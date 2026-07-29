@@ -28,8 +28,12 @@ import {
 import { getCookie, removeCookie, setCookie } from '@/lib/cookies'
 import {
   CONTENT_LAYOUT_VALUES,
+  CUSTOM_THEME_PRESET,
+  CUSTOM_THEME_VARIABLE_NAMES,
   type ContentLayout,
   DEFAULT_THEME_CUSTOMIZATION,
+  getCustomThemeVariables,
+  normalizeCustomColor,
   resolveThemeFont,
   THEME_COOKIE_KEYS,
   THEME_FONT_VALUES,
@@ -69,6 +73,8 @@ type ThemeCustomizationContextType = {
   defaults: ThemeCustomization
   customization: ThemeCustomization
   setPreset: (preset: ThemePreset) => void
+  setCustomColor: (color: string) => void
+  resetPreset: () => void
   setFont: (font: ThemeFont) => void
   setRadius: (radius: ThemeRadius) => void
   setScale: (scale: ThemeScale) => void
@@ -84,6 +90,8 @@ const FALLBACK_CONTEXT: ThemeCustomizationContextType = {
   defaults: DEFAULT_THEME_CUSTOMIZATION,
   customization: DEFAULT_THEME_CUSTOMIZATION,
   setPreset: () => {},
+  setCustomColor: () => {},
+  resetPreset: () => {},
   setFont: () => {},
   setRadius: () => {},
   setScale: () => {},
@@ -94,6 +102,21 @@ const FALLBACK_CONTEXT: ThemeCustomizationContextType = {
 const ThemeCustomizationContext =
   createContext<ThemeCustomizationContextType>(FALLBACK_CONTEXT)
 
+function applyCustomThemeVariables(color: string | null) {
+  if (typeof document === 'undefined') return
+  const body = document.body
+  if (!body) return
+
+  const variables = color ? getCustomThemeVariables(color) : null
+  for (const name of CUSTOM_THEME_VARIABLE_NAMES) {
+    if (variables) {
+      body.style.setProperty(name, variables[name])
+    } else {
+      body.style.removeProperty(name)
+    }
+  }
+}
+
 export function ThemeCustomizationProvider(props: {
   children: React.ReactNode
 }) {
@@ -103,6 +126,11 @@ export function ThemeCustomizationProvider(props: {
       THEME_PRESET_VALUES,
       DEFAULT_THEME_CUSTOMIZATION.preset
     )
+  )
+  const [customColor, _setCustomColor] = useState(
+    () =>
+      normalizeCustomColor(getCookie(THEME_COOKIE_KEYS.customColor)) ??
+      DEFAULT_THEME_CUSTOMIZATION.customColor
   )
   const [font, _setFont] = useState<ThemeFont>(() =>
     readCookie<ThemeFont>(
@@ -142,6 +170,15 @@ export function ThemeCustomizationProvider(props: {
     )
   }, [preset])
 
+  // Custom colors are intentionally inline because their value is chosen at
+  // runtime. Fixed presets keep using the stylesheet; clearing these tokens
+  // when another preset is selected lets their original CSS win unchanged.
+  useEffect(() => {
+    applyCustomThemeVariables(
+      preset === CUSTOM_THEME_PRESET ? customColor : null
+    )
+  }, [preset, customColor])
+
   // Font is the one axis where we resolve before writing the attribute:
   // the persisted preference may be `default`, but CSS works in terms of
   // the concrete `sans`/`serif` choice that should drive the cascade.
@@ -177,6 +214,28 @@ export function ThemeCustomizationProvider(props: {
     } else {
       setCookie(THEME_COOKIE_KEYS.preset, value, COOKIE_MAX_AGE)
     }
+  }, [])
+
+  const setCustomColor = useCallback((value: string) => {
+    const color = normalizeCustomColor(value)
+    if (!color) return
+
+    _setCustomColor(color)
+    _setPreset(CUSTOM_THEME_PRESET)
+    setCookie(THEME_COOKIE_KEYS.preset, CUSTOM_THEME_PRESET, COOKIE_MAX_AGE)
+
+    if (color === DEFAULT_THEME_CUSTOMIZATION.customColor) {
+      removeCookie(THEME_COOKIE_KEYS.customColor)
+    } else {
+      setCookie(THEME_COOKIE_KEYS.customColor, color, COOKIE_MAX_AGE)
+    }
+  }, [])
+
+  const resetPreset = useCallback(() => {
+    _setPreset(DEFAULT_THEME_CUSTOMIZATION.preset)
+    _setCustomColor(DEFAULT_THEME_CUSTOMIZATION.customColor)
+    removeCookie(THEME_COOKIE_KEYS.preset)
+    removeCookie(THEME_COOKIE_KEYS.customColor)
   }, [])
 
   const setFont = useCallback((value: ThemeFont) => {
@@ -216,18 +275,27 @@ export function ThemeCustomizationProvider(props: {
   }, [])
 
   const resetCustomization = useCallback(() => {
-    setPreset(DEFAULT_THEME_CUSTOMIZATION.preset)
+    resetPreset()
     setFont(DEFAULT_THEME_CUSTOMIZATION.font)
     setRadius(DEFAULT_THEME_CUSTOMIZATION.radius)
     setScale(DEFAULT_THEME_CUSTOMIZATION.scale)
     setContentLayout(DEFAULT_THEME_CUSTOMIZATION.contentLayout)
-  }, [setPreset, setFont, setRadius, setScale, setContentLayout])
+  }, [resetPreset, setFont, setRadius, setScale, setContentLayout])
 
   const value = useMemo<ThemeCustomizationContextType>(
     () => ({
       defaults: DEFAULT_THEME_CUSTOMIZATION,
-      customization: { preset, font, radius, scale, contentLayout },
+      customization: {
+        preset,
+        customColor,
+        font,
+        radius,
+        scale,
+        contentLayout,
+      },
       setPreset,
+      setCustomColor,
+      resetPreset,
       setFont,
       setRadius,
       setScale,
@@ -236,11 +304,14 @@ export function ThemeCustomizationProvider(props: {
     }),
     [
       preset,
+      customColor,
       font,
       radius,
       scale,
       contentLayout,
       setPreset,
+      setCustomColor,
+      resetPreset,
       setFont,
       setRadius,
       setScale,

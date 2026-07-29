@@ -18,8 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { Radio as RadioPrimitive } from '@base-ui/react/radio'
 import { RadioGroup as Radio } from '@base-ui/react/radio-group'
-import { CircleCheck, Palette, RotateCcw } from 'lucide-react'
-import type { SVGProps } from 'react'
+import { CircleCheck, Palette, Pipette, RotateCcw } from 'lucide-react'
+import { useRef, type SVGProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { IconDir } from '@/assets/custom/icon-dir'
@@ -53,6 +53,7 @@ import { type Collapsible, useLayout } from '@/context/layout-provider'
 import { useThemeCustomization } from '@/context/theme-customization-provider'
 import { useTheme } from '@/context/theme-provider'
 import {
+  CUSTOM_THEME_PRESET,
   type ContentLayout,
   THEME_PRESETS,
   type ThemeFont,
@@ -245,13 +246,20 @@ function ThemeConfig() {
 
 function PresetConfig() {
   const { t } = useTranslation()
-  const { defaults, customization, setPreset } = useThemeCustomization()
+  const colorInputRef = useRef<HTMLInputElement>(null)
+  const { defaults, customization, resetPreset, setCustomColor, setPreset } =
+    useThemeCustomization()
+
+  const openColorPicker = () => {
+    colorInputRef.current?.click()
+  }
+
   return (
     <div>
       <SectionTitle
         title={t('Color preset')}
         showReset={customization.preset !== defaults.preset}
-        onReset={() => setPreset(defaults.preset)}
+        onReset={resetPreset}
       />
       <Radio
         value={customization.preset}
@@ -297,7 +305,61 @@ function PresetConfig() {
             </div>
           </Item>
         ))}
+        <Item
+          value={CUSTOM_THEME_PRESET}
+          className='group flex flex-col items-stretch outline-none'
+          aria-label={t('preset.custom')}
+          onClick={openColorPicker}
+          onKeyDown={(event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return
+
+            event.preventDefault()
+            setPreset(CUSTOM_THEME_PRESET)
+            openColorPicker()
+          }}
+        >
+          <div
+            className={cn(
+              'ring-border relative h-12 overflow-hidden rounded-md ring-[1px] transition',
+              'group-data-checked:ring-primary group-data-checked:shadow-md',
+              'group-focus-visible:ring-2',
+              'group-hover:ring-primary/60'
+            )}
+          >
+            <div
+              aria-hidden='true'
+              className='absolute inset-0 rounded-md'
+              style={{
+                background: `linear-gradient(135deg, ${customization.customColor} 0%, color-mix(in oklch, ${customization.customColor} 58%, white) 52%, color-mix(in oklch, ${customization.customColor} 76%, black) 100%)`,
+              }}
+            />
+            <div
+              aria-hidden='true'
+              className='bg-background/80 text-foreground absolute inset-0 m-auto flex size-7 items-center justify-center rounded-full shadow-sm backdrop-blur-sm'
+            >
+              <Pipette className='size-3.5' />
+            </div>
+            <CircleCheck
+              className={cn(
+                'fill-primary absolute top-0 right-0 z-10 size-5 translate-x-1/2 -translate-y-1/2 stroke-white',
+                'group-data-unchecked:hidden'
+              )}
+              aria-hidden='true'
+            />
+          </div>
+          <div className='mt-1.5 truncate text-center text-xs'>
+            {t('preset.custom')}
+          </div>
+        </Item>
       </Radio>
+      <input
+        ref={colorInputRef}
+        type='color'
+        value={customization.customColor}
+        onChange={(event) => setCustomColor(event.currentTarget.value)}
+        className='sr-only'
+        aria-label={t('Select custom color')}
+      />
     </div>
   )
 }

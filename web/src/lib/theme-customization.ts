@@ -79,7 +79,12 @@ export const THEME_PRESETS = [
   },
 ] as const
 
-export type ThemePreset = (typeof THEME_PRESETS)[number]['value']
+export const CUSTOM_THEME_PRESET = 'custom'
+export const DEFAULT_CUSTOM_THEME_COLOR = '#6366f1'
+
+export type ThemePreset =
+  | (typeof THEME_PRESETS)[number]['value']
+  | typeof CUSTOM_THEME_PRESET
 export type ThemeRadius = 'default' | 'none' | 'sm' | 'md' | 'lg' | 'xl'
 export type ThemeScale = 'default' | 'sm' | 'lg' | 'xl'
 export type ContentLayout = 'full' | 'centered'
@@ -109,6 +114,7 @@ export type ResolvedThemeFont = Exclude<ThemeFont, 'default'>
 
 export type ThemeCustomization = {
   preset: ThemePreset
+  customColor: string
   font: ThemeFont
   radius: ThemeRadius
   scale: ThemeScale
@@ -117,15 +123,17 @@ export type ThemeCustomization = {
 
 export const DEFAULT_THEME_CUSTOMIZATION: ThemeCustomization = {
   preset: 'default',
+  customColor: DEFAULT_CUSTOM_THEME_COLOR,
   font: 'default',
   radius: 'default',
   scale: 'default',
   contentLayout: 'full',
 }
 
-export const THEME_PRESET_VALUES = new Set(
-  THEME_PRESETS.map((p) => p.value)
-) as ReadonlySet<ThemePreset>
+export const THEME_PRESET_VALUES: ReadonlySet<ThemePreset> = new Set([
+  ...THEME_PRESETS.map((preset) => preset.value),
+  CUSTOM_THEME_PRESET,
+])
 
 export const THEME_FONT_VALUES: ReadonlySet<ThemeFont> = new Set([
   'default',
@@ -156,11 +164,98 @@ export const CONTENT_LAYOUT_VALUES: ReadonlySet<ContentLayout> = new Set([
 
 export const THEME_COOKIE_KEYS = {
   preset: 'theme_preset',
+  customColor: 'theme_custom_color',
   font: 'theme_font',
   radius: 'theme_radius',
   scale: 'theme_scale',
   contentLayout: 'theme_content_layout',
 } as const
+
+export const CUSTOM_THEME_VARIABLE_NAMES = [
+  '--primary',
+  '--primary-foreground',
+  '--ring',
+  '--sidebar-primary',
+  '--sidebar-primary-foreground',
+  '--sidebar-ring',
+  '--chart-1',
+  '--chart-2',
+  '--chart-3',
+  '--chart-4',
+  '--chart-5',
+] as const
+
+type CustomThemeVariableName = (typeof CUSTOM_THEME_VARIABLE_NAMES)[number]
+
+/**
+ * Normalizes the hex values emitted by native color inputs before they are
+ * persisted or used in CSS. Keeping the accepted format narrow also prevents
+ * arbitrary cookie values from becoming inline style values.
+ */
+export function normalizeCustomColor(value: string | undefined): string | null {
+  if (!value) return null
+
+  const color = value.trim().toLowerCase()
+  const shortHexMatch = color.match(/^#([\da-f]{3})$/i)
+  const shortHex = shortHexMatch?.[1]
+  if (shortHex) {
+    return `#${[...shortHex].map((channel) => channel.repeat(2)).join('')}`
+  }
+
+  return /^#[\da-f]{6}$/i.test(color) ? color : null
+}
+
+function relativeLuminance(color: string): number {
+  const channels = [1, 3, 5].map(
+    (offset) => Number.parseInt(color.slice(offset, offset + 2), 16) / 255
+  )
+  const [red, green, blue] = channels.map((channel) =>
+    channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue
+}
+
+/**
+ * Selects the higher-contrast text color for a custom primary color. Black
+ * and white are the only candidates because they remain readable on the full
+ * sRGB range exposed by <input type="color">.
+ */
+export function getContrastingForeground(color: string): '#000000' | '#ffffff' {
+  const normalizedColor =
+    normalizeCustomColor(color) ?? DEFAULT_CUSTOM_THEME_COLOR
+  const luminance = relativeLuminance(normalizedColor)
+  const blackContrast = (luminance + 0.05) / 0.05
+  const whiteContrast = 1.05 / (luminance + 0.05)
+
+  return blackContrast > whiteContrast ? '#000000' : '#ffffff'
+}
+
+/**
+ * Builds the inline accent tokens used only by the custom preset. Surface and
+ * sidebar accent tints continue to come from the shared preset CSS bridge,
+ * which derives them from --primary in both light and dark modes.
+ */
+export function getCustomThemeVariables(
+  color: string
+): Record<CustomThemeVariableName, string> {
+  const primary = normalizeCustomColor(color) ?? DEFAULT_CUSTOM_THEME_COLOR
+  const foreground = getContrastingForeground(primary)
+
+  return {
+    '--primary': primary,
+    '--primary-foreground': foreground,
+    '--ring': primary,
+    '--sidebar-primary': primary,
+    '--sidebar-primary-foreground': foreground,
+    '--sidebar-ring': primary,
+    '--chart-1': primary,
+    '--chart-2': `color-mix(in oklch, ${primary} 72%, oklch(0.72 0.16 165))`,
+    '--chart-3': `color-mix(in oklch, ${primary} 72%, oklch(0.7 0.16 250))`,
+    '--chart-4': `color-mix(in oklch, ${primary} 72%, oklch(0.74 0.16 75))`,
+    '--chart-5': `color-mix(in oklch, ${primary} 72%, oklch(0.68 0.17 325))`,
+  }
+}
 
 /**
  * Preset → default font mapping. Used by the provider to resolve the user's
