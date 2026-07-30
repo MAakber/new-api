@@ -96,6 +96,32 @@ func TestEvaluateAutoBanTriggerEnforcesRepeatedViolations(t *testing.T) {
 	require.Equal(t, "not_found", second.Response.Code)
 }
 
+func TestEvaluateAutoBanTriggerEnforcesPermanentBan(t *testing.T) {
+	config := setting.DefaultAutoBanConfig()
+	config.Enabled = true
+	config.UserAgent.Enabled = true
+	config.UserAgent.Mode = setting.AutoBanModeEnforce
+	config.UserAgent.Threshold = 1
+	config.UserAgent.BanDurationMinutes = -1
+	user := setupAutoBanServiceTest(t, config)
+
+	decision, err := EvaluateAutoBanTrigger(autoBanTestContext(user.Id, "blocked", "203.0.113.5"), AutoBanTrigger{
+		RuleType: setting.AutoBanRuleUserAgent,
+		Subject:  "blocked",
+	})
+	require.NoError(t, err)
+	require.True(t, decision.Banned)
+	require.Equal(t, int64(-1), decision.Response.Until)
+
+	repeated, err := EvaluateAutoBanTrigger(autoBanTestContext(user.Id, "blocked", "203.0.113.5"), AutoBanTrigger{
+		RuleType: setting.AutoBanRuleUserAgent,
+		Subject:  "blocked",
+	})
+	require.NoError(t, err)
+	require.True(t, repeated.Banned)
+	require.Equal(t, decision.RecordId, repeated.RecordId)
+}
+
 func TestEvaluateAutoBanTriggerObservesDistinctModels(t *testing.T) {
 	config := setting.DefaultAutoBanConfig()
 	config.Enabled = true

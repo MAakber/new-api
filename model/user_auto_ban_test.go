@@ -98,3 +98,45 @@ func TestExpiredAutoBanAllowsAccess(t *testing.T) {
 	_, banned := user.ActiveAutoBan()
 	require.False(t, banned)
 }
+
+func TestPermanentUserAutoBanRemainsActiveAndCanBeReleased(t *testing.T) {
+	setupUserAutoBanModelTest(t)
+	user := newAutoBanTestUser(t, common.RoleCommonUser)
+	input := AutoBanActionInput{
+		UserId: user.Id, RuleType: "user_agent", Mode: "enforce",
+		TriggerCount: 3, Threshold: 3, WindowMinutes: 10, BanDurationMinutes: -1,
+		ResponseStatus: 403, ResponseCode: "blocked", ResponseMessage: "blocked",
+	}
+	record, applied, err := ApplyUserAutoBan(input)
+	require.NoError(t, err)
+	require.True(t, applied)
+	require.Equal(t, int64(0), record.ExpiresAt)
+
+	var stored User
+	require.NoError(t, DB.First(&stored, user.Id).Error)
+	require.Equal(t, int64(-1), stored.AutoBanUntil)
+	response, banned := stored.ActiveAutoBan()
+	require.True(t, banned)
+	require.Equal(t, int64(-1), response.Until)
+
+	repeated, applied, err := ApplyUserAutoBan(input)
+	require.NoError(t, err)
+	require.False(t, applied)
+	require.Equal(t, record.Id, repeated.Id)
+
+	records, _, err := ListUserAutoBanRecords(AutoBanRecordQuery{UserId: user.Id, Status: AutoBanRecordStatusActive})
+	require.NoError(t, err)
+	require.Len(t, records, 1)
+	require.Equal(t, AutoBanRecordStatusActive, records[0].Status)
+
+	changed, err := ReleaseUserAutoBan(user.Id, 99, "reviewed")
+	require.NoError(t, err)
+	require.True(t, changed)
+	require.NoError(t, DB.First(&stored, user.Id).Error)
+	require.Equal(t, int64(0), stored.AutoBanUntil)
+	_, banned = stored.ActiveAutoBan()
+	require.False(t, banned)
+	var released UserAutoBanRecord
+	require.NoError(t, DB.First(&released, record.Id).Error)
+	require.Equal(t, AutoBanRecordStatusReleased, released.Status)
+}

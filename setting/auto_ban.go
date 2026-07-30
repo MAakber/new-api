@@ -131,8 +131,8 @@ func normalizeAutoBanRule(name string, rule *AutoBanRuleConfig) error {
 	if rule.WindowMinutes < 1 || rule.WindowMinutes > 525600 {
 		return fmt.Errorf("%s window_minutes must be between 1 and 525600", name)
 	}
-	if rule.BanDurationMinutes < 1 || rule.BanDurationMinutes > 525600 {
-		return fmt.Errorf("%s ban_duration_minutes must be between 1 and 525600", name)
+	if rule.BanDurationMinutes < -1 || rule.BanDurationMinutes == 0 || rule.BanDurationMinutes > 525600 {
+		return fmt.Errorf("%s ban_duration_minutes must be -1 or between 1 and 525600", name)
 	}
 	if rule.ResponseStatus < 400 || rule.ResponseStatus > 599 {
 		return fmt.Errorf("%s response_status must be between 400 and 599", name)

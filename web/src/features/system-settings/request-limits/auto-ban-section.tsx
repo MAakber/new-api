@@ -76,22 +76,28 @@ import {
 
 const responseCodePattern = /^[A-Za-z0-9_.-]+$/
 const userIDListPattern = /^\d+$/
-const ruleFieldClassName =
-  'grid grid-rows-[minmax(1.25rem,auto)_2.5rem_1.25rem_minmax(1.25rem,auto)] content-start gap-2'
 
-const ruleSchema = z.object({
-  enabled: z.boolean(),
-  mode: z.enum(['observe', 'enforce']),
-  threshold: z.number().int().min(1).max(100000),
-  window_minutes: z.number().int().min(1).max(525600),
-  ban_duration_minutes: z.number().int().min(1).max(525600),
-  response_status: z.number().int().min(400).max(599),
-  response_message: z.string().trim().min(1).max(500),
-  response_code: z.string().trim().min(1).max(64).regex(responseCodePattern),
-})
-
-const createAutoBanSchema = (t: (key: string) => string) =>
+const createRuleSchema = (t: (key: string) => string) =>
   z.object({
+    enabled: z.boolean(),
+    mode: z.enum(['observe', 'enforce']),
+    threshold: z.number().int().min(1).max(100000),
+    window_minutes: z.number().int().min(1).max(525600),
+    ban_duration_minutes: z
+      .number()
+      .int()
+      .refine((value) => value === -1 || (value >= 1 && value <= 525600), {
+        message: t('Enter -1 or a value from 1 to 525600.'),
+      }),
+    response_status: z.number().int().min(400).max(599),
+    response_message: z.string().trim().min(1).max(500),
+    response_code: z.string().trim().min(1).max(64).regex(responseCodePattern),
+  })
+
+const createAutoBanSchema = (t: (key: string) => string) => {
+  const ruleSchema = createRuleSchema(t)
+
+  return z.object({
     enabled: z.boolean(),
     exempt_user_ids_text: z.string().refine(
       (value) =>
@@ -114,6 +120,7 @@ const createAutoBanSchema = (t: (key: string) => string) =>
     excessive_ips: ruleSchema,
     model_probing: ruleSchema,
   })
+}
 
 type AutoBanSectionProps = {
   defaultValues: {
@@ -229,7 +236,7 @@ function AutoBanRuleCard(props: {
             control={props.form.control}
             name={fieldName('mode')}
             render={({ field }) => (
-              <FormItem className={ruleFieldClassName}>
+              <FormItem>
                 <FormLabel>{t('Rule mode')}</FormLabel>
                 <Select
                   items={[
@@ -255,10 +262,7 @@ function AutoBanRuleCard(props: {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <FormDescription aria-hidden='true' className='min-h-5'>
-                  &nbsp;
-                </FormDescription>
-                <FormMessage className='min-h-5' />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -272,22 +276,28 @@ function AutoBanRuleCard(props: {
               control={props.form.control}
               name={fieldName(name)}
               render={({ field }) => (
-                <FormItem className={ruleFieldClassName}>
+                <FormItem>
                   <FormLabel>{t(label)}</FormLabel>
                   <FormControl>
                     <Input
                       type='number'
-                      min={1}
+                      min={name === 'ban_duration_minutes' ? -1 : 1}
                       value={Number(field.value)}
                       onChange={(event) =>
                         field.onChange(Number(event.target.value))
                       }
                     />
                   </FormControl>
-                  <FormDescription className='min-h-5'>
-                    {t(unit)}
+                  <FormDescription>
+                    {name === 'ban_duration_minutes' ? (
+                      <>
+                        {t(unit)} · {t('-1 means permanent ban')}
+                      </>
+                    ) : (
+                      t(unit)
+                    )}
                   </FormDescription>
-                  <FormMessage className='min-h-5' />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -299,7 +309,7 @@ function AutoBanRuleCard(props: {
             control={props.form.control}
             name={fieldName('response_status')}
             render={({ field }) => (
-              <FormItem className={ruleFieldClassName}>
+              <FormItem>
                 <FormLabel>{t('HTTP status')}</FormLabel>
                 <FormControl>
                   <Input
@@ -312,10 +322,7 @@ function AutoBanRuleCard(props: {
                     }
                   />
                 </FormControl>
-                <FormDescription aria-hidden='true' className='min-h-5'>
-                  &nbsp;
-                </FormDescription>
-                <FormMessage className='min-h-5' />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -323,7 +330,7 @@ function AutoBanRuleCard(props: {
             control={props.form.control}
             name={fieldName('response_code')}
             render={({ field }) => (
-              <FormItem className={ruleFieldClassName}>
+              <FormItem>
                 <FormLabel>{t('Error code')}</FormLabel>
                 <FormControl>
                   <Input
@@ -331,10 +338,7 @@ function AutoBanRuleCard(props: {
                     onChange={field.onChange}
                   />
                 </FormControl>
-                <FormDescription aria-hidden='true' className='min-h-5'>
-                  &nbsp;
-                </FormDescription>
-                <FormMessage className='min-h-5' />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -342,7 +346,7 @@ function AutoBanRuleCard(props: {
             control={props.form.control}
             name={fieldName('response_message')}
             render={({ field }) => (
-              <FormItem className={ruleFieldClassName}>
+              <FormItem>
                 <FormLabel>{t('Error message')}</FormLabel>
                 <FormControl>
                   <Input
@@ -350,10 +354,7 @@ function AutoBanRuleCard(props: {
                     onChange={field.onChange}
                   />
                 </FormControl>
-                <FormDescription aria-hidden='true' className='min-h-5'>
-                  &nbsp;
-                </FormDescription>
-                <FormMessage className='min-h-5' />
+                <FormMessage />
               </FormItem>
             )}
           />

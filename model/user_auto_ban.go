@@ -96,7 +96,7 @@ type UserSecuritySubjectLastSeen struct {
 }
 
 func normalizeAutoBanResponse(until int64, rule string, status int, code string, message string) (AutoBanResponse, bool) {
-	if until <= time.Now().Unix() {
+	if until != -1 && until <= time.Now().Unix() {
 		return AutoBanResponse{}, false
 	}
 	if status < 400 || status > 599 {
@@ -236,7 +236,10 @@ func newAutoBanRecord(input AutoBanActionInput, user User, status string, create
 
 func ApplyUserAutoBan(input AutoBanActionInput) (*UserAutoBanRecord, bool, error) {
 	now := time.Now().Unix()
-	expiresAt := now + int64(input.BanDurationMinutes*60)
+	expiresAt := int64(0)
+	if input.BanDurationMinutes != -1 {
+		expiresAt = now + int64(input.BanDurationMinutes*60)
+	}
 	var record UserAutoBanRecord
 	var applied bool
 	err := DB.Transaction(func(tx *gorm.DB) error {
@@ -247,7 +250,7 @@ func ApplyUserAutoBan(input AutoBanActionInput) (*UserAutoBanRecord, bool, error
 		if user.Role >= common.RoleAdminUser {
 			return ErrAutoBanExemptUser
 		}
-		if user.AutoBanUntil > now {
+		if user.AutoBanUntil == -1 || user.AutoBanUntil > now {
 			if user.AutoBanRecordId > 0 {
 				if err := tx.First(&record, user.AutoBanRecordId).Error; err != nil {
 					return err
@@ -268,8 +271,12 @@ func ApplyUserAutoBan(input AutoBanActionInput) (*UserAutoBanRecord, bool, error
 		if _, err := IncrementUserAuthVersionWithTx(tx, user.Id); err != nil {
 			return err
 		}
+		banUntil := expiresAt
+		if input.BanDurationMinutes == -1 {
+			banUntil = -1
+		}
 		updates := map[string]interface{}{
-			"auto_ban_until":            expiresAt,
+			"auto_ban_until":            banUntil,
 			"auto_ban_rule":             input.RuleType,
 			"auto_ban_record_id":        record.Id,
 			"auto_ban_response_status":  input.ResponseStatus,

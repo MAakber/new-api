@@ -2,6 +2,7 @@ package setting
 
 import (
 	"net"
+	"strconv"
 	"testing"
 
 	"github.com/QuantumNous/new-api/common"
@@ -44,5 +45,14 @@ func TestAutoBanConfigRejectsUnsafeValues(t *testing.T) {
 	} {
 		_, err := ValidateAndNormalizeAutoBanConfigJSON(value)
 		require.Error(t, err, value)
+	}
+}
+
+func TestAutoBanConfigAllowsPermanentBanDuration(t *testing.T) {
+	_, err := ValidateAndNormalizeAutoBanConfigJSON(`{"user_agent":{"ban_duration_minutes":-1}}`)
+	require.NoError(t, err)
+	for _, duration := range []int{0, -2} {
+		_, err := ValidateAndNormalizeAutoBanConfigJSON(`{"user_agent":{"ban_duration_minutes":` + strconv.Itoa(duration) + `}}`)
+		require.Error(t, err)
 	}
 }

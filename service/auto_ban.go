@@ -279,15 +279,19 @@ func EvaluateAutoBanTrigger(c *gin.Context, trigger AutoBanTrigger) (*AutoBanDec
 	}
 	record, applied, applyErr := model.ApplyUserAutoBan(input)
 	if record != nil {
+		banUntil := record.ExpiresAt
+		if banUntil == 0 && record.Status == model.AutoBanRecordStatusActive {
+			banUntil = -1
+		}
 		decision.RecordId = record.Id
 		decision.Response = model.AutoBanResponse{
-			Until:   record.ExpiresAt,
+			Until:   banUntil,
 			Rule:    record.RuleType,
 			Status:  record.ResponseStatus,
 			Code:    record.ResponseCode,
 			Message: record.ResponseMessage,
 		}
 	}
-	decision.Banned = applied || (record != nil && record.Status == model.AutoBanRecordStatusActive && record.ExpiresAt > now)
+	decision.Banned = applied || (record != nil && record.Status == model.AutoBanRecordStatusActive && (record.ExpiresAt == 0 || record.ExpiresAt > now))
 	return decision, applyErr
 }

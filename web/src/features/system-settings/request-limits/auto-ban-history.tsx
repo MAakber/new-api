@@ -320,7 +320,11 @@ export function AutoBanHistory() {
                   </details>
                 </TableCell>
                 <TableCell>{formatTime(record.created_at)}</TableCell>
-                <TableCell>{formatTime(record.expires_at)}</TableCell>
+                <TableCell>
+                  {record.status === 'active' && record.expires_at === 0
+                    ? t('Permanent')
+                    : formatTime(record.expires_at)}
+                </TableCell>
                 <TableCell className='text-right'>
                   {record.status === 'active' ? (
                     <Button
