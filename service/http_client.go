@@ -14,6 +14,7 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/relaykit/dto"
+	"github.com/QuantumNous/new-api/setting"
 	"github.com/QuantumNous/new-api/setting/system_setting"
 
 	"golang.org/x/net/proxy"
@@ -358,6 +359,24 @@ func newProxyHTTPClient(proxyURL *url.URL) (*http.Client, error) {
 // GetHttpClientWithProxy returns the default client or a cached proxy-enabled client.
 func GetHttpClientWithProxy(rawProxyURL string) (*http.Client, error) {
 	return GetHttpClientWithProxySettings(rawProxyURL, dto.ChannelSettings{})
+}
+
+// GetLoginHTTPClient creates an isolated client for external login requests.
+// It shares the proxy-aware transport pool without inheriting relay timeouts or
+// redirect restrictions, so OAuth callers retain standard net/http redirects.
+func GetLoginHTTPClient(timeout time.Duration) (*http.Client, error) {
+	proxyURL := setting.GetLoginProxyURL()
+	if proxyURL == "" {
+		return &http.Client{Timeout: timeout}, nil
+	}
+	proxyClient, err := GetHttpClientWithProxy(proxyURL)
+	if err != nil {
+		return nil, err
+	}
+	return &http.Client{
+		Transport: proxyClient.Transport,
+		Timeout:   timeout,
+	}, nil
 }
 
 // GetHttpClientWithProxySettings returns a cached HTTP client for the proxy URL and

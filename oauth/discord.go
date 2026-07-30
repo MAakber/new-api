@@ -12,6 +12,7 @@ import (
 	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/service"
 	"github.com/QuantumNous/new-api/setting/system_setting"
 	"github.com/gin-gonic/gin"
 )
@@ -71,8 +72,9 @@ func (p *DiscordProvider) ExchangeToken(ctx context.Context, code string, c *gin
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("Accept", "application/json")
 
-	client := http.Client{
-		Timeout: 5 * time.Second,
+	client, err := service.GetLoginHTTPClient(5 * time.Second)
+	if err != nil {
+		return nil, err
 	}
 	res, err := client.Do(req)
 	if err != nil {
@@ -116,8 +118,9 @@ func (p *DiscordProvider) GetUserInfo(ctx context.Context, token *OAuthToken) (*
 	}
 	req.Header.Set("Authorization", "Bearer "+token.AccessToken)
 
-	client := http.Client{
-		Timeout: 5 * time.Second,
+	client, err := service.GetLoginHTTPClient(5 * time.Second)
+	if err != nil {
+		return nil, err
 	}
 	res, err := client.Do(req)
 	if err != nil {

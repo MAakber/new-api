@@ -18,6 +18,7 @@ import (
 	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/service"
 	"github.com/QuantumNous/new-api/setting/system_setting"
 	"github.com/gin-gonic/gin"
 	"github.com/samber/lo"
@@ -131,8 +132,9 @@ func (p *GenericOAuthProvider) ExchangeToken(ctx context.Context, code string, c
 	logger.LogDebug(ctx, "[OAuth-Generic-%s] ExchangeToken: token_endpoint=%s, redirect_uri=%s, auth_style=%d",
 		p.config.Slug, p.config.TokenEndpoint, redirectUri, authStyle)
 
-	client := http.Client{
-		Timeout: 20 * time.Second,
+	client, err := service.GetLoginHTTPClient(20 * time.Second)
+	if err != nil {
+		return nil, err
 	}
 	res, err := client.Do(req)
 	if err != nil {
@@ -212,8 +214,9 @@ func (p *GenericOAuthProvider) GetUserInfo(ctx context.Context, token *OAuthToke
 	req.Header.Set("Authorization", fmt.Sprintf("%s %s", tokenType, token.AccessToken))
 	req.Header.Set("Accept", "application/json")
 
-	client := http.Client{
-		Timeout: 20 * time.Second,
+	client, err := service.GetLoginHTTPClient(20 * time.Second)
+	if err != nil {
+		return nil, err
 	}
 	res, err := client.Do(req)
 	if err != nil {

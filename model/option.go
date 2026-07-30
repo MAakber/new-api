@@ -175,6 +175,8 @@ func InitOptionMap() {
 	common.OptionMap["AutomaticDisableStatusCodes"] = operation_setting.AutomaticDisableStatusCodesToString()
 	common.OptionMap["AutomaticRetryStatusCodes"] = operation_setting.AutomaticRetryStatusCodesToString()
 	common.OptionMap["ExposeRatioEnabled"] = strconv.FormatBool(ratio_setting.IsExposeRatioEnabled())
+	common.OptionMap["LoginProxyURL"] = ""
+	_, _ = setting.SetLoginProxyURL("")
 	common.OptionMap["RelayUserAgentBlacklistEnabled"] = strconv.FormatBool(common.RelayUserAgentBlacklistEnabled)
 	common.OptionMap["RelayUserAgentBlacklist"] = ""
 	_, _ = common.SetRelayUserAgentBlacklistConfig(common.RelayUserAgentBlacklistEnabled, "")
@@ -213,6 +215,10 @@ func validateOptionValue(key string, value string) error {
 		_, err := setting.ValidateAndNormalizeAutoBanConfigJSON(value)
 		return err
 	}
+	if key == "LoginProxyURL" {
+		_, err := setting.NormalizeLoginProxyURL(value)
+		return err
+	}
 	if key == "RelayUserAgentBlacklist" {
 		_, err := common.NormalizeRelayUserAgentBlacklist(value)
 		return err
@@ -226,6 +232,9 @@ func validateOptionValue(key string, value string) error {
 func normalizeOptionValue(key string, value string) (string, error) {
 	if key == "AutoBanConfig" {
 		return setting.ValidateAndNormalizeAutoBanConfigJSON(value)
+	}
+	if key == "LoginProxyURL" {
+		return setting.NormalizeLoginProxyURL(value)
 	}
 	if key == "RelayUserAgentBlacklist" {
 		return common.NormalizeRelayUserAgentBlacklist(value)
@@ -309,6 +318,12 @@ func updateOptionMap(key string, value string) (err error) {
 	common.OptionMapRWMutex.Lock()
 	defer common.OptionMapRWMutex.Unlock()
 	common.OptionMap[key] = value
+	if key == "LoginProxyURL" {
+		_, err = setting.SetLoginProxyURL(value)
+		if err != nil {
+			return err
+		}
+	}
 	if key == "RelayUserAgentBlacklist" || key == "RelayUserAgentBlacklistEnabled" {
 		_, err = common.SetRelayUserAgentBlacklistConfig(
 			common.OptionMap["RelayUserAgentBlacklistEnabled"] == "true",

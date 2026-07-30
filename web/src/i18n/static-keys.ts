@@ -38,6 +38,7 @@ export const STATIC_I18N_KEYS = [
   'System Administration',
   'General',
   'Authentication',
+  'Login Proxy',
   'Request Limits',
   'Content',
   'Integrations',

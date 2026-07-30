@@ -14,6 +14,7 @@ import (
 	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -69,8 +70,9 @@ func (p *GitHubProvider) ExchangeToken(ctx context.Context, code string, c *gin.
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 
-	client := http.Client{
-		Timeout: 20 * time.Second,
+	client, err := service.GetLoginHTTPClient(20 * time.Second)
+	if err != nil {
+		return nil, err
 	}
 	res, err := client.Do(req)
 	if err != nil {
@@ -111,8 +113,9 @@ func (p *GitHubProvider) GetUserInfo(ctx context.Context, token *OAuthToken) (*O
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token.AccessToken))
 
-	client := http.Client{
-		Timeout: 20 * time.Second,
+	client, err := service.GetLoginHTTPClient(20 * time.Second)
+	if err != nil {
+		return nil, err
 	}
 	res, err := client.Do(req)
 	if err != nil {

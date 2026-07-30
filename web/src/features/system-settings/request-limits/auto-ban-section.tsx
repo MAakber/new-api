@@ -76,6 +76,8 @@ import {
 
 const responseCodePattern = /^[A-Za-z0-9_.-]+$/
 const userIDListPattern = /^\d+$/
+const ruleFieldClassName =
+  'grid grid-rows-[minmax(1.25rem,auto)_2.5rem_1.25rem_minmax(1.25rem,auto)] content-start gap-2'
 
 const ruleSchema = z.object({
   enabled: z.boolean(),
@@ -201,7 +203,7 @@ function AutoBanRuleCard(props: {
     `${props.ruleKey}.${name}` as FieldPath<AutoBanFormValues>
 
   return (
-    <Card size='sm'>
+    <Card size='sm' data-card-hover='false'>
       <CardHeader>
         <CardTitle>{t(AUTO_BAN_RULE_LABELS[props.ruleKey])}</CardTitle>
         <CardDescription>
@@ -222,12 +224,12 @@ function AutoBanRuleCard(props: {
         </CardAction>
       </CardHeader>
       <CardContent className='space-y-4'>
-        <div className='grid gap-4 md:grid-cols-4'>
+        <div className='grid items-start gap-4 md:grid-cols-4'>
           <FormField
             control={props.form.control}
             name={fieldName('mode')}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className={ruleFieldClassName}>
                 <FormLabel>{t('Rule mode')}</FormLabel>
                 <Select
                   items={[
@@ -253,7 +255,10 @@ function AutoBanRuleCard(props: {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <FormMessage />
+                <FormDescription aria-hidden='true' className='min-h-5'>
+                  &nbsp;
+                </FormDescription>
+                <FormMessage className='min-h-5' />
               </FormItem>
             )}
           />
@@ -267,7 +272,7 @@ function AutoBanRuleCard(props: {
               control={props.form.control}
               name={fieldName(name)}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className={ruleFieldClassName}>
                   <FormLabel>{t(label)}</FormLabel>
                   <FormControl>
                     <Input
@@ -279,20 +284,22 @@ function AutoBanRuleCard(props: {
                       }
                     />
                   </FormControl>
-                  <FormDescription>{t(unit)}</FormDescription>
-                  <FormMessage />
+                  <FormDescription className='min-h-5'>
+                    {t(unit)}
+                  </FormDescription>
+                  <FormMessage className='min-h-5' />
                 </FormItem>
               )}
             />
           ))}
         </div>
 
-        <div className='grid gap-4 md:grid-cols-[140px_1fr_2fr]'>
+        <div className='grid items-start gap-4 md:grid-cols-[140px_1fr_2fr]'>
           <FormField
             control={props.form.control}
             name={fieldName('response_status')}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className={ruleFieldClassName}>
                 <FormLabel>{t('HTTP status')}</FormLabel>
                 <FormControl>
                   <Input
@@ -305,7 +312,10 @@ function AutoBanRuleCard(props: {
                     }
                   />
                 </FormControl>
-                <FormMessage />
+                <FormDescription aria-hidden='true' className='min-h-5'>
+                  &nbsp;
+                </FormDescription>
+                <FormMessage className='min-h-5' />
               </FormItem>
             )}
           />
@@ -313,7 +323,7 @@ function AutoBanRuleCard(props: {
             control={props.form.control}
             name={fieldName('response_code')}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className={ruleFieldClassName}>
                 <FormLabel>{t('Error code')}</FormLabel>
                 <FormControl>
                   <Input
@@ -321,7 +331,10 @@ function AutoBanRuleCard(props: {
                     onChange={field.onChange}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormDescription aria-hidden='true' className='min-h-5'>
+                  &nbsp;
+                </FormDescription>
+                <FormMessage className='min-h-5' />
               </FormItem>
             )}
           />
@@ -329,7 +342,7 @@ function AutoBanRuleCard(props: {
             control={props.form.control}
             name={fieldName('response_message')}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className={ruleFieldClassName}>
                 <FormLabel>{t('Error message')}</FormLabel>
                 <FormControl>
                   <Input
@@ -337,7 +350,10 @@ function AutoBanRuleCard(props: {
                     onChange={field.onChange}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormDescription aria-hidden='true' className='min-h-5'>
+                  &nbsp;
+                </FormDescription>
+                <FormMessage className='min-h-5' />
               </FormItem>
             )}
           />

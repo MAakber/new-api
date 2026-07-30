@@ -33,6 +33,7 @@ const defaultAuthSettings: AuthSettings = {
   EmailAliasRestrictionEnabled: false,
   EmailDomainWhitelist: '',
   ServerAddress: '',
+  LoginProxyURL: '',
   GitHubOAuthEnabled: false,
   GitHubClientId: '',
   GitHubClientSecret: '',
