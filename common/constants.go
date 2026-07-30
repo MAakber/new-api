@@ -132,6 +132,8 @@ var PreConsumedQuota = 500
 
 var RetryTimes = 0
 
+var RelayUserAgentBlacklistEnabled = false
+
 //var RootUserEmail = ""
 
 var IsMasterNode bool

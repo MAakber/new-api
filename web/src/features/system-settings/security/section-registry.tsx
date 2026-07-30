@@ -16,10 +16,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { AutoBanSection } from '../request-limits/auto-ban-section'
 import { RateLimitSection } from '../request-limits/rate-limit-section'
 import { SensitiveWordsSection } from '../request-limits/sensitive-words-section'
 import { SSRFSection } from '../request-limits/ssrf-section'
 import { TokenLimitSection } from '../request-limits/token-limit-section'
+import { UserAgentRestrictionsSection } from '../request-limits/user-agent-restrictions-section'
 import type { SecuritySettings } from '../types'
 import { createSectionRegistry } from '../utils/section-registry'
 
@@ -50,6 +52,30 @@ const SECURITY_SECTIONS = [
           CheckSensitiveEnabled: settings.CheckSensitiveEnabled,
           CheckSensitiveOnPromptEnabled: settings.CheckSensitiveOnPromptEnabled,
           SensitiveWords: settings.SensitiveWords,
+        }}
+      />
+    ),
+  },
+  {
+    id: 'user-agent-restrictions',
+    titleKey: 'User-Agent Restrictions',
+    build: (settings: SecuritySettings) => (
+      <UserAgentRestrictionsSection
+        defaultValues={{
+          RelayUserAgentBlacklistEnabled:
+            settings.RelayUserAgentBlacklistEnabled,
+          RelayUserAgentBlacklist: settings.RelayUserAgentBlacklist,
+        }}
+      />
+    ),
+  },
+  {
+    id: 'automatic-bans',
+    titleKey: 'Automatic Account Bans',
+    build: (settings: SecuritySettings) => (
+      <AutoBanSection
+        defaultValues={{
+          AutoBanConfig: settings.AutoBanConfig,
         }}
       />
     ),

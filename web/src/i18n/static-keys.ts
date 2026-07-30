@@ -551,6 +551,21 @@ export const STATIC_I18N_KEYS = [
   'The model that was requested',
   'The upstream channel that served the requests',
 
+  // Automatic account bans (constants passed to t at runtime)
+  'Save automatic ban rules',
+  'Repeated sensitive-word violations',
+  'Blocked User-Agent attempts',
+  'Excessive account IP addresses',
+  'Bulk model probing',
+  'Counts requests rejected by the existing sensitive-word detector.',
+  'Counts requests matched by the existing User-Agent regular-expression blacklist.',
+  'Counts distinct client IPs per account; IPv6 addresses are grouped by /64.',
+  'Counts distinct model names requested by the same account within the configured window.',
+  'Observed threshold',
+  'Active ban',
+  'Ban released',
+  'Ban expired',
+
   // Misc
   'Cancel',
   'Status',

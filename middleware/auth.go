@@ -52,6 +52,10 @@ func authHelper(c *gin.Context, minRole int) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"success": false, "code": "AUTH_USER_DISABLED", "message": common.TranslateMessage(c, i18n.MsgAuthUserBanned)})
 		return
 	}
+	if response, banned := user.ActiveAutoBan(); banned {
+		abortDashboardWithAutoBanResponse(c, response)
+		return
+	}
 	if user.Role < minRole {
 		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"success": false, "code": "AUTH_INSUFFICIENT_PRIVILEGE", "message": common.TranslateMessage(c, i18n.MsgAuthInsufficientPrivilege)})
 		return
@@ -83,6 +87,14 @@ func TryUserAuth() func(c *gin.Context) {
 			return
 		}
 		if credentialKind != dashboardCredentialUnmatched {
+			if user.Status != common.UserStatusEnabled {
+				c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"success": false, "code": "AUTH_USER_DISABLED", "message": common.TranslateMessage(c, i18n.MsgAuthUserBanned)})
+				return
+			}
+			if response, banned := user.ActiveAutoBan(); banned {
+				abortDashboardWithAutoBanResponse(c, response)
+				return
+			}
 			setDashboardAuthContext(c, user, identity, credentialKind == dashboardCredentialPAT)
 		}
 		c.Next()
@@ -207,6 +219,10 @@ func setDashboardAuthContext(c *gin.Context, user *model.UserBase, identity serv
 }
 
 func writeDashboardAuthError(c *gin.Context, err error) {
+	if response, ok := service.AutoBanResponseFromError(err); ok {
+		abortDashboardWithAutoBanResponse(c, response)
+		return
+	}
 	if errors.Is(err, service.ErrAuthTokenExpired) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"success": false, "code": "AUTH_TOKEN_EXPIRED", "message": common.TranslateMessage(c, i18n.MsgAuthNotLoggedIn)})
 		return
@@ -261,6 +277,10 @@ func TokenOrUserAuth() func(c *gin.Context) {
 			_, user, err := service.ValidateLoginSession(identity)
 			if err != nil {
 				writeDashboardAuthError(c, err)
+				return
+			}
+			if response, banned := user.ActiveAutoBan(); banned {
+				abortDashboardWithAutoBanResponse(c, response)
 				return
 			}
 			setDashboardAuthContext(c, user, identity, false)
@@ -339,6 +359,10 @@ func TokenAuthReadOnly() func(c *gin.Context) {
 				"message": common.TranslateMessage(c, i18n.MsgAuthUserBanned),
 			})
 			c.Abort()
+			return
+		}
+		if response, banned := userCache.ActiveAutoBan(); banned {
+			abortWithAutoBanResponse(c, response)
 			return
 		}
 
@@ -450,6 +474,10 @@ func TokenAuth() func(c *gin.Context) {
 		userEnabled := userCache.Status == common.UserStatusEnabled
 		if !userEnabled {
 			abortWithOpenAiMessage(c, http.StatusForbidden, common.TranslateMessage(c, i18n.MsgAuthUserBanned))
+			return
+		}
+		if response, banned := userCache.ActiveAutoBan(); banned {
+			abortWithAutoBanResponse(c, response)
 			return
 		}
 

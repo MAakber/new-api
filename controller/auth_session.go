@@ -162,6 +162,19 @@ func requireBrowserSession(c *gin.Context) (service.AuthIdentity, bool) {
 }
 
 func writeAuthSessionError(c *gin.Context, err error) {
+	if response, ok := service.AutoBanResponseFromError(err); ok {
+		status := response.Status
+		if status < 400 || status > 599 {
+			status = http.StatusForbidden
+		}
+		c.JSON(status, gin.H{
+			"success":   false,
+			"code":      response.Code,
+			"message":   response.Message,
+			"ban_until": response.Until,
+		})
+		return
+	}
 	status, code := service.AuthSessionErrorCode(err)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		status, code = http.StatusUnauthorized, "AUTH_UNAUTHORIZED"

@@ -105,6 +105,58 @@ func TestUserAuthAllowsOpaqueDottedPAT(t *testing.T) {
 	assert.Equal(t, user.Id, body.ID)
 }
 
+func TestUserAuthRejectsTemporarilyAutoBannedPAT(t *testing.T) {
+	setupDashboardAuthMiddlewareTest(t)
+	user := createMiddlewarePATUser(t, "auto-banned-pat-user", "auto-banned-pat")
+	require.NoError(t, model.DB.Model(&model.User{}).Where("id = ?", user.Id).Updates(map[string]interface{}{
+		"auto_ban_until":            time.Now().Add(time.Hour).Unix(),
+		"auto_ban_rule":             "user_agent",
+		"auto_ban_response_status":  http.StatusNotFound,
+		"auto_ban_response_code":    "not_found",
+		"auto_ban_response_message": "Not Found",
+	}).Error)
+	router := gin.New()
+	router.GET("/protected", UserAuth(), func(c *gin.Context) {
+		c.Status(http.StatusNoContent)
+	})
+	request := httptest.NewRequest(http.MethodGet, "/protected", nil)
+	request.Header.Set("Authorization", "Bearer auto-banned-pat")
+	response := httptest.NewRecorder()
+
+	router.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusNotFound, response.Code)
+	assert.Contains(t, response.Body.String(), `"code":"not_found"`)
+}
+
+func TestUserAuthReturnsConfiguredAutoBanResponseForExistingSession(t *testing.T) {
+	setupDashboardAuthMiddlewareTest(t)
+	user := createMiddlewarePATUser(t, "auto-banned-session-user", "unrelated-pat")
+	bundle, err := service.CreateLoginSession(user.Id, "password", "127.0.0.1", "test-agent")
+	require.NoError(t, err)
+	require.NoError(t, model.DB.Model(&model.User{}).Where("id = ?", user.Id).Updates(map[string]interface{}{
+		"auth_version":              user.AuthVersion + 1,
+		"auto_ban_until":            time.Now().Add(time.Hour).Unix(),
+		"auto_ban_rule":             "model_probing",
+		"auto_ban_response_status":  451,
+		"auto_ban_response_code":    "model_probe_blocked",
+		"auto_ban_response_message": "Model probing blocked",
+	}).Error)
+
+	router := gin.New()
+	router.GET("/protected", UserAuth(), func(c *gin.Context) {
+		c.Status(http.StatusNoContent)
+	})
+	request := httptest.NewRequest(http.MethodGet, "/protected", nil)
+	request.Header.Set("Authorization", "Bearer "+bundle.AccessToken)
+	response := httptest.NewRecorder()
+	router.ServeHTTP(response, request)
+
+	assert.Equal(t, 451, response.Code)
+	assert.Contains(t, response.Body.String(), `"code":"model_probe_blocked"`)
+	assert.Contains(t, response.Body.String(), `"message":"Model probing blocked"`)
+}
+
 func TestUserAuthNeverFallsBackForRecognizedInvalidInternalJWT(t *testing.T) {
 	setupDashboardAuthMiddlewareTest(t)
 	identity := service.AuthIdentity{UserID: 42, SessionID: "session-42", UserAuthVersion: 1, SessionVersion: 1}

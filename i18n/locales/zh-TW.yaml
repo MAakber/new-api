@@ -27,6 +27,7 @@ common.batch_too_many: "批次請求數量過多，最多 {{.Max}} 條"
 # Auth middleware messages
 auth.not_logged_in: "無權進行此操作，未登入且未提供 access token"
 auth.access_token_invalid: "無權進行此操作，access token 無效"
+relay.user_agent_blocked: "此客戶端不允許使用中轉服務"
 auth.user_info_invalid: "無權進行此操作，使用者資訊無效"
 auth.user_id_not_provided: "無權進行此操作，未提供 New-Api-User"
 auth.user_id_format_error: "無權進行此操作，New-Api-User 格式錯誤"

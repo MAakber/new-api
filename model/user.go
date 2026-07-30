@@ -109,21 +109,33 @@ type User struct {
 	CreatedAt        int64                      `json:"created_at" gorm:"autoCreateTime;column:created_at"`
 	LastLoginAt      int64                      `json:"last_login_at" gorm:"default:0;column:last_login_at"`
 	AuthVersion      int64                      `json:"-" gorm:"type:bigint;not null;default:1;column:auth_version"`
+	AutoBanUntil     int64                      `json:"auto_ban_until,omitempty" gorm:"type:bigint;not null;default:0;column:auto_ban_until;index"`
+	AutoBanRule      string                     `json:"auto_ban_rule,omitempty" gorm:"type:varchar(32);not null;default:'';column:auto_ban_rule"`
+	AutoBanRecordId  int64                      `json:"auto_ban_record_id,omitempty" gorm:"type:bigint;not null;default:0;column:auto_ban_record_id"`
+	AutoBanStatus    int                        `json:"auto_ban_response_status,omitempty" gorm:"type:int;not null;default:403;column:auto_ban_response_status"`
+	AutoBanCode      string                     `json:"auto_ban_response_code,omitempty" gorm:"type:varchar(64);not null;default:'';column:auto_ban_response_code"`
+	AutoBanMessage   string                     `json:"auto_ban_response_message,omitempty" gorm:"type:varchar(500);not null;default:'';column:auto_ban_response_message"`
 	AdminPermissions map[string]map[string]bool `json:"admin_permissions,omitempty" gorm:"-:all"`
 }
 
 func (user *User) ToBaseUser() *UserBase {
 	cache := &UserBase{
-		Id:          user.Id,
-		Group:       user.Group,
-		Quota:       user.Quota,
-		Status:      user.Status,
-		Role:        user.Role,
-		Username:    user.Username,
-		Setting:     user.Setting,
-		Email:       user.Email,
-		AuthVersion: user.AuthVersion,
-		CacheSchema: userCacheSchemaVersion,
+		Id:              user.Id,
+		Group:           user.Group,
+		Quota:           user.Quota,
+		Status:          user.Status,
+		Role:            user.Role,
+		Username:        user.Username,
+		Setting:         user.Setting,
+		Email:           user.Email,
+		AuthVersion:     user.AuthVersion,
+		AutoBanUntil:    user.AutoBanUntil,
+		AutoBanRule:     user.AutoBanRule,
+		AutoBanRecordId: user.AutoBanRecordId,
+		AutoBanStatus:   user.AutoBanStatus,
+		AutoBanCode:     user.AutoBanCode,
+		AutoBanMessage:  user.AutoBanMessage,
+		CacheSchema:     userCacheSchemaVersion,
 	}
 	return cache
 }

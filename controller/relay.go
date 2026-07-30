@@ -140,6 +140,27 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 		contains, words := service.CheckSensitiveText(meta.CombineText)
 		if contains {
 			logger.LogWarn(c, fmt.Sprintf("user sensitive words detected: %s", strings.Join(words, ", ")))
+			evidenceWords := words
+			if len(evidenceWords) > 20 {
+				evidenceWords = evidenceWords[:20]
+			}
+			decision, evaluateErr := service.EvaluateAutoBanTrigger(c, service.AutoBanTrigger{
+				RuleType: setting.AutoBanRuleSensitiveWords,
+				Subject:  "sensitive_words",
+				Evidence: map[string]interface{}{"matched_words": evidenceWords},
+			})
+			if evaluateErr != nil {
+				common.SysLog("failed to evaluate sensitive words auto-ban rule: " + evaluateErr.Error())
+			}
+			if decision != nil && decision.Banned {
+				newAPIError = types.NewErrorWithStatusCode(
+					errors.New(decision.Response.Message),
+					types.ErrorCode(decision.Response.Code),
+					decision.Response.Status,
+					types.ErrOptionWithSkipRetry(),
+				)
+				return
+			}
 			newAPIError = types.NewError(err, types.ErrorCodeSensitiveWordsDetected)
 			return
 		}

@@ -426,6 +426,9 @@ func PasskeyLoginFinish(c *gin.Context) {
 		common.ApiErrorMsg(c, "该用户已被禁用")
 		return
 	}
+	if rejectAutoBannedLogin(c, modelUser) {
+		return
+	}
 
 	if err := model.UpdatePasskeyAssertionState(modelUser.Id, credential, time.Now()); err != nil {
 		common.ApiError(c, err)

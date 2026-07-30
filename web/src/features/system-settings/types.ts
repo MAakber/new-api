@@ -368,6 +368,9 @@ export type SecuritySettings = {
   ModelRequestRateLimitSuccessCount: number
   ModelRequestRateLimitDurationMinutes: number
   ModelRequestRateLimitGroup: string
+  RelayUserAgentBlacklistEnabled: boolean
+  RelayUserAgentBlacklist: string
+  AutoBanConfig: string
   CheckSensitiveEnabled: boolean
   CheckSensitiveOnPromptEnabled: boolean
   SensitiveWords: string

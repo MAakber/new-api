@@ -27,6 +27,7 @@ common.batch_too_many: "批量请求数量过多，最多 {{.Max}} 条"
 # Auth middleware messages
 auth.not_logged_in: "无权进行此操作，未登录且未提供 access token"
 auth.access_token_invalid: "无权进行此操作，access token 无效"
+relay.user_agent_blocked: "该客户端不允许使用中转服务"
 auth.user_info_invalid: "无权进行此操作，用户信息无效"
 auth.user_id_not_provided: "无权进行此操作，未提供 New-Api-User"
 auth.user_id_format_error: "无权进行此操作，New-Api-User 格式错误"

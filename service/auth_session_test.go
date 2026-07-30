@@ -429,3 +429,37 @@ func TestUserAuthVersionInvalidatesExistingSession(t *testing.T) {
 	_, err = CreateLoginSessionAtAuthVersion(user.Id, identity.UserAuthVersion, "2fa", "127.0.0.1", "test-agent")
 	assert.ErrorIs(t, err, ErrLoginSessionRevoked, "a pending 2FA flow must not survive an auth-version change")
 }
+
+func TestActiveAutoBanReturnsConfiguredResponseBeforeSessionRevocation(t *testing.T) {
+	useTestSessionSecret(t)
+	user := setupAuthSessionTestDB(t)
+	bundle, err := CreateLoginSession(user.Id, "password", "127.0.0.1", "test-agent")
+	require.NoError(t, err)
+	identity, err := ParseAccessToken(bundle.AccessToken)
+	require.NoError(t, err)
+	banUntil := time.Now().Add(time.Hour).Unix()
+	require.NoError(t, model.DB.Model(&model.User{}).Where("id = ?", user.Id).Updates(map[string]interface{}{
+		"auth_version":              identity.UserAuthVersion + 1,
+		"auto_ban_until":            banUntil,
+		"auto_ban_rule":             "user_agent",
+		"auto_ban_response_status":  451,
+		"auto_ban_response_code":    "security_rule_blocked",
+		"auto_ban_response_message": "Temporarily blocked",
+	}).Error)
+
+	_, _, err = ValidateLoginSession(identity)
+	response, ok := AutoBanResponseFromError(err)
+	require.True(t, ok)
+	assert.Equal(t, 451, response.Status)
+	assert.Equal(t, "security_rule_blocked", response.Code)
+	assert.Equal(t, banUntil, response.Until)
+
+	_, _, err = RefreshLoginSession(bundle.RefreshToken, bundle.Session.SID, "127.0.0.2", "test-agent-2")
+	response, ok = AutoBanResponseFromError(err)
+	require.True(t, ok)
+	assert.Equal(t, "Temporarily blocked", response.Message)
+
+	_, err = CreateLoginSession(user.Id, "password", "127.0.0.1", "test-agent")
+	_, ok = AutoBanResponseFromError(err)
+	assert.True(t, ok)
+}

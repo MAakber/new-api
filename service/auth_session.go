@@ -23,6 +23,29 @@ var (
 	ErrRefreshRace          = errors.New("refresh token was already rotated")
 )
 
+type AutoBanAuthError struct {
+	Response model.AutoBanResponse
+}
+
+func (err *AutoBanAuthError) Error() string {
+	if err == nil {
+		return "account temporarily banned"
+	}
+	return err.Response.Message
+}
+
+func newAutoBanAuthError(response model.AutoBanResponse) error {
+	return &AutoBanAuthError{Response: response}
+}
+
+func AutoBanResponseFromError(err error) (model.AutoBanResponse, bool) {
+	var autoBanErr *AutoBanAuthError
+	if !errors.As(err, &autoBanErr) || autoBanErr == nil {
+		return model.AutoBanResponse{}, false
+	}
+	return autoBanErr.Response, true
+}
+
 type LoginSessionView struct {
 	SID          string `json:"sid"`
 	Current      bool   `json:"current"`
@@ -60,6 +83,9 @@ func createLoginSession(userID int, expectedAuthVersion int64, loginMethod, ip, 
 	}
 	if user.Status != common.UserStatusEnabled || user.AuthVersion <= 0 {
 		return nil, ErrLoginSessionInvalid
+	}
+	if response, banned := user.ActiveAutoBan(); banned {
+		return nil, newAutoBanAuthError(response)
 	}
 	if expectedAuthVersion > 0 && user.AuthVersion != expectedAuthVersion {
 		return nil, ErrLoginSessionRevoked
@@ -126,6 +152,9 @@ func ValidateLoginSession(identity AuthIdentity) (*model.UserSession, *model.Use
 	user, err := model.GetUserCache(identity.UserID)
 	if err != nil {
 		return nil, nil, err
+	}
+	if response, banned := user.ActiveAutoBan(); banned {
+		return nil, nil, newAutoBanAuthError(response)
 	}
 	if user.Status != common.UserStatusEnabled || user.AuthVersion != identity.UserAuthVersion {
 		return nil, nil, ErrLoginSessionRevoked
@@ -223,6 +252,12 @@ func RefreshLoginSession(rawRefreshToken, expectedSID, ip, userAgent string) (*A
 	currentUser, err := model.GetUserById(session.UserID, false)
 	if err != nil {
 		return nil, nil, err
+	}
+	if response, banned := currentUser.ActiveAutoBan(); banned {
+		return nil, nil, newAutoBanAuthError(response)
+	}
+	if response, banned := userCache.ActiveAutoBan(); banned {
+		return nil, nil, newAutoBanAuthError(response)
 	}
 	if userCache.Status != common.UserStatusEnabled || userCache.AuthVersion != session.UserAuthVersion ||
 		currentUser.Status != common.UserStatusEnabled || currentUser.AuthVersion != session.UserAuthVersion {
@@ -386,6 +421,9 @@ func truncateAuthMetadata(value string, max int) string {
 }
 
 func authSessionErrorCode(err error) (int, string) {
+	if response, ok := AutoBanResponseFromError(err); ok {
+		return response.Status, response.Code
+	}
 	switch {
 	case errors.Is(err, model.ErrUserSessionLimit):
 		return http.StatusConflict, "AUTH_SESSION_LIMIT"

@@ -26,6 +26,7 @@ common.batch_too_many: "Too many items in batch request, maximum is {{.Max}}"
 # Auth middleware messages
 auth.not_logged_in: "Unauthorized, not logged in and no access token provided"
 auth.access_token_invalid: "Unauthorized, invalid access token"
+relay.user_agent_blocked: "This client is not allowed to use the relay service"
 auth.user_info_invalid: "Unauthorized, invalid user info"
 auth.user_id_not_provided: "Unauthorized, New-Api-User header not provided"
 auth.user_id_format_error: "Unauthorized, New-Api-User header format error"

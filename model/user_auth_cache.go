@@ -72,22 +72,27 @@ end
 if pending > 0 and pending <= incoming then
   redis.call('DEL', KEYS[2])
 end
-if ARGV[10] == '0' and redis.call('EXISTS', KEYS[1]) == 0 then
+if ARGV[16] == '0' and redis.call('EXISTS', KEYS[1]) == 0 then
   return 1
 end
 redis.call('HSET', KEYS[1],
   'Id', ARGV[2], 'Group', ARGV[3], 'Email', ARGV[4],
   'Status', ARGV[5], 'Role', ARGV[6], 'Username', ARGV[7],
-  'Setting', ARGV[8], 'AuthVersion', ARGV[1], 'CacheSchema', ARGV[9])
-if ARGV[10] == '1' and redis.call('HEXISTS', KEYS[1], 'Quota') == 0 then
-  redis.call('HSET', KEYS[1], 'Quota', ARGV[11])
+  'Setting', ARGV[8], 'AuthVersion', ARGV[1], 'CacheSchema', ARGV[9],
+  'AutoBanUntil', ARGV[10], 'AutoBanRule', ARGV[11],
+  'AutoBanRecordId', ARGV[12], 'AutoBanStatus', ARGV[13],
+  'AutoBanCode', ARGV[14], 'AutoBanMessage', ARGV[15])
+if ARGV[16] == '1' and redis.call('HEXISTS', KEYS[1], 'Quota') == 0 then
+  redis.call('HSET', KEYS[1], 'Quota', ARGV[17])
 end
-redis.call('EXPIRE', KEYS[1], ARGV[12])
+redis.call('EXPIRE', KEYS[1], ARGV[18])
 return 1`
 	result, err := common.RDB.Eval(context.Background(), script,
 		[]string{getUserCacheKey(user.Id), getUserAuthFenceKey(user.Id), getUserAuthVersionKey(user.Id)},
 		user.AuthVersion, user.Id, user.Group, user.Email, user.Status, user.Role,
-		user.Username, user.Setting, user.CacheSchema, includeQuotaArg, user.Quota, ttl,
+		user.Username, user.Setting, user.CacheSchema, user.AutoBanUntil, user.AutoBanRule,
+		user.AutoBanRecordId, user.AutoBanStatus, user.AutoBanCode, user.AutoBanMessage,
+		includeQuotaArg, user.Quota, ttl,
 	).Int()
 	if err != nil {
 		return err

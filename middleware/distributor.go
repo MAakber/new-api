@@ -19,6 +19,7 @@ import (
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/relaykit/types"
 	"github.com/QuantumNous/new-api/service"
+	"github.com/QuantumNous/new-api/setting"
 	"github.com/QuantumNous/new-api/setting/ratio_setting"
 
 	"github.com/gin-gonic/gin"
@@ -38,6 +39,21 @@ func Distribute() func(c *gin.Context) {
 		if err != nil {
 			abortWithOpenAiMessage(c, http.StatusBadRequest, i18n.T(c, i18n.MsgDistributorInvalidRequest, map[string]any{"Error": err.Error()}))
 			return
+		}
+		if modelRequest.Model != "" && !strings.HasPrefix(c.Request.URL.Path, "/pg/") {
+			decision, evaluateErr := service.EvaluateAutoBanTrigger(c, service.AutoBanTrigger{
+				RuleType: setting.AutoBanRuleModelProbing,
+				Subject:  modelRequest.Model,
+				Distinct: true,
+				Evidence: map[string]interface{}{"model": modelRequest.Model},
+			})
+			if evaluateErr != nil {
+				common.SysLog("failed to evaluate model probing auto-ban rule: " + evaluateErr.Error())
+			}
+			if decision != nil && decision.Banned {
+				abortWithAutoBanResponse(c, decision.Response)
+				return
+			}
 		}
 		if ok {
 			id, err := strconv.Atoi(channelId.(string))

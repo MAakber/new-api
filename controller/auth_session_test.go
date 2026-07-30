@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -152,4 +153,40 @@ func TestSessionLimitDoesNotRecordRejectedLoginAsSuccessful(t *testing.T) {
 	var stored model.User
 	require.NoError(t, db.First(&stored, user.Id).Error)
 	assert.Equal(t, previousLastLoginAt, stored.LastLoginAt)
+}
+
+func TestSetupLoginReturnsConfiguredAutoBanResponse(t *testing.T) {
+	previousDB := model.DB
+	previousRedis := common.RedisEnabled
+	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	require.NoError(t, err)
+	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserSession{}))
+	model.DB = db
+	common.RedisEnabled = false
+	t.Cleanup(func() {
+		model.DB = previousDB
+		common.RedisEnabled = previousRedis
+	})
+
+	banUntil := time.Now().Add(time.Hour).Unix()
+	user := &model.User{
+		Username: "auto-banned-login-user", Password: "unused", Role: common.RoleCommonUser,
+		Status: common.UserStatusEnabled, Group: "default", AuthVersion: 2,
+		AutoBanUntil: banUntil, AutoBanRule: "sensitive_words", AutoBanStatus: http.StatusUnavailableForLegalReasons,
+		AutoBanCode: "sensitive_content_blocked", AutoBanMessage: "Temporarily blocked by content policy",
+	}
+	require.NoError(t, db.Create(user).Error)
+
+	gin.SetMode(gin.TestMode)
+	recorder := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(recorder)
+	c.Request = httptest.NewRequest(http.MethodPost, "/api/user/login", nil)
+	setupLogin(user, c)
+
+	assert.Equal(t, http.StatusUnavailableForLegalReasons, recorder.Code)
+	assert.Contains(t, recorder.Body.String(), `"code":"sensitive_content_blocked"`)
+	assert.Contains(t, recorder.Body.String(), fmt.Sprintf(`"ban_until":%d`, banUntil))
+	var sessionCount int64
+	require.NoError(t, db.Model(&model.UserSession{}).Count(&sessionCount).Error)
+	assert.Zero(t, sessionCount)
 }

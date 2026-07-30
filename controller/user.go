@@ -71,6 +71,9 @@ func Login(c *gin.Context) {
 		}
 		return
 	}
+	if rejectAutoBannedLogin(c, &user) {
+		return
+	}
 
 	// 检查是否启用2FA
 	twoFAEnabled, err := model.IsTwoFAEnabled(user.Id)
@@ -155,14 +158,41 @@ func setupLogin(user *model.User, c *gin.Context) {
 	setupLoginAtAuthVersion(user, 0, c)
 }
 
+func rejectAutoBannedLogin(c *gin.Context, user *model.User) bool {
+	if user == nil {
+		return false
+	}
+	response, banned := user.ActiveAutoBan()
+	if !banned {
+		return false
+	}
+	status := response.Status
+	if status < 400 || status > 599 {
+		status = http.StatusForbidden
+	}
+	c.JSON(status, gin.H{
+		"success":   false,
+		"code":      response.Code,
+		"message":   response.Message,
+		"ban_until": response.Until,
+	})
+	return true
+}
+
 func setupLoginAtAuthVersion(user *model.User, expectedAuthVersion int64, c *gin.Context) {
 	if user == nil || user.Id <= 0 || user.Status != common.UserStatusEnabled {
 		common.ApiErrorI18n(c, i18n.MsgAuthUserBanned)
 		return
 	}
+	if rejectAutoBannedLogin(c, user) {
+		return
+	}
 	currentUser, err := model.GetUserById(user.Id, false)
 	if err != nil {
 		common.ApiError(c, err)
+		return
+	}
+	if rejectAutoBannedLogin(c, currentUser) {
 		return
 	}
 	var bundle *service.AuthBundle

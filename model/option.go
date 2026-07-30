@@ -175,6 +175,10 @@ func InitOptionMap() {
 	common.OptionMap["AutomaticDisableStatusCodes"] = operation_setting.AutomaticDisableStatusCodesToString()
 	common.OptionMap["AutomaticRetryStatusCodes"] = operation_setting.AutomaticRetryStatusCodesToString()
 	common.OptionMap["ExposeRatioEnabled"] = strconv.FormatBool(ratio_setting.IsExposeRatioEnabled())
+	common.OptionMap["RelayUserAgentBlacklistEnabled"] = strconv.FormatBool(common.RelayUserAgentBlacklistEnabled)
+	common.OptionMap["RelayUserAgentBlacklist"] = ""
+	_, _ = common.SetRelayUserAgentBlacklistConfig(common.RelayUserAgentBlacklistEnabled, "")
+	common.OptionMap["AutoBanConfig"] = setting.AutoBanConfig2JsonString()
 
 	// 自动添加所有注册的模型配置
 	modelConfigs := config.GlobalConfig.ExportAllConfigs()
@@ -205,14 +209,34 @@ func SyncOptions(frequency int) {
 }
 
 func validateOptionValue(key string, value string) error {
+	if key == "AutoBanConfig" {
+		_, err := setting.ValidateAndNormalizeAutoBanConfigJSON(value)
+		return err
+	}
+	if key == "RelayUserAgentBlacklist" {
+		_, err := common.NormalizeRelayUserAgentBlacklist(value)
+		return err
+	}
 	if key == operation_setting.ToolPriceOptionKey {
 		return operation_setting.ValidateToolPricesJSON(value)
 	}
 	return nil
 }
 
+func normalizeOptionValue(key string, value string) (string, error) {
+	if key == "AutoBanConfig" {
+		return setting.ValidateAndNormalizeAutoBanConfigJSON(value)
+	}
+	if key == "RelayUserAgentBlacklist" {
+		return common.NormalizeRelayUserAgentBlacklist(value)
+	}
+	return value, validateOptionValue(key, value)
+}
+
 func UpdateOption(key string, value string) error {
-	if err := validateOptionValue(key, value); err != nil {
+	var err error
+	value, err = normalizeOptionValue(key, value)
+	if err != nil {
 		return err
 	}
 	// Save to database first
@@ -239,13 +263,16 @@ func UpdateOptionsBulk(values map[string]string) error {
 	if len(values) == 0 {
 		return nil
 	}
+	normalizedValues := make(map[string]string, len(values))
 	for key, value := range values {
-		if err := validateOptionValue(key, value); err != nil {
+		normalizedValue, err := normalizeOptionValue(key, value)
+		if err != nil {
 			return err
 		}
+		normalizedValues[key] = normalizedValue
 	}
 	err := DB.Transaction(func(tx *gorm.DB) error {
-		for k, v := range values {
+		for k, v := range normalizedValues {
 			option := Option{Key: k}
 			if err := tx.FirstOrCreate(&option, Option{Key: k}).Error; err != nil {
 				return err
@@ -260,7 +287,7 @@ func UpdateOptionsBulk(values map[string]string) error {
 	if err != nil {
 		return err
 	}
-	for k, v := range values {
+	for k, v := range normalizedValues {
 		if err := updateOptionMap(k, v); err != nil {
 			return err
 		}
@@ -269,6 +296,10 @@ func UpdateOptionsBulk(values map[string]string) error {
 }
 
 func updateOptionMap(key string, value string) (err error) {
+	value, err = normalizeOptionValue(key, value)
+	if err != nil {
+		return err
+	}
 	if key == retiredThemeOptionKey {
 		common.OptionMapRWMutex.Lock()
 		delete(common.OptionMap, key)
@@ -278,6 +309,15 @@ func updateOptionMap(key string, value string) (err error) {
 	common.OptionMapRWMutex.Lock()
 	defer common.OptionMapRWMutex.Unlock()
 	common.OptionMap[key] = value
+	if key == "RelayUserAgentBlacklist" || key == "RelayUserAgentBlacklistEnabled" {
+		_, err = common.SetRelayUserAgentBlacklistConfig(
+			common.OptionMap["RelayUserAgentBlacklistEnabled"] == "true",
+			common.OptionMap["RelayUserAgentBlacklist"],
+		)
+		if err != nil {
+			return err
+		}
+	}
 
 	// 检查是否是模型配置 - 使用更规范的方式处理
 	if handleConfigUpdate(key, value) {
@@ -385,11 +425,15 @@ func updateOptionMap(key string, value string) (err error) {
 			setting.DefaultUseAutoGroup = boolValue
 		case "ExposeRatioEnabled":
 			ratio_setting.SetExposeRatioEnabled(boolValue)
+		case "RelayUserAgentBlacklistEnabled":
+			common.RelayUserAgentBlacklistEnabled = boolValue
 		}
 	}
 	switch key {
 	case "EmailDomainWhitelist":
 		common.EmailDomainWhitelist = strings.Split(value, ",")
+	case "AutoBanConfig":
+		err = setting.UpdateAutoBanConfigByJSONString(value)
 	case "SMTPServer":
 		common.SMTPServer = value
 	case "SMTPPort":

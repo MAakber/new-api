@@ -458,6 +458,9 @@ func Verify2FALogin(c *gin.Context) {
 		})
 		return
 	}
+	if rejectAutoBannedLogin(c, user) {
+		return
+	}
 	var flowPayload twoFALoginFlowPayload
 	if err := common.UnmarshalJsonStr(flow.Payload, &flowPayload); err != nil || flowPayload.AuthVersion <= 0 || flowPayload.AuthVersion != user.AuthVersion {
 		c.JSON(http.StatusOK, gin.H{
