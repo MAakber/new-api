@@ -80,7 +80,9 @@ import type { LogCleanupTask } from '../types'
 
 const logSettingsSchema = z.object({
   LogConsumeEnabled: z.boolean(),
-  'request_debug.raw_enabled': z.boolean(),
+  request_debug: z.object({
+    raw_enabled: z.boolean(),
+  }),
 })
 
 type LogSettingsFormValues = z.infer<typeof logSettingsSchema>
@@ -151,7 +153,9 @@ export function LogSettingsSection({
     resolver: zodResolver(logSettingsSchema),
     defaultValues: {
       LogConsumeEnabled: defaultEnabled,
-      'request_debug.raw_enabled': defaultRawEnabled,
+      request_debug: {
+        raw_enabled: defaultRawEnabled,
+      },
     },
   })
 
@@ -180,7 +184,9 @@ export function LogSettingsSection({
   useEffect(() => {
     form.reset({
       LogConsumeEnabled: defaultEnabled,
-      'request_debug.raw_enabled': defaultRawEnabled,
+      request_debug: {
+        raw_enabled: defaultRawEnabled,
+      },
     })
   }, [defaultEnabled, defaultRawEnabled, form])
 
@@ -271,10 +277,10 @@ export function LogSettingsSection({
       })
     }
 
-    if (values['request_debug.raw_enabled'] !== defaultRawEnabled) {
+    if (values.request_debug.raw_enabled !== defaultRawEnabled) {
       await updateOption.mutateAsync({
         key: 'request_debug.raw_enabled',
-        value: values['request_debug.raw_enabled'],
+        value: values.request_debug.raw_enabled,
       })
     }
   }
