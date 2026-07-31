@@ -1,7 +1,9 @@
 package common
 
 import (
+	"encoding/base64"
 	"encoding/json"
+	"mime"
 	"net/http"
 	"net/url"
 	"sort"
@@ -16,6 +18,7 @@ const (
 	// object remains comfortably below the log field's diagnostic JSON budget.
 	requestDebugJSONLimit = 4 * 1024
 	requestDebugURLLimit  = 2048
+	RequestDebugBodyLimit = 32 * 1024
 )
 
 // RequestDebugInbound returns safe request metadata. It deliberately never reads
@@ -26,10 +29,10 @@ func RequestDebugInbound(req *http.Request) map[string]interface{} {
 	}
 	result := map[string]interface{}{
 		"method":           truncateDebugString(req.Method, 64),
-		"url":              sanitizeDebugURL(req.URL),
+		"url":              requestDebugURL(req.URL),
 		"host":             truncateDebugString(requestHost(req), 512),
 		"remote_addr":      truncateDebugString(req.RemoteAddr, 512),
-		"headers":          sanitizeDebugHeaders(req.Header),
+		"headers":          requestDebugHeaders(req.Header),
 		"body_bytes":       maxInt64(req.ContentLength, 0),
 		"body_bytes_known": req.ContentLength >= 0,
 	}
@@ -43,9 +46,9 @@ func RequestDebugUpstream(req *http.Request) map[string]interface{} {
 	}
 	result := map[string]interface{}{
 		"method":           truncateDebugString(req.Method, 64),
-		"url":              sanitizeDebugURL(req.URL),
+		"url":              requestDebugURL(req.URL),
 		"host":             truncateDebugString(requestHost(req), 512),
-		"headers":          sanitizeDebugHeaders(req.Header),
+		"headers":          requestDebugHeaders(req.Header),
 		"body_bytes":       maxInt64(req.ContentLength, 0),
 		"body_bytes_known": req.ContentLength >= 0,
 	}
@@ -60,11 +63,27 @@ func RequestDebugResponse(resp *http.Response) map[string]interface{} {
 	result := map[string]interface{}{
 		"status":           resp.StatusCode,
 		"protocol":         truncateDebugString(resp.Proto, 64),
-		"headers":          sanitizeDebugHeaders(resp.Header),
+		"headers":          requestDebugHeaders(resp.Header),
 		"body_bytes":       maxInt64(resp.ContentLength, 0),
 		"body_bytes_known": resp.ContentLength >= 0,
 	}
 	return limitDebugJSON(result)
+}
+
+func requestDebugURL(u *url.URL) string {
+	if IsRequestDebugRawEnabled() {
+		if u == nil {
+			return ""
+		}
+		copyURL := *u
+		copyURL.Fragment = ""
+		return truncateDebugString(copyURL.String(), requestDebugURLLimit)
+	}
+	return sanitizeDebugURL(u)
+}
+
+func requestDebugHeaders(headers http.Header) map[string]interface{} {
+	return sanitizeDebugHeadersWithRaw(headers, IsRequestDebugRawEnabled())
 }
 
 func sanitizeDebugURL(u *url.URL) string {
@@ -98,6 +117,10 @@ func requestHost(req *http.Request) string {
 }
 
 func sanitizeDebugHeaders(headers http.Header) map[string]interface{} {
+	return sanitizeDebugHeadersWithRaw(headers, false)
+}
+
+func sanitizeDebugHeadersWithRaw(headers http.Header, raw bool) map[string]interface{} {
 	result := make(map[string]interface{})
 	names := make([]string, 0, len(headers))
 	for name := range headers {
@@ -110,7 +133,7 @@ func sanitizeDebugHeaders(headers http.Header) map[string]interface{} {
 			truncated = true
 			break
 		}
-		if isSensitiveDebugName(name) {
+		if !raw && isSensitiveDebugName(name) {
 			result[name] = "[REDACTED]"
 			continue
 		}
@@ -133,6 +156,40 @@ func sanitizeDebugHeaders(headers http.Header) map[string]interface{} {
 		result["truncated"] = true
 	}
 	return result
+}
+
+// RequestDebugBody returns a JSON-safe representation of a captured request
+// body. Callers must only invoke it after the root-only raw option is enabled.
+// Text and JSON remain readable; other data is base64 encoded.
+func RequestDebugBody(data []byte, contentType string, truncated bool) map[string]interface{} {
+	if len(data) > RequestDebugBodyLimit {
+		data = data[:RequestDebugBodyLimit]
+		truncated = true
+	}
+	result := map[string]interface{}{"body_truncated": truncated}
+	if isDisplayableRequestDebugBody(data, contentType) {
+		result["body"] = string(data)
+	} else {
+		result["body"] = base64.StdEncoding.EncodeToString(data)
+		result["body_encoding"] = "base64"
+	}
+	return result
+}
+
+func isDisplayableRequestDebugBody(data []byte, contentType string) bool {
+	if !utf8.Valid(data) {
+		return false
+	}
+	mediaType, _, err := mime.ParseMediaType(contentType)
+	if err == nil && (strings.Contains(mediaType, "json") || strings.HasPrefix(mediaType, "text/") || mediaType == "application/x-www-form-urlencoded") {
+		return true
+	}
+	for _, r := range string(data) {
+		if r < 0x20 && r != '\n' && r != '\r' && r != '\t' {
+			return false
+		}
+	}
+	return true
 }
 
 func isSensitiveDebugName(name string) bool {

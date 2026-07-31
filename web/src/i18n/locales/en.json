@@ -5331,6 +5331,12 @@
     "Ban released": "Ban released",
     "Ban expired": "Ban expired",
     "User IDs must be positive integers": "User IDs must be positive integers",
-    "Optional release reason": "Optional release reason"
+    "Optional release reason": "Optional release reason",
+    "Enable raw sensitive request logging": "Enable raw sensitive request logging",
+    "Root administrators only. Disabled by default.": "Root administrators only. Disabled by default.",
+    "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, as well as restricted request bodies, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.": "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, plus request bodies up to 32 KiB, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.",
+    "Body Encoding": "Body Encoding",
+    "Body Truncated": "Body Truncated",
+    "Request Body": "Request Body"
   }
 }

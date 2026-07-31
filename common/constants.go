@@ -5,6 +5,7 @@ import (
 	//"os"
 	//"strconv"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/google/uuid"
@@ -88,6 +89,19 @@ var EmailLoginAuthServerList = []string{
 }
 
 var DebugEnabled bool
+
+// requestDebugRawEnabled allows root operators to explicitly opt into storing
+// sensitive request diagnostics. It must remain disabled by default.
+var requestDebugRawEnabled atomic.Bool
+
+func IsRequestDebugRawEnabled() bool {
+	return requestDebugRawEnabled.Load()
+}
+
+func SetRequestDebugRawEnabled(enabled bool) {
+	requestDebugRawEnabled.Store(enabled)
+}
+
 var MemoryCacheEnabled bool
 
 var LogConsumeEnabled = true

@@ -15,9 +15,14 @@ import (
 )
 
 func TestRequestDebugRedactsHeadersAndQuery(t *testing.T) {
+	previousRaw := common.IsRequestDebugRawEnabled()
+	common.SetRequestDebugRawEnabled(false)
+	t.Cleanup(func() { common.SetRequestDebugRawEnabled(previousRaw) })
+	require.False(t, common.IsRequestDebugRawEnabled())
 	req := httptest.NewRequest(http.MethodPost, "http://example.test/v1?key=api-key&token=secret&safe=value&x_signature=sig", strings.NewReader("body-must-not-appear"))
 	req.Header.Set("Authorization", "Bearer secret")
 	req.Header.Set("X-API-Key", "api-key")
+	req.Header.Set("Cookie", "session=cookie-secret")
 	req.Header.Set("X-Trace", "visible")
 
 	debug := common.RequestDebugInbound(req)
@@ -31,11 +36,15 @@ func TestRequestDebugRedactsHeadersAndQuery(t *testing.T) {
 	headers := debug["headers"].(map[string]interface{})
 	require.Equal(t, "[REDACTED]", headers["Authorization"])
 	require.Equal(t, "[REDACTED]", headers["X-Api-Key"])
+	require.Equal(t, "[REDACTED]", headers["Cookie"])
 	require.Equal(t, "visible", headers["X-Trace"])
 	require.NotContains(t, string(encoded), "body-must-not-appear")
 }
 
 func TestRequestDebugLimitProducesValidJSON(t *testing.T) {
+	previousRaw := common.IsRequestDebugRawEnabled()
+	common.SetRequestDebugRawEnabled(false)
+	t.Cleanup(func() { common.SetRequestDebugRawEnabled(previousRaw) })
 	req := httptest.NewRequest(http.MethodGet, "http://example.test", nil)
 	for i := 0; i < 80; i++ {
 		req.Header.Set("X-Long-"+string(rune('A'+i%26))+string(rune('a'+i/26)), strings.Repeat("x", 1024))
@@ -48,6 +57,9 @@ func TestRequestDebugLimitProducesValidJSON(t *testing.T) {
 }
 
 func TestRecordLogsUseClientIPAndNeverStoreBody(t *testing.T) {
+	previousRaw := common.IsRequestDebugRawEnabled()
+	common.SetRequestDebugRawEnabled(false)
+	t.Cleanup(func() { common.SetRequestDebugRawEnabled(previousRaw) })
 	previousLogDB := LOG_DB
 	db, err := gorm.Open(sqlite.Open("file:"+strings.ReplaceAll(t.Name(), "/", "_")+"?mode=memory&cache=shared"), &gorm.Config{})
 	require.NoError(t, err)
@@ -77,4 +89,38 @@ func TestRecordLogsUseClientIPAndNeverStoreBody(t *testing.T) {
 		require.NotContains(t, inbound, "body")
 		require.NotContains(t, inbound["url"], "secret")
 	}
+}
+
+func TestRequestDebugRawIncludesSensitiveMetadataAndBody(t *testing.T) {
+	previousRaw := common.IsRequestDebugRawEnabled()
+	common.SetRequestDebugRawEnabled(true)
+	t.Cleanup(func() { common.SetRequestDebugRawEnabled(previousRaw) })
+
+	req := httptest.NewRequest(http.MethodPost, "http://example.test/v1?key=api-key&token=secret", nil)
+	req.Header.Set("Authorization", "Bearer secret")
+	req.Header.Set("Cookie", "session=cookie-secret")
+	debug := common.RequestDebugInbound(req)
+	headers := debug["headers"].(map[string]interface{})
+	require.Contains(t, debug["url"], "token=secret")
+	require.Equal(t, "Bearer secret", headers["Authorization"])
+	require.Equal(t, "session=cookie-secret", headers["Cookie"])
+
+	body := common.RequestDebugBody([]byte(`{"secret":"visible"}`), "application/json", false)
+	require.Equal(t, `{"secret":"visible"}`, body["body"])
+	require.False(t, body["body_truncated"].(bool))
+
+	tooLarge := common.RequestDebugBody([]byte(strings.Repeat("x", common.RequestDebugBodyLimit+1)), "text/plain", false)
+	require.Len(t, tooLarge["body"].(string), common.RequestDebugBodyLimit)
+	require.True(t, tooLarge["body_truncated"].(bool))
+}
+
+func TestRequestDebugIsRemovedFromUserLogs(t *testing.T) {
+	logs := []*Log{{Other: common.MapToJsonStr(map[string]interface{}{
+		"admin_info": map[string]interface{}{
+			"request_debug": map[string]interface{}{"inbound": map[string]interface{}{"body": "secret"}},
+		},
+	})}}
+	formatUserLogs(logs, 0)
+	require.NotContains(t, logs[0].Other, "secret")
+	require.NotContains(t, logs[0].Other, "admin_info")
 }

@@ -1,6 +1,7 @@
 package channel
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -25,6 +26,39 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
+
+// requestDebugCaptureReadCloser records at most RequestDebugBodyLimit bytes as
+// net/http consumes the final upstream request body. It deliberately wraps the
+// outbound reader instead of reading it at log time, preserving retries and
+// streaming request semantics.
+type requestDebugCaptureReadCloser struct {
+	io.ReadCloser
+	buffer    bytes.Buffer
+	truncated bool
+}
+
+func (r *requestDebugCaptureReadCloser) Read(p []byte) (int, error) {
+	n, err := r.ReadCloser.Read(p)
+	if n > 0 {
+		remaining := common2.RequestDebugBodyLimit - r.buffer.Len()
+		if remaining > 0 {
+			toWrite := n
+			if toWrite > remaining {
+				toWrite = remaining
+				r.truncated = true
+			}
+			_, _ = r.buffer.Write(p[:toWrite])
+		}
+		if n > remaining {
+			r.truncated = true
+		}
+	}
+	return n, err
+}
+
+func (r *requestDebugCaptureReadCloser) debugBody(contentType string, contentLength int64) map[string]interface{} {
+	return common2.RequestDebugBody(r.buffer.Bytes(), contentType, r.truncated || contentLength > common2.RequestDebugBodyLimit)
+}
 
 // applyUpstreamContentLength populates req.ContentLength when the upstream
 // body is wrapped in a BodyStorage (see relay/common/outbound_body.go).
@@ -511,13 +545,25 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 		}
 	}
 
+	// Capture only bytes that the transport consumes, and only while the explicit
+	// root-controlled raw diagnostics switch is enabled.
+	var bodyCapture *requestDebugCaptureReadCloser
+	if common2.IsRequestDebugRawEnabled() && req != nil && req.Body != nil {
+		bodyCapture = &requestDebugCaptureReadCloser{ReadCloser: req.Body}
+		req.Body = bodyCapture
+	}
 	// Keep only the final attempt in the gin context. Retry callers reuse this
 	// context, so this does not create extra persisted log entries.
 	common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
-		"upstream": common2.RequestDebugUpstream(req),
+		"upstream": requestDebugUpstream(req, bodyCapture),
 	})
 	resp, err := client.Do(req)
 	if err != nil {
+		// Preserve any bytes consumed before a transport failure as well. The
+		// error log is often the diagnostic record operators need most.
+		common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
+			"upstream": requestDebugUpstream(req, bodyCapture),
+		})
 		logger.LogError(c, "do request failed: "+err.Error())
 		return nil, types.NewError(err, types.ErrorCodeDoRequestFailed, types.ErrOptionWithHideErrMsg("upstream error: do request failed"))
 	}
@@ -525,7 +571,7 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 		return nil, errors.New("resp is nil")
 	}
 	common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
-		"upstream": common2.RequestDebugUpstream(req),
+		"upstream": requestDebugUpstream(req, bodyCapture),
 		"response": common2.RequestDebugResponse(resp),
 	})
 	if common2.DebugEnabled {
@@ -547,6 +593,16 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 	_ = req.Body.Close()
 	_ = c.Request.Body.Close()
 	return resp, nil
+}
+
+func requestDebugUpstream(req *http.Request, bodyCapture *requestDebugCaptureReadCloser) map[string]interface{} {
+	debug := common2.RequestDebugUpstream(req)
+	if bodyCapture != nil && debug != nil {
+		for key, value := range bodyCapture.debugBody(req.Header.Get("Content-Type"), req.ContentLength) {
+			debug[key] = value
+		}
+	}
+	return debug
 }
 
 func DoTaskApiRequest(a TaskAdaptor, c *gin.Context, info *common.RelayInfo, requestBody io.Reader) (*http.Response, error) {

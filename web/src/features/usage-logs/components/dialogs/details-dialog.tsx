@@ -180,6 +180,9 @@ function hasRequestDebugData(
     requestDebugEntry.remote_addr != null ||
     requestDebugEntry.body_bytes != null ||
     requestDebugEntry.body_bytes_known != null ||
+    requestDebugEntry.body != null ||
+    requestDebugEntry.body_encoding != null ||
+    requestDebugEntry.body_truncated != null ||
     requestDebugEntry.status != null ||
     requestDebugEntry.protocol != null ||
     requestDebugEntry.truncated != null
@@ -237,6 +240,19 @@ function RequestDiagnosticsGroup(props: {
             value={requestDebugEntry.body_bytes_known ? t('Yes') : t('No')}
           />
         )}
+        {requestDebugEntry.body_encoding && (
+          <DetailRow
+            label={t('Body Encoding')}
+            value={requestDebugEntry.body_encoding}
+            mono
+          />
+        )}
+        {requestDebugEntry.body_truncated != null && (
+          <DetailRow
+            label={t('Body Truncated')}
+            value={requestDebugEntry.body_truncated ? t('Yes') : t('No')}
+          />
+        )}
         {requestDebugEntry.status != null && (
           <DetailRow
             label={t('Status')}
@@ -263,6 +279,14 @@ function RequestDiagnosticsGroup(props: {
           <p className='text-muted-foreground text-xs'>{t('Headers')}</p>
           <pre className='bg-muted/50 max-h-40 max-w-full overflow-auto rounded border p-2 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap'>
             {headersJson}
+          </pre>
+        </div>
+      )}
+      {requestDebugEntry.body != null && (
+        <div className='min-w-0 space-y-1.5'>
+          <p className='text-muted-foreground text-xs'>{t('Request Body')}</p>
+          <pre className='bg-muted/50 max-h-64 max-w-full overflow-auto rounded border p-2 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap'>
+            {requestDebugEntry.body}
           </pre>
         </div>
       )}

@@ -80,12 +80,14 @@ import type { LogCleanupTask } from '../types'
 
 const logSettingsSchema = z.object({
   LogConsumeEnabled: z.boolean(),
+  'request_debug.raw_enabled': z.boolean(),
 })
 
 type LogSettingsFormValues = z.infer<typeof logSettingsSchema>
 
 type LogSettingsSectionProps = {
   defaultEnabled: boolean
+  defaultRawEnabled: boolean
 }
 
 type ServerLogInfo = {
@@ -141,6 +143,7 @@ function isActiveLogCleanupTask(task: LogCleanupTask | null) {
 
 export function LogSettingsSection({
   defaultEnabled,
+  defaultRawEnabled,
 }: LogSettingsSectionProps) {
   const { t } = useTranslation()
   const updateOption = useUpdateOption()
@@ -148,6 +151,7 @@ export function LogSettingsSection({
     resolver: zodResolver(logSettingsSchema),
     defaultValues: {
       LogConsumeEnabled: defaultEnabled,
+      'request_debug.raw_enabled': defaultRawEnabled,
     },
   })
 
@@ -174,8 +178,11 @@ export function LogSettingsSection({
   }, [])
 
   useEffect(() => {
-    form.reset({ LogConsumeEnabled: defaultEnabled })
-  }, [defaultEnabled, form])
+    form.reset({
+      LogConsumeEnabled: defaultEnabled,
+      'request_debug.raw_enabled': defaultRawEnabled,
+    })
+  }, [defaultEnabled, defaultRawEnabled, form])
 
   useEffect(() => {
     fetchServerLogInfo()
@@ -257,11 +264,19 @@ export function LogSettingsSection({
   }, [logCleanupActive, logCleanupTaskId, t])
 
   const onSubmit = async (values: LogSettingsFormValues) => {
-    if (values.LogConsumeEnabled === defaultEnabled) return
-    await updateOption.mutateAsync({
-      key: 'LogConsumeEnabled',
-      value: values.LogConsumeEnabled,
-    })
+    if (values.LogConsumeEnabled !== defaultEnabled) {
+      await updateOption.mutateAsync({
+        key: 'LogConsumeEnabled',
+        value: values.LogConsumeEnabled,
+      })
+    }
+
+    if (values['request_debug.raw_enabled'] !== defaultRawEnabled) {
+      await updateOption.mutateAsync({
+        key: 'request_debug.raw_enabled',
+        value: values['request_debug.raw_enabled'],
+      })
+    }
   }
 
   const handleRequestCleanLogs = () => {
@@ -354,6 +369,38 @@ export function LogSettingsSection({
                     {t(
                       'Track per-request consumption to power usage analytics. Keeping this on increases database writes.'
                     )}
+                  </FormDescription>
+                </SettingsSwitchContent>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </SettingsSwitchItem>
+            )}
+          />
+
+          <Alert variant='destructive'>
+            <AlertDescription>
+              {t(
+                'High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, as well as restricted request bodies, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.'
+              )}
+            </AlertDescription>
+          </Alert>
+
+          <FormField
+            control={form.control}
+            name='request_debug.raw_enabled'
+            render={({ field }) => (
+              <SettingsSwitchItem>
+                <SettingsSwitchContent>
+                  <FormLabel>
+                    {t('Enable raw sensitive request logging')}
+                  </FormLabel>
+                  <FormDescription>
+                    {t('Root administrators only. Disabled by default.')}
                   </FormDescription>
                 </SettingsSwitchContent>
                 <FormControl>

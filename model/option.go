@@ -183,6 +183,7 @@ func InitOptionMap() {
 	common.OptionMap[setting.UpstreamInterceptionOptionKey] = setting.DefaultUpstreamInterceptionConfigJSON()
 	_, _ = setting.SetUpstreamInterceptionConfig(common.OptionMap[setting.UpstreamInterceptionOptionKey])
 	common.OptionMap["AutoBanConfig"] = setting.AutoBanConfig2JsonString()
+	common.OptionMap["request_debug.raw_enabled"] = strconv.FormatBool(common.IsRequestDebugRawEnabled())
 
 	// 自动添加所有注册的模型配置
 	modelConfigs := config.GlobalConfig.ExportAllConfigs()
@@ -236,6 +237,15 @@ func validateOptionValue(key string, value string) error {
 }
 
 func normalizeOptionValue(key string, value string) (string, error) {
+	if key == "request_debug.raw_enabled" {
+		parsed, err := strconv.ParseBool(strings.TrimSpace(value))
+		// This safety switch is fail-closed: absent or malformed persisted values
+		// must never enable sensitive request diagnostics.
+		if err != nil {
+			return "false", nil
+		}
+		return strconv.FormatBool(parsed), nil
+	}
 	if key == "AutoBanConfig" {
 		return setting.ValidateAndNormalizeAutoBanConfigJSON(value)
 	}
@@ -335,6 +345,9 @@ func updateOptionMap(key string, value string) (err error) {
 	common.OptionMapRWMutex.Lock()
 	defer common.OptionMapRWMutex.Unlock()
 	common.OptionMap[key] = value
+	if key == "request_debug.raw_enabled" {
+		common.SetRequestDebugRawEnabled(value == "true")
+	}
 	if key == "LoginProxyURL" {
 		_, err = setting.SetLoginProxyURL(value)
 		if err != nil {

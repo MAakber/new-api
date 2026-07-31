@@ -5331,6 +5331,12 @@
     "Ban released": "已解除",
     "Ban expired": "已到期",
     "User IDs must be positive integers": "用户 ID 必须为正整数",
-    "Optional release reason": "可选的解封原因"
+    "Optional release reason": "可选的解封原因",
+    "Enable raw sensitive request logging": "启用敏感请求原文日志",
+    "Root administrators only. Disabled by default.": "仅 Root 管理员使用，默认关闭。",
+    "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, as well as restricted request bodies, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.": "高风险：启用后，Authorization、API Key、Cookie 等敏感请求头以及最多 32 KiB 的请求体原文会写入管理员日志。仅用于短期合规审查或排障；关闭后恢复脱敏。",
+    "Body Encoding": "请求体编码",
+    "Body Truncated": "请求体已截断",
+    "Request Body": "请求体"
   }
 }
