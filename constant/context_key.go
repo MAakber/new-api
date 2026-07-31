@@ -72,4 +72,8 @@ const (
 	// fallback in authHelper (finishAdminAudit) skips its record to avoid
 	// duplicate entries.
 	ContextKeyAuditLogged ContextKey = "audit_logged"
+
+	// ContextKeyRequestDebug stores sanitized upstream request/response metadata
+	// collected during relay execution and merged into the eventual log entry.
+	ContextKeyRequestDebug ContextKey = "request_debug"
 )

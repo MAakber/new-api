@@ -218,6 +218,19 @@ export const STATIC_I18N_KEYS = [
   // Channel Affinity section
   'Channel Affinity',
 
+  // Usage log request diagnostics
+  'Request Diagnostics',
+  'Inbound Request',
+  'Upstream Request',
+  'Remote Address',
+  'Method',
+  'Host',
+  'Body Bytes',
+  'Body Bytes Known',
+  'Protocol',
+  'Headers',
+  'Truncated',
+
   // Models constants
   'Exact Match',
   'Prefix Match',

@@ -12,6 +12,7 @@ import (
 	"time"
 
 	common2 "github.com/QuantumNous/new-api/common"
+	rootconstant "github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relay/constant"
@@ -510,6 +511,11 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 		}
 	}
 
+	// Keep only the final attempt in the gin context. Retry callers reuse this
+	// context, so this does not create extra persisted log entries.
+	common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
+		"upstream": common2.RequestDebugUpstream(req),
+	})
 	resp, err := client.Do(req)
 	if err != nil {
 		logger.LogError(c, "do request failed: "+err.Error())
@@ -518,6 +524,10 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 	if resp == nil {
 		return nil, errors.New("resp is nil")
 	}
+	common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
+		"upstream": common2.RequestDebugUpstream(req),
+		"response": common2.RequestDebugResponse(resp),
+	})
 	if common2.DebugEnabled {
 		policy := service.NormalizeHTTPTransportPolicy(info.ChannelSetting)
 		logger.LogDebug(c, fmt.Sprintf(

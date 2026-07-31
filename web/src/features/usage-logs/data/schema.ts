@@ -22,6 +22,33 @@ For commercial licensing, please contact support@quantumnous.com
  */
 import { z } from 'zod'
 
+const requestDebugHeadersSchema = z.record(
+  z.string(),
+  z.union([z.string(), z.array(z.string()), z.boolean()])
+)
+
+export const requestDebugEntrySchema = z.object({
+  headers: requestDebugHeadersSchema.optional(),
+  method: z.string().optional(),
+  url: z.string().optional(),
+  host: z.string().optional(),
+  remote_addr: z.string().optional(),
+  body_bytes: z.number().optional(),
+  body_bytes_known: z.boolean().optional(),
+  status: z.number().optional(),
+  protocol: z.string().optional(),
+  truncated: z.boolean().optional(),
+})
+
+export const requestDebugSchema = z.object({
+  inbound: requestDebugEntrySchema.optional(),
+  upstream: requestDebugEntrySchema.optional(),
+  response: requestDebugEntrySchema.optional(),
+})
+
+export type RequestDebugEntry = z.infer<typeof requestDebugEntrySchema>
+export type RequestDebug = z.infer<typeof requestDebugSchema>
+
 // Usage log schema
 export const usageLogSchema = z.object({
   id: z.number(),

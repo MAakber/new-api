@@ -63,7 +63,11 @@ import { formatBillingCurrencyFromUSD } from '@/lib/currency'
 import { formatLogQuota, formatTokens, formatUseTime } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
-import type { UsageLog } from '../../data/schema'
+import type {
+  RequestDebug,
+  RequestDebugEntry,
+  UsageLog,
+} from '../../data/schema'
 import {
   parseLogOther,
   getParamOverrideActionLabel,
@@ -161,6 +165,135 @@ function DetailSection(props: {
         {props.children}
       </div>
     </div>
+  )
+}
+
+function hasRequestDebugData(
+  requestDebugEntry: RequestDebugEntry | undefined
+): boolean {
+  if (!requestDebugEntry) return false
+  return (
+    requestDebugEntry.headers != null ||
+    requestDebugEntry.method != null ||
+    requestDebugEntry.url != null ||
+    requestDebugEntry.host != null ||
+    requestDebugEntry.remote_addr != null ||
+    requestDebugEntry.body_bytes != null ||
+    requestDebugEntry.body_bytes_known != null ||
+    requestDebugEntry.status != null ||
+    requestDebugEntry.protocol != null ||
+    requestDebugEntry.truncated != null
+  )
+}
+
+function RequestDiagnosticsGroup(props: {
+  label: string
+  requestDebugEntry: RequestDebugEntry | undefined
+}) {
+  const { t } = useTranslation()
+  const requestDebugEntry = props.requestDebugEntry
+  if (!hasRequestDebugData(requestDebugEntry) || !requestDebugEntry) return null
+
+  const headers = requestDebugEntry.headers
+  const headersJson =
+    headers && Object.keys(headers).length > 0
+      ? JSON.stringify(headers, null, 2)
+      : null
+
+  return (
+    <div className='bg-background/60 min-w-0 space-y-2 rounded-md border p-2.5'>
+      <p className='text-xs font-semibold'>{props.label}</p>
+      <div className='min-w-0 space-y-1.5'>
+        {requestDebugEntry.remote_addr && (
+          <DetailRow
+            label={t('Remote Address')}
+            value={requestDebugEntry.remote_addr}
+            mono
+          />
+        )}
+        {requestDebugEntry.url && (
+          <DetailRow label={t('URL')} value={requestDebugEntry.url} mono />
+        )}
+        {requestDebugEntry.method && (
+          <DetailRow
+            label={t('Method')}
+            value={requestDebugEntry.method}
+            mono
+          />
+        )}
+        {requestDebugEntry.host && (
+          <DetailRow label={t('Host')} value={requestDebugEntry.host} mono />
+        )}
+        {requestDebugEntry.body_bytes != null && (
+          <DetailRow
+            label={t('Body Bytes')}
+            value={requestDebugEntry.body_bytes.toLocaleString()}
+            mono
+          />
+        )}
+        {requestDebugEntry.body_bytes_known != null && (
+          <DetailRow
+            label={t('Body Bytes Known')}
+            value={requestDebugEntry.body_bytes_known ? t('Yes') : t('No')}
+          />
+        )}
+        {requestDebugEntry.status != null && (
+          <DetailRow
+            label={t('Status')}
+            value={String(requestDebugEntry.status)}
+            mono
+          />
+        )}
+        {requestDebugEntry.protocol && (
+          <DetailRow
+            label={t('Protocol')}
+            value={requestDebugEntry.protocol}
+            mono
+          />
+        )}
+        {requestDebugEntry.truncated != null && (
+          <DetailRow
+            label={t('Truncated')}
+            value={requestDebugEntry.truncated ? t('Yes') : t('No')}
+          />
+        )}
+      </div>
+      {headersJson && (
+        <div className='min-w-0 space-y-1.5'>
+          <p className='text-muted-foreground text-xs'>{t('Headers')}</p>
+          <pre className='bg-muted/50 max-h-40 max-w-full overflow-auto rounded border p-2 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap'>
+            {headersJson}
+          </pre>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function RequestDiagnostics(props: { requestDebug: RequestDebug }) {
+  const { t } = useTranslation()
+
+  return (
+    <DetailSection
+      icon={<Route className='size-3.5' aria-hidden='true' />}
+      iconTone='info'
+      label={t('Request Diagnostics')}
+    >
+      <div className='min-w-0 space-y-2'>
+        <RequestDiagnosticsGroup
+          label={t('Inbound Request')}
+          requestDebugEntry={props.requestDebug.inbound}
+        />
+        <RequestDiagnosticsGroup
+          label={t('Upstream Request')}
+          requestDebugEntry={props.requestDebug.upstream}
+        />
+        <RequestDiagnosticsGroup
+          label={t('Upstream Response')}
+          requestDebugEntry={props.requestDebug.response}
+        />
+      </div>
+    </DetailSection>
   )
 }
 
@@ -489,6 +622,7 @@ export function DetailsDialog(props: DetailsDialogProps) {
   const isTopup = props.log.type === 1
   const isManage = props.log.type === 3
   const isSubscription = other?.billing_source === 'subscription'
+  const isLogin = props.log.type === 7
   const isTieredBilling =
     isConsume &&
     !isViolation &&
@@ -496,9 +630,15 @@ export function DetailsDialog(props: DetailsDialogProps) {
     !!other?.expr_b64
   const hasAudioTokens = other?.ws || other?.audio
   const showTiming = isTimingLogType(props.log.type)
-  const showAdminIp =
-    !!props.log.ip && (showTiming || (props.isAdmin && isTopup))
+  const showAdminIp = props.isAdmin && !!props.log.ip && !isLogin
   const adminInfo = other?.admin_info
+  const requestDebug = adminInfo?.request_debug
+  const hasRequestDiagnostics =
+    props.isAdmin &&
+    !!requestDebug &&
+    (hasRequestDebugData(requestDebug.inbound) ||
+      hasRequestDebugData(requestDebug.upstream) ||
+      hasRequestDebugData(requestDebug.response))
   const topupAuditFields =
     isTopup && props.isAdmin && adminInfo
       ? ([
@@ -570,7 +710,6 @@ export function DetailsDialog(props: DetailsDialogProps) {
     isManage && props.isAdmin && (operationText != null || auditRoute != null)
 
   // Login audit (type=7); visible to the log owner, not admin-only.
-  const isLogin = props.log.type === 7
   const loginAuditFields = isLogin
     ? ([
         other?.login_method && {
@@ -630,7 +769,9 @@ export function DetailsDialog(props: DetailsDialogProps) {
       contentClassName={cn(
         'min-w-0 overflow-hidden',
         'max-sm:max-h-[calc(100dvh-1.5rem)] max-sm:w-[calc(100vw-1.5rem)] max-sm:max-w-[calc(100vw-1.5rem)] max-sm:p-4',
-        isTieredBilling ? 'sm:max-w-4xl lg:max-w-5xl' : 'sm:max-w-lg'
+        isTieredBilling || hasRequestDiagnostics
+          ? 'sm:max-w-4xl lg:max-w-5xl'
+          : 'sm:max-w-lg'
       )}
       headerClassName='max-sm:gap-1'
       titleClassName='flex items-center gap-2 text-base'
@@ -778,6 +919,11 @@ export function DetailsDialog(props: DetailsDialogProps) {
               </div>
             </div>
           </DetailSection>
+        )}
+
+        {/* Diagnostics are emitted already redacted by the backend. */}
+        {hasRequestDiagnostics && requestDebug && (
+          <RequestDiagnostics requestDebug={requestDebug} />
         )}
 
         {/* Quota saturation marker (admin only) */}
