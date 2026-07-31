@@ -5334,9 +5334,16 @@
     "Optional release reason": "可选的解封原因",
     "Enable raw sensitive request logging": "启用敏感请求原文日志",
     "Root administrators only. Disabled by default.": "仅 Root 管理员使用，默认关闭。",
-    "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, as well as restricted request bodies, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.": "高风险：启用后，Authorization、API Key、Cookie 等敏感请求头以及最多 32 KiB 的请求体原文会写入管理员日志。仅用于短期合规审查或排障；关闭后恢复脱敏。",
+    "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, as well as restricted request bodies, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.": "高风险：启用后会暴露敏感请求头，并将最多 4 MiB 的请求体保存到独立诊断存储，仅供 Root 管理员按需查看。仅用于短期排障，完成后请关闭。",
     "Body Encoding": "请求体编码",
     "Body Truncated": "请求体已截断",
-    "Request Body": "请求体"
+    "Request Body": "请求体",
+    "Body available": "请求体可用",
+    "Stored Bytes": "存储字节数",
+    "Content Type": "内容类型",
+    "Compression": "压缩方式",
+    "Load full request body": "加载完整请求体",
+    "Full request body": "完整请求体",
+    "Request body not available": "请求体不可用"
   }
 }

@@ -38,7 +38,9 @@ import {
 import { getUserAvatarFallback, getUserAvatarStyle } from '@/lib/avatar'
 import { formatBillingCurrencyFromUSD } from '@/lib/currency'
 import { formatLogQuota, formatTimestampToDate } from '@/lib/format'
+import { ROLE } from '@/lib/roles'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/stores/auth-store'
 
 import { LOG_TYPE_ALL_VALUE } from '../../constants'
 import type { UsageLog } from '../../data/schema'
@@ -284,6 +286,9 @@ function buildTypeDetailSegments(
 }
 
 export function useCommonLogsColumns(isAdmin: boolean): ColumnDef<UsageLog>[] {
+  const isRoot = useAuthStore(
+    (state) => state.auth.user?.role === ROLE.SUPER_ADMIN
+  )
   const { t } = useTranslation()
   const columns: ColumnDef<UsageLog>[] = [
     {
@@ -778,6 +783,7 @@ export function useCommonLogsColumns(isAdmin: boolean): ColumnDef<UsageLog>[] {
             <DetailsDialog
               log={log}
               isAdmin={isAdmin}
+              isRoot={isRoot}
               open={dialogOpen}
               onOpenChange={setDialogOpen}
             />

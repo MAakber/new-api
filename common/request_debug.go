@@ -166,6 +166,16 @@ func RequestDebugBody(data []byte, contentType string, truncated bool) map[strin
 		data = data[:RequestDebugBodyLimit]
 		truncated = true
 	}
+	return RequestDebugBodyRepresentation(data, contentType, truncated)
+}
+
+// RequestDebugBodyRepresentation formats an already bounded body without
+// applying the preview limit. Full bodies are only returned by the root-only
+// on-demand diagnostics endpoint.
+func RequestDebugBodyRepresentation(data []byte, contentType string, truncated bool) map[string]interface{} {
+	if truncated && isTextualRequestDebugContentType(contentType) {
+		data = trimIncompleteUTF8Tail(data)
+	}
 	result := map[string]interface{}{"body_truncated": truncated}
 	if isDisplayableRequestDebugBody(data, contentType) {
 		result["body"] = string(data)
@@ -176,12 +186,74 @@ func RequestDebugBody(data []byte, contentType string, truncated bool) map[strin
 	return result
 }
 
+func trimIncompleteUTF8Tail(data []byte) []byte {
+	if utf8.Valid(data) || len(data) == 0 {
+		return data
+	}
+
+	for trim := 1; trim < utf8.UTFMax && trim <= len(data); trim++ {
+		prefixEnd := len(data) - trim
+		if !utf8.Valid(data[:prefixEnd]) || !isUTF8RunePrefix(data[prefixEnd:]) {
+			continue
+		}
+		return data[:prefixEnd]
+	}
+	return data
+}
+
+func isUTF8RunePrefix(data []byte) bool {
+	if len(data) == 0 || len(data) >= utf8.UTFMax {
+		return false
+	}
+	width := utf8PartialWidth(data[0])
+	if width <= 1 || len(data) >= width {
+		return false
+	}
+	for _, b := range data[1:] {
+		if b&0xc0 != 0x80 {
+			return false
+		}
+	}
+
+	completed := make([]byte, width)
+	copy(completed, data)
+	for i := len(data); i < width; i++ {
+		completed[i] = 0x80
+	}
+	if len(data) == 1 {
+		switch completed[0] {
+		case 0xe0:
+			completed[1] = 0xa0
+		case 0xf0:
+			completed[1] = 0x90
+		}
+	}
+	return utf8.Valid(completed)
+}
+
+func utf8PartialWidth(first byte) int {
+	switch {
+	case first >= 0xc2 && first <= 0xdf:
+		return 2
+	case first >= 0xe0 && first <= 0xef:
+		return 3
+	case first >= 0xf0 && first <= 0xf4:
+		return 4
+	default:
+		return 1
+	}
+}
+
+func isTextualRequestDebugContentType(contentType string) bool {
+	mediaType, _, err := mime.ParseMediaType(contentType)
+	return err == nil && (strings.Contains(mediaType, "json") || strings.HasPrefix(mediaType, "text/") || mediaType == "application/x-www-form-urlencoded")
+}
+
 func isDisplayableRequestDebugBody(data []byte, contentType string) bool {
 	if !utf8.Valid(data) {
 		return false
 	}
-	mediaType, _, err := mime.ParseMediaType(contentType)
-	if err == nil && (strings.Contains(mediaType, "json") || strings.HasPrefix(mediaType, "text/") || mediaType == "application/x-www-form-urlencoded") {
+	if isTextualRequestDebugContentType(contentType) {
 		return true
 	}
 	for _, r := range string(data) {

@@ -49,7 +49,10 @@ import {
   UserCog,
   Info,
   LogIn,
+  Eye,
+  Loader2,
 } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Dialog } from '@/components/dialog'
@@ -63,6 +66,7 @@ import { formatBillingCurrencyFromUSD } from '@/lib/currency'
 import { formatLogQuota, formatTokens, formatUseTime } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
+import { getRequestDebugBody } from '../../request-debug-api'
 import type {
   RequestDebug,
   RequestDebugEntry,
@@ -181,8 +185,13 @@ function hasRequestDebugData(
     requestDebugEntry.body_bytes != null ||
     requestDebugEntry.body_bytes_known != null ||
     requestDebugEntry.body != null ||
+    requestDebugEntry.body_available != null ||
+    requestDebugEntry.body_ref != null ||
     requestDebugEntry.body_encoding != null ||
     requestDebugEntry.body_truncated != null ||
+    requestDebugEntry.stored_bytes != null ||
+    requestDebugEntry.content_type != null ||
+    requestDebugEntry.compression != null ||
     requestDebugEntry.status != null ||
     requestDebugEntry.protocol != null ||
     requestDebugEntry.truncated != null
@@ -192,9 +201,14 @@ function hasRequestDebugData(
 function RequestDiagnosticsGroup(props: {
   label: string
   requestDebugEntry: RequestDebugEntry | undefined
+  requestId?: string
+  isRoot?: boolean
 }) {
   const { t } = useTranslation()
   const requestDebugEntry = props.requestDebugEntry
+  const [fullBody, setFullBody] = useState<string | null>(null)
+  const [fullBodyLoading, setFullBodyLoading] = useState(false)
+  const [fullBodyError, setFullBodyError] = useState<string | null>(null)
   if (!hasRequestDebugData(requestDebugEntry) || !requestDebugEntry) return null
 
   const headers = requestDebugEntry.headers
@@ -202,6 +216,32 @@ function RequestDiagnosticsGroup(props: {
     headers && Object.keys(headers).length > 0
       ? JSON.stringify(headers, null, 2)
       : null
+  const canLoadFullBody =
+    props.isRoot === true &&
+    requestDebugEntry.body_available === true &&
+    !!requestDebugEntry.body_ref
+
+  const loadFullBody = async () => {
+    const bodyRequestId = requestDebugEntry.body_ref || props.requestId
+    if (!bodyRequestId || fullBodyLoading) {
+      return
+    }
+    setFullBodyLoading(true)
+    setFullBodyError(null)
+    try {
+      const response = await getRequestDebugBody(bodyRequestId)
+      if (!response.success || response.data?.body == null) {
+        throw new Error(response.message || t('Request body not available'))
+      }
+      setFullBody(response.data.body)
+    } catch (error) {
+      setFullBodyError(
+        error instanceof Error ? error.message : t('Request body not available')
+      )
+    } finally {
+      setFullBodyLoading(false)
+    }
+  }
 
   return (
     <div className='bg-background/60 min-w-0 space-y-2 rounded-md border p-2.5'>
@@ -253,6 +293,27 @@ function RequestDiagnosticsGroup(props: {
             value={requestDebugEntry.body_truncated ? t('Yes') : t('No')}
           />
         )}
+        {requestDebugEntry.stored_bytes != null && (
+          <DetailRow
+            label={t('Stored Bytes')}
+            value={requestDebugEntry.stored_bytes.toLocaleString()}
+            mono
+          />
+        )}
+        {requestDebugEntry.content_type && (
+          <DetailRow
+            label={t('Content Type')}
+            value={requestDebugEntry.content_type}
+            mono
+          />
+        )}
+        {requestDebugEntry.compression && (
+          <DetailRow
+            label={t('Compression')}
+            value={requestDebugEntry.compression}
+            mono
+          />
+        )}
         {requestDebugEntry.status != null && (
           <DetailRow
             label={t('Status')}
@@ -290,11 +351,44 @@ function RequestDiagnosticsGroup(props: {
           </pre>
         </div>
       )}
+      {canLoadFullBody && fullBody == null && (
+        <div className='flex flex-wrap items-center gap-2'>
+          <Button
+            type='button'
+            size='sm'
+            variant='outline'
+            onClick={loadFullBody}
+            disabled={fullBodyLoading}
+          >
+            {fullBodyLoading ? (
+              <Loader2 className='size-4 animate-spin' />
+            ) : (
+              <Eye className='size-4' />
+            )}
+            {t('Load full request body')}
+          </Button>
+          {fullBodyError && (
+            <span className='text-destructive text-xs'>{fullBodyError}</span>
+          )}
+        </div>
+      )}
+      {fullBody != null && (
+        <div className='min-w-0 space-y-1.5'>
+          <p className='text-muted-foreground text-xs'>{t('Full request body')}</p>
+          <pre className='bg-muted/50 max-h-[60vh] max-w-full overflow-auto rounded border p-2 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap'>
+            {fullBody}
+          </pre>
+        </div>
+      )}
     </div>
   )
 }
 
-function RequestDiagnostics(props: { requestDebug: RequestDebug }) {
+function RequestDiagnostics(props: {
+  requestDebug: RequestDebug
+  requestId?: string
+  isRoot?: boolean
+}) {
   const { t } = useTranslation()
 
   return (
@@ -307,14 +401,20 @@ function RequestDiagnostics(props: { requestDebug: RequestDebug }) {
         <RequestDiagnosticsGroup
           label={t('Inbound Request')}
           requestDebugEntry={props.requestDebug.inbound}
+          requestId={props.requestId}
+          isRoot={props.isRoot}
         />
         <RequestDiagnosticsGroup
           label={t('Upstream Request')}
           requestDebugEntry={props.requestDebug.upstream}
+          requestId={props.requestId}
+          isRoot={props.isRoot}
         />
         <RequestDiagnosticsGroup
           label={t('Upstream Response')}
           requestDebugEntry={props.requestDebug.response}
+          requestId={props.requestId}
+          isRoot={props.isRoot}
         />
       </div>
     </DetailSection>
@@ -629,6 +729,7 @@ function TokenBreakdown(props: { log: UsageLog; other: LogOtherData }) {
 interface DetailsDialogProps {
   log: UsageLog
   isAdmin: boolean
+  isRoot: boolean
   open: boolean
   onOpenChange: (open: boolean) => void
 }
@@ -947,7 +1048,11 @@ export function DetailsDialog(props: DetailsDialogProps) {
 
         {/* Diagnostics are emitted already redacted by the backend. */}
         {hasRequestDiagnostics && requestDebug && (
-          <RequestDiagnostics requestDebug={requestDebug} />
+          <RequestDiagnostics
+            requestDebug={requestDebug}
+            requestId={props.log.request_id}
+            isRoot={props.isRoot}
+          />
         )}
 
         {/* Quota saturation marker (admin only) */}

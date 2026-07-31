@@ -1,8 +1,10 @@
 package controller
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
@@ -93,6 +95,27 @@ func GetLogByKey(c *gin.Context) {
 		"message": "",
 		"data":    logs,
 	})
+}
+
+func GetRequestDebugBody(c *gin.Context) {
+	if !common.IsRequestDebugRawEnabled() {
+		common.ApiError(c, errors.New("raw request diagnostics are disabled"))
+		return
+	}
+	requestID := strings.TrimSpace(c.Param("request_id"))
+	stored, err := model.GetRequestDebugBody(c.Request.Context(), requestID)
+	if err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	result := common.RequestDebugBodyRepresentation(stored.Data, stored.ContentType, stored.BodyTruncated)
+	result["body_available"] = true
+	result["body_ref"] = requestID
+	result["body_bytes"] = stored.BodyBytes
+	result["stored_bytes"] = stored.StoredBytes
+	result["content_type"] = stored.ContentType
+	result["compression"] = stored.Compression
+	common.ApiSuccess(c, result)
 }
 
 func GetLogsStat(c *gin.Context) {

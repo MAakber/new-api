@@ -108,7 +108,8 @@ type LogCleanupState struct {
 }
 
 type LogCleanupResult struct {
-	DeletedCount int64 `json:"deleted_count"`
+	DeletedCount            int64 `json:"deleted_count"`
+	DeletedRequestBodyCount int64 `json:"deleted_request_body_count"`
 }
 
 var (
@@ -437,7 +438,23 @@ func runLogCleanupTask(ctx context.Context, task *model.SystemTask, runnerID str
 		return
 	}
 
-	result := LogCleanupResult{DeletedCount: state.Processed}
+	var deletedRequestBodyCount int64
+	for {
+		deleted, err := model.DeleteOldRequestDebugBodyBatch(ctx, payload.TargetTimestamp, payload.BatchSize)
+		if err != nil {
+			failSystemTask(task, runnerID, err)
+			return
+		}
+		deletedRequestBodyCount += deleted
+		if deleted == 0 {
+			break
+		}
+	}
+
+	result := LogCleanupResult{
+		DeletedCount:            state.Processed,
+		DeletedRequestBodyCount: deletedRequestBodyCount,
+	}
 	if err := model.FinishSystemTask(task.TaskID, runnerID, model.SystemTaskStatusSucceeded, result, ""); err != nil {
 		logSystemTaskLockError(ctx, task, err)
 	}

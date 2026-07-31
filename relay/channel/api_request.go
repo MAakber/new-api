@@ -15,6 +15,7 @@ import (
 	common2 "github.com/QuantumNous/new-api/common"
 	rootconstant "github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/logger"
+	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relay/constant"
 	"github.com/QuantumNous/new-api/relay/helper"
@@ -33,13 +34,17 @@ import (
 // streaming request semantics.
 type requestDebugCaptureReadCloser struct {
 	io.ReadCloser
-	buffer    bytes.Buffer
-	truncated bool
+	buffer        bytes.Buffer
+	fullBody      bytes.Buffer
+	totalBytes    int64
+	truncated     bool
+	fullTruncated bool
 }
 
 func (r *requestDebugCaptureReadCloser) Read(p []byte) (int, error) {
 	n, err := r.ReadCloser.Read(p)
 	if n > 0 {
+		r.totalBytes += int64(n)
 		remaining := common2.RequestDebugBodyLimit - r.buffer.Len()
 		if remaining > 0 {
 			toWrite := n
@@ -52,12 +57,32 @@ func (r *requestDebugCaptureReadCloser) Read(p []byte) (int, error) {
 		if n > remaining {
 			r.truncated = true
 		}
+		fullRemaining := model.RequestDebugBodyMaxBytes - int64(r.fullBody.Len())
+		if fullRemaining > 0 {
+			toWrite := int64(n)
+			if toWrite > fullRemaining {
+				toWrite = fullRemaining
+				r.fullTruncated = true
+			}
+			_, _ = r.fullBody.Write(p[:toWrite])
+		}
+		if int64(n) > fullRemaining {
+			r.fullTruncated = true
+		}
 	}
 	return n, err
 }
 
 func (r *requestDebugCaptureReadCloser) debugBody(contentType string, contentLength int64) map[string]interface{} {
 	return common2.RequestDebugBody(r.buffer.Bytes(), contentType, r.truncated || contentLength > common2.RequestDebugBodyLimit)
+}
+
+func (r *requestDebugCaptureReadCloser) storeBody(ctx context.Context, requestID, contentType string, contentLength int64, readErr error) error {
+	if r == nil {
+		return nil
+	}
+	truncated := r.fullTruncated || contentLength > model.RequestDebugBodyMaxBytes || readErr != nil
+	return model.StoreRequestDebugBody(ctx, requestID, contentType, r.fullBody.Bytes(), r.totalBytes, truncated)
 }
 
 // applyUpstreamContentLength populates req.ContentLength when the upstream
@@ -558,11 +583,28 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 		"upstream": requestDebugUpstream(req, bodyCapture),
 	})
 	resp, err := client.Do(req)
+	bodyStored := false
+	if bodyCapture != nil {
+		requestID := c.GetString(common2.RequestIdKey)
+		if requestID != "" {
+			if storeErr := bodyCapture.storeBody(c.Request.Context(), requestID, req.Header.Get("Content-Type"), req.ContentLength, err); storeErr != nil {
+				logger.LogWarn(c, "failed to store full request debug body: "+storeErr.Error())
+			} else {
+				bodyStored = true
+			}
+		}
+	}
+	requestDebug := func() map[string]interface{} {
+		if bodyStored {
+			return requestDebugUpstreamReference(req, bodyCapture, c.GetString(common2.RequestIdKey))
+		}
+		return requestDebugUpstream(req, bodyCapture)
+	}
 	if err != nil {
 		// Preserve any bytes consumed before a transport failure as well. The
 		// error log is often the diagnostic record operators need most.
 		common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
-			"upstream": requestDebugUpstream(req, bodyCapture),
+			"upstream": requestDebug(),
 		})
 		logger.LogError(c, "do request failed: "+err.Error())
 		return nil, types.NewError(err, types.ErrorCodeDoRequestFailed, types.ErrOptionWithHideErrMsg("upstream error: do request failed"))
@@ -571,7 +613,7 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 		return nil, errors.New("resp is nil")
 	}
 	common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
-		"upstream": requestDebugUpstream(req, bodyCapture),
+		"upstream": requestDebug(),
 		"response": common2.RequestDebugResponse(resp),
 	})
 	if common2.DebugEnabled {
@@ -602,6 +644,18 @@ func requestDebugUpstream(req *http.Request, bodyCapture *requestDebugCaptureRea
 			debug[key] = value
 		}
 	}
+	return debug
+}
+
+func requestDebugUpstreamReference(req *http.Request, bodyCapture *requestDebugCaptureReadCloser, requestID string) map[string]interface{} {
+	debug := requestDebugUpstream(req, bodyCapture)
+	if debug == nil || bodyCapture == nil {
+		return debug
+	}
+	delete(debug, "body")
+	debug["body_available"] = true
+	debug["body_ref"] = requestID
+	debug["body_truncated"] = bodyCapture.fullTruncated || (req.ContentLength > model.RequestDebugBodyMaxBytes) || (req.ContentLength >= 0 && bodyCapture.totalBytes < req.ContentLength)
 	return debug
 }
 

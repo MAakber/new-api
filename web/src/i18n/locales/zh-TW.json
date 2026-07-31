@@ -5318,6 +5318,18 @@
     "Ban released": "Ban released",
     "Ban expired": "Ban expired",
     "User IDs must be positive integers": "User IDs must be positive integers",
-    "Optional release reason": "Optional release reason"
+    "Optional release reason": "Optional release reason",
+    "Enable raw sensitive request logging": "啟用敏感請求原文記錄",
+    "Root administrators only. Disabled by default.": "僅限 Root 管理員使用，預設關閉。",
+    "Body Encoding": "請求體編碼",
+    "Body Truncated": "請求體已截斷",
+    "Request Body": "請求體",
+    "Body available": "請求體可用",
+    "Stored Bytes": "儲存位元組數",
+    "Content Type": "內容類型",
+    "Compression": "壓縮方式",
+    "Load full request body": "載入完整請求體",
+    "Full request body": "完整請求體",
+    "Request body not available": "請求體不可用"
   }
 }

@@ -5334,9 +5334,16 @@
     "Optional release reason": "Optional release reason",
     "Enable raw sensitive request logging": "Enable raw sensitive request logging",
     "Root administrators only. Disabled by default.": "Root administrators only. Disabled by default.",
-    "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, as well as restricted request bodies, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.": "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, plus request bodies up to 32 KiB, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.",
+    "High risk: enabling raw sensitive request logging writes Authorization, API Key, Cookie, and other sensitive request headers, as well as restricted request bodies, to administrator logs. Use only for short-term compliance review or troubleshooting. Disable it to restore redaction.": "High risk: enabling raw sensitive request logging exposes sensitive headers and stores request bodies up to 4 MiB in separate diagnostic storage for root-only on-demand review. Use only for short-term troubleshooting and disable it afterward.",
     "Body Encoding": "Body Encoding",
     "Body Truncated": "Body Truncated",
-    "Request Body": "Request Body"
+    "Request Body": "Request Body",
+    "Body available": "Body available",
+    "Stored Bytes": "Stored Bytes",
+    "Content Type": "Content Type",
+    "Compression": "Compression",
+    "Load full request body": "Load full request body",
+    "Full request body": "Full request body",
+    "Request body not available": "Request body not available"
   }
 }
