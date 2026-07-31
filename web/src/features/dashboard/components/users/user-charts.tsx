@@ -38,6 +38,7 @@ import {
 } from '@/features/dashboard/lib'
 import type {
   ProcessedUserChartData,
+  UserChartMetric,
   UserChartsFilters,
 } from '@/features/dashboard/types'
 import { getRollingDateRange, type TimeGranularity } from '@/lib/time'
@@ -49,17 +50,20 @@ let themeManagerPromise: Promise<
 
 const USER_CHARTS: {
   value: string
-  labelKey: string
+  quotaLabelKey: string
+  tokensLabelKey: string
   specKey: keyof ProcessedUserChartData
 }[] = [
   {
     value: 'rank',
-    labelKey: 'User Consumption Ranking',
+    quotaLabelKey: 'User Consumption Ranking',
+    tokensLabelKey: 'User Token Usage Ranking',
     specKey: 'spec_user_rank',
   },
   {
     value: 'trend',
-    labelKey: 'User Consumption Trend',
+    quotaLabelKey: 'User Consumption Trend',
+    tokensLabelKey: 'User Token Usage Trend',
     specKey: 'spec_user_trend',
   },
 ]
@@ -82,6 +86,7 @@ export function UserCharts(props: UserChartsProps) {
   // The selection is owned by the dashboard parent so it persists across
   // sub-section switches; the rolling window is derived from the chosen range.
   const timeGranularity = props.filters.timeGranularity
+  const metric = props.filters.metric
   const selectedRange = props.filters.selectedRange
   const topUserLimit = props.filters.topUserLimit
   const onFiltersChange = props.onFiltersChange
@@ -120,6 +125,13 @@ export function UserCharts(props: UserChartsProps) {
     [onFiltersChange, props.filters]
   )
 
+  const handleMetricChange = useCallback(
+    (metric: UserChartMetric) => {
+      onFiltersChange({ ...props.filters, metric })
+    },
+    [onFiltersChange, props.filters]
+  )
+
   useEffect(() => {
     const updateTheme = async () => {
       setThemeReady(false)
@@ -149,9 +161,10 @@ export function UserCharts(props: UserChartsProps) {
         isLoading ? [] : (userData ?? []),
         timeGranularity,
         t,
-        topUserLimit
+        topUserLimit,
+        metric
       ),
-    [userData, isLoading, timeGranularity, t, topUserLimit]
+    [userData, isLoading, timeGranularity, t, topUserLimit, metric]
   )
 
   return (
@@ -172,6 +185,23 @@ export function UserCharts(props: UserChartsProps) {
                 {t(preset.label)}
               </TabsTrigger>
             ))}
+          </TabsList>
+        </Tabs>
+
+        <Tabs
+          value={metric}
+          onValueChange={(value) =>
+            handleMetricChange(value as UserChartMetric)
+          }
+          className='shrink-0'
+        >
+          <TabsList>
+            <TabsTrigger value='quota' className='px-2.5 text-xs'>
+              {t('Quota')}
+            </TabsTrigger>
+            <TabsTrigger value='tokens' className='px-2.5 text-xs'>
+              {t('Tokens')}
+            </TabsTrigger>
           </TabsList>
         </Tabs>
 
@@ -234,7 +264,13 @@ export function UserCharts(props: UserChartsProps) {
                 <IconBadge tone='info' size='sm'>
                   <Users />
                 </IconBadge>
-                <div className='text-sm font-semibold'>{t(chart.labelKey)}</div>
+                <div className='text-sm font-semibold'>
+                  {t(
+                    metric === 'tokens'
+                      ? chart.tokensLabelKey
+                      : chart.quotaLabelKey
+                  )}
+                </div>
               </div>
 
               <div className='h-[300px] p-1.5 sm:h-96 sm:p-2'>
@@ -244,7 +280,7 @@ export function UserCharts(props: UserChartsProps) {
                   themeReady &&
                   spec && (
                     <VChart
-                      key={`user-${chart.value}-${topUserLimit}-${resolvedTheme}`}
+                      key={`user-${chart.value}-${metric}-${topUserLimit}-${resolvedTheme}`}
                       spec={{
                         ...spec,
                         theme: resolvedTheme === 'dark' ? 'dark' : 'light',

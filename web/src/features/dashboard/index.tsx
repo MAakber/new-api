@@ -210,6 +210,7 @@ export function Dashboard() {
     () => {
       const granularity = getSavedGranularity()
       return {
+        metric: 'quota',
         timeGranularity: granularity,
         selectedRange: getDefaultDays(granularity),
         topUserLimit: 10,

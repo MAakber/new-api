@@ -195,6 +195,8 @@ export type ConsumptionDistributionChartType = 'bar' | 'area'
 
 export type ModelAnalyticsChartTab = 'trend' | 'proportion' | 'top'
 
+export type UserChartMetric = 'quota' | 'tokens'
+
 export interface DashboardChartPreferences {
   consumptionDistributionChart: ConsumptionDistributionChartType
   modelAnalyticsChart: ModelAnalyticsChartTab
@@ -205,6 +207,7 @@ export interface DashboardChartPreferences {
 // User analytics selections are held by the dashboard parent so they survive
 // switching between dashboard sub-sections, matching the model/flow filters.
 export interface UserChartsFilters {
+  metric: UserChartMetric
   timeGranularity: TimeGranularity
   selectedRange: number
   topUserLimit: number
