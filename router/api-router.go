@@ -199,6 +199,7 @@ func SetApiRouter(router *gin.Engine) {
 		{
 			optionRoute.GET("/", controller.GetOptions)
 			optionRoute.PUT("/", controller.UpdateOption)
+			optionRoute.PATCH("/pricing/patch", controller.PatchPricingOptions)
 			optionRoute.POST("/payment_compliance", controller.ConfirmPaymentCompliance)
 			optionRoute.GET("/channel_affinity_cache", controller.GetChannelAffinityCacheStats)
 			optionRoute.DELETE("/channel_affinity_cache", controller.ClearChannelAffinityCache)
@@ -237,6 +238,14 @@ func SetApiRouter(router *gin.Engine) {
 			ratioSyncRoute.GET("/channels", controller.GetSyncableChannels)
 			ratioSyncRoute.POST("/fetch", controller.FetchUpstreamRatios)
 		}
+		autoPriceSyncRoute := apiRouter.Group("/auto-sync/pricing")
+		autoPriceSyncRoute.Use(middleware.RootAuth())
+		{
+			autoPriceSyncRoute.GET("", controller.GetAutoPriceSyncStatus)
+			autoPriceSyncRoute.PATCH("", controller.UpdateAutoPriceSyncConfig)
+		}
+		apiRouter.GET("/auto-sync/model-metadata", middleware.AdminAuth(), controller.GetAutoModelSyncStatus)
+		apiRouter.PATCH("/auto-sync/model-metadata", middleware.RootAuth(), controller.UpdateAutoModelSyncConfig)
 		registerChannelRoutes(apiRouter)
 		registerAuthzRoutes(apiRouter)
 		tokenRoute := apiRouter.Group("/token")

@@ -17,6 +17,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { api } from '@/lib/api'
+import type {
+  AutoModelSyncStatusView,
+  AutoSyncResponse,
+} from '@/types/auto-sync'
 
 import type {
   GetModelsParams,
@@ -225,6 +229,27 @@ export async function applyUpstreamOverwrite(params: {
   source?: SyncSource
 }): Promise<SyncUpstreamResponse> {
   return syncUpstream(params)
+}
+
+export async function getAutoModelSyncStatus() {
+  const res = await api.get<AutoSyncResponse<AutoModelSyncStatusView>>(
+    '/api/auto-sync/model-metadata'
+  )
+  if (!res.data.success || !res.data.data) {
+    throw new Error(res.data.message || 'Failed to load automatic model sync')
+  }
+  return res.data
+}
+
+export async function updateAutoModelSyncConfig(enabled: boolean) {
+  const res = await api.patch<AutoSyncResponse<AutoModelSyncStatusView>>(
+    '/api/auto-sync/model-metadata',
+    { enabled }
+  )
+  if (!res.data.success || !res.data.data) {
+    throw new Error(res.data.message || 'Failed to update automatic model sync')
+  }
+  return res.data
 }
 
 // ============================================================================

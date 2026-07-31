@@ -145,6 +145,9 @@ func ClaudeHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *typ
 		}
 
 		usage, newApiErr := chatCompletionsViaResponses(c, info, adaptor, openAIRequest)
+		if interceptionErr := service.FinishUpstreamInterception(c); interceptionErr != nil {
+			return interceptionErr
+		}
 		if newApiErr != nil {
 			return newApiErr
 		}
@@ -216,6 +219,9 @@ func ClaudeHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *typ
 	}
 
 	usage, newAPIError := adaptor.DoResponse(c, httpResp, info)
+	if interceptionErr := service.FinishUpstreamInterception(c); interceptionErr != nil {
+		return interceptionErr
+	}
 	if newAPIError != nil {
 		// reset status code 重置状态码
 		service.ResetStatusCode(newAPIError, statusCodeMappingStr)

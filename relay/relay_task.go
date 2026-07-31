@@ -82,10 +82,13 @@ func ResolveOriginTask(c *gin.Context, info *relaycommon.RelayInfo) *dto.TaskErr
 	// 锁定到原始任务的渠道（重试时复用同一渠道，轮换 key）
 	ch, err := model.GetChannelById(originTask.ChannelId, true)
 	if err != nil {
-		return service.TaskErrorWrapperLocal(err, "channel_not_found", http.StatusBadRequest)
+		return taskChannelUnavailableError()
 	}
 	if ch.Status != common.ChannelStatusEnabled {
 		return service.TaskErrorWrapperLocal(errors.New("the channel of the origin task is disabled"), "task_channel_disable", http.StatusBadRequest)
+	}
+	if err := service.AuthorizeChannelForUserRequest(ch); err != nil {
+		return taskChannelUnavailableError()
 	}
 	info.LockedChannel = ch
 
@@ -388,7 +391,10 @@ func videoFetchByIDRespBodyBuilder(c *gin.Context) (respBody []byte, taskResp *d
 	isOpenAIVideoAPI := strings.HasPrefix(c.Request.RequestURI, "/v1/videos/")
 
 	// Gemini/Vertex 支持实时查询：用户 fetch 时直接从上游拉取最新状态
-	if realtimeResp := tryRealtimeFetch(originTask, isOpenAIVideoAPI); len(realtimeResp) > 0 {
+	if realtimeResp, realtimeErr := tryRealtimeFetch(originTask, isOpenAIVideoAPI); realtimeErr != nil {
+		taskResp = realtimeErr
+		return
+	} else if len(realtimeResp) > 0 {
 		respBody = realtimeResp
 		return
 	}
@@ -427,13 +433,20 @@ func videoFetchByIDRespBodyBuilder(c *gin.Context) (respBody []byte, taskResp *d
 // tryRealtimeFetch 尝试从上游实时拉取 Gemini/Vertex 任务状态。
 // 仅当渠道类型为 Gemini 或 Vertex 时触发；其他渠道或出错时返回 nil。
 // 当非 OpenAI Video API 时，还会构建自定义格式的响应体。
-func tryRealtimeFetch(task *model.Task, isOpenAIVideoAPI bool) []byte {
+func taskChannelUnavailableError() *dto.TaskError {
+	return service.TaskErrorWrapperLocal(service.ErrChannelRequestGuardRejected, "channel_unavailable", http.StatusServiceUnavailable)
+}
+
+func tryRealtimeFetch(task *model.Task, isOpenAIVideoAPI bool) ([]byte, *dto.TaskError) {
 	channelModel, err := model.GetChannelById(task.ChannelId, true)
 	if err != nil {
-		return nil
+		return nil, taskChannelUnavailableError()
 	}
 	if channelModel.Type != constant.ChannelTypeVertexAi && channelModel.Type != constant.ChannelTypeGemini {
-		return nil
+		return nil, nil
+	}
+	if err := service.AuthorizeChannelForUserRequest(channelModel); err != nil {
+		return nil, taskChannelUnavailableError()
 	}
 
 	baseURL := constant.ChannelBaseURLs[channelModel.Type]
@@ -443,7 +456,7 @@ func tryRealtimeFetch(task *model.Task, isOpenAIVideoAPI bool) []byte {
 	proxy := channelModel.GetSetting().Proxy
 	adaptor := GetTaskAdaptor(constant.TaskPlatform(strconv.Itoa(channelModel.Type)))
 	if adaptor == nil {
-		return nil
+		return nil, nil
 	}
 
 	resp, err := adaptor.FetchTask(baseURL, channelModel.Key, map[string]any{
@@ -451,17 +464,17 @@ func tryRealtimeFetch(task *model.Task, isOpenAIVideoAPI bool) []byte {
 		"action":  task.Action,
 	}, proxy)
 	if err != nil || resp == nil {
-		return nil
+		return nil, nil
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil
+		return nil, nil
 	}
 
 	ti, err := adaptor.ParseTaskResult(body)
 	if err != nil || ti == nil {
-		return nil
+		return nil, nil
 	}
 
 	snap := task.Snapshot()
@@ -488,7 +501,7 @@ func tryRealtimeFetch(task *model.Task, isOpenAIVideoAPI bool) []byte {
 
 	// OpenAI Video API 由调用者的 ConvertToOpenAIVideo 分支处理
 	if isOpenAIVideoAPI {
-		return nil
+		return nil, nil
 	}
 
 	// 非 OpenAI Video API: 构建自定义格式响应
@@ -505,7 +518,7 @@ func tryRealtimeFetch(task *model.Task, isOpenAIVideoAPI bool) []byte {
 		Code: "success",
 		Data: out,
 	})
-	return respBody
+	return respBody, nil
 }
 
 // detectVideoFormat 从 Gemini/Vertex 原始响应中探测视频格式

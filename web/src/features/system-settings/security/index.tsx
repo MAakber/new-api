@@ -32,6 +32,8 @@ const defaultSecuritySettings: SecuritySettings = {
   ModelRequestRateLimitGroup: '',
   RelayUserAgentBlacklistEnabled: false,
   RelayUserAgentBlacklist: '',
+  UpstreamInterceptionConfig:
+    '{"enabled":false,"action":"remove","retry_on_block":false,"error_status":502,"error_code":"upstream_response_intercepted","error_message":"上游响应被内容策略拦截","excluded_channel_ids":[],"rules":[]}',
   AutoBanConfig: '{}',
   CheckSensitiveEnabled: false,
   CheckSensitiveOnPromptEnabled: false,

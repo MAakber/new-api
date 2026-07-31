@@ -27,14 +27,16 @@ import { Button } from '@/components/ui/button'
 import {
   fetchUpstreamRatios,
   getUpstreamChannels,
-  updateSystemOption,
+  patchPricingOptions,
 } from '../api'
 import type {
   DifferencesMap,
+  FetchUpstreamRatiosRequest,
   RatioType,
   UpstreamChannel,
   UpstreamConfig,
 } from '../types'
+import { AutoPriceSyncControl } from './auto-price-sync-control'
 import { ChannelSelectorDialog } from './channel-selector-dialog'
 import {
   ConflictConfirmDialog,
@@ -49,6 +51,11 @@ import {
   OPENROUTER_CHANNEL_TYPE,
   OPENROUTER_ENDPOINT,
 } from './constants'
+import {
+  buildPricingPatchOperations,
+  isPricingPatchConflict,
+  type PricingOptionMaps,
+} from './pricing-patch'
 import {
   NUMERIC_SYNC_FIELDS,
   RATIO_SYNC_FIELDS,
@@ -67,18 +74,7 @@ import { UpstreamRatioSyncTable } from './upstream-ratio-sync-table'
 // ---------------------------------------------------------------------------
 
 type UpstreamRatioSyncProps = {
-  modelRatios: {
-    ModelPrice: string
-    ModelRatio: string
-    CompletionRatio: string
-    CacheRatio: string
-    CreateCacheRatio: string
-    ImageRatio: string
-    AudioRatio: string
-    AudioCompletionRatio: string
-    'billing_setting.billing_mode': string
-    'billing_setting.billing_expr': string
-  }
+  modelRatios: PricingOptionMaps
 }
 
 // ---------------------------------------------------------------------------
@@ -133,6 +129,8 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
   const [resolutions, setResolutions] = useState<ResolutionsMap>({})
   const [conflictItems, setConflictItems] = useState<ConflictItem[]>([])
   const [confirmLoading, setConfirmLoading] = useState(false)
+  const [pricingSnapshot, setPricingSnapshot] =
+    useState<PricingOptionMaps | null>(null)
 
   const { data: channelsData } = useQuery({
     queryKey: ['upstream-channels'],
@@ -161,8 +159,12 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
   }, [channels])
 
   const fetchMutation = useMutation({
-    mutationFn: fetchUpstreamRatios,
-    onSuccess: (data) => {
+    mutationFn: ({
+      snapshot: _,
+      ...request
+    }: FetchUpstreamRatiosRequest & { snapshot: PricingOptionMaps }) =>
+      fetchUpstreamRatios(request),
+    onSuccess: (data, { snapshot }) => {
       if (!data.success) {
         toast.error(data.message || t('Failed to fetch upstream prices'))
         return
@@ -180,6 +182,7 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
 
       setDifferences(diffs)
       setResolutions({})
+      setPricingSnapshot(snapshot)
 
       if (Object.keys(diffs).length === 0) {
         toast.success(t('No price differences found'))
@@ -193,10 +196,12 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
   })
 
   const { mutate: syncMutate, isPending: isSyncPending } = useMutation({
-    mutationFn: async (updates: Array<{ key: string; value: string }>) => {
-      for (const update of updates) {
-        await updateSystemOption(update)
+    mutationFn: async (request: Parameters<typeof patchPricingOptions>[0]) => {
+      const response = await patchPricingOptions(request)
+      if (!response.success) {
+        throw new Error(response.message || t('Failed to sync prices'))
       }
+      return response
     },
     onSuccess: () => {
       toast.success(t('Prices synced successfully'))
@@ -220,6 +225,13 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
       setResolutions({})
     },
     onError: (error: Error) => {
+      if (isPricingPatchConflict(error)) {
+        toast.error(
+          t('Pricing configuration changed. Refreshed latest values.')
+        )
+        queryClient.invalidateQueries({ queryKey: ['system-options'] })
+        return
+      }
       toast.error(error.message || t('Failed to sync prices'))
     },
   })
@@ -245,7 +257,11 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
       endpoint: channelEndpoints[ch.id] || DEFAULT_ENDPOINT,
     }))
 
-    fetchMutation.mutate({ upstreams, timeout: 10 })
+    fetchMutation.mutate({
+      upstreams,
+      timeout: 10,
+      snapshot: { ...modelRatios },
+    })
   }
 
   const handleSelectValue = useCallback(
@@ -289,26 +305,29 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
     setResolutions((prev) => applyResolutionRemovalPlan(prev, plan))
   }, [])
 
+  const snapshotRatios = pricingSnapshot ?? modelRatios
   const parsedRatios = useMemo(() => {
     return {
-      ModelRatio: parseJsonRecord<number>(modelRatios.ModelRatio),
-      CompletionRatio: parseJsonRecord<number>(modelRatios.CompletionRatio),
-      CacheRatio: parseJsonRecord<number>(modelRatios.CacheRatio),
-      CreateCacheRatio: parseJsonRecord<number>(modelRatios.CreateCacheRatio),
-      ImageRatio: parseJsonRecord<number>(modelRatios.ImageRatio),
-      AudioRatio: parseJsonRecord<number>(modelRatios.AudioRatio),
-      AudioCompletionRatio: parseJsonRecord<number>(
-        modelRatios.AudioCompletionRatio
+      ModelRatio: parseJsonRecord<number>(snapshotRatios.ModelRatio),
+      CompletionRatio: parseJsonRecord<number>(snapshotRatios.CompletionRatio),
+      CacheRatio: parseJsonRecord<number>(snapshotRatios.CacheRatio),
+      CreateCacheRatio: parseJsonRecord<number>(
+        snapshotRatios.CreateCacheRatio
       ),
-      ModelPrice: parseJsonRecord<number>(modelRatios.ModelPrice),
+      ImageRatio: parseJsonRecord<number>(snapshotRatios.ImageRatio),
+      AudioRatio: parseJsonRecord<number>(snapshotRatios.AudioRatio),
+      AudioCompletionRatio: parseJsonRecord<number>(
+        snapshotRatios.AudioCompletionRatio
+      ),
+      ModelPrice: parseJsonRecord<number>(snapshotRatios.ModelPrice),
       'billing_setting.billing_mode': parseJsonRecord<string>(
-        modelRatios['billing_setting.billing_mode']
+        snapshotRatios['billing_setting.billing_mode']
       ),
       'billing_setting.billing_expr': parseJsonRecord<string>(
-        modelRatios['billing_setting.billing_expr']
+        snapshotRatios['billing_setting.billing_expr']
       ),
     }
-  }, [modelRatios])
+  }, [snapshotRatios])
 
   type ParsedRatios = typeof parsedRatios
 
@@ -378,19 +397,30 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
         })
       })
 
-      const updates = Object.entries(finalRatios).map(([key, value]) => ({
-        key,
-        value: JSON.stringify(value, null, 2),
-      }))
+      const pricingDraft = Object.fromEntries(
+        Object.entries(finalRatios).map(([key, value]) => [
+          key,
+          JSON.stringify(value, null, 2),
+        ])
+      ) as PricingOptionMaps
+      const operations = buildPricingPatchOperations(
+        snapshotRatios,
+        pricingDraft
+      )
+
+      if (operations.length === 0) return true
 
       return new Promise<boolean>((resolve) => {
-        syncMutate(updates, {
-          onSuccess: () => resolve(true),
-          onError: () => resolve(false),
-        })
+        syncMutate(
+          { operations },
+          {
+            onSuccess: () => resolve(true),
+            onError: () => resolve(false),
+          }
+        )
       })
     },
-    [resolutions, syncMutate]
+    [resolutions, snapshotRatios, syncMutate]
   )
 
   const findSourceChannel = (
@@ -476,6 +506,7 @@ export function UpstreamRatioSync({ modelRatios }: UpstreamRatioSyncProps) {
 
   return (
     <div className='flex h-full min-h-0 flex-col gap-4'>
+      <AutoPriceSyncControl />
       <div className='flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
         <div className='flex flex-col gap-2 sm:flex-row'>
           <Button onClick={handleOpenChannelDialog} disabled={isLoading}>

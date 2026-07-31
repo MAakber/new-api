@@ -77,6 +77,9 @@ func TextHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *types
 		service.ShouldChatCompletionsUseResponsesGlobal(info.ChannelId, info.ChannelType, info.OriginModelName) {
 		applySystemPromptIfNeeded(c, info, request)
 		usage, newApiErr := chatCompletionsViaResponses(c, info, adaptor, request)
+		if interceptionErr := service.FinishUpstreamInterception(c); interceptionErr != nil {
+			return interceptionErr
+		}
 		if newApiErr != nil {
 			return newApiErr
 		}
@@ -205,6 +208,9 @@ func TextHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *types
 	}
 
 	usage, newApiErr := adaptor.DoResponse(c, httpResp, info)
+	if interceptionErr := service.FinishUpstreamInterception(c); interceptionErr != nil {
+		return interceptionErr
+	}
 	if newApiErr != nil {
 		// reset status code 重置状态码
 		service.ResetStatusCode(newApiErr, statusCodeMappingStr)

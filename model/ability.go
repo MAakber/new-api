@@ -146,6 +146,79 @@ func GetChannel(group string, model string, retry int, requestPath string) (*Cha
 	return &channel, err
 }
 
+// GetChannelExcluding mirrors DB selection for request-local exclusions without
+// changing legacy GetChannel retry semantics used by non-request callers.
+func GetChannelExcluding(group, model string, retry int, requestPath string, excluded map[int]struct{}) (*Channel, error) {
+	var abilities []Ability
+	groupColumn := commonGroupCol
+	// Unit callers may initialize a lightweight DB without InitDB/initCol.
+	if groupColumn == "" {
+		groupColumn = `"group"`
+	}
+	if err := DB.Where(groupColumn+" = ? and model = ? and enabled = ?", group, model, true).Order("priority DESC, weight DESC").Find(&abilities).Error; err != nil {
+		return nil, err
+	}
+	abilities = filterAbilitiesByRequestPathAndModel(abilities, requestPath, model)
+	priorities := make([]int64, 0)
+	seen := map[int64]struct{}{}
+	for _, ability := range abilities {
+		if _, skip := excluded[ability.ChannelId]; skip {
+			continue
+		}
+		priority := int64(0)
+		if ability.Priority != nil {
+			priority = *ability.Priority
+		}
+		if _, ok := seen[priority]; !ok {
+			seen[priority] = struct{}{}
+			priorities = append(priorities, priority)
+		}
+	}
+	if len(priorities) == 0 {
+		return nil, nil
+	}
+	if retry < 0 {
+		retry = 0
+	} else if retry >= len(priorities) {
+		retry = len(priorities) - 1
+	}
+	for _, priority := range priorities[retry:] {
+		candidates := make([]Ability, 0)
+		total := uint(0)
+		for _, ability := range abilities {
+			if _, skip := excluded[ability.ChannelId]; skip {
+				continue
+			}
+			value := int64(0)
+			if ability.Priority != nil {
+				value = *ability.Priority
+			}
+			if value == priority {
+				candidates = append(candidates, ability)
+				total += ability.Weight + 10
+			}
+		}
+		if len(candidates) == 0 {
+			continue
+		}
+		weight := common.GetRandomInt(int(total))
+		id := 0
+		for _, ability := range candidates {
+			weight -= int(ability.Weight) + 10
+			if weight <= 0 {
+				id = ability.ChannelId
+				break
+			}
+		}
+		var channel Channel
+		if err := DB.First(&channel, "id = ?", id).Error; err != nil {
+			return nil, err
+		}
+		return &channel, nil
+	}
+	return nil, nil
+}
+
 // filterAbilitiesByRequestPathAndModel restricts candidates by request path and
 // model for the DB (non-memory-cache) selection path. Only Advanced Custom
 // (type 58) channels are path-checked: kept only when one of their routes matches

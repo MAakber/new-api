@@ -84,6 +84,8 @@ func (p *RetryParam) ResetRetryNextTry() {
 func CacheGetRandomSatisfiedChannel(param *RetryParam) (*model.Channel, string, error) {
 	var channel *model.Channel
 	var err error
+	guardRejected := false
+	excluded := make(map[int]struct{})
 	selectGroup := param.TokenGroup
 	userGroup := common.GetContextKeyString(param.Ctx, constant.ContextKeyUserGroup)
 
@@ -116,7 +118,14 @@ func CacheGetRandomSatisfiedChannel(param *RetryParam) (*model.Channel, string, 
 			}
 			logger.LogDebug(param.Ctx, "Auto selecting group: %s, priorityRetry: %d", autoGroup, priorityRetry)
 
-			channel, _ = model.GetRandomSatisfiedChannel(autoGroup, param.ModelName, priorityRetry, param.RequestPath)
+			channel, err = selectAuthorizedRequestChannel(autoGroup, param.ModelName, priorityRetry, param.RequestPath, excluded)
+			if err != nil && !IsChannelRequestGuardRejected(err) {
+				return nil, selectGroup, err
+			}
+			if IsChannelRequestGuardRejected(err) {
+				guardRejected = true
+				channel = nil
+			}
 			if channel == nil {
 				// Current group has no available channel for this model, try next group
 				// 当前分组没有该模型的可用渠道，尝试下一个分组
@@ -154,10 +163,39 @@ func CacheGetRandomSatisfiedChannel(param *RetryParam) (*model.Channel, string, 
 			break
 		}
 	} else {
-		channel, err = model.GetRandomSatisfiedChannel(param.TokenGroup, param.ModelName, param.GetRetry(), param.RequestPath)
+		channel, err = selectAuthorizedRequestChannel(param.TokenGroup, param.ModelName, param.GetRetry(), param.RequestPath, excluded)
 		if err != nil {
+			if IsChannelRequestGuardRejected(err) {
+				return nil, param.TokenGroup, err
+			}
 			return nil, param.TokenGroup, err
 		}
 	}
+	if channel == nil && guardRejected {
+		return nil, selectGroup, ErrChannelRequestGuardRejected
+	}
 	return channel, selectGroup, nil
+}
+
+const maxRequestGuardCandidateAttempts = 1024
+
+func selectAuthorizedRequestChannel(group, modelName string, retry int, requestPath string, excluded map[int]struct{}) (*model.Channel, error) {
+	for attempts := 0; attempts < maxRequestGuardCandidateAttempts; attempts++ {
+		channel, err := model.GetRandomSatisfiedChannelExcluding(group, modelName, retry, requestPath, excluded)
+		if err != nil || channel == nil {
+			if channel == nil && len(excluded) > 0 {
+				return nil, ErrChannelRequestGuardRejected
+			}
+			return channel, err
+		}
+		if err := AuthorizeChannelForUserRequest(channel); err != nil {
+			if IsChannelRequestGuardRejected(err) {
+				excluded[channel.Id] = struct{}{}
+				continue
+			}
+			return nil, err
+		}
+		return channel, nil
+	}
+	return nil, ErrChannelRequestGuardRejected
 }

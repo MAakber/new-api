@@ -14,13 +14,14 @@ import (
 
 type Vendor struct {
 	Id          int            `json:"id"`
-	Name        string         `json:"name" gorm:"size:128;not null;uniqueIndex:uk_vendor_name_delete_at,priority:1"`
+	Name        string         `json:"name" gorm:"size:128;not null"`
+	ActiveName  *string        `json:"-" gorm:"size:128"`
 	Description string         `json:"description,omitempty" gorm:"type:text"`
 	Icon        string         `json:"icon,omitempty" gorm:"type:varchar(128)"`
 	Status      int            `json:"status" gorm:"default:1"`
 	CreatedTime int64          `json:"created_time" gorm:"bigint"`
 	UpdatedTime int64          `json:"updated_time" gorm:"bigint"`
-	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index;uniqueIndex:uk_vendor_name_delete_at,priority:2"`
+	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // Insert 创建新的供应商记录
@@ -28,7 +29,16 @@ func (v *Vendor) Insert() error {
 	now := common.GetTimestamp()
 	v.CreatedTime = now
 	v.UpdatedTime = now
-	return DB.Create(v).Error
+	v.ActiveName = &v.Name
+	if err := DB.Create(v).Error; err != nil {
+		var existing Vendor
+		if lookupErr := DB.Where("active_name = ?", v.Name).First(&existing).Error; lookupErr == nil {
+			v.Id = existing.Id
+			return nil
+		}
+		return err
+	}
+	return nil
 }
 
 // IsVendorNameDuplicated 检查供应商名称是否重复（排除自身 ID）
@@ -44,12 +54,20 @@ func IsVendorNameDuplicated(id int, name string) (bool, error) {
 // Update 更新供应商记录
 func (v *Vendor) Update() error {
 	v.UpdatedTime = common.GetTimestamp()
-	return DB.Save(v).Error
+	v.ActiveName = &v.Name
+	return DB.Model(&Vendor{}).Where("id = ?", v.Id).
+		Select("name", "active_name", "description", "icon", "status", "updated_time").
+		Updates(v).Error
 }
 
 // Delete 软删除供应商
 func (v *Vendor) Delete() error {
-	return DB.Delete(v).Error
+	return DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Model(v).Update("active_name", nil).Error; err != nil {
+			return err
+		}
+		return tx.Delete(v).Error
+	})
 }
 
 // GetVendorByID 根据 ID 获取供应商

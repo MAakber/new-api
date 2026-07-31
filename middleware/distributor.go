@@ -70,6 +70,10 @@ func Distribute() func(c *gin.Context) {
 				abortWithOpenAiMessage(c, http.StatusForbidden, i18n.T(c, i18n.MsgDistributorChannelDisabled))
 				return
 			}
+			if err := service.AuthorizeChannelForUserRequest(channel); err != nil {
+				abortWithOpenAiMessage(c, http.StatusServiceUnavailable, "channel unavailable", types.ErrorCodeGetChannelFailed)
+				return
+			}
 		} else {
 			// Select a channel for the user
 			// check token model mapping
@@ -128,6 +132,9 @@ func Distribute() func(c *gin.Context) {
 							autoGroups := service.GetUserAutoGroup(userGroup)
 							for _, g := range autoGroups {
 								if model.IsChannelEnabledForGroupModel(g, modelRequest.Model, preferred.Id) {
+									if service.AuthorizeChannelForUserRequest(preferred) != nil {
+										break
+									}
 									selectGroup = g
 									common.SetContextKey(c, constant.ContextKeyAutoGroup, g)
 									channel = preferred
@@ -136,7 +143,7 @@ func Distribute() func(c *gin.Context) {
 									break
 								}
 							}
-						} else if model.IsChannelEnabledForGroupModel(usingGroup, modelRequest.Model, preferred.Id) {
+						} else if model.IsChannelEnabledForGroupModel(usingGroup, modelRequest.Model, preferred.Id) && service.AuthorizeChannelForUserRequest(preferred) == nil {
 							channel = preferred
 							selectGroup = usingGroup
 							affinityUsable = true
@@ -178,7 +185,10 @@ func Distribute() func(c *gin.Context) {
 			}
 		}
 		common.SetContextKey(c, constant.ContextKeyRequestStartTime, time.Now())
-		SetupContextForSelectedChannel(c, channel, modelRequest.Model)
+		if setupErr := SetupContextForSelectedChannel(c, channel, modelRequest.Model); setupErr != nil {
+			abortWithOpenAiMessage(c, http.StatusServiceUnavailable, "channel unavailable", types.ErrorCodeGetChannelFailed)
+			return
+		}
 		c.Next()
 		if channel != nil && c.Writer != nil && c.Writer.Status() < http.StatusBadRequest {
 			service.RecordChannelAffinity(c, channel.Id)

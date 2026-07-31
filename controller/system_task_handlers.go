@@ -2,7 +2,9 @@ package controller
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
@@ -10,6 +12,7 @@ import (
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/QuantumNous/new-api/setting/operation_setting"
+	"gorm.io/gorm"
 )
 
 // RegisterScheduledSystemTasks wires the periodic channel test, upstream model
@@ -22,6 +25,8 @@ func RegisterScheduledSystemTasks() {
 	service.RegisterSystemTaskHandler(modelUpdateHandler{})
 	service.RegisterSystemTaskHandler(midjourneyPollHandler{})
 	service.RegisterSystemTaskHandler(asyncTaskPollHandler{})
+	service.RegisterSystemTaskHandler(autoPriceSyncHandler{})
+	service.RegisterSystemTaskHandler(autoModelMetadataSyncHandler{})
 }
 
 // channelTestHandler runs the scheduled "test all channels" job. Enablement and
@@ -150,6 +155,88 @@ func (asyncTaskPollHandler) NewPayload() any { return nil }
 func (asyncTaskPollHandler) Run(ctx context.Context, task *model.SystemTask, runnerID string) {
 	summary := service.RunTaskPollingOnce(ctx, service.NewSystemTaskProgressReporter(task, runnerID))
 	finishSystemTaskHandler(task, runnerID, model.SystemTaskStatusSucceeded, summary, nil)
+}
+
+type autoPriceSyncHandler struct{}
+
+func (autoPriceSyncHandler) Type() string { return model.SystemTaskTypeAutoPriceSync }
+func (autoPriceSyncHandler) BuildDueTask(now int64) (*model.SystemTask, bool, error) {
+	return buildDueAutoSyncTask(model.SystemTaskTypeAutoPriceSync, now)
+}
+func (autoPriceSyncHandler) Run(ctx context.Context, task *model.SystemTask, runnerID string) {
+	payload := model.AutoSyncTaskPayload{}
+	if err := task.DecodePayload(&payload); err != nil || payload.EventType != task.Type || payload.CutoffGeneration <= 0 {
+		common.SysLog(fmt.Sprintf("auto price sync task has invalid payload: task=%s", task.TaskID))
+		return
+	}
+	outcome, err := service.RunAutoPriceSyncBatch(ctx, payload.CutoffGeneration)
+	if err != nil {
+		if !errors.Is(err, context.Canceled) {
+			common.SysLog(fmt.Sprintf("auto price sync task interrupted: task=%s err=%v", task.TaskID, err))
+		}
+		return
+	}
+	status := model.SystemTaskStatusSucceeded
+	if outcome.Failed {
+		status = model.SystemTaskStatusFailed
+	}
+	finishAutoSyncTask(task, runnerID, payload, outcome.EventIDs, status, outcome.Summary, strings.Join(outcome.Summary.Errors, "; "))
+}
+
+type autoModelMetadataSyncHandler struct{}
+
+func (autoModelMetadataSyncHandler) Type() string { return model.SystemTaskTypeAutoModelSync }
+func (autoModelMetadataSyncHandler) BuildDueTask(now int64) (*model.SystemTask, bool, error) {
+	return buildDueAutoSyncTask(model.SystemTaskTypeAutoModelSync, now)
+}
+func (autoModelMetadataSyncHandler) Run(ctx context.Context, task *model.SystemTask, runnerID string) {
+	payload := model.AutoSyncTaskPayload{}
+	if err := task.DecodePayload(&payload); err != nil || payload.EventType != task.Type || payload.CutoffGeneration <= 0 {
+		common.SysLog(fmt.Sprintf("auto model sync task has invalid payload: task=%s", task.TaskID))
+		return
+	}
+	outcome, err := service.RunAutoModelMetadataSyncBatch(ctx, payload.CutoffGeneration)
+	if err != nil {
+		if !errors.Is(err, context.Canceled) {
+			common.SysLog(fmt.Sprintf("auto model sync task interrupted: task=%s err=%v", task.TaskID, err))
+		}
+		return
+	}
+	status := model.SystemTaskStatusSucceeded
+	if outcome.Failed {
+		status = model.SystemTaskStatusFailed
+	}
+	finishAutoSyncTask(task, runnerID, payload, outcome.EventIDs, status, outcome.Summary, strings.Join(outcome.Summary.Errors, "; "))
+}
+
+func buildDueAutoSyncTask(eventType string, now int64) (*model.SystemTask, bool, error) {
+	var task *model.SystemTask
+	built := false
+	err := model.DB.Transaction(func(tx *gorm.DB) error {
+		var err error
+		task, built, err = model.BuildDueAutoSyncTaskTx(tx, eventType, now)
+		return err
+	})
+	return task, built, err
+}
+
+func finishAutoSyncTask(task *model.SystemTask, runnerID string, payload model.AutoSyncTaskPayload, eventIDs []int64, status model.SystemTaskStatus, result any, errorMessage string) {
+	if len(errorMessage) > 512 {
+		errorMessage = errorMessage[:512]
+	}
+	err := model.DB.Transaction(func(tx *gorm.DB) error {
+		if err := model.FinalizeAutoSyncBatchTx(tx, payload.EventType, payload.CutoffGeneration, eventIDs, task.TaskID); err != nil {
+			return err
+		}
+		return model.FinishSystemTaskTx(tx, task.TaskID, runnerID, status, result, errorMessage)
+	})
+	if err != nil {
+		common.SysLog(fmt.Sprintf("auto sync task failed to finalize atomically: task=%s err=%v", task.TaskID, err))
+		return
+	}
+	if err := model.ReleaseSystemTaskLock(task.TaskID, runnerID); err != nil {
+		common.SysLog(fmt.Sprintf("auto sync task failed to release lock: task=%s err=%v", task.TaskID, err))
+	}
 }
 
 func finishSystemTaskHandler(task *model.SystemTask, runnerID string, status model.SystemTaskStatus, result any, runErr error) {

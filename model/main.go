@@ -290,12 +290,19 @@ func migrateDB() error {
 		&SystemInstance{},
 		&SystemTask{},
 		&SystemTaskLock{},
+		&AutoSyncCursor{},
+		&AutoSyncEvent{},
+		&AutoPriceGuard{},
+		&NamedLease{},
 		&CasbinRule{},
 		&AuthzRole{},
 		&UserSecurityEvent{},
 		&UserAutoBanRecord{},
 	)
 	if err != nil {
+		return err
+	}
+	if err := MigrateModelVendorActiveNames(); err != nil {
 		return err
 	}
 	if err := InitializeUserAuthVersions(); err != nil {
@@ -355,6 +362,10 @@ func migrateDBFast() error {
 		{&SystemInstance{}, "SystemInstance"},
 		{&SystemTask{}, "SystemTask"},
 		{&SystemTaskLock{}, "SystemTaskLock"},
+		{&AutoSyncCursor{}, "AutoSyncCursor"},
+		{&AutoSyncEvent{}, "AutoSyncEvent"},
+		{&AutoPriceGuard{}, "AutoPriceGuard"},
+		{&NamedLease{}, "NamedLease"},
 		{&UserSecurityEvent{}, "UserSecurityEvent"},
 		{&UserAutoBanRecord{}, "UserAutoBanRecord"},
 	}
@@ -380,6 +391,9 @@ func migrateDBFast() error {
 		if err != nil {
 			return err
 		}
+	}
+	if err := MigrateModelVendorActiveNames(); err != nil {
+		return err
 	}
 	if err := InitializeUserAuthVersions(); err != nil {
 		return err

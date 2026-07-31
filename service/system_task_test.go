@@ -43,6 +43,23 @@ type stubSystemTaskRunResult struct {
 	err      error
 }
 
+type stubDueHandler struct {
+	taskType string
+	builds   int
+}
+
+func (h *stubDueHandler) Type() string                                   { return h.taskType }
+func (h *stubDueHandler) Run(context.Context, *model.SystemTask, string) {}
+func (h *stubDueHandler) BuildDueTask(_ int64) (*model.SystemTask, bool, error) {
+	h.builds++
+	active, err := model.GetActiveSystemTask(h.taskType)
+	if err != nil || active != nil {
+		return active, false, err
+	}
+	task, err := model.CreateSystemTask(h.taskType, nil, nil)
+	return task, err == nil, err
+}
+
 func (h *stubScheduledHandler) Type() string { return h.taskType }
 
 func (h *stubScheduledHandler) Run(ctx context.Context, task *model.SystemTask, runnerID string) {
@@ -105,6 +122,20 @@ func TestSystemTaskSchedulerSkipsDisabled(t *testing.T) {
 
 	runSystemTaskScheduler()
 	assert.Equal(t, int64(0), countSystemTasks(t, handler.taskType))
+}
+
+func TestSystemTaskSchedulerInvokesDurableDueHandler(t *testing.T) {
+	truncate(t)
+	handler := &stubDueHandler{taskType: "test_due_handler"}
+	withSystemTaskRegistry(t, handler)
+
+	runSystemTaskScheduler()
+	require.Equal(t, 1, handler.builds)
+	require.Equal(t, int64(1), countSystemTasks(t, handler.taskType))
+
+	runSystemTaskScheduler()
+	require.Equal(t, 2, handler.builds)
+	require.Equal(t, int64(1), countSystemTasks(t, handler.taskType))
 }
 
 func TestSystemTaskClaimPassDispatchesByType(t *testing.T) {

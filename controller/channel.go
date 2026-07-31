@@ -696,11 +696,12 @@ func AddChannel(c *gin.Context) {
 		}
 		channels = append(channels, *localChannel)
 	}
-	err = model.BatchInsertChannels(channels)
+	_, err = service.CreateChannels(channels, service.ChannelMutationTriggerCreate)
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
+	model.InitChannelCache()
 	recordManageAudit(c, "channel.create", map[string]interface{}{
 		"name":  addChannelRequest.Channel.Name,
 		"type":  addChannelRequest.Channel.Type,
@@ -790,12 +791,14 @@ func DisableTagChannels(c *gin.Context) {
 		})
 		return
 	}
-	err = model.DisableChannelByTag(channelTag.Tag)
+	result, err := service.UpdateChannelStatusesByTag(channelTag.Tag, common.ChannelStatusManuallyDisabled)
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
-	model.InitChannelCache()
+	if result.ChangedCount > 0 {
+		model.InitChannelCache()
+	}
 	recordManageAudit(c, "channel.tag_disable", map[string]interface{}{
 		"tag": channelTag.Tag,
 	})
@@ -816,12 +819,14 @@ func EnableTagChannels(c *gin.Context) {
 		})
 		return
 	}
-	err = model.EnableChannelByTag(channelTag.Tag)
+	result, err := service.UpdateChannelStatusesByTag(channelTag.Tag, common.ChannelStatusEnabled)
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
-	model.InitChannelCache()
+	if result.ChangedCount > 0 {
+		model.InitChannelCache()
+	}
 	recordManageAudit(c, "channel.tag_enable", map[string]interface{}{
 		"tag": channelTag.Tag,
 	})
@@ -876,12 +881,18 @@ func EditTagChannels(c *gin.Context) {
 		}
 		channelTag.HeaderOverride = common.GetPointer[string](trimmed)
 	}
-	err = model.EditChannelByTag(channelTag.Tag, channelTag.NewTag, channelTag.ModelMapping, channelTag.Models, channelTag.Groups, channelTag.Priority, channelTag.Weight, channelTag.ParamOverride, channelTag.HeaderOverride)
+	result, err := service.UpdateChannelsByTag(service.ChannelTagMutationInput{
+		Tag: channelTag.Tag, NewTag: channelTag.NewTag, ModelMapping: channelTag.ModelMapping, Models: channelTag.Models,
+		Groups: channelTag.Groups, Priority: channelTag.Priority, Weight: channelTag.Weight,
+		ParamOverride: channelTag.ParamOverride, HeaderOverride: channelTag.HeaderOverride,
+	})
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
-	model.InitChannelCache()
+	if result.ChangedCount > 0 {
+		model.InitChannelCache()
+	}
 	recordManageAudit(c, "channel.tag_edit", map[string]interface{}{
 		"tag": channelTag.Tag,
 	})
@@ -943,13 +954,13 @@ type ChannelStatusBatchRequest struct {
 }
 
 func UpdateChannel(c *gin.Context) {
-	channel := PatchChannel{}
+	requestChannel := PatchChannel{}
 	rawBody, err := c.GetRawData()
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
-	if err := common.Unmarshal(rawBody, &channel); err != nil {
+	if err := common.Unmarshal(rawBody, &requestChannel); err != nil {
 		common.ApiError(c, err)
 		return
 	}
@@ -962,7 +973,35 @@ func UpdateChannel(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
 		return
 	}
+	for field := range requestData {
+		if _, readOnly := channelReadOnlyFields[field]; readOnly {
+			common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+			return
+		}
+	}
+	originChannel, err := model.GetChannelById(requestChannel.Id, true)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": err.Error(),
+		})
+		return
+	}
+	// Decode a second time over the complete persisted row. This preserves the
+	// legacy sparse PATCH contract while the domain service uses explicit maps
+	// that correctly persist provided zero values.
+	channel := PatchChannel{Channel: *originChannel}
+	if err := common.Unmarshal(rawBody, &channel); err != nil {
+		common.ApiError(c, err)
+		return
+	}
 	clearChannelReadOnlyFields(&channel, requestData)
+	channel.CreatedTime = originChannel.CreatedTime
+	channel.TestTime = originChannel.TestTime
+	channel.ResponseTime = originChannel.ResponseTime
+	channel.Balance = originChannel.Balance
+	channel.BalanceUpdatedTime = originChannel.BalanceUpdatedTime
+	channel.UsedQuota = originChannel.UsedQuota
 
 	// 使用统一的校验函数
 	if err := validateChannel(&channel.Channel, false); err != nil {
@@ -972,25 +1011,14 @@ func UpdateChannel(c *gin.Context) {
 		})
 		return
 	}
-	// Preserve existing ChannelInfo to ensure multi-key channels keep correct state even if the client does not send ChannelInfo in the request.
-	originChannel, err := model.GetChannelById(channel.Id, true)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"success": false,
-			"message": err.Error(),
-		})
-		return
-	}
 	originProxy := originChannel.GetSetting().Proxy
-	proxyChanged := false
-	if _, settingProvided := requestData["setting"]; settingProvided {
-		newProxy, _ := service.NormalizeProxyURL(channel.GetSetting().Proxy)
-		normalizedOriginProxy, originProxyErr := service.NormalizeProxyURL(originProxy)
-		proxyChanged = originProxyErr != nil || normalizedOriginProxy != newProxy
-	}
 
-	// Always copy the original ChannelInfo so that fields like IsMultiKey and MultiKeySize are retained.
-	channel.ChannelInfo = originChannel.ChannelInfo
+	// Runtime multi-key state is never client-controlled. Configuration fields
+	// decoded above (including IsMultiKey/size/mode) remain mergeable.
+	channel.ChannelInfo.MultiKeyStatusList = originChannel.ChannelInfo.MultiKeyStatusList
+	channel.ChannelInfo.MultiKeyDisabledReason = originChannel.ChannelInfo.MultiKeyDisabledReason
+	channel.ChannelInfo.MultiKeyDisabledTime = originChannel.ChannelInfo.MultiKeyDisabledTime
+	channel.ChannelInfo.MultiKeyPollingIndex = originChannel.ChannelInfo.MultiKeyPollingIndex
 
 	if channelHasSensitiveChanges(&channel, originChannel, requestData) &&
 		!authz.Can(c.GetInt("id"), c.GetInt("role"), authz.ChannelSensitiveWrite) {
@@ -1083,43 +1111,61 @@ func UpdateChannel(c *gin.Context) {
 			// 覆盖模式：直接使用新密钥（默认行为，不需要特殊处理）
 		}
 	}
-	err = channel.Update()
+	fields := make(map[string]bool, len(requestData))
+	for field := range requestData {
+		if field != "id" && field != "key_mode" {
+			fields[field] = true
+		}
+	}
+	mutation, err := service.UpdateChannelAdminPatch(service.ChannelAdminPatchInput{
+		ChannelID: channel.Id, ExpectedRevision: originChannel.ConfigRevision, Patch: channel.Channel,
+		Fields: fields, Trigger: service.ChannelMutationTriggerUpdate,
+	})
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
-	model.InitChannelCache()
+	updated := mutation.Updated
+	if mutation.CacheRefreshRequired {
+		model.InitChannelCache()
+	}
+	newProxy, _ := service.NormalizeProxyURL(updated.GetSetting().Proxy)
+	normalizedOriginProxy, originProxyErr := service.NormalizeProxyURL(originProxy)
+	proxyChanged := originProxyErr != nil || normalizedOriginProxy != newProxy
 	if proxyChanged {
 		service.InvalidateProxyClient(originProxy)
 	}
 	// 记录变更的字段名（语言无关的字段标识），密钥仅记录"已更换"绝不记录内容。
 	changedFields := make([]string, 0)
-	if channel.Models != originChannel.Models {
+	if mutation.ModelsChanged {
 		changedFields = append(changedFields, "models")
 	}
-	if channel.Group != originChannel.Group {
+	if updated.Group != originChannel.Group {
 		changedFields = append(changedFields, "group")
 	}
-	if channel.Type != originChannel.Type {
+	if mutation.TypeChanged {
 		changedFields = append(changedFields, "type")
 	}
-	if !equalStringPtr(channel.BaseURL, originChannel.BaseURL) {
+	if mutation.BaseURLChanged {
 		changedFields = append(changedFields, "base_url")
 	}
-	if channel.Key != "" && channel.Key != originChannel.Key {
+	if mutation.ModelMappingChanged {
+		changedFields = append(changedFields, "model_mapping")
+	}
+	if updated.Key != originChannel.Key {
 		changedFields = append(changedFields, "key")
 	}
 	recordManageAudit(c, "channel.update", map[string]interface{}{
-		"id":             channel.Id,
-		"name":           channel.Name,
+		"id":             updated.Id,
+		"name":           updated.Name,
 		"changed_fields": changedFields,
 	})
-	channel.Key = ""
-	clearChannelInfo(&channel.Channel)
+	updated.Key = ""
+	clearChannelInfo(updated)
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "",
-		"data":    channel,
+		"data":    updated,
 	})
 	return
 }
@@ -1135,7 +1181,12 @@ func UpdateChannelStatus(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
 		return
 	}
-	changed := model.UpdateChannelStatus(id, "", req.Status, "manual operation")
+	result, err := service.UpdateChannelStatuses([]int{id}, req.Status)
+	if err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	changed := len(result.Channels) == 1 && result.Channels[0].Changed
 	if changed {
 		model.InitChannelCache()
 	}
@@ -1157,12 +1208,12 @@ func BatchUpdateChannelStatus(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
 		return
 	}
-	changedCount := 0
-	for _, id := range req.Ids {
-		if model.UpdateChannelStatus(id, "", req.Status, "manual batch operation") {
-			changedCount++
-		}
+	result, err := service.UpdateChannelStatuses(req.Ids, req.Status)
+	if err != nil {
+		common.ApiError(c, err)
+		return
 	}
+	changedCount := result.ChangedCount
 	if changedCount > 0 {
 		model.InitChannelCache()
 	}
@@ -1338,12 +1389,14 @@ func BatchSetChannelTag(c *gin.Context) {
 		})
 		return
 	}
-	err = model.BatchSetChannelTag(channelBatch.Ids, channelBatch.Tag)
+	changed, err := service.BatchSetChannelTags(channelBatch.Ids, channelBatch.Tag)
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
-	model.InitChannelCache()
+	if changed > 0 {
+		model.InitChannelCache()
+	}
 	recordManageAudit(c, "channel.tag_batch_set", map[string]interface{}{
 		"count": len(channelBatch.Ids),
 	})
@@ -1428,6 +1481,8 @@ func CopyChannel(c *gin.Context) {
 	// clone channel
 	clone := *origin // shallow copy is sufficient as we will overwrite primitives
 	clone.Id = 0     // let DB auto-generate
+	clone.AutoPriceGuardID = 0
+	clone.ConfigRevision = 1
 	clone.CreatedTime = common.GetTimestamp()
 	clone.Name = origin.Name + suffix
 	clone.TestTime = 0
@@ -1443,12 +1498,13 @@ func CopyChannel(c *gin.Context) {
 		return
 	}
 
-	// insert
-	if err := clone.Insert(); err != nil {
+	created, err := service.CreateChannels([]model.Channel{clone}, service.ChannelMutationTriggerCopy)
+	if err != nil {
 		common.SysError("failed to clone channel: " + err.Error())
 		c.JSON(http.StatusOK, gin.H{"success": false, "message": "复制渠道失败，请稍后重试"})
 		return
 	}
+	clone = created[0]
 	model.InitChannelCache()
 	recordManageAudit(c, "channel.copy", map[string]interface{}{
 		"sourceId": id,
@@ -1680,7 +1736,7 @@ func ManageMultiKeys(c *gin.Context) {
 
 		channel.ChannelInfo.MultiKeyStatusList[keyIndex] = 2 // disabled
 
-		err = channel.Update()
+		err = service.UpdateChannelRuntimeMultiKey(service.ChannelRuntimeMultiKeyMutation{ChannelID: channel.Id, ExpectedRevision: channel.ConfigRevision, ChannelInfo: channel.ChannelInfo})
 		if err != nil {
 			common.ApiError(c, err)
 			return
@@ -1722,7 +1778,7 @@ func ManageMultiKeys(c *gin.Context) {
 			delete(channel.ChannelInfo.MultiKeyDisabledReason, keyIndex)
 		}
 
-		err = channel.Update()
+		err = service.UpdateChannelRuntimeMultiKey(service.ChannelRuntimeMultiKeyMutation{ChannelID: channel.Id, ExpectedRevision: channel.ConfigRevision, ChannelInfo: channel.ChannelInfo})
 		if err != nil {
 			common.ApiError(c, err)
 			return
@@ -1746,7 +1802,7 @@ func ManageMultiKeys(c *gin.Context) {
 		channel.ChannelInfo.MultiKeyDisabledTime = make(map[int]int64)
 		channel.ChannelInfo.MultiKeyDisabledReason = make(map[int]string)
 
-		err = channel.Update()
+		err = service.UpdateChannelRuntimeMultiKey(service.ChannelRuntimeMultiKeyMutation{ChannelID: channel.Id, ExpectedRevision: channel.ConfigRevision, ChannelInfo: channel.ChannelInfo})
 		if err != nil {
 			common.ApiError(c, err)
 			return
@@ -1793,7 +1849,7 @@ func ManageMultiKeys(c *gin.Context) {
 			return
 		}
 
-		err = channel.Update()
+		err = service.UpdateChannelRuntimeMultiKey(service.ChannelRuntimeMultiKeyMutation{ChannelID: channel.Id, ExpectedRevision: channel.ConfigRevision, ChannelInfo: channel.ChannelInfo})
 		if err != nil {
 			common.ApiError(c, err)
 			return
@@ -1873,7 +1929,7 @@ func ManageMultiKeys(c *gin.Context) {
 		channel.ChannelInfo.MultiKeyDisabledTime = newDisabledTime
 		channel.ChannelInfo.MultiKeyDisabledReason = newDisabledReason
 
-		err = channel.Update()
+		_, err = service.UpdateChannelKeyConfiguration(channel)
 		if err != nil {
 			common.ApiError(c, err)
 			return
@@ -1941,7 +1997,7 @@ func ManageMultiKeys(c *gin.Context) {
 		channel.ChannelInfo.MultiKeyDisabledTime = newDisabledTime
 		channel.ChannelInfo.MultiKeyDisabledReason = newDisabledReason
 
-		err = channel.Update()
+		_, err = service.UpdateChannelKeyConfiguration(channel)
 		if err != nil {
 			common.ApiError(c, err)
 			return
@@ -1966,6 +2022,19 @@ func ManageMultiKeys(c *gin.Context) {
 
 func multiKeyActionRequiresSensitiveWrite(action string) bool {
 	return action == "delete_key" || action == "delete_disabled_keys"
+}
+
+// authorizeOllamaUserOperation authorizes the user-triggered Ollama management
+// operations before they read credentials or contact the configured upstream.
+func authorizeOllamaUserOperation(c *gin.Context, channel *model.Channel) bool {
+	if channel.Status != common.ChannelStatusEnabled || service.AuthorizeChannelForUserRequest(channel) != nil {
+		c.JSON(http.StatusServiceUnavailable, gin.H{
+			"success": false,
+			"message": "Channel unavailable",
+		})
+		return false
+	}
+	return true
 }
 
 // OllamaPullModel 拉取 Ollama 模型
@@ -2007,6 +2076,10 @@ func OllamaPullModel(c *gin.Context) {
 			"success": false,
 			"message": "This operation is only supported for Ollama channels",
 		})
+		return
+	}
+
+	if !authorizeOllamaUserOperation(c, channel) {
 		return
 	}
 
@@ -2070,6 +2143,10 @@ func OllamaPullModelStream(c *gin.Context) {
 			"success": false,
 			"message": "This operation is only supported for Ollama channels",
 		})
+		return
+	}
+
+	if !authorizeOllamaUserOperation(c, channel) {
 		return
 	}
 
@@ -2155,6 +2232,10 @@ func OllamaDeleteModel(c *gin.Context) {
 		return
 	}
 
+	if !authorizeOllamaUserOperation(c, channel) {
+		return
+	}
+
 	baseURL := constant.ChannelBaseURLs[channel.Type]
 	if channel.GetBaseURL() != "" {
 		baseURL = channel.GetBaseURL()
@@ -2201,6 +2282,10 @@ func OllamaVersion(c *gin.Context) {
 			"success": false,
 			"message": "This operation is only supported for Ollama channels",
 		})
+		return
+	}
+
+	if !authorizeOllamaUserOperation(c, channel) {
 		return
 	}
 

@@ -180,6 +180,8 @@ func InitOptionMap() {
 	common.OptionMap["RelayUserAgentBlacklistEnabled"] = strconv.FormatBool(common.RelayUserAgentBlacklistEnabled)
 	common.OptionMap["RelayUserAgentBlacklist"] = ""
 	_, _ = common.SetRelayUserAgentBlacklistConfig(common.RelayUserAgentBlacklistEnabled, "")
+	common.OptionMap[setting.UpstreamInterceptionOptionKey] = setting.DefaultUpstreamInterceptionConfigJSON()
+	_, _ = setting.SetUpstreamInterceptionConfig(common.OptionMap[setting.UpstreamInterceptionOptionKey])
 	common.OptionMap["AutoBanConfig"] = setting.AutoBanConfig2JsonString()
 
 	// 自动添加所有注册的模型配置
@@ -223,6 +225,10 @@ func validateOptionValue(key string, value string) error {
 		_, err := common.NormalizeRelayUserAgentBlacklist(value)
 		return err
 	}
+	if key == setting.UpstreamInterceptionOptionKey {
+		_, err := setting.ValidateAndNormalizeUpstreamInterceptionConfigJSON(value)
+		return err
+	}
 	if key == operation_setting.ToolPriceOptionKey {
 		return operation_setting.ValidateToolPricesJSON(value)
 	}
@@ -239,10 +245,16 @@ func normalizeOptionValue(key string, value string) (string, error) {
 	if key == "RelayUserAgentBlacklist" {
 		return common.NormalizeRelayUserAgentBlacklist(value)
 	}
+	if key == setting.UpstreamInterceptionOptionKey {
+		return setting.ValidateAndNormalizeUpstreamInterceptionConfigJSON(value)
+	}
 	return value, validateOptionValue(key, value)
 }
 
 func UpdateOption(key string, value string) error {
+	if IsPricingOptionKey(key) {
+		return ErrPricingOptionRequiresPatch
+	}
 	var err error
 	value, err = normalizeOptionValue(key, value)
 	if err != nil {
@@ -271,6 +283,11 @@ func UpdateOption(key string, value string) error {
 func UpdateOptionsBulk(values map[string]string) error {
 	if len(values) == 0 {
 		return nil
+	}
+	for key := range values {
+		if IsPricingOptionKey(key) {
+			return ErrPricingOptionRequiresPatch
+		}
 	}
 	normalizedValues := make(map[string]string, len(values))
 	for key, value := range values {
@@ -329,6 +346,12 @@ func updateOptionMap(key string, value string) (err error) {
 			common.OptionMap["RelayUserAgentBlacklistEnabled"] == "true",
 			common.OptionMap["RelayUserAgentBlacklist"],
 		)
+		if err != nil {
+			return err
+		}
+	}
+	if key == setting.UpstreamInterceptionOptionKey {
+		_, err = setting.SetUpstreamInterceptionConfig(value)
 		if err != nil {
 			return err
 		}

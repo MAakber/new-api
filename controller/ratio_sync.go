@@ -21,6 +21,7 @@ import (
 
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/relaykit/dto"
+	"github.com/QuantumNous/new-api/service"
 	"github.com/QuantumNous/new-api/setting/billing_setting"
 	"github.com/QuantumNous/new-api/setting/ratio_setting"
 	"github.com/samber/lo"
@@ -250,6 +251,22 @@ func FetchUpstreamRatios(c *gin.Context) {
 
 			ctx, cancel := context.WithTimeout(c.Request.Context(), time.Duration(req.Timeout)*time.Second)
 			defer cancel()
+			// Presets now use the shared, key-free source service. Real/custom
+			// channels retain the legacy path below until their descriptor/UI
+			// migration is complete, preserving the existing fetch contract.
+			if chItem.ID == officialRatioPresetID || chItem.ID == modelsDevPresetID {
+				kind := service.PricingSourceOfficial
+				if chItem.ID == modelsDevPresetID {
+					kind = service.PricingSourceModelsDev
+				}
+				normalized, fetchErr := service.FetchNormalizedPricing(ctx, service.PricingSourceDescriptor{Kind: kind}, time.Duration(req.Timeout)*time.Second)
+				if fetchErr != nil {
+					ch <- upstreamResult{Name: uniqueName, Err: service.SanitizePricingError(fetchErr)}
+					return
+				}
+				ch <- upstreamResult{Name: uniqueName, Data: normalized.ToSyncData()}
+				return
+			}
 
 			httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, fullURL, nil)
 			if err != nil {

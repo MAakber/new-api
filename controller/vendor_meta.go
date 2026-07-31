@@ -1,12 +1,14 @@
 package controller
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // GetAllVendors 获取供应商列表（分页）
@@ -116,9 +118,16 @@ func DeleteVendorMeta(c *gin.Context) {
 		common.ApiError(c, err)
 		return
 	}
-	if err := model.DB.Delete(&model.Vendor{}, id).Error; err != nil {
+	var v model.Vendor
+	if err := model.DB.First(&v, id).Error; err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		common.ApiError(c, err)
 		return
+	}
+	if v.Id != 0 {
+		if err := v.Delete(); err != nil {
+			common.ApiError(c, err)
+			return
+		}
 	}
 	common.ApiSuccess(c, nil)
 }

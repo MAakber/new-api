@@ -131,6 +131,17 @@ func UpdateOption(c *gin.Context) {
 		})
 		return
 	}
+	// Pricing maps have a single CAS patch entry point. This guard must remain
+	// before value conversion and all option-specific validation, since those
+	// paths can update ratio/config runtime state before model.UpdateOption gets
+	// its own defensive rejection.
+	if model.IsPricingOptionKey(option.Key) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"message": "pricing options must be updated through the pricing patch service",
+		})
+		return
+	}
 	switch option.Value.(type) {
 	case bool:
 		option.Value = common.Interface2String(option.Value.(bool))

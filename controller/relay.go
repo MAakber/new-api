@@ -92,6 +92,9 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 	defer func() {
 		if newAPIError != nil {
 			logger.LogError(c, fmt.Sprintf("relay error: %s", common.LocalLogPreview(newAPIError.Error())))
+			if service.UpstreamInterceptionErrorAlreadyWritten(c) {
+				return
+			}
 			newAPIError.SetMessage(common.MessageWithRequestId(newAPIError.Error(), requestId))
 			switch relayFormat {
 			case types.RelayFormatOpenAIRealtime:
@@ -233,6 +236,9 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 			break
 		}
 		c.Request.Body = io.NopCloser(bodyStorage)
+		if isUpstreamInterceptionRelayMode(relayInfo.RelayMode, relayFormat) {
+			service.BeginUpstreamInterception(c, relayFormat, channel.Id, relayInfo.IsStream)
+		}
 
 		switch relayFormat {
 		case types.RelayFormatOpenAIRealtime:
@@ -244,6 +250,11 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 		default:
 			newAPIError = relayHandler(c, relayInfo)
 		}
+		if newAPIError != nil {
+			service.AbortUpstreamInterception(c)
+		} else if interceptionErr := service.FinishUpstreamInterception(c); interceptionErr != nil {
+			newAPIError = interceptionErr
+		}
 
 		if newAPIError == nil {
 			relayInfo.LastError = nil
@@ -253,7 +264,11 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 		newAPIError = service.NormalizeViolationFeeError(newAPIError)
 		relayInfo.LastError = newAPIError
 
-		processChannelError(c, *types.NewChannelError(channel.Id, channel.Type, channel.Name, channel.ChannelInfo.IsMultiKey, common.GetContextKeyString(c, constant.ContextKeyChannelKey), channel.GetAutoBan()), newAPIError)
+		if !service.IsUpstreamInterceptionError(newAPIError) {
+			processChannelError(c, *types.NewChannelError(channel.Id, channel.Type, channel.Name, channel.ChannelInfo.IsMultiKey, common.GetContextKeyString(c, constant.ContextKeyChannelKey), channel.GetAutoBan()), newAPIError)
+		} else {
+			logger.LogWarn(c, fmt.Sprintf("upstream response intercepted on channel #%d", channel.Id))
+		}
 
 		if !shouldRetry(c, newAPIError, common.RetryTimes-retryParam.GetRetry()) {
 			break
@@ -283,6 +298,25 @@ func addUsedChannel(c *gin.Context, channelId int) {
 	useChannel := c.GetStringSlice("use_channel")
 	useChannel = append(useChannel, fmt.Sprintf("%d", channelId))
 	c.Set("use_channel", useChannel)
+}
+
+func isUpstreamInterceptionRelayMode(relayMode int, relayFormat types.RelayFormat) bool {
+	// Claude messages use RelayModeUnknown because Path2RelayMode only maps
+	// OpenAI-compatible and Gemini paths.
+	if relayFormat == types.RelayFormatClaude {
+		return true
+	}
+	switch relayMode {
+	case relayconstant.RelayModeChatCompletions,
+		relayconstant.RelayModeCompletions,
+		relayconstant.RelayModeEdits,
+		relayconstant.RelayModeResponses,
+		relayconstant.RelayModeResponsesCompact,
+		relayconstant.RelayModeGemini:
+		return true
+	default:
+		return false
+	}
 }
 
 func fastTokenCountMetaForPricing(request dto.Request) *types.TokenCountMeta {
@@ -352,6 +386,13 @@ func shouldRetry(c *gin.Context, openaiErr *types.NewAPIError, retryTimes int) b
 	}
 	if service.ShouldSkipRetryAfterChannelAffinityFailure(c) {
 		return false
+	}
+	if service.IsUpstreamInterceptionError(openaiErr) {
+		if !service.ShouldRetryUpstreamInterception(openaiErr) || retryTimes <= 0 {
+			return false
+		}
+		_, specificChannel := c.Get("specific_channel_id")
+		return !specificChannel
 	}
 	if types.IsChannelError(openaiErr) {
 		return true

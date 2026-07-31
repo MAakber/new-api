@@ -27,12 +27,19 @@ import * as z from 'zod'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import { resetModelRatios } from '../api'
+import { patchPricingOptions, resetModelRatios } from '../api'
 import { SettingsPageTitleStatusPortal } from '../components/settings-page-context'
 import { SettingsSection } from '../components/settings-section'
+import { useSystemOptions } from '../hooks/use-system-options'
 import { useUpdateOption } from '../hooks/use-update-option'
 import { GroupRatioForm } from './group-ratio-form'
 import { ModelRatioForm } from './model-ratio-form'
+import {
+  buildPricingPatchOperations,
+  getPricingOptionMaps,
+  isPricingPatchConflict,
+  type PricingOptionMaps,
+} from './pricing-patch'
 import { ToolPriceSettings } from './tool-price-settings'
 import { UpstreamRatioSync } from './upstream-ratio-sync'
 import {
@@ -161,7 +168,18 @@ export function RatioSettingsCard({
   const { t } = useTranslation()
   const updateOption = useUpdateOption()
   const queryClient = useQueryClient()
+  const { data: systemOptionsData } = useSystemOptions()
+  const pricingPatch = useMutation({ mutationFn: patchPricingOptions })
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const pricingSnapshotRef = useRef<PricingOptionMaps>({})
+  const pricingOptionMaps = useMemo(
+    () => getPricingOptionMaps(systemOptionsData?.data),
+    [systemOptionsData?.data]
+  )
+
+  useEffect(() => {
+    pricingSnapshotRef.current = pricingOptionMaps
+  }, [pricingOptionMaps])
 
   const resetMutation = useMutation({
     mutationFn: resetModelRatios,
@@ -325,31 +343,62 @@ export function RatioSettingsCard({
         BillingExpr: normalizeJsonString(values.BillingExpr),
       }
 
-      const apiKeyMap: Record<string, string> = {
-        BillingMode: 'billing_setting.billing_mode',
-        BillingExpr: 'billing_setting.billing_expr',
+      const pricingDraft: PricingOptionMaps = {
+        ModelPrice: normalized.ModelPrice,
+        ModelRatio: normalized.ModelRatio,
+        CacheRatio: normalized.CacheRatio,
+        CreateCacheRatio: normalized.CreateCacheRatio,
+        CompletionRatio: normalized.CompletionRatio,
+        ImageRatio: normalized.ImageRatio,
+        AudioRatio: normalized.AudioRatio,
+        AudioCompletionRatio: normalized.AudioCompletionRatio,
+        'billing_setting.billing_mode': normalized.BillingMode,
+        'billing_setting.billing_expr': normalized.BillingExpr,
       }
 
-      const updates = (
-        Object.keys(normalized) as Array<keyof ModelFormValues>
-      ).filter(
-        (key) => normalized[key] !== modelNormalizedDefaults.current[key]
+      const operations = buildPricingPatchOperations(
+        pricingSnapshotRef.current,
+        pricingDraft
       )
+      const exposeRatioChanged =
+        normalized.ExposeRatioEnabled !==
+        modelNormalizedDefaults.current.ExposeRatioEnabled
 
-      if (updates.length === 0) {
+      if (operations.length === 0 && !exposeRatioChanged) {
         toast.info(t('No model price changes to save'))
         return
       }
 
-      for (const key of updates) {
-        const apiKey = apiKeyMap[key as string] || (key as string)
-        await updateOption.mutateAsync({ key: apiKey, value: normalized[key] })
+      try {
+        if (operations.length > 0) {
+          const response = await pricingPatch.mutateAsync({ operations })
+          if (!response.success) {
+            throw new Error(response.message || t('Failed to update setting'))
+          }
+          pricingSnapshotRef.current = response.data
+          queryClient.invalidateQueries({ queryKey: ['system-options'] })
+        }
+        if (exposeRatioChanged) {
+          await updateOption.mutateAsync({
+            key: 'ExposeRatioEnabled',
+            value: normalized.ExposeRatioEnabled,
+          })
+        }
+      } catch (error) {
+        if (isPricingPatchConflict(error)) {
+          toast.error(
+            t('Pricing configuration changed. Refreshed latest values.')
+          )
+          queryClient.invalidateQueries({ queryKey: ['system-options'] })
+          return
+        }
+        throw error
       }
 
       modelNormalizedDefaults.current = normalized
       setSavedModelValues(normalized)
     },
-    [t, updateOption]
+    [pricingPatch, queryClient, t, updateOption]
   )
 
   const saveGroupRatios = useCallback(
@@ -420,7 +469,7 @@ export function RatioSettingsCard({
           savedValues={savedModelValues}
           onSave={saveModelRatios}
           onReset={handleResetRatios}
-          isSaving={updateOption.isPending}
+          isSaving={updateOption.isPending || pricingPatch.isPending}
           isResetting={resetMutation.isPending}
           variant={tab === 'unset-models' ? 'unset' : 'default'}
         />
@@ -438,22 +487,7 @@ export function RatioSettingsCard({
     if (tab === 'tool-prices') {
       return <ToolPriceSettings defaultValue={toolPricesDefault} />
     }
-    return (
-      <UpstreamRatioSync
-        modelRatios={{
-          ModelPrice: modelDefaults.ModelPrice,
-          ModelRatio: modelDefaults.ModelRatio,
-          CompletionRatio: modelDefaults.CompletionRatio,
-          CacheRatio: modelDefaults.CacheRatio,
-          CreateCacheRatio: modelDefaults.CreateCacheRatio,
-          ImageRatio: modelDefaults.ImageRatio,
-          AudioRatio: modelDefaults.AudioRatio,
-          AudioCompletionRatio: modelDefaults.AudioCompletionRatio,
-          'billing_setting.billing_mode': modelDefaults.BillingMode,
-          'billing_setting.billing_expr': modelDefaults.BillingExpr,
-        }}
-      />
-    )
+    return <UpstreamRatioSync modelRatios={pricingOptionMaps} />
   }
 
   const renderTabSwitcher = () => (

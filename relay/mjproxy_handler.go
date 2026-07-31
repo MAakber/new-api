@@ -37,15 +37,22 @@ func RelayMidjourneyImage(c *gin.Context) {
 	}
 	var httpClient *http.Client
 	var proxy string
-	if channel, err := model.CacheGetChannel(midjourneyTask.ChannelId); err == nil {
-		proxy = channel.GetSetting().Proxy
-		if proxy != "" {
-			if httpClient, err = service.GetHttpClientWithProxy(proxy); err != nil {
-				c.JSON(400, gin.H{
-					"error": "proxy_url_invalid",
-				})
-				return
-			}
+	channel, err := model.CacheGetChannel(midjourneyTask.ChannelId)
+	if err != nil || channel == nil {
+		c.JSON(http.StatusServiceUnavailable, gin.H{"error": "channel unavailable"})
+		return
+	}
+	if err := service.AuthorizeChannelForUserRequest(channel); err != nil {
+		c.JSON(http.StatusServiceUnavailable, gin.H{"error": "channel unavailable"})
+		return
+	}
+	proxy = channel.GetSetting().Proxy
+	if proxy != "" {
+		if httpClient, err = service.GetHttpClientWithProxy(proxy); err != nil {
+			c.JSON(400, gin.H{
+				"error": "proxy_url_invalid",
+			})
+			return
 		}
 	}
 	if httpClient == nil {
@@ -306,6 +313,9 @@ func RelayMidjourneyTaskImageSeed(c *gin.Context) *dto.MidjourneyResponse {
 	if channel.Status != common.ChannelStatusEnabled {
 		return service.MidjourneyErrorWrapper(constant.MjRequestError, "该任务所属渠道已被禁用")
 	}
+	if err := service.AuthorizeChannelForUserRequest(channel); err != nil {
+		return service.MidjourneyErrorWrapper(constant.MjRequestError, "channel unavailable")
+	}
 	c.Set("channel_id", originTask.ChannelId)
 	c.Request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", channel.Key))
 
@@ -479,6 +489,9 @@ func RelayMidjourneySubmit(c *gin.Context, relayInfo *relaycommon.RelayInfo) *dt
 			}
 			if channel.Status != common.ChannelStatusEnabled {
 				return service.MidjourneyErrorWrapper(constant.MjRequestError, "该任务所属渠道已被禁用")
+			}
+			if err := service.AuthorizeChannelForUserRequest(channel); err != nil {
+				return service.MidjourneyErrorWrapper(constant.MjRequestError, "channel unavailable")
 			}
 			c.Set("base_url", channel.GetBaseURL())
 			c.Set("channel_id", originTask.ChannelId)

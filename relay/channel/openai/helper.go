@@ -52,7 +52,9 @@ func handleClaudeFormat(c *gin.Context, data string, info *relaycommon.RelayInfo
 		return fmt.Errorf("expected Claude stream responses, got %T", result.Value)
 	}
 	for _, resp := range claudeResponses {
-		helper.ClaudeData(c, *resp)
+		if err := helper.ClaudeData(c, *resp); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -86,8 +88,7 @@ func handleGeminiFormat(c *gin.Context, data string, info *relaycommon.RelayInfo
 
 	// send gemini format response
 	c.Render(-1, common.CustomEvent{Data: "data: " + string(geminiResponseStr)})
-	_ = helper.FlushWriter(c)
-	return nil
+	return helper.FlushWriter(c)
 }
 
 func ProcessStreamResponse(streamResponse dto.ChatCompletionsStreamResponse, responseTextBuilder *strings.Builder, toolCount *int) error {
@@ -236,9 +237,9 @@ func HandleFinalResponse(c *gin.Context, info *relaycommon.RelayInfo, lastStream
 	}
 }
 
-func sendResponsesStreamData(c *gin.Context, streamResponse dto.ResponsesStreamResponse, data string) {
+func sendResponsesStreamData(c *gin.Context, streamResponse dto.ResponsesStreamResponse, data string) error {
 	if data == "" {
-		return
+		return nil
 	}
-	_ = helper.ResponseChunkData(c, streamResponse, data)
+	return helper.ResponseChunkData(c, streamResponse, data)
 }

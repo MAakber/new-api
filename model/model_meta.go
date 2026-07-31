@@ -23,7 +23,8 @@ type BoundChannel struct {
 
 type Model struct {
 	Id           int            `json:"id"`
-	ModelName    string         `json:"model_name" gorm:"size:128;not null;uniqueIndex:uk_model_name_delete_at,priority:1"`
+	ModelName    string         `json:"model_name" gorm:"size:128;not null"`
+	ActiveName   *string        `json:"-" gorm:"size:128"`
 	Description  string         `json:"description,omitempty" gorm:"type:text"`
 	Icon         string         `json:"icon,omitempty" gorm:"type:varchar(128)"`
 	Tags         string         `json:"tags,omitempty" gorm:"type:varchar(255)"`
@@ -33,7 +34,7 @@ type Model struct {
 	SyncOfficial int            `json:"sync_official" gorm:"default:1"`
 	CreatedTime  int64          `json:"created_time" gorm:"bigint"`
 	UpdatedTime  int64          `json:"updated_time" gorm:"bigint"`
-	DeletedAt    gorm.DeletedAt `json:"-" gorm:"index;uniqueIndex:uk_model_name_delete_at,priority:2"`
+	DeletedAt    gorm.DeletedAt `json:"-" gorm:"index"`
 
 	BoundChannels []BoundChannel `json:"bound_channels,omitempty" gorm:"-"`
 	EnableGroups  []string       `json:"enable_groups,omitempty" gorm:"-"`
@@ -48,6 +49,7 @@ func (mi *Model) Insert() error {
 	now := common.GetTimestamp()
 	mi.CreatedTime = now
 	mi.UpdatedTime = now
+	mi.ActiveName = &mi.ModelName
 
 	// 保存原始值（因为 Create 后可能被 GORM 的 default 标签覆盖为 1）
 	originalStatus := mi.Status
@@ -55,6 +57,11 @@ func (mi *Model) Insert() error {
 
 	// 先创建记录（GORM 会对零值字段应用默认值）
 	if err := DB.Create(mi).Error; err != nil {
+		var existing Model
+		if lookupErr := DB.Where("active_name = ?", mi.ModelName).First(&existing).Error; lookupErr == nil {
+			mi.Id = existing.Id
+			return nil
+		}
 		return err
 	}
 
@@ -76,14 +83,20 @@ func IsModelNameDuplicated(id int, name string) (bool, error) {
 
 func (mi *Model) Update() error {
 	mi.UpdatedTime = common.GetTimestamp()
+	mi.ActiveName = &mi.ModelName
 	// 使用 Select 强制更新所有字段，包括零值
 	return DB.Model(&Model{}).Where("id = ?", mi.Id).
-		Select("model_name", "description", "icon", "tags", "vendor_id", "endpoints", "status", "sync_official", "name_rule", "updated_time").
+		Select("model_name", "active_name", "description", "icon", "tags", "vendor_id", "endpoints", "status", "sync_official", "name_rule", "updated_time").
 		Updates(mi).Error
 }
 
 func (mi *Model) Delete() error {
-	return DB.Delete(mi).Error
+	return DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Model(mi).Update("active_name", nil).Error; err != nil {
+			return err
+		}
+		return tx.Delete(mi).Error
+	})
 }
 
 func GetVendorModelCounts() (map[int64]int64, error) {

@@ -139,6 +139,9 @@ func ResponsesHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *
 	}
 
 	usage, newAPIError := adaptor.DoResponse(c, httpResp, info)
+	if interceptionErr := service.FinishUpstreamInterception(c); interceptionErr != nil {
+		return interceptionErr
+	}
 	if newAPIError != nil {
 		// reset status code 重置状态码
 		service.ResetStatusCode(newAPIError, statusCodeMappingStr)

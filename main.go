@@ -322,6 +322,10 @@ func InitResources() error {
 			common.SysError("failed to migrate retired frontend options: " + err.Error())
 		}
 	}
+	if err := model.SeedCanonicalPricingOptions(); err != nil {
+		common.FatalLog("failed to seed canonical pricing options: " + err.Error())
+		return err
+	}
 	model.InitOptionMap()
 
 	// 清理旧的磁盘缓存文件

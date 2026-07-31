@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"errors"
 	"sort"
 	"strconv"
 	"strings"
@@ -11,6 +12,7 @@ import (
 	"github.com/QuantumNous/new-api/model"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // GetAllModelsMeta 获取模型列表（分页）
@@ -161,9 +163,16 @@ func DeleteModelMeta(c *gin.Context) {
 		common.ApiError(c, err)
 		return
 	}
-	if err := model.DB.Delete(&model.Model{}, id).Error; err != nil {
+	var m model.Model
+	if err := model.DB.First(&m, id).Error; err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		common.ApiError(c, err)
 		return
+	}
+	if m.Id != 0 {
+		if err := m.Delete(); err != nil {
+			common.ApiError(c, err)
+			return
+		}
 	}
 	model.RefreshPricing()
 	common.ApiSuccess(c, nil)

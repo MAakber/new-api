@@ -39,6 +39,41 @@ export type UpdateOptionResponse = {
   message: string
 }
 
+export type PricingOptionKey =
+  | 'ModelPrice'
+  | 'ModelRatio'
+  | 'CacheRatio'
+  | 'CreateCacheRatio'
+  | 'CompletionRatio'
+  | 'ImageRatio'
+  | 'AudioRatio'
+  | 'AudioCompletionRatio'
+  | 'billing_setting.billing_mode'
+  | 'billing_setting.billing_expr'
+
+export type PricingPatchValue = number | string
+
+export type PricingPatchOperation = {
+  key: PricingOptionKey
+  model: string
+  action: 'set' | 'delete'
+  value?: PricingPatchValue
+  expected: {
+    present: boolean
+    value?: PricingPatchValue
+  }
+}
+
+export type PricingPatchRequest = {
+  operations: PricingPatchOperation[]
+}
+
+export type PricingPatchResponse = {
+  success: boolean
+  message: string
+  data: Record<PricingOptionKey, string>
+}
+
 export type ConfirmPaymentComplianceResponse = {
   success: boolean
   message: string
@@ -371,6 +406,7 @@ export type SecuritySettings = {
   ModelRequestRateLimitGroup: string
   RelayUserAgentBlacklistEnabled: boolean
   RelayUserAgentBlacklist: string
+  UpstreamInterceptionConfig: string
   AutoBanConfig: string
   CheckSensitiveEnabled: boolean
   CheckSensitiveOnPromptEnabled: boolean
@@ -384,6 +420,24 @@ export type SecuritySettings = {
   'fetch_setting.allowed_ports': number[]
   'fetch_setting.apply_ip_filter_for_domain': boolean
   'token_setting.max_user_tokens': number
+}
+
+export type UpstreamInterceptionRule = {
+  name: string
+  type: 'keyword' | 'regex'
+  expression: string
+  enabled: boolean
+}
+
+export type UpstreamInterceptionConfig = {
+  enabled: boolean
+  action: 'remove' | 'block'
+  retry_on_block: boolean
+  error_status: number
+  error_code: string
+  error_message: string
+  excluded_channel_ids: number[]
+  rules: UpstreamInterceptionRule[]
 }
 
 export type UpstreamChannel = {

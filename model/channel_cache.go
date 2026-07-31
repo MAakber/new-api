@@ -208,6 +208,81 @@ func GetRandomSatisfiedChannel(group string, model string, retry int, requestPat
 	return nil, errors.New("channel not found")
 }
 
+// GetRandomSatisfiedChannelExcluding is request-scoped selection. It never
+// mutates shared cache slices and may fall through lower priorities when every
+// candidate at the starting priority is excluded.
+func GetRandomSatisfiedChannelExcluding(group, model string, retry int, requestPath string, excluded map[int]struct{}) (*Channel, error) {
+	if !common.MemoryCacheEnabled {
+		return GetChannelExcluding(group, model, retry, requestPath, excluded)
+	}
+	channelSyncLock.RLock()
+	defer channelSyncLock.RUnlock()
+	channels := filterChannelsByRequestPathAndModel(group2model2channels[group][model], requestPath, model)
+	if len(channels) == 0 {
+		channels = filterChannelsByRequestPathAndModel(group2model2channels[group][ratio_setting.FormatMatchingModelName(model)], requestPath, model)
+	}
+	priorities := map[int64]struct{}{}
+	for _, id := range channels {
+		if _, skip := excluded[id]; skip {
+			continue
+		}
+		channel, ok := channelsIDM[id]
+		if !ok {
+			return nil, fmt.Errorf("数据库一致性错误，渠道# %d 不存在，请联系管理员修复", id)
+		}
+		priorities[channel.GetPriority()] = struct{}{}
+	}
+	ordered := make([]int64, 0, len(priorities))
+	for priority := range priorities {
+		ordered = append(ordered, priority)
+	}
+	sort.Slice(ordered, func(i, j int) bool { return ordered[i] > ordered[j] })
+	if len(ordered) == 0 {
+		return nil, nil
+	}
+	if retry < 0 {
+		retry = 0
+	} else if retry >= len(ordered) {
+		retry = len(ordered) - 1
+	}
+	for _, priority := range ordered[retry:] {
+		candidates := make([]*Channel, 0)
+		sumWeight := 0
+		for _, id := range channels {
+			if _, skip := excluded[id]; skip {
+				continue
+			}
+			channel := channelsIDM[id]
+			if channel.GetPriority() == priority {
+				candidates = append(candidates, channel)
+				sumWeight += channel.GetWeight()
+			}
+		}
+		if len(candidates) == 0 {
+			continue
+		}
+		return chooseCachedWeightedChannel(candidates, sumWeight), nil
+	}
+	return nil, nil
+}
+
+func chooseCachedWeightedChannel(channels []*Channel, sumWeight int) *Channel {
+	smoothingFactor, smoothingAdjustment := 1, 0
+	if sumWeight == 0 {
+		sumWeight, smoothingAdjustment = len(channels)*100, 100
+	} else if sumWeight/len(channels) < 10 {
+		smoothingFactor = 100
+	}
+	randomWeight := rand.Intn(sumWeight * smoothingFactor)
+	for _, channel := range channels {
+		randomWeight -= channel.GetWeight()*smoothingFactor + smoothingAdjustment
+		if randomWeight < 0 {
+			return channel
+		}
+	}
+	return nil
+}
+
 // filterChannelsByRequestPathAndModel restricts candidates by request path and
 // model. Only Advanced Custom (type 58) channels are path-checked: they are kept
 // only when one of their configured routes matches requestPath and model. All

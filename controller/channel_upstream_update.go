@@ -47,6 +47,7 @@ var channelUpstreamModelUpdateSelectFields = []string{
 	"status",
 	"base_url",
 	"models",
+	"config_revision",
 	"model_mapping",
 	"settings",
 	"setting",
@@ -460,15 +461,21 @@ func fetchAdvancedCustomUpstreamModelIDs(channel *model.Channel, baseURL string)
 	return parseOpenAIModelIDs(body)
 }
 
-func updateChannelUpstreamModelSettings(channel *model.Channel, settings dto.ChannelOtherSettings, updateModels bool) error {
+func persistChannelUpstreamModelMutation(channel *model.Channel, expectedModels string, settings dto.ChannelOtherSettings, trigger service.ChannelMutationTrigger) (*service.ChannelUpstreamModelMutationResult, error) {
+	expectedRevision := channel.ConfigRevision
+	expectedOtherSettings := channel.OtherSettings
 	channel.SetOtherSettings(settings)
-	updates := map[string]interface{}{
-		"settings": channel.OtherSettings,
+	result, err := service.PersistChannelUpstreamModels(service.PersistChannelUpstreamModelMutation{
+		ChannelID: channel.Id, ExpectedRevision: expectedRevision, ExpectedModels: expectedModels, ExpectedOtherSettings: expectedOtherSettings, NextModels: channel.Models, OtherSettings: channel.OtherSettings, Trigger: trigger,
+	})
+	if err != nil {
+		return nil, err
 	}
-	if updateModels {
-		updates["models"] = channel.Models
-	}
-	return model.DB.Model(&model.Channel{}).Where("id = ?", channel.Id).Updates(updates).Error
+	channel.Models = result.Updated.Models
+	channel.OtherSettings = result.Updated.OtherSettings
+	channel.ConfigRevision = result.Updated.ConfigRevision
+	channel.AutoPriceGuardID = result.Updated.AutoPriceGuardID
+	return result, nil
 }
 
 func checkAndPersistChannelUpstreamModelUpdates(
@@ -477,6 +484,7 @@ func checkAndPersistChannelUpstreamModelUpdates(
 	force bool,
 	allowAutoApply bool,
 ) (modelsChanged bool, autoAdded int, err error) {
+	expectedModels := channel.Models
 	now := common.GetTimestamp()
 	if !force {
 		minInterval := getUpstreamModelUpdateMinCheckIntervalSeconds()
@@ -489,7 +497,7 @@ func checkAndPersistChannelUpstreamModelUpdates(
 	pendingAddModels, pendingRemoveModels, fetchErr := collectPendingUpstreamModelChanges(channel, *settings)
 	settings.UpstreamModelUpdateLastCheckTime = now
 	if fetchErr != nil {
-		if err = updateChannelUpstreamModelSettings(channel, *settings, false); err != nil {
+		if _, err = persistChannelUpstreamModelMutation(channel, expectedModels, *settings, service.ChannelMutationTriggerUpstreamApply); err != nil {
 			return false, 0, err
 		}
 		return false, 0, fetchErr
@@ -509,15 +517,15 @@ func checkAndPersistChannelUpstreamModelUpdates(
 	}
 	settings.UpstreamModelUpdateLastRemovedModels = pendingRemoveModels
 
-	if err = updateChannelUpstreamModelSettings(channel, *settings, modelsChanged); err != nil {
+	trigger := service.ChannelMutationTriggerUpstreamApply
+	if modelsChanged {
+		trigger = service.ChannelMutationTriggerUpstreamAutoApply
+	}
+	mutation, err := persistChannelUpstreamModelMutation(channel, expectedModels, *settings, trigger)
+	if err != nil {
 		return false, autoAdded, err
 	}
-	if modelsChanged {
-		if err = channel.UpdateAbilities(nil); err != nil {
-			return true, autoAdded, err
-		}
-	}
-	return modelsChanged, autoAdded, nil
+	return mutation.ModelsChanged, autoAdded, nil
 }
 
 func refreshChannelRuntimeCache() {
@@ -937,6 +945,7 @@ func applyChannelUpstreamModelUpdates(
 	removeModels := intersectModelNames(removeModelsInput, pendingRemoveModels)
 	removeModels = subtractModelNames(removeModels, addModels)
 
+	expectedModels := channel.Models
 	originModels := normalizeModelNames(channel.GetModels())
 	nextModels := applySelectedModelChanges(originModels, addModels, removeModels)
 	modelsChanged = !slices.Equal(originModels, nextModels)
@@ -954,16 +963,11 @@ func applyChannelUpstreamModelUpdates(
 	settings.UpstreamModelUpdateLastRemovedModels = remainingRemoveModels
 	settings.UpstreamModelUpdateLastCheckTime = common.GetTimestamp()
 
-	if err := updateChannelUpstreamModelSettings(channel, settings, modelsChanged); err != nil {
+	mutation, err := persistChannelUpstreamModelMutation(channel, expectedModels, settings, service.ChannelMutationTriggerUpstreamApply)
+	if err != nil {
 		return nil, nil, nil, nil, false, err
 	}
-
-	if modelsChanged {
-		if err := channel.UpdateAbilities(nil); err != nil {
-			return addModels, removeModels, remainingModels, remainingRemoveModels, true, err
-		}
-	}
-	return addModels, removeModels, remainingModels, remainingRemoveModels, modelsChanged, nil
+	return addModels, removeModels, remainingModels, remainingRemoveModels, mutation.ModelsChanged, nil
 }
 
 func collectPendingApplyUpstreamModelChanges(settings dto.ChannelOtherSettings) (pendingAddModels []string, pendingRemoveModels []string) {

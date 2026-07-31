@@ -17,11 +17,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { api } from '@/lib/api'
+import type {
+  AutoPriceSyncStatusView,
+  AutoSyncResponse,
+  PricingSourceDescriptor,
+} from '@/types/auto-sync'
 
 import type {
   ConfirmPaymentComplianceResponse,
   FetchUpstreamRatiosRequest,
   LogCleanupTask,
+  PricingPatchRequest,
+  PricingPatchResponse,
   SystemOptionsResponse,
   SystemTaskListResponse,
   SystemTaskResponse,
@@ -38,6 +45,14 @@ export async function getSystemOptions() {
 
 export async function updateSystemOption(request: UpdateOptionRequest) {
   const res = await api.put<UpdateOptionResponse>('/api/option/', request)
+  return res.data
+}
+
+export async function patchPricingOptions(request: PricingPatchRequest) {
+  const res = await api.patch<PricingPatchResponse>(
+    '/api/option/pricing/patch',
+    request
+  )
   return res.data
 }
 
@@ -103,5 +118,29 @@ export async function fetchUpstreamRatios(request: FetchUpstreamRatiosRequest) {
     '/api/ratio_sync/fetch',
     request
   )
+  return res.data
+}
+
+export async function getAutoPriceSyncStatus() {
+  const res = await api.get<AutoSyncResponse<AutoPriceSyncStatusView>>(
+    '/api/auto-sync/pricing'
+  )
+  if (!res.data.success || !res.data.data) {
+    throw new Error(res.data.message || 'Failed to load automatic price sync')
+  }
+  return res.data
+}
+
+export async function updateAutoPriceSyncConfig(request: {
+  enabled: boolean
+  source?: PricingSourceDescriptor
+}) {
+  const res = await api.patch<AutoSyncResponse<AutoPriceSyncStatusView>>(
+    '/api/auto-sync/pricing',
+    request
+  )
+  if (!res.data.success || !res.data.data) {
+    throw new Error(res.data.message || 'Failed to update automatic price sync')
+  }
   return res.data
 }

@@ -17,13 +17,13 @@ import (
 const (
 	// systemTaskRunnerIdleInterval is the fallback poll interval used to pick up
 	// tasks created on other nodes and mark expired leases failed.
-	systemTaskRunnerIdleInterval = 15 * time.Second
+	systemTaskRunnerIdleInterval = 5 * time.Second
 	systemTaskLockTTL            = 60 * time.Second
 	logCleanupBatchSize          = 100
 
 	// systemTaskSchedulerInterval throttles how often the scheduler/stale-lock
 	// pass runs, independent of how often the runner wakes to claim tasks.
-	systemTaskSchedulerInterval = 15 * time.Second
+	systemTaskSchedulerInterval = 5 * time.Second
 	systemTaskStaleLockInterval = 30 * time.Second
 )
 
@@ -44,6 +44,14 @@ type ScheduledSystemTaskHandler interface {
 	Enabled() bool
 	Interval() time.Duration
 	NewPayload() any
+}
+
+// DueSystemTaskHandler atomically creates a task from a durable external
+// schedule such as the auto-sync event cursor. It is checked every scheduler
+// pass and does not use the periodic latest-task interval logic.
+type DueSystemTaskHandler interface {
+	SystemTaskHandler
+	BuildDueTask(now int64) (*model.SystemTask, bool, error)
 }
 
 var (
@@ -266,6 +274,16 @@ func runSystemTaskScheduler() {
 	scheduledHandlers := make([]ScheduledSystemTaskHandler, 0, len(handlers))
 	taskTypes := make([]string, 0, len(handlers))
 	for _, handler := range handlers {
+		if due, ok := handler.(DueSystemTaskHandler); ok {
+			if _, _, err := due.BuildDueTask(now); err != nil {
+				active, activeErr := model.GetActiveSystemTask(due.Type())
+				if activeErr == nil && active != nil {
+					continue
+				}
+				logger.LogWarn(context.Background(), fmt.Sprintf("durable system task scheduler failed: type=%s err=%v", due.Type(), err))
+			}
+			continue
+		}
 		scheduled, ok := handler.(ScheduledSystemTaskHandler)
 		if !ok || !scheduled.Enabled() {
 			continue

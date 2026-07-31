@@ -30,6 +30,7 @@ import { listDeployments } from './api'
 import { DeploymentAccessGuard } from './components/deployment-access-guard'
 import { DeploymentsTable } from './components/deployments-table'
 import { CreateDeploymentDrawer } from './components/dialogs/create-deployment-drawer'
+import { ModelAutoSyncControl } from './components/model-auto-sync-control'
 import { ModelsDialogs } from './components/models-dialogs'
 import { ModelsPrimaryButtons } from './components/models-primary-buttons'
 import { ModelsProvider, useModels } from './components/models-provider'
@@ -108,6 +109,7 @@ function ModelsContent() {
                 ))}
               </TabsList>
             </Tabs>
+            {activeSection === 'metadata' ? <ModelAutoSyncControl /> : null}
             <div className='min-h-0 flex-1'>
               {activeSection === 'metadata' ? (
                 <ModelsTable />
