@@ -41,6 +41,7 @@ import { isRedemptionExpired } from '../lib'
 import type { Redemption } from '../types'
 import { DataTableBulkActions } from './data-table-bulk-actions'
 import { useRedemptionsColumns } from './redemptions-columns'
+import { RedemptionsExportMenu } from './redemptions-export-menu'
 import { RedemptionsMobileList } from './redemptions-mobile-list'
 import { useRedemptions } from './redemptions-provider'
 
@@ -151,6 +152,9 @@ export function RedemptionsTable() {
     totalCount: data?.total || 0,
     ensurePageInRange,
   })
+  const selectedIds = table
+    .getSelectedRowModel()
+    .rows.map((row) => row.original.id)
 
   const redemptionStatusOptions = useMemo(
     () => getRedemptionStatusOptions(t),
@@ -179,13 +183,26 @@ export function RedemptionsTable() {
             singleSelect: true,
           },
         ],
+        preActions: (
+          <RedemptionsExportMenu
+            selectedIds={selectedIds}
+            keyword={globalFilter || ''}
+            status={statusFilterValue}
+          />
+        ),
       }}
       mobile={<RedemptionsMobileList table={table} isLoading={isLoading} />}
       getRowClassName={(row, { isMobile }) => {
         if (!isDisabledRedemptionRow(row.original)) return undefined
         return isMobile ? DISABLED_ROW_MOBILE : DISABLED_ROW_DESKTOP
       }}
-      bulkActions={<DataTableBulkActions table={table} />}
+      bulkActions={
+        <DataTableBulkActions
+          table={table}
+          keyword={globalFilter || ''}
+          status={statusFilterValue}
+        />
+      }
     />
   )
 }

@@ -5344,6 +5344,22 @@
     "Compression": "压缩方式",
     "Load full request body": "加载完整请求体",
     "Full request body": "完整请求体",
-    "Request body not available": "请求体不可用"
+    "Request body not available": "请求体不可用",
+    "Reward type": "奖励类型",
+    "Subscription plan": "订阅套餐",
+    "No enabled subscription plans are available.": "没有可用的已启用订阅套餐。",
+    "Failed to load subscription plans": "加载订阅套餐失败",
+    "Loading subscription plans...": "正在加载订阅套餐...",
+    "Failed to load redemption code": "加载兑换码失败",
+    "Reward": "奖励",
+    "Subscription plan #{{id}}": "订阅套餐 #{{id}}",
+    "Export": "导出",
+    "Export selected": "导出选中项",
+    "Export current results": "导出当前结果",
+    "Export all codes": "导出全部兑换码",
+    "Export selected codes": "导出选中的兑换码",
+    "Redemption codes exported": "兑换码已导出",
+    "Failed to export redemption codes": "导出兑换码失败",
+    "Subscription activated: {{plan}}": "已激活订阅：{{plan}}"
   }
 }

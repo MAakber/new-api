@@ -24,13 +24,18 @@ import { CopyButton } from '@/components/copy-button'
 import { DataTableBulkActions as BulkActionsToolbar } from '@/components/data-table'
 
 import type { Redemption } from '../types'
+import { SelectedRedemptionsExportButton } from './redemptions-export-menu'
 
 type DataTableBulkActionsProps<TData> = {
   table: Table<TData>
+  keyword: string
+  status: string
 }
 
 export function DataTableBulkActions<TData>({
   table,
+  keyword,
+  status,
 }: DataTableBulkActionsProps<TData>) {
   const { t } = useTranslation()
   const selectedRows = table.getSelectedRowModel().rows
@@ -42,6 +47,7 @@ export function DataTableBulkActions<TData>({
     })
     return selectedCodes.join('\n')
   }, [selectedRows])
+  const selectedIds = selectedRows.map((row) => (row.original as Redemption).id)
 
   return (
     <BulkActionsToolbar table={table} entityName={t('redemption code')}>
@@ -53,6 +59,11 @@ export function DataTableBulkActions<TData>({
         tooltip={t('Copy selected codes')}
         successTooltip={t('Codes copied!')}
         aria-label={t('Copy selected codes')}
+      />
+      <SelectedRedemptionsExportButton
+        selectedIds={selectedIds}
+        keyword={keyword}
+        status={status}
       />
     </BulkActionsToolbar>
   )

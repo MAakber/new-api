@@ -62,6 +62,7 @@ var auditRouteActions = map[string]string{
 	"DELETE /api/performance/logs":       "performance.clear_logs",
 
 	// 兑换码
+	"POST /api/redemption/export":    "redemption.export",
 	"PUT /api/redemption/":           "redemption.update",
 	"DELETE /api/redemption/:id":     "redemption.delete",
 	"DELETE /api/redemption/invalid": "redemption.delete_invalid",

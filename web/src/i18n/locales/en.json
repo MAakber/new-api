@@ -5344,6 +5344,22 @@
     "Compression": "Compression",
     "Load full request body": "Load full request body",
     "Full request body": "Full request body",
-    "Request body not available": "Request body not available"
+    "Request body not available": "Request body not available",
+    "Reward type": "Reward type",
+    "Subscription plan": "Subscription plan",
+    "No enabled subscription plans are available.": "No enabled subscription plans are available.",
+    "Failed to load subscription plans": "Failed to load subscription plans",
+    "Loading subscription plans...": "Loading subscription plans...",
+    "Failed to load redemption code": "Failed to load redemption code",
+    "Reward": "Reward",
+    "Subscription plan #{{id}}": "Subscription plan #{{id}}",
+    "Export": "Export",
+    "Export selected": "Export selected",
+    "Export current results": "Export current results",
+    "Export all codes": "Export all codes",
+    "Export selected codes": "Export selected codes",
+    "Redemption codes exported": "Redemption codes exported",
+    "Failed to export redemption codes": "Failed to export redemption codes",
+    "Subscription activated: {{plan}}": "Subscription activated: {{plan}}"
   }
 }

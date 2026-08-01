@@ -18,6 +18,14 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { z } from 'zod'
 
+export const REDEMPTION_REWARD_TYPE = {
+  QUOTA: 'quota',
+  SUBSCRIPTION: 'subscription',
+} as const
+
+export type RedemptionRewardType =
+  (typeof REDEMPTION_REWARD_TYPE)[keyof typeof REDEMPTION_REWARD_TYPE]
+
 // ============================================================================
 // Redemption Schema & Types
 // ============================================================================
@@ -29,6 +37,12 @@ export const redemptionSchema = z.object({
   key: z.string(),
   status: z.number(), // 1: enabled, 2: disabled, 3: used
   quota: z.number(),
+  reward_type: z
+    .enum([REDEMPTION_REWARD_TYPE.QUOTA, REDEMPTION_REWARD_TYPE.SUBSCRIPTION])
+    .default(REDEMPTION_REWARD_TYPE.QUOTA),
+  plan_id: z.number().default(0),
+  plan_title: z.string().optional(),
+  redeemed_subscription_id: z.number().default(0),
   created_time: z.number(),
   redeemed_time: z.number(),
   expired_time: z.number(), // 0 for never expires
@@ -74,9 +88,20 @@ export interface RedemptionFormData {
   id?: number
   name: string
   quota: number
+  reward_type: RedemptionRewardType
+  plan_id: number
   expired_time: number
   count?: number // Only for create
   status?: number // Only for status update
+}
+
+export type RedemptionExportScope = 'selected' | 'filtered' | 'all'
+
+export interface ExportRedemptionsRequest {
+  scope: RedemptionExportScope
+  ids?: number[]
+  keyword?: string
+  status?: string
 }
 
 // ============================================================================

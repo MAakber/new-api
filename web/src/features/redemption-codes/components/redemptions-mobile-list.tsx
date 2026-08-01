@@ -36,7 +36,7 @@ import { cn } from '@/lib/utils'
 
 import { REDEMPTION_STATUS, REDEMPTION_STATUSES } from '../constants'
 import { isRedemptionExpired } from '../lib'
-import type { Redemption } from '../types'
+import { REDEMPTION_REWARD_TYPE, type Redemption } from '../types'
 import { DataTableRowActions } from './data-table-row-actions'
 
 const MOBILE_SKELETON_KEYS = [
@@ -162,9 +162,14 @@ export function RedemptionsMobileList(props: RedemptionsMobileListProps) {
             </div>
 
             <div className='flex items-center justify-between gap-2 text-xs'>
-              <span className='text-muted-foreground'>{t('Quota')}</span>
+              <span className='text-muted-foreground'>{t('Reward')}</span>
               <span className='font-medium tabular-nums'>
-                {formatQuota(redemption.quota)}
+                {redemption.reward_type === REDEMPTION_REWARD_TYPE.SUBSCRIPTION
+                  ? redemption.plan_title ||
+                    t('Subscription plan #{{id}}', {
+                      id: redemption.plan_id,
+                    })
+                  : formatQuota(redemption.quota)}
               </span>
             </div>
           </div>

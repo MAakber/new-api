@@ -25,6 +25,7 @@ import type {
   GetRedemptionsResponse,
   SearchRedemptionsParams,
   RedemptionFormData,
+  ExportRedemptionsRequest,
 } from './types'
 
 // ============================================================================
@@ -97,4 +98,35 @@ export async function deleteRedemption(id: number): Promise<ApiResponse> {
 export async function deleteInvalidRedemptions(): Promise<ApiResponse<number>> {
   const res = await api.delete('/api/redemption/invalid')
   return res.data
+}
+
+export async function exportRedemptions(
+  data: ExportRedemptionsRequest
+): Promise<void> {
+  const res = await api.post('/api/redemption/export', data, {
+    responseType: 'blob',
+  })
+  const contentType = String(res.headers['content-type'] || '')
+  if (!contentType.includes('text/csv')) {
+    const text = await (res.data as Blob).text()
+    let message = 'Failed to export redemption codes'
+    try {
+      const payload = JSON.parse(text) as ApiResponse
+      message = payload.message || message
+    } catch {
+      // Keep the stable fallback when the server does not return JSON.
+    }
+    throw new Error(message)
+  }
+  const disposition = String(res.headers['content-disposition'] || '')
+  const filenameMatch = disposition.match(/filename="?([^";]+)"?/i)
+  const filename = filenameMatch?.[1] || 'redemption-codes.csv'
+  const url = URL.createObjectURL(res.data as Blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
 }
