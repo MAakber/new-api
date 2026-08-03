@@ -16,6 +16,7 @@ func TestWriteRedemptionsCSVIncludesBOMAndManagementFields(t *testing.T) {
 	redemption := &model.Redemption{
 		Id:                     7,
 		Name:                   "套餐,测试",
+		CodeType:               model.RedemptionCodeTypeRedemption,
 		RewardType:             model.RedemptionRewardTypeSubscription,
 		Key:                    "12345678901234567890123456789012",
 		PlanId:                 3,
@@ -43,6 +44,7 @@ func TestWriteRedemptionsCSVIncludesBOMAndManagementFields(t *testing.T) {
 	assert.Equal(t, "used", records[1][7])
 	assert.Equal(t, "11", records[1][11])
 	assert.Equal(t, "13", records[1][12])
+	assert.Equal(t, redemption.CodeType, records[1][13])
 }
 
 func TestValidateRedemptionStatusUpdateRejectsUsedAndUnknownStatuses(t *testing.T) {

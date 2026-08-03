@@ -27,6 +27,8 @@ import {
 } from '../constants'
 import {
   REDEMPTION_REWARD_TYPE,
+  REDEMPTION_CODE_TYPE,
+  type RedemptionCodeType,
   type RedemptionFormData,
   type Redemption,
   type RedemptionRewardType,
@@ -48,8 +50,13 @@ export function getRedemptionFormSchema(t: TFunction) {
         REDEMPTION_REWARD_TYPE.QUOTA,
         REDEMPTION_REWARD_TYPE.SUBSCRIPTION,
       ]),
+      code_type: z.enum([
+        REDEMPTION_CODE_TYPE.REDEMPTION,
+        REDEMPTION_CODE_TYPE.REGISTRATION,
+      ]),
       quota_dollars: z.number().min(0, t('Quota must be a positive number')),
       plan_id: z.number().int().min(0),
+      max_uses: z.number().int().min(1, t('Usage limit must be at least 1')),
       expired_time: z.date().optional(),
       count: z
         .number()
@@ -59,6 +66,7 @@ export function getRedemptionFormSchema(t: TFunction) {
     })
     .superRefine((data, context) => {
       if (
+        data.code_type === REDEMPTION_CODE_TYPE.REDEMPTION &&
         data.reward_type === REDEMPTION_REWARD_TYPE.SUBSCRIPTION &&
         data.plan_id <= 0
       ) {
@@ -73,9 +81,11 @@ export function getRedemptionFormSchema(t: TFunction) {
 
 export type RedemptionFormValues = {
   name: string
+  code_type: RedemptionCodeType
   reward_type: RedemptionRewardType
   quota_dollars: number
   plan_id: number
+  max_uses: number
   expired_time?: Date
   count?: number
 }
@@ -86,9 +96,11 @@ export type RedemptionFormValues = {
 
 export const REDEMPTION_FORM_DEFAULT_VALUES: RedemptionFormValues = {
   name: '',
+  code_type: REDEMPTION_CODE_TYPE.REDEMPTION,
   reward_type: REDEMPTION_REWARD_TYPE.QUOTA,
   quota_dollars: 10,
   plan_id: 0,
+  max_uses: 1,
   expired_time: undefined,
   count: 1,
 }
@@ -105,9 +117,11 @@ export function transformFormDataToPayload(
 ): RedemptionFormData {
   return {
     name: data.name,
+    code_type: data.code_type,
     reward_type: data.reward_type,
     quota: parseQuotaFromDollars(data.quota_dollars),
     plan_id: data.plan_id,
+    max_uses: data.max_uses,
     expired_time: data.expired_time
       ? Math.floor(data.expired_time.getTime() / 1000)
       : 0,
@@ -123,9 +137,11 @@ export function transformRedemptionToFormDefaults(
 ): RedemptionFormValues {
   return {
     name: redemption.name,
+    code_type: redemption.code_type,
     reward_type: redemption.reward_type,
     quota_dollars: quotaUnitsToDollars(redemption.quota),
     plan_id: redemption.plan_id,
+    max_uses: redemption.max_uses,
     expired_time:
       redemption.expired_time > 0
         ? new Date(redemption.expired_time * 1000)

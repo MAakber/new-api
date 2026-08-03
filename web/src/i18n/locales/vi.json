@@ -5318,6 +5318,19 @@
     "Ban released": "Ban released",
     "Ban expired": "Ban expired",
     "User IDs must be positive integers": "User IDs must be positive integers",
-    "Optional release reason": "Optional release reason"
+    "Optional release reason": "Optional release reason",
+    "Registration Code": "Mã đăng ký",
+    "Registration": "Đăng ký",
+    "Redemption": "Đổi mã",
+    "Code type": "Loại mã",
+    "Maximum registrations per code": "Số lượt đăng ký tối đa cho mỗi mã",
+    "Each generated registration code can be used this many times": "Mỗi mã đăng ký được tạo có thể dùng số lần này",
+    "{{count}} registrations have already used this code": "Mã này đã được dùng cho {{count}} lượt đăng ký",
+    "Usage limit must be at least 1": "Giới hạn sử dụng phải ít nhất là 1",
+    "Require Registration Code": "Yêu cầu mã đăng ký",
+    "Require a valid registration code for every new account": "Yêu cầu mã đăng ký hợp lệ cho mọi tài khoản mới",
+    "Please enter a registration code": "Vui lòng nhập mã đăng ký",
+    "Enter your registration code": "Nhập mã đăng ký của bạn",
+    "Only required when a third-party sign-in creates a new account": "Chỉ bắt buộc khi đăng nhập bên thứ ba tạo tài khoản mới"
   }
 }

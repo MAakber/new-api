@@ -5361,6 +5361,19 @@
     "Export selected codes": "Export selected codes",
     "Redemption codes exported": "Redemption codes exported",
     "Failed to export redemption codes": "Failed to export redemption codes",
-    "Subscription activated: {{plan}}": "Subscription activated: {{plan}}"
+    "Subscription activated: {{plan}}": "Subscription activated: {{plan}}",
+    "Registration Code": "Registration Code",
+    "Registration": "Registration",
+    "Redemption": "Redemption",
+    "Code type": "Code type",
+    "Maximum registrations per code": "Maximum registrations per code",
+    "Each generated registration code can be used this many times": "Each generated registration code can be used this many times",
+    "{{count}} registrations have already used this code": "{{count}} registrations have already used this code",
+    "Usage limit must be at least 1": "Usage limit must be at least 1",
+    "Require Registration Code": "Require Registration Code",
+    "Require a valid registration code for every new account": "Require a valid registration code for every new account",
+    "Please enter a registration code": "Please enter a registration code",
+    "Enter your registration code": "Enter your registration code",
+    "Only required when a third-party sign-in creates a new account": "Only required when a third-party sign-in creates a new account"
   }
 }

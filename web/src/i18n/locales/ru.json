@@ -5318,6 +5318,19 @@
     "Ban released": "Ban released",
     "Ban expired": "Ban expired",
     "User IDs must be positive integers": "User IDs must be positive integers",
-    "Optional release reason": "Optional release reason"
+    "Optional release reason": "Optional release reason",
+    "Registration Code": "Код регистрации",
+    "Registration": "Регистрация",
+    "Redemption": "Погашение",
+    "Code type": "Тип кода",
+    "Maximum registrations per code": "Максимум регистраций на код",
+    "Each generated registration code can be used this many times": "Каждый созданный код регистрации можно использовать столько раз",
+    "{{count}} registrations have already used this code": "Этот код уже использован для {{count}} регистраций",
+    "Usage limit must be at least 1": "Лимит использования должен быть не менее 1",
+    "Require Registration Code": "Требовать код регистрации",
+    "Require a valid registration code for every new account": "Требовать действующий код регистрации для каждой новой учетной записи",
+    "Please enter a registration code": "Введите код регистрации",
+    "Enter your registration code": "Введите ваш код регистрации",
+    "Only required when a third-party sign-in creates a new account": "Требуется только когда сторонний вход создает новую учетную запись"
   }
 }

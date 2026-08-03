@@ -5361,6 +5361,19 @@
     "Export selected codes": "导出选中的兑换码",
     "Redemption codes exported": "兑换码已导出",
     "Failed to export redemption codes": "导出兑换码失败",
-    "Subscription activated: {{plan}}": "已激活订阅：{{plan}}"
+    "Subscription activated: {{plan}}": "已激活订阅：{{plan}}",
+    "Registration Code": "注册码",
+    "Registration": "注册",
+    "Redemption": "兑换",
+    "Code type": "代码类型",
+    "Maximum registrations per code": "每个注册码最多注册次数",
+    "Each generated registration code can be used this many times": "每个生成的注册码可用于这么多次注册",
+    "{{count}} registrations have already used this code": "此注册码已被用于注册 {{count}} 次",
+    "Usage limit must be at least 1": "使用次数上限至少为 1",
+    "Require Registration Code": "要求注册码",
+    "Require a valid registration code for every new account": "每个新账户注册均需有效注册码",
+    "Please enter a registration code": "请输入注册码",
+    "Enter your registration code": "输入您的注册码",
+    "Only required when a third-party sign-in creates a new account": "仅当第三方登录创建新账户时才需要"
   }
 }

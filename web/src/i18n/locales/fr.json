@@ -5318,6 +5318,19 @@
     "Ban released": "Ban released",
     "Ban expired": "Ban expired",
     "User IDs must be positive integers": "User IDs must be positive integers",
-    "Optional release reason": "Optional release reason"
+    "Optional release reason": "Optional release reason",
+    "Registration Code": "Code d'inscription",
+    "Registration": "Inscription",
+    "Redemption": "Échange",
+    "Code type": "Type de code",
+    "Maximum registrations per code": "Nombre maximal d'inscriptions par code",
+    "Each generated registration code can be used this many times": "Chaque code d'inscription généré peut être utilisé ce nombre de fois",
+    "{{count}} registrations have already used this code": "Ce code a déjà été utilisé pour {{count}} inscriptions",
+    "Usage limit must be at least 1": "La limite d'utilisation doit être d'au moins 1",
+    "Require Registration Code": "Exiger un code d'inscription",
+    "Require a valid registration code for every new account": "Exiger un code d'inscription valide pour chaque nouveau compte",
+    "Please enter a registration code": "Veuillez saisir un code d'inscription",
+    "Enter your registration code": "Saisissez votre code d'inscription",
+    "Only required when a third-party sign-in creates a new account": "Requis uniquement lorsqu'une connexion tierce crée un nouveau compte"
   }
 }

@@ -94,11 +94,16 @@ export function SignUpForm({
       email: '',
       password: '',
       confirmPassword: '',
+      registration_code: '',
     },
   })
 
   const emailValue = form.watch('email')
+  const registrationCode = form.watch('registration_code')
   const emailVerificationRequired = !!status?.email_verification
+  const registrationCodeRequired = Boolean(
+    status?.registration_code_enabled ?? status?.data?.registration_code_enabled
+  )
   const hasUserAgreement = Boolean(status?.user_agreement_enabled)
   const hasPrivacyPolicy = Boolean(status?.privacy_policy_enabled)
   const requiresLegalConsent = hasUserAgreement || hasPrivacyPolicy
@@ -144,6 +149,11 @@ export function SignUpForm({
       return
     }
 
+    if (registrationCodeRequired && !data.registration_code?.trim()) {
+      toast.error(t('Please enter a registration code'))
+      return
+    }
+
     // Validate email verification if required
     if (emailVerificationRequired) {
       if (!data.email) {
@@ -166,6 +176,7 @@ export function SignUpForm({
         email: data.email || undefined,
         verification_code: verificationCode || undefined,
         aff_code: getAffiliateCode(),
+        registration_code: data.registration_code?.trim() || undefined,
         turnstile: turnstileToken,
       })
 
@@ -194,7 +205,6 @@ export function SignUpForm({
       toast.error(legalConsentErrorMessage)
       return
     }
-
     setIsWeChatDialogOpen(true)
   }
 
@@ -214,7 +224,7 @@ export function SignUpForm({
 
     setIsWeChatSubmitting(true)
     try {
-      const res = await wechatLoginByCode(wechatCode)
+      const res = await wechatLoginByCode(wechatCode, registrationCode)
       if (res?.success && isAuthBundle(res.data)) {
         await handleLoginSuccess(res.data)
         toast.success(t('Signed in via WeChat'))
@@ -296,6 +306,25 @@ export function SignUpForm({
         />
 
         {/* Email Verification Section */}
+        {registrationCodeRequired && (
+          <FormField
+            control={form.control}
+            name='registration_code'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('Registration Code')}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={t('Enter your registration code')}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
         {emailVerificationRequired && (
           <>
             {/* Email Field */}
@@ -381,6 +410,7 @@ export function SignUpForm({
         {oauthRegisterEnabled && (
           <OAuthProviders
             status={status}
+            registrationCode={registrationCode}
             disabled={isLoading || (requiresLegalConsent && !agreedToLegal)}
             onWeChatLogin={hasWeChatLogin ? handleOpenWeChatDialog : undefined}
             isWeChatLoading={isWeChatSubmitting}

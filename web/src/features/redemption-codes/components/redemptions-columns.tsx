@@ -32,7 +32,11 @@ import { formatQuota, formatTimestampToDate } from '@/lib/format'
 
 import { REDEMPTION_FILTER_EXPIRED, REDEMPTION_STATUSES } from '../constants'
 import { isRedemptionExpired, isTimestampExpired } from '../lib'
-import { REDEMPTION_REWARD_TYPE, type Redemption } from '../types'
+import {
+  REDEMPTION_CODE_TYPE,
+  REDEMPTION_REWARD_TYPE,
+  type Redemption,
+} from '../types'
 import { DataTableRowActions } from './data-table-row-actions'
 
 export function useRedemptionsColumns(): ColumnDef<Redemption>[] {
@@ -133,6 +137,24 @@ export function useRedemptionsColumns(): ColumnDef<Redemption>[] {
       size: 120,
     },
     {
+      accessorKey: 'code_type',
+      header: t('Type'),
+      meta: { mobileHidden: true },
+      cell: ({ row }) => (
+        <StatusBadge
+          label={
+            row.getValue('code_type') === REDEMPTION_CODE_TYPE.REGISTRATION
+              ? t('Registration')
+              : t('Redemption')
+          }
+          variant='neutral'
+          copyable={false}
+          className='-ml-1.5'
+        />
+      ),
+      size: 130,
+    },
+    {
       id: 'code',
       accessorKey: 'key',
       header: t('Code'),
@@ -159,6 +181,16 @@ export function useRedemptionsColumns(): ColumnDef<Redemption>[] {
       header: t('Reward'),
       cell: ({ row }) => {
         const redemption = row.original
+        if (redemption.code_type === REDEMPTION_CODE_TYPE.REGISTRATION) {
+          return (
+            <StatusBadge
+              label={t('Registration')}
+              variant='blue'
+              copyable={false}
+              className='-ml-1.5'
+            />
+          )
+        }
         const isSubscription =
           redemption.reward_type === REDEMPTION_REWARD_TYPE.SUBSCRIPTION
         return (
@@ -176,6 +208,21 @@ export function useRedemptionsColumns(): ColumnDef<Redemption>[] {
         )
       },
       size: 180,
+    },
+    {
+      id: 'usage',
+      header: t('Usage'),
+      meta: { mobileHidden: true },
+      cell: ({ row }) => {
+        const redemption = row.original
+        if (redemption.code_type !== REDEMPTION_CODE_TYPE.REGISTRATION) {
+          return <span className='text-muted-foreground text-sm'>-</span>
+        }
+        return (
+          <span className='font-mono text-sm'>{`${redemption.used_count}/${redemption.max_uses}`}</span>
+        )
+      },
+      size: 110,
     },
     {
       accessorKey: 'created_time',

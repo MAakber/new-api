@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"strconv"
 	"sync"
 	"testing"
@@ -330,4 +331,60 @@ func TestRedeemConcurrentSingleSuccess(t *testing.T) {
 	var user User
 	require.NoError(t, DB.First(&user, "id = ?", userId).Error)
 	assert.Equal(t, 300, user.Quota, "quota must be credited exactly once")
+}
+
+func TestConsumeRegistrationCodeWithTxHonorsUsageLimit(t *testing.T) {
+	require.NoError(t, DB.AutoMigrate(&Redemption{}, &RegistrationCodeUse{}))
+	require.NoError(t, DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&Redemption{}).Error)
+	require.NoError(t, DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&RegistrationCodeUse{}).Error)
+	t.Cleanup(func() {
+		require.NoError(t, DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&Redemption{}).Error)
+		require.NoError(t, DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&RegistrationCodeUse{}).Error)
+	})
+
+	code := &Redemption{
+		Name:        "registration-test",
+		Key:         "40000000000000000000000000000001",
+		Status:      common.RedemptionCodeStatusEnabled,
+		CodeType:    RedemptionCodeTypeRegistration,
+		MaxUses:     2,
+		CreatedTime: common.GetTimestamp(),
+	}
+	require.NoError(t, DB.Create(code).Error)
+
+	err := DB.Transaction(func(tx *gorm.DB) error {
+		require.NoError(t, ConsumeRegistrationCodeWithTx(tx, code.Key, 100))
+		return errors.New("force registration rollback")
+	})
+	require.Error(t, err)
+	var stored Redemption
+	require.NoError(t, DB.First(&stored, code.Id).Error)
+	assert.Zero(t, stored.UsedCount)
+
+	require.NoError(t, DB.Transaction(func(tx *gorm.DB) error {
+		return ConsumeRegistrationCodeWithTx(tx, code.Key, 101)
+	}))
+	require.NoError(t, DB.First(&stored, code.Id).Error)
+	assert.Equal(t, 1, stored.UsedCount)
+	assert.Equal(t, 101, stored.UsedUserId)
+	assert.Equal(t, common.RedemptionCodeStatusEnabled, stored.Status)
+
+	require.NoError(t, DB.Transaction(func(tx *gorm.DB) error {
+		return ConsumeRegistrationCodeWithTx(tx, code.Key, 102)
+	}))
+	require.NoError(t, DB.First(&stored, code.Id).Error)
+	assert.Equal(t, 2, stored.UsedCount)
+	assert.Equal(t, 102, stored.UsedUserId)
+	assert.Equal(t, common.RedemptionCodeStatusUsed, stored.Status)
+
+	err = DB.Transaction(func(tx *gorm.DB) error {
+		return ConsumeRegistrationCodeWithTx(tx, code.Key, 103)
+	})
+	require.ErrorIs(t, err, ErrRegistrationCodeUnavailable)
+	require.NoError(t, DB.First(&stored, code.Id).Error)
+	assert.Equal(t, 2, stored.UsedCount)
+	var uses []RegistrationCodeUse
+	require.NoError(t, DB.Where("redemption_id = ?", code.Id).Order("user_id").Find(&uses).Error)
+	require.Len(t, uses, 2)
+	assert.Equal(t, []int{101, 102}, []int{uses[0].UserId, uses[1].UserId})
 }

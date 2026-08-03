@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQuery } from '@tanstack/react-query'
-import { Coins, PackageCheck } from 'lucide-react'
+import { Coins, KeyRound, PackageCheck } from 'lucide-react'
 import { type FormEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -77,7 +77,9 @@ import {
 } from '../lib'
 import {
   REDEMPTION_REWARD_TYPE,
+  REDEMPTION_CODE_TYPE,
   type Redemption,
+  type RedemptionCodeType,
   type RedemptionRewardType,
 } from '../types'
 import { useRedemptions } from './redemptions-provider'
@@ -97,12 +99,14 @@ export function RedemptionsMutateDrawer({
   const isUpdate = !!currentRow
   const { triggerRefresh } = useRedemptions()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [usedCount, setUsedCount] = useState(0)
 
   const form = useForm<RedemptionFormValues>({
     resolver: zodResolver(getRedemptionFormSchema(t)),
     defaultValues: REDEMPTION_FORM_DEFAULT_VALUES,
   })
   const rewardType = form.watch('reward_type')
+  const codeType = form.watch('code_type')
   const { data: planRecords = [], isLoading: plansLoading } = useQuery({
     queryKey: ['admin-subscription-plans'],
     queryFn: async () => {
@@ -126,12 +130,14 @@ export function RedemptionsMutateDrawer({
         .then((result) => {
           if (result.success && result.data) {
             form.reset(transformRedemptionToFormDefaults(result.data))
+            setUsedCount(result.data.used_count)
           }
         })
         .catch(() => toast.error(t('Failed to load redemption code')))
     } else if (open && !isUpdate) {
       // For create, reset to defaults
       form.reset(REDEMPTION_FORM_DEFAULT_VALUES)
+      setUsedCount(0)
     }
   }, [open, isUpdate, currentRow, form, t])
 
@@ -175,14 +181,19 @@ export function RedemptionsMutateDrawer({
     if (!isUpdate) {
       const name = form.getValues('name')
       if (!name?.trim()) {
-        const defaultName =
+        let defaultName = formatQuota(
+          parseQuotaFromDollars(form.getValues('quota_dollars'))
+        )
+        if (form.getValues('code_type') === REDEMPTION_CODE_TYPE.REGISTRATION) {
+          defaultName = t('Registration Code')
+        } else if (
           form.getValues('reward_type') === REDEMPTION_REWARD_TYPE.SUBSCRIPTION
-            ? planRecords.find(
-                (record) => record.plan.id === form.getValues('plan_id')
-              )?.plan.title || t('Subscription')
-            : formatQuota(
-                parseQuotaFromDollars(form.getValues('quota_dollars'))
-              )
+        ) {
+          defaultName =
+            planRecords.find(
+              (record) => record.plan.id === form.getValues('plan_id')
+            )?.plan.title || t('Subscription')
+        }
         form.setValue('name', [...defaultName].slice(0, 20).join(''), {
           shouldValidate: true,
         })
@@ -257,32 +268,35 @@ export function RedemptionsMutateDrawer({
 
               <FormField
                 control={form.control}
-                name='reward_type'
+                name='code_type'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('Reward type')}</FormLabel>
+                    <FormLabel>{t('Code type')}</FormLabel>
                     <FormControl>
                       <ToggleGroup
                         value={[field.value]}
                         onValueChange={(values) => {
                           const next = values.find(
                             (value) => value !== field.value
-                          ) as RedemptionRewardType | undefined
+                          ) as RedemptionCodeType | undefined
                           if (next) field.onChange(next)
                         }}
                         variant='outline'
                         spacing={0}
+                        disabled={isUpdate}
                         className='grid w-full grid-cols-2'
                       >
-                        <ToggleGroupItem value={REDEMPTION_REWARD_TYPE.QUOTA}>
+                        <ToggleGroupItem
+                          value={REDEMPTION_CODE_TYPE.REDEMPTION}
+                        >
                           <Coins />
-                          {t('Quota')}
+                          {t('Redemption')}
                         </ToggleGroupItem>
                         <ToggleGroupItem
-                          value={REDEMPTION_REWARD_TYPE.SUBSCRIPTION}
+                          value={REDEMPTION_CODE_TYPE.REGISTRATION}
                         >
-                          <PackageCheck />
-                          {t('Subscription plan')}
+                          <KeyRound />
+                          {t('Registration')}
                         </ToggleGroupItem>
                       </ToggleGroup>
                     </FormControl>
@@ -291,89 +305,170 @@ export function RedemptionsMutateDrawer({
                 )}
               />
 
-              {rewardType === REDEMPTION_REWARD_TYPE.QUOTA ? (
+              {codeType === REDEMPTION_CODE_TYPE.REDEMPTION && (
                 <FormField
                   control={form.control}
-                  name='quota_dollars'
+                  name='reward_type'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{quotaLabel}</FormLabel>
+                      <FormLabel>{t('Reward type')}</FormLabel>
+                      <FormControl>
+                        <ToggleGroup
+                          value={[field.value]}
+                          onValueChange={(values) => {
+                            const next = values.find(
+                              (value) => value !== field.value
+                            ) as RedemptionRewardType | undefined
+                            if (next) field.onChange(next)
+                          }}
+                          variant='outline'
+                          spacing={0}
+                          className='grid w-full grid-cols-2'
+                        >
+                          <ToggleGroupItem value={REDEMPTION_REWARD_TYPE.QUOTA}>
+                            <Coins />
+                            {t('Quota')}
+                          </ToggleGroupItem>
+                          <ToggleGroupItem
+                            value={REDEMPTION_REWARD_TYPE.SUBSCRIPTION}
+                          >
+                            <PackageCheck />
+                            {t('Subscription plan')}
+                          </ToggleGroupItem>
+                        </ToggleGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              {codeType === REDEMPTION_CODE_TYPE.REGISTRATION && (
+                <FormField
+                  control={form.control}
+                  name='max_uses'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        {t('Maximum registrations per code')}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           type='number'
-                          step={tokensOnly ? 1 : 0.01}
-                          placeholder={quotaPlaceholder}
+                          min={Math.max(1, usedCount)}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseFloat(e.target.value) || 0
+                              Number.parseInt(e.target.value, 10) || 0
                             )
                           }
                         />
                       </FormControl>
                       <FormDescription>
-                        {tokensOnly
-                          ? t('Enter the quota amount in tokens')
-                          : t('Enter the quota amount in {{currency}}', {
-                              currency: currencyLabel,
-                            })}
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              ) : (
-                <FormField
-                  control={form.control}
-                  name='plan_id'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{t('Subscription plan')}</FormLabel>
-                      <Select
-                        items={enabledPlans.map((record) => ({
-                          value: String(record.plan.id),
-                          label: record.plan.title,
-                        }))}
-                        value={field.value > 0 ? String(field.value) : null}
-                        onValueChange={(value) =>
-                          field.onChange(value === null ? 0 : Number(value))
-                        }
-                        disabled={plansLoading || enabledPlans.length === 0}
-                      >
-                        <FormControl>
-                          <SelectTrigger className='w-full'>
-                            <SelectValue
-                              placeholder={
-                                plansLoading
-                                  ? t('Loading subscription plans...')
-                                  : t('Select subscription plan')
+                        {isUpdate
+                          ? t(
+                              '{{count}} registrations have already used this code',
+                              {
+                                count: usedCount,
                               }
-                            />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent alignItemWithTrigger={false}>
-                          <SelectGroup>
-                            {enabledPlans.map((record) => (
-                              <SelectItem
-                                key={record.plan.id}
-                                value={String(record.plan.id)}
-                              >
-                                {record.plan.title}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      <FormDescription>
-                        {enabledPlans.length === 0 && !plansLoading
-                          ? t('No enabled subscription plans are available.')
-                          : null}
+                            )
+                          : t(
+                              'Each generated registration code can be used this many times'
+                            )}
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               )}
+
+              {codeType !== REDEMPTION_CODE_TYPE.REGISTRATION &&
+                rewardType === REDEMPTION_REWARD_TYPE.QUOTA && (
+                  <FormField
+                    control={form.control}
+                    name='quota_dollars'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{quotaLabel}</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type='number'
+                            step={tokensOnly ? 1 : 0.01}
+                            placeholder={quotaPlaceholder}
+                            onChange={(e) =>
+                              field.onChange(
+                                Number.parseFloat(e.target.value) || 0
+                              )
+                            }
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          {tokensOnly
+                            ? t('Enter the quota amount in tokens')
+                            : t('Enter the quota amount in {{currency}}', {
+                                currency: currencyLabel,
+                              })}
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
+              {codeType !== REDEMPTION_CODE_TYPE.REGISTRATION &&
+                rewardType !== REDEMPTION_REWARD_TYPE.QUOTA && (
+                  <FormField
+                    control={form.control}
+                    name='plan_id'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('Subscription plan')}</FormLabel>
+                        <Select
+                          items={enabledPlans.map((record) => ({
+                            value: String(record.plan.id),
+                            label: record.plan.title,
+                          }))}
+                          value={field.value > 0 ? String(field.value) : null}
+                          onValueChange={(value) =>
+                            field.onChange(value === null ? 0 : Number(value))
+                          }
+                          disabled={plansLoading || enabledPlans.length === 0}
+                        >
+                          <FormControl>
+                            <SelectTrigger className='w-full'>
+                              <SelectValue
+                                placeholder={
+                                  plansLoading
+                                    ? t('Loading subscription plans...')
+                                    : t('Select subscription plan')
+                                }
+                              />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent alignItemWithTrigger={false}>
+                            <SelectGroup>
+                              {enabledPlans.map((record) => (
+                                <SelectItem
+                                  key={record.plan.id}
+                                  value={String(record.plan.id)}
+                                >
+                                  {record.plan.title}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        <FormDescription>
+                          {enabledPlans.length === 0 && !plansLoading
+                            ? t('No enabled subscription plans are available.')
+                            : null}
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
 
               <FormField
                 control={form.control}

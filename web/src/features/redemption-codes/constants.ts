@@ -43,7 +43,7 @@ export const REDEMPTION_STATUSES: Record<
   }
 > = {
   [REDEMPTION_STATUS.ENABLED]: {
-    labelKey: 'Unused',
+    labelKey: 'Active',
     variant: 'success',
     value: REDEMPTION_STATUS.ENABLED,
   },

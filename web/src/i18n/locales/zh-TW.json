@@ -5330,6 +5330,19 @@
     "Compression": "壓縮方式",
     "Load full request body": "載入完整請求體",
     "Full request body": "完整請求體",
-    "Request body not available": "請求體不可用"
+    "Request body not available": "請求體不可用",
+    "Registration Code": "註冊碼",
+    "Registration": "註冊",
+    "Redemption": "兌換",
+    "Code type": "代碼類型",
+    "Maximum registrations per code": "每個註冊碼最多註冊次數",
+    "Each generated registration code can be used this many times": "每個產生的註冊碼可用於這麼多次註冊",
+    "{{count}} registrations have already used this code": "此註冊碼已被用於註冊 {{count}} 次",
+    "Usage limit must be at least 1": "使用次數上限至少為 1",
+    "Require Registration Code": "要求註冊碼",
+    "Require a valid registration code for every new account": "每個新帳戶註冊均需有效註冊碼",
+    "Please enter a registration code": "請輸入註冊碼",
+    "Enter your registration code": "輸入您的註冊碼",
+    "Only required when a third-party sign-in creates a new account": "僅當第三方登入建立新帳戶時才需要"
   }
 }

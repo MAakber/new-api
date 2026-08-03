@@ -26,6 +26,14 @@ export const REDEMPTION_REWARD_TYPE = {
 export type RedemptionRewardType =
   (typeof REDEMPTION_REWARD_TYPE)[keyof typeof REDEMPTION_REWARD_TYPE]
 
+export const REDEMPTION_CODE_TYPE = {
+  REDEMPTION: 'redemption',
+  REGISTRATION: 'registration',
+} as const
+
+export type RedemptionCodeType =
+  (typeof REDEMPTION_CODE_TYPE)[keyof typeof REDEMPTION_CODE_TYPE]
+
 // ============================================================================
 // Redemption Schema & Types
 // ============================================================================
@@ -37,6 +45,9 @@ export const redemptionSchema = z.object({
   key: z.string(),
   status: z.number(), // 1: enabled, 2: disabled, 3: used
   quota: z.number(),
+  code_type: z
+    .enum([REDEMPTION_CODE_TYPE.REDEMPTION, REDEMPTION_CODE_TYPE.REGISTRATION])
+    .default(REDEMPTION_CODE_TYPE.REDEMPTION),
   reward_type: z
     .enum([REDEMPTION_REWARD_TYPE.QUOTA, REDEMPTION_REWARD_TYPE.SUBSCRIPTION])
     .default(REDEMPTION_REWARD_TYPE.QUOTA),
@@ -47,6 +58,8 @@ export const redemptionSchema = z.object({
   redeemed_time: z.number(),
   expired_time: z.number(), // 0 for never expires
   used_user_id: z.number(),
+  max_uses: z.number().default(1),
+  used_count: z.number().default(0),
 })
 
 export type Redemption = z.infer<typeof redemptionSchema>
@@ -87,9 +100,11 @@ export interface SearchRedemptionsParams {
 export interface RedemptionFormData {
   id?: number
   name: string
+  code_type: RedemptionCodeType
   quota: number
   reward_type: RedemptionRewardType
   plan_id: number
+  max_uses: number
   expired_time: number
   count?: number // Only for create
   status?: number // Only for status update

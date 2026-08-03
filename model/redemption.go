@@ -15,7 +15,12 @@ import (
 const (
 	RedemptionRewardTypeQuota        = "quota"
 	RedemptionRewardTypeSubscription = "subscription"
+	RedemptionCodeTypeRedemption     = "redemption"
+	RedemptionCodeTypeRegistration   = "registration"
 )
+
+var ErrRegistrationCodeUnavailable = errors.New("registration code is invalid or unavailable")
+var ErrRegistrationCodeChanged = errors.New("registration code changed concurrently")
 
 type Redemption struct {
 	Id                     int            `json:"id"`
@@ -25,6 +30,7 @@ type Redemption struct {
 	Name                   string         `json:"name" gorm:"index"`
 	Quota                  int            `json:"quota" gorm:"default:100"`
 	RewardType             string         `json:"reward_type" gorm:"type:varchar(32);not null;default:'quota';index"`
+	CodeType               string         `json:"code_type" gorm:"type:varchar(32);not null;default:'redemption';index"`
 	PlanId                 int            `json:"plan_id" gorm:"default:0;index"`
 	PlanTitle              string         `json:"plan_title,omitempty" gorm:"-"`
 	CreatedTime            int64          `json:"created_time" gorm:"bigint"`
@@ -34,6 +40,15 @@ type Redemption struct {
 	UsedUserId             int            `json:"used_user_id"`
 	DeletedAt              gorm.DeletedAt `gorm:"index"`
 	ExpiredTime            int64          `json:"expired_time" gorm:"bigint"` // 过期时间，0 表示不过期
+	MaxUses                int            `json:"max_uses" gorm:"default:1"`
+	UsedCount              int            `json:"used_count" gorm:"default:0"`
+}
+
+type RegistrationCodeUse struct {
+	Id           int   `json:"id"`
+	RedemptionId int   `json:"redemption_id" gorm:"index"`
+	UserId       int   `json:"user_id" gorm:"index"`
+	CreatedTime  int64 `json:"created_time" gorm:"bigint"`
 }
 
 type RedeemResult struct {
@@ -52,8 +67,20 @@ func NormalizeRedemptionRewardType(rewardType string) string {
 	return rewardType
 }
 
+func NormalizeRedemptionCodeType(codeType string) string {
+	codeType = strings.ToLower(strings.TrimSpace(codeType))
+	if codeType == "" {
+		return RedemptionCodeTypeRedemption
+	}
+	return codeType
+}
+
 func (redemption *Redemption) AfterFind(_ *gorm.DB) error {
 	redemption.RewardType = NormalizeRedemptionRewardType(redemption.RewardType)
+	redemption.CodeType = NormalizeRedemptionCodeType(redemption.CodeType)
+	if redemption.CodeType == RedemptionCodeTypeRedemption && redemption.MaxUses <= 0 {
+		redemption.MaxUses = 1
+	}
 	return nil
 }
 
@@ -236,6 +263,9 @@ func Redeem(key string, userId int) (result *RedeemResult, err error) {
 		if redemption.Status != common.RedemptionCodeStatusEnabled {
 			return errors.New("该兑换码已被使用")
 		}
+		if NormalizeRedemptionCodeType(redemption.CodeType) != RedemptionCodeTypeRedemption {
+			return errors.New("该注册码不能用于兑换")
+		}
 		if redemption.ExpiredTime != 0 && redemption.ExpiredTime < common.GetTimestamp() {
 			return errors.New("该兑换码已过期")
 		}
@@ -306,8 +336,60 @@ func Redeem(key string, userId int) (result *RedeemResult, err error) {
 	return result, nil
 }
 
+// ConsumeRegistrationCodeWithTx reserves one use for a newly created account.
+// It is intended to run in the same transaction as inserting that account.
+func ConsumeRegistrationCodeWithTx(tx *gorm.DB, key string, userID int) error {
+	key = strings.TrimSpace(key)
+	if tx == nil || key == "" || userID <= 0 {
+		return ErrRegistrationCodeUnavailable
+	}
+
+	keyCol := "`key`"
+	if common.UsingMainDatabase(common.DatabaseTypePostgreSQL) {
+		keyCol = `"key"`
+	}
+
+	code := &Redemption{}
+	if err := lockForUpdate(tx).Where(keyCol+" = ?", key).First(code).Error; err != nil {
+		return ErrRegistrationCodeUnavailable
+	}
+	if NormalizeRedemptionCodeType(code.CodeType) != RedemptionCodeTypeRegistration ||
+		code.Status != common.RedemptionCodeStatusEnabled ||
+		code.MaxUses <= 0 ||
+		code.UsedCount >= code.MaxUses ||
+		(code.ExpiredTime != 0 && code.ExpiredTime < common.GetTimestamp()) {
+		return ErrRegistrationCodeUnavailable
+	}
+
+	nextUsedCount := code.UsedCount + 1
+	nextStatus := common.RedemptionCodeStatusEnabled
+	if nextUsedCount >= code.MaxUses {
+		nextStatus = common.RedemptionCodeStatusUsed
+	}
+	result := tx.Model(&Redemption{}).
+		Where("id = ? AND status = ? AND used_count = ?", code.Id, common.RedemptionCodeStatusEnabled, code.UsedCount).
+		Updates(map[string]interface{}{
+			"used_count":    nextUsedCount,
+			"used_user_id":  userID,
+			"redeemed_time": common.GetTimestamp(),
+			"status":        nextStatus,
+		})
+	if result.Error != nil || result.RowsAffected != 1 {
+		return ErrRegistrationCodeUnavailable
+	}
+	if err := tx.Create(&RegistrationCodeUse{
+		RedemptionId: code.Id,
+		UserId:       userID,
+		CreatedTime:  common.GetTimestamp(),
+	}).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
 func (redemption *Redemption) Insert() error {
 	redemption.RewardType = NormalizeRedemptionRewardType(redemption.RewardType)
+	redemption.CodeType = NormalizeRedemptionCodeType(redemption.CodeType)
 	var err error
 	err = DB.Create(redemption).Error
 	return err
@@ -321,8 +403,28 @@ func (redemption *Redemption) SelectUpdate() error {
 // Update Make sure your token's fields is completed, because this will update non-zero values
 func (redemption *Redemption) Update() error {
 	var err error
-	err = DB.Model(redemption).Select("name", "status", "quota", "reward_type", "plan_id", "redeemed_time", "expired_time").Updates(redemption).Error
+	err = DB.Model(redemption).Select("name", "status", "quota", "reward_type", "plan_id", "redeemed_time", "expired_time", "max_uses").Updates(redemption).Error
 	return err
+}
+
+// UpdateRegistrationCode prevents an administrator's stale edit from
+// overwriting a registration that consumed the code concurrently.
+func (redemption *Redemption) UpdateRegistrationCode(expectedStatus int, expectedUsedCount int) error {
+	result := DB.Model(&Redemption{}).
+		Where("id = ? AND status = ? AND used_count = ?", redemption.Id, expectedStatus, expectedUsedCount).
+		Updates(map[string]interface{}{
+			"name":         redemption.Name,
+			"status":       redemption.Status,
+			"expired_time": redemption.ExpiredTime,
+			"max_uses":     redemption.MaxUses,
+		})
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected != 1 {
+		return ErrRegistrationCodeChanged
+	}
+	return nil
 }
 
 func GetRedemptionsForExport(ids []int, keyword string, status string, applyFilters bool) ([]*Redemption, error) {

@@ -36,7 +36,11 @@ import { cn } from '@/lib/utils'
 
 import { REDEMPTION_STATUS, REDEMPTION_STATUSES } from '../constants'
 import { isRedemptionExpired } from '../lib'
-import { REDEMPTION_REWARD_TYPE, type Redemption } from '../types'
+import {
+  REDEMPTION_CODE_TYPE,
+  REDEMPTION_REWARD_TYPE,
+  type Redemption,
+} from '../types'
 import { DataTableRowActions } from './data-table-row-actions'
 
 const MOBILE_SKELETON_KEYS = [
@@ -111,6 +115,18 @@ export function RedemptionsMobileList(props: RedemptionsMobileListProps) {
         )
         const statusConfig = REDEMPTION_STATUSES[redemption.status]
         const maskedKey = `${redemption.key.slice(0, 8)}******${redemption.key.slice(-8)}`
+        let detailsLabel = t('Reward')
+        let detailsValue = formatQuota(redemption.quota)
+        if (redemption.code_type === REDEMPTION_CODE_TYPE.REGISTRATION) {
+          detailsLabel = t('Usage')
+          detailsValue = `${redemption.used_count}/${redemption.max_uses}`
+        } else if (
+          redemption.reward_type === REDEMPTION_REWARD_TYPE.SUBSCRIPTION
+        ) {
+          detailsValue =
+            redemption.plan_title ||
+            t('Subscription plan #{{id}}', { id: redemption.plan_id })
+        }
 
         return (
           <div
@@ -128,7 +144,9 @@ export function RedemptionsMobileList(props: RedemptionsMobileListProps) {
                   {redemption.name}
                 </div>
                 <div className='text-muted-foreground text-[11px]'>
-                  {t('Redemption Code')}
+                  {redemption.code_type === REDEMPTION_CODE_TYPE.REGISTRATION
+                    ? t('Registration Code')
+                    : t('Redemption Code')}
                 </div>
               </div>
               {expired ? (
@@ -162,15 +180,8 @@ export function RedemptionsMobileList(props: RedemptionsMobileListProps) {
             </div>
 
             <div className='flex items-center justify-between gap-2 text-xs'>
-              <span className='text-muted-foreground'>{t('Reward')}</span>
-              <span className='font-medium tabular-nums'>
-                {redemption.reward_type === REDEMPTION_REWARD_TYPE.SUBSCRIPTION
-                  ? redemption.plan_title ||
-                    t('Subscription plan #{{id}}', {
-                      id: redemption.plan_id,
-                    })
-                  : formatQuota(redemption.quota)}
-              </span>
+              <span className='text-muted-foreground'>{detailsLabel}</span>
+              <span className='font-medium tabular-nums'>{detailsValue}</span>
             </div>
           </div>
         )

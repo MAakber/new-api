@@ -5318,6 +5318,19 @@
     "Ban released": "Ban released",
     "Ban expired": "Ban expired",
     "User IDs must be positive integers": "User IDs must be positive integers",
-    "Optional release reason": "Optional release reason"
+    "Optional release reason": "Optional release reason",
+    "Registration Code": "登録コード",
+    "Registration": "登録",
+    "Redemption": "引き換え",
+    "Code type": "コード種別",
+    "Maximum registrations per code": "コードごとの登録上限",
+    "Each generated registration code can be used this many times": "生成した各登録コードはこの回数まで使用できます",
+    "{{count}} registrations have already used this code": "このコードはすでに {{count}} 回の登録に使用されています",
+    "Usage limit must be at least 1": "使用回数の上限は 1 以上にしてください",
+    "Require Registration Code": "登録コードを必須にする",
+    "Require a valid registration code for every new account": "すべての新規アカウントに有効な登録コードを必須にする",
+    "Please enter a registration code": "登録コードを入力してください",
+    "Enter your registration code": "登録コードを入力",
+    "Only required when a third-party sign-in creates a new account": "サードパーティーのサインインで新規アカウントが作成される場合のみ必要です"
   }
 }

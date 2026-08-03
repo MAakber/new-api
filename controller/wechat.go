@@ -6,19 +6,27 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/service"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type wechatLoginResponse struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
 	Data    string `json:"data"`
+}
+
+type wechatAuthRequest struct {
+	Code             string `json:"code"`
+	RegistrationCode string `json:"registration_code"`
 }
 
 func getWeChatIdByCode(code string) (string, error) {
@@ -61,7 +69,15 @@ func WeChatAuth(c *gin.Context) {
 		})
 		return
 	}
-	code := c.Query("code")
+	request := wechatAuthRequest{Code: c.Query("code")}
+	if c.Request.Method == http.MethodPost {
+		if err := common.DecodeJson(c.Request.Body, &request); err != nil {
+			common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+			return
+		}
+	}
+	code := request.Code
+	registrationCode := strings.TrimSpace(request.RegistrationCode)
 	wechatId, err := getWeChatIdByCode(code)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -91,18 +107,40 @@ func WeChatAuth(c *gin.Context) {
 		}
 	} else {
 		if common.RegisterEnabled {
+			registrationCodeRequired, err := model.RegistrationCodeRequired()
+			if err != nil {
+				common.ApiErrorI18n(c, i18n.MsgDatabaseError)
+				return
+			}
+			if registrationCodeRequired && registrationCode == "" {
+				common.ApiErrorI18n(c, i18n.MsgUserRegistrationCodeInvalid)
+				return
+			}
 			user.Username = "wechat_" + strconv.Itoa(model.GetMaxUserId()+1)
 			user.DisplayName = "WeChat User"
 			user.Role = common.RoleCommonUser
 			user.Status = common.UserStatusEnabled
 
-			if err := user.Insert(0); err != nil {
+			if err := model.DB.Transaction(func(tx *gorm.DB) error {
+				if err := user.InsertWithTx(tx, 0); err != nil {
+					return err
+				}
+				if registrationCodeRequired {
+					return model.ConsumeRegistrationCodeWithTx(tx, registrationCode, user.Id)
+				}
+				return nil
+			}); err != nil {
+				if errors.Is(err, model.ErrRegistrationCodeUnavailable) {
+					common.ApiErrorI18n(c, i18n.MsgUserRegistrationCodeInvalid)
+					return
+				}
 				c.JSON(http.StatusOK, gin.H{
 					"success": false,
 					"message": err.Error(),
 				})
 				return
 			}
+			user.FinishInsert(0)
 		} else {
 			c.JSON(http.StatusOK, gin.H{
 				"success": false,
