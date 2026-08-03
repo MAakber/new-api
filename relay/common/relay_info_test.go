@@ -1,10 +1,13 @@
 package common
 
 import (
+	"net/http/httptest"
 	"testing"
 
+	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/relaykit/relayconvert/convmeta"
 	"github.com/QuantumNous/new-api/relaykit/types"
+	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -77,4 +80,19 @@ func TestRelayInfoMetaTypedNilReceiver(t *testing.T) {
 	assert.NotNil(t, firstOptions.Gemini.SupportsImagine)
 	assert.NotNil(t, firstOptions.Gemini.SafetySetting)
 	assert.NotNil(t, firstOptions.PreserveThinkingSuffix)
+}
+
+func TestInitChannelMetaEnablesCodeBuddyStreamOptions(t *testing.T) {
+	oldMode := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(oldMode) })
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Set(string(constant.ContextKeyChannelType), constant.ChannelTypeCodeBuddy)
+
+	info := &RelayInfo{}
+	info.InitChannelMeta(c)
+
+	require.NotNil(t, info.ChannelMeta)
+	assert.Equal(t, constant.APITypeOpenAI, info.ApiType)
+	assert.True(t, info.SupportStreamOptions)
 }
