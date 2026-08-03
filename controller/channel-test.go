@@ -50,7 +50,7 @@ func normalizeChannelTestEndpoint(channel *model.Channel, modelName, endpointTyp
 	if strings.HasSuffix(modelName, ratio_setting.CompactModelSuffix) {
 		return string(constant.EndpointTypeOpenAIResponseCompact)
 	}
-	if channel != nil && channel.Type == constant.ChannelTypeCodex {
+	if channel != nil && (channel.Type == constant.ChannelTypeCodex || channel.Type == constant.ChannelTypeCodexCompatibility) {
 		return string(constant.EndpointTypeOpenAIResponse)
 	}
 	return normalized
@@ -660,7 +660,7 @@ func validateTestResponseBody(respBody []byte, isStream bool) error {
 }
 
 func shouldUseStreamForAutomaticChannelTest(channel *model.Channel) bool {
-	return channel != nil && channel.Type == constant.ChannelTypeCodex
+	return channel != nil && (channel.Type == constant.ChannelTypeCodex || channel.Type == constant.ChannelTypeCodexCompatibility)
 }
 
 func detectErrorMessageFromJSONBytes(jsonBytes []byte) string {
