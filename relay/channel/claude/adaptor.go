@@ -89,7 +89,9 @@ func (a *Adaptor) SetupRequestHeader(c *gin.Context, req *http.Header, info *rel
 	}
 	req.Set("anthropic-version", anthropicVersion)
 	CommonClaudeHeadersOperation(c, req, info)
-	channel.ApplyCompatibilityHeaders(info.ChannelType, *req, info.ApiKey, info.IsStream)
+	if info.ShouldUseChannelTestStyle() {
+		channel.ApplyCompatibilityHeaders(info.ChannelType, *req, info.ApiKey, info.IsStream)
+	}
 	return nil
 }
 

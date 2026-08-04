@@ -26,6 +26,7 @@ import {
   copyChannel,
   deleteChannel,
   testChannel,
+  testChannelDetailed,
   updateChannel,
   updateChannelStatus,
   batchUpdateChannelStatus,
@@ -73,6 +74,19 @@ function getChannelTestResponseTime(
   }
 
   return undefined
+}
+
+function getChannelTestResponsePreview(response: ChannelTestResponse): {
+  value?: string
+  truncated: boolean
+} {
+  return {
+    value: response.data?.response_preview ?? response.response_preview,
+    truncated:
+      response.data?.response_preview_truncated ??
+      response.response_preview_truncated ??
+      false,
+  }
 }
 
 function formatChannelTestDuration(responseTime?: number): string | undefined {
@@ -331,6 +345,94 @@ export async function handleTestChannel(
       err?.response?.data?.message || i18next.t(ERROR_MESSAGES.TEST_FAILED)
     const target = getChannelTestLabel(options)
     if (!options?.silent) {
+      toast.error(i18next.t('{{target}} test failed', { target }), {
+        description: errorMsg,
+      })
+    }
+    onTestComplete?.(false, undefined, errorMsg)
+  }
+}
+
+/**
+ * Run a detailed channel test using its POST request contract.
+ */
+export async function handleDetailedChannelTest(
+  id: number,
+  options: {
+    channelName?: string
+    testModel: string
+    endpointType: string
+    stream: boolean
+    message: string
+    silent?: boolean
+  },
+  onTestComplete?: (
+    success: boolean,
+    responseTime?: number,
+    error?: string,
+    errorCode?: string,
+    responsePreview?: string,
+    responsePreviewTruncated?: boolean
+  ) => void
+): Promise<void> {
+  const payload = {
+    model: options.testModel,
+    endpoint_type: options.endpointType,
+    stream: options.stream,
+    message: options.message,
+  }
+
+  try {
+    const response = await testChannelDetailed(id, payload)
+    const responseTime = getChannelTestResponseTime(response)
+    const responsePreview = getChannelTestResponsePreview(response)
+    const duration = formatChannelTestDuration(responseTime)
+    const target = getChannelTestLabel(options)
+    if (response.success) {
+      if (!options.silent) {
+        toast.success(
+          i18next.t('{{target}} test succeeded', { target }),
+          duration
+            ? {
+                description: i18next.t('Response time: {{duration}}', {
+                  duration,
+                }),
+              }
+            : undefined
+        )
+      }
+      onTestComplete?.(
+        true,
+        responseTime,
+        undefined,
+        undefined,
+        responsePreview.value,
+        responsePreview.truncated
+      )
+    } else {
+      const errorMsg = response.message || i18next.t(ERROR_MESSAGES.TEST_FAILED)
+      if (!options.silent) {
+        toast.error(i18next.t('{{target}} test failed', { target }), {
+          description: response.error_code
+            ? `${errorMsg} (${response.error_code})`
+            : errorMsg,
+        })
+      }
+      onTestComplete?.(
+        false,
+        responseTime,
+        errorMsg,
+        response.error_code,
+        responsePreview.value,
+        responsePreview.truncated
+      )
+    }
+  } catch (_error: unknown) {
+    const err = _error as { response?: { data?: { message?: string } } }
+    const errorMsg =
+      err?.response?.data?.message || i18next.t(ERROR_MESSAGES.TEST_FAILED)
+    const target = getChannelTestLabel(options)
+    if (!options.silent) {
       toast.error(i18next.t('{{target}} test failed', { target }), {
         description: errorMsg,
       })

@@ -143,6 +143,7 @@ type RelayInfo struct {
 	SubscriptionAmountUsedAfterPreConsume int64
 	IsClaudeBetaQuery                     bool // /v1/messages?beta=true
 	IsChannelTest                         bool // channel test request
+	DisableChannelTestClientProfile       bool // skip client-profile behavior during a channel test
 	RetryIndex                            int
 	LastError                             *types.NewAPIError
 	RuntimeHeadersOverride                map[string]interface{}
@@ -688,6 +689,12 @@ func (info *RelayInfo) SetEstimatePromptTokens(promptTokens int) {
 		return
 	}
 	info.estimatePromptTokens = promptTokens
+}
+
+// ShouldUseChannelTestStyle preserves normal relay behavior and only disables
+// provider client profiles for channel tests that explicitly opt out.
+func (info *RelayInfo) ShouldUseChannelTestStyle() bool {
+	return info == nil || !info.IsChannelTest || !info.DisableChannelTestClientProfile
 }
 
 func (info *RelayInfo) GetEstimatePromptTokens() int {

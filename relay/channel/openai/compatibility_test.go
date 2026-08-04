@@ -102,6 +102,73 @@ func TestCodeBuddyCompatibilityBuildsWorkBuddyRequest(t *testing.T) {
 	assert.True(t, request.StreamOptions.IncludeUsage)
 }
 
+func TestChannelTestCanDisableCompatibilityClientProfiles(t *testing.T) {
+	oldMode := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(oldMode) })
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
+
+	t.Run("CodeBuddy", func(t *testing.T) {
+		stream := false
+		info := &relaycommon.RelayInfo{
+			IsChannelTest:                   true,
+			DisableChannelTestClientProfile: true,
+			ChannelMeta: &relaycommon.ChannelMeta{
+				ChannelType: constant.ChannelTypeCodeBuddy,
+				ApiKey:      "test-key",
+			},
+		}
+		adaptor := &Adaptor{}
+		adaptor.Init(info)
+		headers := http.Header{}
+		require.NoError(t, adaptor.SetupRequestHeader(c, &headers, info))
+		assert.Equal(t, "Bearer test-key", headers.Get("Authorization"))
+		assert.Empty(t, headers.Get("X-CodeBuddy-Request"))
+		assert.Empty(t, headers.Get("X-API-Key"))
+
+		converted, err := adaptor.ConvertOpenAIRequest(c, info, &dto.GeneralOpenAIRequest{
+			Messages: []dto.Message{{Role: "user", Content: "hello"}},
+			Stream:   &stream,
+		})
+		require.NoError(t, err)
+		request, ok := converted.(*dto.GeneralOpenAIRequest)
+		require.True(t, ok)
+		require.Len(t, request.Messages, 1)
+		assert.Equal(t, "user", request.Messages[0].Role)
+		assert.False(t, *request.Stream)
+	})
+
+	t.Run("Codex compatibility", func(t *testing.T) {
+		maxOutputTokens := uint(4096)
+		info := &relaycommon.RelayInfo{
+			IsChannelTest:                   true,
+			DisableChannelTestClientProfile: true,
+			ChannelMeta: &relaycommon.ChannelMeta{
+				ChannelType: constant.ChannelTypeCodexCompatibility,
+				ApiKey:      "test-key",
+			},
+		}
+		adaptor := &Adaptor{}
+		adaptor.Init(info)
+		headers := http.Header{}
+		require.NoError(t, adaptor.SetupRequestHeader(c, &headers, info))
+		assert.Equal(t, "Bearer test-key", headers.Get("Authorization"))
+		assert.Empty(t, headers.Get("Originator"))
+		assert.Empty(t, headers.Get("OpenAI-Beta"))
+
+		converted, err := adaptor.ConvertOpenAIResponsesRequest(c, info, dto.OpenAIResponsesRequest{
+			Model:           "gpt-test",
+			MaxOutputTokens: &maxOutputTokens,
+		})
+		require.NoError(t, err)
+		request, ok := converted.(dto.OpenAIResponsesRequest)
+		require.True(t, ok)
+		assert.Equal(t, &maxOutputTokens, request.MaxOutputTokens)
+		assert.Empty(t, request.Instructions)
+	})
+}
+
 func TestCodeBuddyCompatibilityReusesConversationIdentityFromPromptCacheKey(t *testing.T) {
 	oldMode := gin.Mode()
 	gin.SetMode(gin.TestMode)

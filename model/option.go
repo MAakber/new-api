@@ -2,6 +2,7 @@ package model
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -253,6 +254,23 @@ func validateOptionValue(key string, value string) error {
 }
 
 func normalizeOptionValue(key string, value string) (string, error) {
+	if key == operation_setting.ChannelTestMessageOptionKey {
+		normalized, err := operation_setting.NormalizeChannelTestMessage(value)
+		if err != nil {
+			return "", err
+		}
+		if normalized == "" {
+			return operation_setting.DefaultChannelTestMessage, nil
+		}
+		return normalized, nil
+	}
+	if key == operation_setting.ChannelTestUseChannelStyleOptionKey || key == operation_setting.ChannelTestShowResponsePreviewOptionKey {
+		parsed, err := strconv.ParseBool(strings.TrimSpace(value))
+		if err != nil {
+			return "", fmt.Errorf("invalid channel test boolean setting %q: %w", key, err)
+		}
+		return strconv.FormatBool(parsed), nil
+	}
 	if key == "request_debug.raw_enabled" {
 		parsed, err := strconv.ParseBool(strings.TrimSpace(value))
 		// This safety switch is fail-closed: absent or malformed persisted values

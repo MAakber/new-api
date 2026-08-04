@@ -2,9 +2,12 @@ package controller
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/QuantumNous/new-api/common"
@@ -147,6 +150,112 @@ func TestCodexCompatibilityChannelTestUsesStreamingResponses(t *testing.T) {
 	require.True(t, ok)
 	require.NotNil(t, responsesRequest.Stream)
 	assert.True(t, *responsesRequest.Stream)
+}
+
+func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
+	const message = "channel probe"
+
+	chatRequest, ok := buildTestRequestWithMessage(
+		"gpt-test",
+		string(constant.EndpointTypeOpenAI),
+		&model.Channel{Type: constant.ChannelTypeOpenAI},
+		false,
+		message,
+	).(*dto.GeneralOpenAIRequest)
+	require.True(t, ok)
+	require.Len(t, chatRequest.Messages, 1)
+	assert.Equal(t, message, chatRequest.Messages[0].StringContent())
+
+	responsesRequest, ok := buildTestRequestWithMessage(
+		"gpt-test",
+		string(constant.EndpointTypeOpenAIResponse),
+		&model.Channel{Type: constant.ChannelTypeOpenAI},
+		true,
+		message,
+	).(*dto.OpenAIResponsesRequest)
+	require.True(t, ok)
+	var responsesInput []dto.Message
+	require.NoError(t, json.Unmarshal(responsesRequest.Input, &responsesInput))
+	require.Len(t, responsesInput, 1)
+	assert.Equal(t, message, responsesInput[0].StringContent())
+
+	embeddingRequest, ok := buildTestRequestWithMessage(
+		"text-embedding-test",
+		string(constant.EndpointTypeEmbeddings),
+		&model.Channel{Type: constant.ChannelTypeOpenAI},
+		false,
+		message,
+	).(*dto.EmbeddingRequest)
+	require.True(t, ok)
+	assert.Equal(t, []any{"hello world"}, embeddingRequest.Input)
+}
+
+func TestResolveChannelTestMessageUsesOverrideThenGlobalDefault(t *testing.T) {
+	setting := operation_setting.GetMonitorSetting()
+	original := *setting
+	t.Cleanup(func() { *setting = original })
+	setting.ChannelTestMessage = "saved probe"
+
+	message, err := resolveChannelTestMessage("  one-off probe  ")
+	require.NoError(t, err)
+	assert.Equal(t, "one-off probe", message)
+
+	message, err = resolveChannelTestMessage("  ")
+	require.NoError(t, err)
+	assert.Equal(t, "saved probe", message)
+}
+
+func TestReadChannelTestResponseBodyBoundsStreamCapture(t *testing.T) {
+	body := io.NopCloser(strings.NewReader(strings.Repeat("x", channelTestResponsePreviewMaxBytes+32)))
+
+	preview, truncated, err := readTestResponseBody(body, true)
+	require.NoError(t, err)
+	assert.Len(t, preview, channelTestResponsePreviewMaxBytes)
+	assert.True(t, truncated)
+}
+
+func TestReadChannelTestResponseBodyKeepsNonStreamBodyForValidation(t *testing.T) {
+	expected := strings.Repeat("x", channelTestResponsePreviewMaxBytes+32)
+	body := io.NopCloser(strings.NewReader(expected))
+
+	response, truncated, err := readTestResponseBody(body, false)
+	require.NoError(t, err)
+	assert.Equal(t, expected, string(response))
+	assert.False(t, truncated)
+}
+
+func TestSanitizeChannelTestResponsePreviewRedactsSecretsButKeepsUsage(t *testing.T) {
+	preview := sanitizeChannelTestResponsePreview([]byte(`{
+		"authorization":"Bearer private-value",
+		"access_token":"private-token",
+		"output_tokens":12,
+		"output":[{"content":[{"type":"output_text","text":"hello"}]}]
+	}`))
+
+	assert.NotContains(t, preview, "private-value")
+	assert.NotContains(t, preview, "private-token")
+	assert.Contains(t, preview, `"output_tokens":12`)
+	assert.Contains(t, preview, `"text":"hello"`)
+}
+
+func TestChannelTestDetailedRejectsOversizedMessageBeforeChannelLookup(t *testing.T) {
+	gina := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(gina) })
+
+	body, err := common.Marshal(channelTestRequest{
+		Message: strings.Repeat("x", operation_setting.ChannelTestMessageMaxRunes+1),
+	})
+	require.NoError(t, err)
+	recorder := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(recorder)
+	ctx.Params = gin.Params{{Key: "id", Value: "1"}}
+	ctx.Request = httptest.NewRequest(http.MethodPost, "/api/channel/test/1", bytes.NewReader(body))
+
+	TestChannelDetailed(ctx)
+
+	assert.Equal(t, http.StatusBadRequest, recorder.Code)
+	assert.Contains(t, recorder.Body.String(), "must not exceed")
 }
 
 func TestCodeBuddyChannelUsesOpenAIChatCompletions(t *testing.T) {

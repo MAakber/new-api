@@ -26,6 +26,7 @@ import type {
   Channel,
   ChannelBalanceResponse,
   ChannelOpsResponse,
+  DetailedChannelTestRequest,
   ChannelTestResponse,
   CopyChannelParams,
   CopyChannelResponse,
@@ -217,6 +218,21 @@ export async function testChannel(
   const res = await api.get(
     `/api/channel/test/${id}`,
     channelActionConfig({ params })
+  )
+  return res.data
+}
+
+/**
+ * Run a detailed channel test without placing the request message in a URL.
+ */
+export async function testChannelDetailed(
+  id: number,
+  data: DetailedChannelTestRequest
+): Promise<ChannelTestResponse> {
+  const res = await api.post(
+    `/api/channel/test/${id}`,
+    data,
+    channelActionConfig()
   )
   return res.data
 }

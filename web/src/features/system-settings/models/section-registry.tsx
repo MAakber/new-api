@@ -20,6 +20,7 @@ import { ChannelAffinitySection } from '../general/channel-affinity'
 import { IoNetDeploymentSettingsSection } from '../integrations/ionet-deployment-settings-section'
 import type { ModelSettings } from '../types'
 import { createSectionRegistry } from '../utils/section-registry'
+import { ChannelTestSection } from './channel-test-section'
 import { ClaudeSettingsCard } from './claude-settings-card'
 import { GeminiSettingsCard } from './gemini-settings-card'
 import { GlobalSettingsCard } from './global-settings-card'
@@ -66,6 +67,29 @@ const MODELS_SECTIONS = [
     ),
   },
   {
+    id: 'channel-test',
+    titleKey: 'Channel Test',
+    build: (settings: ModelSettings) => (
+      <ChannelTestSection
+        defaultValues={{
+          AutomaticEnableChannelEnabled: settings.AutomaticEnableChannelEnabled,
+          'monitor_setting.channel_test_message':
+            settings['monitor_setting.channel_test_message'],
+          'monitor_setting.channel_test_use_channel_style':
+            settings['monitor_setting.channel_test_use_channel_style'],
+          'monitor_setting.channel_test_show_response_preview':
+            settings['monitor_setting.channel_test_show_response_preview'],
+          'monitor_setting.auto_test_channel_enabled':
+            settings['monitor_setting.auto_test_channel_enabled'],
+          'monitor_setting.auto_test_channel_minutes':
+            settings['monitor_setting.auto_test_channel_minutes'],
+          'monitor_setting.channel_test_mode':
+            settings['monitor_setting.channel_test_mode'],
+        }}
+      />
+    ),
+  },
+  {
     id: 'routing-reliability',
     titleKey: 'Routing Reliability',
     build: (settings: ModelSettings) => (
@@ -75,16 +99,9 @@ const MODELS_SECTIONS = [
           ChannelDisableThreshold: settings.ChannelDisableThreshold,
           AutomaticDisableChannelEnabled:
             settings.AutomaticDisableChannelEnabled,
-          AutomaticEnableChannelEnabled: settings.AutomaticEnableChannelEnabled,
           AutomaticDisableKeywords: settings.AutomaticDisableKeywords,
           AutomaticDisableStatusCodes: settings.AutomaticDisableStatusCodes,
           AutomaticRetryStatusCodes: settings.AutomaticRetryStatusCodes,
-          'monitor_setting.auto_test_channel_enabled':
-            settings['monitor_setting.auto_test_channel_enabled'],
-          'monitor_setting.auto_test_channel_minutes':
-            settings['monitor_setting.auto_test_channel_minutes'],
-          'monitor_setting.channel_test_mode':
-            settings['monitor_setting.channel_test_mode'],
         }}
       />
     ),

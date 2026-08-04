@@ -42,3 +42,25 @@ func TestClaudeCodeCompatibilityUsesBearerIdentity(t *testing.T) {
 	assert.Equal(t, "application/json", headers.Get("Content-Type"))
 	assert.Equal(t, "interleaved-thinking-2025-05-14", headers.Get("Anthropic-Beta"))
 }
+
+func TestClaudeCodeChannelTestCanDisableClientProfile(t *testing.T) {
+	oldMode := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(oldMode) })
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Request = httptest.NewRequest(http.MethodPost, "/v1/messages", nil)
+	info := &relaycommon.RelayInfo{
+		IsChannelTest:                   true,
+		DisableChannelTestClientProfile: true,
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ChannelType: constant.ChannelTypeClaudeCode,
+			ApiKey:      "test-key",
+		},
+	}
+
+	headers := http.Header{}
+	require.NoError(t, (&Adaptor{}).SetupRequestHeader(c, &headers, info))
+	assert.Equal(t, "test-key", headers.Get("x-api-key"))
+	assert.Empty(t, headers.Get("Authorization"))
+	assert.Empty(t, headers.Get("User-Agent"))
+}

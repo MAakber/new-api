@@ -43,6 +43,7 @@ export const STATIC_I18N_KEYS = [
   'Content',
   'Integrations',
   'Models',
+  'Channel Test',
   'Routing Reliability',
   'Maintenance',
 

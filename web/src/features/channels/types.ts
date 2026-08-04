@@ -186,9 +186,13 @@ export interface ChannelTestResponse {
   message?: string
   error_code?: string
   time?: number
+  response_preview?: string
+  response_preview_truncated?: boolean
   data?: {
     response_time?: number
     error?: string
+    response_preview?: string
+    response_preview_truncated?: boolean
   }
 }
 
@@ -293,6 +297,13 @@ export interface SearchChannelsParams {
 
 export interface ChannelTestParams {
   test_model?: string
+}
+
+export interface DetailedChannelTestRequest {
+  model: string
+  endpoint_type: string
+  stream: boolean
+  message?: string
 }
 
 export interface CopyChannelParams {

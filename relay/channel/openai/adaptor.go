@@ -242,11 +242,13 @@ func (a *Adaptor) SetupRequestHeader(c *gin.Context, header *http.Header, info *
 			header.Set("Authorization", "Bearer "+info.ApiKey)
 		}
 	}
-	if info.ChannelType == constant.ChannelTypeCodeBuddy {
-		conversationID := channel.ResolveCodeBuddyConversationID(c.Request.Header, info.Request)
-		channel.ApplyCompatibilityHeadersWithConversation(info.ChannelType, *header, info.ApiKey, info.IsStream, conversationID)
-	} else {
-		channel.ApplyCompatibilityHeaders(info.ChannelType, *header, info.ApiKey, info.IsStream)
+	if info.ShouldUseChannelTestStyle() {
+		if info.ChannelType == constant.ChannelTypeCodeBuddy {
+			conversationID := channel.ResolveCodeBuddyConversationID(c.Request.Header, info.Request)
+			channel.ApplyCompatibilityHeadersWithConversation(info.ChannelType, *header, info.ApiKey, info.IsStream, conversationID)
+		} else {
+			channel.ApplyCompatibilityHeaders(info.ChannelType, *header, info.ApiKey, info.IsStream)
+		}
 	}
 	if info.ChannelType == constant.ChannelTypeOpenRouter {
 		if header.Get("HTTP-Referer") == "" {
@@ -268,7 +270,7 @@ func (a *Adaptor) ConvertOpenAIRequest(c *gin.Context, info *relaycommon.RelayIn
 		info.ChannelType != constant.ChannelTypeCodeBuddy {
 		request.StreamOptions = nil
 	}
-	if info.ChannelType == constant.ChannelTypeCodeBuddy {
+	if info.ChannelType == constant.ChannelTypeCodeBuddy && info.ShouldUseChannelTestStyle() {
 		channel.ApplyCodeBuddyRequestProfile(request)
 	}
 	if info.ChannelType == constant.ChannelTypeOpenRouter {
@@ -649,7 +651,9 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 		if !ok {
 			return nil, fmt.Errorf("expected OpenAI chat completions request, got %T", result.Value)
 		}
-		channel.ApplyCodeBuddyRequestProfile(chatRequest)
+		if info.ShouldUseChannelTestStyle() {
+			channel.ApplyCodeBuddyRequestProfile(chatRequest)
+		}
 		stream := info.IsStream
 		chatRequest.Stream = &stream
 		if !stream {
@@ -657,7 +661,7 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 		}
 		return chatRequest, nil
 	}
-	if info != nil && info.ChannelType == constant.ChannelTypeCodexCompatibility {
+	if info != nil && info.ChannelType == constant.ChannelTypeCodexCompatibility && info.ShouldUseChannelTestStyle() {
 		// Codex Responses requires store=false and expects an instructions field.
 		request.Store = json.RawMessage("false")
 		request.MaxOutputTokens = nil

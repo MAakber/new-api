@@ -10,6 +10,7 @@ import (
 	"math"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -37,10 +38,25 @@ import (
 )
 
 type testResult struct {
-	context     *gin.Context
-	localErr    error
-	newAPIError *types.NewAPIError
+	context          *gin.Context
+	localErr         error
+	newAPIError      *types.NewAPIError
+	responsePreview  string
+	previewTruncated bool
 }
+
+type channelTestOptions struct {
+	message         string
+	useChannelStyle bool
+	capturePreview  bool
+}
+
+const channelTestResponsePreviewMaxBytes = 8 << 10
+
+var (
+	channelTestPreviewSensitiveValuePattern = regexp.MustCompile(`(?i)\b(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|token|secret|password|credential|signature)\b\s*[:=]\s*(?:bearer\s+)?[^\s,;]+`)
+	channelTestPreviewBearerPattern         = regexp.MustCompile(`(?i)\bbearer\s+[A-Za-z0-9._~+/-]+={0,2}`)
+)
 
 func normalizeChannelTestEndpoint(channel *model.Channel, modelName, endpointType string) string {
 	normalized := strings.TrimSpace(endpointType)
@@ -74,8 +90,23 @@ func resolveChannelTestUserID(c *gin.Context) (int, error) {
 }
 
 func testChannel(ctx context.Context, channel *model.Channel, testUserID int, testModel string, endpointType string, isStream bool) testResult {
+	setting := operation_setting.GetMonitorSetting()
+	return testChannelWithOptions(ctx, channel, testUserID, testModel, endpointType, isStream, channelTestOptions{
+		message:         setting.ChannelTestMessage,
+		useChannelStyle: setting.ChannelTestUseChannelStyle,
+	})
+}
+
+func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUserID int, testModel string, endpointType string, isStream bool, options channelTestOptions) testResult {
 	if ctx == nil {
 		ctx = context.Background()
+	}
+	if channel == nil {
+		return testResult{localErr: errors.New("channel is nil")}
+	}
+	message, err := resolveChannelTestMessage(options.message)
+	if err != nil {
+		return testResult{localErr: err}
 	}
 	tik := time.Now()
 	var unsupportedTestChannelTypes = []int{
@@ -233,7 +264,7 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 		}
 	}
 
-	request := buildTestRequest(testModel, endpointType, channel, isStream)
+	request := buildTestRequestWithMessage(testModel, endpointType, channel, isStream, message)
 
 	info, err := relaycommon.GenRelayInfo(c, relayFormat, request, nil)
 
@@ -246,6 +277,7 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 	}
 
 	info.IsChannelTest = true
+	info.DisableChannelTestClientProfile = !options.useChannelStyle
 	info.InitChannelMeta(c)
 
 	err = attachTestBillingRequestInput(info, request)
@@ -475,7 +507,7 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 		}
 	}
 	result := w.Result()
-	respBody, err := readTestResponseBody(result.Body, isStream)
+	respBody, responseTruncated, err := readTestResponseBody(result.Body, isStream)
 	if err != nil {
 		return testResult{
 			context:     c,
@@ -510,12 +542,23 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 		Group:            info.UsingGroup,
 		Other:            other,
 	})
-	common.SysLog(fmt.Sprintf("testing channel #%d, response: \n%s", channel.Id, string(respBody)))
-	return testResult{
+	common.SysLog(fmt.Sprintf("testing channel #%d completed", channel.Id))
+	resultData := testResult{
 		context:     c,
 		localErr:    nil,
 		newAPIError: nil,
 	}
+	if options.capturePreview {
+		previewBody := respBody
+		previewTruncated := responseTruncated
+		if len(previewBody) > channelTestResponsePreviewMaxBytes {
+			previewBody = previewBody[:channelTestResponsePreviewMaxBytes]
+			previewTruncated = true
+		}
+		resultData.responsePreview = sanitizeChannelTestResponsePreview(previewBody)
+		resultData.previewTruncated = previewTruncated
+	}
+	return resultData
 }
 
 func attachTestBillingRequestInput(info *relaycommon.RelayInfo, request dto.Request) error {
@@ -589,13 +632,91 @@ func coerceTestUsage(usageAny any, isStream bool, estimatePromptTokens int) (*dt
 	}
 }
 
-func readTestResponseBody(body io.ReadCloser, isStream bool) ([]byte, error) {
+func readTestResponseBody(body io.ReadCloser, isStream bool) ([]byte, bool, error) {
 	defer func() { _ = body.Close() }()
-	const maxStreamLogBytes = 8 << 10
-	if isStream {
-		return io.ReadAll(io.LimitReader(body, maxStreamLogBytes))
+	if !isStream {
+		response, err := io.ReadAll(body)
+		return response, false, err
 	}
-	return io.ReadAll(body)
+	limit := int64(channelTestResponsePreviewMaxBytes)
+	response, err := io.ReadAll(io.LimitReader(body, limit+1))
+	if err != nil {
+		return nil, false, err
+	}
+	if int64(len(response)) > limit {
+		return response[:limit], true, nil
+	}
+	return response, false, nil
+}
+
+func resolveChannelTestMessage(override string) (string, error) {
+	message, err := operation_setting.NormalizeChannelTestMessage(override)
+	if err != nil {
+		return "", err
+	}
+	if message != "" {
+		return message, nil
+	}
+	setting := operation_setting.GetMonitorSetting()
+	message, err = operation_setting.NormalizeChannelTestMessage(setting.ChannelTestMessage)
+	if err != nil || message == "" {
+		return operation_setting.DefaultChannelTestMessage, nil
+	}
+	return message, nil
+}
+
+func sanitizeChannelTestResponsePreview(response []byte) string {
+	preview := strings.TrimSpace(string(response))
+	if preview == "" {
+		return ""
+	}
+
+	var responseValue any
+	if err := common.Unmarshal([]byte(preview), &responseValue); err == nil {
+		redactChannelTestPreviewValue(responseValue)
+		if sanitized, marshalErr := common.Marshal(responseValue); marshalErr == nil {
+			preview = string(sanitized)
+		}
+	}
+	preview = channelTestPreviewSensitiveValuePattern.ReplaceAllString(preview, "[REDACTED]")
+	preview = channelTestPreviewBearerPattern.ReplaceAllString(preview, "Bearer [REDACTED]")
+	return preview
+}
+
+func redactChannelTestPreviewValue(value any) {
+	switch item := value.(type) {
+	case map[string]any:
+		for key, child := range item {
+			if isSensitiveChannelTestPreviewKey(key) {
+				item[key] = "[REDACTED]"
+				continue
+			}
+			redactChannelTestPreviewValue(child)
+		}
+	case []any:
+		for _, child := range item {
+			redactChannelTestPreviewValue(child)
+		}
+	}
+}
+
+func isSensitiveChannelTestPreviewKey(key string) bool {
+	normalized := strings.ToLower(strings.NewReplacer("_", "", "-", "", " ", "").Replace(strings.TrimSpace(key)))
+	if normalized == "key" || normalized == "headers" || normalized == "request" || normalized == "requestbody" ||
+		normalized == "input" || normalized == "prompt" || normalized == "instructions" || normalized == "messages" || normalized == "metadata" {
+		return true
+	}
+	for _, sensitive := range []string{"authorization", "apikey", "secret", "password", "credential", "signature", "cookie"} {
+		if strings.Contains(normalized, sensitive) {
+			return true
+		}
+	}
+	for _, sensitiveToken := range []string{"token", "accesstoken", "refreshtoken", "idtoken", "authtoken", "bearertoken", "sessiontoken", "apitoken"} {
+		if normalized == sensitiveToken {
+			return true
+		}
+	}
+	return false
 }
 
 func detectErrorFromTestResponseBody(respBody []byte) error {
@@ -693,7 +814,19 @@ func detectErrorMessageFromJSONBytes(jsonBytes []byte) string {
 }
 
 func buildTestRequest(model string, endpointType string, channel *model.Channel, isStream bool) dto.Request {
-	testResponsesInput := json.RawMessage(`[{"role":"user","content":"hi"}]`)
+	return buildTestRequestWithMessage(model, endpointType, channel, isStream, operation_setting.DefaultChannelTestMessage)
+}
+
+func buildTestRequestWithMessage(model string, endpointType string, channel *model.Channel, isStream bool, message string) dto.Request {
+	message, err := resolveChannelTestMessage(message)
+	if err != nil {
+		message = operation_setting.DefaultChannelTestMessage
+	}
+	testResponsesInputBytes, err := common.Marshal([]dto.Message{{Role: "user", Content: message}})
+	if err != nil {
+		testResponsesInputBytes = []byte(`[{"role":"user","content":"hi"}]`)
+	}
+	testResponsesInput := json.RawMessage(testResponsesInputBytes)
 
 	// 根据端点类型构建不同的测试请求
 	if endpointType != "" {
@@ -724,7 +857,7 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 			// 返回 OpenAIResponsesRequest
 			return &dto.OpenAIResponsesRequest{
 				Model:  model,
-				Input:  json.RawMessage(`[{"role":"user","content":"hi"}]`),
+				Input:  testResponsesInput,
 				Stream: lo.ToPtr(isStream),
 			}
 		case constant.EndpointTypeOpenAIResponseCompact:
@@ -745,7 +878,7 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 				Messages: []dto.Message{
 					{
 						Role:    "user",
-						Content: "hi",
+						Content: message,
 					},
 				},
 				MaxTokens: lo.ToPtr(maxTokens),
@@ -770,7 +903,8 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 	// 先判断是否为 Embedding 模型
 	if strings.Contains(strings.ToLower(model), "embedding") ||
 		strings.HasPrefix(model, "m3e") ||
-		strings.Contains(model, "bge-") {
+		strings.Contains(model, "bge-") ||
+		(channel != nil && channel.Type == constant.ChannelTypeMokaAI) {
 		// 返回 EmbeddingRequest
 		return &dto.EmbeddingRequest{
 			Model: model,
@@ -790,7 +924,7 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 	if strings.Contains(strings.ToLower(model), "codex") {
 		return &dto.OpenAIResponsesRequest{
 			Model:  model,
-			Input:  json.RawMessage(`[{"role":"user","content":"hi"}]`),
+			Input:  testResponsesInput,
 			Stream: lo.ToPtr(isStream),
 		}
 	}
@@ -802,7 +936,7 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 		Messages: []dto.Message{
 			{
 				Role:    "user",
-				Content: "hi",
+				Content: message,
 			},
 		},
 	}
@@ -826,6 +960,49 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 }
 
 func TestChannel(c *gin.Context) {
+	isStream, _ := strconv.ParseBool(c.Query("stream"))
+	testChannelRequest(c, c.Query("model"), c.Query("endpoint_type"), isStream, "")
+}
+
+type channelTestRequest struct {
+	Model        string `json:"model"`
+	EndpointType string `json:"endpoint_type"`
+	Stream       *bool  `json:"stream"`
+	Message      string `json:"message"`
+}
+
+func TestChannelDetailed(c *gin.Context) {
+	var request channelTestRequest
+	if err := common.DecodeJson(c.Request.Body, &request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"message": "invalid channel test request",
+		})
+		return
+	}
+	if _, err := operation_setting.NormalizeChannelTestMessage(request.Message); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"message": err.Error(),
+		})
+		return
+	}
+	if strings.TrimSpace(request.Model) == "" {
+		request.Model = c.Query("model")
+	}
+	if strings.TrimSpace(request.EndpointType) == "" {
+		request.EndpointType = c.Query("endpoint_type")
+	}
+	if request.Stream == nil {
+		if isStream, err := strconv.ParseBool(c.Query("stream")); err == nil {
+			request.Stream = &isStream
+		}
+	}
+	isStream := request.Stream != nil && *request.Stream
+	testChannelRequest(c, request.Model, request.EndpointType, isStream, request.Message)
+}
+
+func testChannelRequest(c *gin.Context, testModel string, endpointType string, isStream bool, message string) {
 	channelId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		common.ApiError(c, err)
@@ -844,9 +1021,6 @@ func TestChannel(c *gin.Context) {
 	//		go func() { _ = channel.SaveChannelInfo() }()
 	//	}
 	//}()
-	testModel := c.Query("model")
-	endpointType := c.Query("endpoint_type")
-	isStream, _ := strconv.ParseBool(c.Query("stream"))
 	testUserID, err := resolveChannelTestUserID(c)
 	if err != nil {
 		common.ApiError(c, err)
@@ -857,7 +1031,12 @@ func TestChannel(c *gin.Context) {
 	if c.Request != nil {
 		requestCtx = c.Request.Context()
 	}
-	result := testChannel(requestCtx, channel, testUserID, testModel, endpointType, isStream)
+	setting := operation_setting.GetMonitorSetting()
+	result := testChannelWithOptions(requestCtx, channel, testUserID, testModel, endpointType, isStream, channelTestOptions{
+		message:         message,
+		useChannelStyle: setting.ChannelTestUseChannelStyle,
+		capturePreview:  setting.ChannelTestShowResponsePreview,
+	})
 	if result.localErr != nil {
 		resp := gin.H{
 			"success": false,
@@ -883,11 +1062,16 @@ func TestChannel(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
+	response := gin.H{
 		"success": true,
 		"message": "",
 		"time":    consumedTime,
-	})
+	}
+	if setting.ChannelTestShowResponsePreview {
+		response["response_preview"] = result.responsePreview
+		response["response_preview_truncated"] = result.previewTruncated
+	}
+	c.JSON(http.StatusOK, response)
 }
 
 // channelTestSummary records the outcome of one channel test cycle so the
