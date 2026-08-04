@@ -206,6 +206,9 @@ func buildFetchModelsHeaders(channel *model.Channel, key string) (http.Header, e
 	if err := applyFetchModelsHeaderOverrides(channel, key, headers); err != nil {
 		return nil, err
 	}
+	if channel.Type == constant.ChannelTypeClaudeCode {
+		relaychannel.ApplyClaudeCodeCompatibilityHeaders(headers, key, false, "")
+	}
 	return headers, nil
 }
 
@@ -213,6 +216,7 @@ func applyFetchModelsHeaderOverrides(channel *model.Channel, key string, headers
 	info := &relaycommon.RelayInfo{
 		IsChannelTest: true,
 		ChannelMeta: &relaycommon.ChannelMeta{
+			ChannelType:     channel.Type,
 			ApiKey:          key,
 			HeadersOverride: channel.GetHeaderOverride(),
 		},
