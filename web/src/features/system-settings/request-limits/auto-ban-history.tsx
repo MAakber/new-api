@@ -201,10 +201,10 @@ export function AutoBanHistory() {
           <Select
             items={[
               { value: 'all', label: t('All statuses') },
-              { value: 'observed', label: t('Observed') },
-              { value: 'active', label: t('Active') },
-              { value: 'released', label: t('Released') },
-              { value: 'expired', label: t('Expired') },
+              { value: 'observed', label: t(statusLabel.observed) },
+              { value: 'active', label: t(statusLabel.active) },
+              { value: 'released', label: t(statusLabel.released) },
+              { value: 'expired', label: t(statusLabel.expired) },
             ]}
             value={status}
             onValueChange={(value) => {
@@ -218,10 +218,16 @@ export function AutoBanHistory() {
             <SelectContent alignItemWithTrigger={false}>
               <SelectGroup>
                 <SelectItem value='all'>{t('All statuses')}</SelectItem>
-                <SelectItem value='observed'>{t('Observed')}</SelectItem>
-                <SelectItem value='active'>{t('Active')}</SelectItem>
-                <SelectItem value='released'>{t('Released')}</SelectItem>
-                <SelectItem value='expired'>{t('Expired')}</SelectItem>
+                <SelectItem value='observed'>
+                  {t(statusLabel.observed)}
+                </SelectItem>
+                <SelectItem value='active'>{t(statusLabel.active)}</SelectItem>
+                <SelectItem value='released'>
+                  {t(statusLabel.released)}
+                </SelectItem>
+                <SelectItem value='expired'>
+                  {t(statusLabel.expired)}
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
