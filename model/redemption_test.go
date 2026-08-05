@@ -102,6 +102,54 @@ func TestSearchRedemptionsFiltersAndPaginates(t *testing.T) {
 	}
 }
 
+func TestExhaustedRegistrationCodesAreInvalidAndDeleted(t *testing.T) {
+	require.NoError(t, DB.AutoMigrate(&Redemption{}))
+	require.NoError(t, DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&Redemption{}).Error)
+	t.Cleanup(func() {
+		require.NoError(t, DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&Redemption{}).Error)
+	})
+
+	now := common.GetTimestamp()
+	codes := []Redemption{
+		{Name: "active-redemption", Key: "60000000000000000000000000000001", Status: common.RedemptionCodeStatusEnabled},
+		{Name: "unused-registration", Key: "60000000000000000000000000000002", Status: common.RedemptionCodeStatusEnabled, CodeType: RedemptionCodeTypeRegistration, MaxUses: 2, UsedCount: 0},
+		{Name: "partially-used-registration", Key: "60000000000000000000000000000003", Status: common.RedemptionCodeStatusEnabled, CodeType: RedemptionCodeTypeRegistration, MaxUses: 2, UsedCount: 1},
+		{Name: "exhausted-registration", Key: "60000000000000000000000000000004", Status: common.RedemptionCodeStatusEnabled, CodeType: RedemptionCodeTypeRegistration, MaxUses: 1, UsedCount: 1},
+		{Name: "used-redemption", Key: "60000000000000000000000000000005", Status: common.RedemptionCodeStatusUsed},
+		{Name: "disabled-redemption", Key: "60000000000000000000000000000006", Status: common.RedemptionCodeStatusDisabled},
+		{Name: "expired-redemption", Key: "60000000000000000000000000000007", Status: common.RedemptionCodeStatusEnabled, ExpiredTime: now - 1},
+	}
+	require.NoError(t, DB.Create(&codes).Error)
+
+	exhausted, err := GetRedemptionById(codes[3].Id)
+	require.NoError(t, err)
+	assert.Equal(t, common.RedemptionCodeStatusUsed, exhausted.Status)
+
+	enabled, total, err := SearchRedemptions("", strconv.Itoa(common.RedemptionCodeStatusEnabled), 0, 10)
+	require.NoError(t, err)
+	assert.Equal(t, int64(3), total)
+	require.Len(t, enabled, 3)
+	assert.Equal(t, []int{codes[2].Id, codes[1].Id, codes[0].Id}, []int{enabled[0].Id, enabled[1].Id, enabled[2].Id})
+
+	used, total, err := SearchRedemptions("", strconv.Itoa(common.RedemptionCodeStatusUsed), 0, 10)
+	require.NoError(t, err)
+	assert.Equal(t, int64(2), total)
+	require.Len(t, used, 2)
+	assert.Equal(t, []int{codes[4].Id, codes[3].Id}, []int{used[0].Id, used[1].Id})
+
+	deleted, err := DeleteInvalidRedemptions()
+	require.NoError(t, err)
+	assert.Equal(t, int64(4), deleted)
+
+	var remaining []Redemption
+	require.NoError(t, DB.Order("id").Find(&remaining).Error)
+	require.Len(t, remaining, 3)
+	assert.Equal(t,
+		[]string{"active-redemption", "unused-registration", "partially-used-registration"},
+		[]string{remaining[0].Name, remaining[1].Name, remaining[2].Name},
+	)
+}
+
 func TestGetRedemptionsForExportSupportsSelectionAndFilters(t *testing.T) {
 	require.NoError(t, DB.AutoMigrate(&Redemption{}))
 	require.NoError(t, DB.Session(&gorm.Session{AllowGlobalUpdate: true}).Unscoped().Delete(&Redemption{}).Error)

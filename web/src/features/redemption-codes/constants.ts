@@ -53,7 +53,7 @@ export const REDEMPTION_STATUSES: Record<
     value: REDEMPTION_STATUS.DISABLED,
   },
   [REDEMPTION_STATUS.USED]: {
-    labelKey: 'Used',
+    labelKey: 'Invalid',
     variant: 'neutral',
     value: REDEMPTION_STATUS.USED,
   },

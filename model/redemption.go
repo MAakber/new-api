@@ -81,6 +81,9 @@ func (redemption *Redemption) AfterFind(_ *gorm.DB) error {
 	if redemption.CodeType == RedemptionCodeTypeRedemption && redemption.MaxUses <= 0 {
 		redemption.MaxUses = 1
 	}
+	if redemption.CodeType == RedemptionCodeTypeRegistration && redemption.MaxUses > 0 && redemption.UsedCount >= redemption.MaxUses {
+		redemption.Status = common.RedemptionCodeStatusUsed
+	}
 	return nil
 }
 
@@ -133,20 +136,30 @@ func applyRedemptionFilters(query *gorm.DB, keyword string, status string) *gorm
 	switch status {
 	case "expired":
 		return query.Where(
-			"status = ? AND expired_time != 0 AND expired_time < ?",
+			"status = ? AND expired_time != 0 AND expired_time < ? AND NOT (code_type = ? AND max_uses > 0 AND used_count >= max_uses)",
 			common.RedemptionCodeStatusEnabled,
 			now,
+			RedemptionCodeTypeRegistration,
 		)
 	case strconv.Itoa(common.RedemptionCodeStatusEnabled):
 		return query.Where(
-			"status = ? AND (expired_time = 0 OR expired_time >= ?)",
+			"status = ? AND (expired_time = 0 OR expired_time >= ?) AND NOT (code_type = ? AND max_uses > 0 AND used_count >= max_uses)",
 			common.RedemptionCodeStatusEnabled,
 			now,
+			RedemptionCodeTypeRegistration,
 		)
 	case strconv.Itoa(common.RedemptionCodeStatusDisabled):
-		return query.Where("status = ?", common.RedemptionCodeStatusDisabled)
+		return query.Where(
+			"status = ? AND NOT (code_type = ? AND max_uses > 0 AND used_count >= max_uses)",
+			common.RedemptionCodeStatusDisabled,
+			RedemptionCodeTypeRegistration,
+		)
 	case strconv.Itoa(common.RedemptionCodeStatusUsed):
-		return query.Where("status = ?", common.RedemptionCodeStatusUsed)
+		return query.Where(
+			"status = ? OR (code_type = ? AND max_uses > 0 AND used_count >= max_uses)",
+			common.RedemptionCodeStatusUsed,
+			RedemptionCodeTypeRegistration,
+		)
 	default:
 		return query
 	}
@@ -465,6 +478,12 @@ func DeleteRedemptionById(id int) (err error) {
 
 func DeleteInvalidRedemptions() (int64, error) {
 	now := common.GetTimestamp()
-	result := DB.Where("status IN ? OR (status = ? AND expired_time != 0 AND expired_time < ?)", []int{common.RedemptionCodeStatusUsed, common.RedemptionCodeStatusDisabled}, common.RedemptionCodeStatusEnabled, now).Delete(&Redemption{})
+	result := DB.Where(
+		"status IN ? OR (status = ? AND expired_time != 0 AND expired_time < ?) OR (code_type = ? AND max_uses > 0 AND used_count >= max_uses)",
+		[]int{common.RedemptionCodeStatusUsed, common.RedemptionCodeStatusDisabled},
+		common.RedemptionCodeStatusEnabled,
+		now,
+		RedemptionCodeTypeRegistration,
+	).Delete(&Redemption{})
 	return result.RowsAffected, result.Error
 }

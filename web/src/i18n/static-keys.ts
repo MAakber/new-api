@@ -127,6 +127,7 @@ export const STATIC_I18N_KEYS = [
   'Unused',
   'Disabled',
   'Used',
+  'Invalid',
   'Expired',
   'Redemption code(s) created successfully',
   'Redemption code updated successfully',
