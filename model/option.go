@@ -33,7 +33,7 @@ func AllOption() ([]*Option, error) {
 // takes effect on every application node before its next option-sync cycle.
 func RegistrationCodeRequired() (bool, error) {
 	option := Option{}
-	err := DB.Select("value").Where("key = ?", "RegistrationCodeEnabled").First(&option).Error
+	err := DB.Select("value").Where(&Option{Key: "RegistrationCodeEnabled"}).First(&option).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return false, nil
 	}
