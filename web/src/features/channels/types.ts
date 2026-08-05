@@ -388,3 +388,7 @@ export interface AddChannelRequest {
   batch_add_set_key_prefix_2_name?: boolean
   channel: Partial<Channel>
 }
+
+export type ChannelUpdatePayload = Partial<Channel> & {
+  key_mode?: 'append' | 'replace'
+}

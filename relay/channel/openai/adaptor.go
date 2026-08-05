@@ -103,7 +103,12 @@ func (a *Adaptor) Init(info *relaycommon.RelayInfo) {
 }
 
 func (a *Adaptor) GetRequestURL(info *relaycommon.RelayInfo) (string, error) {
-	if info.ChannelType == constant.ChannelTypeCodeBuddy && info.RelayMode == relayconstant.RelayModeResponses {
+	// CodeBuddy 上游只暴露 OpenAI chat/completions 协议：Responses 与
+	// ResponsesCompact（长上下文压缩）请求都必须折叠到 /v1/chat/completions，
+	// 否则会打到上游不存在的路径（如 /v1/responses/compact）并被拒绝。
+	if info.ChannelType == constant.ChannelTypeCodeBuddy &&
+		(info.RelayMode == relayconstant.RelayModeResponses ||
+			info.RelayMode == relayconstant.RelayModeResponsesCompact) {
 		return relaycommon.GetFullRequestURL(info.ChannelBaseUrl, "/v1/chat/completions", info.ChannelType), nil
 	}
 	if info.RelayMode == relayconstant.RelayModeRealtime {
@@ -782,7 +787,11 @@ func (a *Adaptor) DoRequest(c *gin.Context, info *relaycommon.RelayInfo, request
 }
 
 func (a *Adaptor) DoResponse(c *gin.Context, resp *http.Response, info *relaycommon.RelayInfo) (usage any, err *types.NewAPIError) {
-	if info.ChannelType == constant.ChannelTypeCodeBuddy && info.RelayMode == relayconstant.RelayModeResponses {
+	// CodeBuddy 上游以 chat/completions 响应，Responses 与 Compact 请求都要
+	// 转回 Responses 协议再返回下游。
+	if info.ChannelType == constant.ChannelTypeCodeBuddy &&
+		(info.RelayMode == relayconstant.RelayModeResponses ||
+			info.RelayMode == relayconstant.RelayModeResponsesCompact) {
 		if info.IsStream {
 			return OaiChatToResponsesStreamHandler(c, info, resp)
 		}

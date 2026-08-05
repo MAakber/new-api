@@ -1,11 +1,17 @@
 package service
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/relaykit/dto"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -351,6 +357,15 @@ type ChannelKeyConfigurationMutationResult struct {
 // from overwriting a concurrent administrator model edit.
 var ErrChannelUpstreamModelsConflict = errors.New("channel upstream models conflict")
 var ErrChannelMutationRevisionConflict = errors.New("channel configuration revision conflict")
+var ErrInvalidChannelKeyMode = errors.New("invalid channel key mode")
+var ErrChannelMultiKeyAppendUnsupported = errors.New("channel type does not support appending keys")
+
+type ChannelKeyMode string
+
+const (
+	ChannelKeyModeAppend  ChannelKeyMode = "append"
+	ChannelKeyModeReplace ChannelKeyMode = "replace"
+)
 
 // ChannelAdminPatchInput is the controller-facing optimistic-concurrency patch
 // contract. Fields contains only JSON fields actually supplied by the client.
@@ -359,6 +374,7 @@ type ChannelAdminPatchInput struct {
 	ExpectedRevision int64
 	Patch            model.Channel
 	Fields           map[string]bool
+	KeyMode          ChannelKeyMode
 	Trigger          ChannelMutationTrigger
 }
 
@@ -375,6 +391,9 @@ func UpdateChannelAdminPatchTx(tx *gorm.DB, input ChannelAdminPatchInput) (*Chan
 	var current model.Channel
 	if err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(&current, "id = ?", input.ChannelID).Error; err != nil {
 		return nil, err
+	}
+	if input.KeyMode != "" && input.KeyMode != ChannelKeyModeAppend && input.KeyMode != ChannelKeyModeReplace {
+		return nil, ErrInvalidChannelKeyMode
 	}
 	if current.ConfigRevision != input.ExpectedRevision {
 		return nil, ErrChannelMutationRevisionConflict
@@ -434,7 +453,145 @@ func UpdateChannelAdminPatchTx(tx *gorm.DB, input ChannelAdminPatchInput) (*Chan
 			return nil, errors.New("invalid channel admin patch field")
 		}
 	}
+	if input.KeyMode == ChannelKeyModeAppend && input.Fields["key"] && input.Patch.Key != "" {
+		if input.Fields["type"] && next.Type != current.Type {
+			return nil, ErrChannelMultiKeyAppendUnsupported
+		}
+		currentSettings := current.GetOtherSettings()
+		nextSettings := next.GetOtherSettings()
+		currentVertexKeyType := currentSettings.VertexKeyType
+		if currentVertexKeyType == "" {
+			currentVertexKeyType = dto.VertexKeyTypeJSON
+		}
+		nextVertexKeyType := nextSettings.VertexKeyType
+		if nextVertexKeyType == "" {
+			nextVertexKeyType = dto.VertexKeyTypeJSON
+		}
+		if current.Type == constant.ChannelTypeVertexAi && currentVertexKeyType != nextVertexKeyType {
+			return nil, ErrChannelMultiKeyAppendUnsupported
+		}
+		currentAwsKeyType := currentSettings.AwsKeyType
+		if currentAwsKeyType == "" {
+			currentAwsKeyType = dto.AwsKeyTypeAKSK
+		}
+		nextAwsKeyType := nextSettings.AwsKeyType
+		if nextAwsKeyType == "" {
+			nextAwsKeyType = dto.AwsKeyTypeAKSK
+		}
+		if current.Type == constant.ChannelTypeAws && currentAwsKeyType != nextAwsKeyType {
+			return nil, ErrChannelMultiKeyAppendUnsupported
+		}
+		if !channelSupportsMultiKeyAppend(&current) {
+			return nil, ErrChannelMultiKeyAppendUnsupported
+		}
+		keys, err := appendChannelKeys(current, input.Patch.Key)
+		if err != nil {
+			return nil, err
+		}
+		if len(keys) > 0 {
+			next.Key = strings.Join(keys, "\n")
+			if len(keys) > 1 {
+				next.ChannelInfo.IsMultiKey = true
+				next.ChannelInfo.MultiKeySize = len(keys)
+				if next.ChannelInfo.MultiKeyMode == "" {
+					next.ChannelInfo.MultiKeyMode = constant.MultiKeyModeRandom
+				}
+			} else if !current.ChannelInfo.IsMultiKey {
+				next.ChannelInfo.MultiKeySize = 0
+			}
+		}
+	}
 	return UpdateChannelTx(tx, &next, input.Trigger)
+}
+
+func channelSupportsMultiKeyAppend(channel *model.Channel) bool {
+	if channel == nil || channel.Type == constant.ChannelTypeCodex {
+		return false
+	}
+	if channel.Type != constant.ChannelTypeVertexAi {
+		return true
+	}
+	return channel.GetOtherSettings().VertexKeyType != dto.VertexKeyTypeAPIKey
+}
+
+func appendChannelKeys(current model.Channel, incoming string) ([]string, error) {
+	existingKeys, err := parseChannelKeysForAppend(&current, current.Key)
+	if err != nil {
+		return nil, err
+	}
+	incomingKeys, err := parseChannelKeysForAppend(&current, incoming)
+	if err != nil {
+		return nil, err
+	}
+	// Existing entries must keep their order and cardinality: runtime status is
+	// keyed by index, so normalizing or deduplicating the saved list here could
+	// silently move a disabled state onto another credential. Only incoming
+	// entries are normalized and deduplicated.
+	keys := append([]string(nil), existingKeys...)
+	seen := make(map[string]struct{}, len(existingKeys)+len(incomingKeys))
+	for _, key := range existingKeys {
+		normalized := strings.TrimSpace(key)
+		if normalized == "" {
+			continue
+		}
+		seen[normalized] = struct{}{}
+	}
+	for _, key := range incomingKeys {
+		normalized := strings.TrimSpace(key)
+		if normalized == "" {
+			continue
+		}
+		if _, exists := seen[normalized]; exists {
+			continue
+		}
+		seen[normalized] = struct{}{}
+		keys = append(keys, normalized)
+	}
+	return keys, nil
+}
+
+func parseChannelKeysForAppend(channel *model.Channel, raw string) ([]string, error) {
+	if channel != nil && channel.Type == constant.ChannelTypeVertexAi && channel.GetOtherSettings().VertexKeyType != dto.VertexKeyTypeAPIKey {
+		return parseVertexServiceAccountKeys(raw)
+	}
+	keys := make([]string, 0)
+	for _, key := range strings.Split(raw, "\n") {
+		if key = strings.TrimSpace(key); key != "" {
+			keys = append(keys, key)
+		}
+	}
+	return keys, nil
+}
+
+func parseVertexServiceAccountKeys(raw string) ([]string, error) {
+	trimmed := strings.TrimSpace(raw)
+	if trimmed == "" {
+		return nil, nil
+	}
+	var values []json.RawMessage
+	if strings.HasPrefix(trimmed, "[") {
+		if err := common.Unmarshal([]byte(trimmed), &values); err != nil {
+			return nil, fmt.Errorf("invalid Vertex AI service account JSON array: %w", err)
+		}
+	} else {
+		values = []json.RawMessage{json.RawMessage(trimmed)}
+	}
+	keys := make([]string, 0, len(values))
+	for _, value := range values {
+		var object map[string]any
+		if err := common.Unmarshal(value, &object); err != nil || object == nil {
+			if err != nil {
+				return nil, fmt.Errorf("invalid Vertex AI service account JSON: %w", err)
+			}
+			return nil, errors.New("invalid Vertex AI service account JSON")
+		}
+		encoded, err := common.Marshal(object)
+		if err != nil {
+			return nil, fmt.Errorf("encode Vertex AI service account JSON: %w", err)
+		}
+		keys = append(keys, string(bytes.TrimSpace(encoded)))
+	}
+	return keys, nil
 }
 
 type ChannelRuntimeMultiKeyMutation struct {
@@ -614,6 +771,9 @@ func UpdateChannelKeyConfigurationTx(tx *gorm.DB, next *model.Channel) (*Channel
 	var current model.Channel
 	if err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(&current, "id = ?", next.Id).Error; err != nil {
 		return nil, err
+	}
+	if current.ConfigRevision != next.ConfigRevision {
+		return nil, ErrChannelMutationRevisionConflict
 	}
 	result := &ChannelKeyConfigurationMutationResult{Current: &current, Updated: &current}
 	if current.Key == next.Key && reflect.DeepEqual(current.ChannelInfo, next.ChannelInfo) {

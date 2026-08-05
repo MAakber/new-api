@@ -305,6 +305,9 @@ func migrateDB() error {
 	if err != nil {
 		return err
 	}
+	if err := MigratePasskeyCredentialIndexes(); err != nil {
+		return err
+	}
 	if err := MigrateModelVendorActiveNames(); err != nil {
 		return err
 	}
@@ -397,6 +400,9 @@ func migrateDBFast() error {
 		if err != nil {
 			return err
 		}
+	}
+	if err := MigratePasskeyCredentialIndexes(); err != nil {
+		return err
 	}
 	if err := MigrateModelVendorActiveNames(); err != nil {
 		return err

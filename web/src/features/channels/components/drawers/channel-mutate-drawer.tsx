@@ -158,6 +158,7 @@ import {
   channelsQueryKeys,
   getAdvancedCustomStats,
   transformChannelToFormDefaults,
+  supportsChannelKeyAppend,
   type ChannelFormValues,
   deduplicateKeys,
   getChannelTypeIcon,
@@ -561,7 +562,7 @@ function ChannelEditorNav(props: {
                       isDone && !isError && 'text-primary',
                       isConfigured && !isError && 'pt-1.5'
                     )}
-                    aria-label={item.statusLabel}
+                    title={item.statusLabel}
                   >
                     {isConfigured && !isError && !isDone ? (
                       <span
@@ -708,10 +709,6 @@ export function ChannelMutateDrawer({
     }
   }, [open, channelId])
 
-  // Check if this is a multi-key channel
-  const isMultiKeyChannel =
-    isEditing && channelData?.data?.channel_info?.is_multi_key === true
-
   // Form setup
   const form = useForm<ChannelFormValues>({
     resolver: zodResolver(channelFormSchema),
@@ -857,8 +854,10 @@ export function ChannelMutateDrawer({
   const isBatchMode =
     multiKeyMode === 'batch' || multiKeyMode === 'multi_to_single'
   const isChannelDetailLoading = isEditing && isChannelLoading
-  const supportsMultiKeyAddMode =
-    currentType !== 57 && !(currentType === 41 && vertexKeyType === 'api_key')
+  const supportsMultiKeyAddMode = supportsChannelKeyAppend(
+    currentType,
+    vertexKeyType
+  )
   const addModeOptions = useMemo(
     () =>
       supportsMultiKeyAddMode
@@ -1333,8 +1332,7 @@ export function ChannelMutateDrawer({
     }, 500)
 
     return () => clearTimeout(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentBaseUrl])
+  }, [currentBaseUrl, t])
 
   // Handle key deduplication
   const handleDeduplicateKeys = () => {
@@ -1626,7 +1624,6 @@ export function ChannelMutateDrawer({
   const channelMutation = useChannelMutateForm({
     currentRow,
     isEditing,
-    isMultiKeyChannel,
     onSuccess: handleSuccess,
   })
 
@@ -2989,7 +2986,7 @@ export function ChannelMutateDrawer({
                                         {t(
                                           'Enter new key to update, or leave empty to keep current key'
                                         )}
-                                        {isMultiKeyChannel && (
+                                        {supportsMultiKeyAddMode && (
                                           <span className='text-warning mt-1 block'>
                                             {keyModeDescription}
                                           </span>
@@ -3136,7 +3133,7 @@ export function ChannelMutateDrawer({
                                 </div>
                               )}
 
-                              {isEditing && isMultiKeyChannel && (
+                              {isEditing && supportsMultiKeyAddMode && (
                                 <FormField
                                   control={form.control}
                                   name='key_mode'

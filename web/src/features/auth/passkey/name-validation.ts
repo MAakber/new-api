@@ -16,42 +16,32 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-export interface ApiResponse<T = unknown> {
-  success: boolean
-  message?: string
-  data?: T
-}
+import type { PasskeyCredentialSummary } from './types'
 
-export interface PasskeyStatus {
-  enabled: boolean
-  count?: number
-  last_used_at?: string | null
-  backup_eligible?: boolean
-  backup_state?: boolean
-  [key: string]: unknown
-}
+export const MAX_PASSKEYS_PER_USER = 10
+export const MAX_PASSKEY_NAME_LENGTH = 64
 
-export interface PasskeyCredentialSummary {
-  id: number
-  display_name: string
-  created_at: string
-  last_used_at?: string | null
-  attachment?: string
-  transports?: string[]
-  backup_eligible: boolean
-  backup_state: boolean
-}
+export type PasskeyNameValidationError =
+  | 'required'
+  | 'too-long'
+  | 'duplicate'
+  | null
 
-export interface PasskeyCredentialList {
+export function validatePasskeyName(
+  rawName: string,
   credentials: PasskeyCredentialSummary[]
-  count: number
-}
-
-export interface PasskeyOptionsPayload {
-  options?: unknown
-  flow_token?: string
-  expires_at?: number
-  publicKey?: unknown
-  response?: unknown
-  Response?: unknown
+): PasskeyNameValidationError {
+  const name = rawName.trim()
+  if (!name) return 'required'
+  if ([...name].length > MAX_PASSKEY_NAME_LENGTH) return 'too-long'
+  if (
+    credentials.some(
+      (credential) =>
+        credential.display_name.trim().toLocaleLowerCase() ===
+        name.toLocaleLowerCase()
+    )
+  ) {
+    return 'duplicate'
+  }
+  return null
 }

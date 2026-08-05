@@ -24,6 +24,7 @@ import type {
   BatchDeleteParams,
   BatchSetTagParams,
   Channel,
+  ChannelUpdatePayload,
   ChannelBalanceResponse,
   ChannelOpsResponse,
   DetailedChannelTestRequest,
@@ -130,7 +131,7 @@ export async function createChannel(
  */
 export async function updateChannel(
   id: number,
-  data: Partial<Channel>
+  data: ChannelUpdatePayload
 ): Promise<{ success: boolean; message?: string; data?: Channel }> {
   const res = await api.put(
     '/api/channel/',
@@ -312,7 +313,11 @@ export async function deleteDisabledChannels(): Promise<{
 export async function getChannelKey(
   id: number,
   proofToken?: string
-): Promise<{ success: boolean; message?: string; data?: { key: string } }> {
+): Promise<{
+  success: boolean
+  message?: string
+  data?: { key: string; keys?: string[] }
+}> {
   const res = await api.post(
     `/api/channel/${id}/key`,
     undefined,

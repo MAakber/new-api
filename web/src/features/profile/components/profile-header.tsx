@@ -16,13 +16,18 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { Activity, BarChart3, WalletCards } from 'lucide-react'
+import { Activity, BarChart3, Loader2, Pencil, WalletCards } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Dialog } from '@/components/dialog'
 import { StatusBadge } from '@/components/status-badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { IconBadge, type IconBadgeTone } from '@/components/ui/icon-badge'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getUserAvatarFallback, getUserAvatarStyle } from '@/lib/avatar'
 import { formatCompactNumber, formatQuota } from '@/lib/format'
@@ -38,12 +43,17 @@ import type { UserProfile } from '../types'
 interface ProfileHeaderProps {
   profile: UserProfile | null
   loading: boolean
+  updating: boolean
+  onUpdateDisplayName: (displayName: string) => Promise<boolean>
 }
 
-export function ProfileHeader({ profile, loading }: ProfileHeaderProps) {
+export function ProfileHeader(props: ProfileHeaderProps) {
   const { t } = useTranslation()
+  const [editOpen, setEditOpen] = useState(false)
+  const [displayNameInput, setDisplayNameInput] = useState('')
+  const [displayNameError, setDisplayNameError] = useState<string | null>(null)
 
-  if (loading) {
+  if (props.loading) {
     return (
       <Card data-card-hover='false' className='gap-0 overflow-hidden py-0'>
         <CardContent className='p-4 sm:p-5'>
@@ -77,8 +87,9 @@ export function ProfileHeader({ profile, loading }: ProfileHeaderProps) {
     )
   }
 
-  if (!profile) return null
+  if (!props.profile) return null
 
+  const profile = props.profile
   const displayName = getDisplayName(profile)
   const avatarName = profile.username || displayName
   const avatarFallback = getUserAvatarFallback(avatarName)
@@ -114,6 +125,26 @@ export function ProfileHeader({ profile, loading }: ProfileHeaderProps) {
     },
   ]
 
+  const openEdit = () => {
+    setDisplayNameInput(profile.display_name || '')
+    setDisplayNameError(null)
+    setEditOpen(true)
+  }
+
+  const saveDisplayName = async () => {
+    const value = displayNameInput.trim()
+    if (!value) {
+      setDisplayNameError(t('Please enter a name'))
+      return
+    }
+    if ([...value].length > 20) {
+      setDisplayNameError(t('Display name must be 20 characters or fewer'))
+      return
+    }
+    const updated = await props.onUpdateDisplayName(value)
+    if (updated) setEditOpen(false)
+  }
+
   return (
     <Card data-card-hover='false' className='gap-0 overflow-hidden py-0'>
       <CardContent className='p-3 sm:p-5'>
@@ -142,6 +173,15 @@ export function ProfileHeader({ profile, loading }: ProfileHeaderProps) {
                 variant='info'
                 copyText={String(profile.id)}
               />
+              <Button
+                type='button'
+                variant='ghost'
+                size='icon-sm'
+                onClick={openEdit}
+                aria-label={t('Edit')}
+              >
+                <Pencil className='h-4 w-4' />
+              </Button>
             </div>
 
             <div className='text-muted-foreground flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs sm:gap-x-4 sm:text-sm'>
@@ -185,6 +225,67 @@ export function ProfileHeader({ profile, loading }: ProfileHeaderProps) {
           ))}
         </div>
       </div>
+      <Dialog
+        open={editOpen}
+        onOpenChange={(next) => {
+          setEditOpen(next)
+          if (!next) setDisplayNameError(null)
+        }}
+        title={t('Edit profile')}
+        description={t('Update the name shown across your account.')}
+        contentClassName='sm:max-w-md'
+        footer={
+          <>
+            <Button
+              type='button'
+              variant='outline'
+              disabled={props.updating}
+              onClick={() => setEditOpen(false)}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type='button'
+              disabled={props.updating}
+              onClick={() => void saveDisplayName()}
+            >
+              {props.updating && <Loader2 className='h-4 w-4 animate-spin' />}
+              {t('Save changes')}
+            </Button>
+          </>
+        }
+      >
+        <div className='space-y-2'>
+          <Label htmlFor='profile-display-name'>{t('Display Name')}</Label>
+          <Input
+            id='profile-display-name'
+            value={displayNameInput}
+            maxLength={20}
+            aria-invalid={Boolean(displayNameError)}
+            aria-describedby={
+              displayNameError ? 'profile-display-name-error' : undefined
+            }
+            onChange={(event) => {
+              setDisplayNameInput(event.target.value)
+              if (displayNameError) setDisplayNameError(null)
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !props.updating) {
+                event.preventDefault()
+                void saveDisplayName()
+              }
+            }}
+          />
+          {displayNameError && (
+            <p
+              id='profile-display-name-error'
+              className='text-destructive text-sm'
+            >
+              {displayNameError}
+            </p>
+          )}
+        </div>
+      </Dialog>
     </Card>
   )
 }

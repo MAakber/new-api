@@ -208,7 +208,7 @@ func buildFetchModelsHeaders(channel *model.Channel, key string) (http.Header, e
 	}
 	if channel.Type == constant.ChannelTypeClaudeCode {
 		// GET /v1/models 按协议只携带单个凭证头（Authorization）。
-		relaychannel.ApplyClaudeCodeCompatibilityHeaders(headers, key, false, "")
+		relaychannel.ApplyClaudeCodeCompatibilityHeaders(headers, key, false, "", false)
 	}
 	return headers, nil
 }
@@ -454,7 +454,8 @@ func GetChannelKey(c *gin.Context) {
 		"success": true,
 		"message": "获取成功",
 		"data": map[string]interface{}{
-			"key": channel.Key,
+			"key":  channel.Key,
+			"keys": channel.GetKeys(),
 		},
 	})
 }
@@ -1041,6 +1042,12 @@ func UpdateChannel(c *gin.Context) {
 		}
 		channel.ChannelInfo.MultiKeyMode = constant.MultiKeyMode(*channel.MultiKeyMode)
 	}
+	if channel.KeyMode == nil {
+		if _, exists := requestData["key_mode"]; exists {
+			common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+			return
+		}
+	}
 	keyMode := service.ChannelKeyModeReplace
 	if channel.KeyMode != nil {
 		keyMode = service.ChannelKeyMode(*channel.KeyMode)
@@ -1552,7 +1559,7 @@ func ManageMultiKeys(c *gin.Context) {
 
 		// Build all key status data first
 		var allKeyStatusList []KeyStatus
-		for i, key := range keys {
+		for i := range keys {
 			status := 1 // default enabled
 			var disabledTime int64
 			var reason string
@@ -1582,18 +1589,12 @@ func ManageMultiKeys(c *gin.Context) {
 				}
 			}
 
-			// Create key preview (first 10 chars)
-			keyPreview := key
-			if len(key) > 10 {
-				keyPreview = key[:10] + "..."
-			}
-
 			allKeyStatusList = append(allKeyStatusList, KeyStatus{
 				Index:        i,
 				Status:       status,
 				DisabledTime: disabledTime,
 				Reason:       reason,
-				KeyPreview:   keyPreview,
+				KeyPreview:   "********",
 			})
 		}
 

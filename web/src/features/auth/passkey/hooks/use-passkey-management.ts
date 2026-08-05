@@ -29,11 +29,12 @@ import {
 
 import {
   beginPasskeyRegistration,
-  deletePasskey,
+  deletePasskeyById,
   finishPasskeyRegistration,
+  getPasskeys,
   getPasskeyStatus,
 } from '../api'
-import type { PasskeyStatus } from '../types'
+import type { PasskeyCredentialSummary, PasskeyStatus } from '../types'
 
 interface UsePasskeyManagementOptions {
   onStatusChange?: (status: PasskeyStatus | null) => void
@@ -45,27 +46,38 @@ export function usePasskeyManagement(
   const { onStatusChange } = options
 
   const [status, setStatus] = useState<PasskeyStatus | null>(null)
+  const [credentials, setCredentials] = useState<PasskeyCredentialSummary[]>([])
   const [loading, setLoading] = useState(true)
   const [registering, setRegistering] = useState(false)
-  const [removing, setRemoving] = useState(false)
+  const [removingId, setRemovingId] = useState<number | null>(null)
   const [supported, setSupported] = useState(false)
 
   const fetchStatus = useCallback(async () => {
     try {
       setLoading(true)
-      const res = await getPasskeyStatus()
-      if (res.success) {
-        setStatus(res.data ?? null)
-        onStatusChange?.(res.data ?? null)
+      const [statusResponse, listResponse] = await Promise.all([
+        getPasskeyStatus(),
+        getPasskeys(),
+      ])
+      if (statusResponse.success && listResponse.success) {
+        setStatus(statusResponse.data ?? null)
+        setCredentials(listResponse.data?.credentials ?? [])
+        onStatusChange?.(statusResponse.data ?? null)
       } else {
         setStatus(null)
-        toast.error(res.message || i18next.t('Failed to load Passkey status'))
+        setCredentials([])
+        toast.error(
+          statusResponse.message ||
+            listResponse.message ||
+            i18next.t('Failed to load Passkey status')
+        )
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('[Passkey] Failed to fetch status', error)
       toast.error(i18next.t('Failed to load Passkey status'))
       setStatus(null)
+      setCredentials([])
     } finally {
       setLoading(false)
     }
@@ -82,7 +94,7 @@ export function usePasskeyManagement(
   }, [])
 
   const register = useCallback(
-    async (proofToken?: string) => {
+    async (displayName: string, proofToken?: string) => {
       if (!supported) {
         toast.error(i18next.t('This device does not support Passkey'))
         return false
@@ -94,7 +106,10 @@ export function usePasskeyManagement(
 
       setRegistering(true)
       try {
-        const beginResponse = await beginPasskeyRegistration(proofToken)
+        const beginResponse = await beginPasskeyRegistration(
+          displayName,
+          proofToken
+        )
         if (!beginResponse.success) {
           toast.error(
             beginResponse.message ||
@@ -162,10 +177,10 @@ export function usePasskeyManagement(
   )
 
   const remove = useCallback(
-    async (proofToken?: string) => {
-      setRemoving(true)
+    async (id: number, proofToken?: string) => {
+      setRemovingId(id)
       try {
-        const res = await deletePasskey(proofToken)
+        const res = await deletePasskeyById(id, proofToken)
         if (!res.success) {
           toast.error(res.message || i18next.t('Failed to remove Passkey'))
           return false
@@ -180,7 +195,7 @@ export function usePasskeyManagement(
         toast.error(i18next.t('Failed to remove Passkey'))
         return false
       } finally {
-        setRemoving(false)
+        setRemovingId(null)
       }
     },
     [fetchStatus]
@@ -191,9 +206,10 @@ export function usePasskeyManagement(
 
   return {
     status,
+    credentials,
     loading,
     registering,
-    removing,
+    removingId,
     supported,
     enabled,
     lastUsed,

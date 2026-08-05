@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"errors"
+	"fmt"
 	"net"
 	"sync"
 	"testing"
@@ -243,7 +244,7 @@ func TestSecurityFactorMutationsAdvanceUserAuthVersion(t *testing.T) {
 	require.NoError(t, DisableTwoFAWithAuthVersion(user.Id))
 	assertUserAuthVersion(t, user.Id, 4)
 
-	credential := &PasskeyCredential{UserID: user.Id, CredentialID: "credential-id", PublicKey: "public-key"}
+	credential := &PasskeyCredential{UserID: user.Id, CredentialID: "credential-id", DisplayName: "Laptop", PublicKey: "public-key"}
 	require.NoError(t, UpsertPasskeyCredentialWithAuthVersion(credential))
 	assertUserAuthVersion(t, user.Id, 5)
 	require.NoError(t, DeletePasskeyByUserIDWithAuthVersion(user.Id))
@@ -305,6 +306,85 @@ func TestUpdatePasskeyAssertionStateCannotRewriteRegistrationIdentity(t *testing
 
 	validated.ID = []byte("another-credential")
 	assert.ErrorIs(t, UpdatePasskeyAssertionState(user.Id, validated, usedAt), ErrPasskeyNotFound)
+}
+
+func TestMultiplePasskeysRemainIndependentAcrossCreateAndDelete(t *testing.T) {
+	truncateTables(t)
+	user := User{Username: "multi-passkey-user", Password: "password", AuthVersion: 1}
+	require.NoError(t, DB.Create(&user).Error)
+
+	first := &PasskeyCredential{UserID: user.Id, CredentialID: "credential-a", DisplayName: "Phone", PublicKey: "public-key-a"}
+	second := &PasskeyCredential{UserID: user.Id, CredentialID: "credential-b", DisplayName: "Laptop", PublicKey: "public-key-b"}
+	require.NoError(t, CreatePasskeyCredential(first, false))
+	assert.ErrorIs(t, CreatePasskeyCredential(second, false), ErrPasskeyProofRequired)
+	assertUserAuthVersion(t, user.Id, 2)
+	require.NoError(t, CreatePasskeyCredential(second, true))
+	assertUserAuthVersion(t, user.Id, 3)
+
+	credentials, err := ListPasskeyCredentialsByUserID(user.Id)
+	require.NoError(t, err)
+	require.Len(t, credentials, 2)
+	assert.Equal(t, []string{"Phone", "Laptop"}, []string{credentials[0].DisplayName, credentials[1].DisplayName})
+
+	require.NoError(t, DeletePasskeyCredentialByIDAndUserID(first.ID, user.Id))
+	assertUserAuthVersion(t, user.Id, 4)
+	credentials, err = ListPasskeyCredentialsByUserID(user.Id)
+	require.NoError(t, err)
+	require.Len(t, credentials, 1)
+	assert.Equal(t, second.ID, credentials[0].ID)
+	assert.Equal(t, "Laptop", credentials[0].DisplayName)
+	otherUser := User{Username: "other-passkey-user", Password: "password", AffCode: "other-passkey-aff", AuthVersion: 1}
+	require.NoError(t, DB.Create(&otherUser).Error)
+	assert.ErrorIs(t, DeletePasskeyCredentialByIDAndUserID(second.ID, otherUser.Id), ErrPasskeyNotFound)
+	assertUserAuthVersion(t, user.Id, 4)
+	assertUserAuthVersion(t, otherUser.Id, 1)
+}
+
+func TestCreatePasskeyRejectsDuplicateNameAndEleventhCredentialWithoutVersionChange(t *testing.T) {
+	truncateTables(t)
+	user := User{Username: "bounded-passkey-user", Password: "password", AuthVersion: 1}
+	require.NoError(t, DB.Create(&user).Error)
+
+	created := make([]*PasskeyCredential, 0, MaxPasskeysPerUser)
+	for index := 1; index <= MaxPasskeysPerUser; index++ {
+		credential := &PasskeyCredential{
+			UserID: user.Id, CredentialID: fmt.Sprintf("credential-%d", index),
+			DisplayName: fmt.Sprintf("Device %d", index), PublicKey: fmt.Sprintf("public-key-%d", index),
+		}
+		require.NoError(t, CreatePasskeyCredential(credential, index > 1))
+		created = append(created, credential)
+	}
+	assertUserAuthVersion(t, user.Id, int64(1+MaxPasskeysPerUser))
+
+	duplicate := &PasskeyCredential{UserID: user.Id, CredentialID: "duplicate-name", DisplayName: "device 1", PublicKey: "duplicate-public-key"}
+	assert.ErrorIs(t, CreatePasskeyCredential(duplicate, true), ErrPasskeyLimitReached)
+	assertUserAuthVersion(t, user.Id, int64(1+MaxPasskeysPerUser))
+
+	require.NoError(t, DeletePasskeyCredentialByIDAndUserID(created[len(created)-1].ID, user.Id))
+	versionAfterDelete := int64(2 + MaxPasskeysPerUser)
+	assertUserAuthVersion(t, user.Id, versionAfterDelete)
+	assert.ErrorIs(t, CreatePasskeyCredential(duplicate, true), ErrPasskeyNameConflict)
+	assertUserAuthVersion(t, user.Id, versionAfterDelete)
+
+	eleventh := &PasskeyCredential{UserID: user.Id, CredentialID: "credential-11", DisplayName: "Device 11", PublicKey: "public-key-11"}
+	require.NoError(t, CreatePasskeyCredential(eleventh, true))
+	assertUserAuthVersion(t, user.Id, versionAfterDelete+1)
+	overLimit := &PasskeyCredential{UserID: user.Id, CredentialID: "credential-12", DisplayName: "Device 12", PublicKey: "public-key-12"}
+	assert.ErrorIs(t, CreatePasskeyCredential(overLimit, true), ErrPasskeyLimitReached)
+	assertUserAuthVersion(t, user.Id, versionAfterDelete+1)
+}
+
+func TestCreatePasskeyTrimsDisplayNameBeforeCaseInsensitiveUniquenessCheck(t *testing.T) {
+	truncateTables(t)
+	user := User{Username: "normalized-passkey-user", Password: "password", AuthVersion: 1}
+	require.NoError(t, DB.Create(&user).Error)
+
+	first := &PasskeyCredential{UserID: user.Id, CredentialID: "normalized-a", DisplayName: "  Work Laptop  ", PublicKey: "public-key-a"}
+	require.NoError(t, CreatePasskeyCredential(first, false))
+	assert.Equal(t, "Work Laptop", first.DisplayName)
+
+	duplicate := &PasskeyCredential{UserID: user.Id, CredentialID: "normalized-b", DisplayName: " work laptop ", PublicKey: "public-key-b"}
+	assert.ErrorIs(t, CreatePasskeyCredential(duplicate, true), ErrPasskeyNameConflict)
 }
 
 func assertUserAuthVersion(t *testing.T, userID int, expected int64) {

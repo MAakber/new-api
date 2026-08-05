@@ -17,15 +17,25 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { useQueryClient } from '@tanstack/react-query'
-import { Loader2, RefreshCw, Trash2, Power, PowerOff } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  RefreshCw,
+  Trash2,
+  Power,
+  PowerOff,
+} from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { ConfirmDialog } from '@/components/confirm-dialog'
+import { CopyButton } from '@/components/copy-button'
 import { StaticDataTable } from '@/components/data-table'
 import { Dialog } from '@/components/dialog'
 import { StatusBadge } from '@/components/status-badge'
+import { TruncatedText } from '@/components/truncated-text'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -37,10 +47,16 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import {
+  SecureVerificationDialog,
+  useSecureVerification,
+  type VerificationMethod,
+} from '@/features/auth/secure-verification'
+import {
   ADMIN_PERMISSION_ACTIONS,
   ADMIN_PERMISSION_RESOURCES,
   hasPermission,
 } from '@/lib/admin-permissions'
+import { ROLE } from '@/lib/roles'
 import { useAuthStore } from '@/stores/auth-store'
 
 import {
@@ -51,6 +67,7 @@ import {
   enableAllMultiKeys,
   disableAllMultiKeys,
   deleteDisabledMultiKeys,
+  getChannelKey,
 } from '../../api'
 import { MULTI_KEY_FILTER_OPTIONS } from '../../constants'
 import {
@@ -76,6 +93,7 @@ export function MultiKeyManageDialog({
 }: MultiKeyManageDialogProps) {
   const { t } = useTranslation()
   const { currentRow } = useChannels()
+  const currentRowId = currentRow?.id
   const queryClient = useQueryClient()
   const currentUser = useAuthStore((s) => s.auth.user)
   const canEditSensitive = hasPermission(
@@ -83,6 +101,7 @@ export function MultiKeyManageDialog({
     ADMIN_PERMISSION_RESOURCES.CHANNEL,
     ADMIN_PERMISSION_ACTIONS.SENSITIVE_WRITE
   )
+  const canRevealKeys = currentUser?.role === ROLE.SUPER_ADMIN
 
   // Data state
   const [isLoading, setIsLoading] = useState(false)
@@ -100,64 +119,131 @@ export function MultiKeyManageDialog({
   const [confirmAction, setConfirmAction] =
     useState<MultiKeyConfirmAction | null>(null)
   const [isPerformingAction, setIsPerformingAction] = useState(false)
+  const [revealedKeys, setRevealedKeys] = useState<string[] | null>(null)
+  const [isRevealingKeys, setIsRevealingKeys] = useState(false)
+  const {
+    open: verificationOpen,
+    setOpen: setVerificationOpen,
+    methods: verificationMethods,
+    state: verificationState,
+    withVerification,
+    executeVerification,
+    cancel: cancelVerification,
+    setCode: setVerificationCode,
+    switchMethod: switchVerificationMethod,
+  } = useSecureVerification()
 
-  // Reset and load data when dialog opens
+  const loadKeyStatus = useCallback(
+    async (page: number, size: number, status: number | null) => {
+      if (!currentRowId) return
+
+      setIsLoading(true)
+      try {
+        const response = await getMultiKeyStatus(
+          currentRowId,
+          page,
+          size,
+          status === null ? undefined : status
+        )
+
+        if (response.success && response.data) {
+          setKeys(response.data.keys || [])
+          setTotal(response.data.total || 0)
+          setCurrentPage(response.data.page || 1)
+          setPageSize(response.data.page_size || 10)
+          setTotalPages(response.data.total_pages || 0)
+          setEnabledCount(response.data.enabled_count || 0)
+          setManualDisabledCount(response.data.manual_disabled_count || 0)
+          setAutoDisabledCount(response.data.auto_disabled_count || 0)
+        } else {
+          toast.error(response.message || t('Failed to load key status'))
+        }
+      } catch (error: unknown) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : t('Failed to load key status')
+        )
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [currentRowId, t]
+  )
+
+  // Reset and load data when dialog opens or the selected channel changes.
   useEffect(() => {
-    if (open && currentRow) {
+    if (open && currentRowId) {
       setCurrentPage(1)
       setStatusFilter(null)
-      loadKeyStatus(1, pageSize, null)
+      void loadKeyStatus(1, pageSize, null)
+      setRevealedKeys(null)
+    } else if (!open) {
+      setRevealedKeys(null)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, currentRow?.id])
-
-  const loadKeyStatus = async (
-    page: number = currentPage,
-    size: number = pageSize,
-    status: number | null = statusFilter
-  ) => {
-    if (!currentRow) return
-
-    setIsLoading(true)
-    try {
-      const response = await getMultiKeyStatus(
-        currentRow.id,
-        page,
-        size,
-        status === null ? undefined : status
-      )
-
-      if (response.success && response.data) {
-        setKeys(response.data.keys || [])
-        setTotal(response.data.total || 0)
-        setCurrentPage(response.data.page || 1)
-        setPageSize(response.data.page_size || 10)
-        setTotalPages(response.data.total_pages || 0)
-        setEnabledCount(response.data.enabled_count || 0)
-        setManualDisabledCount(response.data.manual_disabled_count || 0)
-        setAutoDisabledCount(response.data.auto_disabled_count || 0)
-      } else {
-        toast.error(response.message || t('Failed to load key status'))
-      }
-    } catch (error: unknown) {
-      toast.error(
-        error instanceof Error ? error.message : t('Failed to load key status')
-      )
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  }, [currentRowId, loadKeyStatus, open, pageSize])
 
   const handleStatusFilterChange = (value: string) => {
-    const newFilter = value === 'all' ? null : parseInt(value)
+    const newFilter = value === 'all' ? null : Number.parseInt(value)
     setStatusFilter(newFilter)
     setCurrentPage(1)
-    loadKeyStatus(1, pageSize, newFilter)
+    void loadKeyStatus(1, pageSize, newFilter)
   }
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage)
-    loadKeyStatus(newPage, pageSize)
+    void loadKeyStatus(newPage, pageSize, statusFilter)
+  }
+
+  const fetchFullKeys = async (proofToken?: string) => {
+    if (!currentRow) return null
+    setIsRevealingKeys(true)
+    try {
+      const response = await getChannelKey(currentRow.id, proofToken)
+      if (!response.success || !response.data) {
+        throw new Error(response.message || t('Failed to fetch channel key'))
+      }
+      const fullKeys = response.data.keys ?? [response.data.key]
+      setRevealedKeys(fullKeys)
+      toast.success(t('Channel key unlocked'))
+      return response
+    } finally {
+      setIsRevealingKeys(false)
+    }
+  }
+
+  const handleRevealKeys = async () => {
+    if (revealedKeys) {
+      setRevealedKeys(null)
+      return
+    }
+    try {
+      await withVerification(fetchFullKeys, {
+        scope: 'channel.key.read',
+        preferredMethod: 'passkey',
+        title: t('Verify to view channel key'),
+        description: t(
+          'Use Passkey or 2FA to confirm your identity before revealing this channel key.'
+        ),
+      })
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t('Failed to fetch channel key')
+      )
+    }
+  }
+
+  const handleDialogVerify = async (
+    method: VerificationMethod,
+    code?: string
+  ) => {
+    try {
+      await executeVerification(method, code)
+    } catch {
+      // Verification errors are surfaced by the shared hook.
+    }
   }
 
   const performAction = async () => {
@@ -174,7 +260,9 @@ export function MultiKeyManageDialog({
     setIsPerformingAction(true)
     try {
       const { type, keyIndex } = confirmAction
-      let response
+      let response:
+        | { success: boolean; message?: string; data?: number }
+        | undefined
 
       // Execute the appropriate action
       if (type === 'enable' && keyIndex !== undefined) {
@@ -194,14 +282,17 @@ export function MultiKeyManageDialog({
       if (response?.success) {
         toast.success(response.message || t('Operation successful'))
         queryClient.invalidateQueries({ queryKey: channelsQueryKeys.lists() })
+        if (type === 'delete' || type === 'delete-disabled') {
+          setRevealedKeys(null)
+        }
 
         // Reload data - reset to page 1 for bulk actions
         const isBulkAction = type.includes('all') || type === 'delete-disabled'
         if (isBulkAction) {
           setCurrentPage(1)
-          loadKeyStatus(1, pageSize)
+          void loadKeyStatus(1, pageSize, statusFilter)
         } else {
-          loadKeyStatus(currentPage, pageSize)
+          void loadKeyStatus(currentPage, pageSize, statusFilter)
         }
       } else {
         toast.error(response?.message || t('Operation failed'))
@@ -231,6 +322,13 @@ export function MultiKeyManageDialog({
   const formatKeyTimestamp = (timestamp?: number) => {
     if (!timestamp) return '-'
     return formatTimestamp(timestamp)
+  }
+
+  let revealIcon = <Eye className='h-4 w-4' />
+  if (isRevealingKeys || verificationState.loading) {
+    revealIcon = <Loader2 className='h-4 w-4 animate-spin' />
+  } else if (revealedKeys) {
+    revealIcon = <EyeOff className='h-4 w-4' />
   }
 
   if (!currentRow) return null
@@ -294,12 +392,10 @@ export function MultiKeyManageDialog({
           {/* Toolbar */}
           <div className='flex shrink-0 items-center justify-between'>
             <Select
-              items={[
-                ...MULTI_KEY_FILTER_OPTIONS.map((option) => ({
-                  value: option.value,
-                  label: t(option.label),
-                })),
-              ]}
+              items={MULTI_KEY_FILTER_OPTIONS.map((option) => ({
+                value: option.value,
+                label: t(option.label),
+              }))}
               value={statusFilter === null ? 'all' : statusFilter.toString()}
               onValueChange={(v) => v !== null && handleStatusFilterChange(v)}
             >
@@ -318,10 +414,23 @@ export function MultiKeyManageDialog({
             </Select>
 
             <div className='flex items-center gap-2'>
+              {canRevealKeys && (
+                <Button
+                  variant='outline'
+                  size='sm'
+                  onClick={handleRevealKeys}
+                  disabled={isRevealingKeys || verificationState.loading}
+                >
+                  {revealIcon}
+                  {revealedKeys ? t('Hide') : t('Reveal key')}
+                </Button>
+              )}
               <Button
                 variant='outline'
                 size='sm'
-                onClick={() => loadKeyStatus()}
+                onClick={() =>
+                  void loadKeyStatus(currentPage, pageSize, statusFilter)
+                }
                 disabled={isLoading}
               >
                 <RefreshCw className='h-4 w-4' />
@@ -378,15 +487,17 @@ export function MultiKeyManageDialog({
 
           {/* Table */}
           <div className='min-h-0 flex-1 overflow-auto rounded-md border'>
-            {isLoading ? (
+            {isLoading && (
               <div className='flex items-center justify-center py-12'>
                 <Loader2 className='text-muted-foreground h-8 w-8 animate-spin' />
               </div>
-            ) : keys.length === 0 ? (
+            )}
+            {!isLoading && keys.length === 0 && (
               <div className='text-muted-foreground py-12 text-center'>
                 {t('No keys found')}
               </div>
-            ) : (
+            )}
+            {!isLoading && keys.length > 0 && (
               <StaticDataTable
                 className='rounded-none border-0'
                 tableClassName='min-w-[800px]'
@@ -405,6 +516,36 @@ export function MultiKeyManageDialog({
                     header: t('Status'),
                     className: 'w-32',
                     cell: (key) => renderStatusBadge(key.status),
+                  },
+                  {
+                    id: 'key',
+                    header: t('API Key'),
+                    className: 'min-w-[240px]',
+                    cell: (key) => {
+                      const value = revealedKeys?.[key.index]
+                      if (!value) {
+                        return (
+                          <code className='text-muted-foreground text-xs'>
+                            ••••••••
+                          </code>
+                        )
+                      }
+                      return (
+                        <div className='flex max-w-[420px] items-center gap-1'>
+                          <TruncatedText
+                            text={value}
+                            maxWidth='max-w-[360px]'
+                            className='font-mono text-xs'
+                          />
+                          <CopyButton
+                            value={value}
+                            size='icon'
+                            tooltip={t('Copy')}
+                            aria-label={t('Copy')}
+                          />
+                        </div>
+                      )
+                    },
                   },
                   {
                     id: 'reason',
@@ -479,6 +620,16 @@ export function MultiKeyManageDialog({
         destructive={isDestructiveAction(confirmAction)}
         isLoading={isPerformingAction}
         handleConfirm={performAction}
+      />
+      <SecureVerificationDialog
+        open={verificationOpen}
+        onOpenChange={setVerificationOpen}
+        methods={verificationMethods}
+        state={verificationState}
+        onVerify={handleDialogVerify}
+        onCancel={cancelVerification}
+        onCodeChange={setVerificationCode}
+        onMethodChange={switchVerificationMethod}
       />
     </>
   )

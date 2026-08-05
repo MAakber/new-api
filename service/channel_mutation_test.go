@@ -171,6 +171,11 @@ func TestChannelMutationKeyConfigurationInvalidatesWithoutEvents(t *testing.T) {
 	require.NoError(t, db.First(&stored, created[0].Id).Error)
 	require.EqualValues(t, 2, stored.ConfigRevision)
 	require.Zero(t, stored.AutoPriceGuardID)
+	next.Key = "stale-overwrite"
+	_, err = UpdateChannelKeyConfiguration(&next)
+	require.ErrorIs(t, err, ErrChannelMutationRevisionConflict)
+	require.NoError(t, db.First(&stored, created[0].Id).Error)
+	require.Equal(t, "one", stored.Key)
 	var after int64
 	require.NoError(t, db.Model(&model.AutoSyncEvent{}).Count(&after).Error)
 	require.Equal(t, before, after)

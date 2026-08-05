@@ -43,6 +43,27 @@ func TestParsePasskeyFinishRequestDoesNotRewriteRequestBody(t *testing.T) {
 	assert.Equal(t, int64(len(bodyText)), context.Request.ContentLength)
 }
 
+func TestPasskeyCredentialResponsesDoNotExposeCredentialMaterial(t *testing.T) {
+	items := passkeyCredentialResponses([]model.PasskeyCredential{{
+		ID:           7,
+		UserID:       42,
+		DisplayName:  "Work laptop",
+		CredentialID: "credential-secret",
+		PublicKey:    "public-key-secret",
+		AAGUID:       "aaguid-secret",
+		Transports:   `["usb"]`,
+		Attachment:   "cross-platform",
+	}})
+	require.Len(t, items, 1)
+	encoded, err := common.Marshal(items[0])
+	require.NoError(t, err)
+	assert.Contains(t, string(encoded), `"display_name":"Work laptop"`)
+	assert.Contains(t, string(encoded), `"transports":["usb"]`)
+	assert.NotContains(t, string(encoded), "credential-secret")
+	assert.NotContains(t, string(encoded), "public-key-secret")
+	assert.NotContains(t, string(encoded), "aaguid-secret")
+}
+
 func TestPasskeyRegisterFinishRejectsMissingOrWrongProofWithoutConsumingFlow(t *testing.T) {
 	previousDB := model.DB
 	previousType := common.MainDatabaseType()
@@ -127,4 +148,61 @@ func TestPasskeyRegisterFinishRejectsMissingOrWrongProofWithoutConsumingFlow(t *
 			assert.Nil(t, flow.ConsumedAt)
 		})
 	}
+}
+
+func TestAdditionalPasskeyRegistrationRequiresExistingPasskeyProof(t *testing.T) {
+	previousDB := model.DB
+	previousType := common.MainDatabaseType()
+	previousRedis := common.RedisEnabled
+	previousSecret := common.SessionSecret
+	settings := system_setting.GetPasskeySettings()
+	previousSettings := *settings
+	dsn := fmt.Sprintf("file:%s?mode=memory&cache=shared", strings.ReplaceAll(t.Name(), "/", "_"))
+	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{})
+	require.NoError(t, err)
+	require.NoError(t, db.AutoMigrate(&model.User{}, &model.TwoFA{}, &model.PasskeyCredential{}, &model.AuthFlow{}))
+	model.DB = db
+	common.SetMainDatabaseType(common.DatabaseTypeSQLite)
+	common.RedisEnabled = false
+	common.SessionSecret = "additional-passkey-proof-test-secret"
+	*settings = system_setting.PasskeySettings{Enabled: true}
+	t.Cleanup(func() {
+		model.DB = previousDB
+		common.SetMainDatabaseType(previousType)
+		common.RedisEnabled = previousRedis
+		common.SessionSecret = previousSecret
+		*settings = previousSettings
+		sqlDB, dbErr := db.DB()
+		if dbErr == nil {
+			_ = sqlDB.Close()
+		}
+	})
+
+	user := &model.User{
+		Username: "additional-passkey-user", Password: "password-placeholder", AffCode: "additional-passkey-aff",
+		Role: common.RoleCommonUser, Status: common.UserStatusEnabled, Group: "default", AuthVersion: 1,
+	}
+	require.NoError(t, db.Create(user).Error)
+	require.NoError(t, db.Create(&model.PasskeyCredential{
+		UserID: user.Id, CredentialID: "existing-credential", DisplayName: "Phone", PublicKey: "existing-public-key",
+	}).Error)
+
+	request := httptest.NewRequest(http.MethodPost, "/api/user/passkey/register/begin", strings.NewReader(`{"display_name":"Laptop"}`))
+	request.Header.Set("Content-Type", "application/json")
+	response := httptest.NewRecorder()
+	context, _ := gin.CreateTestContext(response)
+	context.Request = request
+	context.Set("id", user.Id)
+	context.Set("session_id", "additional-passkey-session")
+	context.Set("auth_version", int64(1))
+	context.Set("session_version", int64(1))
+
+	PasskeyRegisterBegin(context)
+
+	assert.Equal(t, http.StatusForbidden, response.Code)
+	var responseBody struct {
+		Code string `json:"code"`
+	}
+	require.NoError(t, common.Unmarshal(response.Body.Bytes(), &responseBody))
+	assert.Equal(t, "SECURITY_PROOF_REQUIRED", responseBody.Code)
 }

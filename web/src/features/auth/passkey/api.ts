@@ -22,7 +22,12 @@ import type {
   SecurityProof,
   SecurityProofScope,
 } from '../secure-verification/types'
-import type { ApiResponse, PasskeyOptionsPayload, PasskeyStatus } from './types'
+import type {
+  ApiResponse,
+  PasskeyCredentialList,
+  PasskeyOptionsPayload,
+  PasskeyStatus,
+} from './types'
 
 function proofHeaders(proofToken?: string): Record<string, string> | undefined {
   return proofToken ? { 'X-Security-Proof': proofToken } : undefined
@@ -33,12 +38,21 @@ export async function getPasskeyStatus(): Promise<ApiResponse<PasskeyStatus>> {
   return res.data
 }
 
+export async function getPasskeys(): Promise<
+  ApiResponse<PasskeyCredentialList>
+> {
+  const res =
+    await api.get<ApiResponse<PasskeyCredentialList>>('/api/user/passkeys')
+  return res.data
+}
+
 export async function beginPasskeyRegistration(
+  displayName: string,
   proofToken?: string
 ): Promise<ApiResponse<PasskeyOptionsPayload>> {
   const res = await api.post<ApiResponse<PasskeyOptionsPayload>>(
     '/api/user/passkey/register/begin',
-    undefined,
+    { display_name: displayName },
     { headers: proofHeaders(proofToken) }
   )
   return res.data
@@ -62,6 +76,17 @@ export async function finishPasskeyRegistration(
 
 export async function deletePasskey(proofToken?: string): Promise<ApiResponse> {
   const res = await api.delete<ApiResponse>('/api/user/passkey', {
+    headers: proofHeaders(proofToken),
+    acceptAuthRotation: true,
+  })
+  return res.data
+}
+
+export async function deletePasskeyById(
+  id: number,
+  proofToken?: string
+): Promise<ApiResponse> {
+  const res = await api.delete<ApiResponse>(`/api/user/passkeys/${id}`, {
     headers: proofHeaders(proofToken),
     acceptAuthRotation: true,
   })

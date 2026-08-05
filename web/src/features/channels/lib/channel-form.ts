@@ -27,7 +27,7 @@ import {
   ERROR_MESSAGES,
   MODEL_FETCHABLE_TYPES,
 } from '../constants'
-import type { Channel } from '../types'
+import type { Channel, ChannelUpdatePayload } from '../types'
 import {
   CHANNEL_TYPE_ADVANCED_CUSTOM,
   advancedCustomConfigUsesRelativeUpstreamPath,
@@ -36,6 +36,13 @@ import {
   stringifyAdvancedCustomConfig,
   validateAdvancedCustomConfig,
 } from './advanced-custom'
+
+export function supportsChannelKeyAppend(
+  type: number,
+  vertexKeyType: 'json' | 'api_key' | undefined
+): boolean {
+  return type !== 57 && !(type === 41 && vertexKeyType === 'api_key')
+}
 
 // ============================================================================
 // Form Validation Schema
@@ -834,8 +841,8 @@ export function transformFormDataToCreatePayload(formData: ChannelFormValues): {
 export function transformFormDataToUpdatePayload(
   formData: ChannelFormValues,
   channelId: number
-): Partial<Channel> {
-  const payload: Partial<Channel> = {
+): ChannelUpdatePayload {
+  const payload: ChannelUpdatePayload = {
     id: channelId,
     name: formData.name,
     type: formData.type,
@@ -861,6 +868,9 @@ export function transformFormDataToUpdatePayload(
   // Only include key if it was changed (not empty)
   if (formData.key && formData.key.trim()) {
     payload.key = formData.key
+    if (supportsChannelKeyAppend(formData.type, formData.vertex_key_type)) {
+      payload.key_mode = formData.key_mode || 'append'
+    }
   }
 
   // Clean up empty strings to null for optional fields

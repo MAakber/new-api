@@ -39,7 +39,6 @@ import type { Channel } from '../types'
 type UseChannelMutateFormParams = {
   currentRow?: Channel | null
   isEditing: boolean
-  isMultiKeyChannel: boolean
   onSuccess: () => void
 }
 
@@ -103,22 +102,9 @@ export function useChannelMutateForm(props: UseChannelMutateFormParams) {
           for (const field of SENSITIVE_UPDATE_FIELDS) {
             delete payload[field]
           }
+          delete payload.key_mode
         }
-        const payloadWithKeyMode =
-          canEditSensitive &&
-          props.isMultiKeyChannel &&
-          data.key?.trim() &&
-          data.key_mode
-            ? {
-                ...payload,
-                key_mode: data.key_mode,
-              }
-            : payload
-
-        const response = await updateChannel(
-          props.currentRow.id,
-          payloadWithKeyMode
-        )
+        const response = await updateChannel(props.currentRow.id, payload)
         if (!response.success) {
           throw new Error(response.message || t(ERROR_MESSAGES.UPDATE_FAILED))
         }
