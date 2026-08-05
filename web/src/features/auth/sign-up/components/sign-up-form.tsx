@@ -39,6 +39,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { register, wechatLoginByCode } from '@/features/auth/api'
+import { isPendingRegistrationChallenge } from '@/features/auth/complete-registration/flow-response'
 import { LegalConsent } from '@/features/auth/components/legal-consent'
 import { OAuthProviders } from '@/features/auth/components/oauth-providers'
 import { registerFormSchema } from '@/features/auth/constants'
@@ -53,6 +54,7 @@ import { useStatus } from '@/hooks/use-status'
 import { isAuthBundle } from '@/lib/api'
 import { getServerErrorMessageKey } from '@/lib/server-error-message'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/stores/auth-store'
 
 export function SignUpForm({
   className,
@@ -76,7 +78,11 @@ export function SignUpForm({
     setTurnstileToken,
     validateTurnstile,
   } = useTurnstile()
-  const { redirectToLogin, handleLoginSuccess } = useAuthRedirect()
+  const { redirectToLogin, redirectToRegistrationCode, handleLoginSuccess } =
+    useAuthRedirect()
+  const setPendingRegistrationFlowToken = useAuthStore(
+    (state) => state.auth.setPendingRegistrationFlowToken
+  )
   const {
     isSending: isSendingCode,
     secondsLeft,
@@ -94,16 +100,11 @@ export function SignUpForm({
       email: '',
       password: '',
       confirmPassword: '',
-      registration_code: '',
     },
   })
 
   const emailValue = form.watch('email')
-  const registrationCode = form.watch('registration_code')
   const emailVerificationRequired = !!status?.email_verification
-  const registrationCodeRequired = Boolean(
-    status?.registration_code_enabled ?? status?.data?.registration_code_enabled
-  )
   const hasUserAgreement = Boolean(status?.user_agreement_enabled)
   const hasPrivacyPolicy = Boolean(status?.privacy_policy_enabled)
   const requiresLegalConsent = hasUserAgreement || hasPrivacyPolicy
@@ -149,11 +150,6 @@ export function SignUpForm({
       return
     }
 
-    if (registrationCodeRequired && !data.registration_code?.trim()) {
-      toast.error(t('Please enter a registration code'))
-      return
-    }
-
     // Validate email verification if required
     if (emailVerificationRequired) {
       if (!data.email) {
@@ -176,11 +172,15 @@ export function SignUpForm({
         email: data.email || undefined,
         verification_code: verificationCode || undefined,
         aff_code: getAffiliateCode(),
-        registration_code: data.registration_code?.trim() || undefined,
         turnstile: turnstileToken,
       })
 
       if (res?.success) {
+        if (isPendingRegistrationChallenge(res.data)) {
+          setPendingRegistrationFlowToken(res.data.flow_token)
+          redirectToRegistrationCode()
+          return
+        }
         toast.success(t('Account created! Please sign in'))
         redirectToLogin()
       } else {
@@ -224,7 +224,13 @@ export function SignUpForm({
 
     setIsWeChatSubmitting(true)
     try {
-      const res = await wechatLoginByCode(wechatCode, registrationCode)
+      const res = await wechatLoginByCode(wechatCode)
+      if (res?.success && isPendingRegistrationChallenge(res.data)) {
+        setPendingRegistrationFlowToken(res.data.flow_token)
+        handleWeChatDialogChange(false)
+        redirectToRegistrationCode()
+        return
+      }
       if (res?.success && isAuthBundle(res.data)) {
         await handleLoginSuccess(res.data)
         toast.success(t('Signed in via WeChat'))
@@ -306,25 +312,6 @@ export function SignUpForm({
         />
 
         {/* Email Verification Section */}
-        {registrationCodeRequired && (
-          <FormField
-            control={form.control}
-            name='registration_code'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('Registration Code')}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t('Enter your registration code')}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
-
         {emailVerificationRequired && (
           <>
             {/* Email Field */}
@@ -410,7 +397,6 @@ export function SignUpForm({
         {oauthRegisterEnabled && (
           <OAuthProviders
             status={status}
-            registrationCode={registrationCode}
             disabled={isLoading || (requiresLegalConsent && !agreedToLegal)}
             onWeChatLogin={hasWeChatLogin ? handleOpenWeChatDialog : undefined}
             isWeChatLoading={isWeChatSubmitting}

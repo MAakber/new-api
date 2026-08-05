@@ -37,7 +37,6 @@ export const registerFormSchema = z
       .min(8, 'Password must be between 8 and 20 characters')
       .max(20, 'Password must be at most 20 characters long'),
     confirmPassword: z.string().min(1, 'Please confirm your password'),
-    registration_code: z.string().trim().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match.",
@@ -52,6 +51,13 @@ export const forgotPasswordFormSchema = z.object({
 
 export const otpFormSchema = z.object({
   otp: z.string().min(1, 'Please enter a code.'),
+})
+
+export const registrationCodeFormSchema = z.object({
+  registrationCode: z
+    .string()
+    .trim()
+    .min(1, 'Please enter a registration code'),
 })
 
 // ============================================================================

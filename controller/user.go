@@ -117,6 +117,9 @@ func Login(c *gin.Context) {
 
 // loginMethodFromContext 根据请求路径推导登录方式，用于登录审计日志。
 func loginMethodFromContext(c *gin.Context) string {
+	if method := c.GetString("login_method_override"); method != "" {
+		return method
+	}
 	switch c.FullPath() {
 	case "/api/user/login":
 		return "password"
@@ -250,7 +253,6 @@ func Register(c *gin.Context) {
 	}
 	user.Username = strings.TrimSpace(user.Username)
 	user.Email = model.NormalizeEmail(user.Email)
-	user.RegistrationCode = strings.TrimSpace(user.RegistrationCode)
 	if user.Username == "" {
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
 		return
@@ -296,12 +298,31 @@ func Register(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgDatabaseError)
 		return
 	}
-	if registrationCodeRequired && user.RegistrationCode == "" {
-		common.ApiErrorI18n(c, i18n.MsgUserRegistrationCodeInvalid)
-		return
-	}
 	affCode := user.AffCode // this code is the inviter's code, not the user's own code
 	inviterId, _ := model.GetUserIdByAffCode(affCode)
+	if registrationCodeRequired {
+		passwordHash, err := common.Password2Hash(user.Password)
+		if err != nil {
+			common.ApiError(c, err)
+			return
+		}
+		challenge, err := createPendingRegistration(pendingRegistrationPayload{
+			Method: pendingRegistrationPassword,
+			User: pendingRegistrationUser{
+				Username:     user.Username,
+				PasswordHash: passwordHash,
+				DisplayName:  user.Username,
+				Email:        user.Email,
+			},
+			InviterId: inviterId,
+		})
+		if err != nil {
+			common.ApiError(c, err)
+			return
+		}
+		writePendingRegistration(c, challenge)
+		return
+	}
 	cleanUser := model.User{
 		Username:    user.Username,
 		Password:    user.Password,
@@ -313,20 +334,10 @@ func Register(c *gin.Context) {
 		cleanUser.Email = user.Email
 	}
 	if err := model.DB.Transaction(func(tx *gorm.DB) error {
-		if err := cleanUser.InsertWithTx(tx, inviterId); err != nil {
-			return err
-		}
-		if registrationCodeRequired {
-			return model.ConsumeRegistrationCodeWithTx(tx, user.RegistrationCode, cleanUser.Id)
-		}
-		return nil
+		return cleanUser.InsertWithTx(tx, inviterId)
 	}); err != nil {
 		if errors.Is(err, model.ErrEmailAlreadyTaken) {
 			common.ApiErrorI18n(c, i18n.MsgUserEmailAlreadyTaken)
-			return
-		}
-		if errors.Is(err, model.ErrRegistrationCodeUnavailable) {
-			common.ApiErrorI18n(c, i18n.MsgUserRegistrationCodeInvalid)
 			return
 		}
 		common.ApiError(c, err)

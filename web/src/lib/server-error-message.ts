@@ -21,6 +21,7 @@ const serverErrorMessageKeys = {
     'Too many active login sessions. On a device where you are already signed in, open Login sessions and use “Sign out other sessions” to revoke them. If you cannot access a signed-in device, reset your password to sign out all sessions.',
   AUTH_SESSION_ISSUANCE_LIMIT:
     'Too many login sessions were created recently. Please wait for the rolling window to pass, then try again.',
+  REGISTRATION_FLOW_INVALID: 'Registration flow expired. Please try again.',
   TELEGRAM_BIND_DISABLED: 'Telegram binding is disabled.',
   TELEGRAM_BIND_INVALID_REQUEST:
     'The Telegram authorization request is invalid or expired.',

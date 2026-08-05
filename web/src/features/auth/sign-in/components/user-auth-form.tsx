@@ -41,6 +41,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { login, wechatLoginByCode } from '@/features/auth/api'
+import { isPendingRegistrationChallenge } from '@/features/auth/complete-registration/flow-response'
 import { LegalConsent } from '@/features/auth/components/legal-consent'
 import { OAuthProviders } from '@/features/auth/components/oauth-providers'
 import { loginFormSchema } from '@/features/auth/constants'
@@ -72,7 +73,6 @@ export function UserAuthForm({
   const [isPasskeyLoading, setIsPasskeyLoading] = useState(false)
   const [isWeChatDialogOpen, setIsWeChatDialogOpen] = useState(false)
   const [isWeChatSubmitting, setIsWeChatSubmitting] = useState(false)
-  const [registrationCode, setRegistrationCode] = useState('')
   const legalConsentErrorMessage = t('Please agree to the legal terms first')
   const loginFailedMessage = t('Login failed')
 
@@ -91,9 +91,13 @@ export function UserAuthForm({
     setTurnstileToken,
     validateTurnstile,
   } = useTurnstile()
-  const { handleLoginSuccess, redirectTo2FA } = useAuthRedirect()
+  const { handleLoginSuccess, redirectTo2FA, redirectToRegistrationCode } =
+    useAuthRedirect()
   const setPending2FAFlowToken = useAuthStore(
     (state) => state.auth.setPending2FAFlowToken
+  )
+  const setPendingRegistrationFlowToken = useAuthStore(
+    (state) => state.auth.setPendingRegistrationFlowToken
   )
 
   const hasUserAgreement = Boolean(status?.user_agreement_enabled)
@@ -104,9 +108,6 @@ export function UserAuthForm({
     !passkeySupported ||
     (requiresLegalConsent && !agreedToLegal)
   const hasWeChatLogin = Boolean(status?.wechat_login)
-  const registrationCodeRequired = Boolean(
-    status?.registration_code_enabled ?? status?.data?.registration_code_enabled
-  )
   const hasOAuthLogin = Boolean(
     status?.github_oauth ||
     status?.discord_oauth ||
@@ -219,7 +220,13 @@ export function UserAuthForm({
 
     setIsWeChatSubmitting(true)
     try {
-      const res = await wechatLoginByCode(wechatCode, registrationCode)
+      const res = await wechatLoginByCode(wechatCode)
+      if (res?.success && isPendingRegistrationChallenge(res.data)) {
+        setPendingRegistrationFlowToken(res.data.flow_token)
+        handleWeChatDialogChange(false)
+        redirectToRegistrationCode()
+        return
+      }
       if (res?.success && isAuthBundle(res.data)) {
         await handleLoginSuccess(res.data, redirectTo)
         toast.success(t('Signed in via WeChat'))
@@ -338,7 +345,6 @@ export function UserAuthForm({
       <OAuthProviders
         status={status}
         redirectTo={redirectTo}
-        registrationCode={registrationCode}
         disabled={isLoading || (requiresLegalConsent && !agreedToLegal)}
         onWeChatLogin={hasWeChatLogin ? handleOpenWeChatDialog : undefined}
         isWeChatLoading={isWeChatSubmitting}
@@ -353,24 +359,6 @@ export function UserAuthForm({
         className={cn('grid gap-4', className)}
         {...props}
       >
-        {registrationCodeRequired && hasAlternativeLogin && (
-          <FormItem>
-            <FormLabel>{t('Registration Code')}</FormLabel>
-            <FormControl>
-              <Input
-                value={registrationCode}
-                onChange={(event) => setRegistrationCode(event.target.value)}
-                placeholder={t('Enter your registration code')}
-              />
-            </FormControl>
-            <p className='text-muted-foreground text-xs'>
-              {t(
-                'Only required when a third-party sign-in creates a new account'
-              )}
-            </p>
-          </FormItem>
-        )}
-
         {hasAlternativeLogin && alternativeLoginMethods}
 
         {passwordLoginEnabled && (

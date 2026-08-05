@@ -27,6 +27,7 @@ import i18next from 'i18next'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
+import { isPendingRegistrationChallenge } from '@/features/auth/complete-registration/flow-response'
 import { OAuthCallbackScreen } from '@/features/auth/components/oauth-callback-screen'
 import {
   OAUTH_BIND_CALLBACK_MESSAGE,
@@ -40,6 +41,7 @@ import {
 } from '@/features/auth/lib/oauth-bind-window'
 import { api, applyAuthBundle, isAuthBundle } from '@/lib/api'
 import { getServerErrorMessageKey } from '@/lib/server-error-message'
+import { useAuthStore } from '@/stores/auth-store'
 
 type OAuthRequestConfig = AxiosRequestConfig & {
   skipBusinessError?: boolean
@@ -70,6 +72,9 @@ function OAuthCallback() {
   }
   const mode: 'login' | 'bind' =
     typeof window !== 'undefined' && window.opener ? 'bind' : 'login'
+  const setPendingRegistrationFlowToken = useAuthStore(
+    (state) => state.auth.setPendingRegistrationFlowToken
+  )
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -183,6 +188,14 @@ function OAuthCallback() {
           skipBusinessError: true,
         }
         const response = await api.get(`/api/oauth/${provider}`, config)
+        if (
+          response.data?.success &&
+          isPendingRegistrationChallenge(response.data?.data)
+        ) {
+          setPendingRegistrationFlowToken(response.data.data.flow_token)
+          safeNavigate('/complete-registration', '/complete-registration')
+          return
+        }
         if (response.data?.success && isAuthBundle(response.data?.data)) {
           applyAuthBundle(response.data.data)
           safeNavigate(search.redirect)
@@ -223,6 +236,7 @@ function OAuthCallback() {
     search.redirect,
     search.state,
     search.telegram_bind,
+    setPendingRegistrationFlowToken,
   ])
 
   return <OAuthCallbackScreen provider={provider} mode={mode} />

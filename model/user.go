@@ -684,6 +684,24 @@ func (user *User) InsertWithTx(tx *gorm.DB, inviterId int) error {
 	})
 }
 
+// InsertPreparedWithTx inserts a pending registration whose password has
+// already been hashed before it was stored in a short-lived AuthFlow payload.
+func (user *User) InsertPreparedWithTx(tx *gorm.DB, inviterId int) error {
+	return withNormalizedEmailLock(tx, user.Email, func(tx *gorm.DB) error {
+		user.Email = NormalizeEmail(user.Email)
+		if err := ensureEmailAvailableWithTx(tx, user.Email, 0); err != nil {
+			return err
+		}
+		user.Quota = common.QuotaForNewUser
+		user.AffCode = common.GetRandomString(4)
+		if user.Setting == "" {
+			defaultSetting := dto.UserSetting{}
+			user.SetSetting(defaultSetting)
+		}
+		return tx.Create(user).Error
+	})
+}
+
 // FinalizeOAuthUserCreation performs post-transaction tasks for OAuth user creation.
 // This should be called after the transaction commits successfully.
 func (user *User) FinalizeOAuthUserCreation(inviterId int) {

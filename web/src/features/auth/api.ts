@@ -24,11 +24,13 @@ import { useAuthStore } from '@/stores/auth-store'
 import { getAffiliateCode } from './lib/storage'
 import type { TelegramAuthorization } from './lib/telegram-login'
 import type {
+  CompleteRegistrationPayload,
   LoginPayload,
   LoginResponse,
   Login2FAResponse,
   TwoFAPayload,
   RegisterPayload,
+  RegistrationResponse,
   ApiResponse,
 } from './types'
 
@@ -140,8 +142,7 @@ export async function githubOAuthStart(clientId: string, state: string) {
 // Get OAuth state for CSRF protection
 export async function createOAuthFlow(
   provider: string,
-  intent: 'login' | 'bind',
-  registrationCode?: string
+  intent: 'login' | 'bind'
 ): Promise<string> {
   const aff = intent === 'login' ? getAffiliateCode() : ''
   const res = await api.post(
@@ -150,7 +151,6 @@ export async function createOAuthFlow(
       provider,
       intent,
       aff: aff || undefined,
-      registration_code: registrationCode?.trim() || undefined,
     },
     { skipAuthRefresh: intent === 'login' }
   )
@@ -165,12 +165,10 @@ export async function createOAuthFlow(
 
 // WeChat login by authorization code
 export async function wechatLoginByCode(
-  code: string,
-  registrationCode?: string
-): Promise<ApiResponse> {
+  code: string
+): Promise<RegistrationResponse> {
   const res = await api.post('/api/oauth/wechat', {
     code,
-    registration_code: registrationCode?.trim() || undefined,
   })
   return res.data
 }
@@ -193,9 +191,21 @@ export async function telegramLogin(
 // ----------------------------------------------------------------------------
 
 // User registration
-export async function register(payload: RegisterPayload): Promise<ApiResponse> {
+export async function register(
+  payload: RegisterPayload
+): Promise<RegistrationResponse> {
   const res = await api.post(`/api/user/register`, payload, {
     params: { turnstile: payload.turnstile ?? '' },
+  })
+  return res.data
+}
+
+export async function completeRegistration(
+  payload: CompleteRegistrationPayload
+): Promise<RegistrationResponse> {
+  const res = await api.post('/api/user/register/complete', payload, {
+    skipBusinessError: true,
+    skipAuthRefresh: true,
   })
   return res.data
 }

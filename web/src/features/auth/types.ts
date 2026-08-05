@@ -39,8 +39,18 @@ export interface RegisterPayload {
   email?: string
   verification_code?: string
   aff_code?: string
-  registration_code?: string
   turnstile?: string
+}
+
+export interface PendingRegistrationChallenge {
+  require_registration_code: true
+  flow_token: string
+  expires_at: number
+}
+
+export interface CompleteRegistrationPayload {
+  flow_token: string
+  registration_code: string
 }
 
 export interface PasswordResetPayload {
@@ -85,6 +95,10 @@ export interface ApiResponse<T = unknown> {
   message: string
   data?: T
 }
+
+export type RegistrationResponse = ApiResponse<
+  AuthBundle | PendingRegistrationChallenge
+>
 
 // ============================================================================
 // System Status

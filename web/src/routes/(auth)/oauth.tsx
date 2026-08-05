@@ -22,12 +22,17 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import { wechatLoginByCode } from '@/features/auth/api'
+import { isPendingRegistrationChallenge } from '@/features/auth/complete-registration/flow-response'
 import { sanitizeAuthRedirect } from '@/features/auth/lib/auth-redirect'
 import { applyAuthBundle, isAuthBundle } from '@/lib/api'
 import { getServerErrorMessageKey } from '@/lib/server-error-message'
+import { useAuthStore } from '@/stores/auth-store'
 
 function OAuthComponent() {
   const navigate = useNavigate()
+  const setPendingRegistrationFlowToken = useAuthStore(
+    (state) => state.auth.setPendingRegistrationFlowToken
+  )
   const search = useSearch({ from: '/(auth)/oauth' }) as {
     redirect?: string
     provider?: 'github' | 'discord' | 'oidc' | 'linuxdo' | 'telegram' | 'wechat'
@@ -40,6 +45,11 @@ function OAuthComponent() {
       try {
         if (search?.provider === 'wechat' && search.code) {
           const res = await wechatLoginByCode(search.code)
+          if (res?.success && isPendingRegistrationChallenge(res.data)) {
+            setPendingRegistrationFlowToken(res.data.flow_token)
+            navigate({ to: '/complete-registration', replace: true })
+            return
+          }
           if (res?.success && isAuthBundle(res.data)) {
             applyAuthBundle(res.data)
             const target =
@@ -62,7 +72,7 @@ function OAuthComponent() {
       toast.error(i18next.t('OAuth failed'))
       navigate({ to: '/sign-in', replace: true })
     })()
-  }, [navigate, search])
+  }, [navigate, search, setPendingRegistrationFlowToken])
 
   return null
 }

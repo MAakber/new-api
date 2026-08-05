@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
@@ -25,8 +24,7 @@ type wechatLoginResponse struct {
 }
 
 type wechatAuthRequest struct {
-	Code             string `json:"code"`
-	RegistrationCode string `json:"registration_code"`
+	Code string `json:"code"`
 }
 
 func getWeChatIdByCode(code string) (string, error) {
@@ -77,7 +75,6 @@ func WeChatAuth(c *gin.Context) {
 		}
 	}
 	code := request.Code
-	registrationCode := strings.TrimSpace(request.RegistrationCode)
 	wechatId, err := getWeChatIdByCode(code)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -112,28 +109,30 @@ func WeChatAuth(c *gin.Context) {
 				common.ApiErrorI18n(c, i18n.MsgDatabaseError)
 				return
 			}
-			if registrationCodeRequired && registrationCode == "" {
-				common.ApiErrorI18n(c, i18n.MsgUserRegistrationCodeInvalid)
-				return
-			}
 			user.Username = "wechat_" + strconv.Itoa(model.GetMaxUserId()+1)
 			user.DisplayName = "WeChat User"
 			user.Role = common.RoleCommonUser
 			user.Status = common.UserStatusEnabled
-
-			if err := model.DB.Transaction(func(tx *gorm.DB) error {
-				if err := user.InsertWithTx(tx, 0); err != nil {
-					return err
-				}
-				if registrationCodeRequired {
-					return model.ConsumeRegistrationCodeWithTx(tx, registrationCode, user.Id)
-				}
-				return nil
-			}); err != nil {
-				if errors.Is(err, model.ErrRegistrationCodeUnavailable) {
-					common.ApiErrorI18n(c, i18n.MsgUserRegistrationCodeInvalid)
+			if registrationCodeRequired {
+				challenge, err := createPendingRegistration(pendingRegistrationPayload{
+					Method: pendingRegistrationWeChat,
+					User: pendingRegistrationUser{
+						Username:    user.Username,
+						DisplayName: user.DisplayName,
+						WeChatId:    wechatId,
+					},
+				})
+				if err != nil {
+					common.ApiError(c, err)
 					return
 				}
+				writePendingRegistration(c, challenge)
+				return
+			}
+
+			if err := model.DB.Transaction(func(tx *gorm.DB) error {
+				return user.InsertWithTx(tx, 0)
+			}); err != nil {
 				c.JSON(http.StatusOK, gin.H{
 					"success": false,
 					"message": err.Error(),

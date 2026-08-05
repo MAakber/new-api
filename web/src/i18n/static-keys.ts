@@ -161,7 +161,10 @@ export const STATIC_I18N_KEYS = [
   'Require a valid registration code for every new account',
   'Please enter a registration code',
   'Enter your registration code',
-  'Only required when a third-party sign-in creates a new account',
+  'Complete registration',
+  'Enter a registration code to finish creating your account.',
+  'Registration session expired?',
+  'Start again',
 
   // Home page (constants-driven labels)
   'Cost Tracking',

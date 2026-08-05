@@ -59,6 +59,10 @@ export function useAuthRedirect() {
     navigate({ to: '/otp', replace: true })
   }
 
+  const redirectToRegistrationCode = () => {
+    navigate({ to: '/complete-registration', replace: true })
+  }
+
   /**
    * Redirect to login page
    */
@@ -76,6 +80,7 @@ export function useAuthRedirect() {
   return {
     handleLoginSuccess,
     redirectTo2FA,
+    redirectToRegistrationCode,
     redirectToLogin,
     redirectToRegister,
   }

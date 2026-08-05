@@ -83,10 +83,12 @@ interface AuthState {
     accessExpiresAt: number | null
     session: LoginSession | null
     pending2FAFlowToken: string | null
+    pendingRegistrationFlowToken: string | null
     bootstrapState: AuthBootstrapState
     setBundle: (bundle: AuthBundle) => void
     setUser: (user: AuthUser | null) => void
     setPending2FAFlowToken: (flowToken: string | null) => void
+    setPendingRegistrationFlowToken: (flowToken: string | null) => void
     setBootstrapState: (bootstrapState: AuthBootstrapState) => void
     reset: (bootstrapState?: AuthBootstrapState) => void
   }
@@ -99,6 +101,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     accessExpiresAt: null,
     session: null,
     pending2FAFlowToken: null,
+    pendingRegistrationFlowToken: null,
     bootstrapState: 'idle',
     setBundle: (bundle) =>
       set((state) => ({
@@ -110,6 +113,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
           accessExpiresAt: bundle.access_expires_at,
           session: bundle.session,
           pending2FAFlowToken: null,
+          pendingRegistrationFlowToken: null,
           bootstrapState: 'complete',
         },
       })),
@@ -122,6 +126,11 @@ export const useAuthStore = create<AuthState>()((set) => ({
       set((state) => ({
         ...state,
         auth: { ...state.auth, pending2FAFlowToken },
+      })),
+    setPendingRegistrationFlowToken: (pendingRegistrationFlowToken) =>
+      set((state) => ({
+        ...state,
+        auth: { ...state.auth, pendingRegistrationFlowToken },
       })),
     setBootstrapState: (bootstrapState) =>
       set((state) => ({
@@ -138,6 +147,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
           accessExpiresAt: null,
           session: null,
           pending2FAFlowToken: null,
+          pendingRegistrationFlowToken: null,
           bootstrapState,
         },
       })),
