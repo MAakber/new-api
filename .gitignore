@@ -42,3 +42,6 @@ service/openaicompat/chat_responses_live_local_test.go
 go.work
 go.work.sum
 .slim/deepwork/
+
+# Local WorkBuddy scratch files.
+.workbuddy/
