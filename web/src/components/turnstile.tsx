@@ -18,6 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { useEffect, useRef } from 'react'
 
+import { cn } from '@/lib/utils'
+
 declare global {
   interface Window {
     turnstile?: {
@@ -72,5 +74,5 @@ export function Turnstile({
     document.head.appendChild(s)
   }, [siteKey, onVerify, onExpire])
 
-  return <div ref={ref} className={className} />
+  return <div ref={ref} className={cn('flex justify-center', className)} />
 }
