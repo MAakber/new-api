@@ -166,6 +166,7 @@ export const STATIC_I18N_KEYS = [
   'Enter a registration code to finish creating your account.',
   'Registration session expired?',
   'Start again',
+  'Account created successfully',
 
   // Home page (constants-driven labels)
   'Cost Tracking',
