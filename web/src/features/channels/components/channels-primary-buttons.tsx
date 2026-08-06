@@ -57,6 +57,7 @@ import {
   hasPermission,
 } from '@/lib/admin-permissions'
 import { useAuthStore } from '@/stores/auth-store'
+import { useFloatingWindowStore } from '@/stores/floating-window-store'
 
 import {
   handleDeleteAllDisabled,
@@ -69,8 +70,6 @@ import { useChannels } from './channels-provider'
 export function ChannelsPrimaryButtons() {
   const { t } = useTranslation()
   const {
-    setOpen,
-    setCurrentRow,
     enableTagMode,
     setEnableTagMode,
     idSort,
@@ -80,6 +79,9 @@ export function ChannelsPrimaryButtons() {
     upstream,
   } = useChannels()
   const queryClient = useQueryClient()
+  const openChannelEditor = useFloatingWindowStore(
+    (state) => state.openChannelEditor
+  )
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [showConsistencyDialog, setShowConsistencyDialog] = useState(false)
   const [isRepairingConsistency, setIsRepairingConsistency] = useState(false)
@@ -153,8 +155,7 @@ export function ChannelsPrimaryButtons() {
             <Button
               onClick={() => {
                 if (!canEditSensitive) return
-                setCurrentRow(null)
-                setOpen('create-channel')
+                openChannelEditor({ mode: 'create' })
               }}
               size='sm'
               disabled={!canEditSensitive}

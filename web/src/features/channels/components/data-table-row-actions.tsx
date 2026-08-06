@@ -58,6 +58,7 @@ import {
   hasPermission,
 } from '@/lib/admin-permissions'
 import { useAuthStore } from '@/stores/auth-store'
+import { useFloatingWindowStore } from '@/stores/floating-window-store'
 
 import { MODEL_FETCHABLE_TYPES } from '../constants'
 import {
@@ -82,6 +83,9 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const layout = useContext(ChannelRowActionsLayoutContext)
   const channel = row.original
   const { setOpen, setCurrentRow, upstream } = useChannels()
+  const openChannelEditor = useFloatingWindowStore(
+    (state) => state.openChannelEditor
+  )
   const queryClient = useQueryClient()
   const currentUser = useAuthStore((s) => s.auth.user)
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
@@ -97,8 +101,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   )
 
   const handleEdit = () => {
-    setCurrentRow(channel)
-    setOpen('update-channel')
+    openChannelEditor({ mode: 'edit', channelId: channel.id })
   }
 
   const handleTest = () => {

@@ -35,8 +35,6 @@ import type { Channel } from '../types'
 // ============================================================================
 
 type DialogType =
-  | 'create-channel'
-  | 'update-channel'
   | 'test-channel'
   | 'balance-query'
   | 'fetch-models'
@@ -148,4 +146,8 @@ export function useChannels() {
     throw new Error('useChannels must be used within ChannelsProvider')
   }
   return context
+}
+
+export function useOptionalChannels() {
+  return useContext(ChannelsContext)
 }

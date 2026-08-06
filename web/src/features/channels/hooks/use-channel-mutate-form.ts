@@ -38,6 +38,7 @@ import type { Channel } from '../types'
 
 type UseChannelMutateFormParams = {
   currentRow?: Channel | null
+  channelId?: number | null
   isEditing: boolean
   onSuccess: () => void
 }
@@ -90,11 +91,10 @@ export function useChannelMutateForm(props: UseChannelMutateFormParams) {
 
   return useMutation({
     mutationFn: async (data: ChannelFormValues): Promise<string> => {
-      if (props.isEditing && props.currentRow) {
-        const payload = transformFormDataToUpdatePayload(
-          data,
-          props.currentRow.id
-        )
+      const channelId = props.currentRow?.id ?? props.channelId ?? null
+
+      if (props.isEditing && channelId !== null) {
+        const payload = transformFormDataToUpdatePayload(data, channelId)
         if (!data.key?.trim()) {
           delete payload.key
         }
@@ -104,7 +104,7 @@ export function useChannelMutateForm(props: UseChannelMutateFormParams) {
           }
           delete payload.key_mode
         }
-        const response = await updateChannel(props.currentRow.id, payload)
+        const response = await updateChannel(channelId, payload)
         if (!response.success) {
           throw new Error(response.message || t(ERROR_MESSAGES.UPDATE_FAILED))
         }
