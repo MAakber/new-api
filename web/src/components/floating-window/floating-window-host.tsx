@@ -16,6 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { AnimatePresence } from 'motion/react'
 import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -81,17 +82,19 @@ export function FloatingWindowHost() {
 
   return createPortal(
     <div className='pointer-events-none fixed inset-0 z-[45]'>
-      {orderedWindows.map((descriptor) => (
-        <FloatingWindowFrame
-          key={descriptor.instanceId}
-          descriptor={descriptor}
-          isDesktop={isDesktop}
-          viewport={viewport}
-          onActivate={activateWindow}
-          onClose={closeWindow}
-          onRectChange={updateWindowRect}
-        />
-      ))}
+      <AnimatePresence initial={false}>
+        {orderedWindows.map((descriptor) => (
+          <FloatingWindowFrame
+            key={descriptor.instanceId}
+            descriptor={descriptor}
+            isDesktop={isDesktop}
+            viewport={viewport}
+            onActivate={activateWindow}
+            onClose={closeWindow}
+            onRectChange={updateWindowRect}
+          />
+        ))}
+      </AnimatePresence>
     </div>,
     portalTarget
   )

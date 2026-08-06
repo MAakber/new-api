@@ -16,6 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { motion, useReducedMotion } from 'motion/react'
 import {
   useRef,
   useState,
@@ -25,6 +26,7 @@ import {
 import { useTranslation } from 'react-i18next'
 
 import { ConfirmDialog } from '@/components/confirm-dialog'
+import { MOTION_TRANSITION, MOTION_VARIANTS } from '@/lib/motion'
 
 import { FloatingWindowContent } from './content-registry'
 import {
@@ -76,6 +78,7 @@ function getWindowStyle(
 
 export function FloatingWindowFrame(props: FloatingWindowFrameProps) {
   const { t } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
   const interactionRef = useRef<WindowInteraction | null>(null)
   const [isDirty, setIsDirty] = useState(false)
   const [confirmCloseOpen, setConfirmCloseOpen] = useState(false)
@@ -166,17 +169,27 @@ export function FloatingWindowFrame(props: FloatingWindowFrameProps) {
   }
 
   return (
-    <section
+    <motion.section
       role='dialog'
       aria-modal={false}
       aria-labelledby={titleId}
       tabIndex={-1}
       className={
         props.isDesktop
-          ? 'bg-background text-foreground pointer-events-auto absolute flex flex-col overflow-hidden rounded-lg border shadow-2xl outline-none'
-          : 'bg-background text-foreground pointer-events-auto absolute inset-0 flex h-[100dvh] w-screen flex-col overflow-hidden outline-none'
+          ? 'bg-background text-foreground pointer-events-auto absolute flex origin-center flex-col overflow-hidden rounded-lg border shadow-2xl outline-none'
+          : 'bg-background text-foreground pointer-events-auto absolute inset-0 flex h-[100dvh] w-screen origin-center flex-col overflow-hidden outline-none'
       }
       style={getWindowStyle(props.descriptor, props.isDesktop, rect)}
+      initial={
+        shouldReduceMotion ? false : MOTION_VARIANTS.floatingWindow.initial
+      }
+      animate={MOTION_VARIANTS.floatingWindow.animate}
+      exit={
+        shouldReduceMotion ? undefined : MOTION_VARIANTS.floatingWindow.exit
+      }
+      transition={
+        shouldReduceMotion ? MOTION_TRANSITION.none : MOTION_TRANSITION.default
+      }
       onPointerDown={activateWindow}
       onFocusCapture={activateWindow}
       onPointerMove={handlePointerMove}
@@ -241,6 +254,6 @@ export function FloatingWindowFrame(props: FloatingWindowFrameProps) {
         destructive
         handleConfirm={forceCloseWindow}
       />
-    </section>
+    </motion.section>
   )
 }
