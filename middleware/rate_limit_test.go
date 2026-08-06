@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -91,6 +92,35 @@ func TestRedisUserRateLimiterUsesSharedFixedWindow(t *testing.T) {
 	key := redisUserRateLimitKey("USER", 42)
 	assert.True(t, redisServer.Exists(key))
 	assert.Equal(t, 23*time.Second, redisServer.TTL(key))
+}
+
+func TestUserCriticalRateLimitSeparatesUsersAndActionsAcrossIPs(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	useRateLimitMiniRedis(t)
+	previousEnabled, previousNum, previousDuration := common.CriticalRateLimitEnable, common.CriticalRateLimitNum, common.CriticalRateLimitDuration
+	common.CriticalRateLimitEnable, common.CriticalRateLimitNum, common.CriticalRateLimitDuration = true, 1, 30
+	t.Cleanup(func() {
+		common.CriticalRateLimitEnable, common.CriticalRateLimitNum, common.CriticalRateLimitDuration = previousEnabled, previousNum, previousDuration
+	})
+	router := gin.New()
+	require.NoError(t, router.SetTrustedProxies(nil))
+	router.Use(func(c *gin.Context) {
+		id, err := strconv.Atoi(c.Param("user"))
+		require.NoError(t, err)
+		c.Set("id", id)
+	})
+	for _, action := range []string{"access-token", "aff-transfer"} {
+		router.GET("/:user/"+action, UserCriticalRateLimit(action), func(c *gin.Context) {
+			c.Status(http.StatusNoContent)
+		})
+	}
+	assert.Equal(t, http.StatusNoContent, performRateLimitRequest(router, "/41/access-token", "192.0.2.1:1234").Code)
+	limited := performRateLimitRequest(router, "/41/access-token", "198.51.100.1:1234")
+	assert.Equal(t, http.StatusTooManyRequests, limited.Code)
+	assert.Equal(t, "30", limited.Header().Get("Retry-After"))
+	assert.Equal(t, http.StatusNoContent, performRateLimitRequest(router, "/41/aff-transfer", "192.0.2.1:1234").Code)
+	assert.Equal(t, http.StatusNoContent, performRateLimitRequest(router, "/42/access-token", "192.0.2.1:1234").Code)
+	assert.Equal(t, http.StatusUnauthorized, performRateLimitRequest(router, "/0/access-token", "192.0.2.1:1234").Code)
 }
 
 func TestRedisEmailVerificationRateLimiterPreservesResponseAndTTL(t *testing.T) {

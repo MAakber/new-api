@@ -108,7 +108,7 @@ func SetApiRouter(router *gin.Engine) {
 				selfRoute.PUT("/self/avatar", middleware.CriticalRateLimit(), middleware.DisableCache(), controller.PutSelfAvatar)
 				selfRoute.DELETE("/self", controller.DeleteSelf)
 				selfRoute.DELETE("/self/avatar", middleware.DisableCache(), controller.DeleteSelfAvatar)
-				selfRoute.GET("/token", middleware.CriticalRateLimit(), middleware.DisableCache(), controller.GenerateAccessToken)
+				selfRoute.GET("/token", middleware.CriticalRateLimit(), middleware.UserCriticalRateLimit("access-token"), middleware.DisableCache(), controller.GenerateAccessToken)
 				selfRoute.GET("/passkey", middleware.DisableCache(), controller.PasskeyStatus)
 				selfRoute.GET("/passkeys", middleware.DisableCache(), controller.PasskeyList)
 				selfRoute.POST("/passkey/register/begin", middleware.DisableCache(), controller.PasskeyRegisterBegin)
@@ -130,7 +130,7 @@ func SetApiRouter(router *gin.Engine) {
 				selfRoute.POST("/waffo/pay", middleware.CriticalRateLimit(), controller.RequestWaffoPay)
 				selfRoute.POST("/waffo-pancake/amount", controller.RequestWaffoPancakeAmount)
 				selfRoute.POST("/waffo-pancake/pay", middleware.CriticalRateLimit(), controller.RequestWaffoPancakePay)
-				selfRoute.POST("/aff_transfer", controller.TransferAffQuota)
+				selfRoute.POST("/aff_transfer", middleware.UserCriticalRateLimit("aff-transfer"), controller.TransferAffQuota)
 				selfRoute.PUT("/setting", controller.UpdateUserSetting)
 
 				// 2FA routes
