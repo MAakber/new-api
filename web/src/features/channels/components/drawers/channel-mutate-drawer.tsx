@@ -4889,7 +4889,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
         }
         existingModelsOverride={
           shouldPreviewUnsavedModels
-            ? parseModelsString(form.getValues('models') || '')
+            ? currentModelsArray
             : undefined
         }
       />
