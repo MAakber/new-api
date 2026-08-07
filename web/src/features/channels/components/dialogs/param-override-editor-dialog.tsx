@@ -52,6 +52,7 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -266,9 +267,14 @@ const OPERATION_TEMPLATE = {
 const HEADER_PASSTHROUGH_TEMPLATE = {
   operations: [
     {
-      description: 'Pass through X-Request-Id header to upstream.',
+      description: 'Pass through common tracing headers to upstream.',
       mode: 'pass_headers',
-      value: ['X-Request-Id'],
+      value: [
+        'X-Request-Id',
+        'X-Trace-Id',
+        'X-Correlation-Id',
+        'Traceparent',
+      ],
       keep_origin: true,
     },
   ],
@@ -299,28 +305,19 @@ const GEMINI_IMAGE_4K_TEMPLATE = {
 const CODEX_CLI_HEADER_PASSTHROUGH_HEADERS = [
   'Originator',
   'Session_id',
-  'Thread_id',
   'Session-Id',
   'Thread-Id',
-  'X-Client-Request-Id',
-  'User-Agent',
   'X-Codex-Beta-Features',
-  'X-Codex-Turn-State',
   'X-Codex-Turn-Metadata',
   'X-Codex-Window-Id',
-  'X-Codex-Parent-Thread-Id',
-  // 'X-Codex-Installation-Id',
-  'X-OpenAI-Subagent',
-  'X-OpenAI-Memgen-Request',
-  // 'X-OAI-Attestation',
-  'X-ResponsesAPI-Include-Timing-Metrics',
-  'X-OpenAI-Internal-Codex-Responses-Lite',
+  'X-Client-Request-Id',
 ]
 
 const CLAUDE_CLI_HEADER_PASSTHROUGH_HEADERS = [
+  'X-Claude-Code-Session-Id',
   'X-Stainless-Arch',
   'X-Stainless-Lang',
-  'X-Stainless-Os',
+  'X-Stainless-OS',
   'X-Stainless-Package-Version',
   'X-Stainless-Retry-Count',
   'X-Stainless-Runtime',
@@ -339,18 +336,143 @@ const buildPassHeadersTemplate = (headers: string[]) => ({
   ],
 })
 
-const CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE = {
+const CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
+  CLAUDE_CLI_HEADER_PASSTHROUGH_HEADERS
+)
+
+const CODEX_DESKTOP_HEADER_PASSTHROUGH_HEADERS = [
+  ...CODEX_CLI_HEADER_PASSTHROUGH_HEADERS,
+]
+
+const OPENAI_SDK_METADATA_HEADER_PASSTHROUGH_TEMPLATE = {
   operations: [
     {
+      description:
+        'Pass through OpenAI SDK organization, project and Stainless metadata headers.',
       mode: 'pass_headers',
-      value: [...CODEX_CLI_HEADER_PASSTHROUGH_HEADERS],
+      value: [
+        'OpenAI-Organization',
+        'OpenAI-Project',
+        'X-Stainless-Arch',
+        'X-Stainless-Lang',
+        'X-Stainless-OS',
+        'X-Stainless-Package-Version',
+        'X-Stainless-Retry-Count',
+        'X-Stainless-Runtime',
+        'X-Stainless-Runtime-Version',
+        'X-Stainless-Timeout',
+      ],
       keep_origin: true,
     },
   ],
 }
-const CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
-  CLAUDE_CLI_HEADER_PASSTHROUGH_HEADERS
+
+const ANTHROPIC_RUNTIME_HEADER_PASSTHROUGH_TEMPLATE = {
+  operations: [
+    {
+      description:
+        'Pass through Anthropic runtime beta/version headers from the original client request.',
+      mode: 'pass_headers',
+      value: [
+        'Anthropic-Beta',
+        'Anthropic-Version',
+        'Anthropic-Dangerous-Direct-Browser-Access',
+        'X-App',
+      ],
+      keep_origin: true,
+    },
+  ],
+}
+
+const QWEN_CODE_CLI_HEADER_PASSTHROUGH_HEADERS = [
+  'X-Stainless-Arch',
+  'X-Stainless-Lang',
+  'X-Stainless-OS',
+  'X-Stainless-Package-Version',
+  'X-Stainless-Retry-Count',
+  'X-Stainless-Runtime',
+  'X-Stainless-Runtime-Version',
+]
+
+const DROID_CLI_HEADER_PASSTHROUGH_HEADERS = [
+  'X-Stainless-Arch',
+  'X-Stainless-Lang',
+  'X-Stainless-OS',
+  'X-Stainless-Package-Version',
+  'X-Stainless-Retry-Count',
+  'X-Stainless-Runtime',
+  'X-Stainless-Runtime-Version',
+]
+
+const GEMINI_CLI_HEADER_PASSTHROUGH_HEADERS = ['X-Goog-Api-Client']
+
+const CODEX_SESSION_ID_FALLBACK_OPERATION = {
+  mode: 'copy_header',
+  from: 'X-Client-Request-Id',
+  to: 'Session_id',
+  keep_origin: true,
+}
+
+const buildCodexHeaderPassthroughTemplate = (headers: string[]) => ({
+  operations: [
+    { mode: 'pass_headers', value: [...headers], keep_origin: true },
+    { ...CODEX_SESSION_ID_FALLBACK_OPERATION },
+  ],
+})
+
+const CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE =
+  buildCodexHeaderPassthroughTemplate(CODEX_CLI_HEADER_PASSTHROUGH_HEADERS)
+const CODEX_DESKTOP_HEADER_PASSTHROUGH_TEMPLATE =
+  buildCodexHeaderPassthroughTemplate(CODEX_DESKTOP_HEADER_PASSTHROUGH_HEADERS)
+const GEMINI_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
+  GEMINI_CLI_HEADER_PASSTHROUGH_HEADERS
 )
+const QWEN_CODE_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
+  QWEN_CODE_CLI_HEADER_PASSTHROUGH_HEADERS
+)
+const DROID_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
+  DROID_CLI_HEADER_PASSTHROUGH_HEADERS
+)
+
+const CODEX_REMOVE_IMAGE_GENERATION_TOOL_TEMPLATE = {
+  operations: [
+    {
+      description:
+        'Remove image_generation tool objects before upstream relay.',
+      path: 'tools',
+      mode: 'prune_objects',
+      value: {
+        type: 'image_generation',
+        recursive: false,
+      },
+    },
+  ],
+}
+
+const CODEX_REMOVE_RESPONSES_IMAGE_INPUT_TEMPLATE = {
+  operations: [
+    {
+      description: 'Remove Responses image input items before upstream relay.',
+      path: 'input.*.content',
+      mode: 'prune_objects',
+      value: {
+        type: 'input_image',
+        recursive: true,
+      },
+    },
+  ],
+}
+
+const AWS_BEDROCK_REMOVE_INPUT_EXAMPLES_TEMPLATE = {
+  operations: [
+    {
+      description:
+        'Remove all tools[*].custom.input_examples before upstream relay.',
+      mode: 'delete',
+      path: 'tools.*.custom.input_examples',
+    },
+  ],
+}
 
 const AWS_BEDROCK_ANTHROPIC_COMPAT_TEMPLATE = {
   operations: [
@@ -391,58 +513,158 @@ const AWS_BEDROCK_ANTHROPIC_COMPAT_TEMPLATE = {
         'oauth-2025-04-20': null,
       },
     },
-    {
-      description:
-        'Remove all tools[*].custom.input_examples before upstream relay.',
-      mode: 'delete',
-      path: 'tools.*.custom.input_examples',
-    },
   ],
 }
 
 type TemplatePresetConfig = {
   label: string
+  group: 'recommended' | 'advanced' | 'examples'
+  description?: string
   kind: 'operations' | 'legacy'
   payload: Record<string, unknown>
 }
 
+const TEMPLATE_GROUPS = [
+  { label: 'Recommended Scenarios', value: 'recommended' },
+  { label: 'Advanced Compatibility', value: 'advanced' },
+  { label: 'Examples and Starting Points', value: 'examples' },
+] as const
+
 const TEMPLATE_PRESET_CONFIG: Record<string, TemplatePresetConfig> = {
   operations_default: {
     label: 'New Format Template',
+    group: 'examples',
+    description:
+      'Example rule that sets temperature when the model name starts with openai/.',
     kind: 'operations',
     payload: OPERATION_TEMPLATE,
   },
   legacy_default: {
     label: 'Legacy Format Template',
+    group: 'examples',
+    description:
+      'Legacy top-level field object example for simple field overrides.',
     kind: 'legacy',
     payload: LEGACY_TEMPLATE,
   },
   pass_headers_auth: {
-    label: 'Header Passthrough (X-Request-Id)',
+    label: 'Trace Headers Passthrough',
+    group: 'advanced',
+    description:
+      'Pass through common tracing headers such as X-Request-Id and Traceparent.',
     kind: 'operations',
     payload: HEADER_PASSTHROUGH_TEMPLATE,
   },
   gemini_image_4k: {
     label: 'Gemini Image 4K',
+    group: 'advanced',
+    description:
+      'Set generationConfig.imageConfig.imageSize to 4K for matching Gemini image models.',
     kind: 'operations',
     payload: GEMINI_IMAGE_4K_TEMPLATE,
   },
   claude_cli_headers_passthrough: {
-    label: 'Claude CLI Header Passthrough',
+    label: 'Claude Code Header Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through Claude Code session, Anthropic beta/version and Stainless runtime headers.',
     kind: 'operations',
     payload: CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE,
   },
   codex_cli_headers_passthrough: {
-    label: 'Codex CLI Header Passthrough',
+    label: 'Codex CLI Dynamic Headers Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through Codex CLI session, window, turn metadata and request id headers. User-Agent is managed by Header Profile.',
     kind: 'operations',
     payload: CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE,
   },
+  codex_desktop_headers_passthrough: {
+    label: 'Codex Desktop Dynamic Headers Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through Codex Desktop session, window, turn metadata and request id headers. User-Agent is managed by Header Profile.',
+    kind: 'operations',
+    payload: CODEX_DESKTOP_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  openai_sdk_headers_passthrough: {
+    label: 'OpenAI SDK Metadata Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through OpenAI organization, project and Stainless client metadata headers.',
+    kind: 'operations',
+    payload: OPENAI_SDK_METADATA_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  remove_image_generation_tool: {
+    label: 'Upstream Compat: Remove Image Generation Tool',
+    group: 'recommended',
+    description:
+      'Remove image_generation tool objects when an upstream rejects that tool type.',
+    kind: 'operations',
+    payload: CODEX_REMOVE_IMAGE_GENERATION_TOOL_TEMPLATE,
+  },
+  remove_responses_image_input: {
+    label: 'Upstream Compat: Remove Responses Image Input',
+    group: 'recommended',
+    description:
+      'Remove Responses input_image content items when an upstream rejects image input.',
+    kind: 'operations',
+    payload: CODEX_REMOVE_RESPONSES_IMAGE_INPUT_TEMPLATE,
+  },
+  aws_bedrock_remove_input_examples: {
+    label: 'AWS Bedrock Remove Input Examples',
+    group: 'advanced',
+    description:
+      'Remove tools.*.custom.input_examples before sending requests to Bedrock.',
+    kind: 'operations',
+    payload: AWS_BEDROCK_REMOVE_INPUT_EXAMPLES_TEMPLATE,
+  },
+  anthropic_runtime_headers_passthrough: {
+    label: 'Anthropic Beta/Version Passthrough',
+    group: 'advanced',
+    description:
+      'Pass through Anthropic runtime beta/version headers from the original request.',
+    kind: 'operations',
+    payload: ANTHROPIC_RUNTIME_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  gemini_cli_headers_passthrough: {
+    label: 'Gemini CLI Header Passthrough',
+    group: 'advanced',
+    description: 'Pass through Gemini CLI x-goog-api-client metadata.',
+    kind: 'operations',
+    payload: GEMINI_CLI_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  qwen_code_headers_passthrough: {
+    label: 'Qwen Code Header Passthrough',
+    group: 'advanced',
+    description: 'Pass through Qwen Code Stainless client metadata headers.',
+    kind: 'operations',
+    payload: QWEN_CODE_CLI_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  droid_cli_headers_passthrough: {
+    label: 'Droid CLI Header Passthrough',
+    group: 'advanced',
+    description: 'Pass through Droid CLI Stainless client metadata headers.',
+    kind: 'operations',
+    payload: DROID_CLI_HEADER_PASSTHROUGH_TEMPLATE,
+  },
   aws_bedrock_anthropic_beta_override: {
-    label: 'AWS Bedrock Claude Compat',
+    label: 'AWS Bedrock Claude Beta Header',
+    group: 'recommended',
+    description: 'Normalize anthropic-beta header tokens for Bedrock compatibility.',
     kind: 'operations',
     payload: AWS_BEDROCK_ANTHROPIC_COMPAT_TEMPLATE,
   },
 }
+
+const QUICK_TEMPLATE_PRESETS = [
+  'codex_cli_headers_passthrough',
+  'codex_desktop_headers_passthrough',
+  'claude_cli_headers_passthrough',
+  'openai_sdk_headers_passthrough',
+  'aws_bedrock_anthropic_beta_override',
+  'remove_image_generation_tool',
+]
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -577,16 +799,21 @@ const getOperationSummary = (
 }
 
 const getModeTagTailwind = (mode: string): string => {
-  if (mode.includes('header'))
+  if (mode.includes('header')) {
     return 'bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border-cyan-500/20'
-  if (mode.includes('replace') || mode.includes('trim'))
+  }
+  if (mode.includes('replace') || mode.includes('trim')) {
     return 'bg-violet-500/15 text-violet-700 dark:text-violet-300 border-violet-500/20'
-  if (mode.includes('copy') || mode.includes('move'))
+  }
+  if (mode.includes('copy') || mode.includes('move')) {
     return 'bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-500/20'
-  if (mode.includes('error') || mode.includes('prune'))
+  }
+  if (mode.includes('error') || mode.includes('prune')) {
     return 'bg-red-500/15 text-red-700 dark:text-red-300 border-red-500/20'
-  if (mode.includes('sync'))
+  }
+  if (mode.includes('sync')) {
     return 'bg-green-500/15 text-green-700 dark:text-green-300 border-green-500/20'
+  }
   return 'bg-muted text-muted-foreground'
 }
 
@@ -631,17 +858,20 @@ const getModeToPlaceholder = (mode: string): string => {
 }
 
 const getModeValueLabel = (mode: string): string => {
-  if (mode === 'set_header')
+  if (mode === 'set_header') {
     return 'Header Value (supports string or JSON mapping)'
-  if (mode === 'pass_headers')
+  }
+  if (mode === 'pass_headers') {
     return 'Pass-through Headers (comma-separated or JSON array)'
+  }
   if (
     mode === 'trim_prefix' ||
     mode === 'trim_suffix' ||
     mode === 'ensure_prefix' ||
     mode === 'ensure_suffix'
-  )
+  ) {
     return 'Prefix/Suffix Text'
+  }
   if (mode === 'prune_objects') return 'Prune Rule (string or JSON object)'
   return 'Value (supports JSON or plain text)'
 }
@@ -654,8 +884,9 @@ const getModeValuePlaceholder = (mode: string): string => {
     mode === 'trim_suffix' ||
     mode === 'ensure_prefix' ||
     mode === 'ensure_suffix'
-  )
+  ) {
     return 'openai/'
+  }
   if (mode === 'prune_objects') return '{"type":"redacted_thinking"}'
   return '0.7'
 }
@@ -791,8 +1022,9 @@ const parsePruneObjectsDraft = (valueText: string): PruneObjectsDraft => {
   if (!raw) return defaults
   try {
     const parsed = JSON.parse(raw)
-    if (typeof parsed === 'string')
+    if (typeof parsed === 'string') {
       return { ...defaults, typeText: parsed.trim() }
+    }
     if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
       const rules: PruneRule[] = []
       if (
@@ -808,8 +1040,9 @@ const parsePruneObjectsDraft = (valueText: string): PruneObjectsDraft => {
       }
       if (Array.isArray(parsed.conditions)) {
         for (const item of parsed.conditions) {
-          if (item && typeof item === 'object')
+          if (item && typeof item === 'object') {
             rules.push(normalizePruneRule(item))
+          }
         }
       } else if (
         parsed.conditions &&
@@ -868,31 +1101,35 @@ const buildPruneObjectsValueText = (draft: PruneObjectsDraft): string => {
       return conditionPayload
     })
   if (conditions.length > 0) payload.conditions = conditions
-  if (!payload.type && !payload.conditions)
+  if (!payload.type && !payload.conditions) {
     return JSON.stringify({ logic: 'AND' })
+  }
   return JSON.stringify(payload)
 }
 
 // pass_headers helpers
 
 const parsePassHeaderNames = (rawValue: unknown): string[] => {
-  if (Array.isArray(rawValue))
+  if (Array.isArray(rawValue)) {
     return rawValue.map((i) => String(i ?? '').trim()).filter(Boolean)
+  }
   if (rawValue && typeof rawValue === 'object') {
     const obj = rawValue as Record<string, unknown>
-    if (Array.isArray(obj.headers))
+    if (Array.isArray(obj.headers)) {
       return obj.headers.map((i) => String(i ?? '').trim()).filter(Boolean)
+    }
     if (obj.header !== undefined) {
       const single = String(obj.header ?? '').trim()
       return single ? [single] : []
     }
     return []
   }
-  if (typeof rawValue === 'string')
+  if (typeof rawValue === 'string') {
     return rawValue
       .split(',')
       .map((i) => i.trim())
       .filter(Boolean)
+  }
   return []
 }
 
@@ -901,7 +1138,9 @@ const buildConditionPayload = (
   condition: ParamOverrideCondition
 ): Record<string, unknown> | null => {
   const path = condition.path.trim()
-  if (!path) return null
+  if (!path) {
+    return null
+  }
   const payload: Record<string, unknown> = {
     path,
     mode: condition.mode || 'full',
@@ -927,18 +1166,22 @@ const validateOperations = (
     const fromValue = op.from.trim()
     const toValue = op.to.trim()
 
-    if (meta.path && !pathValue)
+    if (meta.path && !pathValue) {
       return t('Rule {{line}} is missing target path', { line })
+    }
     if (FROM_REQUIRED_MODES.has(mode) && !fromValue) {
-      if (!(meta.pathAlias && pathValue))
+      if (!(meta.pathAlias && pathValue)) {
         return t('Rule {{line}} is missing source field', { line })
+      }
     }
     if (TO_REQUIRED_MODES.has(mode) && !toValue) {
-      if (!(meta.pathAlias && pathValue))
+      if (!(meta.pathAlias && pathValue)) {
         return t('Rule {{line}} is missing target field', { line })
+      }
     }
-    if (VALUE_REQUIRED_MODES.has(mode) && op.value_text.trim() === '')
+    if (VALUE_REQUIRED_MODES.has(mode) && op.value_text.trim() === '') {
       return t('Rule {{line}} is missing value', { line })
+    }
 
     if (mode === 'return_error') {
       const raw = op.value_text.trim()
@@ -946,10 +1189,11 @@ const validateOperations = (
       try {
         const parsed = JSON.parse(raw)
         if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-          if (!String((parsed as Record<string, unknown>).message || '').trim())
+          if (!String((parsed as Record<string, unknown>).message || '').trim()) {
             return t('Rule {{line}} return_error requires a message field', {
               line,
             })
+          }
         }
       } catch {
         /* plain string is allowed */
@@ -958,18 +1202,21 @@ const validateOperations = (
 
     if (mode === 'prune_objects') {
       const raw = op.value_text.trim()
-      if (!raw)
+      if (!raw) {
         return t('Rule {{line}} prune_objects is missing conditions', { line })
+      }
     }
 
     if (mode === 'pass_headers') {
       const raw = op.value_text.trim()
-      if (!raw)
+      if (!raw) {
         return t('Rule {{line}} pass_headers is missing header names', { line })
+      }
       const parsed = parseLooseValue(raw)
       const headers = parsePassHeaderNames(parsed)
-      if (headers.length === 0)
+      if (headers.length === 0) {
         return t('Rule {{line}} pass_headers format is invalid', { line })
+      }
     }
   }
   return ''
@@ -1104,6 +1351,9 @@ const buildOperationsJson = (
   return JSON.stringify({ operations: payloadOps }, null, 2)
 }
 
+const getOperationDedupKey = (operation: ParamOverrideOperation): string =>
+  buildOperationsJson([operation], { validate: false }, (key) => key)
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -1170,15 +1420,33 @@ export function ParamOverrideEditorDialog(
     }
   }, [operations, selectedOperationId])
 
-  // Template preset options filtered by group
-  const templatePresetOptions = useMemo(
+  // Template presets
+  const quickTemplatePresets = useMemo(
     () =>
-      Object.entries(TEMPLATE_PRESET_CONFIG).map(([value, config]) => ({
-        value,
-        label: config.label,
-      })),
+      QUICK_TEMPLATE_PRESETS.map((key) => ({
+        key,
+        config: TEMPLATE_PRESET_CONFIG[key],
+      })).filter((item) => item.config),
     []
   )
+
+  const templatePresetOptions = useMemo(
+    () =>
+      TEMPLATE_GROUPS.map((group) => ({
+        ...group,
+        options: Object.entries(TEMPLATE_PRESET_CONFIG)
+          .filter(([, config]) => config.group === group.value)
+          .map(([value, config]) => ({
+            value,
+            label: config.label,
+          })),
+      })).filter((group) => group.options.length > 0),
+    []
+  )
+
+  const selectedTemplatePreset =
+    TEMPLATE_PRESET_CONFIG[templatePresetKey] ||
+    TEMPLATE_PRESET_CONFIG.operations_default
 
   const operationCount = useMemo(
     () => operations.filter((o) => !isOperationBlank(o)).length,
@@ -1215,14 +1483,16 @@ export function ParamOverrideEditorDialog(
   )
 
   const returnErrorDraft = useMemo(() => {
-    if (!selectedOperation || selectedOperation.mode !== 'return_error')
+    if (!selectedOperation || selectedOperation.mode !== 'return_error') {
       return null
+    }
     return parseReturnErrorDraft(selectedOperation.value_text)
   }, [selectedOperation])
 
   const pruneObjectsDraft = useMemo(() => {
-    if (!selectedOperation || selectedOperation.mode !== 'prune_objects')
+    if (!selectedOperation || selectedOperation.mode !== 'prune_objects') {
       return null
+    }
     return parsePruneObjectsDraft(selectedOperation.value_text)
   }, [selectedOperation])
 
@@ -1478,12 +1748,16 @@ export function ParamOverrideEditorDialog(
   const buildVisualJson = useCallback((): string => {
     if (visualMode === 'legacy') {
       const trimmed = legacyValue.trim()
-      if (!trimmed) return ''
-      if (!verifyJSON(trimmed))
+      if (!trimmed) {
+        return ''
+      }
+      if (!verifyJSON(trimmed)) {
         throw new Error(t('Parameter override must be valid JSON format'))
+      }
       const parsed = JSON.parse(trimmed) as unknown
-      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
         throw new Error(t('Legacy format must be a JSON object'))
+      }
       return JSON.stringify(parsed, null, 2)
     }
     return buildOperationsJson(operations, { validate: true }, t)
@@ -1561,15 +1835,15 @@ export function ParamOverrideEditorDialog(
     toast.error(t('Parameter override must be a valid JSON object'))
   }, [editMode, jsonText, t])
 
-  const fillTemplate = useCallback(
-    (mode: 'fill' | 'append') => {
+  const applyTemplate = useCallback(
+    (action: 'replace' | 'add') => {
       const preset =
         TEMPLATE_PRESET_CONFIG[templatePresetKey] ||
         TEMPLATE_PRESET_CONFIG.operations_default
       const payload = preset.payload as Record<string, unknown>
 
       if (preset.kind === 'legacy') {
-        if (mode === 'append' && visualMode === 'legacy') {
+        if (action === 'add' && visualMode === 'legacy') {
           const trimmed = legacyValue.trim()
           let parsedCurrent: Record<string, unknown> = {}
           if (trimmed) {
@@ -1579,7 +1853,7 @@ export function ParamOverrideEditorDialog(
             }
             parsedCurrent = JSON.parse(trimmed) as Record<string, unknown>
           }
-          const merged = { ...(payload || {}), ...parsedCurrent }
+          const merged = { ...payload, ...parsedCurrent }
           const text = JSON.stringify(merged, null, 2)
           setVisualMode('legacy')
           setLegacyValue(text)
@@ -1602,16 +1876,25 @@ export function ParamOverrideEditorDialog(
       const operationsPayload = ((payload as Record<string, unknown>)
         .operations || []) as Record<string, unknown>[]
 
-      if (mode === 'append') {
+      if (action === 'add') {
         const appended = operationsPayload.map(normalizeOperation)
         const existing =
           visualMode === 'operations'
             ? operations.filter((o) => !isOperationBlank(o))
             : []
-        const nextOps = [...existing, ...appended]
+        const existingKeys = new Set(existing.map(getOperationDedupKey))
+        const uniqueAppended = appended.filter((operation) => {
+          const key = getOperationDedupKey(operation)
+          if (existingKeys.has(key)) return false
+          existingKeys.add(key)
+          return true
+        })
+        const nextOps = [...existing, ...uniqueAppended]
         setVisualMode('operations')
         setOperations(nextOps.length > 0 ? nextOps : appended)
-        setSelectedOperationId(nextOps[0]?.id || appended[0]?.id || '')
+        setSelectedOperationId(
+          uniqueAppended[0]?.id || nextOps[0]?.id || appended[0]?.id || ''
+        )
         setLegacyValue('')
         setJsonError('')
         setEditMode('visual')
@@ -1674,8 +1957,9 @@ export function ParamOverrideEditorDialog(
       if (editMode === 'json') {
         const trimmed = jsonText.trim()
         if (trimmed) {
-          if (!verifyJSON(trimmed))
+          if (!verifyJSON(trimmed)) {
             throw new Error(t('Parameter override must be valid JSON format'))
+          }
           result = JSON.stringify(JSON.parse(trimmed), null, 2)
         }
       } else {
@@ -1737,87 +2021,137 @@ export function ParamOverrideEditorDialog(
     >
       {/* Toolbar */}
       <div className='bg-muted/30 border-b px-4 py-3'>
-        <div className='flex flex-wrap items-center gap-2'>
-          <span className='text-muted-foreground text-xs font-medium'>
-            {t('Mode')}
-          </span>
-          <Button
-            type='button'
-            variant={editMode === 'visual' ? 'default' : 'outline'}
-            size='sm'
-            onClick={switchToVisualMode}
-          >
-            {t('Visual')}
-          </Button>
-          <Button
-            type='button'
-            variant={editMode === 'json' ? 'default' : 'outline'}
-            size='sm'
-            onClick={switchToJsonMode}
-          >
-            {t('JSON Text')}
-          </Button>
+        <div className='flex flex-col gap-3'>
+          <div className='flex flex-wrap items-center gap-2'>
+            <span className='text-muted-foreground text-xs font-medium'>
+              {t('Mode')}
+            </span>
+            <Button
+              type='button'
+              variant={editMode === 'visual' ? 'default' : 'outline'}
+              size='sm'
+              onClick={switchToVisualMode}
+            >
+              {t('Visual')}
+            </Button>
+            <Button
+              type='button'
+              variant={editMode === 'json' ? 'default' : 'outline'}
+              size='sm'
+              onClick={switchToJsonMode}
+            >
+              {t('JSON Text')}
+            </Button>
+            <Button
+              type='button'
+              variant='ghost'
+              size='sm'
+              onClick={resetEditorState}
+            >
+              {t('Reset')}
+            </Button>
+          </div>
 
-          <div className='bg-border mx-1 h-5 w-px' />
+          <div className='bg-background rounded-lg border p-3'>
+            <div className='flex flex-wrap items-start justify-between gap-2'>
+              <div className='min-w-0'>
+                <p className='text-sm font-medium'>
+                  {t('Preset Rule Library')}
+                </p>
+                <p className='text-muted-foreground mt-1 text-xs'>
+                  {t(
+                    'Pick a scenario first. It will not change this channel until you apply it.'
+                  )}
+                </p>
+              </div>
+              <Badge variant='secondary' className='max-w-full truncate'>
+                {t(selectedTemplatePreset.label)}
+              </Badge>
+            </div>
 
-          <span className='text-muted-foreground text-xs font-medium'>
-            {t('Template')}
-          </span>
-          <Select
-            items={[
-              ...templatePresetOptions.map((o) => ({
-                value: o.value,
-                label: t(o.label),
-              })),
-            ]}
-            value={templatePresetKey}
-            onValueChange={(v) =>
-              setTemplatePresetKey(v || 'operations_default')
-            }
-          >
-            <SelectTrigger className='h-8 w-[220px]'>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent alignItemWithTrigger={false}>
-              <SelectGroup>
-                {templatePresetOptions.map((o) => (
-                  <SelectItem key={o.value} value={o.value}>
-                    {t(o.label)}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Button
-            type='button'
-            variant='outline'
-            size='sm'
-            onClick={() => fillTemplate('fill')}
-          >
-            {t('Fill Template')}
-          </Button>
-          <Button
-            type='button'
-            variant='ghost'
-            size='sm'
-            onClick={() => fillTemplate('append')}
-          >
-            {t('Append Template')}
-          </Button>
-          <Button
-            type='button'
-            variant='ghost'
-            size='sm'
-            onClick={resetEditorState}
-          >
-            {t('Reset')}
-          </Button>
+            <div className='mt-3 flex flex-wrap gap-2'>
+              <span className='text-muted-foreground self-center text-xs'>
+                {t('Quick Presets')}
+              </span>
+              {quickTemplatePresets.map(({ key, config }) => (
+                <Button
+                  key={key}
+                  type='button'
+                  variant={key === templatePresetKey ? 'default' : 'outline'}
+                  size='sm'
+                  className='h-8 max-w-full justify-start truncate text-xs'
+                  onClick={() => setTemplatePresetKey(key)}
+                >
+                  {t(config.label)}
+                </Button>
+              ))}
+            </div>
+
+            <div className='mt-3 grid gap-2 lg:grid-cols-[minmax(220px,1fr)_auto_auto]'>
+              <Select
+                items={templatePresetOptions.flatMap((group) =>
+                  group.options.map((option) => ({
+                    value: option.value,
+                    label: t(option.label),
+                  }))
+                )}
+                value={templatePresetKey}
+                onValueChange={(v) =>
+                  setTemplatePresetKey(v || 'operations_default')
+                }
+              >
+                <SelectTrigger className='h-8 w-full'>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent alignItemWithTrigger={false}>
+                  {templatePresetOptions.map((group) => (
+                    <SelectGroup key={group.value}>
+                      <SelectLabel>{t(group.label)}</SelectLabel>
+                      {group.options.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {t(option.label)}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button
+                type='button'
+                variant='default'
+                size='sm'
+                className='whitespace-nowrap'
+                onClick={() => applyTemplate('replace')}
+              >
+                {t('Replace Current Rules')}
+              </Button>
+              <Button
+                type='button'
+                variant='outline'
+                size='sm'
+                className='whitespace-nowrap'
+                onClick={() => applyTemplate('add')}
+              >
+                <Plus className='mr-1 h-3.5 w-3.5' />
+                {t('Append to Existing Rules')}
+              </Button>
+            </div>
+            {selectedTemplatePreset.description && (
+              <p className='text-muted-foreground mt-2 text-xs'>
+                {t(selectedTemplatePreset.description)}
+              </p>
+            )}
+            <p className='text-muted-foreground mt-2 text-xs'>
+              {t(
+                'Replace Current Rules removes existing rules first. Append keeps existing rules and adds the selected preset after them.'
+              )}
+            </p>
+          </div>
         </div>
       </div>
       {/* Content */}
       <div className='min-h-0 flex-1 overflow-hidden'>
-        {editMode === 'visual' ? (
-          visualMode === 'legacy' ? (
+        {editMode === 'visual' && visualMode === 'legacy' && (
             <div className='p-4'>
               <p className='text-muted-foreground mb-2 text-sm'>
                 {t('Legacy Format (JSON Object)')}
@@ -1835,7 +2169,8 @@ export function ParamOverrideEditorDialog(
                 )}
               </p>
             </div>
-          ) : (
+        )}
+        {editMode === 'visual' && visualMode !== 'legacy' && (
             <div className='flex h-full'>
               {/* Left sidebar */}
               <div className='flex w-[280px] flex-shrink-0 flex-col border-r'>
@@ -2029,8 +2364,8 @@ export function ParamOverrideEditorDialog(
                 )}
               </div>
             </div>
-          )
-        ) : (
+        )}
+        {editMode !== 'visual' && (
           /* JSON mode */
           <div className='p-4'>
             <div className='mb-2 flex items-center gap-2'>
@@ -2119,6 +2454,122 @@ function RuleEditor(ruleEditorProps: RuleEditorProps) {
   const syncToTarget =
     mode === 'sync_fields' ? parseSyncTargetSpec(operation.to) : null
 
+  let valueEditor: React.ReactNode = null
+  if (meta.value) {
+    if (mode === 'return_error' && ruleEditorProps.returnErrorDraft) {
+      valueEditor = (
+        <ReturnErrorEditor
+          operationId={operation.id}
+          draft={ruleEditorProps.returnErrorDraft}
+          updateDraft={ruleEditorProps.updateReturnErrorDraft}
+        />
+      )
+    } else if (mode === 'prune_objects' && ruleEditorProps.pruneObjectsDraft) {
+      valueEditor = (
+        <PruneObjectsEditor
+          operationId={operation.id}
+          draft={ruleEditorProps.pruneObjectsDraft}
+          updateDraft={ruleEditorProps.updatePruneObjectsDraft}
+          addRule={ruleEditorProps.addPruneRule}
+          updateRule={ruleEditorProps.updatePruneRule}
+          removeRule={ruleEditorProps.removePruneRule}
+        />
+      )
+    } else {
+      valueEditor = (
+        <div className='space-y-1.5'>
+          <div className='flex items-center justify-between'>
+            <label className='text-xs font-medium'>
+              {t(getModeValueLabel(mode))}
+            </label>
+            {operation.value_text.trim().startsWith('{') && (
+              <Button
+                type='button'
+                variant='ghost'
+                size='sm'
+                className='text-muted-foreground h-auto px-1.5 py-0.5 text-xs'
+                onClick={() => {
+                  try {
+                    const parsed = JSON.parse(operation.value_text)
+                    ruleEditorProps.updateOperation(operation.id, {
+                      value_text: JSON.stringify(parsed, null, 2),
+                    })
+                  } catch {
+                    /* not valid JSON */
+                  }
+                }}
+              >
+                {t('Format')}
+              </Button>
+            )}
+          </div>
+          <Textarea
+            value={operation.value_text}
+            onChange={(e) =>
+              ruleEditorProps.updateOperation(operation.id, {
+                value_text: e.target.value,
+              })
+            }
+            placeholder={getModeValuePlaceholder(mode)}
+            rows={3}
+            className='max-h-[200px] resize-y overflow-y-auto font-mono text-xs'
+          />
+        </div>
+      )
+    }
+  }
+
+  let syncEditor: React.ReactNode = null
+  if (mode === 'sync_fields' && syncFromTarget && syncToTarget) {
+    syncEditor = (
+      <SyncFieldsEditor
+        operationId={operation.id}
+        syncFromTarget={syncFromTarget}
+        syncToTarget={syncToTarget}
+        updateOperation={ruleEditorProps.updateOperation}
+      />
+    )
+  } else if ((meta.from || meta.to !== undefined) && mode !== 'sync_fields') {
+    syncEditor = (
+      <div className='grid gap-3 sm:grid-cols-2'>
+        {(meta.from || meta.to === false) && (
+          <div className='space-y-1.5'>
+            <label className='text-xs font-medium'>
+              {t(getModeFromLabel(mode))}
+            </label>
+            <Input
+              value={operation.from}
+              onChange={(e) =>
+                ruleEditorProps.updateOperation(operation.id, {
+                  from: e.target.value,
+                })
+              }
+              placeholder={getModeFromPlaceholder(mode)}
+              className='h-9'
+            />
+          </div>
+        )}
+        {(meta.to || meta.to === false) && (
+          <div className='space-y-1.5'>
+            <label className='text-xs font-medium'>
+              {t(getModeToLabel(mode))}
+            </label>
+            <Input
+              value={operation.to}
+              onChange={(e) =>
+                ruleEditorProps.updateOperation(operation.id, {
+                  to: e.target.value,
+                })
+              }
+              placeholder={getModeToPlaceholder(mode)}
+              className='h-9'
+            />
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
     <ScrollArea className='flex-1'>
       <div className='space-y-4 p-4'>
@@ -2160,12 +2611,10 @@ function RuleEditor(ruleEditorProps: RuleEditorProps) {
           <div className='space-y-1.5'>
             <label className='text-xs font-medium'>{t('Operation Type')}</label>
             <Select
-              items={[
-                ...OPERATION_MODE_OPTIONS.map((o) => ({
-                  value: o.value,
-                  label: t(o.label),
-                })),
-              ]}
+              items={OPERATION_MODE_OPTIONS.map((o) => ({
+                value: o.value,
+                label: t(o.label),
+              }))}
               value={mode}
               onValueChange={(nextMode) =>
                 nextMode !== null &&
@@ -2240,62 +2689,7 @@ function RuleEditor(ruleEditorProps: RuleEditorProps) {
         </div>
 
         {/* Value section */}
-        {meta.value &&
-          (mode === 'return_error' && ruleEditorProps.returnErrorDraft ? (
-            <ReturnErrorEditor
-              operationId={operation.id}
-              draft={ruleEditorProps.returnErrorDraft}
-              updateDraft={ruleEditorProps.updateReturnErrorDraft}
-            />
-          ) : mode === 'prune_objects' && ruleEditorProps.pruneObjectsDraft ? (
-            <PruneObjectsEditor
-              operationId={operation.id}
-              draft={ruleEditorProps.pruneObjectsDraft}
-              updateDraft={ruleEditorProps.updatePruneObjectsDraft}
-              addRule={ruleEditorProps.addPruneRule}
-              updateRule={ruleEditorProps.updatePruneRule}
-              removeRule={ruleEditorProps.removePruneRule}
-            />
-          ) : (
-            <div className='space-y-1.5'>
-              <div className='flex items-center justify-between'>
-                <label className='text-xs font-medium'>
-                  {t(getModeValueLabel(mode))}
-                </label>
-                {operation.value_text.trim().startsWith('{') && (
-                  <Button
-                    type='button'
-                    variant='ghost'
-                    size='sm'
-                    className='text-muted-foreground h-auto px-1.5 py-0.5 text-xs'
-                    onClick={() => {
-                      try {
-                        const parsed = JSON.parse(operation.value_text)
-                        ruleEditorProps.updateOperation(operation.id, {
-                          value_text: JSON.stringify(parsed, null, 2),
-                        })
-                      } catch (_e) {
-                        /* not valid JSON */
-                      }
-                    }}
-                  >
-                    {t('Format')}
-                  </Button>
-                )}
-              </div>
-              <Textarea
-                value={operation.value_text}
-                onChange={(e) =>
-                  ruleEditorProps.updateOperation(operation.id, {
-                    value_text: e.target.value,
-                  })
-                }
-                placeholder={getModeValuePlaceholder(mode)}
-                rows={3}
-                className='max-h-[200px] resize-y overflow-y-auto font-mono text-xs'
-              />
-            </div>
-          ))}
+        {valueEditor}
 
         {/* keep_origin */}
         {meta.keepOrigin && (
@@ -2315,51 +2709,7 @@ function RuleEditor(ruleEditorProps: RuleEditorProps) {
         )}
 
         {/* sync_fields */}
-        {mode === 'sync_fields' && syncFromTarget && syncToTarget ? (
-          <SyncFieldsEditor
-            operationId={operation.id}
-            syncFromTarget={syncFromTarget}
-            syncToTarget={syncToTarget}
-            updateOperation={ruleEditorProps.updateOperation}
-          />
-        ) : (meta.from || meta.to !== undefined) && mode !== 'sync_fields' ? (
-          <div className='grid gap-3 sm:grid-cols-2'>
-            {(meta.from || meta.to === false) && (
-              <div className='space-y-1.5'>
-                <label className='text-xs font-medium'>
-                  {t(getModeFromLabel(mode))}
-                </label>
-                <Input
-                  value={operation.from}
-                  onChange={(e) =>
-                    ruleEditorProps.updateOperation(operation.id, {
-                      from: e.target.value,
-                    })
-                  }
-                  placeholder={getModeFromPlaceholder(mode)}
-                  className='h-9'
-                />
-              </div>
-            )}
-            {(meta.to || meta.to === false) && (
-              <div className='space-y-1.5'>
-                <label className='text-xs font-medium'>
-                  {t(getModeToLabel(mode))}
-                </label>
-                <Input
-                  value={operation.to}
-                  onChange={(e) =>
-                    ruleEditorProps.updateOperation(operation.id, {
-                      to: e.target.value,
-                    })
-                  }
-                  placeholder={getModeToPlaceholder(mode)}
-                  className='h-9'
-                />
-              </div>
-            )}
-          </div>
-        ) : null}
+        {syncEditor}
 
         {/* Conditions */}
         <div className='rounded-lg border p-3'>
@@ -2549,12 +2899,10 @@ function ConditionEditor(conditionEditorProps: ConditionEditorProps) {
                   {t('Match Mode')}
                 </label>
                 <Select
-                  items={[
-                    ...CONDITION_MODE_OPTIONS.map((o) => ({
-                      value: o.value,
-                      label: t(o.label),
-                    })),
-                  ]}
+                  items={CONDITION_MODE_OPTIONS.map((o) => ({
+                    value: o.value,
+                    label: t(o.label),
+                  }))}
                   value={condition.mode}
                   onValueChange={(v) =>
                     v !== null &&
@@ -2722,7 +3070,7 @@ function ReturnErrorEditor(returnErrorEditorProps: ReturnErrorEditorProps) {
                 onChange={(e) =>
                   returnErrorEditorProps.updateDraft(
                     returnErrorEditorProps.operationId,
-                    { statusCode: parseInt(e.target.value, 10) || 400 }
+                    { statusCode: Number.parseInt(e.target.value, 10) || 400 }
                   )
                 }
                 placeholder='400'
@@ -3069,12 +3417,10 @@ function PruneObjectsEditor(pruneObjectsEditorProps: PruneObjectsEditorProps) {
                           {t('Match Mode')}
                         </label>
                         <Select
-                          items={[
-                            ...CONDITION_MODE_OPTIONS.map((o) => ({
-                              value: o.value,
-                              label: t(o.label),
-                            })),
-                          ]}
+                          items={CONDITION_MODE_OPTIONS.map((o) => ({
+                            value: o.value,
+                            label: t(o.label),
+                          }))}
                           value={rule.mode}
                           onValueChange={(v) =>
                             v !== null &&
@@ -3182,12 +3528,10 @@ function SyncFieldsEditor(syncFieldsEditorProps: SyncFieldsEditorProps) {
           </label>
           <div className='flex gap-2'>
             <Select
-              items={[
-                ...SYNC_TARGET_TYPE_OPTIONS.map((o) => ({
-                  value: o.value,
-                  label: t(o.label),
-                })),
-              ]}
+              items={SYNC_TARGET_TYPE_OPTIONS.map((o) => ({
+                value: o.value,
+                label: t(o.label),
+              }))}
               value={syncFieldsEditorProps.syncFromTarget.type || 'json'}
               onValueChange={(v) =>
                 v !== null &&
@@ -3239,12 +3583,10 @@ function SyncFieldsEditor(syncFieldsEditorProps: SyncFieldsEditorProps) {
           </label>
           <div className='flex gap-2'>
             <Select
-              items={[
-                ...SYNC_TARGET_TYPE_OPTIONS.map((o) => ({
-                  value: o.value,
-                  label: t(o.label),
-                })),
-              ]}
+              items={SYNC_TARGET_TYPE_OPTIONS.map((o) => ({
+                value: o.value,
+                label: t(o.label),
+              }))}
               value={syncFieldsEditorProps.syncToTarget.type || 'json'}
               onValueChange={(v) =>
                 v !== null &&
