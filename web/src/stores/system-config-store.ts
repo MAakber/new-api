@@ -61,13 +61,49 @@ export const DEFAULT_CURRENCY_CONFIG: CurrencyConfig = {
   customCurrencyExchangeRate: 1,
 }
 
-interface SystemConfigState {
+export interface SystemConfigState {
   config: SystemConfig
   loading: boolean
   loadedLogoUrl: string
   setConfig: (config: Partial<SystemConfig>) => void
   setLoadedLogoUrl: (url: string) => void
   setLoading: (loading: boolean) => void
+}
+
+type PersistedSystemConfigState = {
+  config?: Partial<Omit<SystemConfig, 'currency' | 'defaultTheme'>> & {
+    currency?: Partial<CurrencyConfig>
+    defaultTheme?: Partial<DefaultThemeSettings>
+  }
+  loadedLogoUrl?: string
+}
+
+export function mergePersistedSystemConfigState(
+  persistedState: unknown,
+  currentState: SystemConfigState
+): SystemConfigState {
+  const persisted = (persistedState ?? {}) as PersistedSystemConfigState
+  const persistedConfig = persisted.config ?? {}
+
+  return {
+    ...currentState,
+    config: {
+      ...currentState.config,
+      ...persistedConfig,
+      defaultTheme: {
+        ...currentState.config.defaultTheme,
+        ...(persistedConfig.defaultTheme ?? {}),
+      },
+      currency: {
+        ...currentState.config.currency,
+        ...(persistedConfig.currency ?? {}),
+      },
+    },
+    loadedLogoUrl:
+      typeof persisted.loadedLogoUrl === 'string'
+        ? persisted.loadedLogoUrl
+        : currentState.loadedLogoUrl,
+  }
 }
 
 /**
@@ -101,6 +137,7 @@ export const useSystemConfigStore = create<SystemConfigState>()(
     }),
     {
       name: 'system-config-storage',
+      merge: mergePersistedSystemConfigState,
       partialize: (state) => ({
         config: state.config,
         loadedLogoUrl: state.loadedLogoUrl,
