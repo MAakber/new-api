@@ -199,6 +199,7 @@ func InitOptionMap() {
 	_, _ = common.SetRelayUserAgentBlacklistConfig(common.RelayUserAgentBlacklistEnabled, "")
 	common.OptionMap[setting.UpstreamInterceptionOptionKey] = setting.DefaultUpstreamInterceptionConfigJSON()
 	_, _ = setting.SetUpstreamInterceptionConfig(common.OptionMap[setting.UpstreamInterceptionOptionKey])
+	common.OptionMap[setting.DefaultThemeOptionKey] = setting.DefaultThemeSettingsJSONString()
 	common.OptionMap["AutoBanConfig"] = setting.AutoBanConfig2JsonString()
 	common.OptionMap["request_debug.raw_enabled"] = strconv.FormatBool(common.IsRequestDebugRawEnabled())
 
@@ -247,6 +248,10 @@ func validateOptionValue(key string, value string) error {
 		_, err := setting.ValidateAndNormalizeUpstreamInterceptionConfigJSON(value)
 		return err
 	}
+	if key == setting.DefaultThemeOptionKey {
+		_, err := setting.ValidateAndNormalizeDefaultThemeJSON(value)
+		return err
+	}
 	if key == operation_setting.ToolPriceOptionKey {
 		return operation_setting.ValidateToolPricesJSON(value)
 	}
@@ -291,6 +296,9 @@ func normalizeOptionValue(key string, value string) (string, error) {
 	}
 	if key == setting.UpstreamInterceptionOptionKey {
 		return setting.ValidateAndNormalizeUpstreamInterceptionConfigJSON(value)
+	}
+	if key == setting.DefaultThemeOptionKey {
+		return setting.ValidateAndNormalizeDefaultThemeJSON(value)
 	}
 	return value, validateOptionValue(key, value)
 }
@@ -399,6 +407,12 @@ func updateOptionMap(key string, value string) (err error) {
 	}
 	if key == setting.UpstreamInterceptionOptionKey {
 		_, err = setting.SetUpstreamInterceptionConfig(value)
+		if err != nil {
+			return err
+		}
+	}
+	if key == setting.DefaultThemeOptionKey {
+		err = setting.SetDefaultThemeSettings(value)
 		if err != nil {
 			return err
 		}

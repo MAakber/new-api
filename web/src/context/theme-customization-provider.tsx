@@ -46,6 +46,7 @@ import {
   type ThemeRadius,
   type ThemeScale,
 } from '@/lib/theme-customization'
+import { useSystemConfigStore } from '@/stores/system-config-store'
 
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // 1 year
 
@@ -120,55 +121,86 @@ function applyCustomThemeVariables(color: string | null) {
 export function ThemeCustomizationProvider(props: {
   children: React.ReactNode
 }) {
+  const defaults = useSystemConfigStore((state) => state.config.defaultTheme)
   const [preset, _setPreset] = useState<ThemePreset>(() =>
     readCookie<ThemePreset>(
       THEME_COOKIE_KEYS.preset,
       THEME_PRESET_VALUES,
-      DEFAULT_THEME_CUSTOMIZATION.preset
+      defaults.preset
     )
   )
   const [customColor, _setCustomColor] = useState(
     () =>
       normalizeCustomColor(getCookie(THEME_COOKIE_KEYS.customColor)) ??
-      DEFAULT_THEME_CUSTOMIZATION.customColor
+      defaults.customColor
   )
   const [font, _setFont] = useState<ThemeFont>(() =>
     readCookie<ThemeFont>(
       THEME_COOKIE_KEYS.font,
       THEME_FONT_VALUES,
-      DEFAULT_THEME_CUSTOMIZATION.font
+      defaults.font
     )
   )
   const [radius, _setRadius] = useState<ThemeRadius>(() =>
     readCookie<ThemeRadius>(
       THEME_COOKIE_KEYS.radius,
       THEME_RADIUS_VALUES,
-      DEFAULT_THEME_CUSTOMIZATION.radius
+      defaults.radius
     )
   )
   const [scale, _setScale] = useState<ThemeScale>(() =>
     readCookie<ThemeScale>(
       THEME_COOKIE_KEYS.scale,
       THEME_SCALE_VALUES,
-      DEFAULT_THEME_CUSTOMIZATION.scale
+      defaults.scale
     )
   )
   const [contentLayout, _setContentLayout] = useState<ContentLayout>(() =>
     readCookie<ContentLayout>(
       THEME_COOKIE_KEYS.contentLayout,
       CONTENT_LAYOUT_VALUES,
-      DEFAULT_THEME_CUSTOMIZATION.contentLayout
+      defaults.contentLayout
     )
   )
+
+  useEffect(() => {
+    const savedPreset = getCookie(THEME_COOKIE_KEYS.preset)
+    const savedCustomColor = getCookie(THEME_COOKIE_KEYS.customColor)
+    if (!savedPreset || !THEME_PRESET_VALUES.has(savedPreset as ThemePreset)) {
+      _setPreset(defaults.preset)
+    }
+    if (!normalizeCustomColor(savedCustomColor)) {
+      _setCustomColor(defaults.customColor)
+    }
+    const savedFont = getCookie(THEME_COOKIE_KEYS.font)
+    if (!savedFont || !THEME_FONT_VALUES.has(savedFont as ThemeFont)) {
+      _setFont(defaults.font)
+    }
+    const savedRadius = getCookie(THEME_COOKIE_KEYS.radius)
+    if (!savedRadius || !THEME_RADIUS_VALUES.has(savedRadius as ThemeRadius)) {
+      _setRadius(defaults.radius)
+    }
+    const savedScale = getCookie(THEME_COOKIE_KEYS.scale)
+    if (!savedScale || !THEME_SCALE_VALUES.has(savedScale as ThemeScale)) {
+      _setScale(defaults.scale)
+    }
+    const savedContentLayout = getCookie(THEME_COOKIE_KEYS.contentLayout)
+    if (
+      !savedContentLayout ||
+      !CONTENT_LAYOUT_VALUES.has(savedContentLayout as ContentLayout)
+    ) {
+      _setContentLayout(defaults.contentLayout)
+    }
+  }, [defaults])
 
   // Mirror state to the <body> via data-* attributes so theme-presets.css can
   // override CSS variables at the right cascade layer.
   useEffect(() => {
     applyAttribute(
       'data-theme-preset',
-      preset === DEFAULT_THEME_CUSTOMIZATION.preset ? null : preset
+      preset === defaults.preset ? null : preset
     )
-  }, [preset])
+  }, [defaults.preset, preset])
 
   // Custom colors are intentionally inline because their value is chosen at
   // runtime. Fixed presets keep using the stylesheet; clearing these tokens
@@ -192,99 +224,124 @@ export function ThemeCustomizationProvider(props: {
   useEffect(() => {
     applyAttribute(
       'data-theme-radius',
-      radius === DEFAULT_THEME_CUSTOMIZATION.radius ? null : radius
+      radius === defaults.radius ? null : radius
     )
-  }, [radius])
+  }, [defaults.radius, radius])
 
   useEffect(() => {
-    applyAttribute(
-      'data-theme-scale',
-      scale === DEFAULT_THEME_CUSTOMIZATION.scale ? null : scale
-    )
-  }, [scale])
+    applyAttribute('data-theme-scale', scale === defaults.scale ? null : scale)
+  }, [defaults.scale, scale])
 
   useEffect(() => {
     applyAttribute('data-theme-content-layout', contentLayout)
   }, [contentLayout])
 
-  const setPreset = useCallback((value: ThemePreset) => {
-    _setPreset(value)
-    if (value === DEFAULT_THEME_CUSTOMIZATION.preset) {
-      removeCookie(THEME_COOKIE_KEYS.preset)
-    } else {
-      setCookie(THEME_COOKIE_KEYS.preset, value, COOKIE_MAX_AGE)
-    }
-  }, [])
+  const setPreset = useCallback(
+    (value: ThemePreset) => {
+      _setPreset(value)
+      if (value === defaults.preset) {
+        removeCookie(THEME_COOKIE_KEYS.preset)
+      } else {
+        setCookie(THEME_COOKIE_KEYS.preset, value, COOKIE_MAX_AGE)
+      }
+    },
+    [defaults.preset]
+  )
 
-  const setCustomColor = useCallback((value: string) => {
-    const color = normalizeCustomColor(value)
-    if (!color) return
+  const setCustomColor = useCallback(
+    (value: string) => {
+      const color = normalizeCustomColor(value)
+      if (!color) return
 
-    _setCustomColor(color)
-    _setPreset(CUSTOM_THEME_PRESET)
-    setCookie(THEME_COOKIE_KEYS.preset, CUSTOM_THEME_PRESET, COOKIE_MAX_AGE)
+      _setCustomColor(color)
+      _setPreset(CUSTOM_THEME_PRESET)
+      setCookie(THEME_COOKIE_KEYS.preset, CUSTOM_THEME_PRESET, COOKIE_MAX_AGE)
 
-    if (color === DEFAULT_THEME_CUSTOMIZATION.customColor) {
-      removeCookie(THEME_COOKIE_KEYS.customColor)
-    } else {
-      setCookie(THEME_COOKIE_KEYS.customColor, color, COOKIE_MAX_AGE)
-    }
-  }, [])
+      if (color === defaults.customColor) {
+        removeCookie(THEME_COOKIE_KEYS.customColor)
+      } else {
+        setCookie(THEME_COOKIE_KEYS.customColor, color, COOKIE_MAX_AGE)
+      }
+    },
+    [defaults.customColor]
+  )
 
   const resetPreset = useCallback(() => {
-    _setPreset(DEFAULT_THEME_CUSTOMIZATION.preset)
-    _setCustomColor(DEFAULT_THEME_CUSTOMIZATION.customColor)
+    _setPreset(defaults.preset)
+    _setCustomColor(defaults.customColor)
     removeCookie(THEME_COOKIE_KEYS.preset)
     removeCookie(THEME_COOKIE_KEYS.customColor)
-  }, [])
+  }, [defaults.customColor, defaults.preset])
 
-  const setFont = useCallback((value: ThemeFont) => {
-    _setFont(value)
-    if (value === DEFAULT_THEME_CUSTOMIZATION.font) {
-      removeCookie(THEME_COOKIE_KEYS.font)
-    } else {
-      setCookie(THEME_COOKIE_KEYS.font, value, COOKIE_MAX_AGE)
-    }
-  }, [])
+  const setFont = useCallback(
+    (value: ThemeFont) => {
+      _setFont(value)
+      if (value === defaults.font) {
+        removeCookie(THEME_COOKIE_KEYS.font)
+      } else {
+        setCookie(THEME_COOKIE_KEYS.font, value, COOKIE_MAX_AGE)
+      }
+    },
+    [defaults.font]
+  )
 
-  const setRadius = useCallback((value: ThemeRadius) => {
-    _setRadius(value)
-    if (value === DEFAULT_THEME_CUSTOMIZATION.radius) {
-      removeCookie(THEME_COOKIE_KEYS.radius)
-    } else {
-      setCookie(THEME_COOKIE_KEYS.radius, value, COOKIE_MAX_AGE)
-    }
-  }, [])
+  const setRadius = useCallback(
+    (value: ThemeRadius) => {
+      _setRadius(value)
+      if (value === defaults.radius) {
+        removeCookie(THEME_COOKIE_KEYS.radius)
+      } else {
+        setCookie(THEME_COOKIE_KEYS.radius, value, COOKIE_MAX_AGE)
+      }
+    },
+    [defaults.radius]
+  )
 
-  const setScale = useCallback((value: ThemeScale) => {
-    _setScale(value)
-    if (value === DEFAULT_THEME_CUSTOMIZATION.scale) {
-      removeCookie(THEME_COOKIE_KEYS.scale)
-    } else {
-      setCookie(THEME_COOKIE_KEYS.scale, value, COOKIE_MAX_AGE)
-    }
-  }, [])
+  const setScale = useCallback(
+    (value: ThemeScale) => {
+      _setScale(value)
+      if (value === defaults.scale) {
+        removeCookie(THEME_COOKIE_KEYS.scale)
+      } else {
+        setCookie(THEME_COOKIE_KEYS.scale, value, COOKIE_MAX_AGE)
+      }
+    },
+    [defaults.scale]
+  )
 
-  const setContentLayout = useCallback((value: ContentLayout) => {
-    _setContentLayout(value)
-    if (value === DEFAULT_THEME_CUSTOMIZATION.contentLayout) {
-      removeCookie(THEME_COOKIE_KEYS.contentLayout)
-    } else {
-      setCookie(THEME_COOKIE_KEYS.contentLayout, value, COOKIE_MAX_AGE)
-    }
-  }, [])
+  const setContentLayout = useCallback(
+    (value: ContentLayout) => {
+      _setContentLayout(value)
+      if (value === defaults.contentLayout) {
+        removeCookie(THEME_COOKIE_KEYS.contentLayout)
+      } else {
+        setCookie(THEME_COOKIE_KEYS.contentLayout, value, COOKIE_MAX_AGE)
+      }
+    },
+    [defaults.contentLayout]
+  )
 
   const resetCustomization = useCallback(() => {
     resetPreset()
-    setFont(DEFAULT_THEME_CUSTOMIZATION.font)
-    setRadius(DEFAULT_THEME_CUSTOMIZATION.radius)
-    setScale(DEFAULT_THEME_CUSTOMIZATION.scale)
-    setContentLayout(DEFAULT_THEME_CUSTOMIZATION.contentLayout)
-  }, [resetPreset, setFont, setRadius, setScale, setContentLayout])
+    setFont(defaults.font)
+    setRadius(defaults.radius)
+    setScale(defaults.scale)
+    setContentLayout(defaults.contentLayout)
+  }, [
+    defaults.contentLayout,
+    defaults.font,
+    defaults.radius,
+    defaults.scale,
+    resetPreset,
+    setFont,
+    setRadius,
+    setScale,
+    setContentLayout,
+  ])
 
   const value = useMemo<ThemeCustomizationContextType>(
     () => ({
-      defaults: DEFAULT_THEME_CUSTOMIZATION,
+      defaults,
       customization: {
         preset,
         customColor,
@@ -317,6 +374,7 @@ export function ThemeCustomizationProvider(props: {
       setScale,
       setContentLayout,
       resetCustomization,
+      defaults,
     ]
   )
 

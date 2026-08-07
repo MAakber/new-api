@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/setting"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -44,4 +45,20 @@ func TestGetStatusAdvertisesDefaultDashboard(t *testing.T) {
 	require.NoError(t, common.Unmarshal(response.Body.Bytes(), &payload))
 	assert.True(t, payload.Success)
 	assert.Equal(t, "default", payload.Data["theme"])
+	require.NotNil(t, payload.Data["default_theme"])
+}
+
+func TestUpdateOptionRejectsInvalidDefaultTheme(t *testing.T) {
+	response := httptest.NewRecorder()
+	context, _ := gin.CreateTestContext(response)
+	context.Request = httptest.NewRequest(
+		http.MethodPut,
+		"/api/option/",
+		strings.NewReader(`{"key":"`+setting.DefaultThemeOptionKey+`","value":"{\"mode\":\"sepia\"}"}`),
+	)
+
+	UpdateOption(context)
+
+	assert.Equal(t, http.StatusBadRequest, response.Code)
+	assert.Contains(t, response.Body.String(), "invalid default theme mode")
 }

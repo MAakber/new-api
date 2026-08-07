@@ -19,8 +19,9 @@ For commercial licensing, please contact support@quantumnous.com
 import { Radio as RadioPrimitive } from '@base-ui/react/radio'
 import { RadioGroup as Radio } from '@base-ui/react/radio-group'
 import { CircleCheck, Palette, Pipette, RotateCcw } from 'lucide-react'
-import { useRef, type SVGProps } from 'react'
+import { useEffect, useRef, useState, type SVGProps } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 import { IconDir } from '@/assets/custom/icon-dir'
 import { IconLayoutCompact } from '@/assets/custom/icon-layout-compact'
@@ -52,9 +53,12 @@ import { useDirection } from '@/context/direction-provider'
 import { type Collapsible, useLayout } from '@/context/layout-provider'
 import { useThemeCustomization } from '@/context/theme-customization-provider'
 import { useTheme } from '@/context/theme-provider'
+import { api } from '@/lib/api'
+import { ROLE } from '@/lib/roles'
 import {
   CUSTOM_THEME_PRESET,
   type ContentLayout,
+  serializeDefaultThemeSettings,
   THEME_PRESETS,
   type ThemeFont,
   type ThemePreset,
@@ -62,6 +66,8 @@ import {
   type ThemeScale,
 } from '@/lib/theme-customization'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/stores/auth-store'
+import { useSystemConfigStore } from '@/stores/system-config-store'
 
 import { useSidebar } from './ui/sidebar'
 
@@ -69,18 +75,62 @@ const Item = RadioPrimitive.Root
 
 export function ConfigDrawer() {
   const { t } = useTranslation()
-  const { setOpen } = useSidebar()
-  const { resetDir } = useDirection()
-  const { resetTheme } = useTheme()
-  const { resetLayout } = useLayout()
-  const { resetCustomization } = useThemeCustomization()
+  const { open, setOpen } = useSidebar()
+  const { dir, resetDir } = useDirection()
+  const { resetTheme, theme } = useTheme()
+  const { collapsible, resetLayout, variant } = useLayout()
+  const { customization, resetCustomization } = useThemeCustomization()
+  const isRoot = useAuthStore(
+    (state) => state.auth.user?.role === ROLE.SUPER_ADMIN
+  )
+  const [savingDefault, setSavingDefault] = useState(false)
+  const defaultSidebarOpen = useSystemConfigStore(
+    (state) => state.config.defaultTheme.sidebarOpen
+  )
+
+  useEffect(() => {
+    if (!document.cookie.includes('sidebar_state=')) {
+      setOpen(defaultSidebarOpen)
+    }
+  }, [defaultSidebarOpen, setOpen])
 
   const handleReset = () => {
-    setOpen(true)
+    setOpen(defaultSidebarOpen)
     resetDir()
     resetTheme()
     resetLayout()
     resetCustomization()
+  }
+
+  const handleSetDefault = async () => {
+    setSavingDefault(true)
+    try {
+      const defaultTheme = {
+        ...customization,
+        mode: theme,
+        sidebarVariant: variant,
+        sidebarCollapsible: collapsible,
+        sidebarOpen: open,
+        direction: dir,
+      }
+      const value = serializeDefaultThemeSettings(defaultTheme)
+      const response = await api.put('/api/option/', {
+        key: 'theme.default',
+        value: JSON.stringify(value),
+      })
+      if (!response.data?.success) {
+        toast.error(response.data?.message || t('Update failed'))
+        return
+      }
+      useSystemConfigStore.getState().setConfig({
+        defaultTheme,
+      })
+      toast.success(t('Default theme updated'))
+    } catch {
+      toast.error(t('Request failed'))
+    } finally {
+      setSavingDefault(false)
+    }
   }
 
   return (
@@ -116,7 +166,11 @@ export function ConfigDrawer() {
           <ContentLayoutConfig />
           <DirConfig />
         </div>
-        <SheetFooter className={sideDrawerFooterClassName('grid-cols-1')}>
+        <SheetFooter
+          className={sideDrawerFooterClassName(
+            isRoot ? 'grid-cols-2' : 'grid-cols-1'
+          )}
+        >
           <Button
             variant='destructive'
             onClick={handleReset}
@@ -124,6 +178,11 @@ export function ConfigDrawer() {
           >
             {t('Reset')}
           </Button>
+          {isRoot && (
+            <Button onClick={handleSetDefault} disabled={savingDefault}>
+              {savingDefault ? t('Saving...') : t('Set as default')}
+            </Button>
+          )}
         </SheetFooter>
       </SheetContent>
     </Sheet>
@@ -641,6 +700,9 @@ function LayoutConfig() {
   const { t } = useTranslation()
   const { open, setOpen } = useSidebar()
   const { defaultCollapsible, collapsible, setCollapsible } = useLayout()
+  const defaultOpen = useSystemConfigStore(
+    (state) => state.config.defaultTheme.sidebarOpen
+  )
 
   const radioState = open ? 'default' : collapsible
 
@@ -650,7 +712,7 @@ function LayoutConfig() {
         title={t('Layout')}
         showReset={radioState !== 'default'}
         onReset={() => {
-          setOpen(true)
+          setOpen(defaultOpen)
           setCollapsible(defaultCollapsible)
         }}
       />

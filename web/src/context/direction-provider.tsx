@@ -20,10 +20,10 @@ import { DirectionProvider as BaseDirectionProvider } from '@base-ui/react/direc
 import { createContext, useContext, useEffect, useState } from 'react'
 
 import { getCookie, setCookie, removeCookie } from '@/lib/cookies'
+import { useSystemConfigStore } from '@/stores/system-config-store'
 
 export type Direction = 'ltr' | 'rtl'
 
-const DEFAULT_DIRECTION = 'ltr'
 const DIRECTION_COOKIE_NAME = 'dir'
 const DIRECTION_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // 1 year
 
@@ -37,9 +37,18 @@ type DirectionContextType = {
 const DirectionContext = createContext<DirectionContextType | null>(null)
 
 export function DirectionProvider({ children }: { children: React.ReactNode }) {
-  const [dir, _setDir] = useState<Direction>(
-    () => (getCookie(DIRECTION_COOKIE_NAME) as Direction) || DEFAULT_DIRECTION
+  const defaultDir = useSystemConfigStore(
+    (state) => state.config.defaultTheme.direction
   )
+  const [dir, _setDir] = useState<Direction>(
+    () => (getCookie(DIRECTION_COOKIE_NAME) as Direction) || defaultDir
+  )
+
+  useEffect(() => {
+    const storedDirection = getCookie(DIRECTION_COOKIE_NAME)
+    if (storedDirection === 'ltr' || storedDirection === 'rtl') return
+    _setDir(defaultDir)
+  }, [defaultDir])
 
   useEffect(() => {
     const htmlElement = document.documentElement
@@ -52,14 +61,14 @@ export function DirectionProvider({ children }: { children: React.ReactNode }) {
   }
 
   const resetDir = () => {
-    _setDir(DEFAULT_DIRECTION)
+    _setDir(defaultDir)
     removeCookie(DIRECTION_COOKIE_NAME)
   }
 
   return (
     <DirectionContext
       value={{
-        defaultDir: DEFAULT_DIRECTION,
+        defaultDir,
         dir,
         setDir,
         resetDir,

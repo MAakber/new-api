@@ -238,6 +238,15 @@ func UpdateOption(c *gin.Context) {
 			})
 			return
 		}
+	case setting.DefaultThemeOptionKey:
+		option.Value, err = setting.ValidateAndNormalizeDefaultThemeJSON(option.Value.(string))
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"success": false,
+				"message": err.Error(),
+			})
+			return
+		}
 	case "GroupRatio":
 		err = ratio_setting.CheckGroupRatio(option.Value.(string))
 		if err != nil {

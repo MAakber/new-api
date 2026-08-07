@@ -121,6 +121,14 @@ export type ThemeCustomization = {
   contentLayout: ContentLayout
 }
 
+export type DefaultThemeSettings = ThemeCustomization & {
+  mode: 'dark' | 'light' | 'system'
+  sidebarVariant: 'inset' | 'sidebar' | 'floating'
+  sidebarCollapsible: 'offcanvas' | 'icon' | 'none'
+  sidebarOpen: boolean
+  direction: 'ltr' | 'rtl'
+}
+
 export const DEFAULT_THEME_CUSTOMIZATION: ThemeCustomization = {
   preset: 'default',
   customColor: DEFAULT_CUSTOM_THEME_COLOR,
@@ -128,6 +136,15 @@ export const DEFAULT_THEME_CUSTOMIZATION: ThemeCustomization = {
   radius: 'default',
   scale: 'default',
   contentLayout: 'full',
+}
+
+export const DEFAULT_THEME_SETTINGS: DefaultThemeSettings = {
+  ...DEFAULT_THEME_CUSTOMIZATION,
+  mode: 'system',
+  sidebarVariant: 'inset',
+  sidebarCollapsible: 'icon',
+  sidebarOpen: true,
+  direction: 'ltr',
 }
 
 export const THEME_PRESET_VALUES: ReadonlySet<ThemePreset> = new Set([
@@ -161,6 +178,86 @@ export const CONTENT_LAYOUT_VALUES: ReadonlySet<ContentLayout> = new Set([
   'full',
   'centered',
 ])
+
+export function normalizeDefaultThemeSettings(
+  value: unknown
+): DefaultThemeSettings {
+  if (!value || typeof value !== 'object') return DEFAULT_THEME_SETTINGS
+  const theme = value as Record<string, unknown>
+
+  const mode = new Set(['dark', 'light', 'system']).has(String(theme.mode))
+    ? (theme.mode as DefaultThemeSettings['mode'])
+    : DEFAULT_THEME_SETTINGS.mode
+  const preset = THEME_PRESET_VALUES.has(theme.preset as ThemePreset)
+    ? (theme.preset as ThemePreset)
+    : DEFAULT_THEME_SETTINGS.preset
+  const customColor =
+    normalizeCustomColor(String(theme.custom_color ?? '')) ??
+    DEFAULT_THEME_SETTINGS.customColor
+  const font = THEME_FONT_VALUES.has(theme.font as ThemeFont)
+    ? (theme.font as ThemeFont)
+    : DEFAULT_THEME_SETTINGS.font
+  const radius = THEME_RADIUS_VALUES.has(theme.radius as ThemeRadius)
+    ? (theme.radius as ThemeRadius)
+    : DEFAULT_THEME_SETTINGS.radius
+  const scale = THEME_SCALE_VALUES.has(theme.scale as ThemeScale)
+    ? (theme.scale as ThemeScale)
+    : DEFAULT_THEME_SETTINGS.scale
+  const contentLayout = CONTENT_LAYOUT_VALUES.has(
+    theme.content_layout as ContentLayout
+  )
+    ? (theme.content_layout as ContentLayout)
+    : DEFAULT_THEME_SETTINGS.contentLayout
+  const sidebarVariant = new Set(['inset', 'sidebar', 'floating']).has(
+    String(theme.sidebar_variant)
+  )
+    ? (theme.sidebar_variant as DefaultThemeSettings['sidebarVariant'])
+    : DEFAULT_THEME_SETTINGS.sidebarVariant
+  const sidebarCollapsible = new Set(['offcanvas', 'icon', 'none']).has(
+    String(theme.sidebar_collapsible)
+  )
+    ? (theme.sidebar_collapsible as DefaultThemeSettings['sidebarCollapsible'])
+    : DEFAULT_THEME_SETTINGS.sidebarCollapsible
+  const sidebarOpen =
+    typeof theme.sidebar_open === 'boolean'
+      ? theme.sidebar_open
+      : DEFAULT_THEME_SETTINGS.sidebarOpen
+  const direction = new Set(['ltr', 'rtl']).has(String(theme.direction))
+    ? (theme.direction as DefaultThemeSettings['direction'])
+    : DEFAULT_THEME_SETTINGS.direction
+
+  return {
+    mode,
+    preset,
+    customColor,
+    font,
+    radius,
+    scale,
+    contentLayout,
+    sidebarVariant,
+    sidebarCollapsible,
+    sidebarOpen,
+    direction,
+  }
+}
+
+export function serializeDefaultThemeSettings(
+  theme: DefaultThemeSettings
+): Record<string, string | boolean> {
+  return {
+    mode: theme.mode,
+    preset: theme.preset,
+    custom_color: theme.customColor,
+    font: theme.font,
+    radius: theme.radius,
+    scale: theme.scale,
+    content_layout: theme.contentLayout,
+    sidebar_variant: theme.sidebarVariant,
+    sidebar_collapsible: theme.sidebarCollapsible,
+    sidebar_open: theme.sidebarOpen,
+    direction: theme.direction,
+  }
+}
 
 export const THEME_COOKIE_KEYS = {
   preset: 'theme_preset',
