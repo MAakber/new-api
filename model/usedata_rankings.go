@@ -18,6 +18,14 @@ type RankingQuotaBucket struct {
 	Tokens    int64  `json:"tokens"`
 }
 
+type RankingUserIP struct {
+	UserID       int    `json:"user_id"`
+	Username     string `json:"username"`
+	IPCount      int64  `json:"ip_count"`
+	RequestCount int64  `json:"request_count"`
+	LastSeen     int64  `json:"last_seen"`
+}
+
 func GetRankingQuotaTotals(startTime int64, endTime int64) ([]RankingQuotaTotal, error) {
 	var rows []RankingQuotaTotal
 	query := DB.Table("quota_data").
@@ -63,4 +71,25 @@ func applyRankingQuotaTimeRange(query *gorm.DB, startTime int64, endTime int64) 
 		query = query.Where("created_at <= ?", endTime)
 	}
 	return query
+}
+
+func GetRankingUserIPs(startTime int64, endTime int64, limit int) ([]RankingUserIP, error) {
+	if limit <= 0 {
+		limit = 20
+	}
+	var rows []RankingUserIP
+	query := LOG_DB.Model(&Log{}).
+		Select("user_id, MAX(username) AS username, COUNT(DISTINCT ip) AS ip_count, COUNT(*) AS request_count, MAX(created_at) AS last_seen").
+		Where("type = ? AND user_id > 0 AND ip <> ''", LogTypeConsume).
+		Group("user_id").
+		Order("ip_count DESC, request_count DESC, user_id ASC").
+		Limit(limit)
+	if startTime > 0 {
+		query = query.Where("created_at >= ?", startTime)
+	}
+	if endTime > 0 {
+		query = query.Where("created_at <= ?", endTime)
+	}
+	err := query.Find(&rows).Error
+	return rows, err
 }

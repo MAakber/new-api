@@ -17,35 +17,49 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PublicLayout } from '@/components/layout'
 import { PageTransition } from '@/components/page-transition'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ROLE } from '@/lib/roles'
+import { useAuthStore } from '@/stores/auth-store'
 
 import {
+  AvailabilitySection,
   MarketShareSection,
   ModelsSection,
   PulseSection,
   RankingsHero,
+  SecuritySection,
 } from './components'
-import { useRankings } from './hooks/use-rankings'
-import type { RankingPeriod } from './types'
+import {
+  useRankingAvailability,
+  useRankings,
+  useRankingSecurity,
+} from './hooks/use-rankings'
+import type { RankingBanSort, RankingPeriod } from './types'
 
-const VALID_PERIODS: RankingPeriod[] = ['today', 'week', 'month', 'year']
+const VALID_PERIODS = new Set<RankingPeriod>(['today', 'week', 'month', 'year'])
 
 export function Rankings() {
   const { t } = useTranslation()
   const search = useSearch({ from: '/rankings/' })
   const navigate = useNavigate()
+  const userRole = useAuthStore((state) => state.auth.user?.role)
+  const isAdmin = Boolean(userRole && userRole >= ROLE.ADMIN)
+  const [banSort, setBanSort] = useState<RankingBanSort>('count')
 
-  const period: RankingPeriod = VALID_PERIODS.includes(
+  const period: RankingPeriod = VALID_PERIODS.has(
     search.period as RankingPeriod
   )
     ? (search.period as RankingPeriod)
     : 'week'
 
   const rankingsQuery = useRankings(period)
+  const availabilityQuery = useRankingAvailability(period)
+  const securityQuery = useRankingSecurity(period, banSort, isAdmin)
   const snapshot = rankingsQuery.data?.data
 
   const handlePeriodChange = (next: RankingPeriod) => {
@@ -53,6 +67,38 @@ export function Rankings() {
       to: '/rankings',
       search: (prev) => ({ ...prev, period: next }),
     })
+  }
+
+  let rankingsContent: ReactNode
+  if (rankingsQuery.isLoading) {
+    rankingsContent = <RankingsLoading />
+  } else if (!snapshot) {
+    const message =
+      rankingsQuery.error instanceof Error
+        ? rankingsQuery.error.message
+        : t('Unable to load rankings data')
+    rankingsContent = <RankingsError message={message} />
+  } else {
+    rankingsContent = (
+      <>
+        <ModelsSection
+          history={snapshot.models_history}
+          rows={snapshot.models}
+          period={period}
+        />
+
+        <MarketShareSection
+          history={snapshot.vendor_share_history}
+          rows={snapshot.vendors}
+          period={period}
+        />
+
+        <PulseSection
+          movers={snapshot.top_movers}
+          droppers={snapshot.top_droppers}
+        />
+      </>
+    )
   }
 
   return (
@@ -76,36 +122,23 @@ export function Rankings() {
         <PageTransition className='relative mx-auto w-full max-w-[1280px] space-y-8 px-3 pt-16 pb-10 sm:px-6 sm:pt-20 sm:pb-12 xl:px-8'>
           <RankingsHero period={period} onPeriodChange={handlePeriodChange} />
 
-          {rankingsQuery.isLoading ? (
-            <RankingsLoading />
-          ) : !snapshot ? (
-            <RankingsError
-              message={
-                rankingsQuery.error instanceof Error
-                  ? rankingsQuery.error.message
-                  : t('Unable to load rankings data')
-              }
-            />
-          ) : (
-            <>
-              <ModelsSection
-                history={snapshot.models_history}
-                rows={snapshot.models}
-                period={period}
-              />
+          <AvailabilitySection
+            snapshot={availabilityQuery.data?.data}
+            loading={availabilityQuery.isLoading}
+            error={availabilityQuery.isError}
+          />
 
-              <MarketShareSection
-                history={snapshot.vendor_share_history}
-                rows={snapshot.vendors}
-                period={period}
-              />
+          {rankingsContent}
 
-              <PulseSection
-                movers={snapshot.top_movers}
-                droppers={snapshot.top_droppers}
-              />
-            </>
-          )}
+          <SecuritySection
+            bans={securityQuery.data?.data.bans}
+            ipUsers={securityQuery.data?.data.ip_users}
+            isAdmin={isAdmin}
+            loading={securityQuery.isLoading}
+            error={securityQuery.isError}
+            banSort={banSort}
+            onBanSortChange={setBanSort}
+          />
         </PageTransition>
       </div>
     </PublicLayout>

@@ -39,6 +39,12 @@ func SetApiRouter(router *gin.Engine) {
 			perfMetricsRoute.GET("", controller.GetPerfMetrics)
 		}
 		apiRouter.GET("/rankings", middleware.HeaderNavModuleAuth("rankings"), controller.GetRankings)
+		rankingRoute := apiRouter.Group("/rankings")
+		rankingRoute.Use(middleware.HeaderNavModuleAuth("rankings"))
+		{
+			rankingRoute.GET("/availability", controller.GetRankingAvailability)
+			rankingRoute.GET("/security", controller.GetRankingSecurity)
+		}
 		apiRouter.GET("/verification", middleware.EmailVerificationRateLimit(), middleware.TurnstileCheck(), controller.SendEmailVerification)
 		apiRouter.GET("/reset_password", middleware.CriticalRateLimit(), middleware.TurnstileCheck(), controller.SendPasswordResetEmail)
 		apiRouter.POST("/user/reset", middleware.CriticalRateLimit(), anonymousRequestBodyLimit, controller.ResetPassword)

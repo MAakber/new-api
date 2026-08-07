@@ -136,3 +136,43 @@ export type RankingsSnapshot = {
   /** 100%-stacked area history of token share by vendor over the period. */
   vendor_share_history: VendorShareSeries
 }
+
+export type RankingModelAvailability = {
+  model_name: string
+  vendor: string
+  vendor_icon?: string
+  success_rate: number
+  avg_latency_ms: number
+  request_count: number
+  recent_success_rates: number[]
+}
+
+export type RankingAvailabilitySnapshot = {
+  generated_at: number
+  models: RankingModelAvailability[]
+}
+
+export type RankingBanSort = 'count' | 'latest' | 'duration'
+
+export type RankingAutoBan = {
+  username: string
+  ban_count: number
+  latest_ban_at: number
+  longest_ban_minutes: number
+  latest_rule: string
+  latest_status: 'active' | 'released' | 'expired'
+}
+
+export type RankingUserIP = {
+  user_id: number
+  username: string
+  ip_count: number
+  request_count: number
+  last_seen: number
+}
+
+export type RankingSecuritySnapshot = {
+  bans: RankingAutoBan[]
+  /** Present only when the requesting user is an administrator. */
+  ip_users?: RankingUserIP[]
+}

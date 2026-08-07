@@ -95,6 +95,15 @@ type UserSecuritySubjectLastSeen struct {
 	LastSeen int64  `json:"last_seen"`
 }
 
+type AutoBanRankingRow struct {
+	UserId            int    `json:"user_id"`
+	Username          string `json:"username"`
+	BanCount          int64  `json:"ban_count"`
+	LatestBanAt       int64  `json:"latest_ban_at"`
+	LongestBanMinutes int    `json:"longest_ban_minutes"`
+	HasPermanentBan   bool   `json:"has_permanent_ban"`
+}
+
 func normalizeAutoBanResponse(until int64, rule string, status int, code string, message string) (AutoBanResponse, bool) {
 	if until != -1 && until <= time.Now().Unix() {
 		return AutoBanResponse{}, false
@@ -384,6 +393,63 @@ func ListUserAutoBanRecords(query AutoBanRecordQuery) ([]*UserAutoBanRecord, int
 	var records []*UserAutoBanRecord
 	err := tx.Order("id DESC").Offset((query.Page - 1) * query.PageSize).Limit(query.PageSize).Find(&records).Error
 	return records, total, err
+}
+
+func GetAutoBanRanking(startTime int64, endTime int64, order string, limit int) ([]AutoBanRankingRow, map[int]UserAutoBanRecord, error) {
+	if limit <= 0 {
+		limit = 20
+	}
+	orderClause := "ban_count DESC, latest_ban_at DESC, user_id ASC"
+	switch order {
+	case "latest":
+		orderClause = "latest_ban_at DESC, ban_count DESC, user_id ASC"
+	case "duration":
+		orderClause = "has_permanent_ban DESC, longest_ban_minutes DESC, latest_ban_at DESC, user_id ASC"
+	}
+
+	var rows []AutoBanRankingRow
+	query := DB.Model(&UserAutoBanRecord{}).
+		Select("user_id, MAX(username) AS username, COUNT(*) AS ban_count, MAX(created_at) AS latest_ban_at, MAX(CASE WHEN ban_duration_minutes = -1 THEN 0 ELSE ban_duration_minutes END) AS longest_ban_minutes, MAX(CASE WHEN ban_duration_minutes = -1 THEN 1 ELSE 0 END) AS has_permanent_ban").
+		Where("status <> ?", AutoBanRecordStatusObserved).
+		Group("user_id").
+		Order(orderClause).
+		Limit(limit)
+	if startTime > 0 {
+		query = query.Where("created_at >= ?", startTime)
+	}
+	if endTime > 0 {
+		query = query.Where("created_at <= ?", endTime)
+	}
+	if err := query.Find(&rows).Error; err != nil {
+		return nil, nil, err
+	}
+
+	latestByUser := make(map[int]UserAutoBanRecord, len(rows))
+	if len(rows) == 0 {
+		return rows, latestByUser, nil
+	}
+	userIDs := make([]int, 0, len(rows))
+	for _, row := range rows {
+		userIDs = append(userIDs, row.UserId)
+	}
+	var records []UserAutoBanRecord
+	detailQuery := DB.Where("user_id IN ? AND status <> ?", userIDs, AutoBanRecordStatusObserved).
+		Order("created_at DESC, id DESC")
+	if startTime > 0 {
+		detailQuery = detailQuery.Where("created_at >= ?", startTime)
+	}
+	if endTime > 0 {
+		detailQuery = detailQuery.Where("created_at <= ?", endTime)
+	}
+	if err := detailQuery.Find(&records).Error; err != nil {
+		return nil, nil, err
+	}
+	for _, record := range records {
+		if _, ok := latestByUser[record.UserId]; !ok {
+			latestByUser[record.UserId] = record
+		}
+	}
+	return rows, latestByUser, nil
 }
 
 func DeleteUserSecurityEventsBefore(before int64) error {
