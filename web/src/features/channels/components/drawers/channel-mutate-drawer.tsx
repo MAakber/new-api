@@ -4875,6 +4875,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       <FetchModelsDialog
         open={fetchModelsDialogOpen}
         onOpenChange={setFetchModelsDialogOpen}
+        channel={effectiveCurrentRow}
         onModelsSelected={(models) => {
           form.setValue('models', formatModelsArray(models))
         }}
