@@ -134,6 +134,7 @@ export function AvailabilitySection(props: AvailabilitySectionProps) {
 
 function AvailabilityContent(props: AvailabilitySectionProps) {
   const { t } = useTranslation()
+  const models = props.snapshot?.models ?? []
   if (props.loading) {
     return (
       <div className='space-y-2'>
@@ -146,7 +147,7 @@ function AvailabilityContent(props: AvailabilitySectionProps) {
   if (props.error) {
     return <AvailabilityEmpty label={t('Unable to load availability data')} />
   }
-  if (!props.snapshot?.models.length) {
+  if (models.length === 0) {
     return (
       <AvailabilityEmpty
         label={t('No model availability data for the selected period')}
@@ -155,7 +156,7 @@ function AvailabilityContent(props: AvailabilitySectionProps) {
   }
   return (
     <div className='divide-border/60 divide-y'>
-      {props.snapshot.models.map((model) => (
+      {models.map((model) => (
         <AvailabilityRow key={model.model_name} model={model} />
       ))}
     </div>
@@ -190,9 +191,10 @@ function AvailabilityMetric(props: {
 function AvailabilityRow(props: { model: RankingModelAvailability }) {
   const { t } = useTranslation()
   const level = getSuccessRateLevel(props.model.success_rate)
+  const recentSuccessRates = props.model.recent_success_rates ?? []
   const recentRates = availabilityRateSegments(
-    props.model.recent_success_rates.length > 0
-      ? props.model.recent_success_rates
+    recentSuccessRates.length > 0
+      ? recentSuccessRates
       : [props.model.success_rate]
   )
   let status = t('Critical')

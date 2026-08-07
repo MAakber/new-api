@@ -250,6 +250,10 @@ func GetRankingAvailability(period string) (*RankingAvailabilityResponse, error)
 	models := make([]RankingModelAvailability, 0, len(summary.Models))
 	for _, item := range summary.Models {
 		modelMeta := modelMeta(item.ModelName, meta)
+		recentSuccessRates := item.RecentSuccessRates
+		if recentSuccessRates == nil {
+			recentSuccessRates = []float64{}
+		}
 		models = append(models, RankingModelAvailability{
 			ModelName:          item.ModelName,
 			Vendor:             modelMeta.vendor,
@@ -257,7 +261,7 @@ func GetRankingAvailability(period string) (*RankingAvailabilityResponse, error)
 			SuccessRate:        item.SuccessRate,
 			AvgLatencyMs:       item.AvgLatencyMs,
 			RequestCount:       item.RequestCount,
-			RecentSuccessRates: item.RecentSuccessRates,
+			RecentSuccessRates: recentSuccessRates,
 		})
 	}
 	response := &RankingAvailabilityResponse{GeneratedAt: now.Unix(), Models: models}

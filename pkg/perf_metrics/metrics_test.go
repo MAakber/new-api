@@ -68,3 +68,10 @@ func TestQueryAvailabilitySummaryUsesFullPeriodTotalsAndRecentTrend(t *testing.T
 	assert.Equal(t, int64(150), result.Models[0].AvgLatencyMs)
 	assert.Equal(t, []float64{100}, result.Models[0].RecentSuccessRates)
 }
+
+func TestRecentSuccessRatesWithoutRecentBucketsReturnsEmptyArray(t *testing.T) {
+	rates := recentSuccessRates(nil, 12)
+
+	require.NotNil(t, rates)
+	assert.Equal(t, []float64{}, rates)
+}

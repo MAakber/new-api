@@ -304,7 +304,7 @@ func mergeModelBucket(modelBuckets map[string]map[int64]counters, modelName stri
 
 func recentSuccessRates(buckets map[int64]counters, limit int) []float64 {
 	if len(buckets) == 0 || limit <= 0 {
-		return nil
+		return []float64{}
 	}
 	timestamps := make([]int64, 0, len(buckets))
 	for ts := range buckets {
