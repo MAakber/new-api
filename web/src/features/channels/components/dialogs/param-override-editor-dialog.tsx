@@ -298,142 +298,6 @@ const GEMINI_IMAGE_4K_TEMPLATE = {
   ],
 }
 
-// Keep in sync with upstream Codex request headers:
-// https://github.com/openai/codex/commit/7c7b4861d88960f7e3bd5b7f30f8351be666dd84
-// https://github.com/openai/codex/commit/14df0e8833aad0d6d78287954b61ffac67af936c
-// https://github.com/openai/codex/commit/ebdd8795e924a8149b616e46ca2ed7848c207a4b
-const CODEX_CLI_HEADER_PASSTHROUGH_HEADERS = [
-  'Originator',
-  'Session_id',
-  'Session-Id',
-  'Thread-Id',
-  'X-Codex-Beta-Features',
-  'X-Codex-Turn-Metadata',
-  'X-Codex-Window-Id',
-  'X-Client-Request-Id',
-]
-
-const CLAUDE_CLI_HEADER_PASSTHROUGH_HEADERS = [
-  'X-Claude-Code-Session-Id',
-  'X-Stainless-Arch',
-  'X-Stainless-Lang',
-  'X-Stainless-OS',
-  'X-Stainless-Package-Version',
-  'X-Stainless-Retry-Count',
-  'X-Stainless-Runtime',
-  'X-Stainless-Runtime-Version',
-  'X-Stainless-Timeout',
-  'User-Agent',
-  'X-App',
-  'Anthropic-Beta',
-  'Anthropic-Dangerous-Direct-Browser-Access',
-  'Anthropic-Version',
-]
-
-const buildPassHeadersTemplate = (headers: string[]) => ({
-  operations: [
-    { mode: 'pass_headers', value: [...headers], keep_origin: true },
-  ],
-})
-
-const CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
-  CLAUDE_CLI_HEADER_PASSTHROUGH_HEADERS
-)
-
-const CODEX_DESKTOP_HEADER_PASSTHROUGH_HEADERS = [
-  ...CODEX_CLI_HEADER_PASSTHROUGH_HEADERS,
-]
-
-const OPENAI_SDK_METADATA_HEADER_PASSTHROUGH_TEMPLATE = {
-  operations: [
-    {
-      description:
-        'Pass through OpenAI SDK organization, project and Stainless metadata headers.',
-      mode: 'pass_headers',
-      value: [
-        'OpenAI-Organization',
-        'OpenAI-Project',
-        'X-Stainless-Arch',
-        'X-Stainless-Lang',
-        'X-Stainless-OS',
-        'X-Stainless-Package-Version',
-        'X-Stainless-Retry-Count',
-        'X-Stainless-Runtime',
-        'X-Stainless-Runtime-Version',
-        'X-Stainless-Timeout',
-      ],
-      keep_origin: true,
-    },
-  ],
-}
-
-const ANTHROPIC_RUNTIME_HEADER_PASSTHROUGH_TEMPLATE = {
-  operations: [
-    {
-      description:
-        'Pass through Anthropic runtime beta/version headers from the original client request.',
-      mode: 'pass_headers',
-      value: [
-        'Anthropic-Beta',
-        'Anthropic-Version',
-        'Anthropic-Dangerous-Direct-Browser-Access',
-        'X-App',
-      ],
-      keep_origin: true,
-    },
-  ],
-}
-
-const QWEN_CODE_CLI_HEADER_PASSTHROUGH_HEADERS = [
-  'X-Stainless-Arch',
-  'X-Stainless-Lang',
-  'X-Stainless-OS',
-  'X-Stainless-Package-Version',
-  'X-Stainless-Retry-Count',
-  'X-Stainless-Runtime',
-  'X-Stainless-Runtime-Version',
-]
-
-const DROID_CLI_HEADER_PASSTHROUGH_HEADERS = [
-  'X-Stainless-Arch',
-  'X-Stainless-Lang',
-  'X-Stainless-OS',
-  'X-Stainless-Package-Version',
-  'X-Stainless-Retry-Count',
-  'X-Stainless-Runtime',
-  'X-Stainless-Runtime-Version',
-]
-
-const GEMINI_CLI_HEADER_PASSTHROUGH_HEADERS = ['X-Goog-Api-Client']
-
-const CODEX_SESSION_ID_FALLBACK_OPERATION = {
-  mode: 'copy_header',
-  from: 'X-Client-Request-Id',
-  to: 'Session_id',
-  keep_origin: true,
-}
-
-const buildCodexHeaderPassthroughTemplate = (headers: string[]) => ({
-  operations: [
-    { mode: 'pass_headers', value: [...headers], keep_origin: true },
-    { ...CODEX_SESSION_ID_FALLBACK_OPERATION },
-  ],
-})
-
-const CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE =
-  buildCodexHeaderPassthroughTemplate(CODEX_CLI_HEADER_PASSTHROUGH_HEADERS)
-const CODEX_DESKTOP_HEADER_PASSTHROUGH_TEMPLATE =
-  buildCodexHeaderPassthroughTemplate(CODEX_DESKTOP_HEADER_PASSTHROUGH_HEADERS)
-const GEMINI_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
-  GEMINI_CLI_HEADER_PASSTHROUGH_HEADERS
-)
-const QWEN_CODE_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
-  QWEN_CODE_CLI_HEADER_PASSTHROUGH_HEADERS
-)
-const DROID_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
-  DROID_CLI_HEADER_PASSTHROUGH_HEADERS
-)
-
 const CODEX_REMOVE_IMAGE_GENERATION_TOOL_TEMPLATE = {
   operations: [
     {
@@ -563,38 +427,6 @@ const TEMPLATE_PRESET_CONFIG: Record<string, TemplatePresetConfig> = {
     kind: 'operations',
     payload: GEMINI_IMAGE_4K_TEMPLATE,
   },
-  claude_cli_headers_passthrough: {
-    label: 'Claude Code Header Passthrough',
-    group: 'recommended',
-    description:
-      'Pass through Claude Code session, Anthropic beta/version and Stainless runtime headers.',
-    kind: 'operations',
-    payload: CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE,
-  },
-  codex_cli_headers_passthrough: {
-    label: 'Codex CLI Dynamic Headers Passthrough',
-    group: 'recommended',
-    description:
-      'Pass through Codex CLI session, window, turn metadata and request id headers. User-Agent is managed by Header Profile.',
-    kind: 'operations',
-    payload: CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE,
-  },
-  codex_desktop_headers_passthrough: {
-    label: 'Codex Desktop Dynamic Headers Passthrough',
-    group: 'recommended',
-    description:
-      'Pass through Codex Desktop session, window, turn metadata and request id headers. User-Agent is managed by Header Profile.',
-    kind: 'operations',
-    payload: CODEX_DESKTOP_HEADER_PASSTHROUGH_TEMPLATE,
-  },
-  openai_sdk_headers_passthrough: {
-    label: 'OpenAI SDK Metadata Passthrough',
-    group: 'recommended',
-    description:
-      'Pass through OpenAI organization, project and Stainless client metadata headers.',
-    kind: 'operations',
-    payload: OPENAI_SDK_METADATA_HEADER_PASSTHROUGH_TEMPLATE,
-  },
   remove_image_generation_tool: {
     label: 'Upstream Compat: Remove Image Generation Tool',
     group: 'recommended',
@@ -619,35 +451,6 @@ const TEMPLATE_PRESET_CONFIG: Record<string, TemplatePresetConfig> = {
     kind: 'operations',
     payload: AWS_BEDROCK_REMOVE_INPUT_EXAMPLES_TEMPLATE,
   },
-  anthropic_runtime_headers_passthrough: {
-    label: 'Anthropic Beta/Version Passthrough',
-    group: 'advanced',
-    description:
-      'Pass through Anthropic runtime beta/version headers from the original request.',
-    kind: 'operations',
-    payload: ANTHROPIC_RUNTIME_HEADER_PASSTHROUGH_TEMPLATE,
-  },
-  gemini_cli_headers_passthrough: {
-    label: 'Gemini CLI Header Passthrough',
-    group: 'advanced',
-    description: 'Pass through Gemini CLI x-goog-api-client metadata.',
-    kind: 'operations',
-    payload: GEMINI_CLI_HEADER_PASSTHROUGH_TEMPLATE,
-  },
-  qwen_code_headers_passthrough: {
-    label: 'Qwen Code Header Passthrough',
-    group: 'advanced',
-    description: 'Pass through Qwen Code Stainless client metadata headers.',
-    kind: 'operations',
-    payload: QWEN_CODE_CLI_HEADER_PASSTHROUGH_TEMPLATE,
-  },
-  droid_cli_headers_passthrough: {
-    label: 'Droid CLI Header Passthrough',
-    group: 'advanced',
-    description: 'Pass through Droid CLI Stainless client metadata headers.',
-    kind: 'operations',
-    payload: DROID_CLI_HEADER_PASSTHROUGH_TEMPLATE,
-  },
   aws_bedrock_anthropic_beta_override: {
     label: 'AWS Bedrock Claude Beta Header',
     group: 'recommended',
@@ -658,10 +461,6 @@ const TEMPLATE_PRESET_CONFIG: Record<string, TemplatePresetConfig> = {
 }
 
 const QUICK_TEMPLATE_PRESETS = [
-  'codex_cli_headers_passthrough',
-  'codex_desktop_headers_passthrough',
-  'claude_cli_headers_passthrough',
-  'openai_sdk_headers_passthrough',
   'aws_bedrock_anthropic_beta_override',
   'remove_image_generation_tool',
 ]

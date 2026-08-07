@@ -63,10 +63,14 @@
   "Interception rules": "Interception rules",
   "Keyword": "Keyword",
   "Leave blank to disable. Supports http, https, socks5, and socks5h URLs with optional usernames and passwords; paths, queries, and fragments are not allowed. Only server-side requests to external login services such as GitHub, Discord, OIDC, LinuxDO, WeChat, and custom OAuth use this proxy. It does not affect model relay or other APIs. Changes take effect immediately after saving.": "Leave blank to disable. Supports http, https, socks5, and socks5h URLs with optional usernames and passwords; paths, queries, and fragments are not allowed. Only server-side requests to external login services such as GitHub, Discord, OIDC, LinuxDO, WeChat, and custom OAuth use this proxy. It does not affect model relay or other APIs. Changes take effect immediately after saving.",
+  "Linux arm64": "Linux arm64",
+  "Linux x64": "Linux x64",
   "Load full request body": "Load full request body",
   "Loading subscription plans...": "Loading subscription plans...",
   "Login Proxy": "Login Proxy",
   "Login Proxy URL": "Login Proxy URL",
+  "macOS arm64": "macOS arm64",
+  "macOS x64": "macOS x64",
   "Match action": "Match action",
   "Match type": "Match type",
   "Method": "Method",
@@ -115,5 +119,7 @@
   "User IDs must be positive integers": "User IDs must be positive integers",
   "User Token Usage Ranking": "User Token Usage Ranking",
   "User Token Usage Trend": "User Token Usage Trend",
-  "User-Agent Restrictions": "User-Agent Restrictions"
+  "User-Agent Restrictions": "User-Agent Restrictions",
+  "Windows x64": "Windows x64",
+  "WorkBuddy": "WorkBuddy"
 }

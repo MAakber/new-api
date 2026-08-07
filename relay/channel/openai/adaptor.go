@@ -280,9 +280,9 @@ func (a *Adaptor) SetupRequestHeader(c *gin.Context, header *http.Header, info *
 	if info.ShouldUseChannelTestStyle() {
 		if info.ChannelType == constant.ChannelTypeCodeBuddy {
 			conversationID := channel.ResolveCodeBuddyConversationID(c.Request.Header, info.Request)
-			channel.ApplyCompatibilityHeadersWithConversation(info.ChannelType, *header, info.ApiKey, info.IsStream, conversationID)
+			channel.ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, *header, info.ApiKey, info.IsStream, conversationID, info.ChannelOtherSettings.ClientIdentity)
 		} else {
-			channel.ApplyCompatibilityHeaders(info.ChannelType, *header, info.ApiKey, info.IsStream)
+			channel.ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, *header, info.ApiKey, info.IsStream, "", info.ChannelOtherSettings.ClientIdentity)
 		}
 	}
 	// Codex 兼容渠道：透传客户端携带的 Codex 会话类 header（多轮续接 / 粘性路由 / 安装标识等），
