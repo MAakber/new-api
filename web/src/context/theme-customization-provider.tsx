@@ -198,9 +198,9 @@ export function ThemeCustomizationProvider(props: {
   useEffect(() => {
     applyAttribute(
       'data-theme-preset',
-      preset === defaults.preset ? null : preset
+      preset === DEFAULT_THEME_CUSTOMIZATION.preset ? null : preset
     )
-  }, [defaults.preset, preset])
+  }, [preset])
 
   // Custom colors are intentionally inline because their value is chosen at
   // runtime. Fixed presets keep using the stylesheet; clearing these tokens
@@ -224,13 +224,16 @@ export function ThemeCustomizationProvider(props: {
   useEffect(() => {
     applyAttribute(
       'data-theme-radius',
-      radius === defaults.radius ? null : radius
+      radius === DEFAULT_THEME_CUSTOMIZATION.radius ? null : radius
     )
-  }, [defaults.radius, radius])
+  }, [radius])
 
   useEffect(() => {
-    applyAttribute('data-theme-scale', scale === defaults.scale ? null : scale)
-  }, [defaults.scale, scale])
+    applyAttribute(
+      'data-theme-scale',
+      scale === DEFAULT_THEME_CUSTOMIZATION.scale ? null : scale
+    )
+  }, [scale])
 
   useEffect(() => {
     applyAttribute('data-theme-content-layout', contentLayout)
