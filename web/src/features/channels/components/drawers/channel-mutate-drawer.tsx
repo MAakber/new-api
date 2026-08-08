@@ -154,6 +154,7 @@ import { useChannelMutateForm } from '../../hooks/use-channel-mutate-form'
 import {
   CHANNEL_FORM_DEFAULT_VALUES,
   CLIENT_IDENTITY_CHANNEL_TYPES,
+  CLIENT_IDENTITY_DEFAULTS,
   CHANNEL_TYPE_ADVANCED_CUSTOM,
   channelFormSchema,
   channelsQueryKeys,
@@ -374,6 +375,7 @@ const SENSITIVE_FORM_FIELDS = [
   'client_identity_profile',
   'client_identity_version',
   'client_identity_platform',
+  'client_identity_source',
 ] satisfies (keyof ChannelFormValues)[]
 
 function readAdvancedSettingsPreference(): boolean {
@@ -866,6 +868,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   const currentClientIdentityProfile = form.watch('client_identity_profile')
   const currentClientIdentityVersion = form.watch('client_identity_version')
   const currentClientIdentityPlatform = form.watch('client_identity_platform')
+  const currentClientIdentitySource = form.watch('client_identity_source')
   const shouldPreviewUnsavedModels =
     !isEditing ||
     (currentType === CHANNEL_TYPE_ADVANCED_CUSTOM && canEditSensitive)
@@ -1160,7 +1163,8 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     currentClientIdentityClientType ||
     currentClientIdentityProfile ||
     currentClientIdentityVersion?.trim() ||
-    currentClientIdentityPlatform
+    currentClientIdentityPlatform ||
+    currentClientIdentitySource !== 'manual'
   )
   const advancedConfigured = Boolean(
     routingStrategyConfigured ||
@@ -1583,6 +1587,22 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     if (editingAdvancedCustom && channelId === null) {
       throw new Error(t('No channel selected'))
     }
+    const clientIdentityProfile = form.getValues('client_identity_profile')
+    const clientIdentityDefaults = CLIENT_IDENTITY_DEFAULTS[type]
+    const clientIdentity =
+      clientIdentityProfile && clientIdentityProfile !== 'none'
+        ? {
+            client_type:
+              form.getValues('client_identity_client_type') ||
+              clientIdentityDefaults?.client_type,
+            profile: clientIdentityProfile,
+            version: form.getValues('client_identity_version') || undefined,
+            platform: form.getValues('client_identity_platform'),
+            source: {
+              kind: form.getValues('client_identity_source') || 'manual',
+            },
+          }
+        : undefined
     const response = await fetchModels({
       type,
       key: isEditing ? undefined : form.getValues('key'),
@@ -1591,6 +1611,8 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       advanced_custom: form.getValues('advanced_custom'),
       header_override: form.getValues('header_override'),
       proxy: form.getValues('proxy'),
+      settings: form.getValues('settings'),
+      client_identity: clientIdentity,
     })
     if (response.success && response.data) {
       return response.data

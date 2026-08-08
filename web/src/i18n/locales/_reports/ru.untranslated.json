@@ -18,8 +18,12 @@
   "Body Encoding": "Body Encoding",
   "Body Truncated": "Body Truncated",
   "Bulk model probing": "Bulk model probing",
+  "Claude CLI": "Claude CLI",
   "Claude Code": "Claude Code",
   "Code Buddy": "Code Buddy",
+  "CodeBuddy": "CodeBuddy",
+  "CodeBuddy CLI": "CodeBuddy CLI",
+  "Codex CLI": "Codex CLI",
   "Compression": "Compression",
   "Configure the WorkBuddy upstream root URL without /v1. New API adds /v1/chat/completions and applies the built-in WorkBuddy request profile.": "Configure the WorkBuddy upstream root URL without /v1. New API adds /v1/chat/completions and applies the built-in WorkBuddy request profile.",
   "Content Type": "Content Type",
@@ -121,5 +125,6 @@
   "User Token Usage Trend": "User Token Usage Trend",
   "User-Agent Restrictions": "User-Agent Restrictions",
   "Windows x64": "Windows x64",
-  "WorkBuddy": "WorkBuddy"
+  "WorkBuddy": "WorkBuddy",
+  "WorkBuddy Desktop": "WorkBuddy Desktop"
 }
