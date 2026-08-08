@@ -61,6 +61,7 @@ import { Switch } from '@/components/ui/switch'
 import { api } from '@/lib/api'
 import dayjs from '@/lib/dayjs'
 import { formatTimestampToDate } from '@/lib/format'
+import { parseIntegerInputValue } from '@/lib/number-input'
 
 import {
   getCurrentLogCleanupTask,
@@ -169,7 +170,9 @@ export function LogSettingsSection({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const [serverLogInfo, setServerLogInfo] = useState<ServerLogInfo | null>(null)
   const [serverLogCleanupMode, setServerLogCleanupMode] = useState('by_count')
-  const [serverLogCleanupValue, setServerLogCleanupValue] = useState(10)
+  const [serverLogCleanupValue, setServerLogCleanupValue] = useState<
+    number | ''
+  >(10)
   const [serverLogCleanupLoading, setServerLogCleanupLoading] = useState(false)
 
   const fetchServerLogInfo = useCallback(async () => {
@@ -323,8 +326,7 @@ export function LogSettingsSection({
 
   const cleanupServerLogFiles = async () => {
     if (
-      !serverLogCleanupValue ||
-      Number.isNaN(serverLogCleanupValue) ||
+      typeof serverLogCleanupValue !== 'number' ||
       serverLogCleanupValue < 1
     ) {
       toast.error(t('Please enter a valid number'))
@@ -569,7 +571,9 @@ export function LogSettingsSection({
                     max={serverLogCleanupMode === 'by_count' ? 1000 : 3650}
                     value={serverLogCleanupValue}
                     onChange={(event) =>
-                      setServerLogCleanupValue(Number(event.target.value))
+                      setServerLogCleanupValue(
+                        parseIntegerInputValue(event.target.value)
+                      )
                     }
                     className='w-[120px]'
                   />

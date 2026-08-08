@@ -29,6 +29,7 @@ import {
   parseQuotaFromDollars,
   quotaUnitsToDollars,
 } from '@/lib/format'
+import { parseNumberInputValue } from '@/lib/number-input'
 import {
   DEFAULT_CURRENCY_CONFIG,
   useSystemConfigStore,
@@ -58,9 +59,11 @@ export function TransferDialog({
   )
   const minimumAmount = quotaUnitsToDollars(minimumQuota)
   const maximumAmount = quotaUnitsToDollars(availableQuota)
-  const [amount, setAmount] = useState(minimumAmount)
-  const transferQuota = parseQuotaFromDollars(amount)
+  const [amount, setAmount] = useState<number | ''>(minimumAmount)
+  const transferQuota =
+    typeof amount === 'number' ? parseQuotaFromDollars(amount) : 0
   const canTransfer =
+    typeof amount === 'number' &&
     Number.isFinite(amount) &&
     transferQuota >= minimumQuota &&
     transferQuota <= availableQuota
@@ -132,7 +135,7 @@ export function TransferDialog({
             id='transfer-amount'
             type='number'
             value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
+            onChange={(e) => setAmount(parseNumberInputValue(e.target.value))}
             min={minimumAmount}
             max={maximumAmount}
             step={minimumAmount}

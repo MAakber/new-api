@@ -60,6 +60,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
+import { parseNumberInputValue } from '@/lib/number-input'
 
 import {
   checkClusterNameAvailability,
@@ -532,10 +533,14 @@ export function CreateDeploymentDrawer({
                       <FormControl>
                         <Input
                           type='number'
-                          value={toNumber(field.value, gpuCount)}
+                          value={
+                            field.value === ''
+                              ? ''
+                              : toNumber(field.value, gpuCount)
+                          }
                           onChange={(e) =>
                             field.onChange(
-                              e.target.value === '' ? 0 : Number(e.target.value)
+                              parseNumberInputValue(e.target.value)
                             )
                           }
                         />
@@ -554,10 +559,14 @@ export function CreateDeploymentDrawer({
                       <FormControl>
                         <Input
                           type='number'
-                          value={toNumber(field.value, replicaCount)}
+                          value={
+                            field.value === ''
+                              ? ''
+                              : toNumber(field.value, replicaCount)
+                          }
                           onChange={(e) =>
                             field.onChange(
-                              e.target.value === '' ? 0 : Number(e.target.value)
+                              parseNumberInputValue(e.target.value)
                             )
                           }
                         />
@@ -578,10 +587,14 @@ export function CreateDeploymentDrawer({
                       <FormControl>
                         <Input
                           type='number'
-                          value={toNumber(field.value, durationHours)}
+                          value={
+                            field.value === ''
+                              ? ''
+                              : toNumber(field.value, durationHours)
+                          }
                           onChange={(e) =>
                             field.onChange(
-                              e.target.value === '' ? 0 : Number(e.target.value)
+                              parseNumberInputValue(e.target.value)
                             )
                           }
                         />
@@ -600,10 +613,14 @@ export function CreateDeploymentDrawer({
                       <FormControl>
                         <Input
                           type='number'
-                          value={toNumber(field.value, trafficPort)}
+                          value={
+                            field.value === ''
+                              ? ''
+                              : toNumber(field.value, trafficPort)
+                          }
                           onChange={(e) =>
                             field.onChange(
-                              e.target.value === '' ? 0 : Number(e.target.value)
+                              parseNumberInputValue(e.target.value)
                             )
                           }
                         />

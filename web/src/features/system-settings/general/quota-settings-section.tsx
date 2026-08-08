@@ -35,6 +35,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { formatQuota } from '@/lib/format'
+import { parseNumberInputValue } from '@/lib/number-input'
 
 import { FormDirtyIndicator } from '../components/form-dirty-indicator'
 import { FormNavigationGuard } from '../components/form-navigation-guard'
@@ -85,8 +86,7 @@ export function QuotaSettingsSection({
   const handleNumberChange =
     (onChange: (value: QuotaInputValue) => void) =>
     (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.currentTarget.valueAsNumber
-      onChange(Number.isNaN(value) ? '' : value)
+      onChange(parseNumberInputValue(event.currentTarget.value))
     }
 
   const { form, handleSubmit, isDirty, isSubmitting } =

@@ -175,6 +175,7 @@ function PlaygroundParameterContent({
                 max={control.max}
                 min={control.min}
                 onChange={(event) => {
+                  if (event.target.value === '') return
                   updateParameterConfig(
                     control.key,
                     normalizeParameterNumberValue(

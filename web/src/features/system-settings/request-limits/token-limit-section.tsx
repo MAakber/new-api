@@ -32,6 +32,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { parseIntegerInputValue } from '@/lib/number-input'
 
 import { SettingsForm } from '../components/settings-form-layout'
 import { SettingsPageFormActions } from '../components/settings-page-context'
@@ -113,7 +114,7 @@ export function TokenLimitSection({ defaultValues }: TokenLimitSectionProps) {
                     step={1}
                     {...field}
                     onChange={(e) =>
-                      field.onChange(Number.parseInt(e.target.value) || 1)
+                      field.onChange(parseIntegerInputValue(e.target.value))
                     }
                   />
                 </FormControl>

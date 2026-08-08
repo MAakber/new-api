@@ -64,6 +64,10 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { getAdminPlans } from '@/features/subscriptions/api'
 import { getCurrencyDisplay, getCurrencyLabel } from '@/lib/currency'
 import { formatQuota, parseQuotaFromDollars } from '@/lib/format'
+import {
+  parseIntegerInputValue,
+  parseNumberInputValue,
+} from '@/lib/number-input'
 import { addTimeToDate } from '@/lib/time'
 
 import { createRedemption, updateRedemption, getRedemption } from '../api'
@@ -359,7 +363,7 @@ export function RedemptionsMutateDrawer({
                           min={Math.max(1, usedCount)}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseInt(e.target.value, 10) || 0
+                              parseIntegerInputValue(e.target.value)
                             )
                           }
                         />
@@ -398,7 +402,7 @@ export function RedemptionsMutateDrawer({
                             placeholder={quotaPlaceholder}
                             onChange={(e) =>
                               field.onChange(
-                                Number.parseFloat(e.target.value) || 0
+                                parseNumberInputValue(e.target.value)
                               )
                             }
                           />
@@ -543,7 +547,7 @@ export function RedemptionsMutateDrawer({
                           placeholder={t('Number of codes to create')}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseInt(e.target.value, 10) || 1
+                              parseIntegerInputValue(e.target.value)
                             )
                           }
                         />

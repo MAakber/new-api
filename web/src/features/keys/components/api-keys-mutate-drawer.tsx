@@ -65,6 +65,10 @@ import { Textarea } from '@/components/ui/textarea'
 import { useStatus } from '@/hooks/use-status'
 import { getUserModels, getUserGroups } from '@/lib/api'
 import { getCurrencyDisplay, getCurrencyLabel } from '@/lib/currency'
+import {
+  parseIntegerInputValue,
+  parseNumberInputValue,
+} from '@/lib/number-input'
 import { cn } from '@/lib/utils'
 
 import { createApiKey, updateApiKey, getApiKey } from '../api'
@@ -420,7 +424,7 @@ export function ApiKeysMutateDrawer({
                           placeholder={t('Number of keys to create')}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseInt(e.target.value, 10) || 1
+                              parseIntegerInputValue(e.target.value)
                             )
                           }
                         />
@@ -459,7 +463,7 @@ export function ApiKeysMutateDrawer({
                           placeholder={quotaPlaceholder}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseFloat(e.target.value) || 0
+                              parseNumberInputValue(e.target.value)
                             )
                           }
                         />

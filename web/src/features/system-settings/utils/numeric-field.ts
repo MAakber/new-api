@@ -24,8 +24,8 @@ import type {
 } from 'react-hook-form'
 
 /**
- * Props produced by {@link safeNumberFieldProps} for a native
- * `<input type="number">`. They are intentionally narrow so consumers can
+ * Props produced by {@link safeNumberFieldProps} for a numeric input. They are
+ * intentionally narrow so consumers can
  * spread them onto our shared `Input` component without leaking the
  * react-hook-form internals (e.g. `disabled`) that need overriding per call.
  */
@@ -38,20 +38,15 @@ export type SafeNumberFieldProps = {
 }
 
 /**
- * Adapter for binding a react-hook-form numeric field to a native
- * `<input type="number">` without ever putting `NaN` into form state.
+ * Adapter for binding a react-hook-form numeric field to a numeric input
+ * without ever putting `NaN` into form state.
  *
  * Why this exists:
- * - `<input type="number">` reports `valueAsNumber === NaN` whenever the field
- *   is empty or holds an in-progress non-numeric token (e.g. just a minus
- *   sign or a trailing dot). Forwarding `NaN` to `field.onChange` makes Zod
- *   numeric validators (`z.number().min(...)`, `z.coerce.number()`, etc.)
- *   fail at submit time, so `form.handleSubmit` silently refuses to call
- *   `onSubmit` — the save button appears frozen with no toast and no error.
- * - Numeric inputs should snap back to the previous valid number instead of
- *   keeping `NaN`. We preserve that behaviour by ignoring `NaN`
- *   updates: React's controlled-input reconciliation will restore the last
- *   valid value to the DOM on the next render.
+ * - Empty inputs must remain empty while the user edits them. Converting an
+ *   empty string to zero makes it impossible to replace an existing value
+ *   naturally and hides required-field validation errors.
+ * - Invalid numeric tokens are ignored, while an empty string is forwarded as
+ *   the explicit draft value used by the form validators.
  *
  * Display:
  * - When the underlying state is not a finite number, the prop returns `''`
@@ -79,9 +74,15 @@ export function safeNumberFieldProps<
   return {
     value: display,
     onChange: (event) => {
-      const next = event.target.valueAsNumber
+      const rawValue = event.currentTarget.value
+      if (rawValue === '') {
+        ;(field.onChange as (value: number | '') => void)('')
+        return
+      }
+
+      const next = Number(rawValue)
       if (Number.isFinite(next)) {
-        ;(field.onChange as (value: number) => void)(next)
+        ;(field.onChange as (value: number | '') => void)(next)
       }
     },
     onBlur: field.onBlur,

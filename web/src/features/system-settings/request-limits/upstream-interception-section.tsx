@@ -46,6 +46,7 @@ import {
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { parseNumberInputValue } from '@/lib/number-input'
 
 import { getUpstreamChannels } from '../api'
 import {
@@ -273,7 +274,9 @@ export function UpstreamInterceptionSection(
                       max={599}
                       value={field.value}
                       onChange={(event) =>
-                        field.onChange(event.target.valueAsNumber)
+                        field.onChange(
+                          parseNumberInputValue(event.target.value)
+                        )
                       }
                     />
                   </FormControl>

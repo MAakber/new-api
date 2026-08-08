@@ -62,6 +62,10 @@ import {
 } from '@/components/ui/sheet'
 import { Switch } from '@/components/ui/switch'
 import { getCurrencyDisplay, getCurrencyLabel } from '@/lib/currency'
+import {
+  parseIntegerInputValue,
+  parseNumberInputValue,
+} from '@/lib/number-input'
 
 import {
   createPlan,
@@ -332,7 +336,7 @@ export function SubscriptionsMutateDrawer({
                           min={0}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseFloat(e.target.value) || 0
+                              parseNumberInputValue(e.target.value)
                             )
                           }
                         />
@@ -370,7 +374,7 @@ export function SubscriptionsMutateDrawer({
                           }
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseFloat(e.target.value) || 0
+                              parseNumberInputValue(e.target.value)
                             )
                           }
                         />
@@ -488,7 +492,7 @@ export function SubscriptionsMutateDrawer({
                           min={0}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseInt(e.target.value, 10) || 0
+                              parseIntegerInputValue(e.target.value)
                             )
                           }
                         />
@@ -513,9 +517,7 @@ export function SubscriptionsMutateDrawer({
                         {...field}
                         type='number'
                         onChange={(e) =>
-                          field.onChange(
-                            Number.parseInt(e.target.value, 10) || 0
-                          )
+                          field.onChange(parseIntegerInputValue(e.target.value))
                         }
                       />
                     </FormControl>
@@ -639,7 +641,7 @@ export function SubscriptionsMutateDrawer({
                             min={1}
                             onChange={(e) =>
                               field.onChange(
-                                Number.parseInt(e.target.value, 10) || 0
+                                parseIntegerInputValue(e.target.value)
                               )
                             }
                           />
@@ -662,7 +664,7 @@ export function SubscriptionsMutateDrawer({
                             min={1}
                             onChange={(e) =>
                               field.onChange(
-                                Number.parseInt(e.target.value, 10) || 0
+                                parseIntegerInputValue(e.target.value)
                               )
                             }
                           />
@@ -733,7 +735,7 @@ export function SubscriptionsMutateDrawer({
                           disabled={resetPeriod !== 'custom'}
                           onChange={(e) =>
                             field.onChange(
-                              Number.parseInt(e.target.value, 10) || 0
+                              parseIntegerInputValue(e.target.value)
                             )
                           }
                         />

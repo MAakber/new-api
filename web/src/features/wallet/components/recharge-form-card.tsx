@@ -35,6 +35,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { formatNumber } from '@/lib/format'
+import { parseIntegerInputValue } from '@/lib/number-input'
 import { cn } from '@/lib/utils'
 
 import {
@@ -124,8 +125,8 @@ export function RechargeFormCard({
 
   const handleAmountChange = (value: string) => {
     setLocalAmount(value)
-    const numValue = Number.parseInt(value) || 0
-    if (numValue >= 0) {
+    const numValue = parseIntegerInputValue(value)
+    if (numValue !== '' && numValue >= 0) {
       onTopupAmountChange(numValue)
     }
   }

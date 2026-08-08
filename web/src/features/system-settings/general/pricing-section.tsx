@@ -40,6 +40,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
+import { parseNumberInputValue } from '@/lib/number-input'
 import { DEFAULT_CURRENCY_CONFIG } from '@/stores/system-config-store'
 
 import { FormDirtyIndicator } from '../components/form-dirty-indicator'
@@ -298,13 +299,10 @@ export function PricingSection({ defaultValues }: PricingSectionProps) {
                           type='number'
                           step='0.01'
                           value={field.value ?? ''}
-                          onChange={(e) =>
-                            field.onChange(
-                              e.target.value === ''
-                                ? undefined
-                                : e.target.valueAsNumber
-                            )
-                          }
+                          onChange={(e) => {
+                            const value = parseNumberInputValue(e.target.value)
+                            field.onChange(value === '' ? undefined : value)
+                          }}
                           name={field.name}
                           onBlur={field.onBlur}
                           ref={field.ref}

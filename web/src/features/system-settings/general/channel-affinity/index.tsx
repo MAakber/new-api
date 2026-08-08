@@ -36,6 +36,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { parseIntegerInputValue } from '@/lib/number-input'
 
 import { SettingsSwitchField } from '../../components/settings-form-layout'
 import { SettingsPageActionsPortal } from '../../components/settings-page-context'
@@ -426,7 +427,10 @@ export function ChannelAffinitySection(props: Props) {
               type='number'
               min={0}
               value={maxEntries}
-              onChange={(e) => setMaxEntries(Number(e.target.value))}
+              onChange={(e) => {
+                const value = parseIntegerInputValue(e.target.value)
+                if (value !== '') setMaxEntries(value)
+              }}
             />
           </div>
           <div className='grid gap-1.5'>
@@ -435,7 +439,10 @@ export function ChannelAffinitySection(props: Props) {
               type='number'
               min={0}
               value={defaultTtl}
-              onChange={(e) => setDefaultTtl(Number(e.target.value))}
+              onChange={(e) => {
+                const value = parseIntegerInputValue(e.target.value)
+                if (value !== '') setDefaultTtl(value)
+              }}
             />
           </div>
         </div>

@@ -54,6 +54,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
+import { parseNumberInputValue } from '@/lib/number-input'
 
 import {
   SettingsForm,
@@ -282,9 +283,16 @@ function AutoBanRuleCard(props: {
                     <Input
                       type='number'
                       min={name === 'ban_duration_minutes' ? -1 : 1}
-                      value={Number(field.value)}
+                      value={
+                        typeof field.value === 'number' ||
+                        typeof field.value === 'string'
+                          ? field.value
+                          : ''
+                      }
                       onChange={(event) =>
-                        field.onChange(Number(event.target.value))
+                        field.onChange(
+                          parseNumberInputValue(event.target.value)
+                        )
                       }
                     />
                   </FormControl>
@@ -316,9 +324,14 @@ function AutoBanRuleCard(props: {
                     type='number'
                     min={400}
                     max={599}
-                    value={Number(field.value)}
+                    value={
+                      typeof field.value === 'number' ||
+                      typeof field.value === 'string'
+                        ? field.value
+                        : ''
+                    }
                     onChange={(event) =>
-                      field.onChange(Number(event.target.value))
+                      field.onChange(parseNumberInputValue(event.target.value))
                     }
                   />
                 </FormControl>

@@ -27,6 +27,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { parseNumberInputValue } from '@/lib/number-input'
 import { ROLE } from '@/lib/roles'
 
 import { updateUserSettings } from '../../api'
@@ -177,9 +178,10 @@ export function NotificationTab({ profile, onUpdate }: NotificationTabProps) {
           type='number'
           className='h-9'
           value={settings.quota_warning_threshold}
-          onChange={(e) =>
-            updateField('quota_warning_threshold', Number(e.target.value))
-          }
+          onChange={(e) => {
+            const value = parseNumberInputValue(e.target.value)
+            if (value !== '') updateField('quota_warning_threshold', value)
+          }}
           placeholder={t('Enter threshold')}
         />
         <p className='text-muted-foreground text-xs'>
@@ -284,9 +286,10 @@ export function NotificationTab({ profile, onUpdate }: NotificationTabProps) {
               min='0'
               max='10'
               value={settings.gotify_priority}
-              onChange={(e) =>
-                updateField('gotify_priority', Number(e.target.value))
-              }
+              onChange={(e) => {
+                const value = parseNumberInputValue(e.target.value)
+                if (value !== '') updateField('gotify_priority', value)
+              }}
               placeholder='5'
             />
             <p className='text-muted-foreground text-xs'>

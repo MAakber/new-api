@@ -34,6 +34,10 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  parseIntegerInputValue,
+  parseNumberInputValue,
+} from '@/lib/number-input'
 
 const createAmountDiscountDialogSchema = (t: (key: string) => string) =>
   z.object({
@@ -156,7 +160,7 @@ export function AmountDiscountDialog({
                     placeholder={t('e.g., 100')}
                     {...field}
                     onChange={(e) =>
-                      field.onChange(parseInt(e.target.value) || 0)
+                      field.onChange(parseIntegerInputValue(e.target.value))
                     }
                     disabled={isEditMode}
                   />
@@ -188,7 +192,7 @@ export function AmountDiscountDialog({
                     placeholder={t('e.g., 0.95')}
                     {...field}
                     onChange={(e) =>
-                      field.onChange(parseFloat(e.target.value) || 0)
+                      field.onChange(parseNumberInputValue(e.target.value))
                     }
                   />
                 </FormControl>

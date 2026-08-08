@@ -26,6 +26,7 @@ import { Dialog } from '@/components/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
+import { parseIntegerInputValue } from '@/lib/number-input'
 
 import { estimatePrice, extendDeployment, getDeployment } from '../../api'
 import { deploymentsQueryKeys } from '../../lib'
@@ -46,7 +47,7 @@ export function ExtendDeploymentDialog({
 }) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const [hours, setHours] = useState(1)
+  const [hours, setHours] = useState<number | ''>(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
@@ -104,11 +105,12 @@ export function ExtendDeploymentDialog({
             hardware_id: priceParams.hardware_id,
             gpus_per_container: priceParams.gpus_per_container,
             replica_count: priceParams.replica_count,
-            duration_hours: hours,
+            duration_hours: typeof hours === 'number' ? hours : 0,
             currency: 'usdc',
           })
         : null,
-    enabled: open && Boolean(priceParams) && hours > 0,
+    enabled:
+      open && Boolean(priceParams) && typeof hours === 'number' && hours > 0,
   })
 
   const priceSummary = useMemo(() => {
@@ -130,15 +132,19 @@ export function ExtendDeploymentDialog({
     return `${String(total)} ${String(currency).toUpperCase()}`.trim()
   }, [priceRes])
 
-  const canSubmit = Boolean(deploymentId) && hours > 0 && !isSubmitting
+  const canSubmit =
+    Boolean(deploymentId) &&
+    typeof hours === 'number' &&
+    hours > 0 &&
+    !isSubmitting
 
   const onSubmit = async () => {
     if (!deploymentId) return
-    const h = toInt(hours, 1)
-    if (h <= 0) {
+    if (typeof hours !== 'number' || hours <= 0) {
       toast.error(t('Please enter a valid duration'))
       return
     }
+    const h = hours
     setIsSubmitting(true)
     try {
       const res = await extendDeployment(deploymentId, h)
@@ -199,7 +205,7 @@ export function ExtendDeploymentDialog({
               type='number'
               min={1}
               value={hours}
-              onChange={(e) => setHours(toInt(e.target.value, 1))}
+              onChange={(e) => setHours(parseIntegerInputValue(e.target.value))}
             />
             <div className='text-muted-foreground text-xs'>
               {t('This will extend the deployment by the specified hours.')}

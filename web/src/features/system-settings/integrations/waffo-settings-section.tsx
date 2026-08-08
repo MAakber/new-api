@@ -30,6 +30,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
+import { parseNumberInputValue } from '@/lib/number-input'
 
 import { SettingsSwitchField } from '../components/settings-form-layout'
 
@@ -270,12 +271,10 @@ export function WaffoSettingsSection({
               step={0.1}
               min={0}
               value={values.WaffoUnitPrice}
-              onChange={(event) =>
-                onValueChange(
-                  'WaffoUnitPrice',
-                  event.target.value === '' ? 0 : event.target.valueAsNumber
-                )
-              }
+              onChange={(event) => {
+                const value = parseNumberInputValue(event.target.value)
+                if (value !== '') onValueChange('WaffoUnitPrice', value)
+              }}
             />
           </div>
           <div className='grid gap-1.5'>
@@ -284,12 +283,10 @@ export function WaffoSettingsSection({
               type='number'
               min={1}
               value={values.WaffoMinTopUp}
-              onChange={(event) =>
-                onValueChange(
-                  'WaffoMinTopUp',
-                  event.target.value === '' ? 1 : event.target.valueAsNumber
-                )
-              }
+              onChange={(event) => {
+                const value = parseNumberInputValue(event.target.value)
+                if (value !== '') onValueChange('WaffoMinTopUp', value)
+              }}
             />
           </div>
         </div>

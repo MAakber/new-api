@@ -36,6 +36,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
+import { parseIntegerInputValue } from '@/lib/number-input'
 
 import {
   SettingsForm,
@@ -161,7 +162,7 @@ export function RateLimitSection({ defaultValues }: RateLimitSectionProps) {
                         step={1}
                         {...field}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 0)
+                          field.onChange(parseIntegerInputValue(e.target.value))
                         }
                       />
                       <span className='text-muted-foreground text-sm'>
@@ -192,7 +193,7 @@ export function RateLimitSection({ defaultValues }: RateLimitSectionProps) {
                         step={1}
                         {...field}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 0)
+                          field.onChange(parseIntegerInputValue(e.target.value))
                         }
                       />
                       <span className='text-muted-foreground text-sm'>
@@ -223,7 +224,7 @@ export function RateLimitSection({ defaultValues }: RateLimitSectionProps) {
                         step={1}
                         {...field}
                         onChange={(e) =>
-                          field.onChange(parseInt(e.target.value) || 1)
+                          field.onChange(parseIntegerInputValue(e.target.value))
                         }
                       />
                       <span className='text-muted-foreground text-sm'>

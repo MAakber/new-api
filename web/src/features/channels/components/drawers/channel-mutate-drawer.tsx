@@ -123,6 +123,7 @@ import {
   type ChannelConnectionInfo,
 } from '@/lib/channel-connection-info'
 import { getLobeIcon } from '@/lib/lobe-icon'
+import { parseNumberInputValue } from '@/lib/number-input'
 import { ROLE } from '@/lib/roles'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth-store'
@@ -3810,7 +3811,9 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                                     placeholder='0'
                                     {...field}
                                     onChange={(e) =>
-                                      field.onChange(Number(e.target.value))
+                                      field.onChange(
+                                        parseNumberInputValue(e.target.value)
+                                      )
                                     }
                                   />
                                 </FormControl>
@@ -3834,7 +3837,9 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                                     placeholder='0'
                                     {...field}
                                     onChange={(e) =>
-                                      field.onChange(Number(e.target.value))
+                                      field.onChange(
+                                        parseNumberInputValue(e.target.value)
+                                      )
                                     }
                                   />
                                 </FormControl>

@@ -34,6 +34,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { parseIntegerInputValue } from '@/lib/number-input'
 
 const rateLimitDialogSchema = z.object({
   groupName: z.string().min(1, 'Group name is required'),
@@ -172,7 +173,7 @@ export function RateLimitDialog({
                       step={1}
                       {...field}
                       onChange={(e) =>
-                        field.onChange(parseInt(e.target.value) || 0)
+                        field.onChange(parseIntegerInputValue(e.target.value))
                       }
                     />
                     <span className='text-muted-foreground text-sm'>
@@ -203,7 +204,7 @@ export function RateLimitDialog({
                       step={1}
                       {...field}
                       onChange={(e) =>
-                        field.onChange(parseInt(e.target.value) || 1)
+                        field.onChange(parseIntegerInputValue(e.target.value))
                       }
                     />
                     <span className='text-muted-foreground text-sm'>
