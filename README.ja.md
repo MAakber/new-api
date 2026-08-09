@@ -332,7 +332,7 @@ docker run --name new-api -d --restart always \
 | `STREAM_SCANNER_MAX_BUFFER_MB` | ストリームスキャナの1行あたりバッファ上限（MB）。4K画像など巨大なbase64 `data:` ペイロードを扱う場合は値を増加させてください | `64` |
 | `MAX_REQUEST_BODY_MB` | リクエストボディ最大サイズ（MB、**解凍後**に計測。巨大リクエスト/zip bomb によるメモリ枯渇を防止）。超過時は `413` | `32` |
 | `AZURE_DEFAULT_API_VERSION` | Azure APIバージョン | `2025-04-01-preview` |
-| `ERROR_LOG_ENABLED` | エラーログスイッチ | `false` |
+| `ERROR_LOG_ENABLED` | エラーログスイッチ | `true` |
 | `PYROSCOPE_URL` | Pyroscopeサーバーのアドレス | - |
 | `PYROSCOPE_APP_NAME` | Pyroscopeアプリ名 | `new-api` |
 | `PYROSCOPE_BASIC_AUTH_USER` | Pyroscope Basic Authユーザー | - |
