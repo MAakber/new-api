@@ -20,6 +20,7 @@ import type { ContentSettings } from '../types'
 import { createSectionRegistry } from '../utils/section-registry'
 import { AnnouncementsSection } from './announcements-section'
 import { ApiInfoSection } from './api-info-section'
+import { BannersSection } from './banners-section'
 import { ChatSettingsSection } from './chat-settings-section'
 import { DashboardSection } from './dashboard-section'
 import { DrawingSettingsSection } from './drawing-settings-section'
@@ -62,6 +63,11 @@ const CONTENT_SECTIONS = [
         data={settings['console_setting.announcements']}
       />
     ),
+  },
+  {
+    id: 'banners',
+    titleKey: 'Banners',
+    build: () => <BannersSection />,
   },
   {
     id: 'api-info',

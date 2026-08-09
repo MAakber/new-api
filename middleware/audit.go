@@ -56,6 +56,11 @@ var auditRouteActions = map[string]string{
 	"PUT /api/custom-oauth-provider/:id":    "custom_oauth.update",
 	"DELETE /api/custom-oauth-provider/:id": "custom_oauth.delete",
 
+	// 公告横幅
+	"POST /api/banner":       "banner.create",
+	"PUT /api/banner/:id":    "banner.update",
+	"DELETE /api/banner/:id": "banner.delete",
+
 	// 性能/缓存（root）
 	"DELETE /api/performance/disk_cache": "performance.clear_disk_cache",
 	"POST /api/performance/gc":           "performance.gc",

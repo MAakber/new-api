@@ -16,23 +16,24 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+
 import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react'
 import { useReducedMotion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
-import { useAnnouncements } from '@/features/dashboard/hooks/use-status-data'
-import { getPreviewText } from '@/features/dashboard/lib'
-import type { AnnouncementItem } from '@/features/dashboard/types'
+import { useBanners } from '@/features/banners'
 import {
-  getAnnouncementSetVersion,
-  getSafeAnnouncementLink,
-} from '@/lib/announcement-utils'
+  getBannerSetVersion,
+  getSafeBannerLink,
+  isBannerCurrentlyVisible,
+} from '@/features/banners/lib/banner-utils'
+import { getPreviewText } from '@/features/dashboard/lib'
 import { getAnnouncementColorClass } from '@/lib/colors'
 import { cn } from '@/lib/utils'
 
-const DISMISSED_VERSION_STORAGE_KEY = 'public-announcement-dismissed-version'
+const DISMISSED_VERSION_STORAGE_KEY = 'public-banner-dismissed-version'
 const ROTATION_INTERVAL_MS = 8000
 
 type PublicAnnouncementBannerProps = {
@@ -49,28 +50,6 @@ function readDismissedVersion(): string | null {
   }
 }
 
-function isCurrentAnnouncement(announcement: AnnouncementItem): boolean {
-  if (
-    announcement.enabled === false ||
-    typeof announcement.content !== 'string' ||
-    !announcement.content.trim()
-  ) {
-    return false
-  }
-
-  const now = Date.now()
-  if (announcement.startDate) {
-    const start = Date.parse(announcement.startDate)
-    if (Number.isNaN(start) || now < start) return false
-  }
-  if (announcement.endDate) {
-    const end = Date.parse(announcement.endDate)
-    if (Number.isNaN(end) || now > end) return false
-  }
-
-  return true
-}
-
 function writeDismissedVersion(version: string): void {
   if (typeof window === 'undefined') return
 
@@ -83,7 +62,7 @@ function writeDismissedVersion(version: string): void {
 
 export function PublicAnnouncementBanner(props: PublicAnnouncementBannerProps) {
   const { t } = useTranslation()
-  const { items } = useAnnouncements()
+  const { data: items = [] } = useBanners()
   const onVisibilityChange = props.onVisibilityChange
   const shouldReduceMotion = useReducedMotion() ?? false
   const [activeIndex, setActiveIndex] = useState(0)
@@ -92,84 +71,66 @@ export function PublicAnnouncementBanner(props: PublicAnnouncementBannerProps) {
     readDismissedVersion()
   )
 
-  const announcements = useMemo(
-    () => items.filter(isCurrentAnnouncement),
-    [items]
-  )
-  const announcementVersion = useMemo(
-    () => getAnnouncementSetVersion(announcements),
-    [announcements]
-  )
-  const isVisible =
-    announcements.length > 0 && dismissedVersion !== announcementVersion
-  const currentIndex = Math.min(
-    activeIndex,
-    Math.max(announcements.length - 1, 0)
-  )
-  const currentAnnouncement = announcements[currentIndex]
-  const currentLink = getSafeAnnouncementLink(currentAnnouncement?.link)
+  const banners = useMemo(() => items.filter(isBannerCurrentlyVisible), [items])
+  const bannerVersion = useMemo(() => getBannerSetVersion(banners), [banners])
+  const isVisible = banners.length > 0 && dismissedVersion !== bannerVersion
+  const currentIndex = Math.min(activeIndex, Math.max(banners.length - 1, 0))
+  const currentBanner = banners[currentIndex]
+  const currentLink = getSafeBannerLink(currentBanner?.link)
 
   useEffect(() => {
-    if (!announcementVersion) return
+    if (!bannerVersion) return
     setActiveIndex(0)
-  }, [announcementVersion])
+  }, [bannerVersion])
 
   useEffect(() => {
-    if (activeIndex < announcements.length) return
+    if (activeIndex < banners.length) return
     setActiveIndex(0)
-  }, [activeIndex, announcements.length])
+  }, [activeIndex, banners.length])
 
   useEffect(() => {
     onVisibilityChange?.(isVisible)
   }, [isVisible, onVisibilityChange])
 
   useEffect(() => {
-    if (
-      !isVisible ||
-      announcements.length < 2 ||
-      shouldReduceMotion ||
-      isPaused
-    ) {
+    if (!isVisible || banners.length < 2 || shouldReduceMotion || isPaused) {
       return
     }
 
     const intervalId = window.setInterval(() => {
-      setActiveIndex((index) => (index + 1) % announcements.length)
+      setActiveIndex((index) => (index + 1) % banners.length)
     }, ROTATION_INTERVAL_MS)
 
     return () => window.clearInterval(intervalId)
-  }, [announcements.length, isPaused, isVisible, shouldReduceMotion])
+  }, [banners.length, isPaused, isVisible, shouldReduceMotion])
 
   const goToPrevious = useCallback(() => {
     setActiveIndex((index) =>
-      announcements.length > 0
-        ? (index - 1 + announcements.length) % announcements.length
-        : 0
+      banners.length > 0 ? (index - 1 + banners.length) % banners.length : 0
     )
-  }, [announcements.length])
+  }, [banners.length])
 
   const goToNext = useCallback(() => {
     setActiveIndex((index) =>
-      announcements.length > 0 ? (index + 1) % announcements.length : 0
+      banners.length > 0 ? (index + 1) % banners.length : 0
     )
-  }, [announcements.length])
+  }, [banners.length])
 
   const handleDismiss = () => {
-    setDismissedVersion(announcementVersion)
+    setDismissedVersion(bannerVersion)
     setIsPaused(true)
-    writeDismissedVersion(announcementVersion)
+    writeDismissedVersion(bannerVersion)
   }
 
-  if (!isVisible || !currentAnnouncement) return null
+  if (!isVisible || !currentBanner) return null
 
-  const announcementText =
-    getPreviewText(currentAnnouncement.content, 180) ||
-    t('Announcement content')
-  const announcementKey = `${currentAnnouncement.id ?? 'announcement'}-${announcementVersion}-${currentIndex}`
+  const bannerText =
+    getPreviewText(currentBanner.content, 180) || t('Banner content')
+  const bannerKey = `${currentBanner.id}-${bannerVersion}-${currentIndex}`
 
   return (
     <section
-      aria-label={t('System announcements')}
+      aria-label={t('Banners')}
       className='bg-foreground text-background fixed inset-x-0 top-0 z-[60] h-[var(--public-announcement-height)] overflow-hidden shadow-[0_8px_24px_-16px_rgba(0,0,0,0.7)]'
       onBlurCapture={(event) => {
         const nextTarget = event.relatedTarget as Node | null
@@ -192,12 +153,12 @@ export function PublicAnnouncementBanner(props: PublicAnnouncementBannerProps) {
             aria-hidden='true'
             className={cn(
               'size-1.5 shrink-0 rounded-full ring-2 ring-background/20',
-              getAnnouncementColorClass(currentAnnouncement.type)
+              getAnnouncementColorClass(currentBanner.type)
             )}
           />
-          {announcements.length > 1 && (
+          {banners.length > 1 && (
             <Button
-              aria-label={t('Previous announcement')}
+              aria-label={t('Previous banner')}
               className='text-background hover:bg-background/10 hover:text-background focus-visible:ring-background/70'
               onClick={goToPrevious}
               size='icon-xs'
@@ -215,11 +176,11 @@ export function PublicAnnouncementBanner(props: PublicAnnouncementBannerProps) {
           className='min-w-0 text-center'
         >
           <div
-            key={announcementKey}
+            key={bannerKey}
             className='public-announcement-copy flex min-w-0 items-center justify-center gap-2'
           >
             <p className='line-clamp-2 min-w-0 text-center text-[11px] leading-4 font-medium sm:line-clamp-1 sm:text-xs'>
-              {announcementText}
+              {bannerText}
             </p>
             {currentLink && (
               <a
@@ -233,20 +194,20 @@ export function PublicAnnouncementBanner(props: PublicAnnouncementBannerProps) {
               </a>
             )}
           </div>
-          {announcements.length > 1 && (
+          {banners.length > 1 && (
             <span className='sr-only'>
-              {t('Announcement {{current}} of {{total}}', {
+              {t('Banner {{current}} of {{total}}', {
                 current: currentIndex + 1,
-                total: announcements.length,
+                total: banners.length,
               })}
             </span>
           )}
         </div>
 
         <div className='flex items-center gap-1'>
-          {announcements.length > 1 && (
+          {banners.length > 1 && (
             <Button
-              aria-label={t('Next announcement')}
+              aria-label={t('Next banner')}
               className='text-background hover:bg-background/10 hover:text-background focus-visible:ring-background/70'
               onClick={goToNext}
               size='icon-xs'
@@ -257,7 +218,7 @@ export function PublicAnnouncementBanner(props: PublicAnnouncementBannerProps) {
             </Button>
           )}
           <Button
-            aria-label={t('Dismiss announcement')}
+            aria-label={t('Dismiss banner')}
             className='text-background hover:bg-background/10 hover:text-background focus-visible:ring-background/70'
             onClick={handleDismiss}
             size='icon-xs'

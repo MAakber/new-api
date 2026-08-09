@@ -327,6 +327,11 @@ func InitResources() error {
 		return err
 	}
 	model.InitOptionMap()
+	if common.IsMasterNode {
+		if err := model.MigrateConsoleSettingAnnouncementsToBanners(); err != nil {
+			common.SysError("failed to migrate console announcements to banners: " + err.Error())
+		}
+	}
 
 	// 清理旧的磁盘缓存文件
 	common.CleanupOldCacheFiles()

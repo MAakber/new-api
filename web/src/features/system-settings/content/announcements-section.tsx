@@ -16,10 +16,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ExternalLink, Plus, Save, Trash2 } from 'lucide-react'
+import type { TFunction } from 'i18next'
+import { Plus, Save, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import * as z from 'zod'
@@ -50,7 +52,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -59,20 +60,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
-import type { AnnouncementItem } from '@/features/dashboard/types'
-import { getSafeAnnouncementLink } from '@/lib/announcement-utils'
-import dayjs from '@/lib/dayjs'
 
 import { SettingsSwitchField } from '../components/settings-form-layout'
 import { SettingsSection } from '../components/settings-section'
 import { useUpdateOption } from '../hooks/use-update-option'
 
-type Announcement = AnnouncementItem & {
-  id: number
+type AnnouncementType = 'default' | 'ongoing' | 'success' | 'warning' | 'error'
+
+type Announcement = {
+  rowId: number
+  source: Record<string, unknown>
   content: string
   publishDate: string
+  type: AnnouncementType
+  extra: string
 }
 
 type AnnouncementsSectionProps = {
@@ -80,8 +82,12 @@ type AnnouncementsSectionProps = {
   data: string
 }
 
-const ANNOUNCEMENT_SORT_ORDER_MIN = -2147483648
-const ANNOUNCEMENT_SORT_ORDER_MAX = 2147483647
+type AnnouncementFormValues = {
+  content: string
+  publishDate: string
+  type: AnnouncementType
+  extra: string
+}
 
 const announcementTypes = [
   'default',
@@ -90,82 +96,6 @@ const announcementTypes = [
   'warning',
   'error',
 ] as const
-
-function isValidOptionalDate(value: string): boolean {
-  return value === '' || !Number.isNaN(Date.parse(value))
-}
-
-const announcementSchema = z
-  .object({
-    content: z
-      .string()
-      .min(1, 'Content is required')
-      .max(500, 'Content must be less than 500 characters'),
-    publishDate: z.string().min(1, 'Publish date is required'),
-    type: z.enum(announcementTypes),
-    extra: z
-      .string()
-      .max(200, 'Extra must be less than 200 characters')
-      .optional(),
-    enabled: z.boolean(),
-    sortOrder: z
-      .number()
-      .int('Sort order must be a whole number')
-      .min(
-        ANNOUNCEMENT_SORT_ORDER_MIN,
-        'Sort order is below the supported minimum'
-      )
-      .max(
-        ANNOUNCEMENT_SORT_ORDER_MAX,
-        'Sort order is above the supported maximum'
-      )
-      .optional(),
-    startDate: z
-      .string()
-      .refine(isValidOptionalDate, 'Start date must be a valid date')
-      .optional(),
-    endDate: z
-      .string()
-      .refine(isValidOptionalDate, 'End date must be a valid date')
-      .optional(),
-    link: z
-      .string()
-      .max(500, 'Link must be less than 500 characters')
-      .refine(
-        (value) => value === '' || Boolean(getSafeAnnouncementLink(value)),
-        'Link must be a valid HTTP or HTTPS URL'
-      )
-      .optional(),
-  })
-  .superRefine((values, context) => {
-    if (!values.startDate || !values.endDate) return
-
-    if (Date.parse(values.startDate) > Date.parse(values.endDate)) {
-      context.addIssue({
-        code: 'custom',
-        message: 'Start date cannot be later than end date',
-        path: ['endDate'],
-      })
-    }
-  })
-
-type AnnouncementFormValues = z.infer<typeof announcementSchema>
-
-const ANNOUNCEMENT_FORM_ID = 'announcement-form'
-
-function getDefaultAnnouncementValues(): AnnouncementFormValues {
-  return {
-    content: '',
-    publishDate: new Date().toISOString(),
-    type: 'default',
-    extra: '',
-    enabled: true,
-    sortOrder: undefined,
-    startDate: '',
-    endDate: '',
-    link: '',
-  }
-}
 
 const typeOptions = [
   {
@@ -205,71 +135,70 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function normalizeAnnouncement(
-  item: Record<string, unknown>,
+  value: Record<string, unknown>,
   index: number
 ): Announcement {
-  const type = announcementTypes.includes(
-    item.type as (typeof announcementTypes)[number]
-  )
-    ? (item.type as Announcement['type'])
-    : 'default'
-  const announcement: Announcement = {
-    ...item,
-    id:
-      typeof item.id === 'number' && Number.isFinite(item.id)
-        ? item.id
-        : index + 1,
-    content: typeof item.content === 'string' ? item.content : '',
-    publishDate: typeof item.publishDate === 'string' ? item.publishDate : '',
+  const itemType = value.type as AnnouncementType
+  const type = announcementTypes.includes(itemType) ? itemType : 'default'
+  const rowId =
+    typeof value.id === 'number' && Number.isFinite(value.id)
+      ? value.id
+      : index + 1
+
+  return {
+    rowId,
+    source: { ...value },
+    content: typeof value.content === 'string' ? value.content : '',
+    publishDate: typeof value.publishDate === 'string' ? value.publishDate : '',
     type,
-    extra: typeof item.extra === 'string' ? item.extra : '',
-    enabled: item.enabled !== false,
+    extra: typeof value.extra === 'string' ? value.extra : '',
   }
-
-  if (
-    typeof item.sortOrder === 'number' &&
-    Number.isInteger(item.sortOrder) &&
-    item.sortOrder >= ANNOUNCEMENT_SORT_ORDER_MIN &&
-    item.sortOrder <= ANNOUNCEMENT_SORT_ORDER_MAX
-  ) {
-    announcement.sortOrder = item.sortOrder
-  } else {
-    delete announcement.sortOrder
-  }
-
-  for (const field of ['startDate', 'endDate'] as const) {
-    const value = typeof item[field] === 'string' ? item[field].trim() : ''
-    if (value && isValidOptionalDate(value)) {
-      announcement[field] = value
-    } else {
-      delete announcement[field]
-    }
-  }
-
-  const link = typeof item.link === 'string' ? item.link.trim() : ''
-  if (link && getSafeAnnouncementLink(link)) {
-    announcement.link = link
-  } else {
-    delete announcement.link
-  }
-
-  return announcement
 }
 
-function toAnnouncementPayload(announcement: Announcement): Announcement {
-  const payload = { ...announcement }
-  if (!payload.startDate) delete payload.startDate
-  if (!payload.endDate) delete payload.endDate
-  if (!payload.link) delete payload.link
-  if (payload.sortOrder === undefined) delete payload.sortOrder
-  return payload
+function toAnnouncementPayload(announcement: Announcement) {
+  return {
+    ...announcement.source,
+    content: announcement.content,
+    publishDate: announcement.publishDate,
+    type: announcement.type,
+    extra: announcement.extra,
+  }
 }
 
-function formatOptionalDate(value?: string): string {
+function getDefaultAnnouncementValues(): AnnouncementFormValues {
+  return {
+    content: '',
+    publishDate: new Date().toISOString(),
+    type: 'default',
+    extra: '',
+  }
+}
+
+function createAnnouncementSchema(t: TFunction) {
+  return z.object({
+    content: z
+      .string()
+      .min(1, t('Content is required'))
+      .max(500, t('Content must be less than 500 characters')),
+    publishDate: z
+      .string()
+      .min(1, t('Publish date is required'))
+      .refine(
+        (value) => !Number.isNaN(Date.parse(value)),
+        t('Publish date must be a valid date')
+      ),
+    type: z.enum(announcementTypes),
+    extra: z.string().max(200, t('Extra must be less than 200 characters')),
+  })
+}
+
+function formatPublishDate(value: string): string {
   if (!value) return '—'
-  const date = dayjs(value)
-  return date.isValid() ? date.format('YYYY-MM-DD HH:mm') : '—'
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? '—' : date.toLocaleString()
 }
+
+const ANNOUNCEMENT_FORM_ID = 'announcement-form'
 
 export function AnnouncementsSection({
   enabled,
@@ -287,8 +216,9 @@ export function AnnouncementsSection({
     useState<Announcement | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<'single' | 'batch'>('single')
 
+  const schema = useMemo(() => createAnnouncementSchema(t), [t])
   const form = useForm<AnnouncementFormValues>({
-    resolver: zodResolver(announcementSchema),
+    resolver: zodResolver(schema),
     defaultValues: getDefaultAnnouncementValues(),
   })
 
@@ -338,13 +268,8 @@ export function AnnouncementsSection({
     form.reset({
       content: announcement.content,
       publishDate: announcement.publishDate,
-      type: announcement.type ?? 'default',
-      extra: announcement.extra || '',
-      enabled: announcement.enabled !== false,
-      sortOrder: announcement.sortOrder,
-      startDate: announcement.startDate || '',
-      endDate: announcement.endDate || '',
-      link: announcement.link || '',
+      type: announcement.type,
+      extra: announcement.extra,
     })
     setShowDialog(true)
   }
@@ -367,13 +292,13 @@ export function AnnouncementsSection({
   const confirmDelete = () => {
     if (deleteTarget === 'single' && editingAnnouncement) {
       setAnnouncements((prev) =>
-        prev.filter((item) => item.id !== editingAnnouncement.id)
+        prev.filter((item) => item.rowId !== editingAnnouncement.rowId)
       )
       setHasChanges(true)
       toast.success(t('Announcement deleted. Click "Save Settings" to apply.'))
     } else if (deleteTarget === 'batch') {
       setAnnouncements((prev) =>
-        prev.filter((item) => !selectedIds.includes(item.id))
+        prev.filter((item) => !selectedIds.includes(item.rowId))
       )
       setSelectedIds([])
       setHasChanges(true)
@@ -387,21 +312,29 @@ export function AnnouncementsSection({
     setEditingAnnouncement(null)
   }
 
-  const handleSubmitForm = (values: AnnouncementFormValues) => {
+  const handleSubmit: SubmitHandler<AnnouncementFormValues> = (values) => {
     if (editingAnnouncement) {
       setAnnouncements((prev) =>
-        prev.map((item, index) =>
-          item.id === editingAnnouncement.id
-            ? normalizeAnnouncement({ ...item, ...values }, index)
+        prev.map((item) =>
+          item.rowId === editingAnnouncement.rowId
+            ? {
+                ...item,
+                source: { ...item.source, ...values },
+                ...values,
+              }
             : item
         )
       )
       toast.success(t('Announcement updated. Click "Save Settings" to apply.'))
     } else {
-      const newId = Math.max(...announcements.map((item) => item.id), 0) + 1
+      const newId = Math.max(...announcements.map((item) => item.rowId), 0) + 1
       setAnnouncements((prev) => [
         ...prev,
-        normalizeAnnouncement({ id: newId, ...values }, prev.length),
+        {
+          rowId: newId,
+          source: { id: newId, ...values },
+          ...values,
+        },
       ])
       toast.success(t('Announcement added. Click "Save Settings" to apply.'))
     }
@@ -423,7 +356,7 @@ export function AnnouncementsSection({
   }
 
   const toggleSelectAll = (checked: boolean) => {
-    setSelectedIds(checked ? announcements.map((item) => item.id) : [])
+    setSelectedIds(checked ? announcements.map((item) => item.rowId) : [])
   }
 
   const toggleSelectOne = (id: number, checked: boolean) => {
@@ -432,37 +365,13 @@ export function AnnouncementsSection({
     )
   }
 
-  const sortedAnnouncements = useMemo(() => {
-    return [...announcements].sort((a, b) => {
-      const sortOrderDifference = (b.sortOrder ?? 0) - (a.sortOrder ?? 0)
-      if (sortOrderDifference !== 0) return sortOrderDifference
-
-      return (
-        new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
-      )
-    })
-  }, [announcements])
-
-  const getRelativeTime = (date: string) => {
-    const now = new Date()
-    const past = new Date(date)
-    const diffMs = now.getTime() - past.getTime()
-    const diffMins = Math.floor(diffMs / 60000)
-    const diffHours = Math.floor(diffMins / 60)
-    const diffDays = Math.floor(diffHours / 24)
-
-    if (diffMins < 60) return `${diffMins}m ago`
-    if (diffHours < 24) return `${diffHours}h ago`
-    return `${diffDays}d ago`
-  }
-
   return (
     <SettingsSection title={t('Announcements')}>
       <div className='space-y-4'>
         <div className='flex flex-wrap items-center justify-between gap-2'>
           <div className='flex flex-wrap items-center gap-2'>
             <Button onClick={handleAdd} size='sm'>
-              <Plus className='mr-2 h-4 w-4' />
+              <Plus data-icon='inline-start' />
               {t('Add Announcement')}
             </Button>
             <Button
@@ -471,7 +380,7 @@ export function AnnouncementsSection({
               variant='destructive'
               disabled={selectedIds.length === 0}
             >
-              <Trash2 className='mr-2 h-4 w-4' />
+              <Trash2 data-icon='inline-start' />
               {t('Delete (')}
               {selectedIds.length})
             </Button>
@@ -481,7 +390,7 @@ export function AnnouncementsSection({
               variant='secondary'
               disabled={!hasChanges || updateOption.isPending}
             >
-              <Save className='mr-2 h-4 w-4' />
+              <Save data-icon='inline-start' />
               {updateOption.isPending ? t('Saving...') : t('Save Settings')}
             </Button>
           </div>
@@ -494,8 +403,8 @@ export function AnnouncementsSection({
         </div>
 
         <StaticDataTable
-          data={sortedAnnouncements}
-          getRowKey={(announcement) => announcement.id}
+          data={announcements}
+          getRowKey={(announcement) => announcement.rowId}
           emptyContent={t(
             'No announcements yet. Click "Add Announcement" to create one.'
           )}
@@ -514,9 +423,9 @@ export function AnnouncementsSection({
               className: 'w-12',
               cell: (announcement) => (
                 <Checkbox
-                  checked={selectedIds.includes(announcement.id)}
+                  checked={selectedIds.includes(announcement.rowId)}
                   onCheckedChange={(checked) =>
-                    toggleSelectOne(announcement.id, checked as boolean)
+                    toggleSelectOne(announcement.rowId, checked as boolean)
                   }
                 />
               ),
@@ -528,58 +437,10 @@ export function AnnouncementsSection({
               cell: (announcement) => announcement.content,
             },
             {
-              id: 'enabled',
-              header: t('Enabled'),
-              cell: (announcement) => (
-                <StatusBadge
-                  label={
-                    announcement.enabled === false
-                      ? t('Disabled')
-                      : t('Enabled')
-                  }
-                  variant={
-                    announcement.enabled === false ? 'neutral' : 'success'
-                  }
-                  copyable={false}
-                />
-              ),
-            },
-            {
-              id: 'sort-order',
-              header: t('Sort Order'),
-              cell: (announcement) => announcement.sortOrder ?? '—',
-            },
-            {
               id: 'publish-date',
               header: t('Publish Date'),
-              cell: (announcement) => (
-                <div className='flex flex-col gap-1'>
-                  <span className='text-sm font-medium'>
-                    {getRelativeTime(announcement.publishDate)}
-                  </span>
-                  <span className='text-muted-foreground text-xs'>
-                    {dayjs(announcement.publishDate).format(
-                      'YYYY-MM-DD HH:mm:ss'
-                    )}
-                  </span>
-                </div>
-              ),
-            },
-            {
-              id: 'lifecycle',
-              header: t('Display window'),
-              cell: (announcement) => (
-                <div className='flex flex-col gap-1 text-xs'>
-                  <span>
-                    <span className='text-muted-foreground'>{t('Start')}:</span>{' '}
-                    {formatOptionalDate(announcement.startDate)}
-                  </span>
-                  <span className='text-muted-foreground'>
-                    <span>{t('End')}:</span>{' '}
-                    {formatOptionalDate(announcement.endDate)}
-                  </span>
-                </div>
-              ),
+              cell: (announcement) =>
+                formatPublishDate(announcement.publishDate),
             },
             {
               id: 'type',
@@ -602,27 +463,7 @@ export function AnnouncementsSection({
               id: 'extra',
               header: t('Extra'),
               cellClassName: 'text-muted-foreground max-w-xs truncate',
-              cell: (announcement) => announcement.extra || '-',
-            },
-            {
-              id: 'link',
-              header: t('Link'),
-              cell: (announcement) => {
-                const link = getSafeAnnouncementLink(announcement.link)
-                return link ? (
-                  <a
-                    className='text-primary inline-flex items-center gap-1 hover:underline'
-                    href={link}
-                    rel='noopener noreferrer'
-                    target='_blank'
-                  >
-                    {t('Open')}
-                    <ExternalLink aria-hidden='true' className='size-3' />
-                  </a>
-                ) : (
-                  '—'
-                )
-              },
+              cell: (announcement) => announcement.extra || '—',
             },
             {
               id: 'actions',
@@ -650,7 +491,7 @@ export function AnnouncementsSection({
         description={t(
           'Create or update system announcements for the dashboard'
         )}
-        contentClassName='max-w-3xl'
+        contentClassName='max-w-2xl'
         contentHeight='auto'
         bodyClassName='space-y-4'
         footer={
@@ -671,7 +512,7 @@ export function AnnouncementsSection({
         <Form {...form}>
           <form
             id={ANNOUNCEMENT_FORM_ID}
-            onSubmit={form.handleSubmit(handleSubmitForm)}
+            onSubmit={form.handleSubmit(handleSubmit)}
             className='space-y-4'
           >
             <FormField
@@ -693,26 +534,6 @@ export function AnnouncementsSection({
                     {t('Maximum 500 characters. Supports Markdown and HTML.')}
                   </FormDescription>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='enabled'
-              render={({ field }) => (
-                <FormItem className='flex flex-row items-center justify-between rounded-xl border px-3 py-2.5'>
-                  <div className='space-y-0.5'>
-                    <FormLabel>{t('Enabled')}</FormLabel>
-                    <FormDescription className='text-xs'>
-                      {t('Show this announcement on public pages')}
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
                 </FormItem>
               )}
             />
@@ -742,94 +563,17 @@ export function AnnouncementsSection({
             />
             <FormField
               control={form.control}
-              name='sortOrder'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('Sort Order')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      min={ANNOUNCEMENT_SORT_ORDER_MIN}
-                      max={ANNOUNCEMENT_SORT_ORDER_MAX}
-                      step='1'
-                      value={field.value ?? ''}
-                      onChange={(event) => {
-                        const value = event.target.valueAsNumber
-                        field.onChange(Number.isNaN(value) ? undefined : value)
-                      }}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    {t('Optional priority. Higher values appear first.')}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='startDate'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('Start date')}</FormLabel>
-                  <FormControl>
-                    <DateTimePicker
-                      value={field.value ? new Date(field.value) : undefined}
-                      onChange={(date) =>
-                        field.onChange(date ? date.toISOString() : '')
-                      }
-                      placeholder={t('Select date')}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    {t('Optional start date for this announcement')}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='endDate'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('End date')}</FormLabel>
-                  <FormControl>
-                    <DateTimePicker
-                      value={field.value ? new Date(field.value) : undefined}
-                      onChange={(date) =>
-                        field.onChange(date ? date.toISOString() : '')
-                      }
-                      placeholder={t('Select date')}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    {t('Optional end date for this announcement')}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name='type'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t('Type')}</FormLabel>
                   <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
                     items={typeOptions.map((option) => ({
                       value: option.value,
-                      label: (
-                        <div className='flex items-center gap-2'>
-                          <div
-                            className={`h-3 w-3 rounded-full ${option.color}`}
-                          />
-                          {t(option.labelKey)}
-                        </div>
-                      ),
+                      label: t(option.labelKey),
                     }))}
-                    onValueChange={field.onChange}
-                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -844,6 +588,7 @@ export function AnnouncementsSection({
                           <SelectItem key={option.value} value={option.value}>
                             <div className='flex items-center gap-2'>
                               <div
+                                aria-hidden='true'
                                 className={`h-3 w-3 rounded-full ${option.color}`}
                               />
                               {t(option.labelKey)}
@@ -859,34 +604,14 @@ export function AnnouncementsSection({
             />
             <FormField
               control={form.control}
-              name='link'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('Link')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='url'
-                      inputMode='url'
-                      placeholder={t('Enter URL...')}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    {t('Optional HTTP or HTTPS destination')}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name='extra'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t('Extra Notes (Optional)')}</FormLabel>
                   <FormControl>
-                    <Input
+                    <Textarea
                       placeholder={t('Additional information')}
+                      rows={3}
                       {...field}
                     />
                   </FormControl>

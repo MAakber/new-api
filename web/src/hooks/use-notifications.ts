@@ -53,7 +53,6 @@ function getAnnouncementKey(item: Record<string, unknown>): string {
     extra: ((item?.extra as string) || '').trim(),
     type: (item?.type as string) || '',
     title: ((item?.title as string) || '').trim(),
-    link: ((item?.link as string) || '').trim(),
   })
   return `hash:${hashString(fingerprint)}`
 }
@@ -82,10 +81,14 @@ export function useNotifications() {
   // Fetch Announcements from status
   const { status, loading: statusLoading } = useStatus()
   const announcementsEnabled = status?.announcements_enabled ?? false
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const announcements: Record<string, unknown>[] = announcementsEnabled
-    ? ((status?.announcements || []) as Record<string, unknown>[]).slice(0, 20)
-    : []
+  const announcements = useMemo<Record<string, unknown>[]>(() => {
+    if (!announcementsEnabled) return []
+
+    return ((status?.announcements || []) as Record<string, unknown>[]).slice(
+      0,
+      20
+    )
+  }, [announcementsEnabled, status?.announcements])
 
   // Notification store
   const {

@@ -264,11 +264,6 @@ export interface AnnouncementItem {
   publishDate?: string
   type?: 'default' | 'ongoing' | 'success' | 'warning' | 'error'
   extra?: string
-  enabled?: boolean
-  sortOrder?: number
-  startDate?: string
-  endDate?: string
-  link?: string
 }
 
 // ============================================================================

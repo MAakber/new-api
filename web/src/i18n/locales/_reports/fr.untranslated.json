@@ -17,5 +17,11 @@
   "Only applies to model relay APIs.": "Only applies to model relay APIs.",
   "Start new rules in observe-only mode, review the history, and switch to enforcement only after confirming the thresholds. Root and administrator accounts are always exempt.": "Start new rules in observe-only mode, review the history, and switch to enforcement only after confirming the thresholds. Root and administrator accounts are always exempt.",
   "Temporarily blocks login and all API access when an enforcing rule reaches its threshold.": "Temporarily blocks login and all API access when an enforcing rule reaches its threshold.",
-  "The user will be able to log in and use API tokens again immediately.": "The user will be able to log in and use API tokens again immediately."
+  "The user will be able to log in and use API tokens again immediately.": "The user will be able to log in and use API tokens again immediately.",
+  "Date and time when this banner should be displayed": "Date and time when this banner should be displayed",
+  "Failed to save banner": "Failed to save banner",
+  "Failed to delete banner": "Failed to delete banner",
+  "Failed to load banners": "Failed to load banners",
+  "No banners yet. Click \"Add Banner\" to create one.": "No banners yet. Click \"Add Banner\" to create one.",
+  "Create or update public banners": "Create or update public banners"
 }
