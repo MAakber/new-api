@@ -68,7 +68,7 @@ func SetRelayRouter(router *gin.Engine) {
 	playgroundRouter := router.Group("/pg")
 	playgroundRouter.Use(middleware.RouteTag("relay"))
 	playgroundRouter.Use(middleware.SystemPerformanceCheck())
-	playgroundRouter.Use(middleware.UserAuth(), middleware.Distribute())
+	playgroundRouter.Use(middleware.UserAuth(), middleware.UserRequestRateLimit(), middleware.Distribute())
 	{
 		playgroundRouter.POST("/chat/completions", controller.Playground)
 	}
@@ -78,11 +78,10 @@ func SetRelayRouter(router *gin.Engine) {
 	relayV1Router.Use(middleware.TokenAuth())
 	relayV1Router.Use(middleware.RelayAutoBanClientMetrics())
 	relayV1Router.Use(middleware.RelayUserAgentBlacklist())
-	relayV1Router.Use(middleware.ModelRequestRateLimit())
 	{
 		// WebSocket 路由（统一到 Relay）
 		wsRouter := relayV1Router.Group("")
-		wsRouter.Use(middleware.Distribute())
+		wsRouter.Use(middleware.UserRequestRateLimit(), middleware.ModelRequestRateLimit(), middleware.Distribute())
 		wsRouter.GET("/realtime", func(c *gin.Context) {
 			controller.Relay(c, types.RelayFormatOpenAIRealtime)
 		})
@@ -90,7 +89,7 @@ func SetRelayRouter(router *gin.Engine) {
 	{
 		//http router
 		httpRouter := relayV1Router.Group("")
-		httpRouter.Use(middleware.Distribute())
+		httpRouter.Use(middleware.UserRequestRateLimit(), middleware.ModelRequestRateLimit(), middleware.Distribute())
 
 		// claude related routes
 		httpRouter.POST("/messages", func(c *gin.Context) {
@@ -168,19 +167,22 @@ func SetRelayRouter(router *gin.Engine) {
 			controller.Relay(c, types.RelayFormatOpenAI)
 		})
 
-		// not implemented
+		// not implemented submission endpoints
 		httpRouter.POST("/images/variations", controller.RelayNotImplemented)
-		httpRouter.GET("/files", controller.RelayNotImplemented)
 		httpRouter.POST("/files", controller.RelayNotImplemented)
-		httpRouter.DELETE("/files/:id", controller.RelayNotImplemented)
-		httpRouter.GET("/files/:id", controller.RelayNotImplemented)
-		httpRouter.GET("/files/:id/content", controller.RelayNotImplemented)
 		httpRouter.POST("/fine-tunes", controller.RelayNotImplemented)
-		httpRouter.GET("/fine-tunes", controller.RelayNotImplemented)
-		httpRouter.GET("/fine-tunes/:id", controller.RelayNotImplemented)
 		httpRouter.POST("/fine-tunes/:id/cancel", controller.RelayNotImplemented)
-		httpRouter.GET("/fine-tunes/:id/events", controller.RelayNotImplemented)
-		httpRouter.DELETE("/models/:model", controller.RelayNotImplemented)
+
+		queryRouter := relayV1Router.Group("")
+		queryRouter.Use(middleware.Distribute())
+		queryRouter.GET("/files", controller.RelayNotImplemented)
+		queryRouter.DELETE("/files/:id", controller.RelayNotImplemented)
+		queryRouter.GET("/files/:id", controller.RelayNotImplemented)
+		queryRouter.GET("/files/:id/content", controller.RelayNotImplemented)
+		queryRouter.GET("/fine-tunes", controller.RelayNotImplemented)
+		queryRouter.GET("/fine-tunes/:id", controller.RelayNotImplemented)
+		queryRouter.GET("/fine-tunes/:id/events", controller.RelayNotImplemented)
+		queryRouter.DELETE("/models/:model", controller.RelayNotImplemented)
 	}
 
 	relayMjRouter := router.Group("/mj")
@@ -197,11 +199,16 @@ func SetRelayRouter(router *gin.Engine) {
 	relaySunoRouter := router.Group("/suno")
 	relaySunoRouter.Use(middleware.RouteTag("relay"))
 	relaySunoRouter.Use(middleware.SystemPerformanceCheck())
-	relaySunoRouter.Use(middleware.TokenAuth(), middleware.RelayAutoBanClientMetrics(), middleware.RelayUserAgentBlacklist(), middleware.Distribute())
+	relaySunoRouter.Use(middleware.TokenAuth(), middleware.RelayAutoBanClientMetrics(), middleware.RelayUserAgentBlacklist())
 	{
-		relaySunoRouter.POST("/submit/:action", controller.RelayTask)
-		relaySunoRouter.POST("/fetch", controller.RelayTaskFetch)
-		relaySunoRouter.GET("/fetch/:id", controller.RelayTaskFetch)
+		submitRouter := relaySunoRouter.Group("")
+		submitRouter.Use(middleware.UserRequestRateLimit(), middleware.Distribute())
+		submitRouter.POST("/submit/:action", controller.RelayTask)
+
+		fetchRouter := relaySunoRouter.Group("")
+		fetchRouter.Use(middleware.Distribute())
+		fetchRouter.POST("/fetch", controller.RelayTaskFetch)
+		fetchRouter.GET("/fetch/:id", controller.RelayTaskFetch)
 	}
 
 	relayGeminiRouter := router.Group("/v1beta")
@@ -210,6 +217,7 @@ func SetRelayRouter(router *gin.Engine) {
 	relayGeminiRouter.Use(middleware.TokenAuth())
 	relayGeminiRouter.Use(middleware.RelayAutoBanClientMetrics())
 	relayGeminiRouter.Use(middleware.RelayUserAgentBlacklist())
+	relayGeminiRouter.Use(middleware.UserRequestRateLimit())
 	relayGeminiRouter.Use(middleware.ModelRequestRateLimit())
 	relayGeminiRouter.Use(middleware.Distribute())
 	{
@@ -222,23 +230,28 @@ func SetRelayRouter(router *gin.Engine) {
 
 func registerMjRouterGroup(relayMjRouter *gin.RouterGroup) {
 	relayMjRouter.GET("/image/:id", relay.RelayMidjourneyImage)
-	relayMjRouter.Use(middleware.TokenAuth(), middleware.RelayAutoBanClientMetrics(), middleware.RelayUserAgentBlacklist(), middleware.Distribute())
+	relayMjRouter.Use(middleware.TokenAuth(), middleware.RelayAutoBanClientMetrics(), middleware.RelayUserAgentBlacklist())
 	{
-		relayMjRouter.POST("/submit/action", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/shorten", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/modal", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/imagine", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/change", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/simple-change", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/describe", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/blend", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/edits", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/video", controller.RelayMidjourney)
+		submitRouter := relayMjRouter.Group("")
+		submitRouter.Use(middleware.UserRequestRateLimit(), middleware.Distribute())
+		submitRouter.POST("/submit/action", controller.RelayMidjourney)
+		submitRouter.POST("/submit/shorten", controller.RelayMidjourney)
+		submitRouter.POST("/submit/modal", controller.RelayMidjourney)
+		submitRouter.POST("/submit/imagine", controller.RelayMidjourney)
+		submitRouter.POST("/submit/change", controller.RelayMidjourney)
+		submitRouter.POST("/submit/simple-change", controller.RelayMidjourney)
+		submitRouter.POST("/submit/describe", controller.RelayMidjourney)
+		submitRouter.POST("/submit/blend", controller.RelayMidjourney)
+		submitRouter.POST("/submit/edits", controller.RelayMidjourney)
+		submitRouter.POST("/submit/video", controller.RelayMidjourney)
 		//relayMjRouter.POST("/notify", controller.RelayMidjourney)
-		relayMjRouter.GET("/task/:id/fetch", controller.RelayMidjourney)
-		relayMjRouter.GET("/task/:id/image-seed", controller.RelayMidjourney)
-		relayMjRouter.POST("/task/list-by-condition", controller.RelayMidjourney)
-		relayMjRouter.POST("/insight-face/swap", controller.RelayMidjourney)
-		relayMjRouter.POST("/submit/upload-discord-images", controller.RelayMidjourney)
+		submitRouter.POST("/insight-face/swap", controller.RelayMidjourney)
+		submitRouter.POST("/submit/upload-discord-images", controller.RelayMidjourney)
+
+		queryRouter := relayMjRouter.Group("")
+		queryRouter.Use(middleware.Distribute())
+		queryRouter.GET("/task/:id/fetch", controller.RelayMidjourney)
+		queryRouter.GET("/task/:id/image-seed", controller.RelayMidjourney)
+		queryRouter.POST("/task/list-by-condition", controller.RelayMidjourney)
 	}
 }

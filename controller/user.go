@@ -261,6 +261,9 @@ func Register(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgUserInputInvalid, map[string]any{"Error": err.Error()})
 		return
 	}
+	if rejectInvalidUserRequestsPerMinute(c, user.RequestsPerMinute) {
+		return
+	}
 	if common.EmailVerificationEnabled {
 		if user.Email == "" || user.VerificationCode == "" {
 			common.ApiErrorI18n(c, i18n.MsgUserEmailVerificationRequired)
@@ -430,6 +433,17 @@ func canManageTargetRole(myRole int, targetRole int) bool {
 	return myRole == common.RoleRootUser || myRole > targetRole
 }
 
+func rejectInvalidUserRequestsPerMinute(c *gin.Context, requestsPerMinute *int) bool {
+	if err := setting.ValidateUserRequestsPerMinute(requestsPerMinute); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"message": err.Error(),
+		})
+		return true
+	}
+	return false
+}
+
 func GetUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -575,31 +589,32 @@ func buildSelfUserData(user *model.User) map[string]interface{} {
 	permissions := calculateUserPermissions(user.Role)
 	permissions["admin_permissions"] = authz.Capabilities(user.Id, user.Role)
 	return map[string]interface{}{
-		"id":                user.Id,
-		"username":          user.Username,
-		"display_name":      user.DisplayName,
-		"role":              user.Role,
-		"status":            user.Status,
-		"email":             user.Email,
-		"github_id":         user.GitHubId,
-		"discord_id":        user.DiscordId,
-		"oidc_id":           user.OidcId,
-		"wechat_id":         user.WeChatId,
-		"telegram_id":       user.TelegramId,
-		"group":             user.Group,
-		"quota":             user.Quota,
-		"used_quota":        user.UsedQuota,
-		"request_count":     user.RequestCount,
-		"aff_code":          user.AffCode,
-		"aff_count":         user.AffCount,
-		"aff_quota":         user.AffQuota,
-		"aff_history_quota": user.AffHistoryQuota,
-		"inviter_id":        user.InviterId,
-		"linux_do_id":       user.LinuxDOId,
-		"setting":           user.Setting,
-		"stripe_customer":   user.StripeCustomer,
-		"sidebar_modules":   userSetting.SidebarModules, // 正确提取sidebar_modules字段
-		"permissions":       permissions,
+		"id":                  user.Id,
+		"username":            user.Username,
+		"display_name":        user.DisplayName,
+		"role":                user.Role,
+		"status":              user.Status,
+		"email":               user.Email,
+		"github_id":           user.GitHubId,
+		"discord_id":          user.DiscordId,
+		"oidc_id":             user.OidcId,
+		"wechat_id":           user.WeChatId,
+		"telegram_id":         user.TelegramId,
+		"group":               user.Group,
+		"quota":               user.Quota,
+		"used_quota":          user.UsedQuota,
+		"request_count":       user.RequestCount,
+		"requests_per_minute": user.RequestsPerMinute,
+		"aff_code":            user.AffCode,
+		"aff_count":           user.AffCount,
+		"aff_quota":           user.AffQuota,
+		"aff_history_quota":   user.AffHistoryQuota,
+		"inviter_id":          user.InviterId,
+		"linux_do_id":         user.LinuxDOId,
+		"setting":             user.Setting,
+		"stripe_customer":     user.StripeCustomer,
+		"sidebar_modules":     userSetting.SidebarModules, // 正确提取sidebar_modules字段
+		"permissions":         permissions,
 	}
 }
 
@@ -728,9 +743,30 @@ func GetUserModels(c *gin.Context) {
 }
 
 func UpdateUser(c *gin.Context) {
+	rawBody, err := c.GetRawData()
+	if err != nil {
+		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+		return
+	}
+	var requestData map[string]interface{}
+	if err := common.Unmarshal(rawBody, &requestData); err != nil {
+		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+		return
+	}
+	_, requestsPerMinuteProvided := requestData["requests_per_minute"]
 	var updatedUser model.User
-	err := common.DecodeJson(c.Request.Body, &updatedUser)
-	if err != nil || updatedUser.Id == 0 {
+	if err := common.Unmarshal(rawBody, &updatedUser); err != nil {
+		if requestsPerMinuteProvided {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"success": false,
+				"message": "invalid requests_per_minute",
+			})
+			return
+		}
+		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+		return
+	}
+	if updatedUser.Id == 0 {
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
 		return
 	}
@@ -746,10 +782,16 @@ func UpdateUser(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgUserInputInvalid, map[string]any{"Error": err.Error()})
 		return
 	}
+	if rejectInvalidUserRequestsPerMinute(c, updatedUser.RequestsPerMinute) {
+		return
+	}
 	originUser, err := model.GetUserById(updatedUser.Id, false)
 	if err != nil {
 		common.ApiError(c, err)
 		return
+	}
+	if !requestsPerMinuteProvided {
+		updatedUser.RequestsPerMinute = originUser.RequestsPerMinute
 	}
 	if updatedUser.Role != common.RoleGuestUser && updatedUser.Role != originUser.Role {
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
@@ -915,6 +957,9 @@ func UpdateSelf(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
 		return
 	}
+	if rejectInvalidUserRequestsPerMinute(c, user.RequestsPerMinute) {
+		return
+	}
 
 	if user.Password == "" {
 		user.Password = "$I_LOVE_U" // make Validator happy :)
@@ -1077,6 +1122,9 @@ func CreateUser(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgUserInputInvalid, map[string]any{"Error": err.Error()})
 		return
 	}
+	if rejectInvalidUserRequestsPerMinute(c, user.RequestsPerMinute) {
+		return
+	}
 	if user.DisplayName == "" {
 		user.DisplayName = user.Username
 	}
@@ -1087,10 +1135,11 @@ func CreateUser(c *gin.Context) {
 	}
 	// Even for admin users, we cannot fully trust them!
 	cleanUser := model.User{
-		Username:    user.Username,
-		Password:    user.Password,
-		DisplayName: user.DisplayName,
-		Role:        user.Role, // 保持管理员设置的角色
+		Username:          user.Username,
+		Password:          user.Password,
+		DisplayName:       user.DisplayName,
+		RequestsPerMinute: user.RequestsPerMinute,
+		Role:              user.Role, // 保持管理员设置的角色
 	}
 	authzTouched := false
 	if err := model.DB.Transaction(func(tx *gorm.DB) error {

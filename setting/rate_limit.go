@@ -4,9 +4,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/QuantumNous/new-api/common"
+)
+
+const (
+	UserRequestRateLimitEnabledOptionKey = "UserRequestRateLimitEnabled"
+	UserRequestRateLimitDefaultOptionKey = "UserRequestRateLimitDefault"
+
+	DefaultUserRequestsPerMinute = 60
+	MaxUserRequestsPerMinute     = 1_000_000
 )
 
 var ModelRequestRateLimitEnabled = false
@@ -15,6 +25,30 @@ var ModelRequestRateLimitCount = 0
 var ModelRequestRateLimitSuccessCount = 1000
 var ModelRequestRateLimitGroup = map[string][2]int{}
 var ModelRequestRateLimitMutex sync.RWMutex
+
+var UserRequestRateLimitEnabled = false
+var UserRequestRateLimitDefault = DefaultUserRequestsPerMinute
+
+func ValidateUserRequestsPerMinute(requestsPerMinute *int) error {
+	if requestsPerMinute == nil {
+		return nil
+	}
+	if *requestsPerMinute < 0 || *requestsPerMinute > MaxUserRequestsPerMinute {
+		return fmt.Errorf("requests_per_minute must be between 0 and %d", MaxUserRequestsPerMinute)
+	}
+	return nil
+}
+
+func ValidateUserRequestRateLimitDefault(value string) error {
+	parsed, err := strconv.Atoi(strings.TrimSpace(value))
+	if err != nil {
+		return fmt.Errorf("%s must be an integer", UserRequestRateLimitDefaultOptionKey)
+	}
+	if parsed < 1 || parsed > MaxUserRequestsPerMinute {
+		return fmt.Errorf("%s must be between 1 and %d", UserRequestRateLimitDefaultOptionKey, MaxUserRequestsPerMinute)
+	}
+	return nil
+}
 
 func ModelRequestRateLimitGroup2JSONString() string {
 	ModelRequestRateLimitMutex.RLock()

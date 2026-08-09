@@ -57,6 +57,10 @@ func writeUserCache(user *UserBase, includeQuota bool) error {
 	if includeQuota {
 		includeQuotaArg = "1"
 	}
+	requestsPerMinute := ""
+	if user.RequestsPerMinute != nil {
+		requestsPerMinute = strconv.Itoa(*user.RequestsPerMinute)
+	}
 	ttl := userCacheTTLSeconds()
 	const script = `
 local incoming = tonumber(ARGV[1])
@@ -81,7 +85,8 @@ redis.call('HSET', KEYS[1],
   'Setting', ARGV[8], 'AuthVersion', ARGV[1], 'CacheSchema', ARGV[9],
   'AutoBanUntil', ARGV[10], 'AutoBanRule', ARGV[11],
   'AutoBanRecordId', ARGV[12], 'AutoBanStatus', ARGV[13],
-  'AutoBanCode', ARGV[14], 'AutoBanMessage', ARGV[15])
+  'AutoBanCode', ARGV[14], 'AutoBanMessage', ARGV[15],
+  'RequestsPerMinute', ARGV[19])
 if ARGV[16] == '1' and redis.call('HEXISTS', KEYS[1], 'Quota') == 0 then
   redis.call('HSET', KEYS[1], 'Quota', ARGV[17])
 end
@@ -92,7 +97,7 @@ return 1`
 		user.AuthVersion, user.Id, user.Group, user.Email, user.Status, user.Role,
 		user.Username, user.Setting, user.CacheSchema, user.AutoBanUntil, user.AutoBanRule,
 		user.AutoBanRecordId, user.AutoBanStatus, user.AutoBanCode, user.AutoBanMessage,
-		includeQuotaArg, user.Quota, ttl,
+		includeQuotaArg, user.Quota, ttl, requestsPerMinute,
 	).Int()
 	if err != nil {
 		return err
@@ -270,6 +275,11 @@ if redis.call('EXISTS', KEYS[1]) == 0 then
   return 1
 end
 if current ~= incoming then
+  return 1
+end
+local schema = redis.call('HGET', KEYS[1], 'CacheSchema') or ''
+if schema ~= ARGV[4] then
+  redis.call('DEL', KEYS[1])
   return 1
 end
 redis.call('HSET', KEYS[1], ARGV[2], ARGV[3], 'CacheSchema', ARGV[4])

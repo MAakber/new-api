@@ -237,8 +237,10 @@ const (
 
 // Rate limit related messages
 const (
-	MsgRateLimitReached      = "rate_limit.reached"
-	MsgRateLimitTotalReached = "rate_limit.total_reached"
+	MsgRateLimitReached                = "rate_limit.reached"
+	MsgRateLimitTotalReached           = "rate_limit.total_reached"
+	MsgUserRequestRateLimitReached     = "rate_limit.user_requests_per_minute"
+	MsgUserRequestRateLimitUnavailable = "rate_limit.user_requests_unavailable"
 )
 
 // Setting related messages

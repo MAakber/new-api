@@ -39,6 +39,8 @@ import { Switch } from '@/components/ui/switch'
 import { parseIntegerInputValue } from '@/lib/number-input'
 
 import {
+  SettingsControlChildren,
+  SettingsControlGroup,
   SettingsForm,
   SettingsSwitchContent,
   SettingsSwitchItem,
@@ -47,6 +49,8 @@ import { SettingsPageFormActions } from '../components/settings-page-context'
 import { SettingsSection } from '../components/settings-section'
 import { useUpdateOption } from '../hooks/use-update-option'
 import { RateLimitVisualEditor } from './rate-limit-visual-editor'
+
+const USER_REQUEST_RATE_LIMIT_MAX = 1_000_000
 
 const isValidJSON = (value: string | undefined) => {
   if (!value || value.trim() === '') return true
@@ -79,6 +83,12 @@ const createRateLimitSchema = (t: (key: string) => string) =>
       .refine(isValidJSON, {
         message: t('Invalid JSON format or values out of allowed range'),
       }),
+    UserRequestRateLimitEnabled: z.boolean(),
+    UserRequestRateLimitDefault: z
+      .number()
+      .int()
+      .min(1)
+      .max(USER_REQUEST_RATE_LIMIT_MAX),
   })
 
 type RateLimitFormValues = z.infer<ReturnType<typeof createRateLimitSchema>>
@@ -103,6 +113,8 @@ export function RateLimitSection({ defaultValues }: RateLimitSectionProps) {
   useEffect(() => {
     form.reset(defaultValues)
   }, [defaultValues, form])
+
+  const userRequestRateLimitEnabled = form.watch('UserRequestRateLimitEnabled')
 
   const onSubmit = async (values: RateLimitFormValues) => {
     const updates = Object.entries(values).filter(
@@ -240,6 +252,83 @@ export function RateLimitSection({ defaultValues }: RateLimitSectionProps) {
               )}
             />
           </div>
+
+          <SettingsControlGroup>
+            <FormField
+              control={form.control}
+              name='UserRequestRateLimitEnabled'
+              render={({ field }) => (
+                <SettingsSwitchItem className='py-0'>
+                  <SettingsSwitchContent>
+                    <FormLabel>
+                      {t('Enable per-user request rate limiting')}
+                    </FormLabel>
+                    <FormDescription>
+                      {t(
+                        'Applies to users who inherit the system default. Individual users can override this in user management.'
+                      )}
+                    </FormDescription>
+                  </SettingsSwitchContent>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      disabled={updateOption.isPending}
+                    />
+                  </FormControl>
+                </SettingsSwitchItem>
+              )}
+            />
+
+            <SettingsControlChildren className='space-y-4'>
+              <FormField
+                control={form.control}
+                name='UserRequestRateLimitDefault'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('Default requests per minute')}</FormLabel>
+                    <FormControl>
+                      <div className='flex max-w-sm items-center gap-2'>
+                        <Input
+                          type='number'
+                          min={1}
+                          max={USER_REQUEST_RATE_LIMIT_MAX}
+                          step={1}
+                          value={field.value ?? ''}
+                          onChange={(event) =>
+                            field.onChange(
+                              parseIntegerInputValue(event.target.value)
+                            )
+                          }
+                          name={field.name}
+                          onBlur={field.onBlur}
+                          ref={field.ref}
+                          disabled={
+                            !userRequestRateLimitEnabled ||
+                            updateOption.isPending
+                          }
+                        />
+                        <span className='text-muted-foreground text-sm'>
+                          {t('RPM')}
+                        </span>
+                      </div>
+                    </FormControl>
+                    <FormDescription>
+                      {userRequestRateLimitEnabled
+                        ? t(
+                            'Users who inherit the system default are limited to this many requests per minute.'
+                          )
+                        : t(
+                            'User request rate limiting is disabled. This value is kept for when you enable it again.'
+                          )}{' '}
+                      {t('Allowed range: 1–1,000,000 requests per minute.')}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </SettingsControlChildren>
+          </SettingsControlGroup>
 
           <FormField
             control={form.control}

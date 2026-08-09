@@ -30,6 +30,8 @@ const defaultSecuritySettings: SecuritySettings = {
   ModelRequestRateLimitSuccessCount: 1000,
   ModelRequestRateLimitDurationMinutes: 1,
   ModelRequestRateLimitGroup: '',
+  UserRequestRateLimitEnabled: false,
+  UserRequestRateLimitDefault: 60,
   RelayUserAgentBlacklistEnabled: false,
   RelayUserAgentBlacklist: '',
   UpstreamInterceptionConfig:

@@ -204,6 +204,8 @@ twofa.code_invalid: "验证码或备用码不正确"
 # Rate limit messages
 rate_limit.reached: "您已达到请求数限制：{{.Minutes}}分钟内最多请求{{.Max}}次"
 rate_limit.total_reached: "您已达到总请求数限制：{{.Minutes}}分钟内最多请求{{.Max}}次，包括失败次数"
+rate_limit.user_requests_per_minute: "您已达到每分钟请求数限制：每分钟最多请求{{.Max}}次"
+rate_limit.user_requests_unavailable: "每分钟请求数限流服务暂时不可用，请稍后再试"
 
 # Setting messages
 setting.invalid_type: "无效的预警类型"

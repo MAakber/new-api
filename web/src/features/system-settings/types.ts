@@ -409,6 +409,8 @@ export type SecuritySettings = {
   ModelRequestRateLimitSuccessCount: number
   ModelRequestRateLimitDurationMinutes: number
   ModelRequestRateLimitGroup: string
+  UserRequestRateLimitEnabled: boolean
+  UserRequestRateLimitDefault: number
   RelayUserAgentBlacklistEnabled: boolean
   RelayUserAgentBlacklist: string
   UpstreamInterceptionConfig: string

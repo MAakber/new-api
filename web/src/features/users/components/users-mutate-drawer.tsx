@@ -44,6 +44,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
@@ -71,6 +72,7 @@ import {
 } from '@/lib/admin-permissions'
 import { getCurrencyDisplay, getCurrencyLabel } from '@/lib/currency'
 import { formatQuota, parseQuotaFromDollars } from '@/lib/format'
+import { parseNumberInputValue } from '@/lib/number-input'
 import { ROLE } from '@/lib/roles'
 import { useAuthStore } from '@/stores/auth-store'
 
@@ -84,12 +86,13 @@ import {
 import { BINDING_FIELDS, ERROR_MESSAGES, SUCCESS_MESSAGES } from '../constants'
 import {
   userFormSchema,
-  type UserFormValues,
   USER_FORM_DEFAULT_VALUES,
   transformFormDataToPayload,
   transformUserToFormDefaults,
+  USER_REQUEST_RATE_LIMIT_MAX,
 } from '../lib'
-import { type User } from '../types'
+import type { UserFormValues, UserRequestRateLimitMode } from '../lib/user-form'
+import type { User } from '../types'
 import { UserQuotaDialog } from './user-quota-dialog'
 import { useUsers } from './users-provider'
 
@@ -136,16 +139,20 @@ export function UsersMutateDrawer({
   useEffect(() => {
     if (open && isUpdate && currentRow) {
       // For update, fetch fresh data
-      getUser(currentRow.id).then((result) => {
-        if (result.success && result.data) {
-          form.reset(transformUserToFormDefaults(result.data))
-        }
-      })
+      getUser(currentRow.id)
+        .then((result) => {
+          if (result.success && result.data) {
+            form.reset(transformUserToFormDefaults(result.data))
+          }
+        })
+        .catch(() => {
+          toast.error(t(ERROR_MESSAGES.UNEXPECTED))
+        })
     } else if (open && !isUpdate) {
       // For create, reset to defaults
       form.reset(USER_FORM_DEFAULT_VALUES)
     }
-  }, [open, isUpdate, currentRow, form])
+  }, [open, isUpdate, currentRow, form, t])
 
   const { meta: currencyMeta } = getCurrencyDisplay()
   const currencyLabel = getCurrencyLabel()
@@ -153,6 +160,7 @@ export function UsersMutateDrawer({
 
   const currentQuotaRaw = form.watch('quota_dollars') || 0
   const selectedRole = form.watch('role')
+  const selectedUserRequestRateLimitMode = form.watch('rpm_mode')
   const canEditAdminPermissions = currentUser?.role === ROLE.SUPER_ADMIN
   const targetIsAdmin = (selectedRole ?? currentRow?.role ?? 0) >= ROLE.ADMIN
 
@@ -195,7 +203,7 @@ export function UsersMutateDrawer({
               : t(ERROR_MESSAGES.CREATE_FAILED))
         )
       }
-    } catch (_error) {
+    } catch {
       toast.error(t(ERROR_MESSAGES.UNEXPECTED))
     } finally {
       setIsSubmitting(false)
@@ -278,7 +286,8 @@ export function UsersMutateDrawer({
                             { value: '10', label: t('Admin') },
                           ]}
                           onValueChange={(value) =>
-                            value !== null && field.onChange(parseInt(value))
+                            value !== null &&
+                            field.onChange(Number.parseInt(value, 10))
                           }
                           value={String(field.value)}
                         >
@@ -360,12 +369,10 @@ export function UsersMutateDrawer({
                       <FormItem>
                         <FormLabel>{t('Group')}</FormLabel>
                         <Select
-                          items={[
-                            ...groups.map((group) => ({
-                              value: group,
-                              label: group,
-                            })),
-                          ]}
+                          items={groups.map((group) => ({
+                            value: group,
+                            label: group,
+                          }))}
                           onValueChange={field.onChange}
                           value={field.value}
                         >
@@ -447,6 +454,155 @@ export function UsersMutateDrawer({
                       </FormItem>
                     )}
                   />
+                </SideDrawerSection>
+              )}
+
+              {isUpdate && (
+                <SideDrawerSection>
+                  <h3 className='text-sm font-medium'>
+                    {t('User request rate limit')}
+                  </h3>
+                  <p className='text-muted-foreground text-xs'>
+                    {t(
+                      'Choose the request limit for this user. This does not change the system default.'
+                    )}
+                  </p>
+
+                  <FormField
+                    control={form.control}
+                    name='rpm_mode'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t('User requests per minute')}</FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            value={field.value}
+                            onValueChange={(value) => {
+                              if (!value) return
+                              const mode = value as UserRequestRateLimitMode
+                              field.onChange(mode)
+
+                              if (mode === 'default') {
+                                form.setValue('requests_per_minute', null, {
+                                  shouldDirty: true,
+                                  shouldValidate: true,
+                                })
+                                return
+                              }
+
+                              if (mode === 'unlimited') {
+                                form.setValue('requests_per_minute', 0, {
+                                  shouldDirty: true,
+                                  shouldValidate: true,
+                                })
+                                return
+                              }
+
+                              const currentValue = form.getValues(
+                                'requests_per_minute'
+                              )
+                              if (
+                                typeof currentValue !== 'number' ||
+                                currentValue < 1
+                              ) {
+                                form.setValue('requests_per_minute', '', {
+                                  shouldDirty: true,
+                                  shouldValidate: true,
+                                })
+                              }
+                            }}
+                            aria-label={t('User requests per minute')}
+                            className='gap-2'
+                          >
+                            {[
+                              {
+                                value: 'default' as const,
+                                title: t('Inherit system default'),
+                                description: t(
+                                  'Use the default RPM configured in system settings.'
+                                ),
+                              },
+                              {
+                                value: 'unlimited' as const,
+                                title: t('Unlimited'),
+                                description: t(
+                                  'Do not apply a per-user RPM limit.'
+                                ),
+                              },
+                              {
+                                value: 'custom' as const,
+                                title: t('Custom'),
+                                description: t(
+                                  'Set a separate RPM for this user.'
+                                ),
+                              },
+                            ].map((option) => (
+                              <Label
+                                key={option.value}
+                                htmlFor={`user-rpm-${option.value}`}
+                                className='hover:border-primary/40 has-data-[checked]:border-primary has-data-[checked]:ring-primary/20 flex cursor-pointer items-start gap-3 rounded-lg border p-3 font-normal transition-all has-data-[checked]:ring-1'
+                              >
+                                <RadioGroupItem
+                                  value={option.value}
+                                  id={`user-rpm-${option.value}`}
+                                  className='mt-0.5'
+                                />
+                                <span className='min-w-0'>
+                                  <span className='block text-sm font-medium'>
+                                    {option.title}
+                                  </span>
+                                  <span className='text-muted-foreground mt-1 block text-xs'>
+                                    {option.description}
+                                  </span>
+                                </span>
+                              </Label>
+                            ))}
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {selectedUserRequestRateLimitMode === 'custom' && (
+                    <FormField
+                      control={form.control}
+                      name='requests_per_minute'
+                      render={({ field }) => (
+                        <FormItem className='ml-7'>
+                          <FormLabel>
+                            {t('Custom requests per minute')}
+                          </FormLabel>
+                          <FormControl>
+                            <div className='flex max-w-sm items-center gap-2'>
+                              <Input
+                                type='number'
+                                min={1}
+                                max={USER_REQUEST_RATE_LIMIT_MAX}
+                                step={1}
+                                value={field.value === null ? '' : field.value}
+                                onChange={(event) =>
+                                  field.onChange(
+                                    parseNumberInputValue(event.target.value)
+                                  )
+                                }
+                                name={field.name}
+                                onBlur={field.onBlur}
+                                ref={field.ref}
+                              />
+                              <span className='text-muted-foreground text-sm'>
+                                {t('RPM')}
+                              </span>
+                            </div>
+                          </FormControl>
+                          <FormDescription>
+                            {t('Enter a whole number from 1 to 1,000,000.')}
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
                 </SideDrawerSection>
               )}
 
