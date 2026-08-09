@@ -116,7 +116,7 @@ export function AvailabilitySection(props: AvailabilitySectionProps) {
       </header>
 
       <div className='p-3 sm:p-4'>
-        <div className='text-muted-foreground grid grid-cols-[minmax(0,1fr)_88px] gap-3 px-3 pb-2 text-[10px] font-semibold tracking-wider uppercase sm:grid-cols-[minmax(0,1fr)_150px_100px_90px]'>
+        <div className='text-muted-foreground grid grid-cols-[minmax(0,1fr)_120px] gap-3 px-3 pb-2 text-[10px] font-semibold tracking-wider uppercase sm:grid-cols-[minmax(0,1fr)_200px_100px_90px]'>
           <span>{t('Model')}</span>
           <span>{t('Success rate')}</span>
           <span className='hidden sm:block'>{t('Average latency')}</span>
@@ -202,7 +202,7 @@ function AvailabilityRow(props: { model: RankingModelAvailability }) {
   if (level === 'warning') status = t('Degraded')
 
   return (
-    <div className='hover:bg-muted/35 grid grid-cols-[minmax(0,1fr)_88px] items-center gap-3 rounded-lg px-3 py-2.5 transition-colors sm:grid-cols-[minmax(0,1fr)_150px_100px_90px]'>
+    <div className='hover:bg-muted/35 grid grid-cols-[minmax(0,1fr)_120px] items-center gap-3 rounded-lg px-3 py-2.5 transition-colors sm:grid-cols-[minmax(0,1fr)_200px_100px_90px]'>
       <div className='flex min-w-0 items-center gap-2.5'>
         {getLobeIcon(props.model.vendor_icon, 22)}
         <div className='min-w-0'>
