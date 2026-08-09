@@ -47,6 +47,13 @@ export const STATIC_I18N_KEYS = [
   'Routing Reliability',
   'Maintenance',
 
+  // Announcement status labels
+  'Default',
+  'Ongoing',
+  'Success',
+  'Warning',
+  'Error',
+
   // System info
   'online',
   'stale',

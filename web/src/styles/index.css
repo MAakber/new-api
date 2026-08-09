@@ -423,6 +423,40 @@ For commercial licensing, please contact support@quantumnous.com
     will-change: transform;
   }
 
+  .public-announcement-stripes {
+    background-image: repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--background) 22%, transparent) 0 2px,
+      transparent 2px 11px
+    );
+    animation: public-announcement-stripes 13s linear infinite;
+    will-change: background-position;
+  }
+
+  .public-announcement-copy {
+    animation: public-announcement-copy-in 360ms ease-out both;
+  }
+
+  @keyframes public-announcement-stripes {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 44px 0;
+    }
+  }
+
+  @keyframes public-announcement-copy-in {
+    from {
+      opacity: 0;
+      transform: translateY(3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Pause animation on hover */
   .scroll-container:hover .animate-scroll-up,
   .scroll-container:hover .animate-scroll-down {
@@ -435,7 +469,9 @@ For commercial licensing, please contact support@quantumnous.com
   .animate-appear-zoom,
   .animate-scroll-up,
   .animate-scroll-down,
-  [data-slot='table'] tbody tr {
+  [data-slot='table'] tbody tr,
+  .public-announcement-stripes,
+  .public-announcement-copy {
     animation: none !important;
     opacity: 1;
     transform: none;

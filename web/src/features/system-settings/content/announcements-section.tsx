@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Plus, Trash2, Save } from 'lucide-react'
+import { ExternalLink, Plus, Save, Trash2 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -59,19 +59,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
+import type { AnnouncementItem } from '@/features/dashboard/types'
+import { getSafeAnnouncementLink } from '@/lib/announcement-utils'
 import dayjs from '@/lib/dayjs'
 
 import { SettingsSwitchField } from '../components/settings-form-layout'
 import { SettingsSection } from '../components/settings-section'
 import { useUpdateOption } from '../hooks/use-update-option'
 
-type Announcement = {
+type Announcement = AnnouncementItem & {
   id: number
   content: string
   publishDate: string
-  type: 'default' | 'ongoing' | 'success' | 'warning' | 'error'
-  extra?: string
 }
 
 type AnnouncementsSectionProps = {
@@ -79,55 +80,196 @@ type AnnouncementsSectionProps = {
   data: string
 }
 
-const announcementSchema = z.object({
-  content: z
-    .string()
-    .min(1, 'Content is required')
-    .max(500, 'Content must be less than 500 characters'),
-  publishDate: z.string().min(1, 'Publish date is required'),
-  type: z.enum(['default', 'ongoing', 'success', 'warning', 'error']),
-  extra: z
-    .string()
-    .max(100, 'Extra must be less than 100 characters')
-    .optional(),
-})
+const ANNOUNCEMENT_SORT_ORDER_MIN = -2147483648
+const ANNOUNCEMENT_SORT_ORDER_MAX = 2147483647
+
+const announcementTypes = [
+  'default',
+  'ongoing',
+  'success',
+  'warning',
+  'error',
+] as const
+
+function isValidOptionalDate(value: string): boolean {
+  return value === '' || !Number.isNaN(Date.parse(value))
+}
+
+const announcementSchema = z
+  .object({
+    content: z
+      .string()
+      .min(1, 'Content is required')
+      .max(500, 'Content must be less than 500 characters'),
+    publishDate: z.string().min(1, 'Publish date is required'),
+    type: z.enum(announcementTypes),
+    extra: z
+      .string()
+      .max(200, 'Extra must be less than 200 characters')
+      .optional(),
+    enabled: z.boolean(),
+    sortOrder: z
+      .number()
+      .int('Sort order must be a whole number')
+      .min(
+        ANNOUNCEMENT_SORT_ORDER_MIN,
+        'Sort order is below the supported minimum'
+      )
+      .max(
+        ANNOUNCEMENT_SORT_ORDER_MAX,
+        'Sort order is above the supported maximum'
+      )
+      .optional(),
+    startDate: z
+      .string()
+      .refine(isValidOptionalDate, 'Start date must be a valid date')
+      .optional(),
+    endDate: z
+      .string()
+      .refine(isValidOptionalDate, 'End date must be a valid date')
+      .optional(),
+    link: z
+      .string()
+      .max(500, 'Link must be less than 500 characters')
+      .refine(
+        (value) => value === '' || Boolean(getSafeAnnouncementLink(value)),
+        'Link must be a valid HTTP or HTTPS URL'
+      )
+      .optional(),
+  })
+  .superRefine((values, context) => {
+    if (!values.startDate || !values.endDate) return
+
+    if (Date.parse(values.startDate) > Date.parse(values.endDate)) {
+      context.addIssue({
+        code: 'custom',
+        message: 'Start date cannot be later than end date',
+        path: ['endDate'],
+      })
+    }
+  })
 
 type AnnouncementFormValues = z.infer<typeof announcementSchema>
 
 const ANNOUNCEMENT_FORM_ID = 'announcement-form'
 
+function getDefaultAnnouncementValues(): AnnouncementFormValues {
+  return {
+    content: '',
+    publishDate: new Date().toISOString(),
+    type: 'default',
+    extra: '',
+    enabled: true,
+    sortOrder: undefined,
+    startDate: '',
+    endDate: '',
+    link: '',
+  }
+}
+
 const typeOptions = [
   {
     value: 'default',
-    label: 'Default',
+    labelKey: 'Default',
     color: 'bg-gray-500',
     badgeVariant: 'neutral' as const,
   },
   {
     value: 'ongoing',
-    label: 'Ongoing',
+    labelKey: 'Ongoing',
     color: 'bg-blue-500',
     badgeVariant: 'info' as const,
   },
   {
     value: 'success',
-    label: 'Success',
+    labelKey: 'Success',
     color: 'bg-green-500',
     badgeVariant: 'success' as const,
   },
   {
     value: 'warning',
-    label: 'Warning',
+    labelKey: 'Warning',
     color: 'bg-orange-500',
     badgeVariant: 'warning' as const,
   },
   {
     value: 'error',
-    label: 'Error',
+    labelKey: 'Error',
     color: 'bg-red-500',
     badgeVariant: 'danger' as const,
   },
 ]
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function normalizeAnnouncement(
+  item: Record<string, unknown>,
+  index: number
+): Announcement {
+  const type = announcementTypes.includes(
+    item.type as (typeof announcementTypes)[number]
+  )
+    ? (item.type as Announcement['type'])
+    : 'default'
+  const announcement: Announcement = {
+    ...item,
+    id:
+      typeof item.id === 'number' && Number.isFinite(item.id)
+        ? item.id
+        : index + 1,
+    content: typeof item.content === 'string' ? item.content : '',
+    publishDate: typeof item.publishDate === 'string' ? item.publishDate : '',
+    type,
+    extra: typeof item.extra === 'string' ? item.extra : '',
+    enabled: item.enabled !== false,
+  }
+
+  if (
+    typeof item.sortOrder === 'number' &&
+    Number.isInteger(item.sortOrder) &&
+    item.sortOrder >= ANNOUNCEMENT_SORT_ORDER_MIN &&
+    item.sortOrder <= ANNOUNCEMENT_SORT_ORDER_MAX
+  ) {
+    announcement.sortOrder = item.sortOrder
+  } else {
+    delete announcement.sortOrder
+  }
+
+  for (const field of ['startDate', 'endDate'] as const) {
+    const value = typeof item[field] === 'string' ? item[field].trim() : ''
+    if (value && isValidOptionalDate(value)) {
+      announcement[field] = value
+    } else {
+      delete announcement[field]
+    }
+  }
+
+  const link = typeof item.link === 'string' ? item.link.trim() : ''
+  if (link && getSafeAnnouncementLink(link)) {
+    announcement.link = link
+  } else {
+    delete announcement.link
+  }
+
+  return announcement
+}
+
+function toAnnouncementPayload(announcement: Announcement): Announcement {
+  const payload = { ...announcement }
+  if (!payload.startDate) delete payload.startDate
+  if (!payload.endDate) delete payload.endDate
+  if (!payload.link) delete payload.link
+  if (payload.sortOrder === undefined) delete payload.sortOrder
+  return payload
+}
+
+function formatOptionalDate(value?: string): string {
+  if (!value) return '—'
+  const date = dayjs(value)
+  return date.isValid() ? date.format('YYYY-MM-DD HH:mm') : '—'
+}
 
 export function AnnouncementsSection({
   enabled,
@@ -147,25 +289,22 @@ export function AnnouncementsSection({
 
   const form = useForm<AnnouncementFormValues>({
     resolver: zodResolver(announcementSchema),
-    defaultValues: {
-      content: '',
-      publishDate: new Date().toISOString(),
-      type: 'default',
-      extra: '',
-    },
+    defaultValues: getDefaultAnnouncementValues(),
   })
 
   useEffect(() => {
     try {
-      const parsed = JSON.parse(data || '[]')
-      if (Array.isArray(parsed)) {
-        setAnnouncements(
-          parsed.map((item, idx) => ({
-            ...item,
-            id: item.id || idx + 1,
-          }))
-        )
+      const parsed: unknown = JSON.parse(data || '[]')
+      if (!Array.isArray(parsed)) {
+        setAnnouncements([])
+        return
       }
+
+      setAnnouncements(
+        parsed
+          .filter(isRecord)
+          .map((item, index) => normalizeAnnouncement(item, index))
+      )
     } catch {
       setAnnouncements([])
     }
@@ -190,12 +329,7 @@ export function AnnouncementsSection({
 
   const handleAdd = () => {
     setEditingAnnouncement(null)
-    form.reset({
-      content: '',
-      publishDate: new Date().toISOString(),
-      type: 'default',
-      extra: '',
-    })
+    form.reset(getDefaultAnnouncementValues())
     setShowDialog(true)
   }
 
@@ -204,8 +338,13 @@ export function AnnouncementsSection({
     form.reset({
       content: announcement.content,
       publishDate: announcement.publishDate,
-      type: announcement.type,
+      type: announcement.type ?? 'default',
       extra: announcement.extra || '',
+      enabled: announcement.enabled !== false,
+      sortOrder: announcement.sortOrder,
+      startDate: announcement.startDate || '',
+      endDate: announcement.endDate || '',
+      link: announcement.link || '',
     })
     setShowDialog(true)
   }
@@ -251,14 +390,19 @@ export function AnnouncementsSection({
   const handleSubmitForm = (values: AnnouncementFormValues) => {
     if (editingAnnouncement) {
       setAnnouncements((prev) =>
-        prev.map((item) =>
-          item.id === editingAnnouncement.id ? { ...item, ...values } : item
+        prev.map((item, index) =>
+          item.id === editingAnnouncement.id
+            ? normalizeAnnouncement({ ...item, ...values }, index)
+            : item
         )
       )
       toast.success(t('Announcement updated. Click "Save Settings" to apply.'))
     } else {
       const newId = Math.max(...announcements.map((item) => item.id), 0) + 1
-      setAnnouncements((prev) => [...prev, { id: newId, ...values }])
+      setAnnouncements((prev) => [
+        ...prev,
+        normalizeAnnouncement({ id: newId, ...values }, prev.length),
+      ])
       toast.success(t('Announcement added. Click "Save Settings" to apply.'))
     }
     setHasChanges(true)
@@ -269,7 +413,7 @@ export function AnnouncementsSection({
     try {
       await updateOption.mutateAsync({
         key: 'console_setting.announcements',
-        value: JSON.stringify(announcements),
+        value: JSON.stringify(announcements.map(toAnnouncementPayload)),
       })
       setHasChanges(false)
       toast.success(t('Announcements saved successfully'))
@@ -290,6 +434,9 @@ export function AnnouncementsSection({
 
   const sortedAnnouncements = useMemo(() => {
     return [...announcements].sort((a, b) => {
+      const sortOrderDifference = (b.sortOrder ?? 0) - (a.sortOrder ?? 0)
+      if (sortOrderDifference !== 0) return sortOrderDifference
+
       return (
         new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
       )
@@ -381,6 +528,28 @@ export function AnnouncementsSection({
               cell: (announcement) => announcement.content,
             },
             {
+              id: 'enabled',
+              header: t('Enabled'),
+              cell: (announcement) => (
+                <StatusBadge
+                  label={
+                    announcement.enabled === false
+                      ? t('Disabled')
+                      : t('Enabled')
+                  }
+                  variant={
+                    announcement.enabled === false ? 'neutral' : 'success'
+                  }
+                  copyable={false}
+                />
+              ),
+            },
+            {
+              id: 'sort-order',
+              header: t('Sort Order'),
+              cell: (announcement) => announcement.sortOrder ?? '—',
+            },
+            {
               id: 'publish-date',
               header: t('Publish Date'),
               cell: (announcement) => (
@@ -397,14 +566,30 @@ export function AnnouncementsSection({
               ),
             },
             {
+              id: 'lifecycle',
+              header: t('Display window'),
+              cell: (announcement) => (
+                <div className='flex flex-col gap-1 text-xs'>
+                  <span>
+                    <span className='text-muted-foreground'>{t('Start')}:</span>{' '}
+                    {formatOptionalDate(announcement.startDate)}
+                  </span>
+                  <span className='text-muted-foreground'>
+                    <span>{t('End')}:</span>{' '}
+                    {formatOptionalDate(announcement.endDate)}
+                  </span>
+                </div>
+              ),
+            },
+            {
               id: 'type',
               header: t('Type'),
               cell: (announcement) => (
                 <StatusBadge
-                  label={
+                  label={t(
                     typeOptions.find((opt) => opt.value === announcement.type)
-                      ?.label
-                  }
+                      ?.labelKey ?? 'Default'
+                  )}
                   variant={
                     typeOptions.find((opt) => opt.value === announcement.type)
                       ?.badgeVariant ?? 'neutral'
@@ -418,6 +603,26 @@ export function AnnouncementsSection({
               header: t('Extra'),
               cellClassName: 'text-muted-foreground max-w-xs truncate',
               cell: (announcement) => announcement.extra || '-',
+            },
+            {
+              id: 'link',
+              header: t('Link'),
+              cell: (announcement) => {
+                const link = getSafeAnnouncementLink(announcement.link)
+                return link ? (
+                  <a
+                    className='text-primary inline-flex items-center gap-1 hover:underline'
+                    href={link}
+                    rel='noopener noreferrer'
+                    target='_blank'
+                  >
+                    {t('Open')}
+                    <ExternalLink aria-hidden='true' className='size-3' />
+                  </a>
+                ) : (
+                  '—'
+                )
+              },
             },
             {
               id: 'actions',
@@ -445,7 +650,7 @@ export function AnnouncementsSection({
         description={t(
           'Create or update system announcements for the dashboard'
         )}
-        contentClassName='max-w-2xl'
+        contentClassName='max-w-3xl'
         contentHeight='auto'
         bodyClassName='space-y-4'
         footer={
@@ -493,6 +698,26 @@ export function AnnouncementsSection({
             />
             <FormField
               control={form.control}
+              name='enabled'
+              render={({ field }) => (
+                <FormItem className='flex flex-row items-center justify-between rounded-xl border px-3 py-2.5'>
+                  <div className='space-y-0.5'>
+                    <FormLabel>{t('Enabled')}</FormLabel>
+                    <FormDescription className='text-xs'>
+                      {t('Show this announcement on public pages')}
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name='publishDate'
               render={({ field }) => (
                 <FormItem>
@@ -517,6 +742,76 @@ export function AnnouncementsSection({
             />
             <FormField
               control={form.control}
+              name='sortOrder'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('Sort Order')}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type='number'
+                      min={ANNOUNCEMENT_SORT_ORDER_MIN}
+                      max={ANNOUNCEMENT_SORT_ORDER_MAX}
+                      step='1'
+                      value={field.value ?? ''}
+                      onChange={(event) => {
+                        const value = event.target.valueAsNumber
+                        field.onChange(Number.isNaN(value) ? undefined : value)
+                      }}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('Optional priority. Higher values appear first.')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='startDate'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('Start date')}</FormLabel>
+                  <FormControl>
+                    <DateTimePicker
+                      value={field.value ? new Date(field.value) : undefined}
+                      onChange={(date) =>
+                        field.onChange(date ? date.toISOString() : '')
+                      }
+                      placeholder={t('Select date')}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('Optional start date for this announcement')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='endDate'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('End date')}</FormLabel>
+                  <FormControl>
+                    <DateTimePicker
+                      value={field.value ? new Date(field.value) : undefined}
+                      onChange={(date) =>
+                        field.onChange(date ? date.toISOString() : '')
+                      }
+                      placeholder={t('Select date')}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('Optional end date for this announcement')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name='type'
               render={({ field }) => (
                 <FormItem>
@@ -529,7 +824,7 @@ export function AnnouncementsSection({
                           <div
                             className={`h-3 w-3 rounded-full ${option.color}`}
                           />
-                          {option.label}
+                          {t(option.labelKey)}
                         </div>
                       ),
                     }))}
@@ -551,13 +846,34 @@ export function AnnouncementsSection({
                               <div
                                 className={`h-3 w-3 rounded-full ${option.color}`}
                               />
-                              {option.label}
+                              {t(option.labelKey)}
                             </div>
                           </SelectItem>
                         ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='link'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('Link')}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type='url'
+                      inputMode='url'
+                      placeholder={t('Enter URL...')}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('Optional HTTP or HTTPS destination')}
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -576,7 +892,7 @@ export function AnnouncementsSection({
                   </FormControl>
                   <FormDescription>
                     {t(
-                      'Optional supplementary information (max 100 characters)'
+                      'Optional supplementary information (max 200 characters)'
                     )}
                   </FormDescription>
                   <FormMessage />
