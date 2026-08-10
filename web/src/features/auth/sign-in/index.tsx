@@ -32,7 +32,7 @@ export function SignIn() {
 
   return (
     <AuthLayout variant='sign-in'>
-      <div className='w-full space-y-8'>
+      <div className='auth-login-page w-full space-y-6 sm:space-y-8'>
         <div className='space-y-2'>
           <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
             {t('Sign in')}
@@ -43,7 +43,7 @@ export function SignIn() {
                 {t("Don't have an account?")}{' '}
                 <Link
                   to='/sign-up'
-                  className='hover:text-primary font-medium underline underline-offset-4'
+                  className='auth-login-action-link hover:text-primary font-medium underline underline-offset-4'
                 >
                   {t('Sign up')}
                 </Link>
@@ -57,7 +57,7 @@ export function SignIn() {
         <TermsFooter
           variant='sign-in'
           status={status}
-          className='text-center'
+          className='auth-login-terms text-center leading-5'
         />
       </div>
     </AuthLayout>

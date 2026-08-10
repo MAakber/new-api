@@ -17,40 +17,41 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-/* The sign-in canvas keeps the grid at the edges and a quiet glass surface
- * under the form so the atmosphere never competes with the controls. */
+/* Keep the moving square grid atmospheric, not luminous. */
 .auth-login-shell {
-  --auth-grid-line: color-mix(in oklch, var(--foreground) 8%, transparent);
-  --auth-cross-line: color-mix(in oklch, var(--primary) 18%, transparent);
+  --auth-grid-line: color-mix(in oklch, var(--foreground) 6%, transparent);
+  --auth-cross-line: color-mix(in oklch, var(--primary) 11%, transparent);
   isolation: isolate;
+  min-height: max(100svh, 100dvh);
+  overflow-x: clip;
   background:
     radial-gradient(
-      circle at 50% 44%,
-      color-mix(in oklch, var(--primary) 10%, transparent),
-      transparent 42%
+      circle at 50% 36%,
+      color-mix(in oklch, var(--foreground) 3%, transparent),
+      transparent 46%
     ),
     linear-gradient(
       135deg,
-      color-mix(in oklch, var(--background) 94%, oklch(0.18 0.03 250)) 0%,
-      var(--background) 55%,
-      color-mix(in oklch, var(--background) 92%, var(--primary)) 100%
+      color-mix(in oklch, var(--background) 96%, var(--foreground)) 0%,
+      var(--background) 54%,
+      color-mix(in oklch, var(--background) 95%, var(--foreground)) 100%
     );
 }
 
 .dark .auth-login-shell {
-  --auth-grid-line: color-mix(in oklch, var(--foreground) 10%, transparent);
-  --auth-cross-line: color-mix(in oklch, var(--primary) 23%, transparent);
+  --auth-grid-line: color-mix(in oklch, var(--foreground) 5%, transparent);
+  --auth-cross-line: color-mix(in oklch, var(--primary) 9%, transparent);
   background:
     radial-gradient(
-      circle at 50% 44%,
-      color-mix(in oklch, var(--primary) 13%, transparent),
-      transparent 44%
+      circle at 50% 34%,
+      color-mix(in oklch, var(--foreground) 3%, transparent),
+      transparent 48%
     ),
     linear-gradient(
       135deg,
-      color-mix(in oklch, var(--background) 94%, oklch(0.14 0.04 250)) 0%,
-      var(--background) 55%,
-      color-mix(in oklch, var(--background) 90%, var(--primary)) 100%
+      color-mix(in oklch, var(--background) 96%, var(--foreground)) 0%,
+      var(--background) 54%,
+      color-mix(in oklch, var(--background) 94%, var(--foreground)) 100%
     );
 }
 
@@ -58,6 +59,7 @@ For commercial licensing, please contact support@quantumnous.com
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
@@ -72,7 +74,7 @@ For commercial licensing, please contact support@quantumnous.com
 }
 
 .auth-login-background::before {
-  opacity: 0.46;
+  opacity: 0.34;
   background-image:
     linear-gradient(90deg, var(--auth-grid-line) 1px, transparent 1px),
     linear-gradient(0deg, var(--auth-grid-line) 1px, transparent 1px);
@@ -91,11 +93,11 @@ For commercial licensing, please contact support@quantumnous.com
     black 72%,
     transparent 98%
   );
-  animation: auth-login-grid-drift 48s ease-in-out infinite alternate;
+  animation: auth-login-grid-drift 52s ease-in-out infinite alternate;
 }
 
 .auth-login-background::after {
-  opacity: 0.34;
+  opacity: 0.2;
   background-image:
     linear-gradient(
       90deg,
@@ -124,31 +126,55 @@ For commercial licensing, please contact support@quantumnous.com
     black 36%,
     transparent 78%
   );
-  animation: auth-login-cross-drift 64s ease-in-out infinite alternate-reverse;
+  animation: auth-login-cross-drift 68s ease-in-out infinite alternate-reverse;
 }
 
 .auth-login-stage {
   position: relative;
   z-index: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: max(100svh, 100dvh);
 }
 
 .auth-login-content {
   position: relative;
   z-index: 1;
-  border: 1px solid color-mix(in oklch, var(--foreground) 8%, transparent);
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid color-mix(in oklch, var(--foreground) 11%, transparent);
   border-radius: calc(var(--radius) * 1.5);
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in oklch, var(--primary) 5%, transparent),
-      transparent 28%
-    ),
-    color-mix(in oklch, var(--background) 85%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--card) 97%, transparent),
+    color-mix(in oklch, var(--background) 94%, transparent)
+  );
   box-shadow:
-    0 28px 90px -42px color-mix(in oklch, var(--foreground) 48%, transparent),
-    0 0 0 1px color-mix(in oklch, var(--background) 30%, transparent);
-  -webkit-backdrop-filter: blur(18px) saturate(110%);
-  backdrop-filter: blur(18px) saturate(110%);
+    0 24px 70px -38px color-mix(in oklch, var(--foreground) 32%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--background) 35%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(100%);
+  backdrop-filter: blur(16px) saturate(100%);
+}
+
+.dark .auth-login-content {
+  border-color: color-mix(in oklch, var(--foreground) 15%, transparent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--card) 96%, transparent),
+    color-mix(in oklch, var(--card) 93%, transparent)
+  );
+  box-shadow:
+    0 26px 72px -38px color-mix(in oklch, black 66%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--foreground) 4%, transparent);
+}
+
+.auth-login-brand {
+  overflow: hidden;
+}
+
+.auth-login-terms {
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 @keyframes auth-login-grid-drift {
@@ -170,26 +196,54 @@ For commercial licensing, please contact support@quantumnous.com
 }
 
 @media (max-width: 639px) {
+  .auth-login-brand {
+    top: max(0.75rem, env(safe-area-inset-top));
+    left: max(0.75rem, env(safe-area-inset-left));
+    min-height: 2.75rem;
+    padding: 0.375rem 0.5rem;
+  }
+
+  .auth-login-stage {
+    align-items: flex-start;
+    min-height: max(100svh, 100dvh);
+    padding-top: calc(4.5rem + env(safe-area-inset-top));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+
   .auth-login-background::before {
-    opacity: 0.34;
+    opacity: 0.27;
+    background-size: clamp(72px, 22vw, 112px) clamp(72px, 22vw, 112px);
   }
 
   .auth-login-background::after {
-    opacity: 0.23;
+    opacity: 0.16;
+    background-size: clamp(156px, 44vw, 220px) clamp(156px, 44vw, 220px);
   }
 
   .auth-login-content {
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in oklch, var(--primary) 4%, transparent),
-        transparent 30%
-      ),
-      color-mix(in oklch, var(--background) 90%, transparent);
-    box-shadow: 0 20px 60px -36px
-      color-mix(in oklch, var(--foreground) 42%, transparent);
-    -webkit-backdrop-filter: blur(12px) saturate(105%);
-    backdrop-filter: blur(12px) saturate(105%);
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 1.25rem 1rem;
+    border-radius: calc(var(--radius) * 1.25);
+    box-shadow:
+      0 20px 56px -34px color-mix(in oklch, var(--foreground) 30%, transparent),
+      0 0 0 1px color-mix(in oklch, var(--background) 32%, transparent);
+    -webkit-backdrop-filter: blur(10px) saturate(100%);
+    backdrop-filter: blur(10px) saturate(100%);
+  }
+
+  .auth-login-action-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
+  .auth-login-content form a[href='/forgot-password'] {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
   }
 }
 

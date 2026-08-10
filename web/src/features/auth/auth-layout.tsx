@@ -38,16 +38,19 @@ export function AuthLayout({ children, variant = 'default' }: AuthLayoutProps) {
   return (
     <div
       className={cn(
-        'relative grid h-svh max-w-none',
-        isSignIn && 'auth-login-shell'
+        'relative grid max-w-none',
+        isSignIn ? 'auth-login-shell' : 'h-svh'
       )}
     >
       {isSignIn && <AuthLoginBackground />}
       <Link
         to='/'
-        className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'
+        className={cn(
+          'absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8',
+          isSignIn && 'auth-login-brand min-w-0 max-w-[calc(100vw-2rem)]'
+        )}
       >
-        <div className='relative h-8 w-8'>
+        <div className='relative h-8 w-8 shrink-0'>
           {loading ? (
             <Skeleton className='absolute inset-0 rounded-full' />
           ) : (
@@ -61,7 +64,14 @@ export function AuthLayout({ children, variant = 'default' }: AuthLayoutProps) {
         {loading ? (
           <Skeleton className='h-6 w-24' />
         ) : (
-          <h1 className='text-xl font-medium'>{systemName}</h1>
+          <h1
+            className={cn(
+              'text-xl font-medium',
+              isSignIn && 'min-w-0 truncate'
+            )}
+          >
+            {systemName}
+          </h1>
         )}
       </Link>
       <div
