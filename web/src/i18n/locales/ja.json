@@ -602,6 +602,7 @@
     "Banner {{current}} of {{total}}": "バナー {{current}} / {{total}}",
     "Banner content": "バナーの内容",
     "Banner deleted successfully": "バナーを削除しました",
+    "Banner updated successfully": "バナーを更新しました",
     "Banners": "バナー",
     "bans": "回BAN",
     "Bar Chart": "棒グラフ",
