@@ -121,7 +121,7 @@ export function DateTimePicker({
             <Button
               variant='outline'
               className={cn(
-                'min-w-0 flex-1 justify-between font-normal',
+                'min-w-40 flex-1 justify-between font-normal',
                 !date && 'text-muted-foreground'
               )}
             />
@@ -148,7 +148,7 @@ export function DateTimePicker({
         type='time'
         value={time}
         onChange={handleTimeChange}
-        className='w-32 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none'
+        className='w-32 shrink-0 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none'
         disabled={!date}
       />
       {date && (

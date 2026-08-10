@@ -97,7 +97,7 @@ describe('banner form date field layout', () => {
     domWindow.close()
   })
 
-  test('keeps the publish date clear action inside its narrow two-column field', async () => {
+  test('keeps publish date controls from shrinking into each other', async () => {
     const container = document.createElement('div')
     document.body.append(container)
     const root = createRoot(container)
@@ -120,6 +120,14 @@ describe('banner form date field layout', () => {
     assert.equal(picker.classList.contains('w-full'), true)
     assert.equal(picker.classList.contains('min-w-0'), true)
     assert.equal(picker.classList.contains('flex-wrap'), true)
+
+    const dateButton = picker.querySelector('button:not([aria-label="Clear"])')
+    assert.ok(dateButton)
+    assert.equal(dateButton.classList.contains('min-w-40'), true)
+
+    const timeInput = picker.querySelector('input[type="time"]')
+    assert.ok(timeInput)
+    assert.equal(timeInput.classList.contains('shrink-0'), true)
 
     const clearButton = picker.querySelector('button[aria-label="Clear"]')
     assert.ok(clearButton)
