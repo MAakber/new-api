@@ -1,0 +1,202 @@
+/*
+Copyright (C) 2023-2026 QuantumNous
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+For commercial licensing, please contact support@quantumnous.com
+*/
+
+/* The sign-in canvas keeps the grid at the edges and a quiet glass surface
+ * under the form so the atmosphere never competes with the controls. */
+.auth-login-shell {
+  --auth-grid-line: color-mix(in oklch, var(--foreground) 8%, transparent);
+  --auth-cross-line: color-mix(in oklch, var(--primary) 18%, transparent);
+  isolation: isolate;
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      color-mix(in oklch, var(--primary) 10%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--background) 94%, oklch(0.18 0.03 250)) 0%,
+      var(--background) 55%,
+      color-mix(in oklch, var(--background) 92%, var(--primary)) 100%
+    );
+}
+
+.dark .auth-login-shell {
+  --auth-grid-line: color-mix(in oklch, var(--foreground) 10%, transparent);
+  --auth-cross-line: color-mix(in oklch, var(--primary) 23%, transparent);
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      color-mix(in oklch, var(--primary) 13%, transparent),
+      transparent 44%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--background) 94%, oklch(0.14 0.04 250)) 0%,
+      var(--background) 55%,
+      color-mix(in oklch, var(--background) 90%, var(--primary)) 100%
+    );
+}
+
+.auth-login-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.auth-login-background::before,
+.auth-login-background::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
+  will-change: transform;
+}
+
+.auth-login-background::before {
+  opacity: 0.46;
+  background-image:
+    linear-gradient(90deg, var(--auth-grid-line) 1px, transparent 1px),
+    linear-gradient(0deg, var(--auth-grid-line) 1px, transparent 1px);
+  background-size: clamp(76px, 9vw, 128px) clamp(76px, 9vw, 128px);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    transparent 4%,
+    black 36%,
+    black 72%,
+    transparent 98%
+  );
+  mask-image: radial-gradient(
+    ellipse at center,
+    transparent 4%,
+    black 36%,
+    black 72%,
+    transparent 98%
+  );
+  animation: auth-login-grid-drift 48s ease-in-out infinite alternate;
+}
+
+.auth-login-background::after {
+  opacity: 0.34;
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 49.75%,
+      var(--auth-cross-line) 49.75%,
+      var(--auth-cross-line) 50.25%,
+      transparent 50.25%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 49.75%,
+      var(--auth-cross-line) 49.75%,
+      var(--auth-cross-line) 50.25%,
+      transparent 50.25%
+    );
+  background-size: clamp(156px, 18vw, 264px) clamp(156px, 18vw, 264px);
+  -webkit-mask-image: radial-gradient(
+    ellipse at 68% 50%,
+    black 6%,
+    black 36%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse at 68% 50%,
+    black 6%,
+    black 36%,
+    transparent 78%
+  );
+  animation: auth-login-cross-drift 64s ease-in-out infinite alternate-reverse;
+}
+
+.auth-login-stage {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-login-content {
+  position: relative;
+  z-index: 1;
+  border: 1px solid color-mix(in oklch, var(--foreground) 8%, transparent);
+  border-radius: calc(var(--radius) * 1.5);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--primary) 5%, transparent),
+      transparent 28%
+    ),
+    color-mix(in oklch, var(--background) 85%, transparent);
+  box-shadow:
+    0 28px 90px -42px color-mix(in oklch, var(--foreground) 48%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--background) 30%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(110%);
+  backdrop-filter: blur(18px) saturate(110%);
+}
+
+@keyframes auth-login-grid-drift {
+  from {
+    transform: translate3d(-1.5%, -1%, 0);
+  }
+  to {
+    transform: translate3d(1.5%, 1.25%, 0);
+  }
+}
+
+@keyframes auth-login-cross-drift {
+  from {
+    transform: translate3d(1.25%, -1%, 0);
+  }
+  to {
+    transform: translate3d(-1.25%, 1.5%, 0);
+  }
+}
+
+@media (max-width: 639px) {
+  .auth-login-background::before {
+    opacity: 0.34;
+  }
+
+  .auth-login-background::after {
+    opacity: 0.23;
+  }
+
+  .auth-login-content {
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklch, var(--primary) 4%, transparent),
+        transparent 30%
+      ),
+      color-mix(in oklch, var(--background) 90%, transparent);
+    box-shadow: 0 20px 60px -36px
+      color-mix(in oklch, var(--foreground) 42%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(105%);
+    backdrop-filter: blur(12px) saturate(105%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-login-background::before,
+  .auth-login-background::after {
+    animation: none;
+    transform: none;
+  }
+}

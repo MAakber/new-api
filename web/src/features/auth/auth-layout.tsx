@@ -21,17 +21,28 @@ import { useTranslation } from 'react-i18next'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSystemConfig } from '@/hooks/use-system-config'
+import { cn } from '@/lib/utils'
+
+import { AuthLoginBackground } from './components/auth-login-background'
 
 type AuthLayoutProps = {
   children: React.ReactNode
+  variant?: 'default' | 'sign-in'
 }
 
-export function AuthLayout({ children }: AuthLayoutProps) {
+export function AuthLayout({ children, variant = 'default' }: AuthLayoutProps) {
   const { t } = useTranslation()
   const { systemName, logo, loading } = useSystemConfig()
+  const isSignIn = variant === 'sign-in'
 
   return (
-    <div className='relative grid h-svh max-w-none'>
+    <div
+      className={cn(
+        'relative grid h-svh max-w-none',
+        isSignIn && 'auth-login-shell'
+      )}
+    >
+      {isSignIn && <AuthLoginBackground />}
       <Link
         to='/'
         className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'
@@ -53,8 +64,18 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           <h1 className='text-xl font-medium'>{systemName}</h1>
         )}
       </Link>
-      <div className='container flex items-center pt-16 sm:pt-0'>
-        <div className='mx-auto flex w-full flex-col justify-center space-y-2 px-4 py-8 sm:w-[480px] sm:p-8'>
+      <div
+        className={cn(
+          'container flex items-center pt-16 sm:pt-0',
+          isSignIn && 'auth-login-stage'
+        )}
+      >
+        <div
+          className={cn(
+            'mx-auto flex w-full flex-col justify-center space-y-2 px-4 py-8 sm:w-[480px] sm:p-8',
+            isSignIn && 'auth-login-content'
+          )}
+        >
           {children}
         </div>
       </div>
