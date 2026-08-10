@@ -111,14 +111,17 @@ export function DateTimePicker({
   }
 
   return (
-    <div className={cn('flex gap-2', className)}>
+    <div
+      className={cn('flex min-w-0 flex-wrap gap-2', className)}
+      data-slot='date-time-picker'
+    >
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger
           render={
             <Button
               variant='outline'
               className={cn(
-                'flex-1 justify-between font-normal',
+                'min-w-0 flex-1 justify-between font-normal',
                 !date && 'text-muted-foreground'
               )}
             />

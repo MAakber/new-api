@@ -114,7 +114,7 @@ export function BannerForm(props: BannerFormProps) {
             control={props.form.control}
             name='publishDate'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='min-w-0'>
                 <FormLabel>{t('Publish Date')}</FormLabel>
                 <FormControl>
                   <DateTimePicker
@@ -123,6 +123,7 @@ export function BannerForm(props: BannerFormProps) {
                       field.onChange(date ? date.toISOString() : '')
                     }
                     placeholder={t('Select publish date')}
+                    className='w-full'
                   />
                 </FormControl>
                 <FormDescription>
@@ -137,7 +138,7 @@ export function BannerForm(props: BannerFormProps) {
             control={props.form.control}
             name='sortOrder'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='min-w-0'>
                 <FormLabel>{t('Sort Order')}</FormLabel>
                 <FormControl>
                   <Input
@@ -166,7 +167,7 @@ export function BannerForm(props: BannerFormProps) {
             control={props.form.control}
             name='startDate'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='min-w-0'>
                 <FormLabel>{t('Start date')}</FormLabel>
                 <FormControl>
                   <DateTimePicker
@@ -175,6 +176,7 @@ export function BannerForm(props: BannerFormProps) {
                       field.onChange(date ? date.toISOString() : '')
                     }
                     placeholder={t('Select date')}
+                    className='w-full'
                   />
                 </FormControl>
                 <FormDescription>
@@ -189,7 +191,7 @@ export function BannerForm(props: BannerFormProps) {
             control={props.form.control}
             name='endDate'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='min-w-0'>
                 <FormLabel>{t('End date')}</FormLabel>
                 <FormControl>
                   <DateTimePicker
@@ -198,6 +200,7 @@ export function BannerForm(props: BannerFormProps) {
                       field.onChange(date ? date.toISOString() : '')
                     }
                     placeholder={t('Select date')}
+                    className='w-full'
                   />
                 </FormControl>
                 <FormDescription>
