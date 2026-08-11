@@ -148,6 +148,7 @@ export interface ClientIdentityConfig {
   profile?: ClientIdentityProfile
   version?: string
   platform?: ClientIdentityPlatform
+  context_1m_enabled?: boolean
   source?: ClientIdentitySourceMetadata
 }
 

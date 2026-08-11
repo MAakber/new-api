@@ -376,6 +376,7 @@ const SENSITIVE_FORM_FIELDS = [
   'client_identity_profile',
   'client_identity_version',
   'client_identity_platform',
+  'client_identity_context_1m_enabled',
   'client_identity_source',
 ] satisfies (keyof ChannelFormValues)[]
 
@@ -428,7 +429,8 @@ function hasAdvancedSettingsValues(values: ChannelFormValues): boolean {
     values.client_identity_client_type ||
     values.client_identity_profile ||
     values.client_identity_version?.trim() ||
-    values.client_identity_platform
+    values.client_identity_platform ||
+    values.client_identity_context_1m_enabled
   )
 }
 
@@ -869,6 +871,9 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   const currentClientIdentityProfile = form.watch('client_identity_profile')
   const currentClientIdentityVersion = form.watch('client_identity_version')
   const currentClientIdentityPlatform = form.watch('client_identity_platform')
+  const currentClientIdentityContext1MEnabled = form.watch(
+    'client_identity_context_1m_enabled'
+  )
   const shouldPreviewUnsavedModels =
     !isEditing ||
     (currentType === CHANNEL_TYPE_ADVANCED_CUSTOM && canEditSensitive)
@@ -1163,7 +1168,8 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     currentClientIdentityClientType ||
     currentClientIdentityProfile ||
     currentClientIdentityVersion?.trim() ||
-    currentClientIdentityPlatform
+    currentClientIdentityPlatform ||
+    currentClientIdentityContext1MEnabled
   )
   const advancedConfigured = Boolean(
     routingStrategyConfigured ||
