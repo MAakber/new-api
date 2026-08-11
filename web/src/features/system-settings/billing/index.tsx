@@ -17,14 +17,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { SettingsPage } from '../components/settings-page'
-import type { BillingSettings } from '../types'
+import type { BillingSettings as BillingSettingsType } from '../types'
 import {
   BILLING_DEFAULT_SECTION,
   getBillingSectionContent,
   getBillingSectionMeta,
 } from './section-registry.tsx'
 
-const defaultBillingSettings: BillingSettings = {
+const defaultBillingSettings: BillingSettingsType = {
   QuotaForNewUser: 0,
   PreConsumedQuota: 0,
   QuotaForInviter: 0,
@@ -105,6 +105,8 @@ const defaultBillingSettings: BillingSettings = {
   'checkin_setting.enabled': false,
   'checkin_setting.min_quota': 1000,
   'checkin_setting.max_quota': 10000,
+  'checkin_setting.balance_tier_enabled': false,
+  'checkin_setting.balance_tiers': '[]',
 }
 
 export function BillingSettings() {

@@ -5606,6 +5606,21 @@
     "Zero retention": "Без хранения данных",
     "Zhipu": "Zhipu",
     "Zhipu V4": "Zhipu V4",
+    "Enable balance-based check-in rewards": "Включить награды за отметку на основе баланса",
+    "Use the user balance before check-in to select a reward tier": "Использовать баланс пользователя до отметки для выбора уровня награды",
+    "Balance reward tiers": "Уровни награды по балансу",
+    "The highest minimum balance not exceeding the user balance is selected; values below the first tier use the first tier.": "Выбирается самый высокий минимальный баланс, не превышающий баланс пользователя; для значений ниже первого уровня используется первый уровень.",
+    "No balance reward tiers configured. Add a tier to get started.": "Уровни награды по балансу не настроены. Добавьте уровень, чтобы начать.",
+    "Minimum balance": "Минимальный баланс",
+    "Minimum reward": "Минимальная награда",
+    "Maximum reward": "Максимальная награда",
+    "Move tier up": "Переместить уровень вверх",
+    "Move tier down": "Переместить уровень вниз",
+    "Value must be a non-negative integer": "Значение должно быть неотрицательным целым числом",
+    "Minimum reward must not exceed maximum reward": "Минимальная награда не должна превышать максимальную",
+    "Minimum balances must be unique": "Минимальные значения баланса должны быть уникальными",
+    "At least one valid balance reward tier is required when balance rewards are enabled": "При включённых наградах по балансу требуется хотя бы один действительный уровень награды по балансу",
+    "Minimum check-in quota cannot exceed maximum check-in quota": "Минимальная квота отметки не может превышать максимальную квоту отметки",
     "Zoom": "Zoom"
   }
 }

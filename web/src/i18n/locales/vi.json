@@ -5606,6 +5606,21 @@
     "Zero retention": "Không lưu dữ liệu",
     "Zhipu": "Zhipu",
     "Zhipu V4": "Zhipu V4",
+    "Enable balance-based check-in rewards": "Bật phần thưởng điểm danh theo số dư",
+    "Use the user balance before check-in to select a reward tier": "Dùng số dư người dùng trước khi điểm danh để chọn bậc phần thưởng",
+    "Balance reward tiers": "Các bậc phần thưởng theo số dư",
+    "The highest minimum balance not exceeding the user balance is selected; values below the first tier use the first tier.": "Chọn mức số dư tối thiểu cao nhất không vượt quá số dư người dùng; nếu thấp hơn bậc đầu tiên thì dùng bậc đầu tiên.",
+    "No balance reward tiers configured. Add a tier to get started.": "Chưa cấu hình bậc phần thưởng theo số dư. Thêm một bậc để bắt đầu.",
+    "Minimum balance": "Số dư tối thiểu",
+    "Minimum reward": "Phần thưởng tối thiểu",
+    "Maximum reward": "Phần thưởng tối đa",
+    "Move tier up": "Di chuyển bậc lên",
+    "Move tier down": "Di chuyển bậc xuống",
+    "Value must be a non-negative integer": "Giá trị phải là số nguyên không âm",
+    "Minimum reward must not exceed maximum reward": "Phần thưởng tối thiểu không được lớn hơn phần thưởng tối đa",
+    "Minimum balances must be unique": "Các mức số dư tối thiểu phải là duy nhất",
+    "At least one valid balance reward tier is required when balance rewards are enabled": "Khi bật phần thưởng theo số dư, cần ít nhất một bậc phần thưởng theo số dư hợp lệ",
+    "Minimum check-in quota cannot exceed maximum check-in quota": "Hạn ngạch điểm danh tối thiểu không được vượt quá hạn ngạch điểm danh tối đa",
     "Zoom": "Zoom"
   }
 }

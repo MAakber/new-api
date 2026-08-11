@@ -5606,6 +5606,21 @@
     "Zero retention": "Zero retention",
     "Zhipu": "Zhipu",
     "Zhipu V4": "Zhipu V4",
+    "Enable balance-based check-in rewards": "Enable balance-based check-in rewards",
+    "Use the user balance before check-in to select a reward tier": "Use the user balance before check-in to select a reward tier",
+    "Balance reward tiers": "Balance reward tiers",
+    "The highest minimum balance not exceeding the user balance is selected; values below the first tier use the first tier.": "The highest minimum balance not exceeding the user balance is selected; values below the first tier use the first tier.",
+    "No balance reward tiers configured. Add a tier to get started.": "No balance reward tiers configured. Add a tier to get started.",
+    "Minimum balance": "Minimum balance",
+    "Minimum reward": "Minimum reward",
+    "Maximum reward": "Maximum reward",
+    "Move tier up": "Move tier up",
+    "Move tier down": "Move tier down",
+    "Value must be a non-negative integer": "Value must be a non-negative integer",
+    "Minimum reward must not exceed maximum reward": "Minimum reward must not exceed maximum reward",
+    "Minimum balances must be unique": "Minimum balances must be unique",
+    "At least one valid balance reward tier is required when balance rewards are enabled": "At least one valid balance reward tier is required when balance rewards are enabled",
+    "Minimum check-in quota cannot exceed maximum check-in quota": "Minimum check-in quota cannot exceed maximum check-in quota",
     "Zoom": "Zoom"
   }
 }

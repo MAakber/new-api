@@ -41,68 +41,73 @@ func GetUserCheckinRecords(userId int, startDate, endDate string) ([]Checkin, er
 
 // HasCheckedInToday 检查用户今天是否已签到
 func HasCheckedInToday(userId int) (bool, error) {
-	today := time.Now().Format("2006-01-02")
+	return hasCheckedInDate(userId, time.Now().Format("2006-01-02"))
+}
+
+func hasCheckedInDate(userId int, date string) (bool, error) {
 	var count int64
 	err := DB.Model(&Checkin{}).
-		Where("user_id = ? AND checkin_date = ?", userId, today).
+		Where("user_id = ? AND checkin_date = ?", userId, date).
 		Count(&count).Error
 	return count > 0, err
 }
 
-// UserCheckin 执行用户签到
-// MySQL 和 PostgreSQL 使用事务保证原子性
-// SQLite 不支持嵌套事务，使用顺序操作 + 手动回滚
+// UserCheckin 执行用户签到。所有支持的主数据库都在同一个事务中完成
+// 用户余额读取、当天检查、签到记录写入和额度更新。
 func UserCheckin(userId int) (*Checkin, error) {
-	setting := operation_setting.GetCheckinSetting()
+	setting := *operation_setting.GetCheckinSetting()
 	if !setting.Enabled {
 		return nil, errors.New("签到功能未启用")
 	}
 
-	// 检查今天是否已签到
-	hasChecked, err := HasCheckedInToday(userId)
-	if err != nil {
-		return nil, err
-	}
-	if hasChecked {
-		return nil, errors.New("今日已签到")
-	}
-
-	// 计算随机额度奖励
-	quotaAwarded := setting.MinQuota
-	if setting.MaxQuota > setting.MinQuota {
-		quotaAwarded = setting.MinQuota + rand.Intn(setting.MaxQuota-setting.MinQuota+1)
-	}
-
-	today := time.Now().Format("2006-01-02")
-	checkin := &Checkin{
-		UserId:       userId,
-		CheckinDate:  today,
-		QuotaAwarded: quotaAwarded,
-		CreatedAt:    time.Now().Unix(),
-	}
-
-	// 根据数据库类型选择不同的策略
-	if common.UsingMainDatabase(common.DatabaseTypeSQLite) {
-		// SQLite 不支持嵌套事务，使用顺序操作 + 手动回滚
-		return userCheckinWithoutTransaction(checkin, userId, quotaAwarded)
-	}
-
-	// MySQL 和 PostgreSQL 支持事务，使用事务保证原子性
-	return userCheckinWithTransaction(checkin, userId, quotaAwarded)
-}
-
-// userCheckinWithTransaction 使用事务执行签到（适用于 MySQL 和 PostgreSQL）
-func userCheckinWithTransaction(checkin *Checkin, userId int, quotaAwarded int) (*Checkin, error) {
+	now := time.Now()
+	today := now.Format("2006-01-02")
+	var checkin *Checkin
+	var quotaAwarded int
 	err := DB.Transaction(func(tx *gorm.DB) error {
-		// 步骤1: 创建签到记录
+		// 锁定用户行，使余额读取、奖励选择和额度更新使用同一个余额快照。
+		var user User
+		userResult := lockForUpdate(tx).
+			Select("id", "quota").
+			Where("id = ?", userId).
+			First(&user)
+		if userResult.Error != nil {
+			return userResult.Error
+		}
+		if userResult.RowsAffected != 1 {
+			return gorm.ErrRecordNotFound
+		}
+
+		var count int64
+		if err := tx.Model(&Checkin{}).
+			Where("user_id = ? AND checkin_date = ?", userId, today).
+			Count(&count).Error; err != nil {
+			return err
+		}
+		if count > 0 {
+			return errors.New("今日已签到")
+		}
+
+		var err error
+		quotaAwarded, err = checkinQuotaAwarded(setting, user.Quota)
+		if err != nil {
+			return err
+		}
+		if !canAddCheckinQuota(user.Quota, quotaAwarded) {
+			return errors.New("签到失败：额度超出安全范围")
+		}
+
+		checkin = newCheckin(userId, today, now.Unix(), quotaAwarded)
 		// 数据库有唯一约束 (user_id, checkin_date)，可以防止并发重复签到
 		if err := tx.Create(checkin).Error; err != nil {
 			return errors.New("签到失败，请稍后重试")
 		}
 
 		// 步骤2: 在事务中增加用户额度
-		if err := tx.Model(&User{}).Where("id = ?", userId).
-			Update("quota", gorm.Expr("quota + ?", quotaAwarded)).Error; err != nil {
+		quotaResult := tx.Model(&User{}).
+			Where("id = ?", userId).
+			Update("quota", gorm.Expr("quota + ?", quotaAwarded))
+		if quotaResult.Error != nil || quotaResult.RowsAffected != 1 {
 			return errors.New("签到失败：更新额度出错")
 		}
 
@@ -121,23 +126,33 @@ func userCheckinWithTransaction(checkin *Checkin, userId int, quotaAwarded int) 
 	return checkin, nil
 }
 
-// userCheckinWithoutTransaction 不使用事务执行签到（适用于 SQLite）
-func userCheckinWithoutTransaction(checkin *Checkin, userId int, quotaAwarded int) (*Checkin, error) {
-	// 步骤1: 创建签到记录
-	// 数据库有唯一约束 (user_id, checkin_date)，可以防止并发重复签到
-	if err := DB.Create(checkin).Error; err != nil {
-		return nil, errors.New("签到失败，请稍后重试")
+func checkinQuotaAwarded(setting operation_setting.CheckinSetting, balance int) (int, error) {
+	quotaAwarded, err := setting.GetCheckinQuotaForBalance(balance, rand.Intn)
+	if err != nil {
+		common.SysError("invalid check-in reward setting: " + err.Error())
+		return 0, errors.New("签到奖励配置无效")
 	}
-
-	// 步骤2: 增加用户额度
-	// 使用 db=true 强制直接写入数据库，不使用批量更新
-	if err := IncreaseUserQuota(userId, quotaAwarded, true); err != nil {
-		// 如果增加额度失败，需要回滚签到记录
-		DB.Delete(checkin)
-		return nil, errors.New("签到失败：更新额度出错")
+	if quotaAwarded < 0 || quotaAwarded > common.MaxQuota {
+		common.SysError("check-in reward is outside the safe quota range")
+		return 0, errors.New("签到奖励配置无效")
 	}
+	return quotaAwarded, nil
+}
 
-	return checkin, nil
+func canAddCheckinQuota(balance, reward int) bool {
+	if balance < common.MinQuota || balance > common.MaxQuota || reward < 0 || reward > common.MaxQuota {
+		return false
+	}
+	return int64(balance)+int64(reward) <= int64(common.MaxQuota)
+}
+
+func newCheckin(userId int, date string, createdAt int64, quotaAwarded int) *Checkin {
+	return &Checkin{
+		UserId:       userId,
+		CheckinDate:  date,
+		QuotaAwarded: quotaAwarded,
+		CreatedAt:    createdAt,
+	}
 }
 
 // GetUserCheckinStats 获取用户签到统计信息

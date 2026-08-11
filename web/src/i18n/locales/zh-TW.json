@@ -5606,6 +5606,21 @@
     "Zero retention": "零數據保留",
     "Zhipu": "智譜",
     "Zhipu V4": "智譜 V4",
+    "Enable balance-based check-in rewards": "啟用基於餘額的簽到獎勵",
+    "Use the user balance before check-in to select a reward tier": "根據簽到前使用者餘額選擇獎勵檔位",
+    "Balance reward tiers": "餘額獎勵檔位",
+    "The highest minimum balance not exceeding the user balance is selected; values below the first tier use the first tier.": "選擇不超過使用者餘額的最高餘額下限；低於首檔時使用首檔。",
+    "No balance reward tiers configured. Add a tier to get started.": "尚未設定餘額獎勵檔位。新增檔位即可開始。",
+    "Minimum balance": "最低餘額",
+    "Minimum reward": "最低獎勵",
+    "Maximum reward": "最高獎勵",
+    "Move tier up": "上移檔位",
+    "Move tier down": "下移檔位",
+    "Value must be a non-negative integer": "值必須是非負整數",
+    "Minimum reward must not exceed maximum reward": "最低獎勵不能超過最高獎勵",
+    "Minimum balances must be unique": "餘額下限必須唯一",
+    "At least one valid balance reward tier is required when balance rewards are enabled": "啟用餘額獎勵時，至少需要一個有效的餘額獎勵檔位",
+    "Minimum check-in quota cannot exceed maximum check-in quota": "簽到最小額度不能超過簽到最大額度",
     "Zoom": "縮放"
   }
 }

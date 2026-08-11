@@ -5606,6 +5606,21 @@
     "Zero retention": "Aucune rétention",
     "Zhipu": "Zhipu",
     "Zhipu V4": "Zhipu V4",
+    "Enable balance-based check-in rewards": "Activer les récompenses de connexion basées sur le solde",
+    "Use the user balance before check-in to select a reward tier": "Utiliser le solde de l'utilisateur avant la connexion pour sélectionner un palier de récompense",
+    "Balance reward tiers": "Paliers de récompense selon le solde",
+    "The highest minimum balance not exceeding the user balance is selected; values below the first tier use the first tier.": "Le palier avec le solde minimum le plus élevé sans dépasser le solde de l'utilisateur est sélectionné ; les soldes inférieurs au premier palier utilisent le premier.",
+    "No balance reward tiers configured. Add a tier to get started.": "Aucun palier de récompense selon le solde n'est configuré. Ajoutez un palier pour commencer.",
+    "Minimum balance": "Solde minimum",
+    "Minimum reward": "Récompense minimum",
+    "Maximum reward": "Récompense maximum",
+    "Move tier up": "Déplacer le palier vers le haut",
+    "Move tier down": "Déplacer le palier vers le bas",
+    "Value must be a non-negative integer": "La valeur doit être un entier non négatif",
+    "Minimum reward must not exceed maximum reward": "La récompense minimum ne doit pas dépasser la récompense maximum",
+    "Minimum balances must be unique": "Les soldes minimums doivent être uniques",
+    "At least one valid balance reward tier is required when balance rewards are enabled": "Au moins un palier de récompense selon le solde valide est requis lorsque les récompenses basées sur le solde sont activées",
+    "Minimum check-in quota cannot exceed maximum check-in quota": "Le quota minimum de connexion ne peut pas dépasser le quota maximum de connexion",
     "Zoom": "Zoom"
   }
 }

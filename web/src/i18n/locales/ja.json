@@ -5606,6 +5606,21 @@
     "Zero retention": "データ保持なし",
     "Zhipu": "Zhipu",
     "Zhipu V4": "Zhipu V 4",
+    "Enable balance-based check-in rewards": "残高に基づくチェックイン報酬を有効にする",
+    "Use the user balance before check-in to select a reward tier": "チェックイン前のユーザー残高を使って報酬ティアを選択",
+    "Balance reward tiers": "残高報酬ティア",
+    "The highest minimum balance not exceeding the user balance is selected; values below the first tier use the first tier.": "ユーザー残高を超えない最大の最低残高を選択します。最初のティア未満の場合は最初のティアを使用します。",
+    "No balance reward tiers configured. Add a tier to get started.": "残高報酬ティアは設定されていません。開始するにはティアを追加してください。",
+    "Minimum balance": "最低残高",
+    "Minimum reward": "最低報酬",
+    "Maximum reward": "最大報酬",
+    "Move tier up": "ティアを上へ移動",
+    "Move tier down": "ティアを下へ移動",
+    "Value must be a non-negative integer": "値は0以上の整数である必要があります",
+    "Minimum reward must not exceed maximum reward": "最低報酬は最大報酬を超えてはいけません",
+    "Minimum balances must be unique": "最低残高は重複できません",
+    "At least one valid balance reward tier is required when balance rewards are enabled": "残高報酬を有効にする場合、少なくとも1つの有効な残高報酬ティアが必要です",
+    "Minimum check-in quota cannot exceed maximum check-in quota": "最小チェックインクォータは最大チェックインクォータを超えられません",
     "Zoom": "ズーム"
   }
 }
