@@ -95,6 +95,12 @@ const createRuleSchema = (t: (key: string) => string) =>
     response_code: z.string().trim().min(1).max(64).regex(responseCodePattern),
   })
 
+const sensitiveWordViolationResponseSchema = z.object({
+  status: z.number().int().min(400).max(599),
+  code: z.string().trim().min(1).max(64).regex(responseCodePattern),
+  message: z.string().trim().min(1).max(500),
+})
+
 const createAutoBanSchema = (t: (key: string) => string) => {
   const ruleSchema = createRuleSchema(t)
 
@@ -116,6 +122,7 @@ const createAutoBanSchema = (t: (key: string) => string) => {
     ),
     exempt_groups_text: z.string(),
     exempt_ip_cidrs_text: z.string(),
+    sensitive_word_violation_response: sensitiveWordViolationResponseSchema,
     sensitive_words: ruleSchema,
     user_agent: ruleSchema,
     excessive_ips: ruleSchema,
@@ -130,6 +137,9 @@ type AutoBanSectionProps = {
 }
 
 const cloneRule = (rule: AutoBanConfig['sensitive_words']) => ({ ...rule })
+const cloneSensitiveWordViolationResponse = (
+  response: AutoBanConfig['sensitive_word_violation_response']
+) => ({ ...response })
 
 const parseAutoBanConfig = (value: string): AutoBanConfig => {
   try {
@@ -146,6 +156,12 @@ const parseAutoBanConfig = (value: string): AutoBanConfig => {
       exempt_ip_cidrs: Array.isArray(parsed.exempt_ip_cidrs)
         ? parsed.exempt_ip_cidrs
         : [],
+      sensitive_word_violation_response: {
+        ...cloneSensitiveWordViolationResponse(
+          DEFAULT_AUTO_BAN_CONFIG.sensitive_word_violation_response
+        ),
+        ...parsed.sensitive_word_violation_response,
+      },
       sensitive_words: {
         ...cloneRule(DEFAULT_AUTO_BAN_CONFIG.sensitive_words),
         ...parsed.sensitive_words,
@@ -173,6 +189,9 @@ const configToFormValues = (config: AutoBanConfig): AutoBanFormValues => ({
   exempt_user_ids_text: config.exempt_user_ids.join('\n'),
   exempt_groups_text: config.exempt_groups.join('\n'),
   exempt_ip_cidrs_text: config.exempt_ip_cidrs.join('\n'),
+  sensitive_word_violation_response: cloneSensitiveWordViolationResponse(
+    config.sensitive_word_violation_response
+  ),
   sensitive_words: cloneRule(config.sensitive_words),
   user_agent: cloneRule(config.user_agent),
   excessive_ips: cloneRule(config.excessive_ips),
@@ -196,6 +215,9 @@ const formValuesToConfig = (values: AutoBanFormValues): AutoBanConfig => ({
     .sort((left, right) => left - right),
   exempt_groups: normalizeLines(values.exempt_groups_text).sort(),
   exempt_ip_cidrs: normalizeLines(values.exempt_ip_cidrs_text).sort(),
+  sensitive_word_violation_response: cloneSensitiveWordViolationResponse(
+    values.sensitive_word_violation_response
+  ),
   sensitive_words: cloneRule(values.sensitive_words),
   user_agent: cloneRule(values.user_agent),
   excessive_ips: cloneRule(values.excessive_ips),
@@ -461,6 +483,83 @@ export function AutoBanSection(props: AutoBanSectionProps) {
                   </SettingsSwitchItem>
                 )}
               />
+
+              <Card size='sm' data-card-hover='false'>
+                <CardHeader>
+                  <CardTitle>
+                    {t('Sensitive-word violation response')}
+                  </CardTitle>
+                  <CardDescription>
+                    {t(
+                      'Returned whenever a sensitive-word request is blocked before automatic enforcement. Use {count} and {threshold} in the message.'
+                    )}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className='grid items-start gap-4 md:grid-cols-[140px_1fr_2fr]'>
+                    <FormField
+                      control={form.control}
+                      name='sensitive_word_violation_response.status'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('HTTP status')}</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='number'
+                              min={400}
+                              max={599}
+                              value={
+                                typeof field.value === 'number' ||
+                                typeof field.value === 'string'
+                                  ? field.value
+                                  : ''
+                              }
+                              onChange={(event) =>
+                                field.onChange(
+                                  parseNumberInputValue(event.target.value)
+                                )
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name='sensitive_word_violation_response.code'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('Error code')}</FormLabel>
+                          <FormControl>
+                            <Input
+                              value={String(field.value)}
+                              onChange={field.onChange}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name='sensitive_word_violation_response.message'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('Error message')}</FormLabel>
+                          <FormControl>
+                            <Input
+                              value={String(field.value)}
+                              onChange={field.onChange}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
 
               <div className='grid gap-4 lg:grid-cols-3'>
                 <FormField

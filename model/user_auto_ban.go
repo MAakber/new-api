@@ -22,15 +22,15 @@ var ErrAutoBanExemptUser = errors.New("user is exempt from automatic bans")
 
 type UserSecurityEvent struct {
 	Id        int64  `json:"id" gorm:"primaryKey"`
-	UserId    int    `json:"user_id" gorm:"not null;index:idx_security_events_user_rule_time,priority:1"`
-	RuleType  string `json:"rule_type" gorm:"type:varchar(32);not null;index:idx_security_events_user_rule_time,priority:2"`
-	Subject   string `json:"subject" gorm:"type:varchar(255);not null;default:'';index:idx_security_events_subject"`
+	UserId    int    `json:"user_id" gorm:"not null;index:idx_security_events_user_rule_time,priority:1;index:idx_security_events_user_rule_subject_time,priority:1"`
+	RuleType  string `json:"rule_type" gorm:"type:varchar(32);not null;index:idx_security_events_user_rule_time,priority:2;index:idx_security_events_user_rule_subject_time,priority:2"`
+	Subject   string `json:"subject" gorm:"type:varchar(255);not null;default:'';index:idx_security_events_subject;index:idx_security_events_user_rule_subject_time,priority:3"`
 	Evidence  string `json:"evidence" gorm:"type:text;not null"`
 	TokenId   int    `json:"token_id" gorm:"not null;default:0;index"`
 	Ip        string `json:"ip" gorm:"type:varchar(64);not null;default:''"`
 	UserAgent string `json:"user_agent" gorm:"type:varchar(512);not null;default:''"`
 	RequestId string `json:"request_id" gorm:"type:varchar(64);not null;default:'';index"`
-	CreatedAt int64  `json:"created_at" gorm:"type:bigint;not null;index:idx_security_events_user_rule_time,priority:3;index"`
+	CreatedAt int64  `json:"created_at" gorm:"type:bigint;not null;index:idx_security_events_user_rule_time,priority:3;index:idx_security_events_user_rule_subject_time,priority:4;index"`
 }
 
 type UserAutoBanRecord struct {
@@ -80,6 +80,26 @@ type AutoBanActionInput struct {
 	Ip                 string
 	UserAgent          string
 	Evidence           string
+}
+
+// UserAutoBanTriggerInput is the database-backed representation of one
+// automatic-ban security event and its configured enforcement rule.
+type UserAutoBanTriggerInput struct {
+	Action    AutoBanActionInput
+	Subject   string
+	Distinct  bool
+	Enforce   bool
+	TokenId   int
+	RequestId string
+}
+
+type UserAutoBanTriggerResult struct {
+	Committed        bool
+	Count            int
+	ThresholdReached bool
+	Observed         bool
+	Applied          bool
+	Record           *UserAutoBanRecord
 }
 
 type AutoBanRecordQuery struct {
@@ -137,13 +157,17 @@ func (user *UserBase) ActiveAutoBan() (AutoBanResponse, bool) {
 }
 
 func CreateUserSecurityEvent(event *UserSecurityEvent) error {
+	return createUserSecurityEvent(DB, event)
+}
+
+func createUserSecurityEvent(tx *gorm.DB, event *UserSecurityEvent) error {
 	if event == nil || event.UserId <= 0 || strings.TrimSpace(event.RuleType) == "" {
 		return fmt.Errorf("invalid user security event")
 	}
 	if event.CreatedAt <= 0 {
 		event.CreatedAt = time.Now().Unix()
 	}
-	return DB.Create(event).Error
+	return tx.Create(event).Error
 }
 
 func HasUserSecuritySubjectSince(userId int, ruleType string, subject string, since int64) (bool, error) {
@@ -187,37 +211,51 @@ func CountDistinctUserSecuritySubjectsSince(userId int, ruleType string, since i
 	return count, err
 }
 
+func loadAutoBanUserForUpdate(tx *gorm.DB, userId int) (*User, error) {
+	if tx == nil || userId <= 0 {
+		return nil, fmt.Errorf("invalid automatic-ban user")
+	}
+	var user User
+	if err := lockForUpdate(tx).Where("id = ?", userId).First(&user).Error; err != nil {
+		return nil, err
+	}
+	if user.Role >= common.RoleAdminUser {
+		return nil, ErrAutoBanExemptUser
+	}
+	return &user, nil
+}
+
+func createObservedAutoBanRecordTx(tx *gorm.DB, user *User, input AutoBanActionInput, now int64) (*UserAutoBanRecord, bool, error) {
+	cutoff := now - int64(input.WindowMinutes*60)
+	var existing UserAutoBanRecord
+	err := tx.Where("user_id = ? AND rule_type = ? AND status = ? AND created_at >= ?", input.UserId, input.RuleType, AutoBanRecordStatusObserved, cutoff).
+		Order("id DESC").First(&existing).Error
+	if err == nil {
+		return &existing, false, nil
+	}
+	if !errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, false, err
+	}
+	record := newAutoBanRecord(input, *user, AutoBanRecordStatusObserved, now, 0)
+	if err := tx.Create(&record).Error; err != nil {
+		return nil, false, err
+	}
+	return &record, true, nil
+}
+
 func CreateObservedAutoBanRecord(input AutoBanActionInput) (*UserAutoBanRecord, bool, error) {
 	now := time.Now().Unix()
-	cutoff := now - int64(input.WindowMinutes*60)
+	var record *UserAutoBanRecord
 	var created bool
-	var record UserAutoBanRecord
 	err := DB.Transaction(func(tx *gorm.DB) error {
-		var user User
-		if err := lockForUpdate(tx).Select("id", "username", "role", "group").Where("id = ?", input.UserId).First(&user).Error; err != nil {
+		user, err := loadAutoBanUserForUpdate(tx, input.UserId)
+		if err != nil {
 			return err
 		}
-		if user.Role >= common.RoleAdminUser {
-			return ErrAutoBanExemptUser
-		}
-		var existing UserAutoBanRecord
-		err := tx.Where("user_id = ? AND rule_type = ? AND status = ? AND created_at >= ?", input.UserId, input.RuleType, AutoBanRecordStatusObserved, cutoff).
-			Order("id DESC").First(&existing).Error
-		if err == nil {
-			record = existing
-			return nil
-		}
-		if !errors.Is(err, gorm.ErrRecordNotFound) {
-			return err
-		}
-		record = newAutoBanRecord(input, user, AutoBanRecordStatusObserved, now, 0)
-		if err := tx.Create(&record).Error; err != nil {
-			return err
-		}
-		created = true
-		return nil
+		record, created, err = createObservedAutoBanRecordTx(tx, user, input, now)
+		return err
 	})
-	return &record, created, err
+	return record, created, err
 }
 
 func newAutoBanRecord(input AutoBanActionInput, user User, status string, createdAt int64, expiresAt int64) UserAutoBanRecord {
@@ -243,71 +281,204 @@ func newAutoBanRecord(input AutoBanActionInput, user User, status string, create
 	}
 }
 
-func ApplyUserAutoBan(input AutoBanActionInput) (*UserAutoBanRecord, bool, error) {
-	now := time.Now().Unix()
+func applyUserAutoBanTx(tx *gorm.DB, user *User, input AutoBanActionInput, now int64) (*UserAutoBanRecord, bool, error) {
+	if user.AutoBanUntil == -1 || user.AutoBanUntil > now {
+		if user.AutoBanRecordId <= 0 {
+			return nil, false, nil
+		}
+		var existing UserAutoBanRecord
+		if err := tx.First(&existing, user.AutoBanRecordId).Error; err != nil {
+			return nil, false, err
+		}
+		return &existing, false, nil
+	}
+	if user.AutoBanRecordId > 0 {
+		_ = tx.Model(&UserAutoBanRecord{}).
+			Where("id = ? AND status = ?", user.AutoBanRecordId, AutoBanRecordStatusActive).
+			Updates(map[string]interface{}{"status": AutoBanRecordStatusExpired}).Error
+	}
+
 	expiresAt := int64(0)
 	if input.BanDurationMinutes != -1 {
 		expiresAt = now + int64(input.BanDurationMinutes*60)
 	}
-	var record UserAutoBanRecord
-	var applied bool
-	err := DB.Transaction(func(tx *gorm.DB) error {
-		var user User
-		if err := lockForUpdate(tx).Where("id = ?", input.UserId).First(&user).Error; err != nil {
-			return err
-		}
-		if user.Role >= common.RoleAdminUser {
-			return ErrAutoBanExemptUser
-		}
-		if user.AutoBanUntil == -1 || user.AutoBanUntil > now {
-			if user.AutoBanRecordId > 0 {
-				if err := tx.First(&record, user.AutoBanRecordId).Error; err != nil {
-					return err
-				}
-			}
-			return nil
-		}
-		if user.AutoBanRecordId > 0 {
-			_ = tx.Model(&UserAutoBanRecord{}).
-				Where("id = ? AND status = ?", user.AutoBanRecordId, AutoBanRecordStatusActive).
-				Updates(map[string]interface{}{"status": AutoBanRecordStatusExpired}).Error
-		}
-
-		record = newAutoBanRecord(input, user, AutoBanRecordStatusActive, now, expiresAt)
-		if err := tx.Create(&record).Error; err != nil {
-			return err
-		}
-		if _, err := IncrementUserAuthVersionWithTx(tx, user.Id); err != nil {
-			return err
-		}
-		banUntil := expiresAt
-		if input.BanDurationMinutes == -1 {
-			banUntil = -1
-		}
-		updates := map[string]interface{}{
-			"auto_ban_until":            banUntil,
-			"auto_ban_rule":             input.RuleType,
-			"auto_ban_record_id":        record.Id,
-			"auto_ban_response_status":  input.ResponseStatus,
-			"auto_ban_response_code":    input.ResponseCode,
-			"auto_ban_response_message": input.ResponseMessage,
-		}
-		if err := tx.Model(&User{}).Where("id = ?", user.Id).Updates(updates).Error; err != nil {
-			return err
-		}
-		applied = true
-		return nil
-	})
-	if err != nil || !applied {
-		return &record, applied, err
+	record := newAutoBanRecord(input, *user, AutoBanRecordStatusActive, now, expiresAt)
+	if err := tx.Create(&record).Error; err != nil {
+		return nil, false, err
 	}
-	if err := PublishUserAuthCache(input.UserId); err != nil {
-		return &record, true, err
+	if _, err := IncrementUserAuthVersionWithTx(tx, user.Id); err != nil {
+		return nil, false, err
 	}
-	if _, err := RevokeAllUserSessions(input.UserId, "automatic_security_ban"); err != nil {
-		return &record, true, err
+	banUntil := expiresAt
+	if input.BanDurationMinutes == -1 {
+		banUntil = -1
+	}
+	updates := map[string]interface{}{
+		"auto_ban_until":            banUntil,
+		"auto_ban_rule":             input.RuleType,
+		"auto_ban_record_id":        record.Id,
+		"auto_ban_response_status":  input.ResponseStatus,
+		"auto_ban_response_code":    input.ResponseCode,
+		"auto_ban_response_message": input.ResponseMessage,
+	}
+	if err := tx.Model(&User{}).Where("id = ?", user.Id).Updates(updates).Error; err != nil {
+		return nil, false, err
 	}
 	return &record, true, nil
+}
+
+func publishAppliedAutoBan(userId int) error {
+	if err := PublishUserAuthCache(userId); err != nil {
+		return err
+	}
+	_, err := RevokeAllUserSessions(userId, "automatic_security_ban")
+	return err
+}
+
+func ApplyUserAutoBan(input AutoBanActionInput) (*UserAutoBanRecord, bool, error) {
+	now := time.Now().Unix()
+	var record *UserAutoBanRecord
+	var applied bool
+	err := DB.Transaction(func(tx *gorm.DB) error {
+		user, err := loadAutoBanUserForUpdate(tx, input.UserId)
+		if err != nil {
+			return err
+		}
+		record, applied, err = applyUserAutoBanTx(tx, user, input, now)
+		return err
+	})
+	if err != nil || !applied {
+		return record, applied, err
+	}
+	if err := publishAppliedAutoBan(input.UserId); err != nil {
+		return record, true, err
+	}
+	return record, true, nil
+}
+
+func enrichAutoBanRecordEvidence(raw string, subject string, count int, threshold int) string {
+	evidence := make(map[string]interface{})
+	if strings.TrimSpace(raw) != "" {
+		_ = common.Unmarshal([]byte(raw), &evidence)
+	}
+	if evidence == nil {
+		evidence = make(map[string]interface{})
+	}
+	evidence["subject"] = subject
+	evidence["trigger_count"] = count
+	evidence["threshold"] = threshold
+	encoded, err := common.Marshal(evidence)
+	if err != nil {
+		return "{}"
+	}
+	return string(encoded)
+}
+
+func recordUserAutoBanTriggerTx(tx *gorm.DB, input UserAutoBanTriggerInput, now int64) (int, error) {
+	action := input.Action
+	cutoff := now - int64(action.WindowMinutes*60)
+	event := &UserSecurityEvent{
+		UserId:    action.UserId,
+		RuleType:  action.RuleType,
+		Subject:   input.Subject,
+		Evidence:  action.Evidence,
+		TokenId:   input.TokenId,
+		Ip:        action.Ip,
+		UserAgent: action.UserAgent,
+		RequestId: input.RequestId,
+		CreatedAt: now,
+	}
+	if input.Distinct {
+		var existing UserSecurityEvent
+		err := tx.
+			Where("user_id = ? AND rule_type = ? AND subject = ? AND created_at >= ?", action.UserId, action.RuleType, input.Subject, cutoff).
+			Order("created_at DESC, id DESC").First(&existing).Error
+		if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+			return 0, err
+		}
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			if err := createUserSecurityEvent(tx, event); err != nil {
+				return 0, err
+			}
+		} else if err := tx.Model(&UserSecurityEvent{}).Where("id = ?", existing.Id).Updates(map[string]interface{}{
+			"evidence":   event.Evidence,
+			"token_id":   event.TokenId,
+			"ip":         event.Ip,
+			"user_agent": event.UserAgent,
+			"request_id": event.RequestId,
+			"created_at": event.CreatedAt,
+		}).Error; err != nil {
+			return 0, err
+		}
+		var count int64
+		err = tx.Model(&UserSecurityEvent{}).
+			Where("user_id = ? AND rule_type = ? AND created_at >= ?", action.UserId, action.RuleType, cutoff).
+			Distinct("subject").Count(&count).Error
+		return int(count), err
+	}
+	if err := createUserSecurityEvent(tx, event); err != nil {
+		return 0, err
+	}
+	var count int64
+	err := tx.Model(&UserSecurityEvent{}).
+		Where("user_id = ? AND rule_type = ? AND created_at >= ?", action.UserId, action.RuleType, cutoff).
+		Count(&count).Error
+	return int(count), err
+}
+
+// EvaluateUserAutoBanTrigger records a security event, evaluates its threshold,
+// and applies the resulting account state transition in one transaction. The
+// locked user row serializes the decision across all application instances.
+func EvaluateUserAutoBanTrigger(input UserAutoBanTriggerInput) (*UserAutoBanTriggerResult, error) {
+	if input.Action.UserId <= 0 || strings.TrimSpace(input.Action.RuleType) == "" || input.Action.Threshold < 1 || input.Action.WindowMinutes < 1 {
+		return nil, fmt.Errorf("invalid automatic-ban trigger")
+	}
+	now := time.Now().Unix()
+	result := &UserAutoBanTriggerResult{}
+	err := DB.Transaction(func(tx *gorm.DB) error {
+		user, err := loadAutoBanUserForUpdate(tx, input.Action.UserId)
+		if err != nil {
+			return err
+		}
+		count, err := recordUserAutoBanTriggerTx(tx, input, now)
+		if err != nil {
+			return err
+		}
+		result.Count = count
+		if count < input.Action.Threshold {
+			return nil
+		}
+		result.ThresholdReached = true
+		action := input.Action
+		action.TriggerCount = count
+		action.Evidence = enrichAutoBanRecordEvidence(action.Evidence, input.Subject, count, action.Threshold)
+		if !input.Enforce {
+			record, observed, err := createObservedAutoBanRecordTx(tx, user, action, now)
+			if err != nil {
+				return err
+			}
+			result.Record = record
+			result.Observed = observed
+			return nil
+		}
+		record, applied, err := applyUserAutoBanTx(tx, user, action, now)
+		if err != nil {
+			return err
+		}
+		result.Record = record
+		result.Applied = applied
+		return nil
+	})
+	if err != nil {
+		return result, err
+	}
+	result.Committed = true
+	if result.Applied {
+		if err := publishAppliedAutoBan(input.Action.UserId); err != nil {
+			return result, err
+		}
+	}
+	return result, nil
 }
 
 func ReleaseUserAutoBan(userId int, operatorId int, reason string) (bool, error) {
@@ -453,5 +624,12 @@ func GetAutoBanRanking(startTime int64, endTime int64, order string, limit int) 
 }
 
 func DeleteUserSecurityEventsBefore(before int64) error {
-	return DB.Where("created_at < ?", before).Delete(&UserSecurityEvent{}).Error
+	return DeleteUserSecurityEventsBeforeWithDB(DB, before)
+}
+
+func DeleteUserSecurityEventsBeforeWithDB(db *gorm.DB, before int64) error {
+	if db == nil {
+		return fmt.Errorf("user security event database is nil")
+	}
+	return db.Where("created_at < ?", before).Delete(&UserSecurityEvent{}).Error
 }

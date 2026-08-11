@@ -11,11 +11,18 @@ export type AutoBanRuleConfig = {
   response_code: string
 }
 
+export type AutoBanSensitiveWordViolationResponseConfig = {
+  status: number
+  code: string
+  message: string
+}
+
 export type AutoBanConfig = {
   enabled: boolean
   exempt_user_ids: number[]
   exempt_groups: string[]
   exempt_ip_cidrs: string[]
+  sensitive_word_violation_response: AutoBanSensitiveWordViolationResponseConfig
   sensitive_words: AutoBanRuleConfig
   user_agent: AutoBanRuleConfig
   excessive_ips: AutoBanRuleConfig
@@ -77,6 +84,11 @@ export const DEFAULT_AUTO_BAN_CONFIG: AutoBanConfig = {
   exempt_user_ids: [],
   exempt_groups: [],
   exempt_ip_cidrs: [],
+  sensitive_word_violation_response: {
+    status: 400,
+    code: 'sensitive_words_detected',
+    message: 'Content policy violation ({count}/{threshold}).',
+  },
   sensitive_words: defaultRule(5, 1440, 10080),
   user_agent: defaultRule(3, 10, 10080),
   excessive_ips: defaultRule(10, 1440, 1440),

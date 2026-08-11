@@ -68,6 +68,26 @@ func geminiRelayHandler(c *gin.Context, info *relaycommon.RelayInfo) *types.NewA
 	return err
 }
 
+func newSensitiveWordViolationError(response model.AutoBanResponse) *types.NewAPIError {
+	if response.Status < http.StatusBadRequest || response.Status > 599 {
+		response.Status = http.StatusBadRequest
+	}
+	response.Code = strings.TrimSpace(response.Code)
+	if response.Code == "" {
+		response.Code = string(types.ErrorCodeSensitiveWordsDetected)
+	}
+	response.Message = strings.TrimSpace(response.Message)
+	if response.Message == "" {
+		response.Message = "Sensitive words detected"
+	}
+	return types.NewErrorWithStatusCode(
+		errors.New(response.Message),
+		types.ErrorCode(response.Code),
+		response.Status,
+		types.ErrOptionWithSkipRetry(),
+	)
+}
+
 func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 
 	requestId := c.GetString(common.RequestIdKey)
@@ -167,7 +187,15 @@ func Relay(c *gin.Context, relayFormat types.RelayFormat) {
 				)
 				return
 			}
-			newAPIError = types.NewError(err, types.ErrorCodeSensitiveWordsDetected)
+			response := model.AutoBanResponse{
+				Status:  http.StatusBadRequest,
+				Code:    string(types.ErrorCodeSensitiveWordsDetected),
+				Message: "Sensitive words detected",
+			}
+			if decision != nil && decision.ViolationResponse.Status != 0 {
+				response = decision.ViolationResponse
+			}
+			newAPIError = newSensitiveWordViolationError(response)
 			return
 		}
 	}

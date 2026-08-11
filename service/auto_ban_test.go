@@ -1,12 +1,12 @@
 package service
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http/httptest"
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
@@ -32,17 +32,15 @@ func setupAutoBanServiceTest(t *testing.T, config setting.AutoBanConfig) *model.
 	))
 	model.DB = db
 	common.RedisEnabled = false
-	autoBanSubjectTrackers = sync.Map{}
 	autoBanLastCleanup.Store(0)
-	encoded, err := json.Marshal(config)
+	encoded, err := common.Marshal(config)
 	require.NoError(t, err)
 	require.NoError(t, setting.UpdateAutoBanConfigByJSONString(string(encoded)))
 	t.Cleanup(func() {
 		model.DB = previousDB
 		common.RedisEnabled = previousRedis
-		autoBanSubjectTrackers = sync.Map{}
 		autoBanLastCleanup.Store(0)
-		defaults, marshalErr := json.Marshal(setting.DefaultAutoBanConfig())
+		defaults, marshalErr := common.Marshal(setting.DefaultAutoBanConfig())
 		require.NoError(t, marshalErr)
 		require.NoError(t, setting.UpdateAutoBanConfigByJSONString(string(defaults)))
 	})
@@ -94,6 +92,103 @@ func TestEvaluateAutoBanTriggerEnforcesRepeatedViolations(t *testing.T) {
 	require.Equal(t, 2, second.Count)
 	require.Equal(t, 404, second.Response.Status)
 	require.Equal(t, "not_found", second.Response.Code)
+	var record model.UserAutoBanRecord
+	require.NoError(t, model.DB.First(&record, second.RecordId).Error)
+	require.Equal(t, 2, record.TriggerCount)
+}
+
+func TestEvaluateAutoBanTriggerFormatsSensitiveWordViolationResponse(t *testing.T) {
+	config := setting.DefaultAutoBanConfig()
+	config.Enabled = true
+	config.SensitiveWords.Enabled = true
+	config.SensitiveWords.Mode = setting.AutoBanModeEnforce
+	config.SensitiveWords.Threshold = 2
+	config.SensitiveWordViolationResponse.Status = 422
+	config.SensitiveWordViolationResponse.Code = "content_risk_control"
+	config.SensitiveWordViolationResponse.Message = "Risk control ({count}/{threshold})"
+	user := setupAutoBanServiceTest(t, config)
+
+	decision, err := EvaluateAutoBanTrigger(autoBanTestContext(user.Id, "client", "203.0.113.7"), AutoBanTrigger{
+		RuleType: setting.AutoBanRuleSensitiveWords,
+		Subject:  "sensitive_words",
+	})
+	require.NoError(t, err)
+	require.True(t, decision.Evaluated)
+	require.False(t, decision.Banned)
+	require.Equal(t, 1, decision.Count)
+	require.Equal(t, 422, decision.ViolationResponse.Status)
+	require.Equal(t, "content_risk_control", decision.ViolationResponse.Code)
+	require.Equal(t, "Risk control (1/2)", decision.ViolationResponse.Message)
+}
+
+func TestEvaluateAutoBanTriggerUsesSharedDatabaseForDistinctCounts(t *testing.T) {
+	config := setting.DefaultAutoBanConfig()
+	config.Enabled = true
+	config.ModelProbing.Enabled = true
+	config.ModelProbing.Mode = setting.AutoBanModeEnforce
+	config.ModelProbing.Threshold = 2
+	user := setupAutoBanServiceTest(t, config)
+
+	first, err := EvaluateAutoBanTrigger(autoBanTestContext(user.Id, "client", "203.0.113.8"), AutoBanTrigger{
+		RuleType: setting.AutoBanRuleModelProbing,
+		Subject:  "model-a",
+		Distinct: true,
+	})
+	require.NoError(t, err)
+	require.Equal(t, 1, first.Count)
+	require.False(t, first.Banned)
+
+	require.NoError(t, model.CreateUserSecurityEvent(&model.UserSecurityEvent{
+		UserId: user.Id, RuleType: setting.AutoBanRuleModelProbing, Subject: "model-b", Evidence: "{}",
+		CreatedAt: time.Now().Unix(),
+	}))
+	decision, err := EvaluateAutoBanTrigger(autoBanTestContext(user.Id, "client", "203.0.113.8"), AutoBanTrigger{
+		RuleType: setting.AutoBanRuleModelProbing,
+		Subject:  "model-a",
+		Distinct: true,
+	})
+	require.NoError(t, err)
+	require.Equal(t, 2, decision.Count)
+	require.True(t, decision.Banned)
+}
+
+func TestEvaluateAutoBanTriggerEnforcesDistinctThresholdUnderConcurrentRequests(t *testing.T) {
+	config := setting.DefaultAutoBanConfig()
+	config.Enabled = true
+	config.ModelProbing.Enabled = true
+	config.ModelProbing.Mode = setting.AutoBanModeEnforce
+	config.ModelProbing.Threshold = 8
+	user := setupAutoBanServiceTest(t, config)
+
+	results := make(chan error, config.ModelProbing.Threshold)
+	var group sync.WaitGroup
+	for index := 0; index < config.ModelProbing.Threshold; index++ {
+		group.Add(1)
+		go func(index int) {
+			defer group.Done()
+			_, err := EvaluateAutoBanTrigger(autoBanTestContext(user.Id, "client", "203.0.113.9"), AutoBanTrigger{
+				RuleType: setting.AutoBanRuleModelProbing,
+				Subject:  fmt.Sprintf("model-%d", index),
+				Distinct: true,
+			})
+			results <- err
+		}(index)
+	}
+	group.Wait()
+	close(results)
+	for err := range results {
+		require.NoError(t, err)
+	}
+
+	var stored model.User
+	require.NoError(t, model.DB.First(&stored, user.Id).Error)
+	_, banned := stored.ActiveAutoBan()
+	require.True(t, banned)
+	var activeRecords int64
+	require.NoError(t, model.DB.Model(&model.UserAutoBanRecord{}).
+		Where("user_id = ? AND status = ?", user.Id, model.AutoBanRecordStatusActive).
+		Count(&activeRecords).Error)
+	require.EqualValues(t, 1, activeRecords)
 }
 
 func TestEvaluateAutoBanTriggerEnforcesPermanentBan(t *testing.T) {

@@ -7,6 +7,7 @@ import (
 	"net"
 	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 	"sync/atomic"
 
@@ -34,15 +35,25 @@ type AutoBanRuleConfig struct {
 	ResponseCode       string `json:"response_code"`
 }
 
+// AutoBanSensitiveWordViolationResponseConfig controls the response returned
+// for a prompt-sensitive-word violation before the automatic-ban threshold is
+// reached. Its message may contain {count} and {threshold} placeholders.
+type AutoBanSensitiveWordViolationResponseConfig struct {
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+	Code    string `json:"code"`
+}
+
 type AutoBanConfig struct {
-	Enabled        bool              `json:"enabled"`
-	ExemptUserIDs  []int             `json:"exempt_user_ids"`
-	ExemptGroups   []string          `json:"exempt_groups"`
-	ExemptIPCIDRs  []string          `json:"exempt_ip_cidrs"`
-	SensitiveWords AutoBanRuleConfig `json:"sensitive_words"`
-	UserAgent      AutoBanRuleConfig `json:"user_agent"`
-	ExcessiveIPs   AutoBanRuleConfig `json:"excessive_ips"`
-	ModelProbing   AutoBanRuleConfig `json:"model_probing"`
+	Enabled                        bool                                        `json:"enabled"`
+	ExemptUserIDs                  []int                                       `json:"exempt_user_ids"`
+	ExemptGroups                   []string                                    `json:"exempt_groups"`
+	ExemptIPCIDRs                  []string                                    `json:"exempt_ip_cidrs"`
+	SensitiveWordViolationResponse AutoBanSensitiveWordViolationResponseConfig `json:"sensitive_word_violation_response"`
+	SensitiveWords                 AutoBanRuleConfig                           `json:"sensitive_words"`
+	UserAgent                      AutoBanRuleConfig                           `json:"user_agent"`
+	ExcessiveIPs                   AutoBanRuleConfig                           `json:"excessive_ips"`
+	ModelProbing                   AutoBanRuleConfig                           `json:"model_probing"`
 }
 
 type autoBanSnapshot struct {
@@ -69,16 +80,25 @@ func defaultAutoBanRule(threshold int, windowMinutes int, banDurationMinutes int
 	}
 }
 
+func defaultAutoBanSensitiveWordViolationResponse() AutoBanSensitiveWordViolationResponseConfig {
+	return AutoBanSensitiveWordViolationResponseConfig{
+		Status:  400,
+		Message: "Content policy violation ({count}/{threshold}).",
+		Code:    "sensitive_words_detected",
+	}
+}
+
 func DefaultAutoBanConfig() AutoBanConfig {
 	return AutoBanConfig{
-		Enabled:        false,
-		ExemptUserIDs:  []int{},
-		ExemptGroups:   []string{},
-		ExemptIPCIDRs:  []string{},
-		SensitiveWords: defaultAutoBanRule(5, 24*60, 7*24*60),
-		UserAgent:      defaultAutoBanRule(3, 10, 7*24*60),
-		ExcessiveIPs:   defaultAutoBanRule(10, 24*60, 24*60),
-		ModelProbing:   defaultAutoBanRule(20, 5, 7*24*60),
+		Enabled:                        false,
+		ExemptUserIDs:                  []int{},
+		ExemptGroups:                   []string{},
+		ExemptIPCIDRs:                  []string{},
+		SensitiveWordViolationResponse: defaultAutoBanSensitiveWordViolationResponse(),
+		SensitiveWords:                 defaultAutoBanRule(5, 24*60, 7*24*60),
+		UserAgent:                      defaultAutoBanRule(3, 10, 7*24*60),
+		ExcessiveIPs:                   defaultAutoBanRule(10, 24*60, 24*60),
+		ModelProbing:                   defaultAutoBanRule(20, 5, 7*24*60),
 	}
 }
 
@@ -148,7 +168,25 @@ func normalizeAutoBanRule(name string, rule *AutoBanRuleConfig) error {
 	return nil
 }
 
+func normalizeAutoBanSensitiveWordViolationResponse(response *AutoBanSensitiveWordViolationResponseConfig) error {
+	if response.Status < 400 || response.Status > 599 {
+		return fmt.Errorf("sensitive_word_violation_response status must be between 400 and 599")
+	}
+	response.Message = strings.TrimSpace(response.Message)
+	if response.Message == "" || len(response.Message) > 500 {
+		return fmt.Errorf("sensitive_word_violation_response message must contain 1 to 500 characters")
+	}
+	response.Code = strings.TrimSpace(response.Code)
+	if len(response.Code) < 1 || len(response.Code) > 64 || !autoBanResponseCodePattern.MatchString(response.Code) {
+		return fmt.Errorf("sensitive_word_violation_response code must contain 1 to 64 letters, numbers, dots, underscores, or hyphens")
+	}
+	return nil
+}
+
 func normalizeAutoBanConfig(config AutoBanConfig) (AutoBanConfig, []*net.IPNet, error) {
+	if err := normalizeAutoBanSensitiveWordViolationResponse(&config.SensitiveWordViolationResponse); err != nil {
+		return AutoBanConfig{}, nil, err
+	}
 	if err := normalizeAutoBanRule(AutoBanRuleSensitiveWords, &config.SensitiveWords); err != nil {
 		return AutoBanConfig{}, nil, err
 	}
@@ -296,6 +334,13 @@ func AutoBanConfig2JsonString() string {
 		return "{}"
 	}
 	return string(encoded)
+}
+
+func FormatSensitiveWordViolationMessage(template string, count int, threshold int) string {
+	return strings.NewReplacer(
+		"{count}", strconv.Itoa(count),
+		"{threshold}", strconv.Itoa(threshold),
+	).Replace(template)
 }
 
 func IsAutoBanExempt(userID int, role int, group string, ip net.IP) bool {

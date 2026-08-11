@@ -26,6 +26,8 @@ func TestAutoBanConfigValidationAndNormalization(t *testing.T) {
 	require.Equal(t, []int{3, 9}, config.ExemptUserIDs)
 	require.Equal(t, []string{"internal", "trusted"}, config.ExemptGroups)
 	require.Equal(t, []string{"2001:db8::/64", "203.0.113.5/32"}, config.ExemptIPCIDRs)
+	require.Equal(t, 400, config.SensitiveWordViolationResponse.Status)
+	require.Equal(t, "sensitive_words_detected", config.SensitiveWordViolationResponse.Code)
 	require.Equal(t, 404, config.UserAgent.ResponseStatus)
 	require.Equal(t, 5, config.SensitiveWords.Threshold, "missing nested fields retain defaults")
 	require.True(t, IsAutoBanExempt(3, common.RoleCommonUser, "default", net.ParseIP("198.51.100.1")))
@@ -40,12 +42,35 @@ func TestAutoBanConfigRejectsUnsafeValues(t *testing.T) {
 		`{"unknown":true}`,
 		`{"user_agent":{"response_status":200}}`,
 		`{"user_agent":{"response_code":"bad code"}}`,
+		`{"sensitive_word_violation_response":{"status":200}}`,
+		`{"sensitive_word_violation_response":{"code":"bad code"}}`,
 		`{"exempt_ip_cidrs":["not-an-ip"]}`,
 		`{} {}`,
 	} {
 		_, err := ValidateAndNormalizeAutoBanConfigJSON(value)
 		require.Error(t, err, value)
 	}
+}
+
+func TestAutoBanConfigFormatsSensitiveWordViolationMessage(t *testing.T) {
+	message := FormatSensitiveWordViolationMessage("Risk control ({count}/{threshold})", 2, 5)
+	require.Equal(t, "Risk control (2/5)", message)
+}
+
+func TestAutoBanConfigAcceptsCustomSensitiveWordViolationResponse(t *testing.T) {
+	normalized, err := ValidateAndNormalizeAutoBanConfigJSON(`{
+		"sensitive_word_violation_response":{
+			"status":422,
+			"code":"content_risk_control",
+			"message":"Risk control ({count}/{threshold})"
+		}
+	}`)
+	require.NoError(t, err)
+	var config AutoBanConfig
+	require.NoError(t, common.Unmarshal([]byte(normalized), &config))
+	require.Equal(t, 422, config.SensitiveWordViolationResponse.Status)
+	require.Equal(t, "content_risk_control", config.SensitiveWordViolationResponse.Code)
+	require.Equal(t, "Risk control ({count}/{threshold})", config.SensitiveWordViolationResponse.Message)
 }
 
 func TestAutoBanConfigAllowsPermanentBanDuration(t *testing.T) {
