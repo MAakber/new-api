@@ -126,3 +126,17 @@ func TestNamedLeaseDatabaseErrorsAreNotBusy(t *testing.T) {
 	assert.False(t, ok)
 	require.Error(t, err)
 }
+
+func TestGetNamedLeaseExpirySemantics(t *testing.T) {
+	prepareNamedLeaseTest(t)
+
+	lease, err := GetNamedLease("missing")
+	require.NoError(t, err)
+	assert.Nil(t, lease)
+
+	require.NoError(t, DB.Create(&NamedLease{Name: "queue", Holder: "node", ExpiresAt: 100, UpdatedAt: 1}).Error)
+	lease, err = GetNamedLease("queue")
+	require.NoError(t, err)
+	require.NotNil(t, lease)
+	assert.Equal(t, int64(100), lease.ExpiresAt)
+}

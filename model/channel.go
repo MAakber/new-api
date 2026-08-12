@@ -981,7 +981,101 @@ func (channel *Channel) ValidateSettings() error {
 			return fmt.Errorf("advanced custom channels require a %s route when upstream model update checks are enabled", dto.AdvancedCustomModelListPath)
 		}
 	}
+	if channelParams.Queue != nil {
+		if err := validateChannelQueueSettings(channelParams.Queue, channel); err != nil {
+			return err
+		}
+	}
 	return nil
+}
+
+// MaxQueueDurationSeconds bounds queue settings before they are converted to
+// time.Duration values by the warmer.
+const MaxQueueDurationSeconds = 86400
+
+// validateChannelQueueSettings validates the auto upstream queue warmer
+// configuration for a channel. Business rules live here (not in relaykit) so
+// the relaykit module stays independently buildable.
+func validateChannelQueueSettings(q *dto.ChannelQueueSettings, channel *Channel) error {
+	if q == nil {
+		return nil
+	}
+	if !q.Enabled {
+		return nil
+	}
+	model := strings.TrimSpace(q.Model)
+	if model == "" {
+		return fmt.Errorf("queue model is required when queue is enabled")
+	}
+	if !channel.hasModel(model) {
+		return fmt.Errorf("queue model %s is not in the channel model list", model)
+	}
+	if q.Interval < 1 {
+		return fmt.Errorf("queue interval must be at least 1 second")
+	}
+	if q.Interval > MaxQueueDurationSeconds {
+		return fmt.Errorf("queue interval must be at most %d seconds", MaxQueueDurationSeconds)
+	}
+	if q.Timeout < 0 {
+		return fmt.Errorf("queue timeout must not be negative")
+	}
+	if q.Timeout > MaxQueueDurationSeconds {
+		return fmt.Errorf("queue timeout must be at most %d seconds", MaxQueueDurationSeconds)
+	}
+	if q.Timeout > 0 && q.Timeout >= q.Interval {
+		// not fatal, but warn-worthy; we still reject to avoid overlap surprises
+		return fmt.Errorf("queue timeout must be less than interval")
+	}
+	if q.MaxTokens != nil && *q.MaxTokens > 128000 {
+		return fmt.Errorf("queue max_tokens must be at most 128000")
+	}
+	if q.MaxConsecutiveFailures < 0 {
+		return fmt.Errorf("queue max_consecutive_failures must not be negative")
+	}
+	if q.CooldownSeconds < 0 {
+		return fmt.Errorf("queue cooldown_seconds must not be negative")
+	}
+	if q.CooldownSeconds > MaxQueueDurationSeconds {
+		return fmt.Errorf("queue cooldown_seconds must be at most %d seconds", MaxQueueDurationSeconds)
+	}
+	if q.MaxQueueAttempts < 0 {
+		return fmt.Errorf("queue max_queue_attempts must not be negative")
+	}
+	if q.BackoffSeconds < 0 {
+		return fmt.Errorf("queue backoff_seconds must not be negative")
+	}
+	if q.BackoffSeconds > MaxQueueDurationSeconds {
+		return fmt.Errorf("queue backoff_seconds must be at most %d seconds", MaxQueueDurationSeconds)
+	}
+	for _, code := range q.QueueBusyStatusCodes {
+		if code < 100 || code > 599 {
+			return fmt.Errorf("queue queue_busy_status_codes contains invalid status code %d", code)
+		}
+	}
+	if q.EndpointType != "" && q.EndpointType != "auto" {
+		switch types.EndpointType(q.EndpointType) {
+		case types.EndpointTypeOpenAI, types.EndpointTypeOpenAIResponse, types.EndpointTypeOpenAIResponseCompact,
+			types.EndpointTypeOpenAIAlphaSearch, types.EndpointTypeAnthropic, types.EndpointTypeGemini,
+			types.EndpointTypeJinaRerank, types.EndpointTypeImageGeneration, types.EndpointTypeEmbeddings,
+			types.EndpointTypeOpenAIVideo:
+		default:
+			return fmt.Errorf("invalid queue endpoint_type: %s", q.EndpointType)
+		}
+	}
+	return nil
+}
+
+// hasModel reports whether model is among the channel's configured models.
+// Both the query and the channel model list are compared after trimming
+// surrounding whitespace.
+func (channel *Channel) hasModel(model string) bool {
+	model = strings.TrimSpace(model)
+	for _, m := range channel.GetModels() {
+		if strings.TrimSpace(m) == model {
+			return true
+		}
+	}
+	return false
 }
 
 func (channel *Channel) GetSetting() dto.ChannelSettings {

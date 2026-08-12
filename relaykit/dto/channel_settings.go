@@ -23,6 +23,39 @@ type ChannelSettings struct {
 	// HTTP2ConnectionShards spreads HTTP/2 traffic across N independent transports
 	// (1-8). Zero/unset means 1. Ignored when HTTPProtocol is "http1".
 	HTTP2ConnectionShards int `json:"http2_connection_shards,omitempty"`
+	// Queue enables the auto upstream queue warmer for this channel. When non-nil
+	// and enabled, a master-node background worker periodically sends warm-up
+	// calls to hold an upstream queue slot for a single model, so real requests
+	// do not have to re-queue. It is pure data: business validation lives in the
+	// host module (model.Channel.ValidateSettings), keeping relaykit independent.
+	Queue *ChannelQueueSettings `json:"queue,omitempty"`
+}
+
+// ChannelQueueSettings configures the auto upstream queue warmer for a channel.
+// A queue-enabled channel targets exactly one model: to warm multiple models,
+// configure multiple channels. EndpointType uses relaykit/types (not the host
+// constant package) so this struct stays buildable inside the independent
+// relaykit module.
+type ChannelQueueSettings struct {
+	Enabled       bool   `json:"enabled,omitempty"`
+	Model         string `json:"model,omitempty"`
+	Interval      int    `json:"interval,omitempty"`      // seconds between warm-up calls
+	EndpointType  string `json:"endpoint_type,omitempty"` // relaykit/types.EndpointType; empty = auto-detect
+	WarmupMessage string `json:"warmup_message,omitempty"`
+	MaxTokens     *uint  `json:"max_tokens,omitempty"` // cap warm-up request size; nil = test default
+	Timeout       int    `json:"timeout,omitempty"`    // per-call timeout seconds
+
+	// Circuit breaker. Failures are classified: queue-busy responses
+	// (QueueBusyStatusCodes, e.g. 429/503) never trip the breaker and only
+	// trigger backoff; genuine failures (auth/config/connection) count toward
+	// MaxConsecutiveFailures. The breaker only pauses warming for this channel
+	// — it never disables the channel or affects real requests.
+	CircuitBreakerEnabled  bool  `json:"circuit_breaker_enabled,omitempty"`
+	MaxConsecutiveFailures int   `json:"max_consecutive_failures,omitempty"`
+	CooldownSeconds        int   `json:"cooldown_seconds,omitempty"`
+	MaxQueueAttempts       int   `json:"max_queue_attempts,omitempty"` // per-round squeeze attempts before backoff
+	BackoffSeconds         int   `json:"backoff_seconds,omitempty"`
+	QueueBusyStatusCodes   []int `json:"queue_busy_status_codes,omitempty"`
 }
 
 const (

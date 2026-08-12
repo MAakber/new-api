@@ -633,6 +633,16 @@ export const STATIC_I18N_KEYS = [
   'OpenAI Models upstream path must not contain {model}',
   'OpenAI Models route is required to enable upstream model checks',
 
+  'Auto Upstream Queue',
+
+  // Auto upstream queue warmer (endpoint labels passed to t at runtime)
+  'Auto detect',
+  'OpenAI Chat',
+  'OpenAI Responses',
+  'OpenAI Responses Compact',
+  'Anthropic Messages',
+  'Image Generation',
+
   // Dashboard flow stages (labels/descriptions passed to t at runtime)
   'User',
   'Node',

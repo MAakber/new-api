@@ -88,6 +88,37 @@ export interface ChannelSettings {
   system_prompt_override?: boolean
   http_protocol?: 'auto' | 'http1' | string
   http2_connection_shards?: number
+  queue?: ChannelQueueSettings
+}
+
+export interface ChannelQueueSettings {
+  enabled?: boolean
+  model?: string
+  interval?: number
+  endpoint_type?: string
+  warmup_message?: string
+  max_tokens?: number
+  timeout?: number
+  circuit_breaker_enabled?: boolean
+  max_consecutive_failures?: number
+  cooldown_seconds?: number
+  max_queue_attempts?: number
+  backoff_seconds?: number
+  queue_busy_status_codes?: number[]
+}
+
+export interface ChannelQueueStatusView {
+  channel_id: number
+  channel_name: string
+  enabled: boolean
+  model: string
+  warming: boolean
+  breaker_active: boolean
+  breaker_until?: number
+  consecutive_failures: number
+  last_warm_at?: number
+  last_status_code?: number
+  last_result?: string
 }
 
 export interface ChannelOtherSettings {

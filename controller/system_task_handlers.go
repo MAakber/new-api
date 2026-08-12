@@ -27,6 +27,32 @@ func RegisterScheduledSystemTasks() {
 	service.RegisterSystemTaskHandler(asyncTaskPollHandler{})
 	service.RegisterSystemTaskHandler(autoPriceSyncHandler{})
 	service.RegisterSystemTaskHandler(autoModelMetadataSyncHandler{})
+	service.RegisterSystemTaskHandler(channelQueueWarmupHandler{})
+}
+
+type channelQueueWarmupHandler struct{}
+
+func (channelQueueWarmupHandler) Type() string { return model.SystemTaskTypeChannelQueueWarmup }
+
+func (channelQueueWarmupHandler) BuildDueTask(now int64) (*model.SystemTask, bool, error) {
+	return buildDueChannelQueueWarmupTask(now)
+}
+
+func (channelQueueWarmupHandler) Run(ctx context.Context, task *model.SystemTask, runnerID string) {
+	payload := channelQueueWarmupTaskPayload{}
+	if err := task.DecodePayload(&payload); err != nil {
+		finishSystemTaskHandler(task, runnerID, model.SystemTaskStatusFailed, nil, err)
+		return
+	}
+	result, err := runChannelQueueWarmupRound(ctx, payload.ChannelIDs, service.NewSystemTaskProgressReporter(task, runnerID))
+	if err != nil {
+		if errors.Is(err, context.Canceled) {
+			return
+		}
+		finishSystemTaskHandler(task, runnerID, model.SystemTaskStatusFailed, result, err)
+		return
+	}
+	finishSystemTaskHandler(task, runnerID, model.SystemTaskStatusSucceeded, result, nil)
 }
 
 // channelTestHandler runs the scheduled "test all channels" job. Enablement and

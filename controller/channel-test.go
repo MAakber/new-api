@@ -49,17 +49,30 @@ type channelTestOptions struct {
 	message         string
 	useChannelStyle bool
 	capturePreview  bool
+	// skipConsumeLog suppresses the consume-log write used by the channel test
+	// flow. The queue warmer reuses the test call path to send a minimal
+	// warm-up request upstream, but warming is not a billable user action and
+	// must not pollute consume logs.
+	skipConsumeLog bool
+	// maxTokens, when non-nil, caps the warm-up request's max_tokens so a queue
+	// warmer does not generate a large (and expensive) upstream response.
+	maxTokens *uint
 }
 
 const channelTestResponsePreviewMaxBytes = 8 << 10
 
 var (
-	channelTestPreviewSensitiveValuePattern = regexp.MustCompile(`(?i)\b(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|token|secret|password|credential|signature)\b\s*[:=]\s*(?:bearer\s+)?[^\s,;]+`)
+	channelTestPreviewSensitiveValuePattern = regexp.MustCompile(`(?i)\b(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|token|secret|password|credential|signature)\b\s*[:=]\s*(?:bearer\s+)?[^\s,;&}\"']+`)
 	channelTestPreviewBearerPattern         = regexp.MustCompile(`(?i)\bbearer\s+[A-Za-z0-9._~+/-]+={0,2}`)
+	channelTestPreviewSensitiveJSONPattern  = regexp.MustCompile(`(?i)((?:"|')?(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|id[_-]?token|bearer|token|secret|password|credential|signature)(?:"|')?\s*:\s*)"(?:bearer\s+)?(?:\\.|[^"\\])*"`)
+	channelTestPreviewSensitiveQueryPattern = regexp.MustCompile(`(?i)([?&;](?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|id[_-]?token|bearer|token|secret|password|credential|signature)=)([^&#\s,;\}"'()\]]*)`)
 )
 
 func normalizeChannelTestEndpoint(channel *model.Channel, modelName, endpointType string) string {
 	normalized := strings.TrimSpace(endpointType)
+	if strings.EqualFold(normalized, "auto") {
+		normalized = ""
+	}
 	if normalized != "" {
 		return normalized
 	}
@@ -265,6 +278,9 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	}
 
 	request := buildTestRequestWithMessage(testModel, endpointType, channel, isStream, message)
+	if options.maxTokens != nil {
+		applyTestRequestMaxTokens(request, *options.maxTokens)
+	}
 
 	info, err := relaycommon.GenRelayInfo(c, relayFormat, request, nil)
 
@@ -529,19 +545,21 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	milliseconds := tok.Sub(tik).Milliseconds()
 	consumedTime := float64(milliseconds) / 1000.0
 	other := buildTestLogOther(c, info, priceData, usage, tieredResult)
-	model.RecordConsumeLog(c, testUserID, model.RecordConsumeLogParams{
-		ChannelId:        channel.Id,
-		PromptTokens:     usage.PromptTokens,
-		CompletionTokens: usage.CompletionTokens,
-		ModelName:        info.OriginModelName,
-		TokenName:        "模型测试",
-		Quota:            quota,
-		Content:          "模型测试",
-		UseTimeSeconds:   int(consumedTime),
-		IsStream:         info.IsStream,
-		Group:            info.UsingGroup,
-		Other:            other,
-	})
+	if !options.skipConsumeLog {
+		model.RecordConsumeLog(c, testUserID, model.RecordConsumeLogParams{
+			ChannelId:        channel.Id,
+			PromptTokens:     usage.PromptTokens,
+			CompletionTokens: usage.CompletionTokens,
+			ModelName:        info.OriginModelName,
+			TokenName:        "模型测试",
+			Quota:            quota,
+			Content:          "模型测试",
+			UseTimeSeconds:   int(consumedTime),
+			IsStream:         info.IsStream,
+			Group:            info.UsingGroup,
+			Other:            other,
+		})
+	}
 	common.SysLog(fmt.Sprintf("testing channel #%d completed", channel.Id))
 	resultData := testResult{
 		context:     c,
@@ -673,7 +691,7 @@ func sanitizeChannelTestResponsePreview(response []byte) string {
 
 	var responseValue any
 	if err := common.Unmarshal([]byte(preview), &responseValue); err == nil {
-		redactChannelTestPreviewValue(responseValue)
+		responseValue = redactChannelTestPreviewValue(responseValue)
 		if sanitized, marshalErr := common.Marshal(responseValue); marshalErr == nil {
 			preview = string(sanitized)
 		}
@@ -683,7 +701,7 @@ func sanitizeChannelTestResponsePreview(response []byte) string {
 	return preview
 }
 
-func redactChannelTestPreviewValue(value any) {
+func redactChannelTestPreviewValue(value any) any {
 	switch item := value.(type) {
 	case map[string]any:
 		for key, child := range item {
@@ -691,13 +709,24 @@ func redactChannelTestPreviewValue(value any) {
 				item[key] = "[REDACTED]"
 				continue
 			}
-			redactChannelTestPreviewValue(child)
+			item[key] = redactChannelTestPreviewValue(child)
 		}
+		return item
 	case []any:
-		for _, child := range item {
-			redactChannelTestPreviewValue(child)
+		for index, child := range item {
+			item[index] = redactChannelTestPreviewValue(child)
+		}
+		return item
+	case string:
+		var nested any
+		if err := common.Unmarshal([]byte(item), &nested); err == nil {
+			nested = redactChannelTestPreviewValue(nested)
+			if sanitized, marshalErr := common.Marshal(nested); marshalErr == nil {
+				return string(sanitized)
+			}
 		}
 	}
+	return value
 }
 
 func isSensitiveChannelTestPreviewKey(key string) bool {
@@ -711,7 +740,7 @@ func isSensitiveChannelTestPreviewKey(key string) bool {
 			return true
 		}
 	}
-	for _, sensitiveToken := range []string{"token", "accesstoken", "refreshtoken", "idtoken", "authtoken", "bearertoken", "sessiontoken", "apitoken"} {
+	for _, sensitiveToken := range []string{"token", "accesstoken", "refreshtoken", "idtoken", "authtoken", "bearertoken", "sessiontoken", "apitoken", "bearer"} {
 		if normalized == sensitiveToken {
 			return true
 		}
@@ -1245,4 +1274,101 @@ func TestAllChannels(c *gin.Context) {
 			"status":  task.Status,
 		},
 	})
+}
+
+// QueueWarmupResult is the outcome of a single queue warm-up call. It carries
+// enough signal for the warmer's failure classifier without exposing internal
+// test plumbing.
+type QueueWarmupResult struct {
+	StatusCode int    // upstream HTTP status code (0 when the request never reached upstream)
+	IsTimeout  bool   // true when the call was canceled by its deadline
+	Err        error  // non-nil on request/conversion/parse failure
+	Message    string // trimmed upstream error message, if any
+}
+
+// applyTestRequestMaxTokens caps the max output tokens of a warm-up request so
+// a queue warmer does not generate an expensive upstream response. It supports
+// the request shapes the test builder can produce.
+func applyTestRequestMaxTokens(request dto.Request, maxTokens uint) {
+	if maxTokens == 0 {
+		return
+	}
+	switch r := request.(type) {
+	case *dto.GeneralOpenAIRequest:
+		if r.MaxTokens == nil || *r.MaxTokens > maxTokens {
+			r.MaxTokens = &maxTokens
+		}
+	case *dto.OpenAIResponsesRequest:
+		if r.MaxOutputTokens == nil || *r.MaxOutputTokens > maxTokens {
+			r.MaxOutputTokens = &maxTokens
+		}
+	case *dto.ClaudeRequest:
+		if r.MaxTokens == nil || *r.MaxTokens > maxTokens {
+			r.MaxTokens = &maxTokens
+		}
+	}
+}
+
+// sanitizeWarmupMessage strips sensitive tokens from an upstream error message
+// before it is surfaced through the queue status API. It reuses the channel
+// test preview redaction patterns so keys and bearer tokens never leak.
+func sanitizeWarmupMessage(msg string) string {
+	if msg == "" {
+		return msg
+	}
+	var responseValue any
+	if err := common.Unmarshal([]byte(msg), &responseValue); err == nil {
+		responseValue = redactChannelTestPreviewValue(responseValue)
+		if sanitized, marshalErr := common.Marshal(responseValue); marshalErr == nil {
+			msg = string(sanitized)
+		}
+	}
+	msg = channelTestPreviewSensitiveQueryPattern.ReplaceAllString(msg, `${1}[REDACTED]`)
+	msg = channelTestPreviewSensitiveJSONPattern.ReplaceAllString(msg, `${1}"[REDACTED]"`)
+	msg = channelTestPreviewSensitiveValuePattern.ReplaceAllString(msg, "[REDACTED]")
+	msg = channelTestPreviewBearerPattern.ReplaceAllString(msg, "Bearer [REDACTED]")
+	return strings.TrimSpace(msg)
+}
+
+// PerformChannelQueueWarmup sends a single minimal warm-up request to a channel
+// for the given model, reusing the channel-test call path. It skips consume
+// logging, response-time updates, and auto-ban evaluation: warming is an
+// internal keep-alive action, not a user billable event, and warm-up failures
+// are classified by the caller (the queue warmer) rather than triggering
+// channel auto-disable. The caller owns the context deadline.
+func PerformChannelQueueWarmup(ctx context.Context, channel *model.Channel, model string, endpointType string, message string, maxTokens *uint, isStream bool) QueueWarmupResult {
+	testUserID, err := resolveChannelTestUserID(nil)
+	if err != nil {
+		return QueueWarmupResult{Err: err}
+	}
+	options := channelTestOptions{
+		message:         message,
+		useChannelStyle: false,
+		capturePreview:  false,
+		skipConsumeLog:  true,
+		maxTokens:       maxTokens,
+	}
+	result := testChannelWithOptions(ctx, channel, testUserID, model, endpointType, isStream, options)
+	statusCode := 0
+	msg := ""
+	if result.context != nil && result.context.Writer != nil {
+		statusCode = result.context.Writer.Status()
+	}
+	if result.newAPIError != nil {
+		statusCode = result.newAPIError.StatusCode
+		msg = sanitizeWarmupMessage(result.newAPIError.Error())
+	}
+	if result.localErr != nil && msg == "" {
+		msg = sanitizeWarmupMessage(result.localErr.Error())
+	}
+	isTimeout := false
+	if ctx.Err() != nil {
+		isTimeout = errors.Is(ctx.Err(), context.DeadlineExceeded) || errors.Is(ctx.Err(), context.Canceled)
+	}
+	return QueueWarmupResult{
+		StatusCode: statusCode,
+		IsTimeout:  isTimeout,
+		Err:        result.localErr,
+		Message:    msg,
+	}
 }

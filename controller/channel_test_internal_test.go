@@ -135,6 +135,10 @@ func TestCodexCompatibilityChannelTestUsesStreamingResponses(t *testing.T) {
 		normalizeChannelTestEndpoint(channel, "gpt-5.6-sol", ""),
 	)
 	assert.Equal(t,
+		string(constant.EndpointTypeOpenAIResponse),
+		normalizeChannelTestEndpoint(channel, "gpt-5.6-sol", "auto"),
+	)
+	assert.Equal(t,
 		string(constant.EndpointTypeOpenAI),
 		normalizeChannelTestEndpoint(channel, "gpt-5.6-sol", string(constant.EndpointTypeOpenAI)),
 	)

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -12,6 +14,24 @@ type NamedLease struct {
 	Holder    string `json:"holder" gorm:"type:varchar(128);index"`
 	ExpiresAt int64  `json:"expires_at" gorm:"bigint;index"`
 	UpdatedAt int64  `json:"updated_at" gorm:"bigint"`
+}
+
+// GetNamedLease returns the current lease, or nil when no lease exists.
+// Callers compare ExpiresAt with their own timestamp so boundary semantics stay
+// consistent with AcquireNamedLease (an expiry exactly at now is still active).
+func GetNamedLease(name string) (*NamedLease, error) {
+	return getNamedLease(DB, name)
+}
+
+func getNamedLease(db *gorm.DB, name string) (*NamedLease, error) {
+	var lease NamedLease
+	if err := db.Where("name = ?", name).First(&lease).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &lease, nil
 }
 
 // Acquire creates a lease when it does not exist, or atomically takes over a

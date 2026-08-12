@@ -30,6 +30,7 @@ import type {
   ChannelUpdatePayload,
   ChannelBalanceResponse,
   ChannelOpsResponse,
+  ChannelQueueStatusView,
   DetailedChannelTestRequest,
   ChannelTestResponse,
   CopyChannelParams,
@@ -160,6 +161,18 @@ export async function getChannel(id: number): Promise<GetChannelResponse> {
  */
 export async function getChannelOps(): Promise<ChannelOpsResponse> {
   const res = await api.get('/api/channel/ops', channelActionConfig())
+  return res.data
+}
+
+/**
+ * Fetch the auto upstream queue warmer status for all queue-enabled channels.
+ */
+export async function getChannelQueueStatus(): Promise<{
+  success: boolean
+  data?: ChannelQueueStatusView[]
+  message?: string
+}> {
+  const res = await api.get('/api/channel/queue/status', channelActionConfig())
   return res.data
 }
 

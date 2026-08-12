@@ -1,4 +1,12 @@
 {
+  "Cap warm-up request size to control cost.": "Cap warm-up request size to control cost.",
+  "Comma-separated HTTP status codes treated as \"queue busy\" (never trip the breaker).": "Comma-separated HTTP status codes treated as \"queue busy\" (never trip the breaker).",
+  "Model name to keep queued": "Model name to keep queued",
+  "One channel warms exactly one model. To warm multiple models, configure separate channels.": "One channel warms exactly one model. To warm multiple models, configure separate channels.",
+  "Periodically send warm-up calls to hold an upstream queue slot so real requests do not have to re-queue.": "Periodically send warm-up calls to hold an upstream queue slot so real requests do not have to re-queue.",
+  "Queue-busy responses (429/503) never trip the breaker. Only genuine failures pause warming; real requests are never affected.": "Queue-busy responses (429/503) never trip the breaker. Only genuine failures pause warming; real requests are never affected.",
+  "Wait between squeeze attempts when the queue is busy.": "Wait between squeeze attempts when the queue is busy.",
+  "Leave empty to use the default test message": "Leave empty to use the default test message",
   "Configure the WorkBuddy upstream root URL without /v1. New API adds /v1/chat/completions and applies the built-in WorkBuddy request profile.": "Configure the WorkBuddy upstream root URL without /v1. New API adds /v1/chat/completions and applies the built-in WorkBuddy request profile.",
   "Counts distinct model names requested by the same account within the configured window.": "Counts distinct model names requested by the same account within the configured window.",
   "Counts requests matched by the existing User-Agent regular-expression blacklist.": "Counts requests matched by the existing User-Agent regular-expression blacklist.",

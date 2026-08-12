@@ -190,6 +190,11 @@ function isOptionalProxyURL(value: string | undefined): boolean {
   }
 }
 
+function normalizeQueueEndpointType(value: unknown): string {
+  const normalized = typeof value === 'string' ? value.trim() : ''
+  return normalized.toLowerCase() === 'auto' ? '' : normalized
+}
+
 export const HTTP_PROTOCOL_AUTO = 'auto'
 export const HTTP_PROTOCOL_HTTP1 = 'http1'
 export const MAX_HTTP2_CONNECTION_SHARDS = 8
@@ -436,6 +441,20 @@ export const channelFormSchema = z
     client_identity_source: z
       .enum(['manual', 'official', 'community', 'npm', 'workbuddy'])
       .optional(),
+    // Auto upstream queue warmer (stored in setting JSON)
+    queue_enabled: z.boolean().optional(),
+    queue_model: z.string().optional(),
+    queue_interval: z.number().int().optional(),
+    queue_endpoint_type: z.string().optional(),
+    queue_warmup_message: z.string().optional(),
+    queue_max_tokens: z.number().int().optional(),
+    queue_timeout: z.number().int().optional(),
+    queue_circuit_breaker_enabled: z.boolean().optional(),
+    queue_max_consecutive_failures: z.number().int().optional(),
+    queue_cooldown_seconds: z.number().int().optional(),
+    queue_max_queue_attempts: z.number().int().optional(),
+    queue_backoff_seconds: z.number().int().optional(),
+    queue_busy_status_codes: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     if (
@@ -623,6 +642,20 @@ export const CHANNEL_FORM_DEFAULT_VALUES: ChannelFormValues = {
   client_identity_context_1m_enabled: false,
   client_identity_source: 'manual',
   advanced_custom: '',
+  // Auto upstream queue warmer defaults
+  queue_enabled: false,
+  queue_model: '',
+  queue_interval: 30,
+  queue_endpoint_type: '',
+  queue_warmup_message: '',
+  queue_max_tokens: 16,
+  queue_timeout: 25,
+  queue_circuit_breaker_enabled: true,
+  queue_max_consecutive_failures: 10,
+  queue_cooldown_seconds: 300,
+  queue_max_queue_attempts: 0,
+  queue_backoff_seconds: 30,
+  queue_busy_status_codes: '429,503',
 }
 
 // ============================================================================
@@ -646,6 +679,19 @@ export function transformChannelToFormDefaults(
     system_prompt: '',
     system_prompt_override: false,
   }
+  let queueEnabled = false
+  let queueModel = ''
+  let queueInterval = 30
+  let queueEndpointType = ''
+  let queueWarmupMessage = ''
+  let queueMaxTokens = 16
+  let queueTimeout = 25
+  let queueCircuitBreakerEnabled = true
+  let queueMaxConsecutiveFailures = 10
+  let queueCooldownSeconds = 300
+  let queueMaxQueueAttempts = 0
+  let queueBackoffSeconds = 30
+  let queueBusyStatusCodes = '429,503'
 
   if (channel.setting) {
     try {
@@ -663,6 +709,39 @@ export function transformChannelToFormDefaults(
         pass_through_body_enabled: parsed.pass_through_body_enabled || false,
         system_prompt: parsed.system_prompt || '',
         system_prompt_override: parsed.system_prompt_override || false,
+      }
+      if (parsed.queue && typeof parsed.queue === 'object') {
+        const q = parsed.queue
+        queueEnabled = q.enabled === true
+        queueModel = q.model || ''
+        queueInterval =
+          Number.isFinite(q.interval) && q.interval > 0 ? q.interval : 30
+        queueEndpointType = normalizeQueueEndpointType(q.endpoint_type)
+        queueWarmupMessage = q.warmup_message || ''
+        queueMaxTokens =
+          Number.isFinite(q.max_tokens) && q.max_tokens > 0 ? q.max_tokens : 16
+        queueTimeout =
+          Number.isFinite(q.timeout) && q.timeout >= 0 ? q.timeout : 25
+        queueCircuitBreakerEnabled = q.circuit_breaker_enabled !== false
+        queueMaxConsecutiveFailures = Number.isFinite(
+          q.max_consecutive_failures
+        )
+          ? q.max_consecutive_failures
+          : 10
+        queueCooldownSeconds = Number.isFinite(q.cooldown_seconds)
+          ? q.cooldown_seconds
+          : 300
+        queueMaxQueueAttempts = Number.isFinite(q.max_queue_attempts)
+          ? q.max_queue_attempts
+          : 0
+        queueBackoffSeconds = Number.isFinite(q.backoff_seconds)
+          ? q.backoff_seconds
+          : 30
+        queueBusyStatusCodes =
+          Array.isArray(q.queue_busy_status_codes) &&
+          q.queue_busy_status_codes.length > 0
+            ? q.queue_busy_status_codes.join(',')
+            : '429,503'
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -833,6 +912,20 @@ export function transformChannelToFormDefaults(
     client_identity_context_1m_enabled: clientIdentityContext1MEnabled,
     client_identity_source: clientIdentitySource || 'manual',
     advanced_custom: advancedCustom,
+    // Auto upstream queue warmer
+    queue_enabled: queueEnabled,
+    queue_model: queueModel,
+    queue_interval: queueInterval,
+    queue_endpoint_type: queueEndpointType,
+    queue_warmup_message: queueWarmupMessage,
+    queue_max_tokens: queueMaxTokens,
+    queue_timeout: queueTimeout,
+    queue_circuit_breaker_enabled: queueCircuitBreakerEnabled,
+    queue_max_consecutive_failures: queueMaxConsecutiveFailures,
+    queue_cooldown_seconds: queueCooldownSeconds,
+    queue_max_queue_attempts: queueMaxQueueAttempts,
+    queue_backoff_seconds: queueBackoffSeconds,
+    queue_busy_status_codes: queueBusyStatusCodes,
   }
 }
 
@@ -862,7 +955,43 @@ export function buildSettingJSON(formData: ChannelFormValues): string {
     settingObj.http2_connection_shards = shards
   }
 
+  // Auto upstream queue warmer. Only embed when enabled so non-queue channels
+  // keep a clean setting JSON.
+  if (formData.queue_enabled) {
+    settingObj.queue = {
+      enabled: true,
+      model: formData.queue_model?.trim() || '',
+      interval: formData.queue_interval || 30,
+      endpoint_type: normalizeQueueEndpointType(formData.queue_endpoint_type),
+      warmup_message: formData.queue_warmup_message || '',
+      max_tokens: formData.queue_max_tokens || 16,
+      timeout: formData.queue_timeout || 25,
+      circuit_breaker_enabled: formData.queue_circuit_breaker_enabled !== false,
+      max_consecutive_failures: formData.queue_max_consecutive_failures || 10,
+      cooldown_seconds: formData.queue_cooldown_seconds || 300,
+      max_queue_attempts: formData.queue_max_queue_attempts || 0,
+      backoff_seconds: formData.queue_backoff_seconds || 30,
+      queue_busy_status_codes: parseBusyStatusCodes(
+        formData.queue_busy_status_codes
+      ),
+    }
+  }
+
   return JSON.stringify(settingObj)
+}
+
+// parseBusyStatusCodes turns a comma-separated status code string into a sorted
+// unique number array. Falls back to [429, 503] when input is empty/invalid.
+function parseBusyStatusCodes(input: string | undefined): number[] {
+  if (!input?.trim()) return [429, 503]
+  const codes: number[] = []
+  for (const part of input.split(',')) {
+    const n = Number.parseInt(part.trim(), 10)
+    if (Number.isFinite(n) && n >= 100 && n <= 599 && !codes.includes(n)) {
+      codes.push(n)
+    }
+  }
+  return codes.length > 0 ? codes : [429, 503]
 }
 
 /**

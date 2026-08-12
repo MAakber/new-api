@@ -198,6 +198,7 @@ import {
   ChannelEditorLoadingState,
   ChannelClientIdentitySection,
   ChannelModelsSection,
+  ChannelQueueSection,
 } from './sections'
 
 type ChannelMutateDrawerProps = {
@@ -3764,6 +3765,19 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                         />
                       </div>
                     )}
+                    {/* ── Auto Upstream Queue ── */}
+                    <div
+                      className={configuredAdvancedSectionClassName(
+                        'scroll-mt-4',
+                        form.watch('queue_enabled') === true
+                      )}
+                    >
+                      <ChannelQueueSection
+                        control={form.control}
+                        disabled={sensitiveLocked}
+                        channelId={channelId ?? undefined}
+                      />
+                    </div>
                     {/* ── Routing & Overrides ── */}
                     <div className={sideDrawerSectionClassName()}>
                       <CardHeading
