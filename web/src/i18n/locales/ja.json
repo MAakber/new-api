@@ -5656,6 +5656,19 @@
     "Minimum balances must be unique": "最低残高は重複できません",
     "At least one valid balance reward tier is required when balance rewards are enabled": "残高報酬を有効にする場合、少なくとも1つの有効な残高報酬ティアが必要です",
     "Minimum check-in quota cannot exceed maximum check-in quota": "最小チェックインクォータは最大チェックインクォータを超えられません",
-    "Zoom": "ズーム"
+    "Zoom": "ズーム",
+    "Avatar images must be 5 MiB or smaller": "アバター画像は 5 MiB 以下にしてください",
+    "Avatar removed successfully": "アバターを削除しました",
+    "Avatar updated successfully": "アバターを更新しました",
+    "Choose an avatar image": "アバター画像を選択",
+    "Failed to remove avatar": "アバターを削除できませんでした",
+    "Failed to update avatar": "アバターを更新できませんでした",
+    "Please choose a JPEG, PNG, or WebP image": "JPEG、PNG、または WebP 画像を選択してください",
+    "Profile avatar": "プロフィール画像",
+    "Remove avatar": "アバターを削除",
+    "Remove profile avatar?": "プロフィール画像を削除しますか？",
+    "Replace avatar": "アバターを変更",
+    "Upload avatar": "アバターをアップロード",
+    "Your initials will be shown until you upload a new avatar.": "新しいアバターをアップロードするまで、名前の頭文字が表示されます。"
   }
 }

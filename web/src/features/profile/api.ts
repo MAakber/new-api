@@ -27,6 +27,7 @@ import type {
   DeleteAccountRequest,
   CheckinStatusResponse,
   CheckinResponse,
+  AvatarUploadResponse,
 } from './types'
 
 // ============================================================================
@@ -80,6 +81,26 @@ export async function deleteUserAccount(
   data?: DeleteAccountRequest
 ): Promise<ApiResponse> {
   const res = await api.delete('/api/user/self', { data })
+  return res.data
+}
+
+/**
+ * Upload a new profile avatar
+ */
+export async function uploadUserAvatar(
+  file: File
+): Promise<ApiResponse<AvatarUploadResponse>> {
+  const formData = new FormData()
+  formData.append('avatar', file)
+  const res = await api.put('/api/user/self/avatar', formData)
+  return res.data
+}
+
+/**
+ * Remove the current profile avatar
+ */
+export async function deleteUserAvatar(): Promise<ApiResponse> {
+  const res = await api.delete('/api/user/self/avatar')
   return res.data
 }
 

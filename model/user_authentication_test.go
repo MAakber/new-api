@@ -40,6 +40,7 @@ func TestHardDeleteUserFailsClosedWhenAuthFenceCannotPublish(t *testing.T) {
 		TokenHash: "hard-delete-auth-flow", Purpose: AuthFlowPurposeTwoFALogin,
 		UserId: user.Id, ExpiresAt: time.Now().Add(time.Minute),
 	}).Error)
+	require.NoError(t, DB.Create(&UserAvatar{UserID: user.Id, ObjectKey: "avatar.png", MimeType: "image/png", Size: 1, Width: 1, Height: 1, SHA256: "hash", Version: 1}).Error)
 
 	oldRedisEnabled, oldRDB := common.RedisEnabled, common.RDB
 	common.RedisEnabled = true
@@ -100,6 +101,7 @@ func TestHardDeleteUserPublishesTombstoneAndPurgesAuthenticationData(t *testing.
 		TokenHash: "hard-delete-success-flow", Purpose: AuthFlowPurposeTwoFALogin,
 		UserId: user.Id, ExpiresAt: time.Now().Add(time.Minute),
 	}).Error)
+	require.NoError(t, DB.Create(&UserAvatar{UserID: user.Id, ObjectKey: "avatar.png", MimeType: "image/png", Size: 1, Width: 1, Height: 1, SHA256: "hash", Version: 1}).Error)
 	require.NoError(t, populateUserCache(user))
 	// Administrative hard deletion commonly targets an already soft-deleted
 	// user; the shared version increment must therefore query unscoped.
@@ -123,6 +125,8 @@ func TestHardDeleteUserPublishesTombstoneAndPurgesAuthenticationData(t *testing.
 		require.NoError(t, DB.Unscoped().Model(record).Where("user_id = ?", user.Id).Count(&count).Error)
 		assert.Zero(t, count)
 	}
+	require.NoError(t, DB.Unscoped().Model(&UserAvatar{}).Where("user_id = ?", user.Id).Count(&count).Error)
+	assert.Zero(t, count)
 	assert.False(t, server.Exists(getUserAuthFenceKey(user.Id)))
 	committed, err := common.RDB.Get(t.Context(), getUserAuthVersionKey(user.Id)).Result()
 	require.NoError(t, err)

@@ -5656,6 +5656,19 @@
     "Minimum balances must be unique": "Các mức số dư tối thiểu phải là duy nhất",
     "At least one valid balance reward tier is required when balance rewards are enabled": "Khi bật phần thưởng theo số dư, cần ít nhất một bậc phần thưởng theo số dư hợp lệ",
     "Minimum check-in quota cannot exceed maximum check-in quota": "Hạn ngạch điểm danh tối thiểu không được vượt quá hạn ngạch điểm danh tối đa",
-    "Zoom": "Zoom"
+    "Zoom": "Zoom",
+    "Avatar images must be 5 MiB or smaller": "Ảnh đại diện phải có dung lượng tối đa 5 MiB",
+    "Avatar removed successfully": "Đã xóa ảnh đại diện",
+    "Avatar updated successfully": "Đã cập nhật ảnh đại diện",
+    "Choose an avatar image": "Chọn ảnh đại diện",
+    "Failed to remove avatar": "Không thể xóa ảnh đại diện",
+    "Failed to update avatar": "Không thể cập nhật ảnh đại diện",
+    "Please choose a JPEG, PNG, or WebP image": "Hãy chọn ảnh JPEG, PNG hoặc WebP",
+    "Profile avatar": "Ảnh đại diện hồ sơ",
+    "Remove avatar": "Xóa ảnh đại diện",
+    "Remove profile avatar?": "Xóa ảnh đại diện hồ sơ?",
+    "Replace avatar": "Thay ảnh đại diện",
+    "Upload avatar": "Tải ảnh đại diện lên",
+    "Your initials will be shown until you upload a new avatar.": "Chữ cái đầu tên của bạn sẽ hiển thị cho đến khi bạn tải ảnh đại diện mới lên."
   }
 }

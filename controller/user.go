@@ -588,7 +588,7 @@ func buildSelfUserData(user *model.User) map[string]interface{} {
 	userSetting := user.GetSetting()
 	permissions := calculateUserPermissions(user.Role)
 	permissions["admin_permissions"] = authz.Capabilities(user.Id, user.Role)
-	return map[string]interface{}{
+	data := map[string]interface{}{
 		"id":                  user.Id,
 		"username":            user.Username,
 		"display_name":        user.DisplayName,
@@ -616,6 +616,15 @@ func buildSelfUserData(user *model.User) map[string]interface{} {
 		"sidebar_modules":     userSetting.SidebarModules, // 正确提取sidebar_modules字段
 		"permissions":         permissions,
 	}
+	if model.DB != nil {
+		avatar, err := model.GetUserAvatar(user.Id)
+		if err != nil {
+			common.SysError(fmt.Sprintf("failed to load avatar metadata for user %d: %v", user.Id, err))
+		} else if avatar != nil {
+			data["avatar_url"] = userAvatarURL(avatar.Version)
+		}
+	}
+	return data
 }
 
 // 计算用户权限的辅助函数
@@ -1073,11 +1082,19 @@ func DeleteUser(c *gin.Context) {
 		common.ApiErrorI18n(c, i18n.MsgUserNoPermissionHigherLevel)
 		return
 	}
+	releaseAvatar := lockAvatarMutation(id)
+	defer releaseAvatar()
+	avatar, avatarErr := model.GetUserAvatar(id)
+	if avatarErr != nil {
+		common.ApiError(c, avatarErr)
+		return
+	}
 	err = model.HardDeleteUserById(id)
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
+	deleteUserAvatarObject(id, avatar)
 	recordManageAuditFor(c, originUser.Id, "user.delete", map[string]interface{}{
 		"username": originUser.Username,
 		"id":       originUser.Id,
@@ -1098,11 +1115,19 @@ func DeleteSelf(c *gin.Context) {
 		return
 	}
 
+	releaseAvatar := lockAvatarMutation(id)
+	defer releaseAvatar()
+	avatar, avatarErr := model.GetUserAvatar(id)
+	if avatarErr != nil {
+		common.ApiError(c, avatarErr)
+		return
+	}
 	err := model.DeleteUserById(id)
 	if err != nil {
 		common.ApiError(c, err)
 		return
 	}
+	deleteUserAvatarObject(id, avatar)
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "",
@@ -1232,13 +1257,23 @@ func ManageUser(c *gin.Context) {
 			common.ApiErrorI18n(c, i18n.MsgUserCannotDeleteRootUser)
 			return
 		}
+		releaseAvatar := lockAvatarMutation(user.Id)
+		avatar, avatarErr := model.GetUserAvatar(user.Id)
+		if avatarErr != nil {
+			releaseAvatar()
+			common.ApiError(c, avatarErr)
+			return
+		}
 		if err := user.Delete(); err != nil {
+			releaseAvatar()
 			c.JSON(http.StatusOK, gin.H{
 				"success": false,
 				"message": err.Error(),
 			})
 			return
 		}
+		deleteUserAvatarObject(user.Id, avatar)
+		releaseAvatar()
 		// 删除用户后，强制清理 Redis 中所有该用户令牌的缓存，
 		// 避免已缓存的令牌在 TTL 过期前仍能通过 TokenAuth 校验。
 		if err := model.InvalidateUserTokensCache(user.Id); err != nil {
@@ -1374,6 +1409,15 @@ func ManageUser(c *gin.Context) {
 		"data":    clearUser,
 	})
 	return
+}
+
+func deleteUserAvatarObject(userID int, avatar *model.UserAvatar) {
+	if avatar == nil {
+		return
+	}
+	if err := service.NewAvatarStorage().Delete(avatar.ObjectKey); err != nil {
+		common.SysError(fmt.Sprintf("failed to delete avatar object for user %d: %v", userID, err))
+	}
 }
 
 type emailBindRequest struct {

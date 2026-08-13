@@ -36,8 +36,16 @@ import { TwoFACard } from './components/two-fa-card'
 import { useProfile } from './hooks'
 
 export function Profile() {
-  const { profile, loading, updating, refreshProfile, updateProfile } =
-    useProfile()
+  const {
+    profile,
+    loading,
+    updating,
+    avatarUpdating,
+    refreshProfile,
+    updateProfile,
+    uploadAvatar,
+    removeAvatar,
+  } = useProfile()
   const { status } = useStatus()
   const permissions = useAuthStore((s) => s.auth.user?.permissions)
 
@@ -57,9 +65,12 @@ export function Profile() {
               profile={profile}
               loading={loading}
               updating={updating}
+              avatarUpdating={avatarUpdating}
               onUpdateDisplayName={(displayName) =>
                 updateProfile({ display_name: displayName })
               }
+              onUploadAvatar={uploadAvatar}
+              onRemoveAvatar={removeAvatar}
             />
           </CardStaggerItem>
 

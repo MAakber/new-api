@@ -16,11 +16,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import i18next from 'i18next'
+import { t } from 'i18next'
 import { useState, useEffect, useCallback } from 'react'
 import { toast } from 'sonner'
 
-import { getUserProfile, updateUserProfile, updateUserSettings } from '../api'
+import { useAuthStore } from '@/stores/auth-store'
+
+import {
+  deleteUserAvatar,
+  getUserProfile,
+  updateUserProfile,
+  updateUserSettings,
+  uploadUserAvatar,
+} from '../api'
 import type {
   UserProfile,
   UpdateUserRequest,
@@ -35,35 +43,156 @@ export function useProfile() {
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [updating, setUpdating] = useState(false)
+  const [avatarUpdating, setAvatarUpdating] = useState(false)
+  const setAuthUser = useAuthStore((state) => state.auth.setUser)
+
+  const syncAuthUser = useCallback(
+    (nextProfile: UserProfile) => {
+      const currentUser = useAuthStore.getState().auth.user
+      if (!currentUser || currentUser.id !== nextProfile.id) return
+
+      setAuthUser({
+        ...currentUser,
+        username: nextProfile.username,
+        avatar_url: nextProfile.avatar_url,
+        display_name: nextProfile.display_name,
+        email: nextProfile.email,
+        role: nextProfile.role,
+        status: nextProfile.status,
+        group: nextProfile.group,
+        quota: nextProfile.quota,
+        used_quota: nextProfile.used_quota,
+        request_count: nextProfile.request_count,
+        aff_code: nextProfile.aff_code,
+        aff_count: nextProfile.aff_count,
+        aff_quota: nextProfile.aff_quota,
+        aff_history_quota: nextProfile.aff_history_quota,
+        inviter_id: nextProfile.invite_user_id,
+        github_id: nextProfile.github_id,
+        discord_id: nextProfile.discord_id,
+        oidc_id: nextProfile.oidc_id,
+        wechat_id: nextProfile.wechat_id,
+        telegram_id: nextProfile.telegram_id,
+        linux_do_id: nextProfile.linux_do_id,
+        setting: nextProfile.setting,
+      })
+    },
+    [setAuthUser]
+  )
 
   // Fetch user profile (with optional silent mode)
-  const fetchProfile = useCallback(async (silent = false) => {
-    try {
-      if (!silent) {
-        setLoading(true)
-      }
-      const response = await getUserProfile()
+  const fetchProfile = useCallback(
+    async (silent = false) => {
+      try {
+        if (!silent) {
+          setLoading(true)
+        }
+        const response = await getUserProfile()
 
-      if (response.success && response.data) {
-        setProfile(response.data)
+        if (response.success && response.data) {
+          const nextProfile: UserProfile = {
+            ...response.data,
+            avatar_url: response.data.avatar_url ?? '',
+          }
+          setProfile(nextProfile)
+          syncAuthUser(nextProfile)
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch profile:', error)
+        if (!silent) {
+          toast.error(t('Failed to load profile'))
+        }
+      } finally {
+        if (!silent) {
+          setLoading(false)
+        }
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to fetch profile:', error)
-      if (!silent) {
-        toast.error(i18next.t('Failed to load profile'))
-      }
-    } finally {
-      if (!silent) {
-        setLoading(false)
-      }
-    }
-  }, [])
+    },
+    [syncAuthUser]
+  )
 
   // Refresh profile silently (without loading state)
   const refreshProfile = useCallback(async () => {
     await fetchProfile(true)
   }, [fetchProfile])
+
+  // Upload a profile avatar and refresh both profile surfaces.
+  const uploadAvatar = useCallback(
+    async (file: File): Promise<boolean> => {
+      try {
+        setAvatarUpdating(true)
+        const response = await uploadUserAvatar(file)
+
+        if (response.success) {
+          if (response.data?.avatar_url) {
+            setProfile((currentProfile) =>
+              currentProfile
+                ? {
+                    ...currentProfile,
+                    avatar_url: response.data?.avatar_url ?? '',
+                  }
+                : currentProfile
+            )
+            const currentUser = useAuthStore.getState().auth.user
+            if (currentUser) {
+              setAuthUser({
+                ...currentUser,
+                avatar_url: response.data.avatar_url,
+              })
+            }
+          }
+          toast.success(t('Avatar updated successfully'))
+          await refreshProfile()
+          return true
+        }
+
+        toast.error(response.message || t('Failed to update avatar'))
+        return false
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to update avatar:', error)
+        toast.error(t('Failed to update avatar'))
+        return false
+      } finally {
+        setAvatarUpdating(false)
+      }
+    },
+    [refreshProfile, setAuthUser]
+  )
+
+  // Remove the profile avatar and refresh both profile surfaces.
+  const removeAvatar = useCallback(async (): Promise<boolean> => {
+    try {
+      setAvatarUpdating(true)
+      const response = await deleteUserAvatar()
+
+      if (response.success) {
+        setProfile((currentProfile) =>
+          currentProfile
+            ? { ...currentProfile, avatar_url: '' }
+            : currentProfile
+        )
+        const currentUser = useAuthStore.getState().auth.user
+        if (currentUser) {
+          setAuthUser({ ...currentUser, avatar_url: '' })
+        }
+        toast.success(t('Avatar removed successfully'))
+        await refreshProfile()
+        return true
+      }
+
+      toast.error(response.message || t('Failed to remove avatar'))
+      return false
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to remove avatar:', error)
+      toast.error(t('Failed to remove avatar'))
+      return false
+    } finally {
+      setAvatarUpdating(false)
+    }
+  }, [refreshProfile, setAuthUser])
 
   // Update user profile
   const updateProfile = useCallback(
@@ -73,17 +202,17 @@ export function useProfile() {
         const response = await updateUserProfile(data)
 
         if (response.success) {
-          toast.success(i18next.t('Profile updated successfully'))
+          toast.success(t('Profile updated successfully'))
           await refreshProfile() // Refresh profile silently
           return true
         }
 
-        toast.error(response.message || i18next.t('Failed to update profile'))
+        toast.error(response.message || t('Failed to update profile'))
         return false
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Failed to update profile:', error)
-        toast.error(i18next.t('Failed to update profile'))
+        toast.error(t('Failed to update profile'))
         return false
       } finally {
         setUpdating(false)
@@ -100,17 +229,17 @@ export function useProfile() {
         const response = await updateUserSettings(data)
 
         if (response.success) {
-          toast.success(i18next.t('Settings updated successfully'))
+          toast.success(t('Settings updated successfully'))
           await refreshProfile() // Refresh profile silently
           return true
         }
 
-        toast.error(response.message || i18next.t('Failed to update settings'))
+        toast.error(response.message || t('Failed to update settings'))
         return false
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Failed to update settings:', error)
-        toast.error(i18next.t('Failed to update settings'))
+        toast.error(t('Failed to update settings'))
         return false
       } finally {
         setUpdating(false)
@@ -128,9 +257,12 @@ export function useProfile() {
     profile,
     loading,
     updating,
+    avatarUpdating,
     fetchProfile,
     refreshProfile,
     updateProfile,
     updateSettings,
+    uploadAvatar,
+    removeAvatar,
   }
 }

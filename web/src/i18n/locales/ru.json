@@ -5656,6 +5656,19 @@
     "Minimum balances must be unique": "Минимальные значения баланса должны быть уникальными",
     "At least one valid balance reward tier is required when balance rewards are enabled": "При включённых наградах по балансу требуется хотя бы один действительный уровень награды по балансу",
     "Minimum check-in quota cannot exceed maximum check-in quota": "Минимальная квота отметки не может превышать максимальную квоту отметки",
-    "Zoom": "Zoom"
+    "Zoom": "Zoom",
+    "Avatar images must be 5 MiB or smaller": "Размер изображения аватара не должен превышать 5 МиБ",
+    "Avatar removed successfully": "Аватар удалён",
+    "Avatar updated successfully": "Аватар обновлён",
+    "Choose an avatar image": "Выберите изображение аватара",
+    "Failed to remove avatar": "Не удалось удалить аватар",
+    "Failed to update avatar": "Не удалось обновить аватар",
+    "Please choose a JPEG, PNG, or WebP image": "Выберите изображение JPEG, PNG или WebP",
+    "Profile avatar": "Аватар профиля",
+    "Remove avatar": "Удалить аватар",
+    "Remove profile avatar?": "Удалить аватар профиля?",
+    "Replace avatar": "Заменить аватар",
+    "Upload avatar": "Загрузить аватар",
+    "Your initials will be shown until you upload a new avatar.": "До загрузки нового аватара будут отображаться ваши инициалы."
   }
 }

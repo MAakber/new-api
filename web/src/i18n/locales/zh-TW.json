@@ -5656,6 +5656,19 @@
     "Minimum balances must be unique": "餘額下限必須唯一",
     "At least one valid balance reward tier is required when balance rewards are enabled": "啟用餘額獎勵時，至少需要一個有效的餘額獎勵檔位",
     "Minimum check-in quota cannot exceed maximum check-in quota": "簽到最小額度不能超過簽到最大額度",
-    "Zoom": "縮放"
+    "Zoom": "縮放",
+    "Avatar images must be 5 MiB or smaller": "頭像圖片不能超過 5 MiB",
+    "Avatar removed successfully": "頭像已移除",
+    "Avatar updated successfully": "頭像更新成功",
+    "Choose an avatar image": "選擇頭像圖片",
+    "Failed to remove avatar": "無法移除頭像",
+    "Failed to update avatar": "無法更新頭像",
+    "Please choose a JPEG, PNG, or WebP image": "請選擇 JPEG、PNG 或 WebP 圖片",
+    "Profile avatar": "個人頭像",
+    "Remove avatar": "移除頭像",
+    "Remove profile avatar?": "要移除個人頭像嗎？",
+    "Replace avatar": "更換頭像",
+    "Upload avatar": "上傳頭像",
+    "Your initials will be shown until you upload a new avatar.": "在您上傳新頭像前，將顯示姓名首字母。"
   }
 }

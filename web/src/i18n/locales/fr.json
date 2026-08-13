@@ -5656,6 +5656,19 @@
     "Minimum balances must be unique": "Les soldes minimums doivent être uniques",
     "At least one valid balance reward tier is required when balance rewards are enabled": "Au moins un palier de récompense selon le solde valide est requis lorsque les récompenses basées sur le solde sont activées",
     "Minimum check-in quota cannot exceed maximum check-in quota": "Le quota minimum de connexion ne peut pas dépasser le quota maximum de connexion",
-    "Zoom": "Zoom"
+    "Zoom": "Zoom",
+    "Avatar images must be 5 MiB or smaller": "Les images d’avatar doivent faire au plus 5 Mio",
+    "Avatar removed successfully": "Avatar supprimé",
+    "Avatar updated successfully": "Avatar mis à jour",
+    "Choose an avatar image": "Choisir une image d’avatar",
+    "Failed to remove avatar": "Impossible de supprimer l’avatar",
+    "Failed to update avatar": "Impossible de mettre à jour l’avatar",
+    "Please choose a JPEG, PNG, or WebP image": "Choisissez une image JPEG, PNG ou WebP",
+    "Profile avatar": "Avatar de profil",
+    "Remove avatar": "Supprimer l’avatar",
+    "Remove profile avatar?": "Supprimer l’avatar de profil ?",
+    "Replace avatar": "Remplacer l’avatar",
+    "Upload avatar": "Téléverser un avatar",
+    "Your initials will be shown until you upload a new avatar.": "Vos initiales seront affichées jusqu’à ce que vous téléversiez un nouvel avatar."
   }
 }

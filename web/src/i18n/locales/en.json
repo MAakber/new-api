@@ -5656,6 +5656,19 @@
     "Minimum balances must be unique": "Minimum balances must be unique",
     "At least one valid balance reward tier is required when balance rewards are enabled": "At least one valid balance reward tier is required when balance rewards are enabled",
     "Minimum check-in quota cannot exceed maximum check-in quota": "Minimum check-in quota cannot exceed maximum check-in quota",
-    "Zoom": "Zoom"
+    "Zoom": "Zoom",
+    "Avatar images must be 5 MiB or smaller": "Avatar images must be 5 MiB or smaller",
+    "Avatar removed successfully": "Avatar removed successfully",
+    "Avatar updated successfully": "Avatar updated successfully",
+    "Choose an avatar image": "Choose an avatar image",
+    "Failed to remove avatar": "Failed to remove avatar",
+    "Failed to update avatar": "Failed to update avatar",
+    "Please choose a JPEG, PNG, or WebP image": "Please choose a JPEG, PNG, or WebP image",
+    "Profile avatar": "Profile avatar",
+    "Remove avatar": "Remove avatar",
+    "Remove profile avatar?": "Remove profile avatar?",
+    "Replace avatar": "Replace avatar",
+    "Upload avatar": "Upload avatar",
+    "Your initials will be shown until you upload a new avatar.": "Your initials will be shown until you upload a new avatar."
   }
 }

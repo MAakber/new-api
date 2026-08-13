@@ -21,8 +21,9 @@ import { X, User, Wallet, LogOut } from 'lucide-react'
 import { AnimatePresence, motion, type Variants } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 
+import { AuthenticatedAvatarImage } from '@/components/authenticated-avatar-image'
 import { SignOutDialog } from '@/components/sign-out-dialog'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import useDialogState from '@/hooks/use-dialog'
@@ -91,7 +92,10 @@ function MobileUserProfile({ user, onNavigate }: MobileUserProfileProps) {
         {/* User header - simplified */}
         <div className='border-border flex items-center gap-2.5 border-b p-2.5'>
           <Avatar className='size-9'>
-            <AvatarImage src='/avatars/01.png' alt={`@${displayName}`} />
+            <AuthenticatedAvatarImage
+              avatarUrl={user.avatar_url}
+              alt={t('Profile avatar')}
+            />
             <AvatarFallback className='text-xs'>{initials}</AvatarFallback>
           </Avatar>
           <div className='flex flex-1 flex-col gap-0.5 overflow-hidden'>
@@ -255,15 +259,15 @@ export function MobileDrawer({
               >
                 {loading ? (
                   <div className='flex flex-col gap-1 p-2'>
-                    {Array.from({ length: 4 }, (_, i) => (
-                      <Skeleton key={i} className='h-8 w-full' />
+                    {['one', 'two', 'three', 'four'].map((key) => (
+                      <Skeleton key={key} className='h-8 w-full' />
                     ))}
                   </div>
                 ) : (
                   <AnimatePresence>
-                    {mobileLinksList.map((link, index) => (
+                    {mobileLinksList.map((link) => (
                       <motion.div
-                        key={`${link.href}-${index}`}
+                        key={`${link.href}-${link.title}`}
                         className='border-border border-b p-2.5 last:border-b-0'
                         variants={MOBILE_DRAWER_ANIMATION.menuItem as Variants}
                       >

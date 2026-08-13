@@ -37,6 +37,8 @@ export interface UserProfile {
   id: number
   /** Username */
   username: string
+  /** Profile avatar URL */
+  avatar_url: string
   /** Display name */
   display_name: string
   /** User role (1=普通用户, 10=管理员, 100=超级管理员) */
@@ -228,4 +230,12 @@ export interface CheckinStatusResponse {
 export interface CheckinResponse {
   /** Quota awarded for this check-in */
   quota_awarded: number
+}
+
+/**
+ * Uploaded avatar response data
+ */
+export interface AvatarUploadResponse {
+  /** Versioned URL for the current avatar */
+  avatar_url: string
 }

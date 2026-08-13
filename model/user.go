@@ -908,6 +908,9 @@ func (user *User) Delete() error {
 		if err != nil {
 			return err
 		}
+		if err := DeleteUserAvatarWithTx(tx, user.Id); err != nil {
+			return err
+		}
 		return tx.Delete(user).Error
 	}); err != nil {
 		return err
@@ -939,6 +942,9 @@ func (user *User) HardDelete() error {
 			}
 		}
 		if err := deleteUserAuthenticationData(tx, user.Id); err != nil {
+			return err
+		}
+		if err := DeleteUserAvatarWithTx(tx, user.Id); err != nil {
 			return err
 		}
 		return tx.Unscoped().Delete(user).Error
