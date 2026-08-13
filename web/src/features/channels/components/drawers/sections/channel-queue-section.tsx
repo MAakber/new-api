@@ -30,6 +30,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { IconBadge } from '@/components/ui/icon-badge'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -119,11 +120,13 @@ export function ChannelQueueSection({
 
   return (
     <div className='flex flex-col gap-4'>
-      <div className='flex items-center gap-2'>
-        <Zap className='text-info h-4 w-4' aria-hidden='true' />
-        <span className='text-[13px] font-semibold'>
+      <div className='flex items-center gap-3'>
+        <IconBadge tone='info' size='md'>
+          <Zap className='h-4 w-4' />
+        </IconBadge>
+        <h3 className='text-sm font-semibold tracking-tight'>
           {t('Auto Upstream Queue')}
-        </span>
+        </h3>
       </div>
 
       {status && (
@@ -346,10 +349,12 @@ export function ChannelQueueSection({
       />
 
       <div className='flex items-center gap-2 pt-2'>
-        <Gauge className='text-warning h-4 w-4' aria-hidden='true' />
-        <span className='text-[13px] font-semibold'>
+        <IconBadge tone='warning' size='xs'>
+          <Gauge className='h-3.5 w-3.5' />
+        </IconBadge>
+        <h4 className='text-muted-foreground text-xs font-medium tracking-wide uppercase'>
           {t('Circuit Breaker')}
-        </span>
+        </h4>
       </div>
 
       <FormField

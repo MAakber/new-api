@@ -17,14 +17,25 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { flexRender, type Row } from '@tanstack/react-table'
+import { Flame } from 'lucide-react'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { GroupBadge } from '@/components/group-badge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
 import { CHANNEL_STATUS } from '../constants'
-import { isTagAggregateRow, parseGroupsList } from '../lib'
+import {
+  isTagAggregateRow,
+  parseChannelSettings,
+  parseGroupsList,
+} from '../lib'
 import type { Channel } from '../types'
 import { ChannelRowActionsLayoutContext } from './channel-row-actions-context'
 import { useChannels } from './channels-provider'
@@ -49,6 +60,8 @@ function ChannelCardComponent({
   const { t } = useTranslation()
   const { sensitiveVisible } = useChannels()
   const isTagRow = isTagAggregateRow(row.original)
+  const queueEnabled =
+    parseChannelSettings(row.original.setting).queue?.enabled === true
   const cells = row.getAllCells()
 
   const renderCell = (id: string) => {
@@ -101,6 +114,23 @@ function ChannelCardComponent({
               <span className='shrink-0'>{selectCell}</span>
             )}
             <div className='min-w-0 overflow-hidden'>{typeCell}</div>
+            {queueEnabled && (
+              <TooltipProvider delay={100}>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Flame
+                        className='h-3.5 w-3.5 shrink-0 text-amber-500'
+                        aria-label={t('Auto Upstream Queue')}
+                      />
+                    }
+                  />
+                  <TooltipContent side='top'>
+                    {t('Auto Upstream Queue')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
           </div>
           <div className='flex shrink-0 items-center gap-1.5'>
             {showStatusBadge && statusCell}

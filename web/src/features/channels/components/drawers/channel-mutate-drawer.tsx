@@ -332,6 +332,7 @@ const ADVANCED_SETTINGS_SECTION_IDS = {
   extraSettings: 'channel-section-advanced-extra-settings',
   fieldPassthrough: 'channel-section-advanced-field-passthrough',
   upstreamModelDetection: 'channel-section-advanced-upstream-model-detection',
+  queue: 'channel-section-advanced-queue',
 } as const
 const ADVANCED_SETTINGS_CHILD_SECTION_IDS: string[] = Object.values(
   ADVANCED_SETTINGS_SECTION_IDS
@@ -875,6 +876,8 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   const currentClientIdentityContext1MEnabled = form.watch(
     'client_identity_context_1m_enabled'
   )
+  const currentQueueEnabled = form.watch('queue_enabled')
+  const currentQueueModel = form.watch('queue_model')
   const shouldPreviewUnsavedModels =
     !isEditing ||
     (currentType === CHANNEL_TYPE_ADVANCED_CUSTOM && canEditSensitive)
@@ -1172,6 +1175,9 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     currentClientIdentityPlatform ||
     currentClientIdentityContext1MEnabled
   )
+  const queueConfigured = Boolean(
+    currentQueueEnabled || currentQueueModel?.trim()
+  )
   const advancedConfigured = Boolean(
     routingStrategyConfigured ||
     internalNotesConfigured ||
@@ -1179,9 +1185,15 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     extraSettingsConfigured ||
     fieldPassthroughConfigured ||
     upstreamModelDetectionConfigured ||
-    clientIdentityConfigured
+    clientIdentityConfigured ||
+    queueConfigured
   )
   const advancedNavChildren: ChannelEditorNavChildItem[] = [
+    {
+      id: ADVANCED_SETTINGS_SECTION_IDS.queue,
+      title: t('Auto Upstream Queue'),
+      configured: queueConfigured,
+    },
     {
       id: ADVANCED_SETTINGS_SECTION_IDS.routingStrategy,
       title: t('Routing Strategy'),
@@ -3767,9 +3779,12 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                     )}
                     {/* ── Auto Upstream Queue ── */}
                     <div
+                      id={getEditorElementId(
+                        ADVANCED_SETTINGS_SECTION_IDS.queue
+                      )}
                       className={configuredAdvancedSectionClassName(
                         'scroll-mt-4',
-                        form.watch('queue_enabled') === true
+                        queueConfigured
                       )}
                     >
                       <ChannelQueueSection
