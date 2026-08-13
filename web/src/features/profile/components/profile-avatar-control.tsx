@@ -100,7 +100,7 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
 
   return (
     <div className='relative shrink-0'>
-      <Avatar className='ring-background h-12 w-12 rounded-xl text-sm ring-2 sm:h-16 sm:w-16 sm:rounded-2xl sm:text-lg sm:ring-4'>
+      <Avatar className='ring-background h-12 w-12 rounded-full text-sm ring-2 sm:h-16 sm:w-16 sm:text-lg sm:ring-4'>
         {previewUrl ? (
           <AvatarImage src={previewUrl} alt={t('Profile avatar')} />
         ) : (
@@ -110,7 +110,7 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
           />
         )}
         <AvatarFallback
-          className='rounded-xl font-semibold text-white sm:rounded-2xl'
+          className='rounded-full font-semibold text-white'
           style={avatarFallbackStyle}
         >
           {avatarFallback}
