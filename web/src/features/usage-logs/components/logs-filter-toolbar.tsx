@@ -138,10 +138,15 @@ export function LogsFilterToolbar<TData>(props: LogsFilterToolbarProps<TData>) {
     return (
       <Drawer open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
         <div
-          className={cn('bg-card/50 rounded-lg border p-2.5', props.className)}
+          className={cn(
+            'bg-card/50 min-w-0 rounded-lg border p-2.5',
+            props.className
+          )}
         >
           {!mobilePanelCollapsed && (
-            <div className='grid gap-2'>{props.mobilePinnedFilters}</div>
+            <div className='grid min-w-0 gap-2'>
+              {props.mobilePinnedFilters}
+            </div>
           )}
 
           <div
@@ -151,7 +156,7 @@ export function LogsFilterToolbar<TData>(props: LogsFilterToolbarProps<TData>) {
             )}
           >
             {!mobilePanelCollapsed && props.stats}
-            <div className='flex items-center justify-end gap-1.5'>
+            <div className='flex min-w-0 flex-wrap items-center justify-end gap-1.5'>
               <Button
                 type='button'
                 variant='ghost'
@@ -245,12 +250,12 @@ export function LogsFilterToolbar<TData>(props: LogsFilterToolbarProps<TData>) {
   return (
     <div
       className={cn(
-        'bg-card/50 rounded-lg border p-2.5 sm:p-3',
+        'bg-card/50 min-w-0 rounded-lg border p-2.5 sm:p-3',
         props.className
       )}
     >
       <div className='flex flex-wrap items-start gap-2'>
-        <div className='grid min-w-0 flex-1 grid-cols-1 gap-2 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]'>
+        <div className='grid min-w-0 flex-1 grid-cols-1 gap-2 sm:grid-cols-[repeat(auto-fit,minmax(min(10rem,100%),1fr))]'>
           {props.primaryFilters}
         </div>
         {advancedToggle && (
@@ -261,7 +266,7 @@ export function LogsFilterToolbar<TData>(props: LogsFilterToolbarProps<TData>) {
       </div>
 
       {advancedOpen && props.advancedFilters && (
-        <div className='mt-2 grid grid-cols-1 gap-2 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]'>
+        <div className='mt-2 grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-[repeat(auto-fit,minmax(min(10rem,100%),1fr))]'>
           {props.advancedFilters}
         </div>
       )}

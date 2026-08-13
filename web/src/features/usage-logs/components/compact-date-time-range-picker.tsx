@@ -124,7 +124,7 @@ export function CompactDateTimeRangePicker({
             type='button'
             variant='outline'
             className={cn(
-              'w-full justify-start gap-2 px-2.5 text-sm leading-5 font-normal tabular-nums',
+              'min-w-0 w-full justify-start gap-2 overflow-hidden px-2.5 text-sm leading-5 font-normal tabular-nums',
               !start && !end && 'text-muted-foreground',
               className
             )}
@@ -136,11 +136,12 @@ export function CompactDateTimeRangePicker({
       </PopoverTrigger>
       <PopoverContent
         align='start'
-        className='w-[min(520px,calc(100vw-2rem))] p-3'
+        collisionPadding={8}
+        className='max-h-[min(var(--available-height),calc(100dvh-1rem))] w-[min(520px,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] overflow-x-hidden overflow-y-auto p-3'
       >
         <div className='space-y-3'>
-          <div className='grid gap-2 sm:grid-cols-[1fr_auto_1fr] sm:items-end'>
-            <div className='space-y-1.5'>
+          <div className='grid min-w-0 gap-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-end'>
+            <div className='min-w-0 space-y-1.5'>
               <div className='text-muted-foreground text-xs'>
                 {t('Start Time')}
               </div>
@@ -148,13 +149,13 @@ export function CompactDateTimeRangePicker({
                 type='datetime-local'
                 value={draftStart}
                 onChange={(e) => setDraftStart(e.target.value)}
-                className='h-8 text-sm leading-5 tabular-nums'
+                className='h-8 min-w-0 px-2 text-sm leading-5 tabular-nums'
               />
             </div>
             <span className='text-muted-foreground hidden pb-2 text-xs sm:block'>
               ~
             </span>
-            <div className='space-y-1.5'>
+            <div className='min-w-0 space-y-1.5'>
               <div className='text-muted-foreground text-xs'>
                 {t('End Time')}
               </div>
@@ -162,17 +163,17 @@ export function CompactDateTimeRangePicker({
                 type='datetime-local'
                 value={draftEnd}
                 onChange={(e) => setDraftEnd(e.target.value)}
-                className='h-8 text-sm leading-5 tabular-nums'
+                className='h-8 min-w-0 px-2 text-sm leading-5 tabular-nums'
               />
             </div>
           </div>
 
-          <div className='flex flex-wrap gap-1.5'>
+          <div className='grid grid-cols-2 gap-1.5 sm:grid-cols-5'>
             <Button
               type='button'
               variant='secondary'
               size='sm'
-              className='h-7 flex-1 px-2 text-xs'
+              className='h-7 min-w-0 px-2 text-xs'
               onClick={() => applyPreset('today')}
             >
               {t('Today')}
@@ -181,7 +182,7 @@ export function CompactDateTimeRangePicker({
               type='button'
               variant='secondary'
               size='sm'
-              className='h-7 flex-1 px-2 text-xs'
+              className='h-7 min-w-0 px-2 text-xs'
               onClick={() => applyPreset('7d')}
             >
               {t('7 Days')}
@@ -190,7 +191,7 @@ export function CompactDateTimeRangePicker({
               type='button'
               variant='secondary'
               size='sm'
-              className='h-7 flex-1 px-2 text-xs'
+              className='h-7 min-w-0 px-2 text-xs'
               onClick={() => applyPreset('week')}
             >
               {t('This week')}
@@ -199,7 +200,7 @@ export function CompactDateTimeRangePicker({
               type='button'
               variant='secondary'
               size='sm'
-              className='h-7 flex-1 px-2 text-xs'
+              className='h-7 min-w-0 px-2 text-xs'
               onClick={() => applyPreset('30d')}
             >
               {t('30 Days')}
@@ -208,7 +209,7 @@ export function CompactDateTimeRangePicker({
               type='button'
               variant='secondary'
               size='sm'
-              className='h-7 flex-1 px-2 text-xs'
+              className='h-7 min-w-0 px-2 text-xs'
               onClick={() => applyPreset('month')}
             >
               {t('This month')}
