@@ -380,11 +380,12 @@ export function OllamaModelsDialog({
           {t('Manage local models for:')} <strong>{currentRow?.name}</strong>
         </>
       }
-      contentClassName='sm:max-w-3xl'
+      contentClassName='sm:max-w-3xl max-md:inset-0 max-md:h-[100dvh] max-md:max-h-[100dvh] max-md:!max-w-none max-md:translate-x-0 max-md:translate-y-0 max-md:!w-screen max-md:!rounded-none max-md:gap-3 max-md:!p-3 max-md:[&>div:nth-child(2)]:min-h-0 max-md:[&>div:nth-child(2)]:flex-1 max-md:[&>div:nth-child(2)]:h-auto max-md:[&>div:nth-child(2)]:max-h-none'
       contentHeight='auto'
-      bodyClassName='space-y-4'
+      bodyClassName='space-y-4 max-md:min-w-0'
+      footerClassName='max-md:!flex-col max-md:items-stretch max-md:!-mx-3 max-md:!-mb-3 max-md:!p-3 max-md:!pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]'
       footer={
-        <Button variant='outline' onClick={close}>
+        <Button variant='outline' onClick={close} className='max-md:w-full'>
           {t('Close')}
         </Button>
       }
@@ -394,11 +395,11 @@ export function OllamaModelsDialog({
           {t('This channel is not an Ollama channel.')}
         </div>
       ) : (
-        <div className='space-y-4 py-2 pr-1'>
-          <div className='flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between'>
-            <div className='flex-1 space-y-2'>
+        <div className='min-w-0 space-y-4 py-2 pr-1'>
+          <div className='flex flex-col gap-3 md:flex-row md:items-end md:justify-between'>
+            <div className='min-w-0 flex-1 space-y-2'>
               <Label htmlFor='ollama-pull'>{t('Pull model')}</Label>
-              <div className='flex gap-2'>
+              <div className='flex min-w-0 gap-2 max-md:flex-col'>
                 <Input
                   id='ollama-pull'
                   placeholder={t('e.g. llama3.1:8b')}
@@ -409,6 +410,7 @@ export function OllamaModelsDialog({
                 <Button
                   onClick={() => void pullModel()}
                   disabled={!channelId || isPulling}
+                  className='max-md:w-full'
                 >
                   {isPulling ? (
                     <>
@@ -447,11 +449,12 @@ export function OllamaModelsDialog({
               )}
             </div>
 
-            <div className='flex gap-2'>
+            <div className='flex gap-2 max-md:w-full max-md:flex-wrap'>
               <Button
                 variant='outline'
                 onClick={() => void fetchOllamaModels()}
                 disabled={!channelId || isFetching}
+                className='max-md:w-full'
               >
                 {isFetching ? (
                   <Loader2 className='mr-2 h-4 w-4 animate-spin' />
@@ -466,14 +469,14 @@ export function OllamaModelsDialog({
           <Separator />
 
           <div className='space-y-3'>
-            <div className='flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
+            <div className='flex flex-col gap-2 md:flex-row md:items-center md:justify-between'>
               <div>
                 <p className='text-sm font-medium'>{t('Local models')}</p>
                 <p className='text-muted-foreground text-xs'>
                   {t('Select models and apply to channel models list.')}
                 </p>
               </div>
-              <div className='relative sm:w-72'>
+              <div className='relative min-w-0 md:w-72'>
                 <Search className='text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
                 <Input
                   placeholder={t('Search models...')}
@@ -485,16 +488,27 @@ export function OllamaModelsDialog({
             </div>
 
             <div className='flex flex-wrap gap-2'>
-              <Button variant='outline' size='sm' onClick={selectAllFiltered}>
+              <Button
+                variant='outline'
+                size='sm'
+                onClick={selectAllFiltered}
+                className='max-md:w-full'
+              >
                 {t('Select all (filtered)')}
               </Button>
-              <Button variant='outline' size='sm' onClick={clearSelection}>
+              <Button
+                variant='outline'
+                size='sm'
+                onClick={clearSelection}
+                className='max-md:w-full'
+              >
                 {t('Clear selection')}
               </Button>
               <Button
                 size='sm'
                 onClick={() => void applySelection('append')}
                 disabled={!selected.length}
+                className='max-md:w-full'
               >
                 {t('Append to channel')}
               </Button>
@@ -503,25 +517,26 @@ export function OllamaModelsDialog({
                 size='sm'
                 onClick={() => void applySelection('replace')}
                 disabled={!selected.length}
+                className='max-md:w-full'
               >
                 {t('Replace channel models')}
               </Button>
             </div>
 
             <div className='overflow-hidden rounded-md border'>
-              <div className='max-h-[420px] overflow-y-auto'>
+              <div className='max-h-[420px] min-w-0 overflow-y-auto max-md:max-h-none max-md:overflow-visible'>
                 {filteredModels.length === 0 ? (
                   <div className='text-muted-foreground p-6 text-center text-sm'>
                     {t('No models found.')}
                   </div>
                 ) : (
-                  <div className='divide-y'>
+                  <div className='min-w-0 divide-y'>
                     {filteredModels.map((m) => {
                       const checked = selected.includes(m.id)
                       return (
                         <div
                           key={m.id}
-                          className='flex items-center justify-between gap-3 p-3'
+                          className='flex min-w-0 items-center justify-between gap-3 p-3'
                         >
                           <div className='flex min-w-0 items-start gap-3'>
                             <Checkbox

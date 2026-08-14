@@ -34,6 +34,7 @@ import {
 } from 'lucide-react'
 import {
   type ChangeEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -325,11 +326,11 @@ function getTestTableColumnClass(columnId: string) {
     case 'select':
       return 'w-10 min-w-10'
     case 'model':
-      return 'w-auto min-w-48 whitespace-nowrap'
+      return 'w-auto whitespace-nowrap md:min-w-48'
     case 'status':
-      return 'w-28 min-w-28 whitespace-nowrap'
+      return 'whitespace-nowrap md:w-28 md:min-w-28'
     case 'result':
-      return 'w-80 min-w-80 max-w-80 whitespace-normal'
+      return 'whitespace-normal md:w-80 md:min-w-80 md:max-w-80'
     case 'actions':
       return 'bg-popover w-px whitespace-nowrap'
     default:
@@ -922,7 +923,7 @@ function ChannelTestDialogContent({
           const isDefault = defaultTestModel === model
 
           return (
-            <div className='flex w-max items-center gap-2 whitespace-nowrap'>
+            <div className='flex min-w-0 items-center gap-2 whitespace-nowrap md:w-max'>
               <span className='font-medium whitespace-nowrap' title={model}>
                 {model}
               </span>
@@ -1034,16 +1035,21 @@ function ChannelTestDialogContent({
             <span className='min-w-0 truncate'>{currentRow.name}</span>
           </span>
         }
-        contentClassName='max-h-[90vh] overflow-hidden sm:max-w-4xl'
+        contentClassName='max-h-[90vh] overflow-hidden sm:max-w-4xl max-md:inset-0 max-md:h-[100dvh] max-md:max-h-[100dvh] max-md:!max-w-none max-md:translate-x-0 max-md:translate-y-0 max-md:!w-screen max-md:!rounded-none max-md:gap-3 max-md:!p-3 max-md:[&>div:nth-child(2)]:min-h-0 max-md:[&>div:nth-child(2)]:flex-1 max-md:[&>div:nth-child(2)]:h-auto max-md:[&>div:nth-child(2)]:max-h-none'
         contentHeight='auto'
-        bodyClassName='space-y-4'
+        bodyClassName='space-y-4 max-md:min-w-0'
+        footerClassName='max-md:!flex-col max-md:items-stretch max-md:!-mx-3 max-md:!-mb-3 max-md:!p-3 max-md:!pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]'
         footer={
-          <Button variant='outline' onClick={handleClose}>
+          <Button
+            variant='outline'
+            onClick={handleClose}
+            className='max-md:w-full'
+          >
             {t('Close')}
           </Button>
         }
       >
-        <div className='max-h-[78vh] space-y-4 overflow-y-auto py-4 pr-1'>
+        <div className='max-h-[78vh] min-w-0 space-y-4 overflow-y-auto py-4 pr-1 max-md:max-h-none max-md:overflow-visible'>
           <div className='grid gap-4 md:grid-cols-2'>
             <div className='grid gap-2'>
               <Label htmlFor='endpoint-type'>{t('Endpoint Type')}</Label>
@@ -1121,8 +1127,8 @@ function ChannelTestDialogContent({
             </p>
           </div>
 
-          <div className='space-y-3 max-sm:has-[div[role="toolbar"]]:pb-16'>
-            <div className='flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between'>
+          <div className='space-y-3'>
+            <div className='flex flex-col gap-3 md:flex-row md:items-start md:justify-between'>
               <div className='min-w-0 space-y-2'>
                 <p className='text-sm font-medium'>{t('Channel models')}</p>
                 <p className='text-muted-foreground text-xs'>
@@ -1177,12 +1183,12 @@ function ChannelTestDialogContent({
                   )}
                 </div>
               </div>
-              <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
+              <div className='flex min-w-0 flex-col gap-2 md:flex-row md:items-center'>
                 <Input
                   placeholder={t('Filter models...')}
                   value={searchTerm}
                   onChange={handleSearchTermChange}
-                  className='sm:w-64'
+                  className='md:w-64'
                 />
               </div>
             </div>
@@ -1190,13 +1196,13 @@ function ChannelTestDialogContent({
             <div className='space-y-3'>
               <DataTableView
                 table={table}
-                containerClassName='rounded-md'
+                containerClassName='rounded-md max-md:hidden'
                 containerProps={{
                   role: 'region',
                   'aria-label': t('Channel models'),
                 }}
                 tableContainerClassName='max-h-90 overflow-auto **:data-[slot=table-container]:overflow-visible'
-                tableClassName='w-max min-w-full table-auto'
+                tableClassName='min-w-full table-auto md:w-max'
                 pinnedColumns={[
                   {
                     columnId: 'actions',
@@ -1208,8 +1214,8 @@ function ChannelTestDialogContent({
                   <colgroup>
                     <col className='w-10 min-w-10' />
                     <col className='w-auto' />
-                    <col className='w-28' />
-                    <col className='w-80' />
+                    <col className='md:w-28' />
+                    <col className='md:w-80' />
                     <col className='w-px' />
                   </colgroup>
                 }
@@ -1222,6 +1228,21 @@ function ChannelTestDialogContent({
                     : t('This channel has no configured models.')
                 }
                 emptyCellClassName='text-muted-foreground h-16 text-center text-sm'
+              />
+
+              <MobileModelList
+                table={table}
+                defaultTestModel={defaultTestModel}
+                testResults={testResults}
+                testingModels={testingModels}
+                isBatchTesting={isBatchTesting}
+                onTestModel={(model) => void testSingleModel(model)}
+                onOpenDetails={setFailureDetails}
+                emptyContent={
+                  models.length
+                    ? t('No models matched your search.')
+                    : t('This channel has no configured models.')
+                }
               />
 
               <DataTablePagination table={table} />
@@ -1378,11 +1399,11 @@ function FailureResultContent({
 
   return (
     <div className='min-w-0 space-y-1.5'>
-      <div className='flex min-w-0 items-center gap-2 text-xs whitespace-normal'>
+      <div className='flex min-w-0 items-center gap-2 text-xs whitespace-normal max-md:flex-col max-md:items-stretch'>
         <p className='text-muted-foreground line-clamp-2 min-w-0 flex-1 leading-snug wrap-break-word'>
           {summary}
         </p>
-        <div className='flex shrink-0 flex-wrap items-center justify-end gap-1.5'>
+        <div className='flex shrink-0 flex-wrap items-center justify-end gap-1.5 max-md:w-full max-md:justify-start'>
           {isModelPriceError && (
             <Button
               variant='outline'
@@ -1489,6 +1510,145 @@ function FailureDetailsSheet({
   )
 }
 
+type MobileModelListProps = {
+  table: TanStackTable<ModelRow>
+  defaultTestModel?: string
+  testResults: Record<string, TestResult>
+  testingModels: Set<string>
+  isBatchTesting: boolean
+  onTestModel: (model: string) => void
+  onOpenDetails: (details: FailureDetailsState) => void
+  emptyContent: ReactNode
+}
+
+function MobileModelList({
+  table,
+  defaultTestModel,
+  testResults,
+  testingModels,
+  isBatchTesting,
+  onTestModel,
+  onOpenDetails,
+  emptyContent,
+}: MobileModelListProps) {
+  const { t } = useTranslation()
+  const rows = table.getRowModel().rows
+
+  return (
+    <div
+      data-slot='mobile-channel-model-list'
+      className='min-w-0 space-y-2 md:hidden'
+    >
+      {rows.length > 0 && (
+        <div className='flex min-w-0 items-center gap-2 rounded-md border px-3 py-2'>
+          <Checkbox
+            checked={table.getIsAllPageRowsSelected()}
+            indeterminate={
+              table.getIsSomePageRowsSelected() &&
+              !table.getIsAllPageRowsSelected()
+            }
+            onCheckedChange={(value) =>
+              table.toggleAllPageRowsSelected(!!value)
+            }
+            aria-label={t('Select all models')}
+          />
+          <span className='text-muted-foreground text-xs'>
+            {t('Select all models')}
+          </span>
+        </div>
+      )}
+
+      <div className='min-w-0 overflow-hidden rounded-md border'>
+        {rows.length === 0 ? (
+          <div className='text-muted-foreground p-4 text-center text-sm'>
+            {emptyContent}
+          </div>
+        ) : (
+          <div className='min-w-0 divide-y'>
+            {rows.map((row) => {
+              const model = row.original.model
+              const result = testResults[model]
+              const isTestingModel = testingModels.has(model)
+
+              return (
+                <article
+                  key={row.id}
+                  data-slot='mobile-channel-model-card'
+                  className='min-w-0 space-y-3 p-3'
+                >
+                  <div className='flex min-w-0 items-start gap-2'>
+                    <Checkbox
+                      checked={row.getIsSelected()}
+                      onCheckedChange={(value) => row.toggleSelected(!!value)}
+                      aria-label={t('Select model {{model}}', { model })}
+                    />
+                    <div className='min-w-0 flex-1 space-y-2'>
+                      <div className='flex min-w-0 flex-wrap items-start gap-2'>
+                        <span
+                          className='min-w-0 flex-1 font-medium break-all'
+                          title={model}
+                        >
+                          {model}
+                        </span>
+                        {defaultTestModel === model && (
+                          <StatusBadge
+                            label={t('Default')}
+                            variant='info'
+                            size='sm'
+                            copyable={false}
+                          />
+                        )}
+                      </div>
+                      <div className='flex min-w-0 flex-wrap items-center gap-2'>
+                        <span className='text-muted-foreground shrink-0 text-xs'>
+                          {t('Status')}
+                        </span>
+                        <TestStatusCell result={result} />
+                      </div>
+                    </div>
+                    <Tooltip>
+                      <TooltipTrigger
+                        render={
+                          <Button
+                            variant='ghost'
+                            size='icon-sm'
+                            className='shrink-0'
+                            onClick={() => onTestModel(model)}
+                            disabled={isTestingModel || isBatchTesting}
+                            aria-label={t('Test Connection')}
+                          />
+                        }
+                      >
+                        {isTestingModel ? (
+                          <Loader2 className='size-4 animate-spin' />
+                        ) : (
+                          <Gauge className='size-4' />
+                        )}
+                      </TooltipTrigger>
+                      <TooltipContent>{t('Test Connection')}</TooltipContent>
+                    </Tooltip>
+                  </div>
+
+                  <div className='min-w-0 space-y-1 border-t pt-2'>
+                    <p className='text-muted-foreground text-xs font-medium'>
+                      {t('Result')}
+                    </p>
+                    <TestResultCell
+                      result={result}
+                      model={model}
+                      onOpenDetails={onOpenDetails}
+                    />
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function TestModelsBulkActions({ table }: { table: TanStackTable<ModelRow> }) {
   const { t } = useTranslation()
   const { copyToClipboard } = useCopyToClipboard()
@@ -1501,7 +1661,11 @@ function TestModelsBulkActions({ table }: { table: TanStackTable<ModelRow> }) {
   }, [copyToClipboard, selectedModels])
 
   return (
-    <BulkActionsToolbar table={table} entityName='model'>
+    <BulkActionsToolbar
+      table={table}
+      entityName='model'
+      className='max-md:static max-md:w-full max-md:translate-x-0 max-md:rounded-md max-md:[&>div]:w-full max-md:[&>div]:flex-wrap'
+    >
       <Tooltip>
         <TooltipTrigger
           render={

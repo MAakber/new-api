@@ -365,7 +365,7 @@ export function MultiKeyManageDialog({
         contentClassName='flex max-h-[90vh] max-w-5xl flex-col'
         titleClassName='flex items-center gap-2'
         contentHeight='min(72vh, 720px)'
-        bodyClassName='space-y-4'
+        bodyClassName='min-w-0 space-y-4'
       >
         <div className='flex min-h-0 flex-1 flex-col space-y-4 overflow-hidden'>
           {/* Statistics */}
@@ -390,7 +390,7 @@ export function MultiKeyManageDialog({
           <Separator className='shrink-0' />
 
           {/* Toolbar */}
-          <div className='flex shrink-0 items-center justify-between'>
+          <div className='flex shrink-0 flex-wrap items-center gap-2'>
             <Select
               items={MULTI_KEY_FILTER_OPTIONS.map((option) => ({
                 value: option.value,
@@ -413,7 +413,7 @@ export function MultiKeyManageDialog({
               </SelectContent>
             </Select>
 
-            <div className='flex items-center gap-2'>
+            <div className='flex min-w-0 flex-1 flex-wrap items-center justify-end gap-2'>
               {canRevealKeys && (
                 <Button
                   variant='outline'
@@ -486,7 +486,7 @@ export function MultiKeyManageDialog({
           )}
 
           {/* Table */}
-          <div className='min-h-0 flex-1 overflow-auto rounded-md border'>
+          <div className='min-h-0 min-w-0 flex-1 overflow-auto rounded-md border'>
             {isLoading && (
               <div className='flex items-center justify-center py-12'>
                 <Loader2 className='text-muted-foreground h-8 w-8 animate-spin' />
@@ -500,7 +500,7 @@ export function MultiKeyManageDialog({
             {!isLoading && keys.length > 0 && (
               <StaticDataTable
                 className='rounded-none border-0'
-                tableClassName='min-w-[800px]'
+                tableClassName='min-w-full md:min-w-[800px]'
                 data={keys}
                 getRowKey={(key) => key.index}
                 columns={[

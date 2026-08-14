@@ -320,15 +320,15 @@ export function FetchModelsDialog({
 
     return (
       <Collapsible key={categoryName} defaultOpen>
-        <CollapsibleTrigger className='hover:bg-muted/50 flex w-full items-center justify-between rounded-lg border p-3'>
-          <div className='flex items-center gap-2'>
+        <CollapsibleTrigger className='hover:bg-muted/50 flex w-full min-w-0 items-center justify-between rounded-lg border p-3 max-md:items-start'>
+          <div className='flex min-w-0 items-center gap-2'>
             <ChevronDown className='h-4 w-4' />
-            <span className='font-medium'>
+            <span className='min-w-0 font-medium max-md:break-words'>
               {categoryName} ({categoryModels.length})
             </span>
           </div>
-          <div className='flex items-center gap-2'>
-            <span className='text-muted-foreground text-sm'>
+          <div className='flex shrink-0 items-center gap-2'>
+            <span className='text-muted-foreground text-sm max-md:text-xs'>
               {categoryModels.filter((m) => selectedModels.includes(m)).length}{' '}
               / {categoryModels.length} selected
             </span>
@@ -341,10 +341,10 @@ export function FetchModelsDialog({
             />
           </div>
         </CollapsibleTrigger>
-        <CollapsibleContent className='px-4 py-2'>
-          <div className='grid grid-cols-2 gap-2'>
+        <CollapsibleContent className='min-w-0 px-4 py-2'>
+          <div className='grid min-w-0 grid-cols-2 gap-2 max-md:grid-cols-1'>
             {categoryModels.map((model) => (
-              <div key={model} className='flex items-center space-x-2'>
+              <div key={model} className='flex min-w-0 items-center space-x-2'>
                 <Checkbox
                   id={model}
                   checked={selectedModels.includes(model)}
@@ -352,9 +352,9 @@ export function FetchModelsDialog({
                 />
                 <Label
                   htmlFor={model}
-                  className='flex cursor-pointer items-center gap-1.5 text-sm font-normal'
+                  className='flex min-w-0 cursor-pointer items-center gap-1.5 text-sm font-normal'
                 >
-                  <span>{model}</span>
+                  <span className='min-w-0 max-md:break-all'>{model}</span>
                   {redirectOnlySet.has(normalizeModelName(model)) && (
                     <Tooltip>
                       <TooltipTrigger
@@ -427,9 +427,9 @@ export function FetchModelsDialog({
     )
   } else {
     content = (
-      <div className='space-y-4'>
+      <div className='min-w-0 space-y-4'>
         {/* Search Bar */}
-        <div className='relative'>
+        <div className='relative min-w-0'>
           <Search className='text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
           <Input
             placeholder={t('Search models...')}
@@ -443,23 +443,32 @@ export function FetchModelsDialog({
         <Tabs
           key={`${activeChannel?.id ?? 'custom'}-${fetchedModels.length}-${removedModels.length}`}
           defaultValue={defaultTab}
+          className='min-w-0'
         >
           <TabsList
-            className={`grid w-full ${removedModels.length > 0 ? 'grid-cols-3' : 'grid-cols-2'}`}
+            className={`grid w-full max-md:h-auto ${removedModels.length > 0 ? 'grid-cols-3' : 'grid-cols-2'}`}
           >
-            <TabsTrigger value='new' disabled={newModels.length === 0}>
+            <TabsTrigger
+              value='new'
+              disabled={newModels.length === 0}
+              className='min-w-0 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
+            >
               {t('New Models ({{count}})', { count: newModels.length })}
             </TabsTrigger>
             <TabsTrigger
               value='existing'
               disabled={existingFilteredModels.length === 0}
+              className='min-w-0 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
             >
               {t('Existing Models ({{count}})', {
                 count: existingFilteredModels.length,
               })}
             </TabsTrigger>
             {removedModels.length > 0 && (
-              <TabsTrigger value='removed'>
+              <TabsTrigger
+                value='removed'
+                className='min-w-0 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
+              >
                 {t('Removed Models ({{count}})', {
                   count: removedModels.length,
                 })}
@@ -469,7 +478,7 @@ export function FetchModelsDialog({
 
           <TabsContent
             value='new'
-            className='max-h-96 space-y-2 overflow-y-auto'
+            className='max-h-96 min-w-0 space-y-2 overflow-y-auto max-md:max-h-none max-md:overflow-visible'
           >
             {getSortedCategoryEntries(newModelsByCategory).map(
               ([category, models]) => renderModelCategory(category, models)
@@ -478,7 +487,7 @@ export function FetchModelsDialog({
 
           <TabsContent
             value='existing'
-            className='max-h-96 space-y-2 overflow-y-auto'
+            className='max-h-96 min-w-0 space-y-2 overflow-y-auto max-md:max-h-none max-md:overflow-visible'
           >
             {getSortedCategoryEntries(existingModelsByCategory).map(
               ([category, models]) => renderModelCategory(category, models)
@@ -488,7 +497,7 @@ export function FetchModelsDialog({
           {removedModels.length > 0 && (
             <TabsContent
               value='removed'
-              className='max-h-96 space-y-2 overflow-y-auto'
+              className='max-h-96 min-w-0 space-y-2 overflow-y-auto max-md:max-h-none max-md:overflow-visible'
             >
               <p className='text-muted-foreground text-xs'>
                 {t(
@@ -514,16 +523,29 @@ export function FetchModelsDialog({
       onOpenChange={handleClose}
       title={t('Fetch Models')}
       description={description}
-      contentClassName='max-w-3xl'
+      contentClassName='max-w-3xl max-md:inset-0 max-md:h-[100dvh] max-md:max-h-[100dvh] max-md:!max-w-none max-md:translate-x-0 max-md:translate-y-0 max-md:!w-screen max-md:!rounded-none max-md:gap-3 max-md:!p-3 max-md:[&>div:nth-child(2)]:min-h-0 max-md:[&>div:nth-child(2)]:flex-1 max-md:[&>div:nth-child(2)]:h-auto max-md:[&>div:nth-child(2)]:max-h-none'
       contentHeight='auto'
-      bodyClassName='space-y-4'
+      bodyClassName='space-y-4 max-md:min-w-0'
+      footerClassName='max-md:!flex-col max-md:items-stretch max-md:!-mx-3 max-md:!-mb-3 max-md:!p-3 max-md:!pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]'
       footer={
         showFooterActions ? (
           <>
-            <Button variant='outline' onClick={handleClose} disabled={isSaving}>
+            <span className='text-muted-foreground min-w-0 text-sm break-words md:hidden'>
+              {t('{{n}} model(s) selected', { n: selectedModels.length })}
+            </span>
+            <Button
+              variant='outline'
+              onClick={handleClose}
+              disabled={isSaving}
+              className='max-md:w-full'
+            >
               {t('Cancel')}
             </Button>
-            <Button onClick={handleSave} disabled={isSaving}>
+            <Button
+              onClick={handleSave}
+              disabled={isSaving}
+              className='max-md:w-full'
+            >
               {isSaving && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
               {isSaving ? t('Saving...') : t('Save Models')}
             </Button>

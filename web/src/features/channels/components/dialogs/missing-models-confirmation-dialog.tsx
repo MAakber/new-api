@@ -63,13 +63,14 @@ export function MissingModelsConfirmationDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={handleOpenChange}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
+      <AlertDialogContent className='max-sm:max-h-[calc(100dvh-1rem)] max-sm:grid-rows-[minmax(0,1fr)_auto] max-sm:overflow-hidden'>
+        <AlertDialogHeader className='max-sm:min-h-0 max-sm:overflow-hidden'>
           <AlertDialogTitle>
             {t('Models not in list, may fail to invoke')}
           </AlertDialogTitle>
           <AlertDialogDescription
             render={<div className='space-y-3 text-sm' />}
+            className='max-sm:min-h-0 max-sm:overflow-y-auto max-sm:overscroll-contain max-sm:pr-1'
           >
             <div>
               {t(
@@ -86,7 +87,7 @@ export function MissingModelsConfirmationDialog({
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className='flex-col gap-2 sm:flex-row'>
+        <AlertDialogFooter className='flex-col gap-2 max-sm:shrink-0 sm:flex-row'>
           <AlertDialogCancel onClick={() => onConfirm('cancel')}>
             {t('Go back and edit')}
           </AlertDialogCancel>

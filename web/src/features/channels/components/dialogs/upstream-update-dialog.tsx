@@ -97,8 +97,8 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
   const handleConfirm = () => {
     const hasAdd = props.addModels.length > 0
     const hasRemove = props.removeModels.length > 0
-    const selectedAddArr = Array.from(selectedAdd)
-    const selectedRemoveArr = Array.from(selectedRemove)
+    const selectedAddArr = [...selectedAdd]
+    const selectedRemoveArr = [...selectedRemove]
     const anyAdd = selectedAddArr.length > 0
     const anyRemove = selectedRemoveArr.length > 0
 
@@ -119,16 +119,22 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
         open={props.open}
         onOpenChange={(v) => !v && props.onCancel()}
         title={t('Upstream Model Updates')}
-        contentClassName='sm:max-w-lg'
+        contentClassName='sm:max-w-lg max-md:inset-0 max-md:h-[100dvh] max-md:max-h-[100dvh] max-md:!max-w-none max-md:translate-x-0 max-md:translate-y-0 max-md:!w-screen max-md:!rounded-none max-md:gap-3 max-md:!p-3 max-md:[&>div:nth-child(2)]:min-h-0 max-md:[&>div:nth-child(2)]:flex-1 max-md:[&>div:nth-child(2)]:h-auto max-md:[&>div:nth-child(2)]:max-h-none'
         contentHeight='auto'
-        bodyClassName='space-y-4'
+        bodyClassName='space-y-4 max-md:min-w-0'
+        footerClassName='max-md:!flex-col max-md:items-stretch max-md:!-mx-3 max-md:!-mb-3 max-md:!p-3 max-md:!pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]'
         footer={
           <>
-            <Button variant='outline' onClick={props.onCancel}>
+            <Button
+              variant='outline'
+              onClick={props.onCancel}
+              className='max-md:w-full'
+            >
               {t('Cancel')}
             </Button>
             <Button
               onClick={handleConfirm}
+              className='max-md:w-full'
               disabled={
                 props.confirmLoading ||
                 (props.addModels.length === 0 &&
@@ -148,15 +154,22 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
         <Tabs
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as 'add' | 'remove')}
+          className='min-w-0'
         >
-          <TabsList className='grid w-full grid-cols-2'>
-            <TabsTrigger value='add' className='gap-1'>
+          <TabsList className='grid w-full grid-cols-2 max-md:h-auto'>
+            <TabsTrigger
+              value='add'
+              className='min-w-0 gap-1 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
+            >
               {t('Add Models')}
               <StatusBadge variant='neutral' className='ml-1' copyable={false}>
                 {selectedAdd.size}/{props.addModels.length}
               </StatusBadge>
             </TabsTrigger>
-            <TabsTrigger value='remove' className='gap-1'>
+            <TabsTrigger
+              value='remove'
+              className='min-w-0 gap-1 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
+            >
               {t('Remove Models')}
               <StatusBadge variant='neutral' className='ml-1' copyable={false}>
                 {selectedRemove.size}/{props.removeModels.length}
@@ -165,7 +178,7 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
           </TabsList>
 
           <TabsContent value='add' className='space-y-3'>
-            <div className='relative'>
+            <div className='relative min-w-0'>
               <Search className='text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4' />
               <Input
                 placeholder={t('Search models...')}
@@ -187,13 +200,13 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
                 </span>
               </div>
             )}
-            <ScrollArea className='h-[280px] rounded-md border p-2'>
+            <ScrollArea className='h-[280px] min-w-0 rounded-md border p-2 max-md:h-auto max-md:overflow-visible max-md:[&_[data-slot=scroll-area-scrollbar]]:hidden max-md:[&_[data-slot=scroll-area-viewport]]:h-auto max-md:[&_[data-slot=scroll-area-viewport]]:overflow-visible'>
               {filteredAdd.length > 0 ? (
-                <div className='space-y-1'>
+                <div className='min-w-0 space-y-1'>
                   {filteredAdd.map((model) => (
                     <label
                       key={model}
-                      className='hover:bg-accent flex cursor-pointer items-center gap-2 rounded px-2 py-1.5'
+                      className='hover:bg-accent flex min-w-0 cursor-pointer items-center gap-2 rounded px-2 py-1.5'
                     >
                       <Checkbox
                         checked={selectedAdd.has(model)}
@@ -201,7 +214,9 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
                           toggleModel(model, selectedAdd, setSelectedAdd)
                         }
                       />
-                      <span className='truncate text-sm'>{model}</span>
+                      <span className='min-w-0 truncate text-sm max-md:overflow-visible max-md:break-all max-md:whitespace-normal'>
+                        {model}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -216,7 +231,7 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
           </TabsContent>
 
           <TabsContent value='remove' className='space-y-3'>
-            <div className='relative'>
+            <div className='relative min-w-0'>
               <Search className='text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4' />
               <Input
                 placeholder={t('Search models...')}
@@ -242,13 +257,13 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
                 </span>
               </div>
             )}
-            <ScrollArea className='h-[280px] rounded-md border p-2'>
+            <ScrollArea className='h-[280px] min-w-0 rounded-md border p-2 max-md:h-auto max-md:overflow-visible max-md:[&_[data-slot=scroll-area-scrollbar]]:hidden max-md:[&_[data-slot=scroll-area-viewport]]:h-auto max-md:[&_[data-slot=scroll-area-viewport]]:overflow-visible'>
               {filteredRemove.length > 0 ? (
-                <div className='space-y-1'>
+                <div className='min-w-0 space-y-1'>
                   {filteredRemove.map((model) => (
                     <label
                       key={model}
-                      className='hover:bg-accent flex cursor-pointer items-center gap-2 rounded px-2 py-1.5'
+                      className='hover:bg-accent flex min-w-0 cursor-pointer items-center gap-2 rounded px-2 py-1.5'
                     >
                       <Checkbox
                         checked={selectedRemove.has(model)}
@@ -256,7 +271,9 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
                           toggleModel(model, selectedRemove, setSelectedRemove)
                         }
                       />
-                      <span className='truncate text-sm'>{model}</span>
+                      <span className='min-w-0 truncate text-sm max-md:overflow-visible max-md:break-all max-md:whitespace-normal'>
+                        {model}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -282,8 +299,8 @@ export function UpstreamUpdateDialog(props: UpstreamUpdateDialogProps) {
         handleConfirm={() => {
           setPartialConfirmOpen(false)
           props.onConfirm({
-            addModels: Array.from(selectedAdd),
-            removeModels: Array.from(selectedRemove),
+            addModels: [...selectedAdd],
+            removeModels: [...selectedRemove],
           })
         }}
       />
