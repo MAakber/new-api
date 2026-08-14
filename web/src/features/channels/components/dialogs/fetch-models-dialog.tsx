@@ -53,17 +53,27 @@ import { resolveFetchModelsChannel } from './fetch-models-channel'
 import { FetchModelsFilters } from './fetch-models-filters'
 import { FetchModelsGroup } from './fetch-models-group'
 
-type FetchModelsDialogProps = {
+type FetchModelsDialogBaseProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
-  onModelsSelected?: (models: string[]) => void
   redirectModels?: string[]
   redirectSourceModels?: string[]
   customFetcher?: () => Promise<string[]>
-  existingModelsOverride?: string[]
   channelName?: string | null
   channel?: Channel | null
 }
+
+type FetchModelsDialogProps = FetchModelsDialogBaseProps &
+  (
+    | {
+        onModelsSelected: (models: string[]) => void
+        existingModelsOverride: string[]
+      }
+    | {
+        onModelsSelected?: undefined
+        existingModelsOverride?: undefined
+      }
+  )
 
 export function FetchModelsDialog(props: FetchModelsDialogProps) {
   const { currentRow } = useChannels()

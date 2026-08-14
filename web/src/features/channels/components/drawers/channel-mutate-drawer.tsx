@@ -5035,9 +5035,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
         channelName={
           shouldPreviewUnsavedModels ? currentName?.trim() : undefined
         }
-        existingModelsOverride={
-          shouldPreviewUnsavedModels ? currentModelsArray : undefined
-        }
+        existingModelsOverride={currentModelsArray}
       />
 
       <SecureVerificationDialog

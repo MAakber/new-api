@@ -38,6 +38,46 @@ vi.mock('../api', async (importOriginal) => ({
 }))
 
 describe('fetch models session lifecycle', () => {
+  it('starts each form session from unsaved selections, including an empty selection', async () => {
+    const user = userEvent.setup()
+    const onModelsSelected = vi.fn()
+    vi.mocked(fetchUpstreamModels).mockResolvedValue({
+      success: true,
+      data: ['gpt-4o', 'qwen3'],
+    })
+    const picker = renderPicker({
+      channel: { id: 303, name: 'Saved channel', models: 'gpt-4o' } as Channel,
+      existingModelsOverride: ['qwen3'],
+      onModelsSelected,
+    })
+    await screen.findByRole('checkbox', { name: 'gpt-4o' })
+    await user.click(screen.getByRole('tab', { name: 'Existing Models (1)' }))
+    expect(
+      screen
+        .getByRole('checkbox', { name: 'qwen3' })
+        .getAttribute('aria-checked')
+    ).toBe('true')
+    await user.click(screen.getByRole('button', { name: 'Save Models' }))
+    expect(onModelsSelected).toHaveBeenCalledExactlyOnceWith(['qwen3'])
+
+    picker.update({ open: false })
+    picker.update({ open: true, existingModelsOverride: [] })
+    await screen.findByRole('checkbox', { name: 'qwen3' })
+    expect(
+      screen
+        .getByRole('checkbox', { name: 'qwen3' })
+        .getAttribute('aria-checked')
+    ).toBe('false')
+    expect(
+      screen
+        .getByRole('checkbox', { name: 'gpt-4o' })
+        .getAttribute('aria-checked')
+    ).toBe('false')
+    expect(
+      screen.getByRole('tab', { name: 'Existing Models (0)' })
+    ).toBeDefined()
+  })
+
   it('restores type preferences after reopening but resets search and unsaved model choices', async () => {
     const user = userEvent.setup()
     const picker = renderPicker({

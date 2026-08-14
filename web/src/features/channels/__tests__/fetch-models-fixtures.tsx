@@ -56,12 +56,24 @@ export function renderChannelUI(element: ReactElement) {
 export function renderPicker(
   provided: Partial<ComponentProps<typeof FetchModelsDialog>> = {}
 ) {
-  let props = { open: true, onOpenChange: vi.fn(), ...provided }
+  let props = {
+    open: true,
+    onOpenChange: vi.fn(),
+    ...provided,
+    onModelsSelected: provided.onModelsSelected ?? vi.fn(),
+    existingModelsOverride: provided.existingModelsOverride ?? [],
+  }
   const view = renderChannelUI(<FetchModelsDialog {...props} />)
   return {
     ...view,
     update: (updates: Partial<ComponentProps<typeof FetchModelsDialog>>) => {
-      props = { ...props, ...updates }
+      props = {
+        ...props,
+        ...updates,
+        onModelsSelected: updates.onModelsSelected ?? props.onModelsSelected,
+        existingModelsOverride:
+          updates.existingModelsOverride ?? props.existingModelsOverride,
+      }
       view.rerender(<FetchModelsDialog {...props} />)
     },
   }
