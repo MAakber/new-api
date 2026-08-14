@@ -77,6 +77,7 @@ import {
 } from '../lib'
 import { parseUpstreamUpdateMeta } from '../lib/upstream-update-utils'
 import type { Channel } from '../types'
+import { ChannelFavicon } from './channel-favicon'
 import { ChannelRowActionsLayoutContext } from './channel-row-actions-context'
 import { useChannels } from './channels-provider'
 import { DataTableRowActions } from './data-table-row-actions'
@@ -607,6 +608,24 @@ export function useChannelsColumns(
           return <TableId value={sensitiveVisible ? id : SENSITIVE_MASK} />
         },
         size: 80,
+      },
+      // Upstream favicon column
+      {
+        id: 'favicon',
+        header: () => <span className='sr-only'>{t('Open in new tab')}</span>,
+        cell: ({ row }) => {
+          if (isTagAggregateRow(row.original)) {
+            return null
+          }
+
+          return <ChannelFavicon baseUrl={row.original.base_url} />
+        },
+        enableSorting: false,
+        enableHiding: false,
+        enableResizing: false,
+        size: 40,
+        minSize: 40,
+        maxSize: 40,
       },
       // Name column
       {

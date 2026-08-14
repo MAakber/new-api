@@ -46,7 +46,7 @@ const SENSITIVE_MASK = '••••'
  * Bespoke channel card for the card view. Reuses every column's existing cell
  * renderer via `flexRender`, so the table's information and interactions are
  * preserved: row selection, provider/multi-key/IO.NET type badge, id,
- * name/remark + warning icons, status (with tooltips), groups, inline
+ * favicon, name/remark + warning icons, status (with tooltips), groups, inline
  * priority/weight spinners, balance refresh, response/test times, tag
  * expand-collapse, and the per-row (or per-tag) actions menu.
  */
@@ -82,6 +82,7 @@ function ChannelCardComponent({
 
   const selectCell = renderCell('select')
   const typeCell = renderCell('type')
+  const faviconCell = renderCell('favicon')
   const nameCell = renderCell('name')
   const statusCell = renderCell('status')
   const actionsCell = renderCell('actions')
@@ -149,7 +150,10 @@ function ChannelCardComponent({
                   #{sensitiveVisible ? row.original.id : SENSITIVE_MASK}
                 </div>
               )}
-              {nameCell}
+              <div className='flex min-w-0 items-start gap-1.5'>
+                {faviconCell}
+                <div className='min-w-0 flex-1'>{nameCell}</div>
+              </div>
             </div>
             <div className='min-w-0'>
               <div className={cn('mb-1', labelClass)}>

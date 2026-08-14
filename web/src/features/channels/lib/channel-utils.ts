@@ -127,6 +127,55 @@ export function getChannelTypeIcon(type: number): string {
 }
 
 // ============================================================================
+// Upstream URL Utilities
+// ============================================================================
+
+/**
+ * Parse a channel Base URL only when it is a safe absolute HTTP(S) URL.
+ * Userinfo is rejected so opening the URL cannot expose embedded credentials.
+ */
+export function parseChannelBaseUrl(
+  baseUrl: string | null | undefined
+): URL | null {
+  const value = baseUrl?.trim()
+  if (!value) {
+    return null
+  }
+
+  try {
+    const url = new URL(value)
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return null
+    }
+    if (!url.hostname || url.username || url.password) {
+      return null
+    }
+    return url
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Get the upstream origin used to request a channel favicon.
+ */
+export function getChannelOrigin(
+  baseUrl: string | null | undefined
+): string | null {
+  return parseChannelBaseUrl(baseUrl)?.origin ?? null
+}
+
+/**
+ * Build the favicon URL for a channel's upstream origin.
+ */
+export function getChannelFaviconUrl(
+  baseUrl: string | null | undefined
+): string | null {
+  const origin = getChannelOrigin(baseUrl)
+  return origin ? `${origin}/favicon.ico` : null
+}
+
+// ============================================================================
 // Status Utilities
 // ============================================================================
 
