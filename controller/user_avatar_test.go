@@ -10,6 +10,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -44,6 +45,16 @@ func avatarRequest(t *testing.T, method string, body io.Reader, contentType stri
 	context.Request = httptest.NewRequest(method, "/api/user/self/avatar", body)
 	context.Request.Header.Set("Content-Type", contentType)
 	context.Set("id", userID)
+	return context, recorder
+}
+
+func adminAvatarRequest(t *testing.T, method string, targetID string) (*gin.Context, *httptest.ResponseRecorder) {
+	t.Helper()
+	gin.SetMode(gin.TestMode)
+	recorder := httptest.NewRecorder()
+	context, _ := gin.CreateTestContext(recorder)
+	context.Request = httptest.NewRequest(method, "/api/user/"+targetID+"/avatar", nil)
+	context.Params = gin.Params{{Key: "id", Value: targetID}}
 	return context, recorder
 }
 
@@ -186,4 +197,54 @@ func TestGetSelfAvatarRejectsUnexpectedMetadata(t *testing.T) {
 	context, recorder := avatarRequest(t, http.MethodGet, nil, "", 10)
 	GetSelfAvatar(context)
 	assert.Equal(t, http.StatusInternalServerError, recorder.Code)
+}
+
+func TestGetAdminUserAvatarServesExistingAvatarWithPrivateHeaders(t *testing.T) {
+	db, _ := setupAvatarControllerTest(t)
+	require.NoError(t, db.AutoMigrate(&model.User{}))
+	target := model.User{Username: "admin-avatar-target", Password: "password"}
+	require.NoError(t, db.Create(&target).Error)
+
+	encoded := pngAvatarBytes(t, 5, 7)
+	objectKey, err := service.NewAvatarStorage().Put(target.Id, bytes.NewReader(encoded))
+	require.NoError(t, err)
+	require.NoError(t, model.SaveUserAvatar(&model.UserAvatar{
+		UserID:    target.Id,
+		ObjectKey: objectKey,
+		MimeType:  service.AvatarContentType,
+		Size:      int64(len(encoded)),
+		Width:     5,
+		Height:    7,
+		SHA256:    hex.EncodeToString(make([]byte, 32)),
+		Version:   4,
+	}))
+
+	context, recorder := adminAvatarRequest(t, http.MethodGet, strconv.Itoa(target.Id))
+	GetAdminUserAvatar(context)
+
+	require.Equal(t, http.StatusOK, recorder.Code)
+	assert.Equal(t, encoded, recorder.Body.Bytes())
+	assert.Equal(t, service.AvatarContentType, recorder.Header().Get("Content-Type"))
+	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
+	assert.Equal(t, "nosniff", recorder.Header().Get("X-Content-Type-Options"))
+}
+
+func TestGetAdminUserAvatarValidatesTargetAndReturnsNotFound(t *testing.T) {
+	db, _ := setupAvatarControllerTest(t)
+	require.NoError(t, db.AutoMigrate(&model.User{}))
+
+	context, recorder := adminAvatarRequest(t, http.MethodGet, "not-an-id")
+	GetAdminUserAvatar(context)
+	assert.Equal(t, http.StatusBadRequest, recorder.Code)
+	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
+
+	context, recorder = adminAvatarRequest(t, http.MethodGet, "9999")
+	GetAdminUserAvatar(context)
+	assert.Equal(t, http.StatusNotFound, context.Writer.Status())
+
+	target := model.User{Username: "admin-avatar-without-image", Password: "password"}
+	require.NoError(t, db.Create(&target).Error)
+	context, recorder = adminAvatarRequest(t, http.MethodGet, strconv.Itoa(target.Id))
+	GetAdminUserAvatar(context)
+	assert.Equal(t, http.StatusNotFound, context.Writer.Status())
 }

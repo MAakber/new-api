@@ -12,6 +12,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 
@@ -20,6 +21,7 @@ import (
 	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
 	_ "golang.org/x/image/webp"
+	"gorm.io/gorm"
 )
 
 const (
@@ -33,8 +35,30 @@ const (
 var avatarMutationLocks [avatarLockShardCount]sync.Mutex
 
 func GetSelfAvatar(c *gin.Context) {
+	serveAvatar(c, c.GetInt("id"))
+}
+
+func GetAdminUserAvatar(c *gin.Context) {
 	setAvatarResponseHeaders(c)
-	avatar, err := model.GetUserAvatar(c.GetInt("id"))
+	userID, err := strconv.Atoi(c.Param("id"))
+	if err != nil || userID <= 0 {
+		writeAvatarError(c, http.StatusBadRequest, "invalid user id")
+		return
+	}
+	if _, err := model.GetUserById(userID, false); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.Status(http.StatusNotFound)
+			return
+		}
+		writeAvatarError(c, http.StatusInternalServerError, "failed to load user")
+		return
+	}
+	serveAvatar(c, userID)
+}
+
+func serveAvatar(c *gin.Context, userID int) {
+	setAvatarResponseHeaders(c)
+	avatar, err := model.GetUserAvatar(userID)
 	if err != nil {
 		writeAvatarError(c, http.StatusInternalServerError, "failed to load avatar")
 		return

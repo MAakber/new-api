@@ -19,17 +19,20 @@ For commercial licensing, please contact support@quantumnous.com
 import type { ColumnDef } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 
+import { AuthenticatedAvatarImage } from '@/components/authenticated-avatar-image'
 import { BadgeCell } from '@/components/data-table'
 import { GroupBadge } from '@/components/group-badge'
 import { LongText } from '@/components/long-text'
 import { StatusBadge } from '@/components/status-badge'
 import { TableId } from '@/components/table-id'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { getUserAvatarFallback, getUserAvatarStyle } from '@/lib/avatar'
 import { formatQuota, formatTimestamp } from '@/lib/format'
 
 import {
@@ -89,31 +92,51 @@ export function useUsersColumns(): ColumnDef<User>[] {
         const username = row.getValue('username') as string
         const displayName = row.original.display_name
         const remark = row.original.remark
+        const avatarName = row.original.username
 
         return (
-          <div className='flex min-w-[160px] flex-col gap-1'>
-            <div className='flex items-center gap-2'>
-              <LongText className='max-w-[140px] font-medium'>
-                {username}
-              </LongText>
-              {remark && (
-                <Tooltip>
-                  <TooltipTrigger
-                    render={<StatusBadge variant='success' copyable={false} />}
-                  >
-                    <LongText className='max-w-[80px]'>{remark}</LongText>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className='text-xs'>{remark}</p>
-                  </TooltipContent>
-                </Tooltip>
+          <div className='flex min-w-[160px] items-center gap-2'>
+            <Avatar
+              aria-hidden='true'
+              className='ring-border/60 size-7 shrink-0 ring-1'
+            >
+              <AuthenticatedAvatarImage
+                avatarUrl={`/api/user/${row.original.id}/avatar`}
+                alt=''
+              />
+              <AvatarFallback
+                className='text-xs font-semibold text-white'
+                style={getUserAvatarStyle(avatarName)}
+              >
+                {getUserAvatarFallback(avatarName)}
+              </AvatarFallback>
+            </Avatar>
+            <div className='flex min-w-0 flex-1 flex-col gap-1'>
+              <div className='flex min-w-0 items-center gap-2'>
+                <LongText className='max-w-[140px] min-w-0 font-medium'>
+                  {username}
+                </LongText>
+                {remark && (
+                  <Tooltip>
+                    <TooltipTrigger
+                      render={
+                        <StatusBadge variant='success' copyable={false} />
+                      }
+                    >
+                      <LongText className='max-w-[80px]'>{remark}</LongText>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className='text-xs'>{remark}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+              </div>
+              {displayName && displayName !== username && (
+                <LongText className='text-muted-foreground max-w-[180px] text-xs'>
+                  {displayName}
+                </LongText>
               )}
             </div>
-            {displayName && displayName !== username && (
-              <LongText className='text-muted-foreground max-w-[180px] text-xs'>
-                {displayName}
-              </LongText>
-            )}
           </div>
         )
       },
