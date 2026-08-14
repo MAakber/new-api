@@ -130,6 +130,18 @@ describe('number input controls', () => {
     assert.ok(decrement)
     assert.equal(input.value, '2')
 
+    const spinnerRail = increment.parentElement
+    assert.ok(spinnerRail)
+    assert.equal(spinnerRail, decrement.parentElement)
+    assert.equal(spinnerRail.classList.contains('inset-y-px'), true)
+    assert.equal(spinnerRail.classList.contains('right-px'), true)
+    assert.equal(spinnerRail.classList.contains('grid'), true)
+    assert.equal(spinnerRail.classList.contains('grid-rows-2'), true)
+    assert.equal(
+      spinnerRail.classList.contains('rounded-r-[calc(var(--radius)-1px)]'),
+      true
+    )
+
     await act(async () => increment.click())
     assert.equal(input.value, '4')
 

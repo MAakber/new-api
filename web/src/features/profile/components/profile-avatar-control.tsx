@@ -99,7 +99,7 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
   }
 
   return (
-    <div className='relative shrink-0'>
+    <div className='group/avatar-control relative shrink-0'>
       <Avatar className='ring-background h-12 w-12 rounded-full text-sm ring-2 sm:h-16 sm:w-16 sm:text-lg sm:ring-4'>
         {previewUrl ? (
           <AvatarImage src={previewUrl} alt={t('Profile avatar')} />
@@ -117,14 +117,17 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
         </AvatarFallback>
       </Avatar>
       <TooltipProvider delay={300}>
-        <div className='bg-background absolute -right-2 -bottom-2 flex rounded-full p-0.5 shadow-sm'>
+        <div
+          data-avatar-actions
+          className='border-border/80 bg-background/95 pointer-events-none absolute -right-2 -bottom-2 z-10 flex translate-y-1 items-center gap-1 rounded-xl border p-1 opacity-0 shadow-md backdrop-blur-sm transition-[opacity,transform] duration-200 group-focus-within/avatar-control:pointer-events-auto group-focus-within/avatar-control:translate-y-0 group-focus-within/avatar-control:opacity-100 group-hover/avatar-control:pointer-events-auto group-hover/avatar-control:translate-y-0 group-hover/avatar-control:opacity-100 motion-reduce:transition-none [@media(hover:none)]:pointer-events-auto [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100'
+        >
           <Tooltip>
             <TooltipTrigger
               render={
                 <Button
                   type='button'
                   variant='secondary'
-                  size='icon-xs'
+                  size='icon-sm'
                   disabled={props.updating}
                   onClick={() => inputRef.current?.click()}
                   aria-label={
@@ -134,9 +137,9 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
               }
             >
               {props.updating ? (
-                <Loader2 className='animate-spin' aria-hidden='true' />
+                <Loader2 className='size-4 animate-spin' aria-hidden='true' />
               ) : (
-                <ImagePlus aria-hidden='true' />
+                <ImagePlus className='size-4' aria-hidden='true' />
               )}
             </TooltipTrigger>
             <TooltipContent>
@@ -150,14 +153,15 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
                   <Button
                     type='button'
                     variant='ghost'
-                    size='icon-xs'
+                    size='icon-sm'
                     disabled={props.updating}
                     onClick={() => setRemoveOpen(true)}
                     aria-label={t('Remove avatar')}
+                    className='text-muted-foreground hover:bg-destructive/10 hover:text-destructive'
                   />
                 }
               >
-                <Trash2 aria-hidden='true' />
+                <Trash2 className='size-4' aria-hidden='true' />
               </TooltipTrigger>
               <TooltipContent>{t('Remove avatar')}</TooltipContent>
             </Tooltip>

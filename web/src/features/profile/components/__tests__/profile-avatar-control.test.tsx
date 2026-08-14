@@ -31,6 +31,9 @@ const domGlobals = [
   'Node',
   'Element',
   'Event',
+  'requestAnimationFrame',
+  'cancelAnimationFrame',
+  'getComputedStyle',
 ] as const
 
 for (const key of domGlobals) {
@@ -59,6 +62,11 @@ await i18n.use(initReactI18next).init({
         'Upload avatar': 'Upload avatar',
         'Choose an avatar image': 'Choose an avatar image',
         'Profile avatar': 'Profile avatar',
+        'Remove avatar': 'Remove avatar',
+        'Remove profile avatar?': 'Remove profile avatar?',
+        'Your initials will be shown until you upload a new avatar.':
+          'Your initials will be shown until you upload a new avatar.',
+        Cancel: 'Cancel',
       },
     },
   },
@@ -69,7 +77,7 @@ describe('ProfileAvatarControl', () => {
     domWindow.close()
   })
 
-  test('exposes an accessible upload action and avatar file picker', async () => {
+  test('keeps the empty avatar action hidden until hover or keyboard focus', async () => {
     const container = document.createElement('div')
     document.body.append(container)
     const root = createRoot(container)
@@ -88,16 +96,104 @@ describe('ProfileAvatarControl', () => {
       )
     })
 
-    const uploadButton = container.querySelector(
+    const uploadButton = container.querySelector<HTMLButtonElement>(
       'button[aria-label="Upload avatar"]'
     )
+    const actions = container.querySelector('[data-avatar-actions]')
     const fileInput = container.querySelector('input[type="file"]')
     assert.ok(uploadButton)
+    assert.ok(actions)
+    assert.equal(
+      container.querySelector('button[aria-label="Remove avatar"]'),
+      null
+    )
+    assert.equal(actions.classList.contains('opacity-0'), true)
+    assert.equal(actions.classList.contains('pointer-events-none'), true)
+    assert.equal(
+      actions.classList.contains('group-hover/avatar-control:opacity-100'),
+      true
+    )
+    assert.equal(
+      actions.classList.contains(
+        'group-focus-within/avatar-control:opacity-100'
+      ),
+      true
+    )
     assert.ok(fileInput)
     assert.equal(fileInput.getAttribute('aria-label'), 'Choose an avatar image')
     assert.equal(
       fileInput.getAttribute('accept'),
       'image/jpeg,image/png,image/webp'
+    )
+
+    await act(async () => {
+      uploadButton.focus()
+    })
+    assert.equal(document.activeElement, uploadButton)
+
+    await act(async () => root.unmount())
+    container.remove()
+  })
+
+  test('reveals replace and remove actions for an existing avatar', async () => {
+    const container = document.createElement('div')
+    document.body.append(container)
+    const root = createRoot(container)
+
+    await act(async () => {
+      root.render(
+        <I18nextProvider i18n={i18n}>
+          <ProfileAvatarControl
+            name='Ada Lovelace'
+            avatarUrl='/api/user/self/avatar'
+            updating={false}
+            onUpload={async () => true}
+            onRemove={async () => true}
+          />
+        </I18nextProvider>
+      )
+    })
+
+    const actions = container.querySelector('[data-avatar-actions]')
+    const replaceButton = container.querySelector<HTMLButtonElement>(
+      'button[aria-label="Replace avatar"]'
+    )
+    const removeButton = container.querySelector<HTMLButtonElement>(
+      'button[aria-label="Remove avatar"]'
+    )
+
+    assert.ok(actions)
+    assert.ok(replaceButton)
+    assert.ok(removeButton)
+    assert.equal(actions.classList.contains('opacity-0'), true)
+    assert.equal(
+      actions.classList.contains('group-hover/avatar-control:opacity-100'),
+      true
+    )
+    assert.equal(
+      actions.classList.contains(
+        'group-focus-within/avatar-control:opacity-100'
+      ),
+      true
+    )
+    assert.equal(
+      actions.classList.contains('[@media(hover:none)]:opacity-100'),
+      true
+    )
+    assert.equal(replaceButton.classList.contains('size-7'), true)
+    assert.equal(removeButton.classList.contains('size-7'), true)
+
+    await act(async () => {
+      removeButton.focus()
+    })
+    assert.equal(document.activeElement, removeButton)
+
+    await act(async () => {
+      removeButton.click()
+    })
+    assert.equal(
+      document.body.textContent?.includes('Remove profile avatar?'),
+      true
     )
 
     await act(async () => root.unmount())

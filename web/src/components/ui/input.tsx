@@ -88,15 +88,16 @@ function NumberInput({
         const currentValue = Number(input.value)
         const minValue = Number(min)
         const maxValue = Number(max)
-        let nextValue = Number.isFinite(currentValue)
-          ? currentValue + direction * safeStep
-          : direction === 1
-            ? Number.isFinite(minValue)
-              ? minValue
-              : safeStep
-            : Number.isFinite(minValue)
-              ? minValue
-              : -safeStep
+        let nextValue: number
+        if (Number.isFinite(currentValue)) {
+          nextValue = currentValue + direction * safeStep
+        } else if (Number.isFinite(minValue)) {
+          nextValue = minValue
+        } else if (direction === 1) {
+          nextValue = safeStep
+        } else {
+          nextValue = -safeStep
+        }
 
         if (Number.isFinite(minValue)) {
           nextValue = Math.max(minValue, nextValue)
@@ -137,7 +138,7 @@ function NumberInput({
         )}
         {...props}
       />
-      <div className='border-input bg-background/70 absolute inset-y-0 right-0 flex w-6 flex-col overflow-hidden rounded-r-lg border-l'>
+      <div className='bg-background/70 border-input absolute inset-y-px right-px grid w-6 grid-rows-2 overflow-hidden rounded-r-[calc(var(--radius)-1px)] border-l'>
         <button
           type='button'
           tabIndex={-1}
