@@ -130,17 +130,25 @@ describe('number input controls', () => {
     assert.ok(decrement)
     assert.equal(input.value, '2')
 
+    const numberInput = input.parentElement
+    assert.ok(numberInput)
+    assert.equal(numberInput.getAttribute('data-slot'), 'number-input')
+    assert.equal(numberInput.classList.contains('relative'), true)
+    assert.equal(numberInput.classList.contains('flex'), true)
+    assert.equal(numberInput.classList.contains('overflow-hidden'), true)
+    assert.equal(numberInput.classList.contains('rounded-lg'), true)
+    assert.equal(numberInput.classList.contains('border'), true)
+
     const spinnerRail = increment.parentElement
     assert.ok(spinnerRail)
     assert.equal(spinnerRail, decrement.parentElement)
-    assert.equal(spinnerRail.classList.contains('inset-y-px'), true)
-    assert.equal(spinnerRail.classList.contains('right-px'), true)
+    assert.equal(spinnerRail.parentElement, numberInput)
+    assert.equal(spinnerRail.classList.contains('absolute'), false)
+    assert.equal(spinnerRail.classList.contains('h-full'), true)
+    assert.equal(spinnerRail.classList.contains('shrink-0'), true)
     assert.equal(spinnerRail.classList.contains('grid'), true)
     assert.equal(spinnerRail.classList.contains('grid-rows-2'), true)
-    assert.equal(
-      spinnerRail.classList.contains('rounded-r-[calc(var(--radius)-1px)]'),
-      true
-    )
+    assert.equal(spinnerRail.classList.contains('border-l'), true)
 
     await act(async () => increment.click())
     assert.equal(input.value, '4')

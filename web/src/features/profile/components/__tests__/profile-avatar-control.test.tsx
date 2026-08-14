@@ -180,8 +180,21 @@ describe('ProfileAvatarControl', () => {
       actions.classList.contains('[@media(hover:none)]:opacity-100'),
       true
     )
-    assert.equal(replaceButton.classList.contains('size-7'), true)
-    assert.equal(removeButton.classList.contains('size-7'), true)
+    assert.equal(actions.classList.contains('-right-1'), true)
+    assert.equal(actions.classList.contains('-bottom-1'), true)
+    assert.equal(actions.classList.contains('gap-0.5'), true)
+    assert.equal(actions.classList.contains('rounded-lg'), true)
+    assert.equal(actions.classList.contains('p-0.5'), true)
+    assert.equal(replaceButton.classList.contains('size-6'), true)
+    assert.equal(removeButton.classList.contains('size-6'), true)
+    assert.equal(
+      replaceButton.querySelector('svg')?.classList.contains('size-3.5'),
+      true
+    )
+    assert.equal(
+      removeButton.querySelector('svg')?.classList.contains('size-3.5'),
+      true
+    )
 
     await act(async () => {
       removeButton.focus()

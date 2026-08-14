@@ -122,7 +122,13 @@ function NumberInput({
   )
 
   return (
-    <div className={cn('relative w-full min-w-0', className)}>
+    <div
+      data-slot='number-input'
+      className={cn(
+        'border-input bg-transparent has-aria-invalid:border-destructive has-aria-invalid:ring-destructive/20 has-aria-invalid:ring-3 has-disabled:bg-input/50 focus-within:border-ring focus-within:ring-ring/50 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40 dark:has-disabled:bg-input/80 relative flex h-8 w-full min-w-0 items-stretch overflow-hidden rounded-lg border transition-colors focus-within:ring-3',
+        className
+      )}
+    >
       <InputPrimitive
         type='number'
         data-slot='input'
@@ -133,12 +139,12 @@ function NumberInput({
         ref={setInputRef}
         step={step}
         className={cn(
-          'border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 pr-8 text-base transition-colors outline-none [appearance:textfield] file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 aria-invalid:ring-inset [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none md:text-sm',
+          'file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 h-full min-w-0 flex-1 w-auto rounded-none border-0 bg-transparent px-2.5 py-1 pr-2 text-base outline-none transition-colors [appearance:textfield] file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none md:text-sm',
           className
         )}
         {...props}
       />
-      <div className='bg-background/70 border-input absolute inset-y-px right-px grid w-6 grid-rows-2 overflow-hidden rounded-r-[calc(var(--radius)-1px)] border-l'>
+      <div className='bg-background/70 border-input grid h-full w-6 shrink-0 grid-rows-2 border-l'>
         <button
           type='button'
           tabIndex={-1}
@@ -146,7 +152,7 @@ function NumberInput({
           disabled={disabled || readOnly}
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => handleStep(1)}
-          className='text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:bg-muted flex min-h-0 flex-1 items-center justify-center p-0 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-40'
+          className='text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:bg-muted flex min-h-0 items-center justify-center p-0 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-40'
         >
           <ChevronUp className='size-3' aria-hidden='true' />
         </button>
@@ -157,7 +163,7 @@ function NumberInput({
           disabled={disabled || readOnly}
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => handleStep(-1)}
-          className='border-input text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:bg-muted flex min-h-0 flex-1 items-center justify-center border-t p-0 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-40'
+          className='border-input text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:bg-muted flex min-h-0 items-center justify-center border-t p-0 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-40'
         >
           <ChevronDown className='size-3' aria-hidden='true' />
         </button>

@@ -45,3 +45,8 @@ go.work.sum
 
 # Local WorkBuddy scratch files.
 .workbuddy/
+
+# BEGIN oh-my-opencode-slim worktrees
+.slim/worktrees/
+.slim/worktrees.json
+# END oh-my-opencode-slim worktrees

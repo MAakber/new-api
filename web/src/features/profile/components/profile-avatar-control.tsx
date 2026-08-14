@@ -119,7 +119,7 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
       <TooltipProvider delay={300}>
         <div
           data-avatar-actions
-          className='border-border/80 bg-background/95 pointer-events-none absolute -right-2 -bottom-2 z-10 flex translate-y-1 items-center gap-1 rounded-xl border p-1 opacity-0 shadow-md backdrop-blur-sm transition-[opacity,transform] duration-200 group-focus-within/avatar-control:pointer-events-auto group-focus-within/avatar-control:translate-y-0 group-focus-within/avatar-control:opacity-100 group-hover/avatar-control:pointer-events-auto group-hover/avatar-control:translate-y-0 group-hover/avatar-control:opacity-100 motion-reduce:transition-none [@media(hover:none)]:pointer-events-auto [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100'
+          className='border-border/80 bg-background/95 pointer-events-none absolute -right-1 -bottom-1 z-10 flex translate-y-1 items-center gap-0.5 rounded-lg border p-0.5 opacity-0 shadow-md backdrop-blur-sm transition-[opacity,transform] duration-200 group-focus-within/avatar-control:pointer-events-auto group-focus-within/avatar-control:translate-y-0 group-focus-within/avatar-control:opacity-100 group-hover/avatar-control:pointer-events-auto group-hover/avatar-control:translate-y-0 group-hover/avatar-control:opacity-100 motion-reduce:transition-none [@media(hover:none)]:pointer-events-auto [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100'
         >
           <Tooltip>
             <TooltipTrigger
@@ -127,7 +127,7 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
                 <Button
                   type='button'
                   variant='secondary'
-                  size='icon-sm'
+                  size='icon-xs'
                   disabled={props.updating}
                   onClick={() => inputRef.current?.click()}
                   aria-label={
@@ -137,9 +137,9 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
               }
             >
               {props.updating ? (
-                <Loader2 className='size-4 animate-spin' aria-hidden='true' />
+                <Loader2 className='size-3.5 animate-spin' aria-hidden='true' />
               ) : (
-                <ImagePlus className='size-4' aria-hidden='true' />
+                <ImagePlus className='size-3.5' aria-hidden='true' />
               )}
             </TooltipTrigger>
             <TooltipContent>
@@ -153,7 +153,7 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
                   <Button
                     type='button'
                     variant='ghost'
-                    size='icon-sm'
+                    size='icon-xs'
                     disabled={props.updating}
                     onClick={() => setRemoveOpen(true)}
                     aria-label={t('Remove avatar')}
@@ -161,7 +161,7 @@ export function ProfileAvatarControl(props: ProfileAvatarControlProps) {
                   />
                 }
               >
-                <Trash2 className='size-4' aria-hidden='true' />
+                <Trash2 className='size-3.5' aria-hidden='true' />
               </TooltipTrigger>
               <TooltipContent>{t('Remove avatar')}</TooltipContent>
             </Tooltip>

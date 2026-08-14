@@ -92,7 +92,7 @@ function TestBannerForm() {
   )
 }
 
-describe('banner form date field layout', () => {
+describe('banner form field layout', () => {
   after(() => {
     domWindow.close()
   })
@@ -132,6 +132,47 @@ describe('banner form date field layout', () => {
     const clearButton = picker.querySelector('button[aria-label="Clear"]')
     assert.ok(clearButton)
     assert.equal(clearButton.closest('[data-slot="date-time-picker"]'), picker)
+
+    await act(async () => root.unmount())
+    container.remove()
+  })
+
+  test('keeps sort order spinner controls inside the number field', async () => {
+    const container = document.createElement('div')
+    document.body.append(container)
+    const root = createRoot(container)
+
+    await act(async () => root.render(<TestBannerForm />))
+
+    const sortLabel = [
+      ...container.querySelectorAll('[data-slot="form-label"]'),
+    ].find((label) => label.textContent === 'Sort Order')
+    assert.ok(sortLabel)
+
+    const sortField = sortLabel.closest('[data-slot="form-item"]')
+    assert.ok(sortField)
+
+    const numberInput = sortField.querySelector<HTMLElement>(
+      '[data-slot="number-input"]'
+    )
+    assert.ok(numberInput)
+
+    const increment = numberInput.querySelector<HTMLButtonElement>(
+      'button[aria-label="Add"]'
+    )
+    const decrement = numberInput.querySelector<HTMLButtonElement>(
+      'button[aria-label="Subtract"]'
+    )
+    assert.ok(increment)
+    assert.ok(decrement)
+
+    const spinnerRail = increment.parentElement
+    assert.ok(spinnerRail)
+    assert.equal(spinnerRail, decrement.parentElement)
+    assert.equal(spinnerRail.parentElement, numberInput)
+    assert.equal(spinnerRail.classList.contains('absolute'), false)
+    assert.equal(spinnerRail.classList.contains('grid-rows-2'), true)
+    assert.equal(spinnerRail.classList.contains('h-full'), true)
 
     await act(async () => root.unmount())
     container.remove()
