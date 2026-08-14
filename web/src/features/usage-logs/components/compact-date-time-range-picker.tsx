@@ -16,11 +16,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { CalendarDays } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { CalendarDays, X } from 'lucide-react'
+import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
+import type { Locale } from 'react-day-picker'
+import { enUS, fr, ja, ru, vi, zhCN, zhTW } from 'react-day-picker/locale'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import {
   Popover,
@@ -30,6 +33,138 @@ import {
 import dayjs from '@/lib/dayjs'
 import { cn } from '@/lib/utils'
 
+const calendarLocales = {
+  en: enUS,
+  zh: zhCN,
+  zhCN,
+  zhTW,
+  fr,
+  ru,
+  ja,
+  vi,
+} as const
+
+interface CompactDateTimeFieldProps {
+  label: string
+  value?: Date
+  onChange: (date: Date | undefined) => void
+  calendarLocale: Partial<Locale>
+}
+
+function CompactDateTimeField({
+  label,
+  value,
+  onChange,
+  calendarLocale,
+}: CompactDateTimeFieldProps) {
+  const { t } = useTranslation()
+  const [calendarOpen, setCalendarOpen] = useState(false)
+  const [month, setMonth] = useState<Date | undefined>(value)
+  const currentYear = new Date().getFullYear()
+
+  useEffect(() => {
+    setMonth(value)
+  }, [value])
+
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    if (!selectedDate) {
+      onChange(undefined)
+      setCalendarOpen(false)
+      return
+    }
+
+    const nextDate = new Date(selectedDate)
+    nextDate.setHours(value?.getHours() ?? 0, value?.getMinutes() ?? 0, 0, 0)
+    setMonth(nextDate)
+    onChange(nextDate)
+    setCalendarOpen(false)
+  }
+
+  const handleTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!value || !event.target.value) return
+
+    const [hours, minutes] = event.target.value.split(':').map(Number)
+    if (!Number.isInteger(hours) || !Number.isInteger(minutes)) return
+
+    const nextDate = new Date(value)
+    nextDate.setHours(hours, minutes, 0, 0)
+    onChange(nextDate)
+  }
+
+  const handleClear = () => {
+    onChange(undefined)
+    setCalendarOpen(false)
+  }
+
+  return (
+    <div className='min-w-0 space-y-1.5' data-slot='date-time-range-field'>
+      <div className='text-muted-foreground text-xs'>{label}</div>
+      <div className='grid min-w-0 grid-cols-[minmax(0,1fr)_auto_auto] gap-1.5'>
+        <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+          <PopoverTrigger
+            render={
+              <Button
+                type='button'
+                variant='outline'
+                data-date-time-range-trigger='true'
+                className={cn(
+                  'min-w-0 w-full justify-between overflow-hidden px-2 text-sm leading-5 font-normal tabular-nums',
+                  !value && 'text-muted-foreground'
+                )}
+              />
+            }
+          >
+            <span className='truncate'>
+              {value ? dayjs(value).format('YYYY-MM-DD') : t('Select date')}
+            </span>
+            <CalendarDays
+              className='text-muted-foreground size-4 shrink-0'
+              aria-hidden='true'
+            />
+          </PopoverTrigger>
+          <PopoverContent
+            align='start'
+            collisionPadding={8}
+            className='w-auto overflow-hidden p-0'
+          >
+            <Calendar
+              mode='single'
+              selected={value}
+              month={month}
+              onMonthChange={setMonth}
+              captionLayout='dropdown'
+              onSelect={handleDateSelect}
+              locale={calendarLocale}
+              startMonth={new Date(currentYear - 100, 0)}
+              endMonth={new Date(currentYear + 100, 11)}
+            />
+          </PopoverContent>
+        </Popover>
+        <Input
+          type='time'
+          value={value ? dayjs(value).format('HH:mm') : ''}
+          onChange={handleTimeChange}
+          aria-label={label}
+          disabled={!value}
+          className='h-8 w-24 min-w-0 shrink-0 appearance-none px-2 text-sm leading-5 tabular-nums [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none'
+        />
+        {value && (
+          <Button
+            type='button'
+            variant='outline'
+            size='icon'
+            onClick={handleClear}
+            className='shrink-0'
+            aria-label={t('Clear')}
+          >
+            <X className='size-4' aria-hidden='true' />
+          </Button>
+        )}
+      </div>
+    </div>
+  )
+}
+
 interface CompactDateTimeRangePickerProps {
   start?: Date
   end?: Date
@@ -37,14 +172,8 @@ interface CompactDateTimeRangePickerProps {
   className?: string
 }
 
-function toInputValue(date?: Date): string {
-  return date ? dayjs(date).format('YYYY-MM-DDTHH:mm') : ''
-}
-
-function fromInputValue(value: string): Date | undefined {
-  if (!value) return undefined
-  const date = new Date(value)
-  return Number.isNaN(date.getTime()) ? undefined : date
+function cloneDate(date?: Date): Date | undefined {
+  return date ? new Date(date) : undefined
 }
 
 export function CompactDateTimeRangePicker({
@@ -53,17 +182,22 @@ export function CompactDateTimeRangePicker({
   onChange,
   className,
 }: CompactDateTimeRangePickerProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [open, setOpen] = useState(false)
-  const [draftStart, setDraftStart] = useState(toInputValue(start))
-  const [draftEnd, setDraftEnd] = useState(toInputValue(end))
+  const [draftStart, setDraftStart] = useState<Date | undefined>(() =>
+    cloneDate(start)
+  )
+  const [draftEnd, setDraftEnd] = useState<Date | undefined>(() =>
+    cloneDate(end)
+  )
+  const calendarLocale =
+    calendarLocales[
+      (i18n.resolvedLanguage ?? i18n.language) as keyof typeof calendarLocales
+    ] ?? enUS
 
   const label = useMemo(() => {
     if (!start && !end) return t('Date Range')
-    // The popover's <input type="datetime-local"> only supports minute
-    // precision, so seconds are always 00 (manual pick) or 59 (preset
-    // end-of-day). Hide them in the trigger label to keep the button
-    // width compact while still showing the meaningful timestamp.
+    // Keep the trigger compact while still showing the meaningful timestamp.
     const startText = start ? dayjs(start).format('YYYY-MM-DD HH:mm') : '-'
     const endText = end ? dayjs(end).format('YYYY-MM-DD HH:mm') : '-'
     return `${startText} ~ ${endText}`
@@ -71,16 +205,16 @@ export function CompactDateTimeRangePicker({
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (nextOpen) {
-      setDraftStart(toInputValue(start))
-      setDraftEnd(toInputValue(end))
+      setDraftStart(cloneDate(start))
+      setDraftEnd(cloneDate(end))
     }
     setOpen(nextOpen)
   }
 
   const applyDraft = () => {
     onChange({
-      start: fromInputValue(draftStart),
-      end: fromInputValue(draftEnd),
+      start: cloneDate(draftStart),
+      end: cloneDate(draftEnd),
     })
     setOpen(false)
   }
@@ -110,8 +244,8 @@ export function CompactDateTimeRangePicker({
       },
     }
     const range = presets[kind]
-    setDraftStart(toInputValue(range.start))
-    setDraftEnd(toInputValue(range.end))
+    setDraftStart(range.start)
+    setDraftEnd(range.end)
     onChange(range)
     setOpen(false)
   }
@@ -141,31 +275,21 @@ export function CompactDateTimeRangePicker({
       >
         <div className='space-y-3'>
           <div className='grid min-w-0 gap-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-end'>
-            <div className='min-w-0 space-y-1.5'>
-              <div className='text-muted-foreground text-xs'>
-                {t('Start Time')}
-              </div>
-              <Input
-                type='datetime-local'
-                value={draftStart}
-                onChange={(e) => setDraftStart(e.target.value)}
-                className='h-8 min-w-0 px-2 text-sm leading-5 tabular-nums'
-              />
-            </div>
+            <CompactDateTimeField
+              label={t('Start Time')}
+              value={draftStart}
+              onChange={setDraftStart}
+              calendarLocale={calendarLocale}
+            />
             <span className='text-muted-foreground hidden pb-2 text-xs sm:block'>
               ~
             </span>
-            <div className='min-w-0 space-y-1.5'>
-              <div className='text-muted-foreground text-xs'>
-                {t('End Time')}
-              </div>
-              <Input
-                type='datetime-local'
-                value={draftEnd}
-                onChange={(e) => setDraftEnd(e.target.value)}
-                className='h-8 min-w-0 px-2 text-sm leading-5 tabular-nums'
-              />
-            </div>
+            <CompactDateTimeField
+              label={t('End Time')}
+              value={draftEnd}
+              onChange={setDraftEnd}
+              calendarLocale={calendarLocale}
+            />
           </div>
 
           <div className='grid grid-cols-2 gap-1.5 sm:grid-cols-5'>
