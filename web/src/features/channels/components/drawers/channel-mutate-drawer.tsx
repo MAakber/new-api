@@ -140,6 +140,9 @@ import {
 } from '../../api'
 import {
   ADD_MODE_OPTIONS,
+  CLAUDE_FIELD_PASSTHROUGH_TYPES,
+  FIELD_PASSTHROUGH_TYPES,
+  OPENAI_FIELD_PASSTHROUGH_TYPES,
   CODE_BUDDY_BASE_URL_HELP,
   CHANNEL_TYPE_CLAUDE_CODE,
   CHANNEL_TYPE_CODE_BUDDY,
@@ -1173,7 +1176,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     (currentHttp2ConnectionShards != null && currentHttp2ConnectionShards > 1)
   )
   let fieldPassthroughConfigured = false
-  if (currentType === 1 || currentType === 57) {
+  if (OPENAI_FIELD_PASSTHROUGH_TYPES.has(currentType)) {
     fieldPassthroughConfigured = Boolean(
       currentAllowServiceTier ||
       currentDisableStore ||
@@ -1181,13 +1184,16 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       currentAllowIncludeObfuscation ||
       currentAllowInferenceGeo
     )
-  } else if (currentType === 14) {
-    fieldPassthroughConfigured = Boolean(
-      currentAllowServiceTier ||
-      currentAllowInferenceGeo ||
-      currentAllowSpeed ||
-      currentClaudeBetaQuery
-    )
+  }
+  if (CLAUDE_FIELD_PASSTHROUGH_TYPES.has(currentType)) {
+    fieldPassthroughConfigured =
+      fieldPassthroughConfigured ||
+      Boolean(
+        currentAllowServiceTier ||
+        currentAllowInferenceGeo ||
+        currentAllowSpeed ||
+        (currentType === 14 && currentClaudeBetaQuery)
+      )
   }
   const upstreamModelDetectionConfigured = Boolean(
     upstreamModelUpdateCheckEnabled ||
@@ -1254,7 +1260,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       configured: clientIdentityConfigured,
     })
   }
-  if (currentType === 1 || currentType === 14 || currentType === 57) {
+  if (FIELD_PASSTHROUGH_TYPES.has(currentType)) {
     advancedNavChildren.push({
       id: ADVANCED_SETTINGS_SECTION_IDS.fieldPassthrough,
       title: t('Field passthrough controls'),
@@ -4588,9 +4594,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                       </fieldset>
                     </div>
 
-                    {(currentType === 1 ||
-                      currentType === 14 ||
-                      currentType === 57) && (
+                    {FIELD_PASSTHROUGH_TYPES.has(currentType) && (
                       <div
                         id={getEditorElementId(
                           ADVANCED_SETTINGS_SECTION_IDS.fieldPassthrough
@@ -4635,7 +4639,9 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                               )}
                             />
 
-                            {(currentType === 1 || currentType === 57) && (
+                            {OPENAI_FIELD_PASSTHROUGH_TYPES.has(
+                              currentType
+                            ) && (
                               <>
                                 <FormField
                                   control={form.control}
@@ -4745,32 +4751,40 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                               </>
                             )}
 
-                            {currentType === 14 && (
+                            {CLAUDE_FIELD_PASSTHROUGH_TYPES.has(
+                              currentType
+                            ) && (
                               <>
-                                <FormField
-                                  control={form.control}
-                                  name='allow_inference_geo'
-                                  render={({ field }) => (
-                                    <FormItem className='flex items-center justify-between gap-3 px-4 py-3'>
-                                      <div className='space-y-0.5'>
-                                        <FormLabel className='text-sm'>
-                                          {t('Allow inference_geo passthrough')}
-                                        </FormLabel>
-                                        <FormDescription>
-                                          {t(
-                                            'Pass through the inference_geo field for Claude data residency region control'
-                                          )}
-                                        </FormDescription>
-                                      </div>
-                                      <FormControl>
-                                        <Switch
-                                          checked={field.value}
-                                          onCheckedChange={field.onChange}
-                                        />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
+                                {!OPENAI_FIELD_PASSTHROUGH_TYPES.has(
+                                  currentType
+                                ) && (
+                                  <FormField
+                                    control={form.control}
+                                    name='allow_inference_geo'
+                                    render={({ field }) => (
+                                      <FormItem className='flex items-center justify-between gap-3 px-4 py-3'>
+                                        <div className='space-y-0.5'>
+                                          <FormLabel className='text-sm'>
+                                            {t(
+                                              'Allow inference_geo passthrough'
+                                            )}
+                                          </FormLabel>
+                                          <FormDescription>
+                                            {t(
+                                              'Pass through the inference_geo field for Claude data residency region control'
+                                            )}
+                                          </FormDescription>
+                                        </div>
+                                        <FormControl>
+                                          <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                          />
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
+                                  />
+                                )}
 
                                 <FormField
                                   control={form.control}
@@ -4797,32 +4811,34 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                                   )}
                                 />
 
-                                <FormField
-                                  control={form.control}
-                                  name='claude_beta_query'
-                                  render={({ field }) => (
-                                    <FormItem className='flex items-center justify-between gap-3 px-4 py-3'>
-                                      <div className='space-y-0.5'>
-                                        <FormLabel className='text-sm'>
-                                          {t(
-                                            'Allow Claude beta query passthrough'
-                                          )}
-                                        </FormLabel>
-                                        <FormDescription>
-                                          {t(
-                                            'Pass through the anthropic-beta header for beta features'
-                                          )}
-                                        </FormDescription>
-                                      </div>
-                                      <FormControl>
-                                        <Switch
-                                          checked={field.value}
-                                          onCheckedChange={field.onChange}
-                                        />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
+                                {currentType === 14 && (
+                                  <FormField
+                                    control={form.control}
+                                    name='claude_beta_query'
+                                    render={({ field }) => (
+                                      <FormItem className='flex items-center justify-between gap-3 px-4 py-3'>
+                                        <div className='space-y-0.5'>
+                                          <FormLabel className='text-sm'>
+                                            {t(
+                                              'Allow Claude beta query passthrough'
+                                            )}
+                                          </FormLabel>
+                                          <FormDescription>
+                                            {t(
+                                              'Pass through the anthropic-beta header for beta features'
+                                            )}
+                                          </FormDescription>
+                                        </div>
+                                        <FormControl>
+                                          <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                          />
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
+                                  />
+                                )}
                               </>
                             )}
                           </div>
