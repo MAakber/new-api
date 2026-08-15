@@ -57,12 +57,12 @@ type channelTestOptions struct {
 	// maxTokens, when non-nil, caps the warm-up request's max_tokens so a queue
 	// warmer does not generate a large (and expensive) upstream response.
 	maxTokens *uint
-	// warmupMessageAsInstructions makes the warm-up message fill the Responses
-	// `instructions` field (system prompt) instead of the user `input`. The
-	// queue warmer needs the upstream request to look like a real Codex request
-	// (Codex feature prompt in instructions), otherwise queue-holding callers
-	// reject it. Input then falls back to a minimal default message.
-	warmupMessageAsInstructions bool
+	// instructions, when non-empty, is injected into the Responses request's
+	// `instructions` field (system prompt). The queue warmer sets this from the
+	// channel's SystemPrompt setting so warm-up calls look like a real Codex
+	// request (Codex feature prompt in instructions); otherwise queue-holding
+	// callers reject them. The warm-up message itself stays the user `input`.
+	instructions string
 }
 
 const channelTestResponsePreviewMaxBytes = 8 << 10
@@ -283,7 +283,7 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		}
 	}
 
-	request := buildTestRequestWithMessage(testModel, endpointType, channel, isStream, message, options.warmupMessageAsInstructions)
+	request := buildTestRequestWithMessage(testModel, endpointType, channel, isStream, message, options.instructions)
 	if options.maxTokens != nil {
 		applyTestRequestMaxTokens(request, *options.maxTokens)
 	}
@@ -849,10 +849,10 @@ func detectErrorMessageFromJSONBytes(jsonBytes []byte) string {
 }
 
 func buildTestRequest(model string, endpointType string, channel *model.Channel, isStream bool) dto.Request {
-	return buildTestRequestWithMessage(model, endpointType, channel, isStream, operation_setting.DefaultChannelTestMessage, false)
+	return buildTestRequestWithMessage(model, endpointType, channel, isStream, operation_setting.DefaultChannelTestMessage, "")
 }
 
-func buildTestRequestWithMessage(model string, endpointType string, channel *model.Channel, isStream bool, message string, messageAsInstructions bool) dto.Request {
+func buildTestRequestWithMessage(model string, endpointType string, channel *model.Channel, isStream bool, message string, instructions string) dto.Request {
 	message, err := resolveChannelTestMessage(message)
 	if err != nil {
 		message = operation_setting.DefaultChannelTestMessage
@@ -863,19 +863,18 @@ func buildTestRequestWithMessage(model string, endpointType string, channel *mod
 	}
 	testResponsesInput := json.RawMessage(testResponsesInputBytes)
 
-	// Warm-up mode: the configured message is a system prompt (instructions),
-	// so it must land in the `instructions` field, not the user `input`. The
-	// upstream queue-holding endpoint requires a Codex-shaped request, and the
-	// instructions field is what carries the Codex feature prompt. Input falls
-	// back to a minimal default so the request stays structurally valid.
+	// When a system prompt is provided (queue warmer passes the channel's
+	// SystemPrompt setting), it must land in the `instructions` field, not the
+	// user `input`. Queue-holding upstreams require a Codex-shaped request, and
+	// the instructions field is what carries the Codex feature prompt. The
+	// warm-up message stays the user input so the request stays valid.
 	var testInstructions json.RawMessage
-	if messageAsInstructions {
-		if b, err := common.Marshal(message); err == nil {
+	if trimmed := strings.TrimSpace(instructions); trimmed != "" {
+		if b, err := common.Marshal(trimmed); err == nil {
 			testInstructions = b
 		} else {
 			testInstructions = json.RawMessage(`""`)
 		}
-		testResponsesInput = json.RawMessage(`[{"role":"user","content":"hi"}]`)
 	}
 
 	// 根据端点类型构建不同的测试请求
@@ -1367,12 +1366,15 @@ func PerformChannelQueueWarmup(ctx context.Context, channel *model.Channel, mode
 		return QueueWarmupResult{Err: err}
 	}
 	options := channelTestOptions{
-		message:                     message,
-		useChannelStyle:             false,
-		capturePreview:              false,
-		skipConsumeLog:              true,
-		maxTokens:                   maxTokens,
-		warmupMessageAsInstructions: true,
+		message:         message,
+		useChannelStyle: false,
+		capturePreview:  false,
+		skipConsumeLog:  true,
+		maxTokens:       maxTokens,
+		// Warm-up calls reuse the channel's SystemPrompt as the upstream
+		// instructions so queue-holding requests carry the same Codex feature
+		// prompt as the in-dashboard channel test — one configuration entry.
+		instructions: channel.GetSetting().SystemPrompt,
 	}
 	result := testChannelWithOptions(ctx, channel, testUserID, model, endpointType, isStream, options)
 	statusCode := 0

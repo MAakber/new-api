@@ -166,7 +166,7 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeOpenAI},
 		false,
 		message,
-		false,
+		"",
 	).(*dto.GeneralOpenAIRequest)
 	require.True(t, ok)
 	require.Len(t, chatRequest.Messages, 1)
@@ -178,7 +178,7 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeOpenAI},
 		true,
 		message,
-		false,
+		"",
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
 	var responsesInput []dto.Message
@@ -192,40 +192,52 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeOpenAI},
 		false,
 		message,
-		false,
+		"",
 	).(*dto.EmbeddingRequest)
 	require.True(t, ok)
 	assert.Equal(t, []any{"hello world"}, embeddingRequest.Input)
 }
 
-func TestBuildWarmupRequestMessageGoesToInstructions(t *testing.T) {
-	const warmupPrompt = "You are Codex, an agent based on GPT-5."
+func TestBuildWarmupRequestInjectsSystemPromptAsInstructions(t *testing.T) {
+	const systemPrompt = "You are Codex, an agent based on GPT-5."
 
 	responsesRequest, ok := buildTestRequestWithMessage(
 		"gpt-5.6-sol",
 		string(constant.EndpointTypeOpenAIResponse),
 		&model.Channel{Type: constant.ChannelTypeCodexCompatibility},
 		true,
-		warmupPrompt,
-		true,
+		"warmup probe",
+		systemPrompt,
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
-	require.JSONEq(t, fmt.Sprintf("%q", warmupPrompt), string(responsesRequest.Instructions))
+	require.JSONEq(t, fmt.Sprintf("%q", systemPrompt), string(responsesRequest.Instructions))
 	var responsesInput []dto.Message
 	require.NoError(t, json.Unmarshal(responsesRequest.Input, &responsesInput))
 	require.Len(t, responsesInput, 1)
-	assert.NotEqual(t, warmupPrompt, responsesInput[0].StringContent())
+	assert.Equal(t, "warmup probe", responsesInput[0].StringContent())
 
 	compactRequest, ok := buildTestRequestWithMessage(
-		"gpt-5.6-sol" + ratio_setting.CompactModelSuffix,
+		"gpt-5.6-sol"+ratio_setting.CompactModelSuffix,
 		string(constant.EndpointTypeOpenAIResponseCompact),
 		&model.Channel{Type: constant.ChannelTypeCodexCompatibility},
 		false,
-		warmupPrompt,
-		true,
+		"warmup probe",
+		systemPrompt,
 	).(*dto.OpenAIResponsesCompactionRequest)
 	require.True(t, ok)
-	require.JSONEq(t, fmt.Sprintf("%q", warmupPrompt), string(compactRequest.Instructions))
+	require.JSONEq(t, fmt.Sprintf("%q", systemPrompt), string(compactRequest.Instructions))
+
+	// Blank system prompt: instructions must stay empty, message stays the input.
+	noPrompt, ok := buildTestRequestWithMessage(
+		"gpt-5.6-sol",
+		string(constant.EndpointTypeOpenAIResponse),
+		&model.Channel{Type: constant.ChannelTypeCodexCompatibility},
+		true,
+		"warmup probe",
+		"  ",
+	).(*dto.OpenAIResponsesRequest)
+	require.True(t, ok)
+	require.Empty(t, noPrompt.Instructions)
 }
 
 func TestResolveChannelTestMessageUsesOverrideThenGlobalDefault(t *testing.T) {
