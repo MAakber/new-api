@@ -2230,6 +2230,7 @@
     "footer.defaultCopyright": "Все права защищены.",
     "footer.new\u0061pi.projectAttributionSuffix": "Все права защищены. Разработано участниками проекта.",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "Для каналов, добавленных после 10 мая 2025 г., не нужно удалять \".\" из имён моделей при развёртывании",
+    "For queue-enabled channels, this message fills the upstream requests instructions field (system prompt), e.g. a Codex feature prompt.": "For queue-enabled channels, this message fills the upstream requests instructions field (system prompt), e.g. a Codex feature prompt.",
     "For private deployments, format: https://fastgpt.run/api/openapi": "Для частных развертываний, формат: https://fastgpt.run/api/openapi",
     "Force a syntactically valid JSON response": "Принудительно возвращать синтаксически корректный JSON",
     "Force AUTH LOGIN": "Принудительный AUTH LOGIN",

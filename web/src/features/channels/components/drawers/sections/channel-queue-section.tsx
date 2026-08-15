@@ -40,6 +40,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
+import { Textarea } from '@/components/ui/textarea'
 
 import { getChannelQueueStatus } from '../../../api'
 import type { ChannelFormValues } from '../../../lib/channel-form'
@@ -337,12 +338,19 @@ export function ChannelQueueSection({
           <FormItem>
             <FormLabel>{t('Warm-up Message')}</FormLabel>
             <FormControl>
-              <Input
+              <Textarea
                 placeholder={t('Leave empty to use the default test message')}
+                rows={4}
+                className='min-h-20 resize-y'
                 {...field}
                 disabled={disabled}
               />
             </FormControl>
+            <FormDescription>
+              {t(
+                'For queue-enabled channels, this message fills the upstream requests instructions field (system prompt), e.g. a Codex feature prompt.',
+              )}
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}
