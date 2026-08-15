@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -136,7 +137,13 @@ func (newAPICompatibleProvider) FetchBalance(ctx context.Context, channel *model
 		return channelCustomBalanceResult{}, err
 	}
 	if status < http.StatusOK || status >= http.StatusMultipleChoices {
-		return channelCustomBalanceResult{}, fmt.Errorf("balance endpoint returned status %d", status)
+		return channelCustomBalanceResult{}, channelCustomBalanceHTTPError("balance", status, body, credential)
+	}
+	if failed, failureMessage := channelCustomBalanceResponseFailure(body); failed {
+		if failureMessage == "" {
+			failureMessage = "balance request failed"
+		}
+		return channelCustomBalanceResult{}, errors.New(safeChannelCustomBalanceMessage(failureMessage, credential))
 	}
 	balance, message, userID, err := parseChannelCustomBalanceResponse(body, config.QuotaPerUnit)
 	if err != nil {
@@ -166,7 +173,7 @@ func (newAPICompatibleProvider) Checkin(ctx context.Context, channel *model.Chan
 	if isAlreadyCheckedInResponse(body) {
 		return channelCustomBalanceResult{Message: "already checked in today"}, nil
 	}
-	return channelCustomBalanceResult{}, fmt.Errorf("check-in endpoint returned status %d", status)
+	return channelCustomBalanceResult{}, channelCustomBalanceHTTPError("check-in", status, body, credential)
 }
 
 func channelCustomBalanceCheckinEndpoint(provider string) string {
@@ -549,7 +556,7 @@ func defaultChannelCustomBalanceConfig(channelID int) model.ChannelCustomBalance
 	return model.ChannelCustomBalance{
 		ChannelID:       channelID,
 		Provider:        ChannelCustomBalanceProviderNewAPI,
-		UseChannelKey:   true,
+		UseChannelKey:   false,
 		AuthType:        ChannelCustomBalanceAuthToken,
 		QuotaPerUnit:    ChannelCustomBalanceDefaultQuotaPerUnit,
 		BalanceInterval: ChannelCustomBalanceDefaultBalanceInterval,
@@ -705,11 +712,16 @@ func doChannelCustomBalanceRequest(ctx context.Context, channel *model.Channel, 
 	if err != nil {
 		return 0, nil, err
 	}
-	req, err := http.NewRequestWithContext(ctx, method, baseURL+endpoint, nil)
+	requestBody := []byte(nil)
+	if method != http.MethodGet && method != http.MethodHead {
+		requestBody = []byte("{}")
+	}
+	req, err := http.NewRequestWithContext(ctx, method, baseURL+endpoint, bytes.NewReader(requestBody))
 	if err != nil {
 		return 0, nil, errors.New("failed to create channel balance request")
 	}
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "new-api-channel-custom-balance/1.0")
 	if config.AuthType == ChannelCustomBalanceAuthCookie {
 		req.Header.Set("Cookie", credential)
@@ -752,6 +764,9 @@ func setChannelCustomBalanceUserHeader(req *http.Request, config *model.ChannelC
 	}
 	userID := strings.TrimSpace(config.UserID)
 	if userID == "" {
+		return
+	}
+	if config.AuthType == ChannelCustomBalanceAuthCookie {
 		return
 	}
 	switch config.Provider {
@@ -928,6 +943,20 @@ func channelCustomBalanceResponseFailure(body []byte) (bool, string) {
 		return false, ""
 	}
 	return true, parseChannelCustomBalanceMessage(body)
+}
+
+func channelCustomBalanceHTTPError(operation string, status int, body []byte, credential string) error {
+	message := safeChannelCustomBalanceMessage(parseChannelCustomBalanceMessage(body), credential)
+	if status == http.StatusUnauthorized || status == http.StatusForbidden {
+		if message != "" {
+			return fmt.Errorf("upstream %s authentication failed (HTTP %d): %s; use a New API dashboard access token or Cookie instead of a relay API token", operation, status, message)
+		}
+		return fmt.Errorf("upstream %s authentication failed (HTTP %d); use a New API dashboard access token or Cookie instead of a relay API token", operation, status)
+	}
+	if message != "" {
+		return fmt.Errorf("upstream %s endpoint returned status %d: %s", operation, status, message)
+	}
+	return fmt.Errorf("upstream %s endpoint returned status %d", operation, status)
 }
 
 func safeChannelCustomBalanceMessage(message, credential string) string {

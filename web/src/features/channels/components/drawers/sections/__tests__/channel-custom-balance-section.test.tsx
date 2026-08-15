@@ -115,7 +115,9 @@ function restoreApi() {
   api.put = originalPut
 }
 
-async function renderSection(): Promise<RenderedSection> {
+async function renderSection(
+  onConfiguredChange?: (configured: boolean) => void
+): Promise<RenderedSection> {
   const container = document.createElement('div')
   document.body.append(container)
   const root = createRoot(container)
@@ -130,7 +132,11 @@ async function renderSection(): Promise<RenderedSection> {
     root.render(
       <QueryClientProvider client={queryClient}>
         <I18nextProvider i18n={i18n}>
-          <ChannelCustomBalanceSection channelId={42} disabled={false} />
+          <ChannelCustomBalanceSection
+            channelId={42}
+            disabled={false}
+            onConfiguredChange={onConfiguredChange}
+          />
         </I18nextProvider>
       </QueryClientProvider>
     )
@@ -252,6 +258,32 @@ describe('channel custom balance section', () => {
         view.container.textContent || '',
         /custom balance permission denied/
       )
+    } finally {
+      await cleanupSection(view)
+      restoreApi()
+    }
+  })
+
+  test('reports enabled state immediately for the editor navigation', async () => {
+    installGetMock()
+    let configured: boolean | undefined
+    const view = await renderSection((value) => {
+      configured = value
+    })
+
+    try {
+      await flushReact()
+      await act(async () => {
+        await waitForElement(view.container, '[role="switch"]')
+      })
+      const switches = [
+        ...view.container.querySelectorAll<HTMLElement>('[role="switch"]'),
+      ]
+      assert.ok(switches.length >= 1)
+      await act(async () => click(switches[0]))
+      await flushReact()
+
+      assert.equal(configured, true)
     } finally {
       await cleanupSection(view)
       restoreApi()

@@ -32,10 +32,16 @@ export const CUSTOM_BALANCE_PROVIDERS = [
   'anyrouter',
 ] as const
 
+export const customBalanceQueryKey = (channelId: number) => [
+  'channels',
+  channelId,
+  'custom-balance',
+]
+
 export const CUSTOM_BALANCE_DEFAULT_VALUES = {
   enabled: false,
   provider: 'new_api' as const,
-  use_channel_key: true,
+  use_channel_key: false,
   auth_type: 'token' as const,
   credential: '',
   user_id: '',
@@ -135,7 +141,7 @@ export function normalizeCustomBalanceSettings(
       typeof settings?.provider === 'string' && settings.provider.trim()
         ? settings.provider
         : CUSTOM_BALANCE_DEFAULT_VALUES.provider,
-    use_channel_key: settings?.use_channel_key !== false,
+    use_channel_key: settings?.use_channel_key === true,
     auth_type: settings?.auth_type === 'cookie' ? 'cookie' : 'token',
     credential_set: settings?.credential_set === true,
     user_id: normalizeUserID(

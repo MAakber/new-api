@@ -133,6 +133,7 @@ import {
   getAllModels,
   getChannel,
   getChannelKey,
+  getCustomBalanceConfig,
   getGroups,
   getPrefillGroups,
   refreshCodexCredential,
@@ -159,6 +160,7 @@ import {
   buildSettingsJSON,
   channelFormSchema,
   channelsQueryKeys,
+  customBalanceQueryKey,
   getAdvancedCustomStats,
   transformChannelToFormDefaults,
   supportsChannelKeyAppend,
@@ -174,6 +176,7 @@ import {
   findMissingModelsInMapping,
   validateModelMappingJson,
   hasAdvancedSettingsErrors,
+  normalizeCustomBalanceSettings,
 } from '../../lib'
 import {
   collectInvalidStatusCodeEntries,
@@ -742,6 +745,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     string | undefined
   >()
   const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
+  const [customBalanceConfigured, setCustomBalanceConfigured] = useState(false)
   const [paramOverrideEditorOpen, setParamOverrideEditorOpen] = useState(false)
   const [advancedCustomEditorOpen, setAdvancedCustomEditorOpen] =
     useState(false)
@@ -759,6 +763,22 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     enabled: isEditing && Boolean(channelId),
   })
   const effectiveCurrentRow = currentRow ?? channelData?.data ?? null
+
+  const { data: customBalanceConfig } = useQuery({
+    queryKey: customBalanceQueryKey(channelId || 0),
+    queryFn: async () => {
+      const response = await getCustomBalanceConfig(channelId as number)
+      if (!response.success) {
+        throw new Error(response.message)
+      }
+      return normalizeCustomBalanceSettings(response.data)
+    },
+    enabled: isEditing && Boolean(channelId),
+  })
+
+  useEffect(() => {
+    setCustomBalanceConfigured(customBalanceConfig?.enabled === true)
+  }, [customBalanceConfig])
 
   // Fetch available groups
   const { data: groupsData, isLoading: isLoadingGroups } = useQuery({
@@ -1188,6 +1208,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     fieldPassthroughConfigured ||
     upstreamModelDetectionConfigured ||
     clientIdentityConfigured ||
+    customBalanceConfigured ||
     queueConfigured
   )
   const advancedNavChildren: ChannelEditorNavChildItem[] = [
@@ -1199,6 +1220,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     {
       id: ADVANCED_SETTINGS_SECTION_IDS.customBalance,
       title: t('Custom Balance & Check-in'),
+      configured: customBalanceConfigured,
     },
     {
       id: ADVANCED_SETTINGS_SECTION_IDS.routingStrategy,
@@ -3812,6 +3834,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                       <ChannelCustomBalanceSection
                         channelId={channelId}
                         disabled={sensitiveLocked}
+                        onConfiguredChange={setCustomBalanceConfigured}
                       />
                     </div>
                     {/* ── Routing & Overrides ── */}

@@ -432,6 +432,32 @@ func UpdateChannelBalance(c *gin.Context) {
 		common.ApiError(c, err)
 		return
 	}
+	customBalanceConfig, err := model.GetChannelCustomBalance(id)
+	if err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	if customBalanceConfig != nil && customBalanceConfig.Enabled {
+		view, refreshErr := service.RefreshChannelCustomBalance(c.Request.Context(), id)
+		if refreshErr != nil {
+			writeChannelCustomBalanceActionError(c, refreshErr, view)
+			return
+		}
+		if view == nil {
+			common.ApiError(c, errors.New("custom balance refresh returned no result"))
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"success":              true,
+			"message":              view.LastBalanceMessage,
+			"balance":              view.Balance,
+			"currency":             "USD",
+			"balance_source":       "custom",
+			"balance_status":       view.LastBalanceStatus,
+			"balance_updated_time": view.BalanceUpdatedTime,
+		})
+		return
+	}
 	if channel.ChannelInfo.IsMultiKey {
 		c.JSON(http.StatusOK, gin.H{
 			"success": false,

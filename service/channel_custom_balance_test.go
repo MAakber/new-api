@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"io"
 	"math"
 	"net/http"
 	"net/http/httptest"
@@ -63,6 +64,10 @@ func TestChannelCustomBalanceTokenCookieAndBalanceUpdate(t *testing.T) {
 		case "/api/user/checkin":
 			atomic.AddInt32(&checkinRequests, 1)
 			assert.Equal(t, "Bearer channel-key-secret", r.Header.Get("Authorization"))
+			assert.Equal(t, "application/json", r.Header.Get("Content-Type"))
+			body, readErr := io.ReadAll(r.Body)
+			assert.NoError(t, readErr)
+			assert.JSONEq(t, `{}`, string(body))
 			_, _ = w.Write([]byte(`{"success":false,"message":"今日已签到"}`))
 		default:
 			http.NotFound(w, r)
@@ -72,12 +77,14 @@ func TestChannelCustomBalanceTokenCookieAndBalanceUpdate(t *testing.T) {
 
 	channel := customBalanceChannel(t, db, server.URL+"/v1/", "channel-key-secret")
 	enabled := true
+	useChannelKey := true
 	autoBalance := false
 	autoCheckin := false
 	view, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
-		Enabled:     &enabled,
-		AutoBalance: &autoBalance,
-		AutoCheckin: &autoCheckin,
+		Enabled:       &enabled,
+		UseChannelKey: &useChannelKey,
+		AutoBalance:   &autoBalance,
+		AutoCheckin:   &autoCheckin,
 	})
 	require.NoError(t, err)
 	require.True(t, view.CredentialSet)
@@ -101,10 +108,10 @@ func TestChannelCustomBalanceTokenCookieAndBalanceUpdate(t *testing.T) {
 	assert.Equal(t, int32(2), atomic.LoadInt32(&balanceRequests))
 
 	credential := "session-cookie-secret"
-	useChannelKey := false
+	useIndependentCredential := false
 	authType := ChannelCustomBalanceAuthCookie
 	view, err = UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
-		UseChannelKey: &useChannelKey,
+		UseChannelKey: &useIndependentCredential,
 		AuthType:      &authType,
 		Credential:    &credential,
 	})
@@ -156,6 +163,7 @@ func TestChannelCustomBalanceProviderUserHeaders(t *testing.T) {
 
 	channel := customBalanceChannel(t, db, server.URL, "channel-key")
 	enabled := true
+	useChannelKey := true
 	userID := "user-42"
 	for _, provider := range []string{
 		ChannelCustomBalanceProviderNewAPI,
@@ -166,9 +174,10 @@ func TestChannelCustomBalanceProviderUserHeaders(t *testing.T) {
 		expectedProvider = provider
 		providerValue := provider
 		_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
-			Enabled:  &enabled,
-			Provider: &providerValue,
-			UserID:   &userID,
+			Enabled:       &enabled,
+			Provider:      &providerValue,
+			UseChannelKey: &useChannelKey,
+			UserID:        &userID,
 		})
 		require.NoError(t, err)
 		_, err = RefreshChannelCustomBalance(context.Background(), channel.Id)
@@ -204,9 +213,11 @@ func TestChannelCustomBalanceCheckinUsesProviderEndpoint(t *testing.T) {
 
 			channel := customBalanceChannel(t, db, server.URL, "channel-key")
 			enabled, provider := true, testCase.provider
+			useChannelKey := true
 			_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
-				Enabled:  &enabled,
-				Provider: &provider,
+				Enabled:       &enabled,
+				Provider:      &provider,
+				UseChannelKey: &useChannelKey,
 			})
 			require.NoError(t, err)
 			_, err = CheckinChannelCustomBalance(context.Background(), channel.Id)
@@ -226,7 +237,8 @@ func TestChannelCustomBalanceCheckinRejectsFailedJSONPayload(t *testing.T) {
 
 	channel := customBalanceChannel(t, db, server.URL, "channel-key")
 	enabled := true
-	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled})
+	useChannelKey := true
+	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled, UseChannelKey: &useChannelKey})
 	require.NoError(t, err)
 
 	_, err = CheckinChannelCustomBalance(context.Background(), channel.Id)
@@ -235,6 +247,48 @@ func TestChannelCustomBalanceCheckinRejectsFailedJSONPayload(t *testing.T) {
 	var config model.ChannelCustomBalance
 	require.NoError(t, db.First(&config, "channel_id = ?", channel.Id).Error)
 	assert.Equal(t, "failed", config.LastCheckinStatus)
+}
+
+func TestChannelCustomBalanceRefreshRejectsFailedJSONPayload(t *testing.T) {
+	db := setupChannelCustomBalanceServiceDB(t)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"success":false,"message":"未登录，请先登录"}`))
+	}))
+	defer server.Close()
+
+	channel := customBalanceChannel(t, db, server.URL, "channel-key")
+	enabled, useChannelKey := true, true
+	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
+		Enabled:       &enabled,
+		UseChannelKey: &useChannelKey,
+	})
+	require.NoError(t, err)
+
+	_, err = RefreshChannelCustomBalance(context.Background(), channel.Id)
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "未登录，请先登录")
+}
+
+func TestChannelCustomBalanceRefreshExplainsUpstreamAuthenticationFailure(t *testing.T) {
+	db := setupChannelCustomBalanceServiceDB(t)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusUnauthorized)
+		_, _ = w.Write([]byte(`{"success":false,"message":"token invalid"}`))
+	}))
+	defer server.Close()
+
+	channel := customBalanceChannel(t, db, server.URL, "relay-token")
+	enabled, useChannelKey := true, true
+	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
+		Enabled:       &enabled,
+		UseChannelKey: &useChannelKey,
+	})
+	require.NoError(t, err)
+
+	_, err = RefreshChannelCustomBalance(context.Background(), channel.Id)
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "dashboard access token or Cookie")
 }
 
 func TestChannelCustomBalanceRejectsChannelKeyForMultiKeyChannel(t *testing.T) {
@@ -249,7 +303,8 @@ func TestChannelCustomBalanceRejectsChannelKeyForMultiKeyChannel(t *testing.T) {
 	require.NoError(t, db.Create(channel).Error)
 
 	enabled := false
-	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled})
+	useChannelKey := true
+	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled, UseChannelKey: &useChannelKey})
 	assert.ErrorIs(t, err, ErrChannelCustomBalanceConfig)
 	assert.ErrorContains(t, err, "multi-key")
 
@@ -284,9 +339,11 @@ func TestChannelCustomBalanceFailureRetriesWithoutOverwritingBalance(t *testing.
 	channel := customBalanceChannel(t, db, server.URL, "key")
 	require.NoError(t, db.Model(channel).Updates(map[string]any{"balance": 9.0}).Error)
 	enabled, autoBalance := true, true
+	useChannelKey := true
 	retryMax, retryInterval, balanceInterval := 1, int64(1), int64(100)
 	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
 		Enabled:                &enabled,
+		UseChannelKey:          &useChannelKey,
 		AutoBalance:            &autoBalance,
 		RetryMax:               &retryMax,
 		RetryIntervalSeconds:   &retryInterval,
@@ -319,9 +376,11 @@ func TestChannelCustomBalanceDueTaskUsesSingletonActiveRow(t *testing.T) {
 	db := setupChannelCustomBalanceServiceDB(t)
 	channel := customBalanceChannel(t, db, "http://127.0.0.1", "key")
 	enabled, autoBalance := true, true
+	useChannelKey := true
 	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
-		Enabled:     &enabled,
-		AutoBalance: &autoBalance,
+		Enabled:       &enabled,
+		UseChannelKey: &useChannelKey,
+		AutoBalance:   &autoBalance,
 	})
 	require.NoError(t, err)
 
@@ -359,7 +418,8 @@ func TestChannelCustomBalanceOperationsSerializePerChannel(t *testing.T) {
 
 	channel := customBalanceChannel(t, db, server.URL, "key")
 	enabled := true
-	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled})
+	useChannelKey := true
+	_, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled, UseChannelKey: &useChannelKey})
 	require.NoError(t, err)
 
 	results := make(chan error, 2)
@@ -439,7 +499,8 @@ func TestChannelCustomBalanceConfigBoundsAndLease(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, ok)
 	enabled := true
-	_, err = UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled})
+	useChannelKey := true
+	_, err = UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{Enabled: &enabled, UseChannelKey: &useChannelKey})
 	assert.ErrorIs(t, err, ErrChannelCustomBalanceBusy)
 	_, _ = model.ReleaseNamedLease("channel-custom-balance:"+strconv.Itoa(channel.Id), "other-node")
 }

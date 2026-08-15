@@ -2,12 +2,14 @@ package controller
 
 import (
 	"bytes"
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
 	"testing"
 
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -74,6 +76,35 @@ func TestChannelCustomBalanceAPIAcceptsNumericUserID(t *testing.T) {
 	UpdateChannelCustomBalance(ctx)
 	require.Equal(t, http.StatusOK, recorder.Code)
 	assert.Contains(t, recorder.Body.String(), `"user_id":"42"`)
+}
+
+func TestUpdateChannelBalanceUsesConfiguredCustomBalance(t *testing.T) {
+	channel := setupChannelCustomBalanceControllerDB(t)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, "/api/user/self", r.URL.Path)
+		assert.Equal(t, "Bearer controller-channel-key", r.Header.Get("Authorization"))
+		_, _ = w.Write([]byte(`{"data":{"quota":1000000}}`))
+	}))
+	defer server.Close()
+
+	baseURL := server.URL
+	require.NoError(t, model.DB.Model(channel).Updates(map[string]any{"base_url": baseURL}).Error)
+	enabled, useChannelKey := true, true
+	_, err := service.UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, service.ChannelCustomBalanceUpdate{
+		Enabled:       &enabled,
+		UseChannelKey: &useChannelKey,
+	})
+	require.NoError(t, err)
+
+	recorder := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(recorder)
+	ctx.Params = gin.Params{{Key: "id", Value: intString(channel.Id)}}
+	ctx.Request = httptest.NewRequest(http.MethodGet, "/api/channel/1/update_balance", nil)
+
+	UpdateChannelBalance(ctx)
+	require.Equal(t, http.StatusOK, recorder.Code)
+	assert.Contains(t, recorder.Body.String(), `"success":true`)
+	assert.Contains(t, recorder.Body.String(), `"balance":2`)
 }
 
 func TestChannelCustomBalanceAPIPreservesLargeNumericUserID(t *testing.T) {

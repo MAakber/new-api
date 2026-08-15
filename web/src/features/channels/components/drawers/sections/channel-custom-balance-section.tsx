@@ -66,6 +66,7 @@ import {
   createCustomBalanceFormValues,
   CUSTOM_BALANCE_DEFAULT_VALUES,
   CUSTOM_BALANCE_PROVIDERS,
+  customBalanceQueryKey,
   customBalanceFormSchema,
   getCustomBalanceStatusVariant,
   normalizeCustomBalanceSettings,
@@ -76,13 +77,8 @@ import type { CustomBalanceSettings } from '../../../types'
 type ChannelCustomBalanceSectionProps = {
   channelId?: number | null
   disabled: boolean
+  onConfiguredChange?: (configured: boolean) => void
 }
-
-const customBalanceQueryKey = (channelId: number) => [
-  'channels',
-  channelId,
-  'custom-balance',
-]
 
 function getErrorMessage(error: unknown, fallback: string): string {
   if (typeof error === 'object' && error !== null) {
@@ -178,6 +174,12 @@ export function ChannelCustomBalanceSection(
     resolver: zodResolver(customBalanceFormSchema),
     defaultValues: CUSTOM_BALANCE_DEFAULT_VALUES,
   })
+  const enabled = form.watch('enabled')
+  const onConfiguredChange = props.onConfiguredChange
+
+  useEffect(() => {
+    onConfiguredChange?.(enabled)
+  }, [enabled, onConfiguredChange])
 
   useEffect(() => {
     if (configQuery.data && !form.formState.isDirty) {
