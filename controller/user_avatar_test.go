@@ -2,6 +2,7 @@ package controller
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"encoding/hex"
 	"image"
 	"image/color"
@@ -13,6 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/service"
@@ -86,6 +88,7 @@ func TestPutSelfAvatarNormalizesImageAndReplacesPriorObject(t *testing.T) {
 	context, recorder := avatarRequest(t, http.MethodPut, firstBody, firstContentType, 7)
 	PutSelfAvatar(context)
 	require.Equal(t, http.StatusOK, recorder.Code)
+	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
 
 	firstAvatar, err := model.GetUserAvatar(7)
 	require.NoError(t, err)
@@ -108,6 +111,7 @@ func TestPutSelfAvatarNormalizesImageAndReplacesPriorObject(t *testing.T) {
 	context, recorder = avatarRequest(t, http.MethodPut, secondBody, secondContentType, 7)
 	PutSelfAvatar(context)
 	require.Equal(t, http.StatusOK, recorder.Code)
+	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
 
 	secondAvatar, err := model.GetUserAvatar(7)
 	require.NoError(t, err)
@@ -168,12 +172,16 @@ func TestGetAndDeleteSelfAvatarRespectPrivateMetadata(t *testing.T) {
 	GetSelfAvatar(context)
 	assert.Equal(t, http.StatusOK, recorder.Code)
 	assert.Equal(t, service.AvatarContentType, recorder.Header().Get("Content-Type"))
-	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
+	assert.Equal(t, "private, max-age=86400", recorder.Header().Get("Cache-Control"))
+	assert.Equal(t, `"`+hex.EncodeToString(make([]byte, 32))+`"`, recorder.Header().Get("ETag"))
+	assert.NotEmpty(t, recorder.Header().Get("Last-Modified"))
+	assert.Equal(t, "Authorization, Cookie", recorder.Header().Get("Vary"))
 	assert.Equal(t, "nosniff", recorder.Header().Get("X-Content-Type-Options"))
 
 	context, recorder = avatarRequest(t, http.MethodDelete, nil, "", 9)
 	DeleteSelfAvatar(context)
 	assert.Equal(t, http.StatusOK, recorder.Code)
+	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
 	avatar, err := model.GetUserAvatar(9)
 	require.NoError(t, err)
 	assert.Nil(t, avatar)
@@ -225,7 +233,7 @@ func TestGetAdminUserAvatarServesExistingAvatarWithPrivateHeaders(t *testing.T) 
 	require.Equal(t, http.StatusOK, recorder.Code)
 	assert.Equal(t, encoded, recorder.Body.Bytes())
 	assert.Equal(t, service.AvatarContentType, recorder.Header().Get("Content-Type"))
-	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
+	assert.Equal(t, "private, max-age=86400", recorder.Header().Get("Cache-Control"))
 	assert.Equal(t, "nosniff", recorder.Header().Get("X-Content-Type-Options"))
 }
 
@@ -236,7 +244,7 @@ func TestGetAdminUserAvatarValidatesTargetAndReturnsNotFound(t *testing.T) {
 	context, recorder := adminAvatarRequest(t, http.MethodGet, "not-an-id")
 	GetAdminUserAvatar(context)
 	assert.Equal(t, http.StatusBadRequest, recorder.Code)
-	assert.Equal(t, "private, no-store", recorder.Header().Get("Cache-Control"))
+	assert.Equal(t, "private, max-age=86400", recorder.Header().Get("Cache-Control"))
 
 	context, recorder = adminAvatarRequest(t, http.MethodGet, "9999")
 	GetAdminUserAvatar(context)
@@ -247,4 +255,57 @@ func TestGetAdminUserAvatarValidatesTargetAndReturnsNotFound(t *testing.T) {
 	context, recorder = adminAvatarRequest(t, http.MethodGet, strconv.Itoa(target.Id))
 	GetAdminUserAvatar(context)
 	assert.Equal(t, http.StatusNotFound, context.Writer.Status())
+}
+
+func TestGetSelfAvatarSupportsConditionalRequestsAndChangesETag(t *testing.T) {
+	setupAvatarControllerTest(t)
+	storage := service.NewAvatarStorage()
+	firstImage := pngAvatarBytes(t, 3, 2)
+	firstDigest := sha256.Sum256(firstImage)
+	firstUpdatedAt := time.Date(2026, 8, 15, 10, 20, 30, 0, time.UTC)
+	firstObjectKey, err := storage.Put(11, bytes.NewReader(firstImage))
+	require.NoError(t, err)
+	require.NoError(t, model.SaveUserAvatar(&model.UserAvatar{
+		UserID:    11,
+		ObjectKey: firstObjectKey,
+		MimeType:  service.AvatarContentType,
+		Size:      int64(len(firstImage)),
+		Width:     3,
+		Height:    2,
+		SHA256:    hex.EncodeToString(firstDigest[:]),
+		Version:   1,
+		UpdatedAt: firstUpdatedAt,
+	}))
+
+	context, recorder := avatarRequest(t, http.MethodGet, nil, "", 11)
+	GetSelfAvatar(context)
+	require.Equal(t, http.StatusOK, recorder.Code)
+	firstETag := recorder.Header().Get("ETag")
+	firstLastModified := recorder.Header().Get("Last-Modified")
+	require.NotEmpty(t, firstETag)
+	require.NotEmpty(t, firstLastModified)
+
+	context, recorder = avatarRequest(t, http.MethodGet, nil, "", 11)
+	context.Request.Header.Set("If-None-Match", firstETag)
+	GetSelfAvatar(context)
+	assert.Equal(t, http.StatusNotModified, context.Writer.Status())
+	assert.Empty(t, recorder.Body.Bytes())
+	assert.Equal(t, firstETag, recorder.Header().Get("ETag"))
+	assert.Equal(t, "private, max-age=86400", recorder.Header().Get("Cache-Control"))
+
+	context, recorder = avatarRequest(t, http.MethodGet, nil, "", 11)
+	context.Request.Header.Set("If-Modified-Since", firstLastModified)
+	GetSelfAvatar(context)
+	assert.Equal(t, http.StatusNotModified, context.Writer.Status())
+	assert.Empty(t, recorder.Body.Bytes())
+
+	secondBody, secondContentType := multipartAvatar(t, pngAvatarBytes(t, 4, 2))
+	context, recorder = avatarRequest(t, http.MethodPut, secondBody, secondContentType, 11)
+	PutSelfAvatar(context)
+	require.Equal(t, http.StatusOK, recorder.Code)
+
+	context, recorder = avatarRequest(t, http.MethodGet, nil, "", 11)
+	GetSelfAvatar(context)
+	require.Equal(t, http.StatusOK, recorder.Code)
+	assert.NotEqual(t, firstETag, recorder.Header().Get("ETag"))
 }

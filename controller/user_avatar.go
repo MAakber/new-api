@@ -15,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
@@ -39,7 +40,7 @@ func GetSelfAvatar(c *gin.Context) {
 }
 
 func GetAdminUserAvatar(c *gin.Context) {
-	setAvatarResponseHeaders(c)
+	setAvatarGetResponseHeaders(c)
 	userID, err := strconv.Atoi(c.Param("id"))
 	if err != nil || userID <= 0 {
 		writeAvatarError(c, http.StatusBadRequest, "invalid user id")
@@ -57,7 +58,7 @@ func GetAdminUserAvatar(c *gin.Context) {
 }
 
 func serveAvatar(c *gin.Context, userID int) {
-	setAvatarResponseHeaders(c)
+	setAvatarGetResponseHeaders(c)
 	avatar, err := model.GetUserAvatar(userID)
 	if err != nil {
 		writeAvatarError(c, http.StatusInternalServerError, "failed to load avatar")
@@ -72,6 +73,17 @@ func serveAvatar(c *gin.Context, userID int) {
 		return
 	}
 
+	etag := fmt.Sprintf(`"%s"`, avatar.SHA256)
+	c.Header("ETag", etag)
+	lastModified := avatar.UpdatedAt.UTC().Truncate(time.Second)
+	if !avatar.UpdatedAt.IsZero() {
+		c.Header("Last-Modified", lastModified.Format(http.TimeFormat))
+	}
+	if avatarNotModified(c.Request, etag, lastModified) {
+		c.Status(http.StatusNotModified)
+		return
+	}
+
 	file, err := service.NewAvatarStorage().Open(avatar.ObjectKey)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -82,11 +94,12 @@ func serveAvatar(c *gin.Context, userID int) {
 		return
 	}
 	defer file.Close()
+
 	c.DataFromReader(http.StatusOK, avatar.Size, avatar.MimeType, file, nil)
 }
 
 func PutSelfAvatar(c *gin.Context) {
-	setAvatarResponseHeaders(c)
+	setAvatarMutationResponseHeaders(c)
 	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, maxAvatarRequestBytes)
 	data, err := readAvatarPart(c)
 	if err != nil {
@@ -174,7 +187,7 @@ func PutSelfAvatar(c *gin.Context) {
 }
 
 func DeleteSelfAvatar(c *gin.Context) {
-	setAvatarResponseHeaders(c)
+	setAvatarMutationResponseHeaders(c)
 	userID := c.GetInt("id")
 	release := lockAvatarMutation(userID)
 	defer release()
@@ -289,9 +302,40 @@ func decodeAvatar(data []byte) (image.Image, int, int, error) {
 	return decoded, config.Width, config.Height, nil
 }
 
-func setAvatarResponseHeaders(c *gin.Context) {
+func setAvatarGetResponseHeaders(c *gin.Context) {
+	c.Header("Cache-Control", "private, max-age=86400")
+	c.Header("Vary", "Authorization, Cookie")
+	c.Header("X-Content-Type-Options", "nosniff")
+}
+
+func setAvatarMutationResponseHeaders(c *gin.Context) {
 	c.Header("Cache-Control", "private, no-store")
 	c.Header("X-Content-Type-Options", "nosniff")
+}
+
+func avatarNotModified(request *http.Request, etag string, lastModified time.Time) bool {
+	ifNoneMatch := request.Header.Values("If-None-Match")
+	if len(ifNoneMatch) > 0 {
+		for _, headerValue := range ifNoneMatch {
+			for _, candidate := range strings.Split(headerValue, ",") {
+				candidate = strings.TrimSpace(candidate)
+				if candidate == "*" || candidate == etag {
+					return true
+				}
+				if strings.HasPrefix(candidate, "W/") && strings.TrimSpace(strings.TrimPrefix(candidate, "W/")) == etag {
+					return true
+				}
+			}
+		}
+		return false
+	}
+
+	ifModifiedSince := request.Header.Get("If-Modified-Since")
+	if ifModifiedSince == "" || lastModified.IsZero() {
+		return false
+	}
+	modifiedSince, err := http.ParseTime(ifModifiedSince)
+	return err == nil && !lastModified.After(modifiedSince)
 }
 
 func writeAvatarError(c *gin.Context, status int, message string) {
