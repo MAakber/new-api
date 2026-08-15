@@ -25,6 +25,7 @@ import {
   textColorMap,
   type StatusVariant,
 } from '@/components/status-badge'
+import { AuthenticatedAvatarImage } from '@/components/authenticated-avatar-image'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   Empty,
@@ -258,6 +259,12 @@ function MobileUserField({ log }: { log: UsageLog }) {
       }}
     >
       <Avatar className='ring-border/60 size-6 shrink-0 ring-1'>
+        {sensitiveVisible && log.user_id > 0 && (
+          <AuthenticatedAvatarImage
+            avatarUrl={`/api/user/${log.user_id}/avatar`}
+            alt=''
+          />
+        )}
         <AvatarFallback
           className={cn(
             'text-[11px] font-semibold',

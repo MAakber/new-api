@@ -21,6 +21,7 @@ import { GitBranch, Sparkles, KeyRound } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { AuthenticatedAvatarImage } from '@/components/authenticated-avatar-image'
 import { GroupBadge } from '@/components/group-badge'
 import { StatusBadge, type StatusBadgeProps } from '@/components/status-badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -505,6 +506,12 @@ export function useCommonLogsColumns(isAdmin: boolean): ColumnDef<UsageLog>[] {
               }}
             >
               <Avatar className='ring-border/60 size-6 ring-1 max-sm:hidden'>
+                {sensitiveVisible && log.user_id > 0 && (
+                  <AuthenticatedAvatarImage
+                    avatarUrl={`/api/user/${log.user_id}/avatar`}
+                    alt=''
+                  />
+                )}
                 <AvatarFallback
                   className={cn(
                     'text-[11px] font-semibold',

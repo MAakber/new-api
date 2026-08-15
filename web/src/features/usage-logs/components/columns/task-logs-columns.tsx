@@ -22,6 +22,7 @@ import { Music } from 'lucide-react'
 import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { AuthenticatedAvatarImage } from '@/components/authenticated-avatar-image'
 import { StatusBadge } from '@/components/status-badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { getUserAvatarFallback, getUserAvatarStyle } from '@/lib/avatar'
@@ -141,6 +142,12 @@ export function useTaskLogsColumns(isAdmin: boolean): ColumnDef<TaskLog>[] {
             }}
           >
             <Avatar className='ring-border/60 size-6 ring-1 max-sm:hidden'>
+              {sensitiveVisible && log.user_id > 0 && (
+                <AuthenticatedAvatarImage
+                  avatarUrl={`/api/user/${log.user_id}/avatar`}
+                  alt=''
+                />
+              )}
               <AvatarFallback
                 className={cn(
                   'text-[11px] font-semibold',
