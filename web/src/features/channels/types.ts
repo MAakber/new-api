@@ -275,6 +275,61 @@ export interface ChannelBalanceResponse {
   currency?: string
 }
 
+export type CustomBalanceProvider =
+  | 'new_api'
+  | 'one_api'
+  | 'veloera'
+  | 'anyrouter'
+
+export type CustomBalanceAuthType = 'token' | 'cookie'
+
+export interface CustomBalanceSettings {
+  enabled: boolean
+  provider: CustomBalanceProvider | string
+  use_channel_key: boolean
+  auth_type: CustomBalanceAuthType
+  credential_set: boolean
+  user_id: string
+  quota_per_unit: number
+  auto_balance: boolean
+  auto_checkin: boolean
+  balance_interval_seconds: number
+  checkin_interval_seconds: number
+  retry_max_attempts: number
+  retry_max?: number
+  retry_interval_seconds: number
+  next_balance_at: number | null
+  next_checkin_at: number | null
+  last_balance_at: number | null
+  last_balance_status: string | null
+  last_balance_error: string | null
+  last_checkin_at: number | null
+  last_checkin_status: string | null
+  last_checkin_error: string | null
+}
+
+export interface CustomBalanceUpdatePayload {
+  enabled: boolean
+  provider: CustomBalanceProvider | string
+  use_channel_key: boolean
+  auth_type: CustomBalanceAuthType
+  credential?: string
+  user_id: string
+  quota_per_unit: number
+  auto_balance: boolean
+  auto_checkin: boolean
+  balance_interval_seconds: number
+  checkin_interval_seconds: number
+  retry_max_attempts: number
+  retry_interval_seconds: number
+}
+
+export interface CustomBalanceApiResponse {
+  success: boolean
+  message?: string
+  data?: Partial<CustomBalanceSettings>
+}
+
 export interface FetchModelsResponse {
   success: boolean
   message?: string

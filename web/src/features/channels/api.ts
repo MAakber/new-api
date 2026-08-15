@@ -29,6 +29,8 @@ import type {
   ClientIdentityProfile,
   ChannelUpdatePayload,
   ChannelBalanceResponse,
+  CustomBalanceApiResponse,
+  CustomBalanceUpdatePayload,
   ChannelOpsResponse,
   ChannelQueueStatusView,
   DetailedChannelTestRequest,
@@ -307,6 +309,54 @@ export async function updateChannelBalance(
 ): Promise<ChannelBalanceResponse> {
   const res = await api.get(
     `/api/channel/update_balance/${id}`,
+    channelActionConfig()
+  )
+  return res.data
+}
+
+// ============================================================================
+// Channel Custom Balance Operations
+// ============================================================================
+
+export async function getCustomBalanceConfig(
+  channelId: number
+): Promise<CustomBalanceApiResponse> {
+  const res = await api.get(
+    `/api/channel/${channelId}/custom-balance`,
+    channelActionConfig()
+  )
+  return res.data
+}
+
+export async function updateCustomBalanceConfig(
+  channelId: number,
+  data: CustomBalanceUpdatePayload
+): Promise<CustomBalanceApiResponse> {
+  const res = await api.put(
+    `/api/channel/${channelId}/custom-balance`,
+    data,
+    channelActionConfig()
+  )
+  return res.data
+}
+
+export async function refreshCustomBalance(
+  channelId: number
+): Promise<CustomBalanceApiResponse> {
+  const res = await api.post(
+    `/api/channel/${channelId}/custom-balance/refresh`,
+    undefined,
+    channelActionConfig()
+  )
+  return res.data
+}
+
+export async function checkinCustomBalance(
+  channelId: number
+): Promise<CustomBalanceApiResponse> {
+  const res = await api.post(
+    `/api/channel/${channelId}/custom-balance/checkin`,
+    undefined,
     channelActionConfig()
   )
   return res.data

@@ -28,6 +28,37 @@ func RegisterScheduledSystemTasks() {
 	service.RegisterSystemTaskHandler(autoPriceSyncHandler{})
 	service.RegisterSystemTaskHandler(autoModelMetadataSyncHandler{})
 	service.RegisterSystemTaskHandler(channelQueueWarmupHandler{})
+	service.RegisterSystemTaskHandler(channelCustomBalanceTaskHandler{
+		taskType:  model.SystemTaskTypeChannelCustomBalance,
+		operation: model.ChannelCustomBalanceOperationBalance,
+	})
+	service.RegisterSystemTaskHandler(channelCustomBalanceTaskHandler{
+		taskType:  model.SystemTaskTypeChannelCustomCheckin,
+		operation: model.ChannelCustomBalanceOperationCheckin,
+	})
+}
+
+type channelCustomBalanceTaskHandler struct {
+	taskType  string
+	operation string
+}
+
+func (handler channelCustomBalanceTaskHandler) Type() string { return handler.taskType }
+
+func (handler channelCustomBalanceTaskHandler) BuildDueTask(now int64) (*model.SystemTask, bool, error) {
+	return service.BuildDueChannelCustomBalanceTask(handler.taskType, now)
+}
+
+func (handler channelCustomBalanceTaskHandler) Run(ctx context.Context, task *model.SystemTask, runnerID string) {
+	summary, err := service.RunDueChannelCustomBalanceTask(ctx, handler.operation)
+	if err != nil {
+		if errors.Is(err, context.Canceled) {
+			return
+		}
+		finishSystemTaskHandler(task, runnerID, model.SystemTaskStatusFailed, summary, err)
+		return
+	}
+	finishSystemTaskHandler(task, runnerID, model.SystemTaskStatusSucceeded, summary, nil)
 }
 
 type channelQueueWarmupHandler struct{}

@@ -197,6 +197,7 @@ import {
   ChannelBasicSection,
   ChannelEditorLoadingState,
   ChannelClientIdentitySection,
+  ChannelCustomBalanceSection,
   ChannelModelsSection,
   ChannelQueueSection,
 } from './sections'
@@ -326,6 +327,7 @@ const CHANNEL_EDITOR_MAIN_SECTION_IDS = [
 ]
 const ADVANCED_SETTINGS_SECTION_IDS = {
   clientIdentity: 'channel-section-advanced-client-identity',
+  customBalance: 'channel-section-advanced-custom-balance',
   routingStrategy: 'channel-section-advanced-routing-strategy',
   internalNotes: 'channel-section-advanced-internal-notes',
   overrideRules: 'channel-section-advanced-override-rules',
@@ -1193,6 +1195,10 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       id: ADVANCED_SETTINGS_SECTION_IDS.queue,
       title: t('Auto Upstream Queue'),
       configured: queueConfigured,
+    },
+    {
+      id: ADVANCED_SETTINGS_SECTION_IDS.customBalance,
+      title: t('Custom Balance & Check-in'),
     },
     {
       id: ADVANCED_SETTINGS_SECTION_IDS.routingStrategy,
@@ -3791,6 +3797,21 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                         control={form.control}
                         disabled={sensitiveLocked}
                         channelId={channelId ?? undefined}
+                      />
+                    </div>
+                    {/* ── Custom Balance & Check-in ── */}
+                    <div
+                      id={getEditorElementId(
+                        ADVANCED_SETTINGS_SECTION_IDS.customBalance
+                      )}
+                      className={configuredAdvancedSectionClassName(
+                        'scroll-mt-4',
+                        false
+                      )}
+                    >
+                      <ChannelCustomBalanceSection
+                        channelId={channelId}
+                        disabled={sensitiveLocked}
                       />
                     </div>
                     {/* ── Routing & Overrides ── */}

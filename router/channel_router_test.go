@@ -13,6 +13,10 @@ import (
 )
 
 func TestChannelStatusRoutesUseOperatePermission(t *testing.T) {
+	assertChannelRoutePermission(t, http.MethodGet, "/:id/custom-balance", authz.ChannelRead, controller.GetChannelCustomBalance)
+	assertChannelRoutePermission(t, http.MethodPut, "/:id/custom-balance", authz.ChannelSensitiveWrite, controller.UpdateChannelCustomBalance)
+	assertChannelRoutePermission(t, http.MethodPost, "/:id/custom-balance/refresh", authz.ChannelOperate, controller.RefreshChannelCustomBalance)
+	assertChannelRoutePermission(t, http.MethodPost, "/:id/custom-balance/checkin", authz.ChannelOperate, controller.CheckinChannelCustomBalance)
 	assertChannelRoutePermission(t, http.MethodPost, "/:id/status", authz.ChannelOperate, controller.UpdateChannelStatus)
 	assertChannelRoutePermission(t, http.MethodPost, "/status/batch", authz.ChannelOperate, controller.BatchUpdateChannelStatus)
 	assertChannelRoutePermission(t, http.MethodPut, "/", authz.ChannelWrite, controller.UpdateChannel)
