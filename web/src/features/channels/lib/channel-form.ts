@@ -955,11 +955,27 @@ export function buildSettingJSON(formData: ChannelFormValues): string {
     settingObj.http2_connection_shards = shards
   }
 
-  // Auto upstream queue warmer. Only embed when enabled so non-queue channels
-  // keep a clean setting JSON.
-  if (formData.queue_enabled) {
+  let existingQueue: Record<string, unknown> | undefined
+  if (typeof formData.setting === 'string' && formData.setting.trim()) {
+    try {
+      const parsedSetting: unknown = JSON.parse(formData.setting)
+      if (
+        isJsonObjectValue(parsedSetting) &&
+        isJsonObjectValue(parsedSetting.queue)
+      ) {
+        existingQueue = parsedSetting.queue
+      }
+    } catch {
+      // Keep malformed setting input tolerant, as before.
+    }
+  }
+
+  // Embed enabled queue settings, or retain an existing queue object while
+  // disabled so toggling the switch does not discard its configuration.
+  if (formData.queue_enabled === true || existingQueue) {
     settingObj.queue = {
-      enabled: true,
+      ...existingQueue,
+      enabled: formData.queue_enabled === true,
       model: formData.queue_model?.trim() || '',
       interval: formData.queue_interval || 30,
       endpoint_type: normalizeQueueEndpointType(formData.queue_endpoint_type),
