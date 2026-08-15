@@ -166,7 +166,7 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeOpenAI},
 		false,
 		message,
-		"",
+		nil,
 	).(*dto.GeneralOpenAIRequest)
 	require.True(t, ok)
 	require.Len(t, chatRequest.Messages, 1)
@@ -178,9 +178,10 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeOpenAI},
 		true,
 		message,
-		"",
+		nil,
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
+	assert.Empty(t, responsesRequest.Instructions)
 	var responsesInput []dto.Message
 	require.NoError(t, json.Unmarshal(responsesRequest.Input, &responsesInput))
 	require.Len(t, responsesInput, 1)
@@ -192,14 +193,14 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeOpenAI},
 		false,
 		message,
-		"",
+		nil,
 	).(*dto.EmbeddingRequest)
 	require.True(t, ok)
 	assert.Equal(t, []any{"hello world"}, embeddingRequest.Input)
 }
 
 func TestBuildWarmupRequestInjectsSystemPromptAsInstructions(t *testing.T) {
-	const systemPrompt = "You are Codex, an agent based on GPT-5."
+	systemPrompt := "  You are Codex, an agent based on GPT-5.  "
 
 	responsesRequest, ok := buildTestRequestWithMessage(
 		"gpt-5.6-sol",
@@ -207,7 +208,7 @@ func TestBuildWarmupRequestInjectsSystemPromptAsInstructions(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeCodexCompatibility},
 		true,
 		"warmup probe",
-		systemPrompt,
+		common.GetPointer(systemPrompt),
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
 	require.JSONEq(t, fmt.Sprintf("%q", systemPrompt), string(responsesRequest.Instructions))
@@ -222,22 +223,68 @@ func TestBuildWarmupRequestInjectsSystemPromptAsInstructions(t *testing.T) {
 		&model.Channel{Type: constant.ChannelTypeCodexCompatibility},
 		false,
 		"warmup probe",
-		systemPrompt,
+		common.GetPointer(systemPrompt),
 	).(*dto.OpenAIResponsesCompactionRequest)
 	require.True(t, ok)
 	require.JSONEq(t, fmt.Sprintf("%q", systemPrompt), string(compactRequest.Instructions))
 
-	// Blank system prompt: instructions must stay empty, message stays the input.
+	// Blank system prompt: the field must still be present as a JSON empty string.
 	noPrompt, ok := buildTestRequestWithMessage(
 		"gpt-5.6-sol",
 		string(constant.EndpointTypeOpenAIResponse),
 		&model.Channel{Type: constant.ChannelTypeCodexCompatibility},
 		true,
 		"warmup probe",
-		"  ",
+		common.GetPointer("  "),
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
-	require.Empty(t, noPrompt.Instructions)
+	require.JSONEq(t, `""`, string(noPrompt.Instructions))
+
+	noPromptCompact, ok := buildTestRequestWithMessage(
+		"gpt-5.6-sol"+ratio_setting.CompactModelSuffix,
+		string(constant.EndpointTypeOpenAIResponseCompact),
+		&model.Channel{Type: constant.ChannelTypeCodexCompatibility},
+		false,
+		"warmup probe",
+		common.GetPointer("\t"),
+	).(*dto.OpenAIResponsesCompactionRequest)
+	require.True(t, ok)
+	require.JSONEq(t, `""`, string(noPromptCompact.Instructions))
+}
+
+func TestQueueWarmupSystemPromptOwnership(t *testing.T) {
+	const systemPrompt = "  configured prompt  "
+	settingBytes, err := common.Marshal(dto.ChannelSettings{
+		SystemPrompt:         systemPrompt,
+		SystemPromptOverride: true,
+	})
+	require.NoError(t, err)
+
+	tests := []struct {
+		name           string
+		channelType    int
+		controllerOwns bool
+	}{
+		{name: "Codex adaptor owns injection", channelType: constant.ChannelTypeCodex},
+		{name: "Codex compatibility controller owns injection", channelType: constant.ChannelTypeCodexCompatibility, controllerOwns: true},
+		{name: "ordinary channel has no queue prompt injection", channelType: constant.ChannelTypeOpenAI},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			channel := &model.Channel{
+				Type:    test.channelType,
+				Setting: common.GetPointer(string(settingBytes)),
+			}
+			instructions := queueWarmupControllerInstructions(channel)
+			if test.controllerOwns {
+				require.NotNil(t, instructions)
+				assert.Equal(t, systemPrompt, *instructions)
+				return
+			}
+			assert.Nil(t, instructions)
+		})
+	}
 }
 
 func TestResolveChannelTestMessageUsesOverrideThenGlobalDefault(t *testing.T) {

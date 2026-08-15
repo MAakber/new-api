@@ -57,12 +57,10 @@ type channelTestOptions struct {
 	// maxTokens, when non-nil, caps the warm-up request's max_tokens so a queue
 	// warmer does not generate a large (and expensive) upstream response.
 	maxTokens *uint
-	// instructions, when non-empty, is injected into the Responses request's
-	// `instructions` field (system prompt). The queue warmer sets this from the
-	// channel's SystemPrompt setting so warm-up calls look like a real Codex
-	// request (Codex feature prompt in instructions); otherwise queue-holding
-	// callers reject them. The warm-up message itself stays the user `input`.
-	instructions string
+	// instructions is optional controller-owned Responses instructions. A
+	// non-nil pointer preserves an explicit empty JSON string for compatibility
+	// queue warm-ups; nil leaves injection to the adaptor or omits the field.
+	instructions *string
 }
 
 const channelTestResponsePreviewMaxBytes = 8 << 10
@@ -849,10 +847,10 @@ func detectErrorMessageFromJSONBytes(jsonBytes []byte) string {
 }
 
 func buildTestRequest(model string, endpointType string, channel *model.Channel, isStream bool) dto.Request {
-	return buildTestRequestWithMessage(model, endpointType, channel, isStream, operation_setting.DefaultChannelTestMessage, "")
+	return buildTestRequestWithMessage(model, endpointType, channel, isStream, operation_setting.DefaultChannelTestMessage, nil)
 }
 
-func buildTestRequestWithMessage(model string, endpointType string, channel *model.Channel, isStream bool, message string, instructions string) dto.Request {
+func buildTestRequestWithMessage(model string, endpointType string, channel *model.Channel, isStream bool, message string, instructions *string) dto.Request {
 	message, err := resolveChannelTestMessage(message)
 	if err != nil {
 		message = operation_setting.DefaultChannelTestMessage
@@ -869,8 +867,10 @@ func buildTestRequestWithMessage(model string, endpointType string, channel *mod
 	// the instructions field is what carries the Codex feature prompt. The
 	// warm-up message stays the user input so the request stays valid.
 	var testInstructions json.RawMessage
-	if trimmed := strings.TrimSpace(instructions); trimmed != "" {
-		if b, err := common.Marshal(trimmed); err == nil {
+	if instructions != nil {
+		if strings.TrimSpace(*instructions) == "" {
+			testInstructions = json.RawMessage(`""`)
+		} else if b, err := common.Marshal(*instructions); err == nil {
 			testInstructions = b
 		} else {
 			testInstructions = json.RawMessage(`""`)
@@ -1354,6 +1354,18 @@ func sanitizeWarmupMessage(msg string) string {
 	return strings.TrimSpace(msg)
 }
 
+// queueWarmupControllerInstructions returns instructions only for the channel
+// whose adaptor-side channel styling is disabled during queue warm-up. Codex
+// channels inject their own SystemPrompt in the adaptor and must not receive a
+// controller copy.
+func queueWarmupControllerInstructions(channel *model.Channel) *string {
+	if channel == nil || channel.Type != constant.ChannelTypeCodexCompatibility {
+		return nil
+	}
+	systemPrompt := channel.GetSetting().SystemPrompt
+	return &systemPrompt
+}
+
 // PerformChannelQueueWarmup sends a single minimal warm-up request to a channel
 // for the given model, reusing the channel-test call path. It skips consume
 // logging, response-time updates, and auto-ban evaluation: warming is an
@@ -1371,10 +1383,7 @@ func PerformChannelQueueWarmup(ctx context.Context, channel *model.Channel, mode
 		capturePreview:  false,
 		skipConsumeLog:  true,
 		maxTokens:       maxTokens,
-		// Warm-up calls reuse the channel's SystemPrompt as the upstream
-		// instructions so queue-holding requests carry the same Codex feature
-		// prompt as the in-dashboard channel test — one configuration entry.
-		instructions: channel.GetSetting().SystemPrompt,
+		instructions:    queueWarmupControllerInstructions(channel),
 	}
 	result := testChannelWithOptions(ctx, channel, testUserID, model, endpointType, isStream, options)
 	statusCode := 0
