@@ -78,6 +78,7 @@ type ChannelCustomBalanceSectionProps = {
   channelId?: number | null
   disabled: boolean
   onConfiguredChange?: (configured: boolean) => void
+  onDirtyChange?: (dirty: boolean) => void
 }
 
 function getErrorMessage(error: unknown, fallback: string): string {
@@ -175,11 +176,24 @@ export function ChannelCustomBalanceSection(
     defaultValues: CUSTOM_BALANCE_DEFAULT_VALUES,
   })
   const enabled = form.watch('enabled')
+  const provider = form.watch('provider')
+  const useChannelKey = form.watch('use_channel_key')
   const onConfiguredChange = props.onConfiguredChange
+  const onDirtyChange = props.onDirtyChange
 
   useEffect(() => {
     onConfiguredChange?.(enabled)
   }, [enabled, onConfiguredChange])
+
+  useEffect(() => {
+    onDirtyChange?.(form.formState.isDirty)
+  }, [form.formState.isDirty, onDirtyChange])
+
+  useEffect(() => {
+    if (provider === 'new_api' && useChannelKey) {
+      form.setValue('use_channel_key', false, { shouldDirty: false })
+    }
+  }, [form, provider, useChannelKey])
 
   useEffect(() => {
     if (configQuery.data && !form.formState.isDirty) {
@@ -266,7 +280,6 @@ export function ChannelCustomBalanceSection(
     veloera: t('Veloera'),
     anyrouter: t('AnyRouter'),
   }
-  const useChannelKey = form.watch('use_channel_key')
   const authType = form.watch('auth_type')
   const isMutating =
     saveMutation.isPending ||
@@ -430,29 +443,31 @@ export function ChannelCustomBalanceSection(
                 />
               </div>
 
-              <FormField
-                control={form.control}
-                name='use_channel_key'
-                render={({ field }) => (
-                  <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3'>
-                    <div className='space-y-0.5'>
-                      <FormLabel>{t('Use channel key')}</FormLabel>
-                      <FormDescription>
-                        {t(
-                          'Reuse this channel key instead of storing an independent credential.'
-                        )}
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        disabled={controlsDisabled}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+              {provider !== 'new_api' && (
+                <FormField
+                  control={form.control}
+                  name='use_channel_key'
+                  render={({ field }) => (
+                    <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3'>
+                      <div className='space-y-0.5'>
+                        <FormLabel>{t('Use channel key')}</FormLabel>
+                        <FormDescription>
+                          {t(
+                            'Reuse this channel key instead of storing an independent credential.'
+                          )}
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          disabled={controlsDisabled}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              )}
 
               <FormField
                 control={form.control}

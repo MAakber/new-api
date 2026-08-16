@@ -746,6 +746,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   >()
   const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
   const [customBalanceConfigured, setCustomBalanceConfigured] = useState(false)
+  const [customBalanceDirty, setCustomBalanceDirty] = useState(false)
   const [paramOverrideEditorOpen, setParamOverrideEditorOpen] = useState(false)
   const [advancedCustomEditorOpen, setAdvancedCustomEditorOpen] =
     useState(false)
@@ -3828,13 +3829,14 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                       )}
                       className={configuredAdvancedSectionClassName(
                         'scroll-mt-4',
-                        false
+                        customBalanceConfigured || customBalanceDirty
                       )}
                     >
                       <ChannelCustomBalanceSection
                         channelId={channelId}
                         disabled={sensitiveLocked}
                         onConfiguredChange={setCustomBalanceConfigured}
+                        onDirtyChange={setCustomBalanceDirty}
                       />
                     </div>
                     {/* ── Routing & Overrides ── */}

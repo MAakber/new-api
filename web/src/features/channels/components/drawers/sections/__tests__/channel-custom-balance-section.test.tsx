@@ -116,7 +116,8 @@ function restoreApi() {
 }
 
 async function renderSection(
-  onConfiguredChange?: (configured: boolean) => void
+  onConfiguredChange?: (configured: boolean) => void,
+  onDirtyChange?: (dirty: boolean) => void
 ): Promise<RenderedSection> {
   const container = document.createElement('div')
   document.body.append(container)
@@ -136,6 +137,7 @@ async function renderSection(
             channelId={42}
             disabled={false}
             onConfiguredChange={onConfiguredChange}
+            onDirtyChange={onDirtyChange}
           />
         </I18nextProvider>
       </QueryClientProvider>
@@ -199,7 +201,7 @@ describe('channel custom balance section', () => {
     domWindow.close()
   })
 
-  test('does not echo the credential and disables the credential input while using the channel key', async () => {
+  test('does not echo the credential and hides channel-key mode for New API', async () => {
     installGetMock()
     const view = await renderSection()
 
@@ -213,7 +215,8 @@ describe('channel custom balance section', () => {
       )
       assert.ok(credentialInput)
       assert.equal(credentialInput.value, '')
-      assert.equal(credentialInput.disabled, true)
+      assert.equal(credentialInput.disabled, false)
+      assert.doesNotMatch(view.container.textContent || '', /Use channel key/)
       assert.match(view.container.textContent || '', /Credential set/)
     } finally {
       await cleanupSection(view)
@@ -267,9 +270,15 @@ describe('channel custom balance section', () => {
   test('reports enabled state immediately for the editor navigation', async () => {
     installGetMock()
     let configured: boolean | undefined
-    const view = await renderSection((value) => {
-      configured = value
-    })
+    let dirty: boolean | undefined
+    const view = await renderSection(
+      (value) => {
+        configured = value
+      },
+      (value) => {
+        dirty = value
+      }
+    )
 
     try {
       await flushReact()
@@ -284,6 +293,7 @@ describe('channel custom balance section', () => {
       await flushReact()
 
       assert.equal(configured, true)
+      assert.equal(dirty, true)
     } finally {
       await cleanupSection(view)
       restoreApi()
