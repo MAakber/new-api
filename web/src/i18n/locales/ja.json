@@ -3329,6 +3329,7 @@
     "Number of completions to generate": "生成する候補数",
     "Number of images to generate": "生成する画像枚数",
     "Number of keys to create": "作成するキーの数",
+    "Number of times to retry failed requests": "失敗したリクエストを再試行する回数",
     "Number of times to retry failed requests (0-10)": "失敗したリクエストを再試行する回数 (0-10)",
     "Number of tokens per unit quota": "単位クォータあたりのトークン数",
     "Number of top log probabilities returned per token": "トークンごとに返される上位対数確率の数",

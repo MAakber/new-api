@@ -3329,6 +3329,7 @@
     "Number of completions to generate": "Số lượng phản hồi cần sinh",
     "Number of images to generate": "Số ảnh cần sinh",
     "Number of keys to create": "Số lượng khóa cần tạo",
+    "Number of times to retry failed requests": "Số lần thử lại các yêu cầu không thành công",
     "Number of times to retry failed requests (0-10)": "Số lần thử lại các yêu cầu không thành công (0-10)",
     "Number of tokens per unit quota": "Số token trên đơn vị hạn mức",
     "Number of top log probabilities returned per token": "Số log probabilities hàng đầu trên mỗi token",

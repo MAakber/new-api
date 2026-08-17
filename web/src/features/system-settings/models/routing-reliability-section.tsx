@@ -57,7 +57,7 @@ const numericString = z.string().refine((value) => {
 
 const routingReliabilitySchema = z
   .object({
-    RetryTimes: z.coerce.number().min(0).max(10),
+    RetryTimes: z.coerce.number().int().min(0),
     ChannelDisableThreshold: numericString,
     AutomaticDisableChannelEnabled: z.boolean(),
     AutomaticDisableKeywords: z.string(),
@@ -248,12 +248,12 @@ export function RoutingReliabilitySection({
                       <Input
                         type='number'
                         min='0'
-                        max='10'
+                        step='1'
                         {...safeNumberFieldProps(field)}
                       />
                     </FormControl>
                     <FormDescription>
-                      {t('Number of times to retry failed requests (0-10)')}
+                      {t('Number of times to retry failed requests')}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

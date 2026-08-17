@@ -3329,6 +3329,7 @@
     "Number of completions to generate": "Nombre de complétions à générer",
     "Number of images to generate": "Nombre d'images à générer",
     "Number of keys to create": "Nombre de clés à créer",
+    "Number of times to retry failed requests": "Nombre de tentatives de réessai des requêtes échouées",
     "Number of times to retry failed requests (0-10)": "Nombre de tentatives de réessai des requêtes échouées (0-10)",
     "Number of tokens per unit quota": "Nombre de jetons par unité de quota",
     "Number of top log probabilities returned per token": "Nombre de log-probabilités retournées par jeton",
