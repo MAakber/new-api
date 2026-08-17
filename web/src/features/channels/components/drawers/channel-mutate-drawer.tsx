@@ -201,6 +201,7 @@ import {
   ChannelEditorLoadingState,
   ChannelClientIdentitySection,
   ChannelCustomBalanceSection,
+  type ChannelCustomBalanceSectionHandle,
   ChannelModelsSection,
   ChannelQueueSection,
 } from './sections'
@@ -737,6 +738,8 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     ((action: MissingModelsAction) => void) | null
   >(null)
   const channelFormRef = useRef<HTMLFormElement>(null)
+  const customBalanceSectionRef =
+    useRef<ChannelCustomBalanceSectionHandle>(null)
   const advancedNavScrollPendingRef = useRef(false)
   const [activeEditorSectionId, setActiveEditorSectionId] = useState<string>(
     CHANNEL_EDITOR_SECTION_IDS.identity
@@ -834,8 +837,8 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   )
 
   useEffect(() => {
-    onDirtyChange?.(isDirty)
-  }, [isDirty, onDirtyChange])
+    onDirtyChange?.(isDirty || customBalanceDirty)
+  }, [customBalanceDirty, isDirty, onDirtyChange])
 
   // Watch form values for conditional rendering
   const multiKeyMode = form.watch('multi_key_mode')
@@ -1903,6 +1906,11 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
             form.setValue('models', data.models)
           }
         }
+      }
+
+      if (customBalanceSectionRef.current) {
+        const customBalanceSaved = await customBalanceSectionRef.current.save()
+        if (!customBalanceSaved) return
       }
 
       await channelMutation.mutateAsync(data)
@@ -3833,6 +3841,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                       )}
                     >
                       <ChannelCustomBalanceSection
+                        ref={customBalanceSectionRef}
                         channelId={channelId}
                         disabled={sensitiveLocked}
                         onConfiguredChange={setCustomBalanceConfigured}

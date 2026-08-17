@@ -25,7 +25,13 @@ import {
   Loader2,
   RefreshCw,
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -79,6 +85,10 @@ type ChannelCustomBalanceSectionProps = {
   disabled: boolean
   onConfiguredChange?: (configured: boolean) => void
   onDirtyChange?: (dirty: boolean) => void
+}
+
+export type ChannelCustomBalanceSectionHandle = {
+  save: () => Promise<boolean>
 }
 
 function getErrorMessage(error: unknown, fallback: string): string {
@@ -150,9 +160,10 @@ function ScheduleItem(props: { label: string; timestamp?: number | null }) {
   )
 }
 
-export function ChannelCustomBalanceSection(
-  props: ChannelCustomBalanceSectionProps
-) {
+export const ChannelCustomBalanceSection = forwardRef<
+  ChannelCustomBalanceSectionHandle,
+  ChannelCustomBalanceSectionProps
+>(function ChannelCustomBalanceSection(props, ref) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const channelId = props.channelId ?? null
@@ -286,6 +297,25 @@ export function ChannelCustomBalanceSection(
     balanceMutation.isPending ||
     checkinMutation.isPending
   const controlsDisabled = props.disabled || isMutating
+
+  const saveCustomBalance = useCallback(async () => {
+    if (!form.formState.isDirty) return true
+
+    let saved = false
+    try {
+      await form.handleSubmit(async (values) => {
+        await saveMutation.mutateAsync(values)
+        saved = true
+      })()
+    } catch {
+      return false
+    }
+    return saved
+  }, [form, saveMutation])
+
+  useImperativeHandle(ref, () => ({ save: saveCustomBalance }), [
+    saveCustomBalance,
+  ])
 
   if (channelId === null) {
     return (
@@ -758,7 +788,7 @@ export function ChannelCustomBalanceSection(
       )}
     </div>
   )
-}
+})
 
 function SectionHeading() {
   const { t } = useTranslation()

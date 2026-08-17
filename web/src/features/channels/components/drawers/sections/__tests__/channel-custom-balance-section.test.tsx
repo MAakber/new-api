@@ -106,6 +106,10 @@ type RenderedSection = {
   queryClient: InstanceType<typeof QueryClient>
 }
 
+type CustomBalanceSectionHandle = {
+  save: () => Promise<boolean>
+}
+
 function installGetMock() {
   api.get = (async () => ({ data: responseWithSecret })) as typeof api.get
 }
@@ -117,7 +121,8 @@ function restoreApi() {
 
 async function renderSection(
   onConfiguredChange?: (configured: boolean) => void,
-  onDirtyChange?: (dirty: boolean) => void
+  onDirtyChange?: (dirty: boolean) => void,
+  ref?: { current: CustomBalanceSectionHandle | null }
 ): Promise<RenderedSection> {
   const container = document.createElement('div')
   document.body.append(container)
@@ -136,6 +141,7 @@ async function renderSection(
           <ChannelCustomBalanceSection
             channelId={42}
             disabled={false}
+            ref={ref}
             onConfiguredChange={onConfiguredChange}
             onDirtyChange={onDirtyChange}
           />
@@ -294,6 +300,39 @@ describe('channel custom balance section', () => {
 
       assert.equal(configured, true)
       assert.equal(dirty, true)
+    } finally {
+      await cleanupSection(view)
+      restoreApi()
+    }
+  })
+
+  test('exposes the same save path for the parent channel submit', async () => {
+    installGetMock()
+    let putCalls = 0
+    api.put = (async () => {
+      putCalls += 1
+      return { data: responseWithSecret }
+    }) as typeof api.put
+    const ref = { current: null as CustomBalanceSectionHandle | null }
+    const view = await renderSection(undefined, undefined, ref)
+
+    try {
+      await flushReact()
+      await act(async () => {
+        await waitForElement(view.container, '[role="switch"]')
+      })
+      const enabledSwitch =
+        view.container.querySelector<HTMLElement>('[role="switch"]')
+      assert.ok(enabledSwitch)
+      await act(async () => click(enabledSwitch))
+
+      let saved = false
+      await act(async () => {
+        saved = (await ref.current?.save()) ?? false
+      })
+
+      assert.equal(saved, true)
+      assert.equal(putCalls, 1)
     } finally {
       await cleanupSection(view)
       restoreApi()
