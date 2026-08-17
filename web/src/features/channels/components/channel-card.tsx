@@ -16,8 +16,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { useQuery } from '@tanstack/react-query'
 import { flexRender, type Row } from '@tanstack/react-table'
-import { Flame } from 'lucide-react'
+import { CalendarCheck2, Flame } from 'lucide-react'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -30,8 +31,10 @@ import {
 } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
+import { getCustomBalanceConfig } from '../api'
 import { CHANNEL_STATUS } from '../constants'
 import {
+  customBalanceQueryKey,
   isTagAggregateRow,
   parseChannelSettings,
   parseGroupsList,
@@ -62,6 +65,18 @@ function ChannelCardComponent({
   const isTagRow = isTagAggregateRow(row.original)
   const queueEnabled =
     parseChannelSettings(row.original.setting).queue?.enabled === true
+  const customBalanceQuery = useQuery({
+    queryKey: customBalanceQueryKey(row.original.id),
+    queryFn: async () => {
+      const response = await getCustomBalanceConfig(row.original.id)
+      return response.success ? response.data : null
+    },
+    enabled: !isTagRow && row.original.id > 0,
+    staleTime: 30_000,
+  })
+  const autoCheckinEnabled =
+    customBalanceQuery.data?.enabled === true &&
+    customBalanceQuery.data.auto_checkin === true
   const cells = row.getAllCells()
 
   const renderCell = (id: string) => {
@@ -128,6 +143,23 @@ function ChannelCardComponent({
                   />
                   <TooltipContent side='top'>
                     {t('Auto Upstream Queue')}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+            {autoCheckinEnabled && (
+              <TooltipProvider delay={100}>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <CalendarCheck2
+                        className='h-3.5 w-3.5 shrink-0 text-emerald-500'
+                        aria-label={t('Automatic check-in')}
+                      />
+                    }
+                  />
+                  <TooltipContent side='top'>
+                    {t('Automatic check-in')}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
