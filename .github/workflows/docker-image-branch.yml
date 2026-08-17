@@ -40,8 +40,8 @@ jobs:
           fi
 
           SHA=$(git rev-parse HEAD)
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          VERSION="${TAG_PREFIX}-$(date +'%Y%m%d')-${SHORT_SHA}"
+          SHORT_SHA=$(git rev-parse --short=8 HEAD)
+          VERSION=$(bash scripts/version.sh)
 
           echo "branch=$BRANCH_NAME" >> "$GITHUB_OUTPUT"
           echo "sha=$SHA" >> "$GITHUB_OUTPUT"

@@ -3,8 +3,7 @@ name: Build Electron App
 on:
   push:
     tags:
-      - '*'  # Triggers on version tags like v1.0.0
-      - '!*-*'  # Ignore pre-release tags like v1.0.0-beta
+      - '*'  # Triggers on version tags like v20260817-e3d87ab4
       - '!*-alpha*' # Ignore alpha tags like v1.0.0-alpha
   workflow_dispatch:  # Allows manual triggering
 
@@ -41,6 +40,11 @@ jobs:
         with:
           go-version: '>=1.25.1'
 
+      - name: Determine Version
+        run: |
+          VERSION=$(bash scripts/version.sh)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Build frontend
         env:
           CI: ""
@@ -48,42 +52,33 @@ jobs:
         run: |
           cd web
           bun install --frozen-lockfile
-          DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(git describe --tags) bun run build
+          DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$VERSION bun run build
           cd ..
 
       # - name: Build Go binary (macos/Linux)
       #   if: runner.os != 'Windows'
       #   run: |
       #     go mod download
-      #     go build -ldflags "-s -w -X 'new-api/common.Version=$(git describe --tags)' -extldflags '-static'" -o new-api
+      #     go build -ldflags "-s -w -X 'github.com/QuantumNous/new-api/common.Version=$VERSION' -extldflags '-static'" -o new-api
 
       - name: Build Go binary (Windows)
         if: runner.os == 'Windows'
         run: |
           go mod download
-          go build -ldflags "-s -w -X 'new-api/common.Version=$(git describe --tags)'" -o new-api.exe
+          go build -ldflags "-s -w -X 'github.com/QuantumNous/new-api/common.Version=$VERSION'" -o new-api.exe
 
       - name: Update Electron version
         run: |
           cd electron
-          VERSION=$(git describe --tags)
-          VERSION=${VERSION#v}  # Remove 'v' prefix if present
-          # Convert to valid semver: take first 3 components and convert rest to prerelease format
-          # e.g., 0.9.3-patch.1 -> 0.9.3-patch.1
-          if [[ $VERSION =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)(.*)$ ]]; then
-            MAJOR=${BASH_REMATCH[1]}
-            MINOR=${BASH_REMATCH[2]}
-            PATCH=${BASH_REMATCH[3]}
-            REST=${BASH_REMATCH[4]}
-          
-            VERSION="$MAJOR.$MINOR.$PATCH"
-          
-            # If there's extra content, append it without adding -dev
-            if [[ -n "$REST" ]]; then
-              VERSION="$VERSION$REST"
-            fi
+          ELECTRON_VERSION=${VERSION#v}
+          if [[ $ELECTRON_VERSION =~ ^([0-9]{4})([0-9]{2})([0-9]{2})-([0-9a-f]+)$ ]]; then
+            YEAR=${BASH_REMATCH[1]}
+            MONTH=${BASH_REMATCH[2]#0}
+            DAY=${BASH_REMATCH[3]#0}
+            SHA=${BASH_REMATCH[4]}
+            ELECTRON_VERSION="$YEAR.$MONTH.$DAY-g$SHA"
           fi
-          npm version $VERSION --no-git-tag-version --allow-same-version
+          npm version "$ELECTRON_VERSION" --no-git-tag-version --allow-same-version
 
       - name: Install Electron dependencies
         run: |
