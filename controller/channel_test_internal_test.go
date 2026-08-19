@@ -16,6 +16,7 @@ import (
 	"github.com/QuantumNous/new-api/pkg/billingexpr"
 	"github.com/QuantumNous/new-api/relay"
 	"github.com/QuantumNous/new-api/relay/channel/openai"
+	vercelchannel "github.com/QuantumNous/new-api/relay/channel/vercel"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/service"
@@ -313,7 +314,7 @@ func TestCodeBuddyChannelUsesOpenAIChatCompletions(t *testing.T) {
 
 	require.True(t, ok)
 	assert.Equal(t, 63, constant.ChannelTypeCodeBuddy)
-	assert.Equal(t, 63, constant.ChannelTypeDummy)
+	assert.Equal(t, 64, constant.ChannelTypeDummy)
 	assert.Equal(t, "CodeBuddy", constant.GetChannelTypeName(constant.ChannelTypeCodeBuddy))
 	assert.Equal(t, constant.APITypeOpenAI, apiType)
 	require.IsType(t, &openai.Adaptor{}, relay.GetAdaptor(apiType))
@@ -333,6 +334,21 @@ func TestNewAPIChannelRegistration(t *testing.T) {
 	assert.Equal(t, "New API", constant.GetChannelTypeName(constant.ChannelTypeNewAPI))
 	require.Greater(t, len(constant.ChannelBaseURLs), constant.ChannelTypeNewAPI)
 	assert.Empty(t, constant.ChannelBaseURLs[constant.ChannelTypeNewAPI])
+}
+
+func TestVercelChannelRegistration(t *testing.T) {
+	apiType, ok := common.ChannelType2APIType(constant.ChannelTypeVercel)
+
+	require.True(t, ok)
+	assert.Equal(t, 64, constant.ChannelTypeVercel)
+	assert.Equal(t, 64, constant.ChannelTypeDummy)
+	assert.Equal(t, constant.APITypeVercel, apiType)
+	assert.Equal(t, "Vercel AI Gateway", constant.GetChannelTypeName(constant.ChannelTypeVercel))
+	require.IsType(t, &vercelchannel.Adaptor{}, relay.GetAdaptor(apiType))
+	assert.Equal(t, []constant.EndpointType{constant.EndpointTypeOpenAI},
+		common.GetEndpointTypesByChannelType(constant.ChannelTypeVercel, "zai/glm-5.2"))
+	require.Greater(t, len(constant.ChannelBaseURLs), constant.ChannelTypeVercel)
+	assert.Equal(t, "https://ai-gateway.vercel.sh", constant.ChannelBaseURLs[constant.ChannelTypeVercel])
 }
 
 func TestResponsesCompactAPITypeSupport(t *testing.T) {

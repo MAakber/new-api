@@ -61,6 +61,7 @@ const (
 	ChannelTypeCodexCompatibility = 61
 	ChannelTypeClaudeCode         = 62
 	ChannelTypeCodeBuddy          = 63
+	ChannelTypeVercel             = 64
 	ChannelTypeDummy              // this one is only for count, do not add any channel after this
 
 )
@@ -130,6 +131,7 @@ var ChannelBaseURLs = []string{
 	"",                                          //61
 	"",                                          //62
 	"",                                          //63
+	"https://ai-gateway.vercel.sh",              //64
 }
 
 var ChannelTypeNames = map[int]string{
@@ -193,6 +195,7 @@ var ChannelTypeNames = map[int]string{
 	ChannelTypeCodexCompatibility: "Codex",
 	ChannelTypeClaudeCode:         "Claude Code",
 	ChannelTypeCodeBuddy:          "CodeBuddy",
+	ChannelTypeVercel:             "Vercel AI Gateway",
 }
 
 func GetChannelTypeName(channelType int) string {

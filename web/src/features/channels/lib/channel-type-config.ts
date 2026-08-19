@@ -194,6 +194,17 @@ export const CHANNEL_TYPE_CONFIGS: Record<number, ChannelTypeConfig> = {
       models: 'Models',
     },
   },
+  64: {
+    id: 64,
+    name: CHANNEL_TYPES[64],
+    icon: 'Vercel',
+    defaultBaseUrl: 'https://ai-gateway.vercel.sh',
+    hints: {
+      baseUrl: 'Default: https://ai-gateway.vercel.sh',
+      key: 'Vercel AI Gateway API Key',
+      models: 'zai/glm-5.2',
+    },
+  },
 }
 
 /**

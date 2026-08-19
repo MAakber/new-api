@@ -113,6 +113,7 @@ export const STATIC_I18N_KEYS = [
   'Successfully deleted {{count}} API key(s)',
   'Enter API key for this channel',
   'Code Buddy',
+  'Vercel AI Gateway',
   'Codex',
   'Claude Code',
   'WorkBuddy',
