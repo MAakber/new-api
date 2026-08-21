@@ -97,8 +97,7 @@ func TextHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *types
 
 	var requestBody io.Reader
 
-	passThroughBody := (passThroughGlobal || info.ChannelSetting.PassThroughBodyEnabled) &&
-		info.ChannelType != constant.ChannelTypeCodeBuddy
+	passThroughBody := passThroughGlobal || info.ChannelSetting.PassThroughBodyEnabled
 	if passThroughBody {
 		storage, err := common.GetBodyStorage(c)
 		if err != nil {

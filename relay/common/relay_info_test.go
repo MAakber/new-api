@@ -82,12 +82,12 @@ func TestRelayInfoMetaTypedNilReceiver(t *testing.T) {
 	assert.NotNil(t, firstOptions.PreserveThinkingSuffix)
 }
 
-func TestInitChannelMetaEnablesCodeBuddyStreamOptions(t *testing.T) {
+func TestInitChannelMetaEnablesOpenAIStreamOptions(t *testing.T) {
 	oldMode := gin.Mode()
 	gin.SetMode(gin.TestMode)
 	t.Cleanup(func() { gin.SetMode(oldMode) })
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
-	c.Set(string(constant.ContextKeyChannelType), constant.ChannelTypeCodeBuddy)
+	c.Set(string(constant.ContextKeyChannelType), constant.ChannelTypeOpenAI)
 
 	info := &RelayInfo{}
 	info.InitChannelMeta(c)

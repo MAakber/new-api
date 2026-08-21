@@ -55,7 +55,6 @@ export function getChannelTypeIcon(type: number): string {
     59: 'Sub2API', // Sub2API
     60: 'NewAPI', // New API
     61: 'OpenAI', // Codex
-    63: 'CodeBuddy', // Code Buddy
     64: 'Vercel', // Vercel AI Gateway
     3: 'Azure', // Azure
 

@@ -223,7 +223,7 @@ func TestOaiChatToResponsesStreamHandlerConvertsSSEOrderAndUsage(t *testing.T) {
 	)
 }
 
-func TestOaiChatToResponsesStreamHandlerHandlesCodeBuddyDoneTerminal(t *testing.T) {
+func TestOaiChatToResponsesStreamHandlerHandlesPlainDoneTerminal(t *testing.T) {
 	oldMode := gin.Mode()
 	gin.SetMode(gin.TestMode)
 	t.Cleanup(func() { gin.SetMode(oldMode) })
@@ -243,7 +243,7 @@ func TestOaiChatToResponsesStreamHandlerHandlesCodeBuddyDoneTerminal(t *testing.
 
 	c, recorder, resp, info := newResponsesChatTestContext(t, body, true)
 	c.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
-	info.ChannelType = constant.ChannelTypeCodeBuddy
+	info.ChannelType = constant.ChannelTypeOpenAI
 
 	usage, err := OaiChatToResponsesStreamHandler(c, info, resp)
 	require.Nil(t, err)

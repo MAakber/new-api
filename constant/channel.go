@@ -60,8 +60,9 @@ const (
 	ChannelTypeNewAPI             = 60
 	ChannelTypeCodexCompatibility = 61
 	ChannelTypeClaudeCode         = 62
-	ChannelTypeCodeBuddy          = 63
-	ChannelTypeVercel             = 64
+	// 63 was CodeBuddy, removed. The id stays reserved so ChannelBaseURLs
+	// indexes after it remain correct.
+	ChannelTypeVercel = 64
 	ChannelTypeDummy              // this one is only for count, do not add any channel after this
 
 )
@@ -130,7 +131,7 @@ var ChannelBaseURLs = []string{
 	"",                                          //60
 	"",                                          //61
 	"",                                          //62
-	"",                                          //63
+	"",                                          //63 (reserved, was CodeBuddy)
 	"https://ai-gateway.vercel.sh",              //64
 }
 
@@ -194,7 +195,6 @@ var ChannelTypeNames = map[int]string{
 	ChannelTypeNewAPI:             "New API",
 	ChannelTypeCodexCompatibility: "Codex",
 	ChannelTypeClaudeCode:         "Claude Code",
-	ChannelTypeCodeBuddy:          "CodeBuddy",
 	ChannelTypeVercel:             "Vercel AI Gateway",
 }
 

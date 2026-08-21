@@ -15,7 +15,6 @@ import (
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/pkg/billingexpr"
 	"github.com/QuantumNous/new-api/relay"
-	"github.com/QuantumNous/new-api/relay/channel/openai"
 	vercelchannel "github.com/QuantumNous/new-api/relay/channel/vercel"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relaykit/dto"
@@ -307,23 +306,6 @@ func TestChannelTestDetailedRejectsOversizedMessageBeforeChannelLookup(t *testin
 
 	assert.Equal(t, http.StatusBadRequest, recorder.Code)
 	assert.Contains(t, recorder.Body.String(), "must not exceed")
-}
-
-func TestCodeBuddyChannelUsesOpenAIChatCompletions(t *testing.T) {
-	apiType, ok := common.ChannelType2APIType(constant.ChannelTypeCodeBuddy)
-
-	require.True(t, ok)
-	assert.Equal(t, 63, constant.ChannelTypeCodeBuddy)
-	assert.Equal(t, 64, constant.ChannelTypeDummy)
-	assert.Equal(t, "CodeBuddy", constant.GetChannelTypeName(constant.ChannelTypeCodeBuddy))
-	assert.Equal(t, constant.APITypeOpenAI, apiType)
-	require.IsType(t, &openai.Adaptor{}, relay.GetAdaptor(apiType))
-	assert.Equal(t, []constant.EndpointType{constant.EndpointTypeOpenAI},
-		common.GetEndpointTypesByChannelType(constant.ChannelTypeCodeBuddy, "o3-pro"))
-	assert.Equal(t, []constant.EndpointType{constant.EndpointTypeOpenAI},
-		common.GetEndpointTypesByChannelType(constant.ChannelTypeCodeBuddy, "gpt-image-1"))
-	require.Greater(t, len(constant.ChannelBaseURLs), constant.ChannelTypeCodeBuddy)
-	assert.Empty(t, constant.ChannelBaseURLs[constant.ChannelTypeCodeBuddy])
 }
 
 func TestNewAPIChannelRegistration(t *testing.T) {

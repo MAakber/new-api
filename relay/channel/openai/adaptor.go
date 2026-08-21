@@ -103,14 +103,6 @@ func (a *Adaptor) Init(info *relaycommon.RelayInfo) {
 }
 
 func (a *Adaptor) GetRequestURL(info *relaycommon.RelayInfo) (string, error) {
-	// CodeBuddy 上游只暴露 OpenAI chat/completions 协议：Responses 与
-	// ResponsesCompact（长上下文压缩）请求都必须折叠到 /v1/chat/completions，
-	// 否则会打到上游不存在的路径（如 /v1/responses/compact）并被拒绝。
-	if info.ChannelType == constant.ChannelTypeCodeBuddy &&
-		(info.RelayMode == relayconstant.RelayModeResponses ||
-			info.RelayMode == relayconstant.RelayModeResponsesCompact) {
-		return relaycommon.GetFullRequestURL(info.ChannelBaseUrl, "/v1/chat/completions", info.ChannelType), nil
-	}
 	if info.RelayMode == relayconstant.RelayModeRealtime {
 		if strings.HasPrefix(info.ChannelBaseUrl, "https://") {
 			baseUrl := strings.TrimPrefix(info.ChannelBaseUrl, "https://")
@@ -278,12 +270,7 @@ func (a *Adaptor) SetupRequestHeader(c *gin.Context, header *http.Header, info *
 		}
 	}
 	if info.ShouldUseChannelTestStyle() {
-		if info.ChannelType == constant.ChannelTypeCodeBuddy {
-			conversationID := channel.ResolveCodeBuddyConversationID(c.Request.Header, info.Request)
-			channel.ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, *header, info.ApiKey, info.IsStream, conversationID, info.ChannelOtherSettings.ClientIdentity)
-		} else {
-			channel.ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, *header, info.ApiKey, info.IsStream, "", info.ChannelOtherSettings.ClientIdentity)
-		}
+		channel.ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, *header, info.ApiKey, info.IsStream, "", info.ChannelOtherSettings.ClientIdentity)
 	}
 	// Codex 兼容渠道：透传客户端携带的 Codex 会话类 header（多轮续接 / 粘性路由 / 安装标识等），
 	// 与真实 Codex CLI 行为对齐。仅复制客户端显式携带的值，不覆盖已由兼容身份设置的固定头。
@@ -320,12 +307,8 @@ func (a *Adaptor) ConvertOpenAIRequest(c *gin.Context, info *relaycommon.RelayIn
 		return nil, errors.New("request is nil")
 	}
 	if info.ChannelType != constant.ChannelTypeOpenAI &&
-		info.ChannelType != constant.ChannelTypeAzure &&
-		info.ChannelType != constant.ChannelTypeCodeBuddy {
+		info.ChannelType != constant.ChannelTypeAzure {
 		request.StreamOptions = nil
-	}
-	if info.ChannelType == constant.ChannelTypeCodeBuddy && info.ShouldUseChannelTestStyle() {
-		channel.ApplyCodeBuddyRequestProfile(request)
 	}
 	if info.ChannelType == constant.ChannelTypeOpenRouter {
 		if len(request.Usage) == 0 {
@@ -696,25 +679,6 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 	if info != nil && request.Reasoning != nil && request.Reasoning.Effort != "" {
 		info.ReasoningEffort = request.Reasoning.Effort
 	}
-	if info != nil && info.ChannelType == constant.ChannelTypeCodeBuddy {
-		result, err := service.ConvertRequest(c, info, types.RelayFormatOpenAI, &request)
-		if err != nil {
-			return nil, err
-		}
-		chatRequest, ok := result.Value.(*dto.GeneralOpenAIRequest)
-		if !ok {
-			return nil, fmt.Errorf("expected OpenAI chat completions request, got %T", result.Value)
-		}
-		if info.ShouldUseChannelTestStyle() {
-			channel.ApplyCodeBuddyRequestProfile(chatRequest)
-		}
-		stream := info.IsStream
-		chatRequest.Stream = &stream
-		if !stream {
-			chatRequest.StreamOptions = nil
-		}
-		return chatRequest, nil
-	}
 	if info != nil && info.ChannelType == constant.ChannelTypeCodexCompatibility && info.ShouldUseChannelTestStyle() {
 		// Codex Responses requires store=false and expects an instructions field.
 		request.Store = json.RawMessage("false")
@@ -787,16 +751,6 @@ func (a *Adaptor) DoRequest(c *gin.Context, info *relaycommon.RelayInfo, request
 }
 
 func (a *Adaptor) DoResponse(c *gin.Context, resp *http.Response, info *relaycommon.RelayInfo) (usage any, err *types.NewAPIError) {
-	// CodeBuddy 上游以 chat/completions 响应，Responses 与 Compact 请求都要
-	// 转回 Responses 协议再返回下游。
-	if info.ChannelType == constant.ChannelTypeCodeBuddy &&
-		(info.RelayMode == relayconstant.RelayModeResponses ||
-			info.RelayMode == relayconstant.RelayModeResponsesCompact) {
-		if info.IsStream {
-			return OaiChatToResponsesStreamHandler(c, info, resp)
-		}
-		return OaiChatToResponsesHandler(c, info, resp)
-	}
 	switch info.RelayMode {
 	case relayconstant.RelayModeRealtime:
 		err, usage = OpenaiRealtimeHandler(c, info)

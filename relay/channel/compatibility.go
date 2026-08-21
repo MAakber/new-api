@@ -33,10 +33,11 @@ func ApplyCompatibilityHeadersWithConversation(channelType int, headers http.Hea
 // headers and the validated channel client identity. The identity object is
 // intentionally a compact DTO; it cannot supply arbitrary header names or
 // values.
+//
+// conversationID is retained for call-site compatibility and is currently
+// unused by the remaining Codex profile.
 func ApplyCompatibilityHeadersWithClientIdentity(channelType int, headers http.Header, apiKey string, isStream bool, conversationID string, identity *dto.ClientIdentityConfig) {
 	switch channelType {
-	case constant.ChannelTypeCodeBuddy:
-		applyCodeBuddyHeaders(headers, apiKey, conversationID, isStream, identity)
 	case constant.ChannelTypeCodexCompatibility:
 		config := resolveRuntimeClientIdentity(channelType, identity)
 		headers.Set("Authorization", "Bearer "+apiKey)
@@ -93,14 +94,6 @@ func ApplyLightweightClientIdentity(headers http.Header, identity *dto.ClientIde
 		}
 		config.Version = version
 		headers.Set("User-Agent", claudeCodeUserAgentFor(config))
-	case dto.ClientIdentityProfileCodeBuddyCLI:
-		// This header is documented for CodeBuddy's local HTTP API. The
-		// lightweight profile opts into that single marker and nothing else.
-		headers.Set("X-CodeBuddy-Request", "1")
-	case dto.ClientIdentityProfileWorkBuddyDesktop:
-		// No stable public WorkBuddy Desktop request identity is verified.
-		// Keep the profile available for metadata/manual versioning without
-		// inventing a User-Agent or internal headers.
 	}
 }
 
