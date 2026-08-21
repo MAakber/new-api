@@ -21,7 +21,6 @@ import { z } from 'zod'
 import {
   CHANNEL_TYPE_ANTHROPIC,
   CHANNEL_TYPE_CLAUDE_CODE,
-  CHANNEL_TYPE_CODE_BUDDY,
   CHANNEL_TYPE_CODEX_LEGACY,
   CHANNEL_TYPE_CODEX,
   CHANNEL_TYPE_NEW_API,
@@ -53,7 +52,6 @@ export const CLIENT_IDENTITY_CHANNEL_TYPES = new Set([
   CHANNEL_TYPE_CODEX_LEGACY,
   CHANNEL_TYPE_CODEX,
   CHANNEL_TYPE_CLAUDE_CODE,
-  CHANNEL_TYPE_CODE_BUDDY,
 ])
 
 export const CLIENT_IDENTITY_DEFAULTS: Record<
@@ -64,8 +62,6 @@ export const CLIENT_IDENTITY_DEFAULTS: Record<
       | 'codex'
       | 'claude'
       | 'claude_code'
-      | 'codebuddy'
-      | 'workbuddy'
     profile: string
   }
 > = {
@@ -83,18 +79,12 @@ export const CLIENT_IDENTITY_DEFAULTS: Record<
     client_type: 'claude_code',
     profile: 'claude_code',
   },
-  [CHANNEL_TYPE_CODE_BUDDY]: {
-    client_type: 'codebuddy',
-    profile: 'codebuddy',
-  },
 }
 
 const LIGHTWEIGHT_CLIENT_IDENTITY_PROFILES = new Set([
   'none',
   'codex_cli',
   'claude_cli',
-  'codebuddy_cli',
-  'workbuddy_desktop',
 ])
 
 function isClientIdentityProfileAllowed(
@@ -126,19 +116,13 @@ function getClientTypeForProfile(
       return 'claude'
     case 'claude_code':
       return 'claude_code'
-    case 'codebuddy_cli':
-    case 'codebuddy':
-      return 'codebuddy'
-    case 'workbuddy_desktop':
-      return 'workbuddy'
     default:
       return fallback
   }
 }
 
 export function getClientIdentitySourceForProfile(
-  profile: string | undefined,
-  platform?: string
+  profile: string | undefined
 ): 'manual' | 'official' {
   switch (profile) {
     case 'codex_legacy':
@@ -147,8 +131,6 @@ export function getClientIdentitySourceForProfile(
     case 'claude_code':
     case 'claude_cli':
       return 'official'
-    case 'codebuddy':
-      return !platform || platform === 'windows-x64' ? 'official' : 'manual'
     default:
       return 'manual'
   }
@@ -410,8 +392,6 @@ export const channelFormSchema = z
         'codex',
         'claude',
         'claude_code',
-        'codebuddy',
-        'workbuddy',
       ])
       .optional(),
     client_identity_profile: z
@@ -420,12 +400,9 @@ export const channelFormSchema = z
         'codex_legacy',
         'codex_compatibility',
         'claude_code',
-        'codebuddy',
         'codex_cli',
         'claude_cli',
-        'codebuddy_cli',
-        'workbuddy_desktop',
-      ])
+                  ])
       .optional(),
     client_identity_version: z.string().max(64).optional(),
     client_identity_platform: z
@@ -439,8 +416,13 @@ export const channelFormSchema = z
       .optional(),
     client_identity_context_1m_enabled: z.boolean().optional(),
     client_identity_source: z
-      .enum(['manual', 'official', 'community', 'npm', 'workbuddy'])
+      .enum(['manual', 'official', 'community', 'npm'])
       .optional(),
+    // Upstream request strategy (client header templates), stored in settings JSON
+    header_profile_enabled: z.boolean().optional(),
+    header_profile_mode: z.enum(['fixed', 'round_robin', 'random']).optional(),
+    header_profile_selected_ids: z.array(z.string()).optional(),
+    header_profile_snapshots: z.string().optional(),
     // Auto upstream queue warmer (stored in setting JSON)
     queue_enabled: z.boolean().optional(),
     queue_model: z.string().optional(),
@@ -466,8 +448,7 @@ export const channelFormSchema = z
         CHANNEL_TYPE_NEW_API,
         CHANNEL_TYPE_CODEX,
         CHANNEL_TYPE_CLAUDE_CODE,
-        CHANNEL_TYPE_CODE_BUDDY,
-      ].includes(data.type) &&
+            ].includes(data.type) &&
       !data.base_url?.trim()
     ) {
       addRequiredIssue(
@@ -641,6 +622,10 @@ export const CHANNEL_FORM_DEFAULT_VALUES: ChannelFormValues = {
   client_identity_platform: undefined,
   client_identity_context_1m_enabled: false,
   client_identity_source: 'manual',
+  header_profile_enabled: false,
+  header_profile_mode: 'fixed',
+  header_profile_selected_ids: [],
+  header_profile_snapshots: '',
   advanced_custom: '',
   // Auto upstream queue warmer defaults
   queue_enabled: false,
@@ -772,6 +757,10 @@ export function transformChannelToFormDefaults(
   let clientIdentityPlatform: ChannelFormValues['client_identity_platform']
   let clientIdentityContext1MEnabled = false
   let clientIdentitySource: ChannelFormValues['client_identity_source']
+  let headerProfileEnabled = false
+  let headerProfileMode: ChannelFormValues['header_profile_mode'] = 'fixed'
+  let headerProfileSelectedIds: string[] = []
+  let headerProfileSnapshots = ''
 
   if (channel.settings) {
     try {
@@ -806,9 +795,7 @@ export function transformChannelToFormDefaults(
           clientIdentity.client_type === 'none' ||
           clientIdentity.client_type === 'codex' ||
           clientIdentity.client_type === 'claude' ||
-          clientIdentity.client_type === 'claude_code' ||
-          clientIdentity.client_type === 'codebuddy' ||
-          clientIdentity.client_type === 'workbuddy'
+          clientIdentity.client_type === 'claude_code'
         ) {
           clientIdentityClientType = clientIdentity.client_type
         }
@@ -817,11 +804,8 @@ export function transformChannelToFormDefaults(
           clientIdentity.profile === 'codex_legacy' ||
           clientIdentity.profile === 'codex_compatibility' ||
           clientIdentity.profile === 'claude_code' ||
-          clientIdentity.profile === 'codebuddy' ||
           clientIdentity.profile === 'codex_cli' ||
-          clientIdentity.profile === 'claude_cli' ||
-          clientIdentity.profile === 'codebuddy_cli' ||
-          clientIdentity.profile === 'workbuddy_desktop'
+          clientIdentity.profile === 'claude_cli'
         ) {
           clientIdentityProfile = clientIdentity.profile
         }
@@ -846,14 +830,36 @@ export function transformChannelToFormDefaults(
           (clientIdentity.source.kind === 'manual' ||
             clientIdentity.source.kind === 'official' ||
             clientIdentity.source.kind === 'community' ||
-            clientIdentity.source.kind === 'npm' ||
-            clientIdentity.source.kind === 'workbuddy')
+            clientIdentity.source.kind === 'npm')
         ) {
           clientIdentitySource = clientIdentity.source.kind
         }
       }
       if (parsed.advanced_custom) {
         advancedCustom = stringifyAdvancedCustomConfig(parsed.advanced_custom)
+      }
+      const headerProfileStrategy = parsed.header_profile_strategy
+      if (headerProfileStrategy && typeof headerProfileStrategy === 'object') {
+        headerProfileEnabled = Boolean(headerProfileStrategy.enabled)
+        if (
+          headerProfileStrategy.mode === 'fixed' ||
+          headerProfileStrategy.mode === 'round_robin' ||
+          headerProfileStrategy.mode === 'random'
+        ) {
+          headerProfileMode = headerProfileStrategy.mode
+        }
+        if (Array.isArray(headerProfileStrategy.selected_profile_ids)) {
+          headerProfileSelectedIds =
+            headerProfileStrategy.selected_profile_ids.filter(
+              (id: unknown): id is string =>
+                typeof id === 'string' && id.trim() !== ''
+            )
+        }
+        if (Array.isArray(headerProfileStrategy.profiles)) {
+          headerProfileSnapshots = JSON.stringify(
+            headerProfileStrategy.profiles
+          )
+        }
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -911,6 +917,10 @@ export function transformChannelToFormDefaults(
     client_identity_platform: clientIdentityPlatform,
     client_identity_context_1m_enabled: clientIdentityContext1MEnabled,
     client_identity_source: clientIdentitySource || 'manual',
+    header_profile_enabled: headerProfileEnabled,
+    header_profile_mode: headerProfileMode,
+    header_profile_selected_ids: headerProfileSelectedIds,
+    header_profile_snapshots: headerProfileSnapshots,
     advanced_custom: advancedCustom,
     // Auto upstream queue warmer
     queue_enabled: queueEnabled,
@@ -1140,12 +1150,7 @@ export function buildSettingsJSON(formData: ChannelFormValues): string {
         clientIdentity.context_1m_enabled = true
       }
       clientIdentity.source = {
-        kind: getClientIdentitySourceForProfile(
-          profile,
-          requestedProfile === profile
-            ? formData.client_identity_platform
-            : undefined
-        ),
+        kind: getClientIdentitySourceForProfile(profile),
       }
       settingsObj.client_identity = clientIdentity
     }
@@ -1188,6 +1193,35 @@ export function buildSettingsJSON(formData: ChannelFormValues): string {
     }
   } else if ('advanced_custom' in settingsObj) {
     delete settingsObj.advanced_custom
+  }
+
+  // Upstream request strategy (client header templates). Only persisted when
+  // enabled with at least one selected template, so an untouched channel keeps
+  // the default "do not modify requests" behavior.
+  const headerProfileSelectedIds = (
+    formData.header_profile_selected_ids ?? []
+  ).filter((id) => typeof id === 'string' && id.trim() !== '')
+  if (formData.header_profile_enabled && headerProfileSelectedIds.length > 0) {
+    const strategy: Record<string, unknown> = {
+      enabled: true,
+      mode: formData.header_profile_mode || 'fixed',
+      selected_profile_ids: headerProfileSelectedIds,
+    }
+    // Snapshots keep custom/pinned-version templates resolvable server-side.
+    if (formData.header_profile_snapshots) {
+      try {
+        const snapshots = JSON.parse(formData.header_profile_snapshots)
+        if (Array.isArray(snapshots) && snapshots.length > 0) {
+          strategy.profiles = snapshots
+        }
+      } catch {
+        // A malformed snapshot payload must not block saving; the backend can
+        // still resolve built-in templates from the selected ids alone.
+      }
+    }
+    settingsObj.header_profile_strategy = strategy
+  } else if ('header_profile_strategy' in settingsObj) {
+    delete settingsObj.header_profile_strategy
   }
 
   return JSON.stringify(settingsObj)

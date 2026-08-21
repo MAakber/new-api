@@ -375,6 +375,101 @@ const AWS_BEDROCK_ANTHROPIC_COMPAT_TEMPLATE = {
   ],
 }
 
+// ---------------------------------------------------------------------------
+// Client header passthrough templates
+//
+// These pair with the dynamic ("protocol compatible") client templates in the
+// upstream request strategy. Those templates only pin the static identity, so
+// the per-request dynamic headers listed here must be passed through for the
+// upstream to accept the request as coming from a real client.
+// ---------------------------------------------------------------------------
+
+const buildPassHeadersTemplate = (headers: string[]) => ({
+  operations: [
+    {
+      mode: 'pass_headers',
+      value: [...headers],
+      keep_origin: true,
+    },
+  ],
+})
+
+// Codex derives Session_id from X-Client-Request-Id when the client does not
+// send it explicitly, so the copy operation is part of the template.
+const buildCodexPassHeadersTemplate = (headers: string[]) => ({
+  operations: [
+    {
+      mode: 'pass_headers',
+      value: [...headers],
+      keep_origin: true,
+    },
+    {
+      mode: 'copy_header',
+      from: 'X-Client-Request-Id',
+      to: 'Session_id',
+      keep_origin: true,
+    },
+  ],
+})
+
+const CODEX_CLI_PASSTHROUGH_HEADERS = [
+  'Originator',
+  'Session_id',
+  'Session-Id',
+  'Thread-Id',
+  'X-Codex-Beta-Features',
+  'X-Codex-Turn-Metadata',
+  'X-Codex-Window-Id',
+  'X-Client-Request-Id',
+]
+
+const CLAUDE_CLI_PASSTHROUGH_HEADERS = [
+  'X-Claude-Code-Session-Id',
+  'X-Stainless-Arch',
+  'X-Stainless-Lang',
+  'X-Stainless-OS',
+  'X-Stainless-Package-Version',
+  'X-Stainless-Retry-Count',
+  'X-Stainless-Runtime',
+  'X-Stainless-Runtime-Version',
+  'X-Stainless-Timeout',
+  'X-App',
+  'Anthropic-Beta',
+  'Anthropic-Dangerous-Direct-Browser-Access',
+  'Anthropic-Version',
+]
+
+const OPENAI_SDK_PASSTHROUGH_HEADERS = [
+  'OpenAI-Organization',
+  'OpenAI-Project',
+  'X-Stainless-Arch',
+  'X-Stainless-Lang',
+  'X-Stainless-OS',
+  'X-Stainless-Package-Version',
+  'X-Stainless-Retry-Count',
+  'X-Stainless-Runtime',
+  'X-Stainless-Runtime-Version',
+  'X-Stainless-Timeout',
+]
+
+const GEMINI_CLI_PASSTHROUGH_HEADERS = ['X-Goog-Api-Client']
+
+const CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildCodexPassHeadersTemplate(
+  CODEX_CLI_PASSTHROUGH_HEADERS
+)
+const CODEX_DESKTOP_HEADER_PASSTHROUGH_TEMPLATE = buildCodexPassHeadersTemplate(
+  CODEX_CLI_PASSTHROUGH_HEADERS
+)
+const CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
+  CLAUDE_CLI_PASSTHROUGH_HEADERS
+)
+const OPENAI_SDK_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
+  OPENAI_SDK_PASSTHROUGH_HEADERS
+)
+const GEMINI_CLI_HEADER_PASSTHROUGH_TEMPLATE = buildPassHeadersTemplate(
+  GEMINI_CLI_PASSTHROUGH_HEADERS
+)
+
 type TemplatePresetConfig = {
   label: string
   group: 'recommended' | 'advanced' | 'examples'
@@ -390,6 +485,45 @@ const TEMPLATE_GROUPS = [
 ] as const
 
 const TEMPLATE_PRESET_CONFIG: Record<string, TemplatePresetConfig> = {
+  codex_cli_headers_passthrough: {
+    label: 'Codex CLI Dynamic Headers Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through Codex session, window, turn metadata and client request id. User-Agent is not included; use a client template for it.',
+    kind: 'operations',
+    payload: CODEX_CLI_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  codex_desktop_headers_passthrough: {
+    label: 'Codex Desktop Dynamic Headers Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through Codex Desktop session, window, turn metadata and client request id. User-Agent is not included; use a client template for it.',
+    kind: 'operations',
+    payload: CODEX_DESKTOP_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  claude_cli_headers_passthrough: {
+    label: 'Claude Code Real Headers Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through Claude Code session, Anthropic Beta and Stainless dynamic headers.',
+    kind: 'operations',
+    payload: CLAUDE_CLI_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  openai_sdk_headers_passthrough: {
+    label: 'OpenAI SDK Metadata Passthrough',
+    group: 'recommended',
+    description:
+      'Pass through OpenAI-Organization, OpenAI-Project and X-Stainless-* client metadata.',
+    kind: 'operations',
+    payload: OPENAI_SDK_HEADER_PASSTHROUGH_TEMPLATE,
+  },
+  gemini_cli_headers_passthrough: {
+    label: 'Gemini CLI Headers Passthrough',
+    group: 'advanced',
+    description: 'Pass through the X-Goog-Api-Client client metadata header.',
+    kind: 'operations',
+    payload: GEMINI_CLI_HEADER_PASSTHROUGH_TEMPLATE,
+  },
   operations_default: {
     label: 'New Format Template',
     group: 'examples',
@@ -456,7 +590,13 @@ const TEMPLATE_PRESET_CONFIG: Record<string, TemplatePresetConfig> = {
   },
 }
 
+// Quick picks, ordered so the client header passthrough presets that pair with
+// the dynamic client templates come first.
 const QUICK_TEMPLATE_PRESETS = [
+  'codex_cli_headers_passthrough',
+  'codex_desktop_headers_passthrough',
+  'claude_cli_headers_passthrough',
+  'openai_sdk_headers_passthrough',
   'aws_bedrock_anthropic_beta_override',
   'remove_image_generation_tool',
 ]

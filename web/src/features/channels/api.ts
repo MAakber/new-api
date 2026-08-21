@@ -19,14 +19,13 @@ For commercial licensing, please contact support@quantumnous.com
 import { getGroups as getUserGroups } from '@/features/users/api'
 import { api, type ApiRequestConfig } from '@/lib/api'
 
+import type { HeaderProfile } from './lib/header-profile'
 import type {
   AddChannelRequest,
   BatchDeleteParams,
   BatchSetTagParams,
   Channel,
-  ClientIdentityPlatform,
   ClientIdentityConfig,
-  ClientIdentityProfile,
   ChannelUpdatePayload,
   ChannelBalanceResponse,
   CustomBalanceApiResponse,
@@ -67,51 +66,6 @@ export type CodexResetCreditsResponse = CodexUsageResponse
 
 export type CodexUsageResetResponse = CodexUsageResponse
 
-export type ClientIdentityVersionLookup = {
-  client_type: string
-  profile: ClientIdentityProfile
-  platform?: ClientIdentityPlatform
-  versions: string[]
-  latest: string
-  source: {
-    kind: 'npm' | 'workbuddy' | 'manual' | 'official' | 'community'
-    package?: string
-    platform?: ClientIdentityPlatform
-    checked_at?: number
-  }
-  cached: boolean
-  stale: boolean
-}
-
-export type ClientIdentityVersionResponse = {
-  success: boolean
-  message?: string
-  data?: ClientIdentityVersionLookup
-}
-
-export async function getClientIdentityVersions(
-  profile: ClientIdentityProfile,
-  platform?: ClientIdentityPlatform
-): Promise<ClientIdentityVersionResponse> {
-  const res = await api.get('/api/channel/client-identity/versions', {
-    params: { profile, ...(platform ? { platform } : {}) },
-    ...channelActionConfig(),
-  })
-  return res.data
-}
-
-export async function refreshClientIdentityVersions(
-  profile: ClientIdentityProfile,
-  platform?: ClientIdentityPlatform
-): Promise<ClientIdentityVersionResponse> {
-  const res = await api.post(
-    '/api/channel/client-identity/versions/refresh',
-    { profile, ...(platform ? { platform } : {}) },
-    channelActionConfig()
-  )
-  return res.data
-}
-
 export type CodexCredentialRefreshResponse = {
   success: boolean
   message?: string
@@ -124,6 +78,116 @@ export type CodexCredentialRefreshResponse = {
     channel_type?: number
     channel_name?: string
   }
+}
+
+// ============================================================================
+// Header Profile (Upstream Request Strategy) npm version options
+// ============================================================================
+
+export type NpmVersionOption = {
+  value: string
+  label?: string
+  version?: string
+}
+
+export type NpmVersionOptionsLookup = {
+  package: string
+  latest_version: string
+  options: NpmVersionOption[]
+  source: string
+  fetched_at?: number
+  cached?: boolean
+}
+
+export type NpmVersionOptionsResponse = {
+  success: boolean
+  message?: string
+  code?: string
+  data?: NpmVersionOptionsLookup
+}
+
+export async function getNpmVersionOptions(
+  packageName: string
+): Promise<NpmVersionOptionsResponse> {
+  const res = await api.get('/api/channel/npm_version_options', {
+    params: { package: packageName },
+    ...channelActionConfig(),
+  })
+  return res.data
+}
+
+export async function refreshNpmVersionOptions(
+  packageName: string
+): Promise<NpmVersionOptionsResponse> {
+  const res = await api.post(
+    '/api/channel/npm_version_options/refresh',
+    null,
+    { params: { package: packageName }, ...channelActionConfig() }
+  )
+  return res.data
+}
+
+export type NpmVersionDiagnosticsResponse = {
+  success: boolean
+  message?: string
+  data?: unknown
+}
+
+export async function getNpmVersionDiagnostics(): Promise<NpmVersionDiagnosticsResponse> {
+  const res = await api.get(
+    '/api/channel/npm_version_options/diagnostics',
+    channelActionConfig()
+  )
+  return res.data
+}
+
+// ============================================================================
+// User-defined header profiles (custom client templates)
+// ============================================================================
+
+export type UserHeaderProfilePayload = {
+  name: string
+  category?: string
+  headers: Record<string, string>
+  description?: string
+}
+
+export type UserHeaderProfilesResponse = {
+  success: boolean
+  message?: string
+  data?: HeaderProfile[]
+}
+
+export async function listUserHeaderProfiles(): Promise<UserHeaderProfilesResponse> {
+  const res = await api.get('/api/user/header_profiles')
+  return res.data
+}
+
+export async function createUserHeaderProfile(
+  payload: UserHeaderProfilePayload
+): Promise<{ success: boolean; message?: string; data?: HeaderProfile }> {
+  const res = await api.post('/api/user/header_profiles', payload)
+  return res.data
+}
+
+export async function updateUserHeaderProfile(
+  id: string,
+  payload: UserHeaderProfilePayload
+): Promise<{ success: boolean; message?: string; data?: HeaderProfile }> {
+  const res = await api.put(
+    `/api/user/header_profiles/${encodeURIComponent(id)}`,
+    payload
+  )
+  return res.data
+}
+
+export async function deleteUserHeaderProfile(
+  id: string
+): Promise<{ success: boolean; message?: string }> {
+  const res = await api.delete(
+    `/api/user/header_profiles/${encodeURIComponent(id)}`
+  )
+  return res.data
 }
 
 // ============================================================================
