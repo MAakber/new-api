@@ -26,10 +26,12 @@ func TestDetailedChannelTestRouteUsesOperatePermission(t *testing.T) {
 	assertChannelRoutePermission(t, http.MethodPost, "/test/:id", authz.ChannelOperate, controller.TestChannelDetailed)
 }
 
-func TestClientIdentityVersionRoutesUseChannelPermissions(t *testing.T) {
-	assertChannelRoutePermission(t, http.MethodGet, "/client-identity/versions", authz.ChannelRead, controller.GetClientIdentityVersions)
-	assertChannelRoutePermission(t, http.MethodPost, "/client-identity/versions/refresh", authz.ChannelOperate, controller.RefreshClientIdentityVersions)
-	assertChannelRoutePermission(t, http.MethodGet, "/:id/client-identity", authz.ChannelRead, controller.GetChannelClientIdentity)
+// The header profile npm version routes replaced the removed client identity
+// version endpoints.
+func TestChannelNpmVersionOptionRoutesUseChannelPermissions(t *testing.T) {
+	assertChannelRoutePermission(t, http.MethodGet, "/npm_version_options", authz.ChannelRead, controller.GetChannelNpmVersionOptions)
+	assertChannelRoutePermission(t, http.MethodGet, "/npm_version_options/diagnostics", authz.ChannelRead, controller.GetChannelNpmVersionDiagnostics)
+	assertChannelRoutePermission(t, http.MethodPost, "/npm_version_options/refresh", authz.ChannelOperate, controller.RefreshChannelNpmVersionOptions)
 }
 
 func TestChannelDeleteRoutesUseSensitiveWritePermission(t *testing.T) {

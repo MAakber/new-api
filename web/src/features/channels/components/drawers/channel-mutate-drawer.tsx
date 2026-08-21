@@ -140,9 +140,7 @@ import {
 } from '../../api'
 import {
   ADD_MODE_OPTIONS,
-  CODE_BUDDY_BASE_URL_HELP,
   CHANNEL_TYPE_CLAUDE_CODE,
-  CHANNEL_TYPE_CODE_BUDDY,
   CHANNEL_TYPE_CODEX,
   CHANNEL_STATUS_LABELS,
   CHANNEL_TYPE_OPTIONS,
@@ -155,7 +153,6 @@ import {
 import { useChannelMutateForm } from '../../hooks/use-channel-mutate-form'
 import {
   CHANNEL_FORM_DEFAULT_VALUES,
-  CLIENT_IDENTITY_CHANNEL_TYPES,
   CHANNEL_TYPE_ADVANCED_CUSTOM,
   buildSettingsJSON,
   channelFormSchema,
@@ -199,7 +196,7 @@ import {
   ChannelAuthSection,
   ChannelBasicSection,
   ChannelEditorLoadingState,
-  ChannelClientIdentitySection,
+  ChannelHeaderProfileSection,
   ChannelCustomBalanceSection,
   type ChannelCustomBalanceSectionHandle,
   ChannelModelsSection,
@@ -330,7 +327,7 @@ const CHANNEL_EDITOR_MAIN_SECTION_IDS = [
   CHANNEL_EDITOR_SECTION_IDS.advanced,
 ]
 const ADVANCED_SETTINGS_SECTION_IDS = {
-  clientIdentity: 'channel-section-advanced-client-identity',
+  headerProfile: 'channel-section-advanced-header-profile',
   customBalance: 'channel-section-advanced-custom-balance',
   routingStrategy: 'channel-section-advanced-routing-strategy',
   internalNotes: 'channel-section-advanced-internal-notes',
@@ -893,14 +890,12 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   const currentUpstreamModelUpdateIgnoredModels = form.watch(
     'upstream_model_update_ignored_models'
   )
-  const currentClientIdentityClientType = form.watch(
-    'client_identity_client_type'
-  )
-  const currentClientIdentityProfile = form.watch('client_identity_profile')
-  const currentClientIdentityVersion = form.watch('client_identity_version')
-  const currentClientIdentityPlatform = form.watch('client_identity_platform')
   const currentClientIdentityContext1MEnabled = form.watch(
     'client_identity_context_1m_enabled'
+  )
+  const currentHeaderProfileEnabled = form.watch('header_profile_enabled')
+  const currentHeaderProfileSelectedIds = form.watch(
+    'header_profile_selected_ids'
   )
   const currentQueueEnabled = form.watch('queue_enabled')
   const currentQueueModel = form.watch('queue_model')
@@ -1112,8 +1107,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     45,
     CHANNEL_TYPE_CODEX,
     CHANNEL_TYPE_CLAUDE_CODE,
-    CHANNEL_TYPE_CODE_BUDDY,
-  ].includes(currentType)
+    ].includes(currentType)
   const providerRequiresOther = [3, 18, 21, 39, 41, 49].includes(currentType)
   const identityComplete = Boolean(currentName?.trim() && currentType > 0)
   const credentialsComplete = Boolean(
@@ -1194,11 +1188,12 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     currentUpstreamModelUpdateAutoSyncEnabled ||
     currentUpstreamModelUpdateIgnoredModels?.trim()
   )
-  const clientIdentityConfigured = Boolean(
-    currentClientIdentityClientType ||
-    currentClientIdentityProfile ||
-    currentClientIdentityVersion?.trim() ||
-    currentClientIdentityPlatform ||
+
+  // The upstream request strategy card also owns the 1M context toggle, so both
+  // count toward the section being configured.
+  const headerProfileConfigured = Boolean(
+    (currentHeaderProfileEnabled &&
+      (currentHeaderProfileSelectedIds?.length ?? 0) > 0) ||
     currentClientIdentityContext1MEnabled
   )
   const queueConfigured = Boolean(
@@ -1211,7 +1206,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     extraSettingsConfigured ||
     fieldPassthroughConfigured ||
     upstreamModelDetectionConfigured ||
-    clientIdentityConfigured ||
+    headerProfileConfigured ||
     customBalanceConfigured ||
     queueConfigured
   )
@@ -1247,13 +1242,11 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       configured: extraSettingsConfigured,
     },
   ]
-  if (CLIENT_IDENTITY_CHANNEL_TYPES.has(currentType)) {
-    advancedNavChildren.unshift({
-      id: ADVANCED_SETTINGS_SECTION_IDS.clientIdentity,
-      title: t('Client Identity & Version'),
-      configured: clientIdentityConfigured,
-    })
-  }
+  advancedNavChildren.unshift({
+    id: ADVANCED_SETTINGS_SECTION_IDS.headerProfile,
+    title: t('Upstream Request Strategy'),
+    configured: headerProfileConfigured,
+  })
   if (currentType === 1 || currentType === 14 || currentType === 57) {
     advancedNavChildren.push({
       id: ADVANCED_SETTINGS_SECTION_IDS.fieldPassthrough,
@@ -2980,20 +2973,16 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                                 <FormLabel>{t('Base URL')}</FormLabel>
                                 <FormControl>
                                   <Input
-                                    placeholder={
-                                      currentType === CHANNEL_TYPE_CODE_BUDDY
-                                        ? 'http://127.0.0.1:13100'
-                                        : t(FIELD_PLACEHOLDERS.BASE_URL)
-                                    }
+                                    placeholder={t(
+                                      FIELD_PLACEHOLDERS.BASE_URL
+                                    )}
                                     {...field}
                                   />
                                 </FormControl>
                                 <FormDescription>
-                                  {currentType === CHANNEL_TYPE_CODE_BUDDY
-                                    ? t(CODE_BUDDY_BASE_URL_HELP)
-                                    : t(
-                                        'Custom API base URL. For official channels, New API has built-in addresses. Only fill this for third-party proxy sites or special endpoints. Do not add /v1 or trailing slash.'
-                                      )}
+                                  {t(
+                                    'Custom API base URL. For official channels, New API has built-in addresses. Only fill this for third-party proxy sites or special endpoints. Do not add /v1 or trailing slash.'
+                                  )}
                                 </FormDescription>
                                 <FormMessage />
                               </FormItem>
@@ -3795,25 +3784,24 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                     onOpenChange={handleAdvancedSettingsOpenChange}
                     summary={advancedSummary}
                   >
-                    {CLIENT_IDENTITY_CHANNEL_TYPES.has(currentType) && (
-                      <div
-                        id={getEditorElementId(
-                          ADVANCED_SETTINGS_SECTION_IDS.clientIdentity
-                        )}
-                        className={configuredAdvancedSectionClassName(
-                          'scroll-mt-4',
-                          clientIdentityConfigured
-                        )}
-                      >
-                        <ChannelClientIdentitySection
-                          control={form.control}
-                          setValue={form.setValue}
-                          channelType={currentType}
-                          disabled={sensitiveLocked}
-                          isSubmitting={isSubmitting}
-                        />
-                      </div>
-                    )}
+                    {/* ── Upstream Request Strategy (client templates) ── */}
+                    <div
+                      id={getEditorElementId(
+                        ADVANCED_SETTINGS_SECTION_IDS.headerProfile
+                      )}
+                      className={configuredAdvancedSectionClassName(
+                        'scroll-mt-4',
+                        headerProfileConfigured
+                      )}
+                    >
+                      <ChannelHeaderProfileSection
+                        control={form.control}
+                        setValue={form.setValue}
+                        disabled={sensitiveLocked}
+                        onOpenAdvanced={() => setParamOverrideEditorOpen(true)}
+                      />
+                    </div>
+
                     {/* ── Auto Upstream Queue ── */}
                     <div
                       id={getEditorElementId(

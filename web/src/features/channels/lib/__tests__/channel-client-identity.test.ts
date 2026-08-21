@@ -55,33 +55,6 @@ describe('channel client identity settings', () => {
     assert.deepEqual(compatible.client_identity.source, { kind: 'official' })
   })
 
-  test('reads a persisted CodeBuddy identity and platform with legacy source data', () => {
-    const values = transformChannelToFormDefaults({
-      type: 63,
-      settings: JSON.stringify({
-        client_identity: {
-          client_type: 'codebuddy',
-          profile: 'codebuddy',
-          version: '5.3.8.34705286',
-          platform: 'windows-x64',
-          source: { kind: 'manual' },
-        },
-      }),
-      channel_info: {
-        is_multi_key: false,
-        multi_key_size: 0,
-        multi_key_polling_index: 0,
-        multi_key_mode: 'random',
-      },
-    } as Channel)
-
-    assert.equal(values.client_identity_client_type, 'codebuddy')
-    assert.equal(values.client_identity_profile, 'codebuddy')
-    assert.equal(values.client_identity_version, '5.3.8.34705286')
-    assert.equal(values.client_identity_platform, 'windows-x64')
-    assert.equal(values.client_identity_source, 'manual')
-  })
-
   test('removes client identity when a channel changes to an unrelated type', () => {
     const settings = JSON.parse(
       buildSettingsJSON({
@@ -121,44 +94,8 @@ describe('channel client identity settings', () => {
     })
   })
 
-  test('serializes a CodeBuddy profile with an automatic official source', () => {
-    const settings = JSON.parse(
-      buildSettingsJSON({
-        ...CHANNEL_FORM_DEFAULT_VALUES,
-        type: 63,
-        client_identity_version: '5.3.8.34705286',
-        client_identity_source: 'manual',
-      })
-    )
-
-    assert.deepEqual(settings.client_identity.source, { kind: 'official' })
-  })
-
-  test('uses manual source for CodeBuddy on non-Windows platforms', () => {
-    const settings = JSON.parse(
-      buildSettingsJSON({
-        ...CHANNEL_FORM_DEFAULT_VALUES,
-        type: 63,
-        client_identity_platform: 'linux-x64',
-        client_identity_source: 'official',
-      })
-    )
-
-    assert.deepEqual(settings.client_identity.source, { kind: 'manual' })
-  })
-
   test('maps client identity sources independently of legacy form source', () => {
     assert.equal(getClientIdentitySourceForProfile('codex_cli'), 'official')
-    assert.equal(getClientIdentitySourceForProfile('codebuddy'), 'official')
-    assert.equal(
-      getClientIdentitySourceForProfile('codebuddy', 'windows-x64'),
-      'official'
-    )
-    assert.equal(
-      getClientIdentitySourceForProfile('codebuddy', 'linux-x64'),
-      'manual'
-    )
-    assert.equal(getClientIdentitySourceForProfile('codebuddy_cli'), 'manual')
   })
 
   test('serializes a Claude Code profile with an automatic official source', () => {
@@ -224,19 +161,24 @@ describe('channel client identity settings', () => {
     assert.equal(settings.client_identity.context_1m_enabled, undefined)
   })
 
-  test('serializes manual lightweight profiles without using a legacy source', () => {
+  // The persisted source is always derived from the profile, so a stale legacy
+  // form value must never be written through.
+  test('ignores the legacy form source when serializing a profile', () => {
     const settings = JSON.parse(
       buildSettingsJSON({
         ...CHANNEL_FORM_DEFAULT_VALUES,
         type: 1,
-        client_identity_client_type: 'codebuddy',
-        client_identity_profile: 'codebuddy_cli',
+        client_identity_client_type: 'codex',
+        client_identity_profile: 'codex_cli',
         client_identity_version: '2.115.0',
         client_identity_source: 'community',
       })
     )
 
-    assert.deepEqual(settings.client_identity.source, { kind: 'manual' })
+    assert.deepEqual(settings.client_identity.source, {
+      kind: getClientIdentitySourceForProfile('codex_cli'),
+    })
+    assert.notEqual(settings.client_identity.source.kind, 'community')
   })
 
   test('keeps standard channels on no-client defaults without identity settings', () => {
