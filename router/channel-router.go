@@ -41,9 +41,10 @@ var channelPermissionRoutes = []permissionRoute{
 	{method: http.MethodPut, path: "/:id/custom-balance", permission: authz.ChannelSensitiveWrite, handler: controller.UpdateChannelCustomBalance},
 	{method: http.MethodPost, path: "/:id/custom-balance/refresh", permission: authz.ChannelOperate, handler: controller.RefreshChannelCustomBalance},
 	{method: http.MethodPost, path: "/:id/custom-balance/checkin", permission: authz.ChannelOperate, handler: controller.CheckinChannelCustomBalance},
-	{method: http.MethodGet, path: "/client-identity/versions", permission: authz.ChannelRead, handler: controller.GetClientIdentityVersions},
-	{method: http.MethodPost, path: "/client-identity/versions/refresh", permission: authz.ChannelOperate, handler: controller.RefreshClientIdentityVersions},
-	{method: http.MethodGet, path: "/:id/client-identity", permission: authz.ChannelRead, handler: controller.GetChannelClientIdentity},
+	// Header profile (upstream request strategy) npm version options.
+	{method: http.MethodGet, path: "/npm_version_options", permission: authz.ChannelRead, handler: controller.GetChannelNpmVersionOptions},
+	{method: http.MethodGet, path: "/npm_version_options/diagnostics", permission: authz.ChannelRead, handler: controller.GetChannelNpmVersionDiagnostics},
+	{method: http.MethodPost, path: "/npm_version_options/refresh", permission: authz.ChannelOperate, handler: controller.RefreshChannelNpmVersionOptions},
 	{method: http.MethodGet, path: "/", permission: authz.ChannelRead, handler: controller.GetAllChannels},
 	{method: http.MethodGet, path: "/search", permission: authz.ChannelRead, handler: controller.SearchChannels},
 	{method: http.MethodGet, path: "/models", permission: authz.ChannelRead, handler: controller.ChannelListModels},

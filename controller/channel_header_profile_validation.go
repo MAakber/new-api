@@ -1,0 +1,355 @@
+package controller
+
+import (
+	"fmt"
+	"sort"
+	"strings"
+
+	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/relaykit/dto"
+	"github.com/QuantumNous/new-api/setting/operation_setting"
+)
+
+// validateChannelHeaderProfileSettings validates the channel's header profile
+// strategy and writes the normalized form back to the channel so stored
+// settings stay canonical (deduped ids, default mode, pruned snapshots).
+func validateChannelHeaderProfileSettings(channel *model.Channel, passedHeaders map[string]struct{}) error {
+	if channel == nil {
+		return nil
+	}
+
+	settings := channel.GetOtherSettings()
+	if settings.HeaderProfileStrategy == nil {
+		return nil
+	}
+
+	if err := validateHeaderProfileStrategy(settings.HeaderProfileStrategy); err != nil {
+		return err
+	}
+	if err := validateHeaderProfilePassthrough(settings.HeaderProfileStrategy, passedHeaders); err != nil {
+		return err
+	}
+
+	channel.SetOtherSettings(settings)
+	return nil
+}
+
+// validateHeaderProfileStrategy normalizes and validates the strategy in place.
+// It is safe to call with a nil or disabled strategy.
+func validateHeaderProfileStrategy(strategy *dto.HeaderProfileStrategy) error {
+	if strategy == nil || !strategy.Enabled {
+		return nil
+	}
+
+	normalizedProfileIDs := make([]string, 0, len(strategy.SelectedProfileIDs))
+	seenProfileIDs := map[string]struct{}{}
+	for _, profileID := range strategy.SelectedProfileIDs {
+		profileID = strings.TrimSpace(profileID)
+		if profileID == "" {
+			continue
+		}
+		if _, exists := seenProfileIDs[profileID]; exists {
+			continue
+		}
+		seenProfileIDs[profileID] = struct{}{}
+		normalizedProfileIDs = append(normalizedProfileIDs, profileID)
+	}
+	strategy.SelectedProfileIDs = normalizedProfileIDs
+	if strings.TrimSpace(string(strategy.Mode)) == "" {
+		strategy.Mode = dto.HeaderProfileModeFixed
+	}
+
+	switch strategy.Mode {
+	case dto.HeaderProfileModeFixed:
+		if len(strategy.SelectedProfileIDs) != 1 {
+			return fmt.Errorf("header_profile_strategy mode=fixed 时必须且只能选择 1 个 selected_profile_ids")
+		}
+	case dto.HeaderProfileModeRoundRobin, dto.HeaderProfileModeRandom:
+		if len(strategy.SelectedProfileIDs) < 1 {
+			return fmt.Errorf("header_profile_strategy mode=%s 时至少需要 1 个 selected_profile_ids", strategy.Mode)
+		}
+	default:
+		return fmt.Errorf("header_profile_strategy mode 非法: %s", strategy.Mode)
+	}
+
+	return validateHeaderProfileStrategySnapshots(strategy)
+}
+
+// validateHeaderProfileStrategySnapshots validates custom profile snapshots and
+// prunes the stored snapshots down to the selected ids, so a channel never
+// persists templates it does not use.
+func validateHeaderProfileStrategySnapshots(strategy *dto.HeaderProfileStrategy) error {
+	selectedIDs := make(map[string]struct{}, len(strategy.SelectedProfileIDs))
+	for _, profileID := range strategy.SelectedProfileIDs {
+		selectedIDs[profileID] = struct{}{}
+	}
+
+	profileMap := make(map[string]dto.HeaderProfile, len(strategy.Profiles))
+	for _, profile := range strategy.Profiles {
+		profile.ID = strings.TrimSpace(profile.ID)
+		if profile.ID == "" {
+			continue
+		}
+		if _, selected := selectedIDs[profile.ID]; !selected {
+			continue
+		}
+		if len(profile.Headers) == 0 {
+			return fmt.Errorf("header_profile_strategy profile %s headers 不能为空", profile.ID)
+		}
+		for key, value := range profile.Headers {
+			if strings.TrimSpace(key) == "" {
+				return fmt.Errorf("header_profile_strategy profile %s 存在空请求头名称", profile.ID)
+			}
+			if strings.TrimSpace(value) == "" {
+				return fmt.Errorf("header_profile_strategy profile %s 存在空请求头值", profile.ID)
+			}
+		}
+		if err := dto.ValidateHeaderProfileVersionMeta(profile); err != nil {
+			return fmt.Errorf("header_profile_strategy profile %s %s", profile.ID, err.Error())
+		}
+		profileMap[profile.ID] = profile
+	}
+
+	strategy.Profiles = make([]dto.HeaderProfile, 0, len(strategy.SelectedProfileIDs))
+	for _, profileID := range strategy.SelectedProfileIDs {
+		if profile, exists := profileMap[profileID]; exists {
+			strategy.Profiles = append(strategy.Profiles, profile)
+		}
+	}
+
+	for _, profileID := range strategy.SelectedProfileIDs {
+		if _, exists := profileMap[profileID]; exists {
+			continue
+		}
+		if _, exists := dto.ResolveHeaderProfile(profileID, nil); exists {
+			continue
+		}
+		return fmt.Errorf("header_profile_strategy 选择的 Profile 不存在或缺少快照: %s", profileID)
+	}
+	return nil
+}
+
+func validateHeaderProfilePassthrough(strategy *dto.HeaderProfileStrategy, passedHeaders map[string]struct{}) error {
+	if strategy == nil || !strategy.Enabled {
+		return nil
+	}
+	requiredHeaders := collectRequiredHeaderProfilePassthroughHeaders(strategy)
+	if len(requiredHeaders) == 0 {
+		return nil
+	}
+	if passedHeaders == nil {
+		passedHeaders = map[string]struct{}{}
+	}
+	return requireParamOverridePassHeaders(requiredHeaders, passedHeaders)
+}
+
+func validateChannelParamOverride(channel *model.Channel) (map[string]struct{}, error) {
+	if channel == nil {
+		return map[string]struct{}{}, nil
+	}
+	passedHeaders, err := collectParamOverridePassHeaders(channel.ParamOverride)
+	if err != nil {
+		return nil, fmt.Errorf("param_override pass_headers 格式错误: %s", err.Error())
+	}
+	return passedHeaders, nil
+}
+
+func collectRequiredHeaderProfilePassthroughHeaders(strategy *dto.HeaderProfileStrategy) []string {
+	headers := newHeaderNameSet()
+	for _, profileID := range strategy.SelectedProfileIDs {
+		profile, exists := resolveHeaderProfileForPassthrough(profileID, strategy.Profiles)
+		if !exists || !profile.PassthroughRequired {
+			continue
+		}
+		headers.add(requiredPassthroughHeadersForProfile(profile)...)
+	}
+	return headers.values
+}
+
+func resolveHeaderProfileForPassthrough(profileID string, profiles []dto.HeaderProfile) (dto.HeaderProfile, bool) {
+	trimmedID := strings.TrimSpace(profileID)
+	if trimmedID == "" {
+		return dto.HeaderProfile{}, false
+	}
+	if _, ok := operation_setting.HeaderProfilePassThroughHeaders[trimmedID]; ok {
+		if builtinProfile, exists := dto.ResolveHeaderProfile(trimmedID, nil); exists {
+			return builtinProfile, true
+		}
+	}
+	return dto.ResolveHeaderProfile(trimmedID, profiles)
+}
+
+func requiredPassthroughHeadersForProfile(profile dto.HeaderProfile) []string {
+	if headers, ok := operation_setting.HeaderProfilePassThroughHeaders[strings.TrimSpace(profile.ID)]; ok {
+		return headers
+	}
+	headers := make([]string, 0, len(profile.Headers))
+	for header := range profile.Headers {
+		headers = append(headers, header)
+	}
+	sort.Strings(headers)
+	return headers
+}
+
+func requireParamOverridePassHeaders(required []string, passed map[string]struct{}) error {
+	missing := make([]string, 0)
+	for _, header := range required {
+		if _, exists := passed[strings.ToLower(header)]; exists {
+			continue
+		}
+		missing = append(missing, header)
+	}
+	if len(missing) == 0 {
+		return nil
+	}
+	return fmt.Errorf("header_profile_strategy 选择了需要真实客户端请求头透传的 Profile，必须在 param_override.operations 配置 pass_headers: %s", strings.Join(missing, ", "))
+}
+
+func collectParamOverridePassHeaders(raw *string) (map[string]struct{}, error) {
+	headers := map[string]struct{}{}
+	if raw == nil || strings.TrimSpace(*raw) == "" {
+		return headers, nil
+	}
+
+	var parsed map[string]interface{}
+	if err := common.Unmarshal([]byte(*raw), &parsed); err != nil {
+		return nil, err
+	}
+	for _, operation := range paramOverrideOperations(parsed) {
+		if !strings.EqualFold(strings.TrimSpace(fmt.Sprintf("%v", operation["mode"])), "pass_headers") {
+			continue
+		}
+		if paramOverrideOperationIsConditional(operation) {
+			continue
+		}
+		names, err := parseParamOverridePassHeaderNames(operation["value"])
+		if err != nil {
+			return nil, err
+		}
+		for _, name := range names {
+			headers[strings.ToLower(name)] = struct{}{}
+		}
+	}
+	return headers, nil
+}
+
+func paramOverrideOperationIsConditional(operation map[string]interface{}) bool {
+	if rawConditions, exists := operation["conditions"]; exists {
+		if rawConditions == nil {
+			// treat explicit null as absent
+		} else if conditions, ok := rawConditions.([]interface{}); ok {
+			if len(conditions) > 0 {
+				return true
+			}
+		} else {
+			return true
+		}
+	}
+	if rawWhen, exists := operation["when"]; exists {
+		switch value := rawWhen.(type) {
+		case nil:
+			return false
+		case string:
+			return strings.TrimSpace(value) != ""
+		default:
+			return true
+		}
+	}
+	return false
+}
+
+func paramOverrideOperations(parsed map[string]interface{}) []map[string]interface{} {
+	rawOperations, _ := parsed["operations"].([]interface{})
+	operations := make([]map[string]interface{}, 0, len(rawOperations))
+	for _, raw := range rawOperations {
+		operation, ok := raw.(map[string]interface{})
+		if ok {
+			operations = append(operations, operation)
+		}
+	}
+	return operations
+}
+
+func parseParamOverridePassHeaderNames(value interface{}) ([]string, error) {
+	switch raw := value.(type) {
+	case nil:
+		return nil, fmt.Errorf("pass_headers value is required")
+	case string:
+		return parseParamOverridePassHeaderString(raw)
+	case []interface{}:
+		values := make([]string, 0, len(raw))
+		for _, item := range raw {
+			values = append(values, fmt.Sprintf("%v", item))
+		}
+		return normalizeParamOverridePassHeaderNames(values)
+	case map[string]interface{}:
+		return parseParamOverridePassHeaderObject(raw)
+	default:
+		return nil, fmt.Errorf("pass_headers value must be string, array or object")
+	}
+}
+
+func parseParamOverridePassHeaderString(raw string) ([]string, error) {
+	trimmed := strings.TrimSpace(raw)
+	if trimmed == "" {
+		return nil, fmt.Errorf("pass_headers value is required")
+	}
+	if strings.HasPrefix(trimmed, "[") || strings.HasPrefix(trimmed, "{") {
+		var parsed interface{}
+		if err := common.UnmarshalJsonStr(trimmed, &parsed); err != nil {
+			return nil, err
+		}
+		return parseParamOverridePassHeaderNames(parsed)
+	}
+	return normalizeParamOverridePassHeaderNames(strings.Split(trimmed, ","))
+}
+
+func parseParamOverridePassHeaderObject(raw map[string]interface{}) ([]string, error) {
+	values := make([]string, 0)
+	for _, key := range []string{"headers", "names", "header"} {
+		value, exists := raw[key]
+		if !exists {
+			continue
+		}
+		names, err := parseParamOverridePassHeaderNames(value)
+		if err != nil {
+			return nil, fmt.Errorf("pass_headers value.%s is invalid: %s", key, err.Error())
+		}
+		values = append(values, names...)
+	}
+	return normalizeParamOverridePassHeaderNames(values)
+}
+
+func normalizeParamOverridePassHeaderNames(values []string) ([]string, error) {
+	names := newHeaderNameSet()
+	names.add(values...)
+	if len(names.values) == 0 {
+		return nil, fmt.Errorf("pass_headers value is invalid")
+	}
+	return names.values, nil
+}
+
+type headerNameSet struct {
+	seen   map[string]struct{}
+	values []string
+}
+
+func newHeaderNameSet() headerNameSet {
+	return headerNameSet{seen: map[string]struct{}{}}
+}
+
+func (set *headerNameSet) add(values ...string) {
+	for _, value := range values {
+		name := strings.TrimSpace(value)
+		if name == "" {
+			continue
+		}
+		key := strings.ToLower(name)
+		if _, exists := set.seen[key]; exists {
+			continue
+		}
+		set.seen[key] = struct{}{}
+		set.values = append(set.values, name)
+	}
+}

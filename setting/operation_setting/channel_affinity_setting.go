@@ -81,6 +81,59 @@ var claudeCliPassThroughHeaders = []string{
 	"Anthropic-Version",
 }
 
+// codexDesktopPassThroughHeaders mirrors the Codex CLI set: the desktop app
+// speaks the same protocol and only differs in its User-Agent/Originator values.
+var codexDesktopPassThroughHeaders = append([]string(nil), codexCliPassThroughHeaders...)
+
+var geminiCliPassThroughHeaders = []string{
+	"X-Goog-Api-Client",
+}
+
+// These two lists are the exact counterparts of the "快捷预设" presets in
+// ParamOverrideEditorDialog. Do not reuse the broader legacy lists above here:
+// doing so would make a user click a preset and then fail validation because
+// the server demanded headers the preset never adds.
+var codexCompatiblePassThroughHeaders = []string{
+	"Originator",
+	"Session_id",
+	"Session-Id",
+	"Thread-Id",
+	"X-Codex-Beta-Features",
+	"X-Codex-Turn-Metadata",
+	"X-Codex-Window-Id",
+	"X-Client-Request-Id",
+}
+
+var claudeCodeCompatiblePassThroughHeaders = []string{
+	"X-Claude-Code-Session-Id",
+	"X-Stainless-Arch",
+	"X-Stainless-Lang",
+	"X-Stainless-OS",
+	"X-Stainless-Package-Version",
+	"X-Stainless-Retry-Count",
+	"X-Stainless-Runtime",
+	"X-Stainless-Runtime-Version",
+	"X-Stainless-Timeout",
+	"X-App",
+	"Anthropic-Beta",
+	"Anthropic-Dangerous-Direct-Browser-Access",
+	"Anthropic-Version",
+}
+
+// HeaderProfilePassThroughHeaders maps a built-in header profile id to the
+// dynamic client headers that must be passed through for that client to look
+// authentic upstream. Profiles absent from this map only pin static identity
+// headers and need no passthrough configuration.
+var HeaderProfilePassThroughHeaders = map[string][]string{
+	"codex-cli":     codexCliPassThroughHeaders,
+	"codex-desktop": codexDesktopPassThroughHeaders,
+	"claude-code":   claudeCliPassThroughHeaders,
+	"gemini-cli":    geminiCliPassThroughHeaders,
+	// Protocol-compatible templates match their frontend quick presets exactly.
+	"codex-compatible":       codexCompatiblePassThroughHeaders,
+	"claude-code-compatible": claudeCodeCompatiblePassThroughHeaders,
+}
+
 func buildPassHeaderTemplate(headers []string) map[string]interface{} {
 	clonedHeaders := make([]string, 0, len(headers))
 	clonedHeaders = append(clonedHeaders, headers...)

@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -19,6 +20,7 @@ import (
 	"github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relay/constant"
 	"github.com/QuantumNous/new-api/relay/helper"
+	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/relaykit/types"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/QuantumNous/new-api/setting/operation_setting"
@@ -254,6 +256,27 @@ func processHeaderOverride(info *common.RelayInfo, c *gin.Context) (map[string]s
 	}
 
 	headerOverrideSource := common.GetEffectiveHeaderOverride(info)
+
+	// Header profile templates provide the channel's client identity headers.
+	// They are applied first so explicit passthrough rules and per-header
+	// overrides below can still win.
+	profileHeaders, profileID, err := resolveHeaderProfileStrategyHeaders(info)
+	if err != nil {
+		return nil, types.NewError(err, types.ErrorCodeChannelHeaderOverrideInvalid)
+	}
+	appliedProfileKeys := make([]string, 0, len(profileHeaders))
+	for name, value := range profileHeaders {
+		key := strings.TrimSpace(strings.ToLower(name))
+		value = strings.TrimSpace(value)
+		if key == "" || value == "" {
+			continue
+		}
+		headerOverride[key] = value
+		appliedProfileKeys = append(appliedProfileKeys, key)
+	}
+	if profileID != "" {
+		logHeaderProfileApplied(info, profileID, appliedProfileKeys)
+	}
 	passAll := false
 	var passthroughRegex []*regexp.Regexp
 	if !info.IsChannelTest {
@@ -342,6 +365,111 @@ func processHeaderOverride(info *common.RelayInfo, c *gin.Context) (map[string]s
 	return headerOverride, nil
 }
 
+// selectedHeaderProfileIDs returns the header profile ids selected on the
+// channel, or nil when the upstream request strategy is not enabled.
+func selectedHeaderProfileIDs(info *common.RelayInfo) []string {
+	if info == nil || info.ChannelMeta == nil {
+		return nil
+	}
+	strategy := info.ChannelOtherSettings.HeaderProfileStrategy
+	if strategy == nil || !strategy.Enabled {
+		return nil
+	}
+	return strategy.SelectedProfileIDs
+}
+
+// hasSelectedHeaderProfile reports whether the channel selected the given
+// header profile template.
+func hasSelectedHeaderProfile(info *common.RelayInfo, profileID string) bool {
+	for _, selected := range selectedHeaderProfileIDs(info) {
+		if selected == profileID {
+			return true
+		}
+	}
+	return false
+}
+
+// applyCompatibilityIdentityHeaders emits the protocol-compatible client
+// identity headers.
+//
+// These are driven by the selected header profile template so any channel can
+// present a Codex/Claude Code identity. Credentials, Accept and the per-request
+// dynamic ids stay owned by the relay, because a template is a static header
+// table and must never carry secrets.
+//
+// A channel that still uses the dedicated compatibility channel types keeps
+// working without a template selection: those types cannot talk to their
+// upstream without these headers, so the channel type acts as a fallback.
+func applyCompatibilityIdentityHeaders(c *gin.Context, req *http.Request, info *common.RelayInfo) {
+	if info == nil || info.ChannelMeta == nil || !info.ShouldUseChannelTestStyle() {
+		return
+	}
+
+	identity := info.ChannelOtherSettings.ClientIdentity
+	codexSelected := hasSelectedHeaderProfile(info, dto.HeaderProfileIDCodexCompatible)
+	claudeSelected := hasSelectedHeaderProfile(info, dto.HeaderProfileIDClaudeCodeCompatible)
+
+	switch {
+	case codexSelected || info.ChannelType == rootconstant.ChannelTypeCodexCompatibility:
+		ApplyCompatibilityHeadersWithClientIdentity(
+			rootconstant.ChannelTypeCodexCompatibility,
+			req.Header,
+			info.ApiKey,
+			info.IsStream,
+			"",
+			identity,
+		)
+	case claudeSelected || info.ChannelType == rootconstant.ChannelTypeClaudeCode:
+		ApplyClaudeCodeCompatibilityHeadersWithIdentity(
+			req.Header,
+			info.ApiKey,
+			info.IsStream,
+			info.EnsureClaudeCodeSessionID(),
+			true,
+			identity,
+		)
+	case info.ChannelType == rootconstant.ChannelTypeCodex:
+		// OAuth credentials and account routing remain owned by the adapter;
+		// the client identity is generated before Header Override is applied.
+		ApplyCodexLegacyClientIdentity(req.Header, identity)
+	case info.ChannelType == rootconstant.ChannelTypeOpenAI,
+		info.ChannelType == rootconstant.ChannelTypeAnthropic:
+		ApplyLightweightClientIdentity(req.Header, identity)
+	}
+}
+
+// resolveHeaderProfileStrategyHeaders resolves the channel's header profile
+// template for this request. Round robin selection is persisted per channel so
+// rotation is stable across restarts and instances.
+func resolveHeaderProfileStrategyHeaders(info *common.RelayInfo) (map[string]string, string, error) {
+	if info == nil || info.ChannelMeta == nil {
+		return nil, "", nil
+	}
+	strategy := info.ChannelMeta.ChannelOtherSettings.HeaderProfileStrategy
+	if strategy == nil || !strategy.Enabled {
+		return nil, "", nil
+	}
+	return service.ResolveChannelRuntimeHeaderProfileHeaders(info.ChannelMeta.ChannelId, strategy)
+}
+
+func logHeaderProfileApplied(info *common.RelayInfo, profileID string, headerKeys []string) {
+	if info == nil || info.ChannelMeta == nil || len(headerKeys) == 0 {
+		return
+	}
+	strategy := info.ChannelMeta.ChannelOtherSettings.HeaderProfileStrategy
+	if strategy == nil {
+		return
+	}
+	sort.Strings(headerKeys)
+	logger.LogDebug(context.Background(), fmt.Sprintf(
+		"header profile applied: channel=%d profile=%s mode=%s headers=%s",
+		info.ChannelMeta.ChannelId,
+		profileID,
+		string(strategy.Mode),
+		strings.Join(headerKeys, ","),
+	))
+}
+
 func ResolveHeaderOverride(info *common.RelayInfo, c *gin.Context) (map[string]string, error) {
 	return processHeaderOverride(info, c)
 }
@@ -398,23 +526,7 @@ func DoApiRequest(a Adaptor, c *gin.Context, info *common.RelayInfo, requestBody
 	if err != nil {
 		return nil, fmt.Errorf("setup request header failed: %w", err)
 	}
-	if info != nil && info.ChannelMeta != nil && info.ShouldUseChannelTestStyle() {
-		switch info.ChannelType {
-		case rootconstant.ChannelTypeOpenAI, rootconstant.ChannelTypeAnthropic:
-			ApplyLightweightClientIdentity(req.Header, info.ChannelOtherSettings.ClientIdentity)
-		case rootconstant.ChannelTypeCodex:
-			// OAuth credentials and account routing remain owned by the adapter;
-			// the client identity is generated before Header Override is applied.
-			ApplyCodexLegacyClientIdentity(req.Header, info.ChannelOtherSettings.ClientIdentity)
-		case rootconstant.ChannelTypeCodexCompatibility:
-			ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, req.Header, info.ApiKey, info.IsStream, "", info.ChannelOtherSettings.ClientIdentity)
-		case rootconstant.ChannelTypeClaudeCode:
-			ApplyClaudeCodeCompatibilityHeadersWithIdentity(req.Header, info.ApiKey, info.IsStream, info.EnsureClaudeCodeSessionID(), true, info.ChannelOtherSettings.ClientIdentity)
-		case rootconstant.ChannelTypeCodeBuddy:
-			conversationID := ResolveCodeBuddyConversationID(c.Request.Header, info.Request)
-			ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, req.Header, info.ApiKey, info.IsStream, conversationID, info.ChannelOtherSettings.ClientIdentity)
-		}
-	}
+	applyCompatibilityIdentityHeaders(c, req, info)
 	// Apply Header Override last so it wins over every ordinary header emitted
 	// by the adaptor or the compatibility profile.
 	headerOverride, err := processHeaderOverride(info, c)

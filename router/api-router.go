@@ -133,6 +133,12 @@ func SetApiRouter(router *gin.Engine) {
 				selfRoute.POST("/aff_transfer", controller.TransferAffQuota)
 				selfRoute.PUT("/setting", controller.UpdateUserSetting)
 
+				// User-defined upstream request header templates
+				selfRoute.GET("/header_profiles", controller.ListUserHeaderProfiles)
+				selfRoute.POST("/header_profiles", middleware.CriticalRateLimit(), controller.CreateUserHeaderProfile)
+				selfRoute.PUT("/header_profiles/:id", middleware.CriticalRateLimit(), controller.UpdateUserHeaderProfile)
+				selfRoute.DELETE("/header_profiles/:id", middleware.CriticalRateLimit(), controller.DeleteUserHeaderProfile)
+
 				// 2FA routes
 				selfRoute.GET("/2fa/status", controller.Get2FAStatus)
 				selfRoute.POST("/2fa/setup", middleware.DisableCache(), controller.Setup2FA)

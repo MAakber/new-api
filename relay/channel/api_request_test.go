@@ -8,6 +8,7 @@ import (
 
 	"github.com/QuantumNous/new-api/constant"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/stretchr/testify/assert"
@@ -359,7 +360,6 @@ func TestDoApiRequestHeaderOverrideWinsOverCompatibilityDefaults(t *testing.T) {
 		{name: "codex", channelType: constant.ChannelTypeCodex},
 		{name: "codex compatibility", channelType: constant.ChannelTypeCodexCompatibility},
 		{name: "claude code", channelType: constant.ChannelTypeClaudeCode},
-		{name: "codebuddy", channelType: constant.ChannelTypeCodeBuddy},
 	}
 
 	for _, test := range tests {
@@ -553,4 +553,122 @@ func TestProcessHeaderOverride_NonClaudeCodePreservesExistingBehavior(t *testing
 	require.Equal(t, "Bearer static", headers["authorization"])
 	require.Equal(t, "trace-123", headers["x-client"])
 	require.Equal(t, "channel-key", headers["x-channel-key"])
+}
+
+// The protocol-compatible templates must drive the compatibility headers so an
+// ordinary OpenAI/Anthropic channel can present a Codex/Claude Code identity.
+func TestApplyCompatibilityIdentityHeaders_TemplateDrivesCodexHeaders(t *testing.T) {
+	t.Parallel()
+
+	gin.SetMode(gin.TestMode)
+	recorder := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(recorder)
+	ctx.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
+
+	req := httptest.NewRequest(http.MethodPost, "https://upstream.example.com/v1/responses", nil)
+	info := &relaycommon.RelayInfo{
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ApiKey:      "sk-test",
+			ChannelType: constant.ChannelTypeOpenAI,
+			ChannelOtherSettings: dto.ChannelOtherSettings{
+				HeaderProfileStrategy: &dto.HeaderProfileStrategy{
+					Enabled:            true,
+					Mode:               dto.HeaderProfileModeFixed,
+					SelectedProfileIDs: []string{dto.HeaderProfileIDCodexCompatible},
+				},
+			},
+		},
+	}
+	info.ChannelType = constant.ChannelTypeOpenAI
+
+	applyCompatibilityIdentityHeaders(ctx, req, info)
+
+	require.Equal(t, "responses=experimental", req.Header.Get("OpenAI-Beta"))
+	require.Equal(t, "codex_cli_rs", req.Header.Get("Originator"))
+	require.True(t, strings.HasPrefix(req.Header.Get("User-Agent"), "codex_cli_rs/"))
+	// Credentials stay owned by the relay, not the template.
+	require.Equal(t, "Bearer sk-test", req.Header.Get("Authorization"))
+}
+
+func TestApplyCompatibilityIdentityHeaders_TemplateDrivesClaudeCodeHeaders(t *testing.T) {
+	t.Parallel()
+
+	gin.SetMode(gin.TestMode)
+	recorder := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(recorder)
+	ctx.Request = httptest.NewRequest(http.MethodPost, "/v1/messages", nil)
+
+	req := httptest.NewRequest(http.MethodPost, "https://upstream.example.com/v1/messages", nil)
+	info := &relaycommon.RelayInfo{
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ApiKey:      "sk-ant-test",
+			ChannelType: constant.ChannelTypeAnthropic,
+			ChannelOtherSettings: dto.ChannelOtherSettings{
+				HeaderProfileStrategy: &dto.HeaderProfileStrategy{
+					Enabled:            true,
+					Mode:               dto.HeaderProfileModeFixed,
+					SelectedProfileIDs: []string{dto.HeaderProfileIDClaudeCodeCompatible},
+				},
+			},
+		},
+	}
+	info.ChannelType = constant.ChannelTypeAnthropic
+
+	applyCompatibilityIdentityHeaders(ctx, req, info)
+
+	require.Equal(t, "2023-06-01", req.Header.Get("Anthropic-Version"))
+	require.Equal(t, "cli", req.Header.Get("X-App"))
+	require.True(t, strings.HasPrefix(req.Header.Get("User-Agent"), "claude-cli/"))
+	require.NotEmpty(t, req.Header.Get("X-Client-Request-Id"))
+}
+
+// A dedicated compatibility channel type cannot reach its upstream without
+// these headers, so it must keep working without a template selection.
+func TestApplyCompatibilityIdentityHeaders_ChannelTypeFallbackWithoutTemplate(t *testing.T) {
+	t.Parallel()
+
+	gin.SetMode(gin.TestMode)
+	recorder := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(recorder)
+	ctx.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
+
+	req := httptest.NewRequest(http.MethodPost, "https://upstream.example.com/v1/responses", nil)
+	info := &relaycommon.RelayInfo{
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ApiKey:      "sk-test",
+			ChannelType: constant.ChannelTypeCodexCompatibility,
+		},
+	}
+	info.ChannelType = constant.ChannelTypeCodexCompatibility
+
+	applyCompatibilityIdentityHeaders(ctx, req, info)
+
+	require.Equal(t, "responses=experimental", req.Header.Get("OpenAI-Beta"))
+	require.Equal(t, "codex_cli_rs", req.Header.Get("Originator"))
+}
+
+// Without a template and without a compatibility channel type nothing should be
+// injected, preserving the default "requests are unmodified" behavior.
+func TestApplyCompatibilityIdentityHeaders_PlainChannelIsUntouched(t *testing.T) {
+	t.Parallel()
+
+	gin.SetMode(gin.TestMode)
+	recorder := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(recorder)
+	ctx.Request = httptest.NewRequest(http.MethodPost, "/v1/chat/completions", nil)
+
+	req := httptest.NewRequest(http.MethodPost, "https://upstream.example.com/v1/chat/completions", nil)
+	info := &relaycommon.RelayInfo{
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ApiKey:      "sk-test",
+			ChannelType: constant.ChannelTypeOpenAI,
+		},
+	}
+	info.ChannelType = constant.ChannelTypeOpenAI
+
+	applyCompatibilityIdentityHeaders(ctx, req, info)
+
+	require.Empty(t, req.Header.Get("OpenAI-Beta"))
+	require.Empty(t, req.Header.Get("Originator"))
+	require.Empty(t, req.Header.Get("Authorization"))
 }

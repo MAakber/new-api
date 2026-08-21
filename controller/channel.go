@@ -211,8 +211,6 @@ func buildFetchModelsHeaders(channel *model.Channel, key string) (http.Header, e
 		relaychannel.ApplyCompatibilityHeadersWithClientIdentity(channel.Type, headers, key, false, "", otherSettings.ClientIdentity)
 	case constant.ChannelTypeClaudeCode:
 		relaychannel.ApplyClaudeCodeCompatibilityHeadersWithIdentity(headers, key, false, "", false, otherSettings.ClientIdentity)
-	case constant.ChannelTypeCodeBuddy:
-		relaychannel.ApplyCompatibilityHeadersWithClientIdentity(channel.Type, headers, key, false, "", otherSettings.ClientIdentity)
 	}
 
 	if err := applyFetchModelsHeaderOverrides(channel, key, headers); err != nil {
@@ -492,6 +490,15 @@ func validateChannel(channel *model.Channel, isAdd bool) error {
 	// 校验 channel settings
 	if err := channel.ValidateSettings(); err != nil {
 		return fmt.Errorf("渠道额外设置[channel setting] 格式错误：%s", err.Error())
+	}
+
+	// 校验上游请求策略（客户端模板）及其所需的请求头透传配置
+	passedHeaders, err := validateChannelParamOverride(channel)
+	if err != nil {
+		return err
+	}
+	if err := validateChannelHeaderProfileSettings(channel, passedHeaders); err != nil {
+		return err
 	}
 
 	if (channel.Type == constant.ChannelTypeNewAPI ||
