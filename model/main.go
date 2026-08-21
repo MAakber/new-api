@@ -304,8 +304,13 @@ func migrateDB() error {
 		&UserAutoBanRecord{},
 		&RequestDebugBodyRecord{},
 		&RequestDebugBodyChunk{},
+		&RequestHeaderStrategyState{},
+		&UserHeaderTemplate{},
 	)
 	if err != nil {
+		return err
+	}
+	if err := migrateRequestHeaderStrategyStateScopeTypeLength(); err != nil {
 		return err
 	}
 	if err := MigratePasskeyCredentialIndexes(); err != nil {
@@ -383,6 +388,8 @@ func migrateDBFast() error {
 		{&UserAutoBanRecord{}, "UserAutoBanRecord"},
 		{&RequestDebugBodyRecord{}, "RequestDebugBodyRecord"},
 		{&RequestDebugBodyChunk{}, "RequestDebugBodyChunk"},
+		{&RequestHeaderStrategyState{}, "RequestHeaderStrategyState"},
+		{&UserHeaderTemplate{}, "UserHeaderTemplate"},
 	}
 	// 动态计算migration数量，确保errChan缓冲区足够大
 	errChan := make(chan error, len(migrations))
@@ -406,6 +413,9 @@ func migrateDBFast() error {
 		if err != nil {
 			return err
 		}
+	}
+	if err := migrateRequestHeaderStrategyStateScopeTypeLength(); err != nil {
+		return err
 	}
 	if err := MigratePasskeyCredentialIndexes(); err != nil {
 		return err
