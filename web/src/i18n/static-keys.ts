@@ -673,6 +673,10 @@ export const STATIC_I18N_KEYS = [
   'Ban released',
   'Ban expired',
 
+  // Custom balance and check-in
+  'Ignore balance-limit auto-ban',
+  'Keep this channel enabled when the upstream reports a temporary balance or quota limit.',
+
   // Misc
   'Cancel',
   'Status',

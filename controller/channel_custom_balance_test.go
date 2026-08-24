@@ -27,7 +27,7 @@ func setupChannelCustomBalanceControllerDB(t *testing.T) *model.Channel {
 
 func TestChannelCustomBalanceAPIDoesNotReturnCredential(t *testing.T) {
 	channel := setupChannelCustomBalanceControllerDB(t)
-	requestBody := []byte(`{"enabled":false,"use_channel_key":false,"credential":"controller-secret"}`)
+	requestBody := []byte(`{"enabled":false,"use_channel_key":false,"ignore_balance_auto_ban":true,"credential":"controller-secret"}`)
 	recorder := httptest.NewRecorder()
 	ctx, _ := gin.CreateTestContext(recorder)
 	ctx.Params = gin.Params{{Key: "id", Value: strconv.Itoa(channel.Id)}}
@@ -39,6 +39,7 @@ func TestChannelCustomBalanceAPIDoesNotReturnCredential(t *testing.T) {
 	assert.NotContains(t, recorder.Body.String(), "controller-secret")
 	assert.NotContains(t, recorder.Body.String(), "EncryptedCredential")
 	assert.Contains(t, recorder.Body.String(), `"credential_set":true`)
+	assert.Contains(t, recorder.Body.String(), `"ignore_balance_auto_ban":true`)
 	var stored model.ChannelCustomBalance
 	require.NoError(t, model.DB.First(&stored, "channel_id = ?", channel.Id).Error)
 	assert.NotContains(t, recorder.Body.String(), stored.EncryptedCredential)

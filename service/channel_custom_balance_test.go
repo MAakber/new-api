@@ -139,6 +139,35 @@ func TestChannelCustomBalanceTokenCookieAndBalanceUpdate(t *testing.T) {
 	assert.Equal(t, float64(1), view.Balance)
 }
 
+func TestChannelCustomBalanceCanIgnoreBalanceLimitAutoBan(t *testing.T) {
+	db := setupChannelCustomBalanceServiceDB(t)
+	channel := customBalanceChannel(t, db, "http://127.0.0.1", "channel-key")
+	enabled := true
+	useChannelKey := true
+	ignore := true
+	view, err := UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
+		Enabled:              &enabled,
+		UseChannelKey:        &useChannelKey,
+		IgnoreBalanceAutoBan: &ignore,
+	})
+	require.NoError(t, err)
+	require.NotNil(t, view)
+	assert.True(t, view.IgnoreBalanceAutoBan)
+
+	assert.True(t, ShouldIgnoreChannelBalanceAutoBan(channel.Id, "You exceeded your current quota"))
+	assert.True(t, ShouldIgnoreChannelBalanceAutoBan(channel.Id, "daily quota reached"))
+	assert.True(t, ShouldIgnoreChannelBalanceAutoBan(channel.Id, "余额不足"))
+	assert.False(t, ShouldIgnoreChannelBalanceAutoBan(channel.Id, "Permission denied"))
+
+	ignore = false
+	view, err = UpdateChannelCustomBalanceConfig(context.Background(), channel.Id, ChannelCustomBalanceUpdate{
+		IgnoreBalanceAutoBan: &ignore,
+	})
+	require.NoError(t, err)
+	assert.False(t, view.IgnoreBalanceAutoBan)
+	assert.False(t, ShouldIgnoreChannelBalanceAutoBan(channel.Id, "余额不足"))
+}
+
 func TestChannelCustomBalanceProviderUserHeaders(t *testing.T) {
 	db := setupChannelCustomBalanceServiceDB(t)
 	expectedProvider := ChannelCustomBalanceProviderNewAPI

@@ -306,6 +306,31 @@ describe('channel custom balance section', () => {
     }
   })
 
+  test('shows the balance-limit auto-ban ignore switch', async () => {
+    installGetMock()
+    const view = await renderSection()
+
+    try {
+      await flushReact()
+      await act(async () => {
+        await waitForElement(view.container, '[role="switch"]')
+      })
+
+      assert.match(
+        view.container.textContent || '',
+        /Ignore balance-limit auto-ban/
+      )
+      const switches = [
+        ...view.container.querySelectorAll<HTMLElement>('[role="switch"]'),
+      ]
+      assert.ok(switches.length >= 3)
+      assert.equal(switches[2].getAttribute('aria-checked'), 'false')
+    } finally {
+      await cleanupSection(view)
+      restoreApi()
+    }
+  })
+
   test('exposes the same save path for the parent channel submit', async () => {
     installGetMock()
     let putCalls = 0

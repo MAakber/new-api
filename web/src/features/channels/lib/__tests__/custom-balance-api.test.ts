@@ -72,6 +72,7 @@ describe('custom balance API contract', () => {
       quota_per_unit: 1,
       auto_balance: true,
       auto_checkin: true,
+      ignore_balance_auto_ban: false,
       balance_interval_seconds: 3600,
       checkin_interval_seconds: 86400,
       retry_max_attempts: 3,

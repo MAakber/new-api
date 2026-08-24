@@ -15,16 +15,17 @@ import (
 )
 
 type channelCustomBalanceUpdateRequest struct {
-	Enabled         *bool            `json:"enabled"`
-	Provider        *string          `json:"provider"`
-	UseChannelKey   *bool            `json:"use_channel_key"`
-	AuthType        *string          `json:"auth_type"`
-	Credential      *string          `json:"credential"`
-	ClearCredential bool             `json:"clear_credential"`
-	UserID          *json.RawMessage `json:"user_id"`
-	QuotaPerUnit    *float64         `json:"quota_per_unit"`
-	AutoBalance     *bool            `json:"auto_balance"`
-	AutoCheckin     *bool            `json:"auto_checkin"`
+	Enabled              *bool            `json:"enabled"`
+	Provider             *string          `json:"provider"`
+	UseChannelKey        *bool            `json:"use_channel_key"`
+	AuthType             *string          `json:"auth_type"`
+	Credential           *string          `json:"credential"`
+	ClearCredential      bool             `json:"clear_credential"`
+	UserID               *json.RawMessage `json:"user_id"`
+	QuotaPerUnit         *float64         `json:"quota_per_unit"`
+	AutoBalance          *bool            `json:"auto_balance"`
+	AutoCheckin          *bool            `json:"auto_checkin"`
+	IgnoreBalanceAutoBan *bool            `json:"ignore_balance_auto_ban"`
 
 	BalanceIntervalSeconds *int64 `json:"balance_interval_seconds"`
 	CheckinIntervalSeconds *int64 `json:"checkin_interval_seconds"`
@@ -49,6 +50,7 @@ func (request channelCustomBalanceUpdateRequest) serviceInput() (service.Channel
 		QuotaPerUnit:           request.QuotaPerUnit,
 		AutoBalance:            request.AutoBalance,
 		AutoCheckin:            request.AutoCheckin,
+		IgnoreBalanceAutoBan:   request.IgnoreBalanceAutoBan,
 		BalanceIntervalSeconds: request.BalanceIntervalSeconds,
 		CheckinIntervalSeconds: request.CheckinIntervalSeconds,
 		RetryMax:               request.RetryMax,

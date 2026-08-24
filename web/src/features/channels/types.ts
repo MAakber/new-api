@@ -293,6 +293,7 @@ export interface CustomBalanceSettings {
   quota_per_unit: number
   auto_balance: boolean
   auto_checkin: boolean
+  ignore_balance_auto_ban: boolean
   balance_interval_seconds: number
   checkin_interval_seconds: number
   retry_max_attempts: number
@@ -318,6 +319,7 @@ export interface CustomBalanceUpdatePayload {
   quota_per_unit: number
   auto_balance: boolean
   auto_checkin: boolean
+  ignore_balance_auto_ban: boolean
   balance_interval_seconds: number
   checkin_interval_seconds: number
   retry_max_attempts: number

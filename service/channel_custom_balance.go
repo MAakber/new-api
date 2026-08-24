@@ -55,16 +55,17 @@ var (
 // ChannelCustomBalanceView is the public, credential-free representation of
 // the configuration and its latest execution state.
 type ChannelCustomBalanceView struct {
-	ChannelID     int     `json:"channel_id"`
-	Enabled       bool    `json:"enabled"`
-	Provider      string  `json:"provider"`
-	UseChannelKey bool    `json:"use_channel_key"`
-	AuthType      string  `json:"auth_type"`
-	CredentialSet bool    `json:"credential_set"`
-	UserID        string  `json:"user_id"`
-	QuotaPerUnit  float64 `json:"quota_per_unit"`
-	AutoBalance   bool    `json:"auto_balance"`
-	AutoCheckin   bool    `json:"auto_checkin"`
+	ChannelID            int     `json:"channel_id"`
+	Enabled              bool    `json:"enabled"`
+	Provider             string  `json:"provider"`
+	UseChannelKey        bool    `json:"use_channel_key"`
+	AuthType             string  `json:"auth_type"`
+	CredentialSet        bool    `json:"credential_set"`
+	UserID               string  `json:"user_id"`
+	QuotaPerUnit         float64 `json:"quota_per_unit"`
+	AutoBalance          bool    `json:"auto_balance"`
+	AutoCheckin          bool    `json:"auto_checkin"`
+	IgnoreBalanceAutoBan bool    `json:"ignore_balance_auto_ban"`
 
 	BalanceIntervalSeconds int64 `json:"balance_interval_seconds"`
 	CheckinIntervalSeconds int64 `json:"checkin_interval_seconds"`
@@ -92,16 +93,17 @@ type ChannelCustomBalanceView struct {
 // nil credential or an empty credential preserves the encrypted value. Set
 // ClearCredential to explicitly remove the independent credential.
 type ChannelCustomBalanceUpdate struct {
-	Enabled         *bool
-	Provider        *string
-	UseChannelKey   *bool
-	AuthType        *string
-	Credential      *string
-	ClearCredential bool
-	UserID          *string
-	QuotaPerUnit    *float64
-	AutoBalance     *bool
-	AutoCheckin     *bool
+	Enabled              *bool
+	Provider             *string
+	UseChannelKey        *bool
+	AuthType             *string
+	Credential           *string
+	ClearCredential      bool
+	UserID               *string
+	QuotaPerUnit         *float64
+	AutoBalance          *bool
+	AutoCheckin          *bool
+	IgnoreBalanceAutoBan *bool
 
 	BalanceIntervalSeconds *int64
 	CheckinIntervalSeconds *int64
@@ -286,6 +288,9 @@ func UpdateChannelCustomBalanceConfig(ctx context.Context, channelID int, input 
 		}
 		if input.AutoCheckin != nil {
 			config.AutoCheckin = *input.AutoCheckin
+		}
+		if input.IgnoreBalanceAutoBan != nil {
+			config.IgnoreBalanceAutoBan = *input.IgnoreBalanceAutoBan
 		}
 		if input.BalanceIntervalSeconds != nil {
 			config.BalanceInterval = *input.BalanceIntervalSeconds
@@ -602,6 +607,7 @@ func channelCustomBalanceView(channel *model.Channel, config *model.ChannelCusto
 		QuotaPerUnit:           config.QuotaPerUnit,
 		AutoBalance:            config.AutoBalance,
 		AutoCheckin:            config.AutoCheckin,
+		IgnoreBalanceAutoBan:   config.IgnoreBalanceAutoBan,
 		BalanceIntervalSeconds: config.BalanceInterval,
 		CheckinIntervalSeconds: config.CheckinInterval,
 		RetryMax:               config.RetryMax,
@@ -620,6 +626,59 @@ func channelCustomBalanceView(channel *model.Channel, config *model.ChannelCusto
 		Balance:                channel.Balance,
 		BalanceUpdatedTime:     channel.BalanceUpdatedTime,
 	}
+}
+
+// ShouldIgnoreChannelBalanceAutoBan reports whether balance/quota-limit errors
+// should leave a channel enabled because its upstream quota can recover later
+// (for example, after a daily reset). Other automatic-ban reasons remain active.
+func ShouldIgnoreChannelBalanceAutoBan(channelID int, reason string) bool {
+	if channelID <= 0 || !isBalanceLimitAutoBanReason(reason) {
+		return false
+	}
+	config, err := model.GetChannelCustomBalance(channelID)
+	if err != nil || config == nil {
+		return false
+	}
+	return config.Enabled && config.IgnoreBalanceAutoBan
+}
+
+func isBalanceLimitAutoBanReason(reason string) bool {
+	lower := strings.ToLower(strings.TrimSpace(reason))
+	if lower == "" {
+		return false
+	}
+	for _, phrase := range []string{
+		"余额不足",
+		"额度不足",
+		"配额不足",
+		"达到金额上限",
+		"达到额度上限",
+		"金额上限",
+		"额度上限",
+		"达到每日限额",
+		"每日额度",
+		"每日配额",
+		"日额度",
+		"credit balance is too low",
+		"you exceeded your current quota",
+		"quota exceeded",
+		"quota reached",
+		"quota limit",
+		"daily quota",
+		"daily limit",
+		"limit reached",
+		"insufficient quota",
+		"insufficient balance",
+		"balance exhausted",
+		"credit exhausted",
+		"balance limit",
+		"credit limit",
+	} {
+		if strings.Contains(lower, strings.ToLower(phrase)) {
+			return true
+		}
+	}
+	return false
 }
 
 func channelCustomBalanceOperationForTaskType(taskType string) (string, error) {

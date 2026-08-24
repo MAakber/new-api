@@ -17,20 +17,21 @@ const (
 // are encrypted before they reach this model and are intentionally excluded
 // from JSON serialization.
 type ChannelCustomBalance struct {
-	ChannelID           int     `json:"channel_id" gorm:"primaryKey"`
-	Enabled             bool    `json:"enabled"`
-	Provider            string  `json:"provider" gorm:"type:varchar(32);index"`
-	UseChannelKey       bool    `json:"use_channel_key"`
-	AuthType            string  `json:"auth_type" gorm:"type:varchar(16)"`
-	EncryptedCredential string  `json:"-" gorm:"type:text"`
-	UserID              string  `json:"user_id" gorm:"type:varchar(128)"`
-	QuotaPerUnit        float64 `json:"quota_per_unit"`
-	AutoBalance         bool    `json:"auto_balance"`
-	AutoCheckin         bool    `json:"auto_checkin"`
-	BalanceInterval     int64   `json:"balance_interval_seconds" gorm:"bigint"`
-	CheckinInterval     int64   `json:"checkin_interval_seconds" gorm:"bigint"`
-	RetryMax            int     `json:"retry_max"`
-	RetryInterval       int64   `json:"retry_interval_seconds" gorm:"bigint"`
+	ChannelID            int     `json:"channel_id" gorm:"primaryKey"`
+	Enabled              bool    `json:"enabled"`
+	Provider             string  `json:"provider" gorm:"type:varchar(32);index"`
+	UseChannelKey        bool    `json:"use_channel_key"`
+	AuthType             string  `json:"auth_type" gorm:"type:varchar(16)"`
+	EncryptedCredential  string  `json:"-" gorm:"type:text"`
+	UserID               string  `json:"user_id" gorm:"type:varchar(128)"`
+	QuotaPerUnit         float64 `json:"quota_per_unit"`
+	AutoBalance          bool    `json:"auto_balance"`
+	AutoCheckin          bool    `json:"auto_checkin"`
+	IgnoreBalanceAutoBan bool    `json:"ignore_balance_auto_ban"`
+	BalanceInterval      int64   `json:"balance_interval_seconds" gorm:"bigint"`
+	CheckinInterval      int64   `json:"checkin_interval_seconds" gorm:"bigint"`
+	RetryMax             int     `json:"retry_max"`
+	RetryInterval        int64   `json:"retry_interval_seconds" gorm:"bigint"`
 
 	BalanceRetryCount int `json:"balance_retry_count"`
 	CheckinRetryCount int `json:"checkin_retry_count"`

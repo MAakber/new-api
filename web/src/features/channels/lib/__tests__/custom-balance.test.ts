@@ -87,4 +87,18 @@ describe('custom balance serialization', () => {
     assert.equal(values.provider, 'veloera')
     assert.equal(buildCustomBalancePayload(values).provider, 'veloera')
   })
+
+  test('serializes the balance-limit auto-ban ignore switch', () => {
+    const payload = buildCustomBalancePayload({
+      ...CUSTOM_BALANCE_DEFAULT_VALUES,
+      ignore_balance_auto_ban: true,
+    })
+
+    assert.equal(payload.ignore_balance_auto_ban, true)
+    assert.equal(
+      createCustomBalanceFormValues({ ignore_balance_auto_ban: true })
+        .ignore_balance_auto_ban,
+      true
+    )
+  })
 })

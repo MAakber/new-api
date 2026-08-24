@@ -48,6 +48,7 @@ export const CUSTOM_BALANCE_DEFAULT_VALUES = {
   quota_per_unit: 500000,
   auto_balance: false,
   auto_checkin: false,
+  ignore_balance_auto_ban: false,
   balance_interval_seconds: 3600,
   checkin_interval_seconds: 86400,
   retry_max_attempts: 3,
@@ -64,6 +65,7 @@ export type CustomBalanceFormValues = {
   quota_per_unit: number
   auto_balance: boolean
   auto_checkin: boolean
+  ignore_balance_auto_ban: boolean
   balance_interval_seconds: number
   checkin_interval_seconds: number
   retry_max_attempts: number
@@ -83,6 +85,7 @@ export const customBalanceFormSchema = z.object({
     .positive('Quota must be a positive number'),
   auto_balance: z.boolean(),
   auto_checkin: z.boolean(),
+  ignore_balance_auto_ban: z.boolean(),
   balance_interval_seconds: z
     .number()
     .int('Value must be a non-negative integer')
@@ -154,6 +157,7 @@ export function normalizeCustomBalanceSettings(
     ),
     auto_balance: settings?.auto_balance === true,
     auto_checkin: settings?.auto_checkin === true,
+    ignore_balance_auto_ban: settings?.ignore_balance_auto_ban === true,
     balance_interval_seconds: positiveInteger(
       settings?.balance_interval_seconds,
       CUSTOM_BALANCE_DEFAULT_VALUES.balance_interval_seconds
@@ -208,6 +212,7 @@ export function buildCustomBalancePayload(
     quota_per_unit: values.quota_per_unit,
     auto_balance: values.auto_balance,
     auto_checkin: values.auto_checkin,
+    ignore_balance_auto_ban: values.ignore_balance_auto_ban,
     balance_interval_seconds: values.balance_interval_seconds,
     checkin_interval_seconds: values.checkin_interval_seconds,
     retry_max_attempts: values.retry_max_attempts,
@@ -242,6 +247,7 @@ export function createCustomBalanceFormValues(
     quota_per_unit: normalized.quota_per_unit,
     auto_balance: normalized.auto_balance,
     auto_checkin: normalized.auto_checkin,
+    ignore_balance_auto_ban: normalized.ignore_balance_auto_ban,
     balance_interval_seconds: normalized.balance_interval_seconds,
     checkin_interval_seconds: normalized.checkin_interval_seconds,
     retry_max_attempts: normalized.retry_max_attempts,

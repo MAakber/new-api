@@ -607,6 +607,31 @@ export const ChannelCustomBalanceSection = forwardRef<
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name='ignore_balance_auto_ban'
+                  render={({ field }) => (
+                    <FormItem className='flex flex-row items-center justify-between gap-3 sm:col-span-2'>
+                      <div className='space-y-0.5'>
+                        <FormLabel>
+                          {t('Ignore balance-limit auto-ban')}
+                        </FormLabel>
+                        <FormDescription>
+                          {t(
+                            'Keep this channel enabled when the upstream reports a temporary balance or quota limit.'
+                          )}
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          disabled={controlsDisabled}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div className='grid gap-4 sm:grid-cols-2'>
