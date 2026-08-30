@@ -266,6 +266,9 @@ func InitLogDB() (err error) {
 }
 
 func migrateDB() error {
+	if err := migratePrefillGroupUniqueness(DB); err != nil {
+		return err
+	}
 	// Migrate price_amount column from float/double to decimal for existing tables
 	migrateSubscriptionPlanPriceAmount()
 	// Migrate model_limits column from varchar to text for existing tables
@@ -344,106 +347,6 @@ func migrateDB() error {
 			return err
 		}
 	}
-	return nil
-}
-
-func migrateDBFast() error {
-
-	var wg sync.WaitGroup
-
-	migrations := []struct {
-		model interface{}
-		name  string
-	}{
-		{&Channel{}, "Channel"},
-		{&ChannelCustomBalance{}, "ChannelCustomBalance"},
-		{&Token{}, "Token"},
-		{&User{}, "User"},
-		{&UserAvatar{}, "UserAvatar"},
-		{&UserSession{}, "UserSession"},
-		{&AuthFlow{}, "AuthFlow"},
-		{&ExternalIdentityClaim{}, "ExternalIdentityClaim"},
-		{&PasskeyCredential{}, "PasskeyCredential"},
-		{&Option{}, "Option"},
-		{&Banner{}, "Banner"},
-		{&Redemption{}, "Redemption"},
-		{&RegistrationCodeUse{}, "RegistrationCodeUse"},
-		{&Ability{}, "Ability"},
-		{&Log{}, "Log"},
-		{&Midjourney{}, "Midjourney"},
-		{&TopUp{}, "TopUp"},
-		{&QuotaData{}, "QuotaData"},
-		{&Task{}, "Task"},
-		{&Model{}, "Model"},
-		{&Vendor{}, "Vendor"},
-		{&PrefillGroup{}, "PrefillGroup"},
-		{&Setup{}, "Setup"},
-		{&TwoFA{}, "TwoFA"},
-		{&TwoFABackupCode{}, "TwoFABackupCode"},
-		{&Checkin{}, "Checkin"},
-		{&SubscriptionOrder{}, "SubscriptionOrder"},
-		{&UserSubscription{}, "UserSubscription"},
-		{&SubscriptionPreConsumeRecord{}, "SubscriptionPreConsumeRecord"},
-		{&CustomOAuthProvider{}, "CustomOAuthProvider"},
-		{&UserOAuthBinding{}, "UserOAuthBinding"},
-		{&PerfMetric{}, "PerfMetric"},
-		{&SystemInstance{}, "SystemInstance"},
-		{&SystemTask{}, "SystemTask"},
-		{&SystemTaskLock{}, "SystemTaskLock"},
-		{&AutoSyncCursor{}, "AutoSyncCursor"},
-		{&AutoSyncEvent{}, "AutoSyncEvent"},
-		{&AutoPriceGuard{}, "AutoPriceGuard"},
-		{&NamedLease{}, "NamedLease"},
-		{&UserSecurityEvent{}, "UserSecurityEvent"},
-		{&UserAutoBanRecord{}, "UserAutoBanRecord"},
-		{&RequestDebugBodyRecord{}, "RequestDebugBodyRecord"},
-		{&RequestDebugBodyChunk{}, "RequestDebugBodyChunk"},
-	}
-	// 动态计算migration数量，确保errChan缓冲区足够大
-	errChan := make(chan error, len(migrations))
-
-	for _, m := range migrations {
-		wg.Add(1)
-		go func(model interface{}, name string) {
-			defer wg.Done()
-			if err := DB.AutoMigrate(model); err != nil {
-				errChan <- fmt.Errorf("failed to migrate %s: %v", name, err)
-			}
-		}(m.model, m.name)
-	}
-
-	// Wait for all migrations to complete
-	wg.Wait()
-	close(errChan)
-
-	// Check for any errors
-	for err := range errChan {
-		if err != nil {
-			return err
-		}
-	}
-	if err := MigratePasskeyCredentialIndexes(); err != nil {
-		return err
-	}
-	if err := MigrateModelVendorActiveNames(); err != nil {
-		return err
-	}
-	if err := InitializeUserAuthVersions(); err != nil {
-		return err
-	}
-	if err := InitializeExternalIdentityClaims(); err != nil {
-		return err
-	}
-	if common.UsingMainDatabase(common.DatabaseTypeSQLite) {
-		if err := ensureSubscriptionPlanTableSQLite(); err != nil {
-			return err
-		}
-	} else {
-		if err := DB.AutoMigrate(&SubscriptionPlan{}); err != nil {
-			return err
-		}
-	}
-	common.SysLog("database migrated")
 	return nil
 }
 
