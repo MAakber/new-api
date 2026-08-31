@@ -266,6 +266,9 @@ func InitLogDB() (err error) {
 }
 
 func migrateDB() error {
+	if err := migrateTokenKeyUniqueness(DB); err != nil {
+		return err
+	}
 	if err := migratePrefillGroupUniqueness(DB); err != nil {
 		return err
 	}
