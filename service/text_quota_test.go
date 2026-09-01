@@ -283,6 +283,139 @@ func TestCalculateTextQuotaSummaryUsesOpenAIBillingUsageBeforeTopLevelUsage(t *t
 	require.Equal(t, 98, summary.Quota)
 }
 
+func TestCalculateTextQuotaSummaryUsesOpenAIResponsesInputTokenDetails(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+	relayInfo := &relaycommon.RelayInfo{
+		RelayFormat:     types.RelayFormatOpenAI,
+		OriginModelName: "gpt-4o",
+		PriceData: hosttypes.PriceData{
+			ModelRatio:      1,
+			CompletionRatio: 2,
+			CacheRatio:      0.25,
+			GroupRatioInfo:  hosttypes.GroupRatioInfo{GroupRatio: 1},
+		},
+		StartTime: time.Now(),
+	}
+
+	responsesUsage := &dto.Usage{
+		InputTokens:  100,
+		OutputTokens: 10,
+		TotalTokens:  110,
+		InputTokensDetails: &dto.InputTokenDetails{
+			CachedTokens: 40,
+		},
+	}
+	convertedUsage := &dto.Usage{
+		PromptTokens:     100,
+		CompletionTokens: 10,
+		TotalTokens:      110,
+		PromptTokensDetails: dto.InputTokenDetails{
+			CachedTokens: 40,
+		},
+		BillingUsage: dto.NewOpenAIResponsesBillingUsage(responsesUsage),
+	}
+
+	effectiveUsage := effectiveBillingUsage(convertedUsage)
+	require.Equal(t, 40, effectiveUsage.PromptTokensDetails.CachedTokens)
+	require.Zero(t, convertedUsage.BillingUsage.OpenAIUsage.PromptTokensDetails.CachedTokens)
+
+	summary := calculateTextQuotaSummary(ctx, relayInfo, effectiveUsage)
+	require.Equal(t, 40, summary.CacheTokens)
+	// 60 uncached input + 40*0.25 cached input + 10*2 output = 90.
+	require.Equal(t, 90, summary.Quota)
+}
+
+func TestUsageFromOpenAIBillingUsageNormalizesCacheDetailsWithoutOverwritingCanonicalValues(t *testing.T) {
+	responsesUsage := &dto.Usage{
+		InputTokens:          100,
+		OutputTokens:         10,
+		PromptCacheHitTokens: 55,
+		PromptTokensDetails: dto.InputTokenDetails{
+			CachedTokens: 8,
+			TextTokens:   12,
+		},
+		InputTokensDetails: &dto.InputTokenDetails{
+			CachedTokens:         40,
+			CachedCreationTokens: 5,
+			CacheWriteTokens:     6,
+			TextTokens:           60,
+			ImageTokens:          7,
+			AudioTokens:          9,
+		},
+	}
+
+	billingUsage := dto.NewOpenAIResponsesBillingUsage(responsesUsage)
+	usage := effectiveBillingUsage(&dto.Usage{BillingUsage: billingUsage})
+
+	require.Equal(t, 8, usage.PromptTokensDetails.CachedTokens)
+	require.Equal(t, 5, usage.PromptTokensDetails.CachedCreationTokens)
+	require.Equal(t, 6, usage.PromptTokensDetails.CacheWriteTokens)
+	require.Equal(t, 12, usage.PromptTokensDetails.TextTokens)
+	require.Equal(t, 7, usage.PromptTokensDetails.ImageTokens)
+	require.Equal(t, 9, usage.PromptTokensDetails.AudioTokens)
+	require.Zero(t, billingUsage.OpenAIUsage.PromptTokensDetails.CachedCreationTokens)
+}
+
+func TestUsageFromOpenAIBillingUsageFallsBackToPromptCacheHitTokens(t *testing.T) {
+	usage := effectiveBillingUsage(&dto.Usage{
+		BillingUsage: dto.NewOpenAIChatBillingUsage(&dto.Usage{
+			PromptTokens:         100,
+			CompletionTokens:     10,
+			PromptCacheHitTokens: 35,
+		}),
+	})
+
+	require.Equal(t, 35, usage.PromptTokensDetails.CachedTokens)
+}
+
+func TestCalculateTextQuotaSummaryNormalizesOpenAIResponsesBillingUsageDetails(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	w := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(w)
+
+	relayInfo := &relaycommon.RelayInfo{
+		RelayFormat:     types.RelayFormatClaude,
+		OriginModelName: "gpt-5.6-sol",
+		PriceData: hosttypes.PriceData{
+			ModelRatio:         1,
+			CompletionRatio:    2,
+			CacheRatio:         0.5,
+			CacheCreationRatio: 2,
+			GroupRatioInfo:     hosttypes.GroupRatioInfo{GroupRatio: 1},
+		},
+		StartTime: time.Now(),
+	}
+
+	responsesDetails := dto.InputTokenDetails{
+		CachedTokens:     80,
+		CacheWriteTokens: 10,
+		TextTokens:       100,
+	}
+	usage := &dto.Usage{
+		PromptTokens:     999,
+		CompletionTokens: 999,
+		BillingUsage: dto.NewOpenAIResponsesBillingUsage(&dto.Usage{
+			InputTokens:        100,
+			OutputTokens:       10,
+			TotalTokens:        110,
+			InputTokensDetails: &responsesDetails,
+		}),
+	}
+
+	effectiveUsage := effectiveBillingUsage(usage)
+	summary := calculateTextQuotaSummary(ctx, relayInfo, effectiveUsage)
+
+	require.Equal(t, dto.BillingUsageSourceOAIResponses, effectiveUsage.UsageSource)
+	require.Equal(t, responsesDetails, effectiveUsage.PromptTokensDetails)
+	require.Equal(t, 100, summary.PromptTokens)
+	require.Equal(t, 10, summary.CompletionTokens)
+	require.Equal(t, 80, summary.CacheTokens)
+	require.Equal(t, 10, summary.CacheCreationTokens)
+	// (100-80-10) + 80*0.5 + 10*2 + 10*2 = 90
+	require.Equal(t, 90, summary.Quota)
+}
+
 func TestUsageBillingPathForLog(t *testing.T) {
 	require.Equal(t, usageBillingPathAnthropic, usageBillingPathForLog(true, &dto.Usage{
 		BillingUsage: dto.NewClaudeMessagesBillingUsage(&dto.ClaudeUsage{InputTokens: 1}),
@@ -994,6 +1127,38 @@ func TestCalculateTextToolCallSurchargeGeminiGoogleSearch(t *testing.T) {
 	assert.Equal(t, dto.BuildInToolGoogleSearch, summary.ToolSurchargeItems[0].Name)
 	assert.Equal(t, 1, summary.ToolSurchargeItems[0].Count)
 	assert.Equal(t, 14.0, summary.ToolSurchargeItems[0].Price)
+}
+
+func TestCalculateTextToolCallSurchargeGeminiFunctionCall(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+
+	operation_setting.SetToolPriceForTest("gemini_surcharge_fn", 5.0)
+	t.Cleanup(func() {
+		operation_setting.DeleteToolPriceForTest("gemini_surcharge_fn")
+	})
+
+	relayInfo := &relaycommon.RelayInfo{
+		OriginModelName: "gemini-2.5-flash",
+		ResponsesUsageInfo: &relaycommon.ResponsesUsageInfo{
+			BuiltInTools: map[string]*relaycommon.BuildInToolInfo{
+				"gemini_surcharge_fn": {CallCount: 2},
+			},
+		},
+	}
+	summary := &textQuotaSummary{ModelName: "gemini-2.5-flash", GroupRatio: 1}
+
+	surcharge := calculateTextToolCallSurcharge(ctx, relayInfo, summary)
+	expected := decimal.NewFromFloat(5.0 * 2 / 1000).Mul(decimal.NewFromFloat(common.QuotaPerUnit))
+	assert.True(t, expected.Equal(surcharge), "got %s want %s", surcharge, expected)
+	require.Len(t, summary.ToolSurchargeItems, 1)
+	assert.Equal(t, "gemini_surcharge_fn", summary.ToolSurchargeItems[0].Name)
+	assert.Equal(t, 2, summary.ToolSurchargeItems[0].Count)
+	assert.Equal(t, 5.0, summary.ToolSurchargeItems[0].Price)
+
+	other := map[string]interface{}{}
+	appendToolSurchargeLogInfo(other, summary.ToolSurchargeItems)
+	assert.Equal(t, summary.ToolSurchargeItems, other["tool_surcharges"])
 }
 
 func TestCalculateTextToolCallSurchargeImageGenerationDefaultPrice(t *testing.T) {
