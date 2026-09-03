@@ -142,13 +142,6 @@ func makeTask(userId, channelId, quota, tokenId int, billingSource string, subsc
 	}
 }
 
-func taskBillingOtherMap(t *testing.T, other *model.LogOther) map[string]interface{} {
-	t.Helper()
-	var values map[string]interface{}
-	require.NoError(t, common.UnmarshalJsonStr(other.JSONString(), &values))
-	return values
-}
-
 func TestPriceDataOtherRatiosFilterAndSnapshot(t *testing.T) {
 	priceData := types.PriceData{}
 
@@ -213,7 +206,7 @@ func TestTaskBillingOtherFiltersHistoricalOtherRatios(t *testing.T) {
 		"inf":      math.Inf(1),
 	}
 
-	other := taskBillingOtherMap(t, taskBillingOther(task))
+	other := taskBillingOther(task).Snapshot()
 
 	assert.Equal(t, 2.0, other["seconds"])
 	assert.Equal(t, 1.0, other["identity"])
