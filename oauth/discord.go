@@ -34,9 +34,10 @@ type discordOAuthResponse struct {
 }
 
 type discordUser struct {
-	UID  string `json:"id"`
-	ID   string `json:"username"`
-	Name string `json:"global_name"`
+	UID    string `json:"id"`
+	ID     string `json:"username"`
+	Name   string `json:"global_name"`
+	Avatar string `json:"avatar"`
 }
 
 func (p *DiscordProvider) GetName() string {
@@ -150,10 +151,18 @@ func (p *DiscordProvider) GetUserInfo(ctx context.Context, token *OAuthToken) (*
 
 	logger.LogDebug(ctx, "[OAuth-Discord] GetUserInfo success: uid=%s, username=%s, name=%s", discordUser.UID, discordUser.ID, discordUser.Name)
 
+	avatarURL := ""
+	if discordUser.Avatar != "" {
+		// Always request a static PNG so it can pass the same image validation
+		// as user-uploaded avatars, including for animated Discord avatars.
+		avatarURL = fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.png", discordUser.UID, discordUser.Avatar)
+	}
+
 	return &OAuthUser{
 		ProviderUserID: discordUser.UID,
 		Username:       discordUser.ID,
 		DisplayName:    discordUser.Name,
+		AvatarURL:      avatarURL,
 	}, nil
 }
 

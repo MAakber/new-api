@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/http"
@@ -380,6 +381,11 @@ func findOrCreateOAuthUser(providerName string, provider oauth.Provider, oauthUs
 		inviterId, _ = model.GetUserIdByAffCode(affiliateCode)
 	}
 	if registrationCodeRequired {
+		avatarURL, avatarErr := validateOAuthAvatarURL(oauthUser.AvatarURL)
+		if avatarErr != nil {
+			logOAuthAvatarImportWarning(context.Background(), user.Id, avatarErr)
+			avatarURL = ""
+		}
 		challenge, err := createPendingRegistration(pendingRegistrationPayload{
 			Method: pendingRegistrationOAuth,
 			User: pendingRegistrationUser{
@@ -390,6 +396,7 @@ func findOrCreateOAuthUser(providerName string, provider oauth.Provider, oauthUs
 			InviterId:      inviterId,
 			Provider:       providerName,
 			ProviderUserId: oauthUser.ProviderUserID,
+			AvatarURL:      avatarURL,
 		})
 		if err != nil {
 			return nil, nil, err
@@ -441,6 +448,7 @@ func findOrCreateOAuthUser(providerName string, provider oauth.Provider, oauthUs
 		// Perform post-transaction tasks
 		user.FinalizeOAuthUserCreation(inviterId)
 	}
+	importOAuthAvatar(context.Background(), user.Id, oauthUser.AvatarURL)
 
 	return user, nil, nil
 }

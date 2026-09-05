@@ -36,6 +36,7 @@ func setupRegistrationCompletionTest(t *testing.T) *gorm.DB {
 	require.NoError(t, err)
 	require.NoError(t, db.AutoMigrate(
 		&model.User{},
+		&model.UserAvatar{},
 		&model.AuthFlow{},
 		&model.ExternalIdentityClaim{},
 		&model.Redemption{},

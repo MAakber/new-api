@@ -45,6 +45,7 @@ type pendingRegistrationPayload struct {
 	InviterId      int                     `json:"inviter_id,omitempty"`
 	Provider       string                  `json:"provider,omitempty"`
 	ProviderUserId string                  `json:"provider_user_id,omitempty"`
+	AvatarURL      string                  `json:"avatar_url,omitempty"`
 }
 
 type pendingRegistrationChallenge struct {
@@ -113,6 +114,7 @@ func CompleteRegistration(c *gin.Context) {
 	var createdUser model.User
 	var completedMethod string
 	var completedProvider string
+	var completedAvatarURL string
 	var inviterId int
 	_, err := model.ConsumeAuthFlowWithAction(request.FlowToken, model.AuthFlowMatch{
 		Purpose: model.AuthFlowPurposeRegistration,
@@ -218,6 +220,7 @@ func CompleteRegistration(c *gin.Context) {
 		createdUser = user
 		completedMethod = payload.Method
 		completedProvider = payload.Provider
+		completedAvatarURL = payload.AvatarURL
 		inviterId = payload.InviterId
 		return nil
 	})
@@ -245,6 +248,7 @@ func CompleteRegistration(c *gin.Context) {
 
 	if completedMethod == pendingRegistrationOAuth {
 		createdUser.FinalizeOAuthUserCreation(inviterId)
+		importOAuthAvatar(c.Request.Context(), createdUser.Id, completedAvatarURL)
 		c.Set("login_method_override", "oauth:"+completedProvider)
 		setupLogin(&createdUser, c)
 		return
