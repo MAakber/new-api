@@ -64,5 +64,10 @@ export function buildOIDCOAuthUrl(
  * Build LinuxDO OAuth URL
  */
 export function buildLinuxDOOAuthUrl(clientId: string, state: string): string {
-  return `https://connect.linux.do/oauth2/authorize?response_type=code&client_id=${clientId}&state=${state}`
+  const url = new URL('https://connect.linux.do/oauth2/authorize')
+  url.searchParams.set('response_type', 'code')
+  url.searchParams.set('client_id', clientId)
+  url.searchParams.set('scope', 'openid profile')
+  url.searchParams.set('state', state)
+  return url.toString()
 }
