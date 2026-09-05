@@ -20,6 +20,7 @@ import { t } from 'i18next'
 
 import { ERROR_MESSAGES, MESSAGE_ROLES, MESSAGE_STATUS } from '../../constants'
 import type { ChatCompletionResponse, Message } from '../../types'
+import { mergeWebSearchSources } from '../streaming/stream-utils'
 import { parseThinkTags } from './message-reasoning-utils'
 import {
   completeAssistantTiming,
@@ -207,7 +208,15 @@ export function applyChatCompletionResponse(
     return null
   }
 
-  return applyChatCompletionChoice(message, choice)
+  const updatedMessage = applyChatCompletionChoice(message, choice)
+  if (!updatedMessage || !response.sources) {
+    return updatedMessage
+  }
+
+  return {
+    ...updatedMessage,
+    sources: mergeWebSearchSources([], response.sources),
+  }
 }
 
 /**

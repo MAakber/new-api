@@ -76,4 +76,9 @@ const (
 	// ContextKeyRequestDebug stores sanitized upstream request/response metadata
 	// collected during relay execution and merged into the eventual log entry.
 	ContextKeyRequestDebug ContextKey = "request_debug"
+
+	// ContextKeyWebSearchRequests stores the number of server-side web search
+	// requests made immediately before a Playground relay round so text billing
+	// can apply the existing web_search per-call price exactly once.
+	ContextKeyWebSearchRequests ContextKey = "web_search_requests"
 )

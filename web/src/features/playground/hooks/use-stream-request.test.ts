@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import assert from 'node:assert/strict'
 import { describe, test } from 'node:test'
 
+import type { StreamMessageUpdate } from '../lib/streaming/stream-utils'
 import type { ChatCompletionRequest } from '../types'
 import { createStreamRequestController } from './use-stream-request'
 
@@ -174,8 +175,11 @@ describe('latest-wins stream request coordination', () => {
       setStreaming: () => undefined,
     })
     const callbacks = {
-      onUpdate: (_type: 'reasoning' | 'content', chunk: string) =>
-        updates.push(chunk),
+      onUpdate: (update: StreamMessageUpdate) => {
+        if (update.type !== 'sources') {
+          updates.push(update.chunk)
+        }
+      },
       onComplete: () => undefined,
       onError: () => undefined,
     }

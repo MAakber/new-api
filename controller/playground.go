@@ -4,9 +4,11 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/middleware"
 	"github.com/QuantumNous/new-api/model"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/relaykit/types"
 
 	"github.com/gin-gonic/gin"
@@ -51,6 +53,12 @@ func Playground(c *gin.Context) {
 		Group:  relayInfo.UsingGroup,
 	}
 	_ = middleware.SetupContextForToken(c, tempToken)
+
+	var playgroundRequest dto.GeneralOpenAIRequest
+	if err := common.UnmarshalBodyReusable(c, &playgroundRequest); err == nil && isPlaygroundWebSearchEnabled(playgroundRequest.WebSearch) {
+		newAPIError = playgroundWithWebSearch(c, &playgroundRequest)
+		return
+	}
 
 	Relay(c, types.RelayFormatOpenAI)
 }

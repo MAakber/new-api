@@ -28,6 +28,11 @@ export interface MessageVersion {
   content: string
 }
 
+export interface WebSearchSource {
+  href: string
+  title: string
+}
+
 export interface Message {
   key: string
   from: MessageRole
@@ -36,7 +41,7 @@ export interface Message {
   startedAt?: number
   completedAt?: number
   durationMs?: number
-  sources?: { href: string; title: string }[]
+  sources?: WebSearchSource[]
   reasoning?: {
     content: string
     duration: number
@@ -70,6 +75,7 @@ export interface ChatCompletionRequest {
   group?: string
   messages: ChatCompletionMessage[]
   stream: boolean
+  web_search?: boolean
   temperature?: number
   top_p?: number
   max_tokens?: number
@@ -89,6 +95,9 @@ export interface ChatCompletionChunk {
       role?: MessageRole
       content?: string
       reasoning_content?: string
+      web_search?: {
+        sources?: WebSearchSource[]
+      }
     }
     finish_reason: string | null
   }>
@@ -108,6 +117,7 @@ export interface ChatCompletionResponse {
     }
     finish_reason: string
   }>
+  sources?: WebSearchSource[]
   usage?: {
     prompt_tokens: number
     completion_tokens: number
@@ -126,6 +136,7 @@ export interface PlaygroundConfig {
   presence_penalty: number
   seed: number | null
   stream: boolean
+  webSearchEnabled: boolean
 }
 
 export interface ParameterEnabled {

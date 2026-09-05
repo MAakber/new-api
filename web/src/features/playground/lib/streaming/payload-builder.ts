@@ -44,6 +44,10 @@ export function buildChatCompletionPayload(
     stream: config.stream,
   }
 
+  if (config.webSearchEnabled) {
+    payload.web_search = true
+  }
+
   if (parameterEnabled.temperature) {
     payload.temperature = config.temperature
   }

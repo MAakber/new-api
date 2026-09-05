@@ -33,7 +33,9 @@ import {
   hasChatCompletionChoice,
   isAssistantMessageFinal,
   isAssistantMessagePending,
+  mergeWebSearchSources,
 } from '../lib'
+import type { StreamMessageUpdate } from '../lib/streaming/stream-utils'
 import type { Message, PlaygroundConfig, ParameterEnabled } from '../types'
 import { useStreamRequest } from './use-stream-request'
 
@@ -188,16 +190,29 @@ export function useChatHandler({
 
   // Handle stream update
   const handleStreamUpdate = useCallback(
-    (generation: number, type: 'reasoning' | 'content', chunk: string) => {
+    (generation: number, update: StreamMessageUpdate) => {
       if (generation !== requestGenerationRef.current) return
       if (pendingStreamChunksRef.current.generation !== generation) return
-      pendingStreamChunksRef.current[type] = mergePendingStreamChunk(
-        pendingStreamChunksRef.current[type],
-        chunk
+
+      if (update.type === 'sources') {
+        flushStreamUpdates(generation)
+        onMessageUpdate((prev) => {
+          if (generation !== requestGenerationRef.current) return prev
+          return updateLastAssistantMessage(prev, (message) => ({
+            ...message,
+            sources: mergeWebSearchSources(message.sources, update.sources),
+          }))
+        })
+        return
+      }
+
+      pendingStreamChunksRef.current[update.type] = mergePendingStreamChunk(
+        pendingStreamChunksRef.current[update.type],
+        update.chunk
       )
       scheduleStreamFlush(generation)
     },
-    [scheduleStreamFlush]
+    [flushStreamUpdates, onMessageUpdate, scheduleStreamFlush]
   )
 
   // Handle stream complete
@@ -256,7 +271,7 @@ export function useChatHandler({
       )
       void sendStreamRequest(
         payload,
-        (type, chunk) => handleStreamUpdate(generation, type, chunk),
+        (update) => handleStreamUpdate(generation, update),
         () => handleStreamComplete(generation),
         (error, errorCode) => handleStreamError(generation, error, errorCode)
       )

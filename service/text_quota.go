@@ -164,12 +164,14 @@ func calculateTextToolCallSurcharge(ctx *gin.Context, relayInfo *relaycommon.Rel
 		items = collectToolSurchargeItem(items, dto.BuildInToolWebSearchPreview, 1, summary.ModelName)
 	}
 
-	items = collectToolSurchargeItem(
-		items,
-		dto.BuildInToolWebSearch,
-		ctx.GetInt("claude_web_search_requests"),
-		summary.ModelName,
-	)
+	webSearchRequests := ctx.GetInt("claude_web_search_requests")
+	playgroundWebSearchRequests := common.GetContextKeyInt(ctx, constant.ContextKeyWebSearchRequests)
+	if webSearchRequests > 0 {
+		items = collectToolSurchargeItem(items, dto.BuildInToolWebSearch, webSearchRequests, summary.ModelName)
+	}
+	if playgroundWebSearchRequests > 0 {
+		items = collectToolSurchargeItem(items, dto.BuildInToolWebSearch, playgroundWebSearchRequests, summary.ModelName)
+	}
 
 	if ctx.GetBool("gemini_google_search_call") {
 		items = collectToolSurchargeItem(items, dto.BuildInToolGoogleSearch, 1, summary.ModelName)

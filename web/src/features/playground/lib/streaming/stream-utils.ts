@@ -17,17 +17,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { ERROR_MESSAGES } from '../../constants'
-import type { ChatCompletionChunk } from '../../types'
+import type { ChatCompletionChunk, WebSearchSource } from '../../types'
 
 const STREAM_DONE_MESSAGE = '[DONE]'
 const STREAM_CLOSED_READY_STATE = 2
 
-export type StreamUpdateType = 'reasoning' | 'content'
+export type StreamUpdateType = 'reasoning' | 'content' | 'sources'
 
-export type StreamMessageUpdate = {
-  type: StreamUpdateType
-  chunk: string
-}
+export type StreamMessageUpdate =
+  | {
+      type: 'reasoning' | 'content'
+      chunk: string
+    }
+  | {
+      type: 'sources'
+      sources: WebSearchSource[]
+    }
 
 type StreamErrorPayload = {
   error?: {
@@ -82,7 +87,64 @@ export function parseStreamMessageUpdates(data: string): StreamMessageUpdate[] {
     updates.push({ type: 'content', chunk: delta.content })
   }
 
+  const sources = normalizeWebSearchSources(delta.web_search?.sources)
+  if (sources.length > 0) {
+    updates.push({ type: 'sources', sources })
+  }
+
   return updates
+}
+
+export function normalizeWebSearchSources(sources: unknown): WebSearchSource[] {
+  if (!Array.isArray(sources)) {
+    return []
+  }
+
+  const normalized: WebSearchSource[] = []
+  for (const source of sources) {
+    if (!source || typeof source !== 'object') {
+      continue
+    }
+
+    const candidate = source as { href?: unknown; title?: unknown }
+    if (typeof candidate.href !== 'string') {
+      continue
+    }
+
+    let parsed: URL
+    try {
+      parsed = new URL(candidate.href)
+    } catch {
+      continue
+    }
+
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      continue
+    }
+
+    const href = parsed.toString()
+    if (normalized.some((item) => item.href === href)) {
+      continue
+    }
+
+    const title =
+      typeof candidate.title === 'string' && candidate.title.trim()
+        ? candidate.title.trim()
+        : parsed.hostname
+    normalized.push({ href, title })
+
+    if (normalized.length >= 20) {
+      break
+    }
+  }
+  return normalized
+}
+
+export function mergeWebSearchSources(
+  current: WebSearchSource[] | undefined,
+  incoming: WebSearchSource[]
+): WebSearchSource[] {
+  return normalizeWebSearchSources([...(current ?? []), ...incoming])
 }
 
 export function isStreamDoneMessage(data: string): boolean {
