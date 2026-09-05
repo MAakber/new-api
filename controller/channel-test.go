@@ -857,9 +857,19 @@ func buildTestRequestWithMessage(model string, endpointType string, channel *mod
 	if err != nil {
 		message = operation_setting.DefaultChannelTestMessage
 	}
-	testResponsesInputBytes, err := common.Marshal([]dto.Message{{Role: "user", Content: message}})
+	// Build the Responses-API user input as Codex CLI does: a message whose
+	// content is an array of {type:"input_text"} parts. String content also
+	// parses fine on the OpenAI side, but queue-holding Codex-shaped upstreams
+	// may shape-check the item structure, so stay aligned with the CLI format.
+	testResponsesInputBytes, err := common.Marshal([]dto.Message{{
+		Role: "user",
+		Content: []map[string]string{{
+			"type": "input_text",
+			"text": message,
+		}},
+	}})
 	if err != nil {
-		testResponsesInputBytes = []byte(`[{"role":"user","content":"hi"}]`)
+		testResponsesInputBytes = []byte(`[{"role":"user","content":[{"type":"input_text","text":"hi"}]}]`)
 	}
 	testResponsesInput := json.RawMessage(testResponsesInputBytes)
 

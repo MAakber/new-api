@@ -16,6 +16,7 @@ import (
 	"github.com/QuantumNous/new-api/relaykit/types"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type Adaptor struct {
@@ -98,6 +99,31 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 
 	if isCompact {
 		return request, nil
+	}
+
+	// Channel-test and queue warm-up payloads are built by testChannelWithOptions
+	// with only the bare Responses shape (model/input/instructions/stream/store).
+	// Real Codex CLI traffic (codex-rs ResponsesApiRequest) always carries a
+	// fixed set of extra fields; relay-style upstreams that shape-check the
+	// payload (e.g. Any station) reject requests missing them. Fill in stable
+	// defaults for channel tests and warm-ups only — user requests keep exactly
+	// whatever the client sent.
+	if info != nil && info.IsChannelTest {
+		if len(request.ToolChoice) == 0 {
+			request.ToolChoice = json.RawMessage(`"auto"`)
+		}
+		if len(request.ParallelToolCalls) == 0 {
+			request.ParallelToolCalls = json.RawMessage(`false`)
+		}
+		if len(request.Include) == 0 {
+			request.Include = json.RawMessage(`["reasoning.encrypted_content"]`)
+		}
+		if len(request.PromptCacheKey) == 0 {
+			request.PromptCacheKey = json.RawMessage(`"` + uuid.NewString() + `"`)
+		}
+		if request.Reasoning == nil {
+			request.Reasoning = &dto.Reasoning{Effort: "low", Summary: "none"}
+		}
 	}
 	// codex: store must be false
 	request.Store = json.RawMessage("false")

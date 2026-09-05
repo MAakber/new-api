@@ -182,10 +182,17 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 		"",
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
-	var responsesInput []dto.Message
+	var responsesInput []struct {
+		Content []struct {
+			Type string `json:"type"`
+			Text string `json:"text"`
+		} `json:"content"`
+	}
 	require.NoError(t, json.Unmarshal(responsesRequest.Input, &responsesInput))
 	require.Len(t, responsesInput, 1)
-	assert.Equal(t, message, responsesInput[0].StringContent())
+	require.Len(t, responsesInput[0].Content, 1)
+	assert.Equal(t, "input_text", responsesInput[0].Content[0].Type)
+	assert.Equal(t, message, responsesInput[0].Content[0].Text)
 
 	embeddingRequest, ok := buildTestRequestWithMessage(
 		"text-embedding-test",
@@ -212,10 +219,17 @@ func TestBuildWarmupRequestInjectsSystemPromptAsInstructions(t *testing.T) {
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
 	require.JSONEq(t, fmt.Sprintf("%q", systemPrompt), string(responsesRequest.Instructions))
-	var responsesInput []dto.Message
+	var responsesInput []struct {
+		Content []struct {
+			Type string `json:"type"`
+			Text string `json:"text"`
+		} `json:"content"`
+	}
 	require.NoError(t, json.Unmarshal(responsesRequest.Input, &responsesInput))
 	require.Len(t, responsesInput, 1)
-	assert.Equal(t, "warmup probe", responsesInput[0].StringContent())
+	require.Len(t, responsesInput[0].Content, 1)
+	assert.Equal(t, "input_text", responsesInput[0].Content[0].Type)
+	assert.Equal(t, "warmup probe", responsesInput[0].Content[0].Text)
 
 	compactRequest, ok := buildTestRequestWithMessage(
 		"gpt-5.6-sol"+ratio_setting.CompactModelSuffix,
