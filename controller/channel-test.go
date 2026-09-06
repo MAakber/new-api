@@ -861,15 +861,20 @@ func buildTestRequestWithMessage(model string, endpointType string, channel *mod
 	// content is an array of {type:"input_text"} parts. String content also
 	// parses fine on the OpenAI side, but queue-holding Codex-shaped upstreams
 	// may shape-check the item structure, so stay aligned with the CLI format.
-	testResponsesInputBytes, err := common.Marshal([]dto.Message{{
-		Role: "user",
-		Content: []map[string]string{{
-			"type": "input_text",
-			"text": message,
-		}},
+	contentBytes, err := common.Marshal([]map[string]string{{
+		"type": "input_text",
+		"text": message,
 	}})
 	if err != nil {
-		testResponsesInputBytes = []byte(`[{"role":"user","content":[{"type":"input_text","text":"hi"}]}]`)
+		contentBytes = []byte(`[{"type":"input_text","text":"hi"}]`)
+	}
+	testResponsesInputBytes, err := common.Marshal([]dto.Input{{
+		Type:    "message",
+		Role:    "user",
+		Content: json.RawMessage(contentBytes),
+	}})
+	if err != nil {
+		testResponsesInputBytes = []byte(`[{"type":"message","role":"user","content":[{"type":"input_text","text":"hi"}]}]`)
 	}
 	testResponsesInput := json.RawMessage(testResponsesInputBytes)
 
@@ -1365,6 +1370,13 @@ func sanitizeWarmupMessage(msg string) string {
 	return strings.TrimSpace(msg)
 }
 
+// shouldUseCodexCompatibilityProfileForQueueWarmup enables the existing
+// channel-test profile only for the Codex compatibility channel. Legacy Codex
+// and all other channel types keep the queue warmer's previous behavior.
+func shouldUseCodexCompatibilityProfileForQueueWarmup(channel *model.Channel) bool {
+	return channel != nil && channel.Type == constant.ChannelTypeCodexCompatibility
+}
+
 // PerformChannelQueueWarmup sends a single minimal warm-up request to a channel
 // for the given model, reusing the channel-test call path. It skips consume
 // logging, response-time updates, and auto-ban evaluation: warming is an
@@ -1378,7 +1390,7 @@ func PerformChannelQueueWarmup(ctx context.Context, channel *model.Channel, mode
 	}
 	options := channelTestOptions{
 		message:         message,
-		useChannelStyle: false,
+		useChannelStyle: shouldUseCodexCompatibilityProfileForQueueWarmup(channel),
 		capturePreview:  false,
 		skipConsumeLog:  true,
 		maxTokens:       maxTokens,

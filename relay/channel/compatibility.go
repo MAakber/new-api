@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/QuantumNous/new-api/constant"
+	relaycommon "github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/google/uuid"
 )
@@ -50,6 +51,42 @@ func ApplyCompatibilityHeadersWithClientIdentity(channelType int, headers http.H
 			headers.Set("Accept", "application/json")
 		}
 	}
+}
+
+// ApplyCodexCompatibilityTestHeaders adds only the synthetic session headers
+// required by the channel-test Codex Responses profile. It must not be used
+// for normal user traffic and never adds credentials or attestation headers.
+func ApplyCodexCompatibilityTestHeaders(headers http.Header, identity *relaycommon.CodexCompatibilityTestIdentity) {
+	if headers == nil || identity == nil {
+		return
+	}
+
+	// Do not carry session state from a caller or from a reused header map into
+	// a synthetic probe. Header Override is applied later by DoApiRequest and
+	// remains the only explicit override path.
+	for name := range headers {
+		switch strings.ToLower(name) {
+		case "session-id",
+			"thread-id",
+			"x-client-request-id",
+			"x-codex-installation-id",
+			"x-codex-window-id",
+			"x-codex-turn-metadata",
+			"x-codex-turn-state",
+			"x-codex-beta-features",
+			"x-codex-parent-thread-id",
+			"x-openai-subagent",
+			"x-oai-attestation":
+			delete(headers, name)
+		}
+	}
+
+	headers.Set("Session-Id", identity.SessionID)
+	headers.Set("Thread-Id", identity.ThreadID)
+	headers.Set("X-Client-Request-Id", identity.ClientRequestID)
+	headers.Set("X-Codex-Installation-Id", identity.InstallationID)
+	headers.Set("X-Codex-Window-Id", identity.WindowID)
+	headers.Set("X-Codex-Turn-Metadata", identity.TurnMetadata)
 }
 
 // ApplyCodexLegacyClientIdentity applies only the safe identity fields for

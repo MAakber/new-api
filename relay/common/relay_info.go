@@ -76,6 +76,50 @@ type ChannelMeta struct {
 	SupportStreamOptions bool // 是否支持流式选项
 }
 
+// CodexCompatibilityTestIdentity contains the request-scoped synthetic
+// identity used only by channel-test Responses probes. It deliberately holds
+// no credentials or host-specific data.
+type CodexCompatibilityTestIdentity struct {
+	SessionID       string
+	ThreadID        string
+	ClientRequestID string
+	InstallationID  string
+	WindowID        string
+	TurnID          string
+	RootTurnID      string
+	PromptCacheKey  string
+	TurnMetadata    string
+}
+
+type codexCompatibilityTurnMetadata struct {
+	InstallationID             string                                 `json:"installation_id"`
+	SessionID                  string                                 `json:"session_id"`
+	ThreadID                   string                                 `json:"thread_id"`
+	AgentName                  string                                 `json:"agent_name"`
+	TurnID                     string                                 `json:"turn_id"`
+	WindowID                   string                                 `json:"window_id"`
+	RequestKind                string                                 `json:"request_kind"`
+	RootTurnID                 string                                 `json:"root_turn_id"`
+	ThreadSource               string                                 `json:"thread_source"`
+	Sandbox                    string                                 `json:"sandbox"`
+	SandboxMode                string                                 `json:"sandbox_mode"`
+	AutoReviewEnabled          bool                                   `json:"auto_review_enabled"`
+	NodeReplAutoReviewRequired bool                                   `json:"node_repl_auto_review_required"`
+	NodeReplDisabled           bool                                   `json:"node_repl_disabled"`
+	Workspaces                 map[string]codexCompatibilityWorkspace `json:"workspaces"`
+	TurnStartedAtUnixMS        int64                                  `json:"turn_started_at_unix_ms"`
+}
+
+type codexCompatibilityWorkspace struct {
+	AssociatedRemoteURLs codexCompatibilityAssociatedRemoteURLs `json:"associated_remote_urls"`
+	LatestGitCommitHash  string                                 `json:"latest_git_commit_hash"`
+	HasChanges           bool                                   `json:"has_changes"`
+}
+
+type codexCompatibilityAssociatedRemoteURLs struct {
+	Origin string `json:"origin"`
+}
+
 type TokenCountMeta struct {
 	//promptTokens int
 	estimatePromptTokens int
@@ -187,6 +231,10 @@ type RelayInfo struct {
 	// claudeCodeSessionID is generated only for Claude Code upstream requests.
 	// It is request-scoped and intentionally never sourced from inbound headers.
 	claudeCodeSessionID string
+
+	// codexCompatibilityTestIdentity is generated only for the channel-test
+	// Codex compatibility Responses profile and is reused by body/header setup.
+	codexCompatibilityTestIdentity *CodexCompatibilityTestIdentity
 
 	ThinkingContentInfo
 	TokenCountMeta
@@ -707,6 +755,71 @@ func (info *RelayInfo) SetEstimatePromptTokens(promptTokens int) {
 // provider client profiles for channel tests that explicitly opt out.
 func (info *RelayInfo) ShouldUseChannelTestStyle() bool {
 	return info == nil || !info.IsChannelTest || !info.DisableChannelTestClientProfile
+}
+
+// ShouldUseCodexCompatibilityTestProfile identifies the narrow profile used by
+// channel-test and queue-warmup Responses probes. Normal user traffic and
+// Responses compaction are intentionally excluded.
+func (info *RelayInfo) ShouldUseCodexCompatibilityTestProfile() bool {
+	return info != nil && info.ChannelMeta != nil &&
+		info.ChannelType == constant.ChannelTypeCodexCompatibility &&
+		info.IsChannelTest && info.ShouldUseChannelTestStyle() &&
+		info.RelayMode == relayconstant.RelayModeResponses
+}
+
+// EnsureCodexCompatibilityTestIdentity returns one stable synthetic identity
+// for the current channel-test request. The identity is never sourced from
+// client headers and is generated only for the narrow compatibility profile.
+func (info *RelayInfo) EnsureCodexCompatibilityTestIdentity() *CodexCompatibilityTestIdentity {
+	if !info.ShouldUseCodexCompatibilityTestProfile() {
+		return nil
+	}
+	if info.codexCompatibilityTestIdentity == nil {
+		sessionID := uuid.NewString()
+		turnStartedAtUnixMS := int64(0)
+		if !info.StartTime.IsZero() {
+			turnStartedAtUnixMS = info.StartTime.UnixMilli()
+		}
+		identity := &CodexCompatibilityTestIdentity{
+			SessionID:       sessionID,
+			ThreadID:        sessionID,
+			ClientRequestID: sessionID,
+			InstallationID:  uuid.NewString(),
+			WindowID:        sessionID + ":0",
+			TurnID:          uuid.NewString(),
+			RootTurnID:      uuid.NewString(),
+			PromptCacheKey:  sessionID,
+		}
+		turnMetadata, _ := json.Marshal(codexCompatibilityTurnMetadata{
+			InstallationID:             identity.InstallationID,
+			SessionID:                  identity.SessionID,
+			ThreadID:                   identity.ThreadID,
+			AgentName:                  "/root",
+			TurnID:                     identity.TurnID,
+			WindowID:                   identity.WindowID,
+			RequestKind:                "turn",
+			RootTurnID:                 identity.RootTurnID,
+			ThreadSource:               "user",
+			Sandbox:                    "none",
+			SandboxMode:                "danger-full-access",
+			AutoReviewEnabled:          false,
+			NodeReplAutoReviewRequired: false,
+			NodeReplDisabled:           false,
+			Workspaces: map[string]codexCompatibilityWorkspace{
+				"/workspace": {
+					AssociatedRemoteURLs: codexCompatibilityAssociatedRemoteURLs{
+						Origin: "https://example.invalid/origin.git",
+					},
+					LatestGitCommitHash: strings.Repeat("0", 40),
+					HasChanges:          false,
+				},
+			},
+			TurnStartedAtUnixMS: turnStartedAtUnixMS,
+		})
+		identity.TurnMetadata = string(turnMetadata)
+		info.codexCompatibilityTestIdentity = identity
+	}
+	return info.codexCompatibilityTestIdentity
 }
 
 // EnsureClaudeCodeSessionID lazily creates the upstream-only session identity

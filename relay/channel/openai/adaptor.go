@@ -285,9 +285,17 @@ func (a *Adaptor) SetupRequestHeader(c *gin.Context, header *http.Header, info *
 			channel.ApplyCompatibilityHeadersWithClientIdentity(info.ChannelType, *header, info.ApiKey, info.IsStream, "", info.ChannelOtherSettings.ClientIdentity)
 		}
 	}
+	if info.ShouldUseCodexCompatibilityTestProfile() {
+		channel.ApplyCodexCompatibilityTestHeaders(*header, info.EnsureCodexCompatibilityTestIdentity())
+		if isCodexResponsesLiteModel(codexCompatibilityProfileModel(info)) {
+			header.Set("X-OpenAI-Internal-Codex-Responses-Lite", "true")
+		} else {
+			deleteHeaderCaseInsensitive(*header, "X-OpenAI-Internal-Codex-Responses-Lite")
+		}
+	}
 	// Codex 兼容渠道：透传客户端携带的 Codex 会话类 header（多轮续接 / 粘性路由 / 安装标识等），
 	// 与真实 Codex CLI 行为对齐。仅复制客户端显式携带的值，不覆盖已由兼容身份设置的固定头。
-	if info.ChannelType == constant.ChannelTypeCodexCompatibility {
+	if info.ChannelType == constant.ChannelTypeCodexCompatibility && !info.IsChannelTest {
 		for _, name := range []string{
 			"session-id",
 			"thread-id",
@@ -715,15 +723,13 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 		}
 		return chatRequest, nil
 	}
-	if info != nil && info.ChannelType == constant.ChannelTypeCodexCompatibility && info.ShouldUseChannelTestStyle() {
+	if info != nil && info.ChannelMeta != nil && info.ChannelType == constant.ChannelTypeCodexCompatibility && info.ShouldUseChannelTestStyle() {
 		// Codex Responses requires store=false and expects an instructions field.
-		request.Store = json.RawMessage("false")
-		request.MaxOutputTokens = nil
 		// 渠道级系统提示词注入，语义与 codex 订阅渠道（codex/adaptor.go）对齐：
 		// instructions 为空时注入 SystemPrompt；非空且开启 SystemPromptOverride 时拼接。
 		if info.ChannelSetting.SystemPrompt != "" {
 			systemPrompt := info.ChannelSetting.SystemPrompt
-			if len(request.Instructions) == 0 {
+			if !hasCodexJSONValue(request.Instructions) {
 				if b, err := common.Marshal(systemPrompt); err == nil {
 					request.Instructions = b
 				} else {
@@ -755,6 +761,14 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 				}
 			}
 		}
+		// Compaction has a smaller, separately documented request shape. Keep
+		// the system-prompt behavior above, but do not add full Responses probe
+		// fields to a compact request.
+		if info.RelayMode == relayconstant.RelayModeResponsesCompact {
+			return request, nil
+		}
+		request.Store = json.RawMessage("false")
+		request.MaxOutputTokens = nil
 		if len(request.Instructions) == 0 {
 			request.Instructions = json.RawMessage(`"You are a helpful assistant."`)
 		}
@@ -768,7 +782,16 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 			request.ToolChoice = json.RawMessage(`"auto"`)
 		}
 		if len(request.ParallelToolCalls) == 0 {
-			request.ParallelToolCalls = json.RawMessage("true")
+			if info.ShouldUseCodexCompatibilityTestProfile() {
+				request.ParallelToolCalls = json.RawMessage("false")
+			} else {
+				request.ParallelToolCalls = json.RawMessage("true")
+			}
+		}
+		if info.ShouldUseCodexCompatibilityTestProfile() {
+			if err := applyCodexCompatibilityTestResponsesShape(&request, info); err != nil {
+				return nil, err
+			}
 		}
 	}
 	return request, nil

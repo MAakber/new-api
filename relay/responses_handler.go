@@ -176,6 +176,11 @@ func ResponsesHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *
 }
 
 func shouldPassThroughResponsesBody(info *relaycommon.RelayInfo) bool {
+	if info != nil && info.ShouldUseCodexCompatibilityTestProfile() {
+		// Channel-test Codex probes must reach the adaptor so their Responses
+		// body gets the same compatibility shaping as queue warm-up calls.
+		return false
+	}
 	return info != nil && info.ChannelMeta != nil &&
 		(model_setting.GetGlobalSettings().PassThroughRequestEnabled || info.ChannelSetting.PassThroughBodyEnabled) &&
 		info.ChannelType != constant.ChannelTypeCodeBuddy

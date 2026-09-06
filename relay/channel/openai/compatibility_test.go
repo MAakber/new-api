@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
@@ -13,6 +14,7 @@ import (
 	relayconstant "github.com/QuantumNous/new-api/relay/constant"
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -24,21 +26,31 @@ func TestCodexCompatibilityBuildsPiCompatibleResponsesRequest(t *testing.T) {
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	c.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
 	info := &relaycommon.RelayInfo{
-		IsStream: true,
+		IsStream:      true,
+		RelayMode:     relayconstant.RelayModeResponses,
+		IsChannelTest: true,
 		ChannelMeta: &relaycommon.ChannelMeta{
-			ChannelType: constant.ChannelTypeCodexCompatibility,
-			ApiKey:      "test-key",
+			ChannelType:       constant.ChannelTypeCodexCompatibility,
+			ApiKey:            "test-key",
+			UpstreamModelName: "gpt-5-codex",
 		},
 	}
 	adaptor := &Adaptor{}
 	adaptor.Init(info)
 
-	headers := http.Header{}
+	headers := http.Header{
+		"X-Codex-Turn-State":    []string{"stale-state"},
+		"X-OAI-Attestation":     []string{"stale-attestation"},
+		"X-Codex-Beta-Features": []string{"stale-features"},
+	}
 	require.NoError(t, adaptor.SetupRequestHeader(c, &headers, info))
 	assert.Equal(t, "Bearer test-key", headers.Get("Authorization"))
 	assert.Equal(t, "responses=experimental", headers.Get("OpenAI-Beta"))
 	assert.Equal(t, "codex_cli_rs", headers.Get("Originator"))
 	assert.Equal(t, "text/event-stream", headers.Get("Accept"))
+	assert.Empty(t, headers.Get("X-Codex-Turn-State"))
+	assert.Empty(t, headers.Get("X-Codex-Beta-Features"))
+	assert.Empty(t, headers.Get("X-OAI-Attestation"))
 
 	maxOutputTokens := uint(4096)
 	converted, err := adaptor.ConvertOpenAIResponsesRequest(c, info, dto.OpenAIResponsesRequest{
@@ -54,7 +66,242 @@ func TestCodexCompatibilityBuildsPiCompatibleResponsesRequest(t *testing.T) {
 	assert.JSONEq(t, `{"verbosity":"low"}`, string(request.Text))
 	assert.JSONEq(t, `["reasoning.encrypted_content"]`, string(request.Include))
 	assert.JSONEq(t, `"auto"`, string(request.ToolChoice))
+	assert.JSONEq(t, `false`, string(request.ParallelToolCalls))
+	require.NotNil(t, request.Reasoning)
+	assert.Equal(t, "low", request.Reasoning.Effort)
+	assert.JSONEq(t, `"all_turns"`, string(request.Reasoning.Context))
+	require.NoError(t, uuid.Validate(strings.Trim(string(request.PromptCacheKey), `"`)))
+	assert.NotEmpty(t, request.ClientMetadata)
+}
+
+func TestCodexCompatibilityNormalResponsesKeepExistingProfileWithoutTestIdentity(t *testing.T) {
+	oldMode := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(oldMode) })
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
+	info := &relaycommon.RelayInfo{
+		RelayMode: relayconstant.RelayModeResponses,
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ChannelType:       constant.ChannelTypeCodexCompatibility,
+			ApiKey:            "test-key",
+			UpstreamModelName: "gpt-5-codex",
+		},
+	}
+
+	converted, err := (&Adaptor{}).ConvertOpenAIResponsesRequest(c, info, dto.OpenAIResponsesRequest{Model: "gpt-5-codex"})
+	require.NoError(t, err)
+	request, ok := converted.(dto.OpenAIResponsesRequest)
+	require.True(t, ok)
 	assert.JSONEq(t, `true`, string(request.ParallelToolCalls))
+	assert.Nil(t, request.Reasoning)
+	assert.Empty(t, request.PromptCacheKey)
+	assert.Empty(t, request.ClientMetadata)
+
+	headers := http.Header{}
+	require.NoError(t, (&Adaptor{}).SetupRequestHeader(c, &headers, info))
+	assert.Empty(t, headers.Get("Session-Id"))
+	assert.Empty(t, headers.Get("X-Codex-Turn-Metadata"))
+}
+
+func TestCodexCompatibilityTestShapePreservesExplicitFields(t *testing.T) {
+	oldMode := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(oldMode) })
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
+	info := &relaycommon.RelayInfo{
+		RelayMode:     relayconstant.RelayModeResponses,
+		IsChannelTest: true,
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ChannelType: constant.ChannelTypeCodexCompatibility,
+			ApiKey:      "test-key",
+		},
+	}
+
+	converted, err := (&Adaptor{}).ConvertOpenAIResponsesRequest(c, info, dto.OpenAIResponsesRequest{
+		Model:             "gpt-5-codex",
+		ToolChoice:        json.RawMessage(`"required"`),
+		ParallelToolCalls: json.RawMessage(`true`),
+		Include:           json.RawMessage(`["response.output_text"]`),
+		PromptCacheKey:    json.RawMessage(`"caller-cache-key"`),
+		Reasoning:         &dto.Reasoning{Effort: "medium", Summary: "concise"},
+	})
+	require.NoError(t, err)
+	request, ok := converted.(dto.OpenAIResponsesRequest)
+	require.True(t, ok)
+
+	assert.JSONEq(t, `"required"`, string(request.ToolChoice))
+	assert.JSONEq(t, `true`, string(request.ParallelToolCalls))
+	assert.JSONEq(t, `["response.output_text","reasoning.encrypted_content"]`, string(request.Include))
+	assert.JSONEq(t, `"caller-cache-key"`, string(request.PromptCacheKey))
+	require.NotNil(t, request.Reasoning)
+	assert.Equal(t, "medium", request.Reasoning.Effort)
+	assert.Equal(t, "concise", request.Reasoning.Summary)
+	assert.JSONEq(t, `"all_turns"`, string(request.Reasoning.Context))
+
+	headers := http.Header{}
+	require.NoError(t, (&Adaptor{}).SetupRequestHeader(c, &headers, info))
+	assert.Empty(t, headers.Get("X-OpenAI-Internal-Codex-Responses-Lite"))
+}
+
+func TestCodexCompatibilityTestIdentityMatchesHeadersAndBodyMetadata(t *testing.T) {
+	oldMode := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(oldMode) })
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Request = httptest.NewRequest(http.MethodPost, "/v1/responses", nil)
+	for name, value := range map[string]string{
+		"Session-Id":              "forged-session",
+		"Thread-Id":               "forged-thread",
+		"X-Client-Request-Id":     "forged-request",
+		"X-Codex-Installation-Id": "forged-installation",
+		"X-Codex-Window-Id":       "forged-window",
+		"X-Codex-Turn-State":      "must-not-be-added",
+		"X-OAI-Attestation":       "must-not-be-added",
+	} {
+		c.Request.Header.Set(name, value)
+	}
+	info := &relaycommon.RelayInfo{
+		IsStream:      true,
+		RelayMode:     relayconstant.RelayModeResponses,
+		IsChannelTest: true,
+		StartTime:     time.UnixMilli(1700000000123),
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ChannelType:       constant.ChannelTypeCodexCompatibility,
+			ApiKey:            "test-key",
+			UpstreamModelName: "gpt-5.6-luna",
+		},
+	}
+
+	converted, err := (&Adaptor{}).ConvertOpenAIResponsesRequest(c, info, dto.OpenAIResponsesRequest{Model: "gpt-5.6-luna"})
+	require.NoError(t, err)
+	request, ok := converted.(dto.OpenAIResponsesRequest)
+	require.True(t, ok)
+
+	headers := http.Header{}
+	require.NoError(t, (&Adaptor{}).SetupRequestHeader(c, &headers, info))
+	secondHeaders := http.Header{}
+	require.NoError(t, (&Adaptor{}).SetupRequestHeader(c, &secondHeaders, info))
+	assert.Equal(t, headers.Get("Session-Id"), secondHeaders.Get("Session-Id"))
+	assert.Equal(t, headers.Get("Thread-Id"), secondHeaders.Get("Thread-Id"))
+	assert.Equal(t, headers.Get("X-Client-Request-Id"), secondHeaders.Get("X-Client-Request-Id"))
+	assert.NotEqual(t, "forged-session", headers.Get("Session-Id"))
+	assert.NotEqual(t, "forged-thread", headers.Get("Thread-Id"))
+	assert.NotEqual(t, "forged-request", headers.Get("X-Client-Request-Id"))
+	assert.NotEqual(t, "forged-installation", headers.Get("X-Codex-Installation-Id"))
+	assert.NotEqual(t, "forged-window", headers.Get("X-Codex-Window-Id"))
+	assert.Equal(t, headers.Get("Session-Id"), headers.Get("Thread-Id"))
+	assert.Equal(t, headers.Get("Session-Id"), headers.Get("X-Client-Request-Id"))
+	assert.Equal(t, headers.Get("Session-Id")+":0", headers.Get("X-Codex-Window-Id"))
+	require.NoError(t, uuid.Validate(headers.Get("Session-Id")))
+	require.NoError(t, uuid.Validate(headers.Get("X-Codex-Installation-Id")))
+	assert.Empty(t, headers.Get("X-Codex-Turn-State"))
+	assert.Empty(t, headers.Get("X-OAI-Attestation"))
+	assert.Equal(t, "true", headers.Get("X-OpenAI-Internal-Codex-Responses-Lite"))
+
+	var metadata map[string]any
+	require.NoError(t, json.Unmarshal(request.ClientMetadata, &metadata))
+	require.Len(t, metadata, 7)
+	assert.Equal(t, headers.Get("Thread-Id"), metadata["thread_id"])
+	assert.Equal(t, headers.Get("X-Codex-Turn-Metadata"), metadata["x-codex-turn-metadata"])
+	assert.Equal(t, headers.Get("Session-Id"), metadata["session_id"])
+	assert.Equal(t, headers.Get("X-Codex-Installation-Id"), metadata["x-codex-installation-id"])
+	assert.Equal(t, headers.Get("X-Codex-Window-Id"), metadata["x-codex-window-id"])
+	assert.NotNil(t, metadata["turn_id"])
+	assert.NotNil(t, metadata["root_turn_id"])
+	assert.Equal(t, headers.Get("Session-Id"), strings.Trim(string(request.PromptCacheKey), `"`))
+	assert.NotContains(t, metadata, "cwd")
+	assert.NotContains(t, metadata, "git")
+	assert.NotContains(t, metadata, "client_request_id")
+
+	var turnMetadata map[string]any
+	require.NoError(t, json.Unmarshal([]byte(headers.Get("X-Codex-Turn-Metadata")), &turnMetadata))
+	require.Len(t, turnMetadata, 16)
+	assert.Equal(t, headers.Get("X-Codex-Installation-Id"), turnMetadata["installation_id"])
+	assert.Equal(t, headers.Get("Session-Id"), turnMetadata["session_id"])
+	assert.Equal(t, headers.Get("Thread-Id"), turnMetadata["thread_id"])
+	assert.Equal(t, turnMetadata["thread_id"], metadata["thread_id"])
+	assert.Equal(t, turnMetadata["session_id"], metadata["session_id"])
+	assert.Equal(t, turnMetadata["installation_id"], metadata["x-codex-installation-id"])
+	assert.Equal(t, turnMetadata["turn_id"], metadata["turn_id"])
+	assert.Equal(t, turnMetadata["window_id"], metadata["x-codex-window-id"])
+	assert.Equal(t, turnMetadata["root_turn_id"], metadata["root_turn_id"])
+	assert.Equal(t, "/root", turnMetadata["agent_name"])
+	assert.Equal(t, headers.Get("X-Codex-Window-Id"), turnMetadata["window_id"])
+	assert.Equal(t, "turn", turnMetadata["request_kind"])
+	assert.Equal(t, "user", turnMetadata["thread_source"])
+	assert.Equal(t, "none", turnMetadata["sandbox"])
+	assert.Equal(t, "danger-full-access", turnMetadata["sandbox_mode"])
+	assert.Equal(t, false, turnMetadata["auto_review_enabled"])
+	assert.Equal(t, false, turnMetadata["node_repl_auto_review_required"])
+	assert.Equal(t, false, turnMetadata["node_repl_disabled"])
+	assert.Equal(t, float64(1700000000123), turnMetadata["turn_started_at_unix_ms"])
+	turnID, ok := turnMetadata["turn_id"].(string)
+	require.True(t, ok)
+	require.NoError(t, uuid.Validate(turnID))
+	rootTurnID, ok := turnMetadata["root_turn_id"].(string)
+	require.True(t, ok)
+	require.NoError(t, uuid.Validate(rootTurnID))
+	workspaces, ok := turnMetadata["workspaces"].(map[string]any)
+	require.True(t, ok)
+	workspace, ok := workspaces["/workspace"].(map[string]any)
+	require.True(t, ok)
+	assert.Equal(t, false, workspace["has_changes"])
+	assert.Equal(t, strings.Repeat("0", 40), workspace["latest_git_commit_hash"])
+	remoteURLs, ok := workspace["associated_remote_urls"].(map[string]any)
+	require.True(t, ok)
+	assert.Equal(t, "https://example.invalid/origin.git", remoteURLs["origin"])
+}
+
+func TestCodexCompatibilityTestProfileLiteModelSelection(t *testing.T) {
+	for _, test := range []struct {
+		model string
+		want  bool
+	}{
+		{model: "gpt-5.6-luna", want: true},
+		{model: "gpt-5.6-terra", want: true},
+		{model: "gpt-5.6-sol", want: true},
+		{model: "gpt-5-codex", want: false},
+		{model: "gpt-5.5-luna", want: false},
+	} {
+		t.Run(test.model, func(t *testing.T) {
+			assert.Equal(t, test.want, isCodexResponsesLiteModel(test.model))
+		})
+	}
+}
+
+func TestCodexCompatibilityCompactTestDoesNotUseResponsesProbeShape(t *testing.T) {
+	oldMode := gin.Mode()
+	gin.SetMode(gin.TestMode)
+	t.Cleanup(func() { gin.SetMode(oldMode) })
+
+	c, _ := gin.CreateTestContext(httptest.NewRecorder())
+	c.Request = httptest.NewRequest(http.MethodPost, "/v1/responses/compact", nil)
+	info := &relaycommon.RelayInfo{
+		RelayMode:     relayconstant.RelayModeResponsesCompact,
+		IsChannelTest: true,
+		ChannelMeta: &relaycommon.ChannelMeta{
+			ChannelType: constant.ChannelTypeCodexCompatibility,
+			ApiKey:      "test-key",
+		},
+	}
+
+	converted, err := (&Adaptor{}).ConvertOpenAIResponsesRequest(c, info, dto.OpenAIResponsesRequest{Model: "gpt-5.6-luna"})
+	require.NoError(t, err)
+	request, ok := converted.(dto.OpenAIResponsesRequest)
+	require.True(t, ok)
+	assert.Empty(t, request.Store)
+	assert.Empty(t, request.Text)
+	assert.Empty(t, request.ToolChoice)
+	assert.Empty(t, request.ParallelToolCalls)
+	assert.Empty(t, request.Include)
+	assert.Nil(t, request.Reasoning)
+	assert.Empty(t, request.PromptCacheKey)
+	assert.Empty(t, request.ClientMetadata)
 }
 
 func TestCodexCompatibilityInjectsChannelSystemPrompt(t *testing.T) {
@@ -133,15 +380,15 @@ func TestCodexCompatibilityPassesThroughSessionHeaders(t *testing.T) {
 	t.Cleanup(func() { gin.SetMode(oldMode) })
 
 	clientHeaders := map[string]string{
-		"Session-Id":             "sess-abc",
-		"Thread-Id":              "thread-xyz",
-		"X-Codex-Turn-State":     "turn-token-123",
-		"X-Codex-Beta-Features":  "memgen,tools",
-		"X-Codex-Installation-Id": "inst-456",
-		"X-Codex-Turn-Metadata":  "meta-1",
+		"Session-Id":               "sess-abc",
+		"Thread-Id":                "thread-xyz",
+		"X-Codex-Turn-State":       "turn-token-123",
+		"X-Codex-Beta-Features":    "memgen,tools",
+		"X-Codex-Installation-Id":  "inst-456",
+		"X-Codex-Turn-Metadata":    "meta-1",
 		"X-Codex-Parent-Thread-Id": "parent-0",
-		"X-Codex-Window-Id":      "win-7",
-		"X-Openai-Subagent":      "true",
+		"X-Codex-Window-Id":        "win-7",
+		"X-Openai-Subagent":        "true",
 	}
 
 	run := func(t *testing.T, present map[string]string) http.Header {
@@ -287,6 +534,7 @@ func TestChannelTestCanDisableCompatibilityClientProfiles(t *testing.T) {
 	t.Run("Codex compatibility", func(t *testing.T) {
 		maxOutputTokens := uint(4096)
 		info := &relaycommon.RelayInfo{
+			RelayMode:                       relayconstant.RelayModeResponses,
 			IsChannelTest:                   true,
 			DisableChannelTestClientProfile: true,
 			ChannelMeta: &relaycommon.ChannelMeta{
@@ -311,6 +559,8 @@ func TestChannelTestCanDisableCompatibilityClientProfiles(t *testing.T) {
 		require.True(t, ok)
 		assert.Equal(t, &maxOutputTokens, request.MaxOutputTokens)
 		assert.Empty(t, request.Instructions)
+		assert.Empty(t, request.ClientMetadata)
+		assert.Empty(t, request.PromptCacheKey)
 	})
 }
 
@@ -409,7 +659,7 @@ func TestCodeBuddyResponsesEnforceUpstreamRequestRules(t *testing.T) {
 	converted, err := (&Adaptor{}).ConvertOpenAIResponsesRequest(c, info, dto.OpenAIResponsesRequest{
 		Model:        "gpt-5.6-sol",
 		Instructions: json.RawMessage(`"system says YOU ARE CODEX"`),
-		Input: json.RawMessage(`[{"role":"user","content":[{"type":"input_text","text":"codex; you are the codex; openai codex; YOU ARE CODEX now"},{"type":"input_image","image_url":"https://example.invalid/image.png"}]}]`),
+		Input:        json.RawMessage(`[{"role":"user","content":[{"type":"input_text","text":"codex; you are the codex; openai codex; YOU ARE CODEX now"},{"type":"input_image","image_url":"https://example.invalid/image.png"}]}]`),
 	})
 	require.NoError(t, err)
 	request, ok := converted.(*dto.GeneralOpenAIRequest)

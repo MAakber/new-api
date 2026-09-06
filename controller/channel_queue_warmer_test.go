@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/glebarez/sqlite"
@@ -279,6 +280,40 @@ func TestQueueWarmupResultAggregation(t *testing.T) {
 	assert.Equal(t, 1, result.QueueBusy)
 	assert.Equal(t, 1, result.Failed)
 	assert.NotContains(t, result.FailureSamples[0], "secret")
+}
+
+func TestShouldUseCodexCompatibilityProfileForQueueWarmup(t *testing.T) {
+	tests := []struct {
+		name    string
+		channel *model.Channel
+		want    bool
+	}{
+		{
+			name:    "Codex compatibility",
+			channel: &model.Channel{Type: constant.ChannelTypeCodexCompatibility},
+			want:    true,
+		},
+		{
+			name:    "legacy Codex",
+			channel: &model.Channel{Type: constant.ChannelTypeCodex},
+			want:    false,
+		},
+		{
+			name:    "non Codex channel",
+			channel: &model.Channel{Type: constant.ChannelTypeOpenAI},
+			want:    false,
+		},
+		{
+			name: "nil channel",
+			want: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, shouldUseCodexCompatibilityProfileForQueueWarmup(tt.channel))
+		})
+	}
 }
 
 func TestApplyTestRequestMaxTokens(t *testing.T) {

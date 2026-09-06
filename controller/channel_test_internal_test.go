@@ -183,6 +183,8 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 	).(*dto.OpenAIResponsesRequest)
 	require.True(t, ok)
 	var responsesInput []struct {
+		Type    string `json:"type"`
+		Role    string `json:"role"`
 		Content []struct {
 			Type string `json:"type"`
 			Text string `json:"text"`
@@ -190,6 +192,8 @@ func TestBuildChannelTestRequestUsesConfiguredMessage(t *testing.T) {
 	}
 	require.NoError(t, json.Unmarshal(responsesRequest.Input, &responsesInput))
 	require.Len(t, responsesInput, 1)
+	assert.Equal(t, "message", responsesInput[0].Type)
+	assert.Equal(t, "user", responsesInput[0].Role)
 	require.Len(t, responsesInput[0].Content, 1)
 	assert.Equal(t, "input_text", responsesInput[0].Content[0].Type)
 	assert.Equal(t, message, responsesInput[0].Content[0].Text)
@@ -220,6 +224,8 @@ func TestBuildWarmupRequestInjectsSystemPromptAsInstructions(t *testing.T) {
 	require.True(t, ok)
 	require.JSONEq(t, fmt.Sprintf("%q", systemPrompt), string(responsesRequest.Instructions))
 	var responsesInput []struct {
+		Type    string `json:"type"`
+		Role    string `json:"role"`
 		Content []struct {
 			Type string `json:"type"`
 			Text string `json:"text"`
@@ -227,6 +233,8 @@ func TestBuildWarmupRequestInjectsSystemPromptAsInstructions(t *testing.T) {
 	}
 	require.NoError(t, json.Unmarshal(responsesRequest.Input, &responsesInput))
 	require.Len(t, responsesInput, 1)
+	assert.Equal(t, "message", responsesInput[0].Type)
+	assert.Equal(t, "user", responsesInput[0].Role)
 	require.Len(t, responsesInput[0].Content, 1)
 	assert.Equal(t, "input_text", responsesInput[0].Content[0].Type)
 	assert.Equal(t, "warmup probe", responsesInput[0].Content[0].Text)
