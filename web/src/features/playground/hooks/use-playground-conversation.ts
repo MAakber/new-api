@@ -27,6 +27,7 @@ import {
 import type { Message } from '../types'
 
 type UsePlaygroundConversationOptions = {
+  isLoadingMessages?: boolean
   messages: Message[]
   updateMessages: (
     updater: Message[] | ((prev: Message[]) => Message[])
@@ -35,6 +36,7 @@ type UsePlaygroundConversationOptions = {
 }
 
 export function usePlaygroundConversation({
+  isLoadingMessages = false,
   messages,
   updateMessages,
   sendChat,
@@ -45,11 +47,12 @@ export function usePlaygroundConversation({
 
   const handleSendMessage = useCallback(
     (text: string) => {
+      if (isLoadingMessages) return
       const nextMessages = appendUserMessagePair(messages, text)
       updateMessages(nextMessages)
       sendChat(nextMessages)
     },
-    [messages, updateMessages, sendChat]
+    [isLoadingMessages, messages, updateMessages, sendChat]
   )
 
   const handleRegenerateMessage = useCallback(

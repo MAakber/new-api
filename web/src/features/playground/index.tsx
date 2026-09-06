@@ -56,6 +56,7 @@ export function Playground() {
     applyEdit,
     handleDeleteMessage,
   } = usePlaygroundConversation({
+    isLoadingMessages,
     messages,
     updateMessages,
     sendChat,
@@ -97,7 +98,7 @@ export function Playground() {
       <div className='mx-auto w-full max-w-4xl'>
         <PlaygroundInput
           config={config}
-          disabled={isGenerating}
+          disabled={isGenerating || isLoadingMessages}
           groups={groups}
           groupValue={config.group}
           isGenerating={isGenerating}

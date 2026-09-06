@@ -120,13 +120,13 @@ func TestPlaygroundWithWebSearchUsesBingOnceAndClearsControlFields(t *testing.T)
 	request := &dto.GeneralOpenAIRequest{
 		Model:     "test-model",
 		WebSearch: json.RawMessage(`true`),
-		Messages:  []dto.Message{{Role: "user", Content: "latest question"}},
+		Messages:  []dto.Message{{Role: "user", Content: "你好喵，你能不能看看北京天气怎么样"}},
 		Stream:    common.GetPointer(false),
 	}
 	err := playgroundWithWebSearch(context, request)
 
 	require.Nil(t, err)
-	assert.Equal(t, "latest question", searcher.query)
+	assert.Equal(t, "你好喵，你能不能看看北京天气怎么样", searcher.query)
 	assert.Equal(t, "", searcher.language)
 	assert.Contains(t, writer.Body.String(), `"sources":[{"href":"https://example.com","title":"Example"}]`)
 }
