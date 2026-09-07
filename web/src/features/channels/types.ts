@@ -254,6 +254,7 @@ export interface ChannelOpsResponse {
 }
 
 export interface ChannelTestResponse {
+  diagnostics?: ChannelTestDiagnostics
   success: boolean
   message?: string
   error_code?: string
@@ -433,6 +434,24 @@ export interface DetailedChannelTestRequest {
   endpoint_type: string
   stream: boolean
   message?: string
+  test_type?: 'basic' | 'tool_call'
+}
+
+export interface ChannelTestDiagnostics {
+  status: 'passed' | 'failed' | 'degraded' | 'skipped'
+  reason: string
+  endpoint_type: string
+  test_type: 'basic' | 'tool_call'
+  endpoint_path?: string
+  detail?: string
+  requested_stream: boolean
+  upstream_stream?: boolean
+  duration_ms: number
+  first_response_ms?: number
+  event_count: number
+  tool_count: number
+  tool_name_valid?: boolean
+  tool_arguments_valid?: boolean
 }
 
 export interface CopyChannelParams {

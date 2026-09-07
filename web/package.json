@@ -8,6 +8,7 @@
     "build": "rsbuild build",
     "build:check": "tsgo -b && rsbuild build",
     "typecheck": "tsgo -b",
+    "test:channels": "vitest run --config vitest.channels.config.ts",
     "test:drawing": "vitest run --config vitest.drawing.config.ts",
     "test:playground": "vitest run --config vitest.playground.config.ts",
     "lint": "oxlint -c .oxlintrc.json .",

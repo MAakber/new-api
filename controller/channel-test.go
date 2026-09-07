@@ -10,6 +10,7 @@ import (
 	"math"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -43,9 +44,11 @@ type testResult struct {
 	newAPIError      *types.NewAPIError
 	responsePreview  string
 	previewTruncated bool
+	diagnostics      *channelTestDiagnostics
 }
 
 type channelTestOptions struct {
+	testType        string
 	message         string
 	useChannelStyle bool
 	capturePreview  bool
@@ -116,7 +119,22 @@ func testChannel(ctx context.Context, channel *model.Channel, testUserID int, te
 	})
 }
 
-func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUserID int, testModel string, endpointType string, isStream bool, options channelTestOptions) testResult {
+func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUserID int, testModel string, endpointType string, isStream bool, options channelTestOptions) (outcome testResult) {
+	started := time.Now()
+	var diagnostics *channelTestDiagnostics
+	if options.testType != "" {
+		diagnostics = &channelTestDiagnostics{Status: "failed", Reason: "request_failed", TestType: options.testType, RequestedStream: isStream, EndpointType: endpointType}
+		defer func() {
+			diagnostics.DurationMS = time.Since(started).Milliseconds()
+			outcome.diagnostics = diagnostics
+			if outcome.localErr != nil || outcome.newAPIError != nil {
+				if diagnostics.Status == "passed" || diagnostics.Status == "degraded" {
+					diagnostics.Reason = "request_failed"
+				}
+				diagnostics.Status = "failed"
+			}
+		}()
+	}
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -144,6 +162,11 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		}
 	}
 	w := httptest.NewRecorder()
+	if diagnostics != nil && options.capturePreview {
+		defer func() {
+			outcome.responsePreview = sanitizeChannelTestResponsePreview(w.Body.Bytes())
+		}()
+	}
 	c, _ := gin.CreateTestContext(w)
 
 	testModel = strings.TrimSpace(testModel)
@@ -161,7 +184,20 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		}
 	}
 
-	endpointType = normalizeChannelTestEndpoint(channel, testModel, endpointType)
+	if diagnostics != nil {
+		endpointType, err = resolveChannelProbeEndpoint(channel, testModel, endpointType)
+		if err != nil {
+			diagnostics.Reason = "invalid_endpoint"
+			return testResult{localErr: err}
+		}
+		diagnostics.EndpointType = endpointType
+		if channelProbeNotApplicable(endpointType, options.testType, isStream) {
+			diagnostics.Status, diagnostics.Reason = "skipped", "not_applicable"
+			return testResult{}
+		}
+	} else {
+		endpointType = normalizeChannelTestEndpoint(channel, testModel, endpointType)
+	}
 
 	requestPath := "/v1/chat/completions"
 
@@ -203,6 +239,12 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	}
 	if strings.HasPrefix(requestPath, "/v1/responses/compact") {
 		testModel = ratio_setting.WithCompactModelSuffix(testModel)
+	}
+	if diagnostics != nil {
+		requestPath = strings.ReplaceAll(requestPath, "{model}", url.PathEscape(testModel))
+		if endpointType == string(constant.EndpointTypeGemini) && isStream {
+			requestPath = strings.ReplaceAll(requestPath, ":generateContent", ":streamGenerateContent") + "?alt=sse"
+		}
 	}
 
 	c.Request = httptest.NewRequestWithContext(ctx, http.MethodPost, requestPath, nil)
@@ -284,6 +326,11 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	}
 
 	request := buildTestRequestWithMessage(testModel, endpointType, channel, isStream, message, options.instructions)
+	if diagnostics != nil {
+		if err := configureChannelProbeRequest(request, options.testType, isStream, options.message); err != nil {
+			return testResult{localErr: err}
+		}
+	}
 	if options.maxTokens != nil {
 		applyTestRequestMaxTokens(request, *options.maxTokens)
 	}
@@ -301,6 +348,20 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	info.IsChannelTest = true
 	info.DisableChannelTestClientProfile = !options.useChannelStyle
 	info.InitChannelMeta(c)
+
+	if diagnostics != nil && (relayFormat == types.RelayFormatClaude || relayFormat == types.RelayFormatGemini) {
+		// Build native input using the same conversion registry as normal relay
+		// requests, so custom native routes and provider-specific tools agree.
+		converted, convertErr := service.ConvertRequest(c, info, relayFormat, request)
+		if convertErr != nil {
+			return testResult{context: c, localErr: convertErr, newAPIError: types.NewError(convertErr, types.ErrorCodeConvertRequestFailed)}
+		}
+		nativeRequest, ok := converted.Value.(dto.Request)
+		if !ok {
+			return testResult{context: c, localErr: fmt.Errorf("invalid native channel probe request: %T", converted.Value)}
+		}
+		request, info.Request = nativeRequest, nativeRequest
+	}
 
 	err = attachTestBillingRequestInput(info, request)
 	if err != nil {
@@ -426,9 +487,14 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		}
 	default:
 		// Chat/Completion 等其他请求类型
-		if generalReq, ok := request.(*dto.GeneralOpenAIRequest); ok {
-			convertedRequest, err = adaptor.ConvertOpenAIRequest(c, info, generalReq)
-		} else {
+		switch req := request.(type) {
+		case *dto.ClaudeRequest:
+			convertedRequest, err = adaptor.ConvertClaudeRequest(c, info, req)
+		case *dto.GeminiChatRequest:
+			convertedRequest, err = adaptor.ConvertGeminiRequest(c, info, req)
+		case *dto.GeneralOpenAIRequest:
+			convertedRequest, err = adaptor.ConvertOpenAIRequest(c, info, req)
+		default:
 			return testResult{
 				context:     c,
 				localErr:    errors.New("invalid general request type"),
@@ -462,6 +528,7 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	//	}
 	//}
 
+	probeTemplate := jsonData
 	if len(info.ParamOverride) > 0 {
 		jsonData, err = relaycommon.ApplyParamOverrideWithRelayInfo(jsonData, info)
 		if err != nil {
@@ -479,6 +546,12 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 			}
 		}
 	}
+	if diagnostics != nil && len(info.ParamOverride) > 0 {
+		jsonData, err = enforceChannelProbeLimits(jsonData, probeTemplate, channelProbeUpstreamEndpoint(convertedRequest), options.testType)
+		if err != nil {
+			return testResult{context: c, localErr: err, newAPIError: types.NewError(err, types.ErrorCodeChannelParamOverrideInvalid)}
+		}
+	}
 
 	requestBody := bytes.NewBuffer(jsonData)
 	c.Request.Body = io.NopCloser(bytes.NewBuffer(jsonData))
@@ -491,9 +564,21 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		}
 	}
 	var httpResp *http.Response
+	var upstreamCapture *channelProbeUpstreamCapture
 	if resp != nil {
 		httpResp = resp.(*http.Response)
+		if diagnostics != nil {
+			diagnostics.UpstreamStream = common.GetPointer(strings.Contains(strings.ToLower(httpResp.Header.Get("Content-Type")), "text/event-stream"))
+			diagnostics.EndpointPath = info.RequestURLPath
+			if httpResp.Body != nil {
+				upstreamCapture = &channelProbeUpstreamCapture{ReadCloser: httpResp.Body, started: started}
+				httpResp.Body = upstreamCapture
+			}
+		}
 		if httpResp.StatusCode != http.StatusOK {
+			if diagnostics != nil {
+				diagnostics.Reason = "upstream_error"
+			}
 			err := service.RelayErrorHandler(c.Request.Context(), httpResp, true)
 			common.SysError(fmt.Sprintf(
 				"channel test bad response: channel_id=%d name=%s type=%d model=%s endpoint_type=%s status=%d err=%v",
@@ -513,6 +598,33 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		}
 	}
 	usageA, respErr := adaptor.DoResponse(c, httpResp, info)
+	if diagnostics != nil {
+		if upstreamCapture != nil {
+			diagnostics.FirstResponseMS = upstreamCapture.firstByteMS
+			raw := bytes.TrimSpace(upstreamCapture.body.Bytes())
+			if gjson.ValidBytes(raw) {
+				diagnostics.UpstreamStream = common.GetPointer(false)
+			} else if bytes.HasPrefix(raw, []byte("data:")) || bytes.HasPrefix(raw, []byte("event:")) || bytes.HasPrefix(raw, []byte(":")) {
+				diagnostics.UpstreamStream = common.GetPointer(true)
+			}
+		}
+		validateChannelProbeResponse(w.Body.Bytes(), diagnostics, info.StreamStatus)
+		if upstreamEndpoint := channelProbeUpstreamEndpoint(convertedRequest); upstreamCapture != nil && upstreamEndpoint != "" {
+			// Compact uses a Responses request upstream but has a different result.
+			if endpointType == string(constant.EndpointTypeOpenAIResponseCompact) {
+				upstreamEndpoint = endpointType
+			}
+			upstreamDiagnostic := &channelTestDiagnostics{
+				EndpointType: upstreamEndpoint, TestType: options.testType,
+				RequestedStream: diagnostics.UpstreamStream != nil && *diagnostics.UpstreamStream,
+			}
+			validateChannelProbeResponse(upstreamCapture.body.Bytes(), upstreamDiagnostic, nil)
+			if upstreamDiagnostic.Status == "failed" && diagnostics.Reason != "stream_timeout" {
+				diagnostics.Status, diagnostics.Reason = "failed", upstreamDiagnostic.Reason
+				diagnostics.Detail = upstreamDiagnostic.Detail
+			}
+		}
+	}
 	if respErr != nil {
 		return testResult{
 			context:     c,
@@ -528,20 +640,21 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 			newAPIError: types.NewOpenAIError(usageErr, types.ErrorCodeBadResponseBody, http.StatusInternalServerError),
 		}
 	}
-	result := w.Result()
-	respBody, responseTruncated, err := readTestResponseBody(result.Body, isStream)
-	if err != nil {
-		return testResult{
-			context:     c,
-			localErr:    err,
-			newAPIError: types.NewOpenAIError(err, types.ErrorCodeReadResponseBodyFailed, http.StatusInternalServerError),
+	var respBody []byte
+	var responseTruncated bool
+	if diagnostics == nil {
+		respBody, responseTruncated, err = readTestResponseBody(w.Result().Body, isStream)
+		if err != nil {
+			return testResult{
+				context: c, localErr: err,
+				newAPIError: types.NewOpenAIError(err, types.ErrorCodeReadResponseBodyFailed, http.StatusInternalServerError),
+			}
 		}
-	}
-	if bodyErr := validateTestResponseBody(respBody, isStream); bodyErr != nil {
-		return testResult{
-			context:     c,
-			localErr:    bodyErr,
-			newAPIError: types.NewOpenAIError(bodyErr, types.ErrorCodeBadResponseBody, http.StatusInternalServerError),
+		if bodyErr := validateTestResponseBody(respBody, isStream); bodyErr != nil {
+			return testResult{
+				context: c, localErr: bodyErr,
+				newAPIError: types.NewOpenAIError(bodyErr, types.ErrorCodeBadResponseBody, http.StatusInternalServerError),
+			}
 		}
 	}
 	info.SetEstimatePromptTokens(usage.PromptTokens)
@@ -572,7 +685,7 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		localErr:    nil,
 		newAPIError: nil,
 	}
-	if options.capturePreview {
+	if options.capturePreview && diagnostics == nil {
 		previewBody := respBody
 		previewTruncated := responseTruncated
 		if len(previewBody) > channelTestResponsePreviewMaxBytes {
@@ -694,6 +807,27 @@ func sanitizeChannelTestResponsePreview(response []byte) string {
 	if preview == "" {
 		return ""
 	}
+	if strings.HasPrefix(preview, "data:") || strings.HasPrefix(preview, "event:") || strings.HasPrefix(preview, ":") {
+		var sanitized strings.Builder
+		var data []string
+		for _, line := range strings.Split(strings.ReplaceAll(preview, "\r\n", "\n")+"\n\n", "\n") {
+			if value, ok := strings.CutPrefix(line, "data:"); ok {
+				data = append(data, strings.TrimPrefix(value, " "))
+			} else if strings.TrimSpace(line) == "" {
+				if len(data) > 0 {
+					sanitized.WriteString("data: ")
+					sanitized.WriteString(sanitizeChannelTestResponsePreview([]byte(strings.Join(data, "\n"))))
+					sanitized.WriteByte('\n')
+					data = nil
+				}
+				sanitized.WriteByte('\n')
+			} else {
+				sanitized.WriteString(line)
+				sanitized.WriteByte('\n')
+			}
+		}
+		preview = strings.TrimSpace(sanitized.String())
+	}
 
 	var responseValue any
 	if err := common.Unmarshal([]byte(preview), &responseValue); err == nil {
@@ -702,6 +836,8 @@ func sanitizeChannelTestResponsePreview(response []byte) string {
 			preview = string(sanitized)
 		}
 	}
+	preview = channelTestPreviewSensitiveQueryPattern.ReplaceAllString(preview, `${1}[REDACTED]`)
+	preview = channelTestPreviewSensitiveJSONPattern.ReplaceAllString(preview, `${1}"[REDACTED]"`)
 	preview = channelTestPreviewSensitiveValuePattern.ReplaceAllString(preview, "[REDACTED]")
 	preview = channelTestPreviewBearerPattern.ReplaceAllString(preview, "Bearer [REDACTED]")
 	return preview
@@ -1012,24 +1148,13 @@ func buildTestRequestWithMessage(model string, endpointType string, channel *mod
 		testRequest.StreamOptions = &dto.StreamOptions{IncludeUsage: true}
 	}
 
-	if dto.IsOpenAIReasoningOModel(model) {
-		testRequest.MaxCompletionTokens = lo.ToPtr(uint(16))
-	} else if strings.Contains(model, "thinking") {
-		if !strings.Contains(model, "claude") {
-			testRequest.MaxTokens = lo.ToPtr(uint(50))
-		}
-	} else if strings.Contains(model, "gemini") {
-		testRequest.MaxTokens = lo.ToPtr(uint(3000))
-	} else {
-		testRequest.MaxTokens = lo.ToPtr(uint(16))
-	}
-
+	applyChannelTestModelBudget(testRequest, model)
 	return testRequest
 }
 
 func TestChannel(c *gin.Context) {
 	isStream, _ := strconv.ParseBool(c.Query("stream"))
-	testChannelRequest(c, c.Query("model"), c.Query("endpoint_type"), isStream, "")
+	testChannelRequest(c, c.Query("model"), c.Query("endpoint_type"), isStream, "", "")
 }
 
 type channelTestRequest struct {
@@ -1037,6 +1162,7 @@ type channelTestRequest struct {
 	EndpointType string `json:"endpoint_type"`
 	Stream       *bool  `json:"stream"`
 	Message      string `json:"message"`
+	TestType     string `json:"test_type,omitempty"`
 }
 
 func TestChannelDetailed(c *gin.Context) {
@@ -1055,6 +1181,10 @@ func TestChannelDetailed(c *gin.Context) {
 		})
 		return
 	}
+	if request.TestType != "" && request.TestType != "basic" && request.TestType != "tool_call" {
+		c.JSON(http.StatusBadRequest, gin.H{"success": false, "message": "invalid channel test type"})
+		return
+	}
 	if strings.TrimSpace(request.Model) == "" {
 		request.Model = c.Query("model")
 	}
@@ -1067,10 +1197,10 @@ func TestChannelDetailed(c *gin.Context) {
 		}
 	}
 	isStream := request.Stream != nil && *request.Stream
-	testChannelRequest(c, request.Model, request.EndpointType, isStream, request.Message)
+	testChannelRequest(c, request.Model, request.EndpointType, isStream, request.Message, request.TestType)
 }
 
-func testChannelRequest(c *gin.Context, testModel string, endpointType string, isStream bool, message string) {
+func testChannelRequest(c *gin.Context, testModel string, endpointType string, isStream bool, message string, testType string) {
 	channelId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		common.ApiError(c, err)
@@ -1101,10 +1231,33 @@ func testChannelRequest(c *gin.Context, testModel string, endpointType string, i
 	}
 	setting := operation_setting.GetMonitorSetting()
 	result := testChannelWithOptions(requestCtx, channel, testUserID, testModel, endpointType, isStream, channelTestOptions{
+		testType:        testType,
 		message:         message,
 		useChannelStyle: setting.ChannelTestUseChannelStyle,
 		capturePreview:  setting.ChannelTestShowResponsePreview,
 	})
+	if result.diagnostics != nil {
+		diagnostics := result.diagnostics
+		response := gin.H{
+			"success": diagnostics.Status == "passed" || diagnostics.Status == "degraded",
+			"message": "", "time": float64(diagnostics.DurationMS) / 1000, "diagnostics": diagnostics,
+		}
+		if result.localErr != nil {
+			response["message"] = sanitizeChannelTestResponsePreview([]byte(result.localErr.Error()))
+		}
+		if result.newAPIError != nil {
+			response["error_code"] = result.newAPIError.GetErrorCode()
+		}
+		if diagnostics.Status != "skipped" {
+			go channel.UpdateResponseTime(diagnostics.DurationMS)
+		}
+		if setting.ChannelTestShowResponsePreview {
+			response["response_preview"] = result.responsePreview
+			response["response_preview_truncated"] = result.previewTruncated
+		}
+		c.JSON(http.StatusOK, response)
+		return
+	}
 	if result.localErr != nil {
 		resp := gin.H{
 			"success": false,
