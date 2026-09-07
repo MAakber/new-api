@@ -52,6 +52,7 @@ const nodeSchema = z.object({
     jobId: z.string().max(128).optional(),
     createdAt: z.number().finite(),
     referenceIds: z.array(z.string()).max(16).optional(),
+    mask: assetSchema.optional(),
     usage: z.record(z.string(), z.unknown()).optional(),
   }),
 })
@@ -155,6 +156,7 @@ export function serializeDrawingDocument(
       data: {
         ...node.data,
         settings: normalizeStoredImageSettings(node.data.settings),
+        progress: undefined,
       },
     })),
     edges: document.edges.map((edge) => ({

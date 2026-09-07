@@ -147,6 +147,15 @@ For commercial licensing, please contact support@quantumnous.com
   }
 }
 
+@keyframes drawing-generation-progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
 /* Override auto-skeleton-react inline styles with Vercel shimmer */
 .auto-skeleton-fade [class^='skeleton-'] {
   background: linear-gradient(

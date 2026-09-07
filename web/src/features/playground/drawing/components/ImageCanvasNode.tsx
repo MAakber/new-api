@@ -25,7 +25,7 @@ import {
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Handle, NodeResizer, Position, type NodeProps } from '@xyflow/react'
-import { memo, useState } from 'react'
+import { memo, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
@@ -35,13 +35,17 @@ import { Spinner } from '@/components/ui/spinner'
 import { cn } from '@/lib/utils'
 import { useDrawingStore } from '@/stores/drawing-store'
 
+import { ImageRetryContext } from '../context/image-retry-context'
 import { downloadBlob, imageAssetToFile } from '../lib/image-assets'
+import { getImageModelFamily } from '../lib/image-settings'
 import type { DrawingNode } from '../types'
+import { ImageGenerationProgress } from './ImageGenerationProgress'
 
 export const ImageCanvasNode = memo(function ImageCanvasNode(
   props: NodeProps<DrawingNode>
 ) {
   const { t } = useTranslation()
+  const retry = useContext(ImageRetryContext)
   const reference = useDrawingStore((state) =>
     state.referenceIds.includes(props.id)
   )
@@ -52,6 +56,12 @@ export const ImageCanvasNode = memo(function ImageCanvasNode(
   const imageFailed = Boolean(asset && failedSource === asset.src)
   const pending = props.data.status === 'pending'
   const complete = props.data.status === 'complete'
+  const failed = props.data.status === 'error'
+  const canReceive =
+    props.isConnectable &&
+    !pending &&
+    getImageModelFamily(props.data.settings.model) !== 'dall-e-3'
+  const canReference = props.isConnectable && complete && Boolean(asset)
   return (
     <>
       <NodeResizer
@@ -67,14 +77,42 @@ export const ImageCanvasNode = memo(function ImageCanvasNode(
       <Handle
         type='target'
         position={Position.Left}
-        className='!bg-muted-foreground !size-1 !border-0'
-        isConnectable={false}
+        className='!bg-background !border-primary focus-visible:!ring-primary !z-10 !size-4 !border-2 focus-visible:!ring-2 aria-disabled:!opacity-40'
+        isConnectable={canReceive}
+        isConnectableStart={canReceive}
+        isConnectableEnd={canReceive}
+        role='button'
+        tabIndex={canReceive ? 0 : -1}
+        aria-label={t('Reference input')}
+        aria-disabled={!canReceive}
+        title={t('Reference input')}
+        onKeyDown={(event) => {
+          if (canReceive && (event.key === 'Enter' || event.key === ' ')) {
+            event.preventDefault()
+            event.stopPropagation()
+            event.currentTarget.click()
+          }
+        }}
       />
       <Handle
         type='source'
         position={Position.Right}
-        className='!bg-muted-foreground !size-1 !border-0'
-        isConnectable={false}
+        className='!bg-primary !border-background focus-visible:!ring-primary !z-10 !size-4 !border-2 focus-visible:!ring-2 aria-disabled:!opacity-40'
+        isConnectable={canReference}
+        isConnectableStart={canReference}
+        isConnectableEnd={canReference}
+        role='button'
+        tabIndex={canReference ? 0 : -1}
+        aria-label={t('Reference output')}
+        aria-disabled={!canReference}
+        title={t('Drag to another image’s reference input')}
+        onKeyDown={(event) => {
+          if (canReference && (event.key === 'Enter' || event.key === ' ')) {
+            event.preventDefault()
+            event.stopPropagation()
+            event.currentTarget.click()
+          }
+        }}
       />
       <article
         className={cn(
@@ -94,7 +132,7 @@ export const ImageCanvasNode = memo(function ImageCanvasNode(
               {t('Reference')}
             </Badge>
           )}
-          {pending && <Spinner className='size-3' />}
+          {pending && <Spinner className='size-3' aria-hidden='true' />}
           {asset && complete && (
             <span className='text-muted-foreground font-mono text-[10px]'>
               {asset.width} × {asset.height}
@@ -113,17 +151,32 @@ export const ImageCanvasNode = memo(function ImageCanvasNode(
               alt={props.data.prompt || asset.name}
               draggable={false}
               loading='lazy'
-              className={cn(
-                'size-full object-contain',
-                pending && 'opacity-60'
-              )}
+              className='size-full object-contain'
               onError={() => setFailedSource(asset.src)}
             />
           )}
-          {(!asset || pending || imageFailed || !complete) && (
+          {pending && (
+            <div
+              className={cn(
+                'absolute inset-x-0 bottom-0 bg-background/90 p-3 text-center text-xs',
+                (!asset || imageFailed) && 'inset-0 flex items-center p-5'
+              )}
+            >
+              <ImageGenerationProgress
+                key={props.data.progress?.startedAt}
+                progress={
+                  props.data.progress || {
+                    startedAt: props.data.createdAt,
+                    phase: 'generating',
+                    previewCount: 0,
+                  }
+                }
+              />
+              {imageFailed && <p>{t('The image could not be loaded.')}</p>}
+            </div>
+          )}
+          {!pending && (!asset || imageFailed || !complete) && (
             <div className='bg-background/75 absolute inset-0 flex flex-col items-center justify-center gap-2 p-5 text-center text-xs'>
-              {pending && <Spinner className='size-5' />}
-              {pending && <p role='status'>{t('Generating image…')}</p>}
               {props.data.status === 'error' && (
                 <p
                   role='alert'
@@ -147,24 +200,46 @@ export const ImageCanvasNode = memo(function ImageCanvasNode(
             {props.data.prompt || asset?.name}
           </p>
           <div className='nodrag nopan flex items-center gap-1'>
-            <Button
-              type='button'
-              size='sm'
-              variant={reference ? 'secondary' : 'ghost'}
-              disabled={!complete || !asset}
-              aria-pressed={reference}
-              className='min-w-0 flex-1 text-xs'
-              onClick={() =>
-                useDrawingStore.getState().toggleReference(props.id)
-              }
-            >
-              <HugeiconsIcon
-                icon={ImageAdd01Icon}
-                size={14}
-                aria-hidden='true'
-              />
-              {reference ? t('Reference selected') : t('Use as reference')}
-            </Button>
+            {failed && (
+              <Button
+                type='button'
+                size='sm'
+                variant='outline'
+                disabled={!retry}
+                title={t('Retry')}
+                className='min-w-0 flex-1 text-xs'
+                onClick={() => {
+                  if (retry?.(props.id)) setFailedSource(null)
+                }}
+              >
+                <HugeiconsIcon
+                  icon={ArrowReloadHorizontalIcon}
+                  size={14}
+                  aria-hidden='true'
+                />
+                <span className='truncate'>{t('Retry')}</span>
+              </Button>
+            )}
+            {!failed && (
+              <Button
+                type='button'
+                size='sm'
+                variant={reference ? 'secondary' : 'ghost'}
+                disabled={!complete || !asset}
+                aria-pressed={reference}
+                className='min-w-0 flex-1 text-xs'
+                onClick={() =>
+                  useDrawingStore.getState().toggleReference(props.id)
+                }
+              >
+                <HugeiconsIcon
+                  icon={ImageAdd01Icon}
+                  size={14}
+                  aria-hidden='true'
+                />
+                {reference ? t('Reference selected') : t('Use as reference')}
+              </Button>
+            )}
             <Button
               type='button'
               size='icon-xs'

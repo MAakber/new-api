@@ -18,7 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import {
   applyNodeChanges,
+  applyEdgeChanges,
   type NodeChange,
+  type EdgeChange,
+  type Connection,
   type Edge,
   type Viewport,
 } from '@xyflow/react'
@@ -26,6 +29,7 @@ import { create } from 'zustand'
 
 import { arrangeImageNodes } from '@/features/playground/drawing/lib/canvas-document'
 import { DEFAULT_IMAGE_SETTINGS } from '@/features/playground/drawing/lib/image-settings'
+import { canConnectReference } from '@/features/playground/drawing/lib/reference-connections'
 import type {
   DrawingDocument,
   DrawingMask,
@@ -49,9 +53,17 @@ type DrawingState = DrawingDocument & {
   hydrate: (document: DrawingDocument | null) => void
   checkpoint: () => void
   changeNodes: (changes: NodeChange<DrawingNode>[]) => void
+  changeEdges: (changes: EdgeChange[]) => void
+  connectReference: (
+    connection: Pick<Connection, 'source' | 'target'>
+  ) => boolean
   addNodes: (nodes: DrawingNode[], edges?: Edge[]) => void
   removeNodes: (ids: string[]) => void
-  updateNodeData: (id: string, data: Partial<ImageNodeData>) => void
+  updateNodeData: (
+    id: string,
+    data: Partial<ImageNodeData>,
+    jobId?: string
+  ) => void
   updateSettings: (settings: Partial<ImageSettings>) => void
   setViewport: (viewport: Viewport) => void
   toggleReference: (id: string) => void
@@ -145,6 +157,85 @@ export const useDrawingStore = create<DrawingState>((set, get) => ({
       }
     })
   },
+  connectReference: (connection) => {
+    if (!canConnectReference(get().nodes, connection)) return false
+    get().checkpoint()
+    set((state) => ({
+      nodes: state.nodes.map((node) =>
+        node.id === connection.target
+          ? {
+              ...node,
+              data: {
+                ...node.data,
+                referenceIds: [
+                  ...(node.data.referenceIds || []),
+                  connection.source,
+                ],
+                settings: { ...node.data.settings, mode: 'edit' },
+                mask: node.data.referenceIds?.length
+                  ? node.data.mask
+                  : undefined,
+              },
+            }
+          : node
+      ),
+      edges: [
+        ...state.edges,
+        {
+          id: `${connection.source}-${connection.target}`,
+          source: connection.source,
+          target: connection.target,
+        },
+      ],
+      revision: state.revision + 1,
+    }))
+    return true
+  },
+  changeEdges: (changes) => {
+    const state = get()
+    const allowed = changes.filter((change) => {
+      if (change.type !== 'remove') return change.type === 'select'
+      const edge = state.edges.find((item) => item.id === change.id)
+      return (
+        edge &&
+        !state.nodes.some(
+          (node) => node.id === edge.target && node.data.status === 'pending'
+        )
+      )
+    })
+    const removedIds = new Set(
+      allowed.flatMap((change) => (change.type === 'remove' ? [change.id] : []))
+    )
+    if (removedIds.size) get().checkpoint()
+    set((current) => {
+      const removed = current.edges.filter((edge) => removedIds.has(edge.id))
+      return {
+        edges: applyEdgeChanges(allowed, current.edges),
+        nodes: current.nodes.map((node) => {
+          const sources = removed
+            .filter((edge) => edge.target === node.id)
+            .map((edge) => edge.source)
+          if (!sources.length) return node
+          const references = node.data.referenceIds || []
+          const referenceIds = references.filter((id) => !sources.includes(id))
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              referenceIds,
+              settings: {
+                ...node.data.settings,
+                mode: referenceIds.length ? 'edit' : 'generate',
+              },
+              mask:
+                references[0] === referenceIds[0] ? node.data.mask : undefined,
+            },
+          }
+        }),
+        revision: current.revision + (removedIds.size ? 1 : 0),
+      }
+    })
+  },
   addNodes: (nodes, edges = []) => {
     get().checkpoint()
     set((state) => ({
@@ -170,23 +261,39 @@ export const useDrawingStore = create<DrawingState>((set, get) => ({
       revision: state.revision + 1,
     }))
   },
-  updateNodeData: (id, data) =>
+  updateNodeData: (id, data, jobId) =>
     set((state) => {
       // Keep undo/redo snapshots in sync with asynchronous generation results.
       // Undoing a move must never turn a completed image back into a pending job.
-      const update = (nodes: DrawingNode[]) =>
-        nodes.map((node) =>
-          node.id === id ? { ...node, data: { ...node.data, ...data } } : node
-        )
+      const update = (nodes: DrawingNode[], preserveSettings = false) =>
+        nodes.map((node) => {
+          if (
+            node.id !== id ||
+            (jobId !== undefined && node.data.jobId !== jobId)
+          ) {
+            return node
+          }
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              ...data,
+              // Reference edits remain undoable after a retried job settles.
+              settings: preserveSettings
+                ? node.data.settings
+                : (data.settings ?? node.data.settings),
+            },
+          }
+        })
       return {
         nodes: update(state.nodes),
         past: state.past.map((snapshot) => ({
           ...snapshot,
-          nodes: update(snapshot.nodes),
+          nodes: update(snapshot.nodes, true),
         })),
         future: state.future.map((snapshot) => ({
           ...snapshot,
-          nodes: update(snapshot.nodes),
+          nodes: update(snapshot.nodes, true),
         })),
         revision: state.revision + 1,
       }

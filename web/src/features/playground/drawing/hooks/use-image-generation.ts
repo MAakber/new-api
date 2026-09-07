@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { useMutation } from '@tanstack/react-query'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
@@ -42,7 +42,7 @@ export function useImageGeneration() {
   const jobs = useRef(new Map<string, ImageJob>())
   const [pendingCount, setPendingCount] = useState(0)
 
-  const mutation = useMutation({
+  const { mutate } = useMutation({
     retry: false,
     mutationFn: async (input: GenerationInput) => {
       const result = await generateImages({
@@ -61,18 +61,43 @@ export function useImageGeneration() {
             return
           }
           // A preview uses the target dimensions; final decoding resolves the actual size.
-          state.updateNodeData(id, {
-            asset: {
-              id,
-              src: image.src,
-              mimeType: image.mimeType,
-              name: input.settings.prompt.slice(0, 512),
-              width: 1024,
-              height: 1024,
+          const progress = state.nodes.find((node) => node.id === id)?.data
+            .progress
+          state.updateNodeData(
+            id,
+            {
+              progress: {
+                startedAt: progress?.startedAt ?? Date.now(),
+                phase: 'generating',
+                previewCount: (progress?.previewCount ?? 0) + 1,
+              },
+              asset: {
+                id,
+                src: image.src,
+                mimeType: image.mimeType,
+                name: input.settings.prompt.slice(0, 512),
+                width: 1024,
+                height: 1024,
+              },
             },
-          })
+            input.job.id
+          )
         },
       })
+      const state = useDrawingStore.getState()
+      if (state.userId !== input.userId) return
+      input.job.controller.signal.throwIfAborted()
+      for (const id of input.job.nodeIds) {
+        const progress = state.nodes.find((node) => node.id === id)?.data
+          .progress
+        if (progress) {
+          state.updateNodeData(
+            id,
+            { progress: { ...progress, phase: 'decoding' } },
+            input.job.id
+          )
+        }
+      }
       const assets = await Promise.allSettled(
         result.images.map((image, index) =>
           imageSourceToAsset(
@@ -88,10 +113,15 @@ export function useImageGeneration() {
       for (const [index, id] of input.job.nodeIds.entries()) {
         const asset = assets[index]
         if (!asset) {
-          useDrawingStore.getState().updateNodeData(id, {
-            status: 'error',
-            error: 'The server returned fewer images than requested.',
-          })
+          useDrawingStore.getState().updateNodeData(
+            id,
+            {
+              status: 'error',
+              progress: undefined,
+              error: 'The server returned fewer images than requested.',
+            },
+            input.job.id
+          )
           continue
         }
         if (asset.status === 'rejected') {
@@ -101,15 +131,24 @@ export function useImageGeneration() {
               : 'The image could not be loaded.'
           useDrawingStore
             .getState()
-            .updateNodeData(id, { status: 'error', error })
+            .updateNodeData(
+              id,
+              { status: 'error', error, progress: undefined },
+              input.job.id
+            )
           continue
         }
-        useDrawingStore.getState().updateNodeData(id, {
-          asset: asset.value,
-          status: 'complete',
-          revisedPrompt: result.images[index].revisedPrompt?.slice(0, 64000),
-          usage: result.usage,
-        })
+        useDrawingStore.getState().updateNodeData(
+          id,
+          {
+            asset: asset.value,
+            status: 'complete',
+            progress: undefined,
+            revisedPrompt: result.images[index].revisedPrompt?.slice(0, 64000),
+            usage: result.usage,
+          },
+          input.job.id
+        )
       }
     },
     onError: (error, input) => {
@@ -120,10 +159,15 @@ export function useImageGeneration() {
           ? error.message.slice(0, 10000)
           : 'Image generation failed.'
       for (const id of input.job.nodeIds) {
-        useDrawingStore.getState().updateNodeData(id, {
-          status: cancelled ? 'cancelled' : 'error',
-          error: cancelled ? undefined : message,
-        })
+        useDrawingStore.getState().updateNodeData(
+          id,
+          {
+            status: cancelled ? 'cancelled' : 'error',
+            progress: undefined,
+            error: cancelled ? undefined : message,
+          },
+          input.job.id
+        )
       }
       if (!cancelled) toast.error(t(message))
     },
@@ -192,10 +236,16 @@ export function useImageGeneration() {
           status: 'pending',
           jobId: job.id,
           createdAt: Date.now(),
+          progress: {
+            startedAt: Date.now(),
+            phase: 'generating',
+            previewCount: 0,
+          },
           referenceIds:
             settings.mode === 'edit'
               ? referenceNodes.map((node) => node.id)
               : [],
+          mask: settings.mode === 'edit' ? mask : undefined,
         },
       })
     )
@@ -213,13 +263,78 @@ export function useImageGeneration() {
     state.addNodes(nodes, edges)
     jobs.current.set(job.id, job)
     setPendingCount(jobs.current.size)
-    mutation.mutate({ job, settings, references, mask, userId: state.userId })
+    mutate({ job, settings, references, mask, userId: state.userId })
     return true
   }
+  const retry = useCallback(
+    (nodeId: string): boolean => {
+      const state = useDrawingStore.getState()
+      const node = state.nodes.find((item) => item.id === nodeId)
+      if (!node || node.data.status !== 'error') return false
+
+      const settings = {
+        ...node.data.settings,
+        prompt: node.data.prompt,
+        n: 1,
+      }
+      const referenceIds =
+        settings.mode === 'edit' ? node.data.referenceIds || [] : []
+      const references = referenceIds.flatMap((id) => {
+        const reference = state.nodes.find((item) => item.id === id)
+        return reference?.data.status === 'complete' && reference.data.asset
+          ? [reference.data.asset]
+          : []
+      })
+      if (references.length !== referenceIds.length) {
+        toast.error(
+          t(
+            'The original reference images are no longer available. Restore them before retrying.'
+          )
+        )
+        return false
+      }
+      const error = validateImageSettings(settings, references.length)
+      if (error) {
+        toast.error(t(error))
+        return false
+      }
+
+      const job: ImageJob = {
+        id: crypto.randomUUID(),
+        controller: new AbortController(),
+        nodeIds: [nodeId],
+      }
+      state.updateNodeData(nodeId, {
+        status: 'pending',
+        progress: {
+          startedAt: Date.now(),
+          phase: 'generating',
+          previewCount: 0,
+        },
+        jobId: job.id,
+        settings,
+        asset: undefined,
+        error: undefined,
+        revisedPrompt: undefined,
+        usage: undefined,
+      })
+      jobs.current.set(job.id, job)
+      setPendingCount(jobs.current.size)
+      mutate({
+        job,
+        settings,
+        references,
+        mask: settings.mode === 'edit' ? node.data.mask : undefined,
+        userId: state.userId,
+      })
+      return true
+    },
+    [mutate, t]
+  )
   const cancel = (jobId?: string) => {
     for (const job of jobs.current.values()) {
       if (!jobId || job.id === jobId) job.controller.abort()
     }
   }
-  return { generate, cancel, pendingCount }
+  return { generate, retry, cancel, pendingCount }
 }

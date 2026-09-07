@@ -39,8 +39,15 @@ export type ImageNodeData = {
   revisedPrompt?: string
   jobId?: string
   createdAt: number
+  progress?: ImageGenerationProgress
   referenceIds?: string[]
+  mask?: ImageAsset
   usage?: Record<string, unknown>
+}
+export type ImageGenerationProgress = {
+  startedAt: number
+  phase: 'generating' | 'decoding'
+  previewCount: number
 }
 export type DrawingNode = Node<ImageNodeData, 'image'>
 export type DrawingMask = { referenceId: string; asset: ImageAsset }

@@ -17,32 +17,40 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import { ReactFlowProvider } from '@xyflow/react'
 import { describe, it, expect } from 'vitest'
 
+import { useDrawingStore } from '@/stores/drawing-store'
+
 import { DrawingWorkspace } from '../components/DrawingWorkspace'
+import { DEFAULT_IMAGE_SETTINGS } from '../lib/image-settings'
+
+function renderWorkspace(userId: number) {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false, staleTime: Infinity } },
+  })
+  client.setQueryData(
+    ['drawing-groups', userId],
+    [{ value: 'default', label: 'default', ratio: 1 }]
+  )
+  client.setQueryData(
+    ['drawing-models', userId, 'default'],
+    [{ value: 'gpt-image-1', label: 'gpt-image-1' }]
+  )
+  const view = render(
+    <QueryClientProvider client={client}>
+      <ReactFlowProvider>
+        <DrawingWorkspace userId={userId} />
+      </ReactFlowProvider>
+    </QueryClientProvider>
+  )
+  return { client, view }
+}
 
 describe('Drawing workspace', () => {
   it('shows the empty canvas and settings when no reference image or mask exists', async () => {
-    const client = new QueryClient({
-      defaultOptions: { queries: { retry: false, staleTime: Infinity } },
-    })
-    client.setQueryData(
-      ['drawing-groups', 801],
-      [{ value: 'default', label: 'default', ratio: 1 }]
-    )
-    client.setQueryData(
-      ['drawing-models', 801, 'default'],
-      [{ value: 'gpt-image-1', label: 'gpt-image-1' }]
-    )
-    render(
-      <QueryClientProvider client={client}>
-        <ReactFlowProvider>
-          <DrawingWorkspace userId={801} />
-        </ReactFlowProvider>
-      </QueryClientProvider>
-    )
+    const { client, view } = renderWorkspace(801)
     await waitFor(() =>
       expect(screen.getByText('Room for every idea')).toBeTruthy()
     )
@@ -53,6 +61,37 @@ describe('Drawing workspace', () => {
         .hasAttribute('disabled')
     ).toBe(true)
     expect(screen.queryByRole('dialog')).toBeNull()
+    view.unmount()
+    client.clear()
+  })
+
+  it('draws the minimap SVG at the size of its compact container after adding an image', async () => {
+    const { client, view } = renderWorkspace(821)
+    await waitFor(() =>
+      expect(screen.getByText('Room for every idea')).toBeTruthy()
+    )
+    act(() =>
+      useDrawingStore.getState().addNodes([
+        {
+          id: 'overview-image',
+          type: 'image',
+          position: { x: 0, y: 0 },
+          width: 280,
+          height: 330,
+          data: {
+            prompt: 'Overview image',
+            settings: DEFAULT_IMAGE_SETTINGS,
+            status: 'error',
+            createdAt: 1,
+          },
+        },
+      ])
+    )
+    const overview = screen.getByTestId('rf__minimap').querySelector('svg')
+    expect(overview?.getAttribute('width')).toBe('144')
+    expect(overview?.getAttribute('height')).toBe('96')
+    expect(overview?.getAttribute('viewBox')).not.toContain('NaN')
+    view.unmount()
     client.clear()
   })
 })

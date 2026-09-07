@@ -16,16 +16,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { ImageAdd01Icon } from '@hugeicons/core-free-icons'
+import { Delete02Icon, ImageAdd01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
   Background,
   BackgroundVariant,
+  MarkerType,
   MiniMap,
   ReactFlow,
   useReactFlow,
 } from '@xyflow/react'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
@@ -61,10 +62,13 @@ import { useTheme } from '@/context/theme-provider'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { useDrawingStore } from '@/stores/drawing-store'
 
+import { ImageRetryContext } from '../context/image-retry-context'
 import { useCanvasFiles } from '../hooks/use-canvas-files'
 import { useDrawingPersistence } from '../hooks/use-drawing-persistence'
 import { useImageGeneration } from '../hooks/use-image-generation'
+import { useReferenceConnections } from '../hooks/use-reference-connections'
 import { imageFileToAsset } from '../lib/image-assets'
+import { canConnectReference } from '../lib/reference-connections'
 import type { DrawingNode, ImageSettings } from '../types'
 import { CanvasToolbar } from './CanvasToolbar'
 import { CanvasViewportControls } from './CanvasViewportControls'
@@ -78,8 +82,8 @@ import '@xyflow/react/dist/style.css'
 const nodeTypes = { image: ImageCanvasNode }
 const defaultEdgeOptions = {
   type: 'smoothstep',
-  style: { stroke: 'var(--muted-foreground)', opacity: 0.45 },
-  deletable: false,
+  style: { stroke: 'var(--primary)', opacity: 0.7, strokeWidth: 2 },
+  markerEnd: { type: MarkerType.ArrowClosed, color: 'var(--primary)' },
 }
 
 export function DrawingWorkspace(props: { userId: number }) {
@@ -92,12 +96,37 @@ export function DrawingWorkspace(props: { userId: number }) {
   )
   const nodes = useDrawingStore((state) => state.nodes)
   const edges = useDrawingStore((state) => state.edges)
+  const selectedEdges = edges.filter((edge) => edge.selected)
+  const selectedReferencesPending = selectedEdges.some((edge) =>
+    nodes.some(
+      (node) => node.id === edge.target && node.data.status === 'pending'
+    )
+  )
+  const canvasEdges = useMemo(
+    () =>
+      edges.map((edge) =>
+        edge.selected
+          ? {
+              ...edge,
+              style: {
+                ...defaultEdgeOptions.style,
+                ...edge.style,
+                strokeWidth: 3,
+                opacity: 1,
+              },
+            }
+          : edge
+      ),
+    [edges]
+  )
   const viewport = useDrawingStore((state) => state.viewport)
   const referenceId = useDrawingStore((state) => state.referenceIds[0])
   const changeNodes = useDrawingStore((state) => state.changeNodes)
+  const changeEdges = useDrawingStore((state) => state.changeEdges)
+  const referenceConnections = useReferenceConnections()
   const checkpoint = useDrawingStore((state) => state.checkpoint)
   const setViewport = useDrawingStore((state) => state.setViewport)
-  const { generate, cancel, pendingCount } = useImageGeneration()
+  const { generate, retry, cancel, pendingCount } = useImageGeneration()
   const files = useCanvasFiles()
   const compact = useMediaQuery('(max-width: 1023px)')
   const canvas = useRef<HTMLDivElement>(null)
@@ -189,7 +218,10 @@ export function DrawingWorkspace(props: { userId: number }) {
     >
       <CanvasToolbar
         tool={tool}
-        onToolChange={setTool}
+        onToolChange={(nextTool) => {
+          referenceConnections.cancel()
+          setTool(nextTool)
+        }}
         compact={compact}
         saveStatus={saveStatus}
         busy={files.busy}
@@ -290,66 +322,125 @@ export function DrawingWorkspace(props: { userId: number }) {
                 }))
               )
             } else if (!command && event.key.toLowerCase() === 'h') {
+              referenceConnections.cancel()
               setTool('hand')
             } else if (!command && event.key.toLowerCase() === 'v') {
+              referenceConnections.cancel()
               setTool('select')
             }
           }}
         >
-          <ReactFlow<DrawingNode>
-            nodes={nodes}
-            edges={edges}
-            nodeTypes={nodeTypes}
-            defaultViewport={viewport}
-            colorMode={resolvedTheme}
-            onNodesChange={changeNodes}
-            onNodeDragStart={checkpoint}
-            onMoveEnd={(_event, nextViewport) => setViewport(nextViewport)}
-            defaultEdgeOptions={defaultEdgeOptions}
-            nodesConnectable={false}
-            edgesFocusable={false}
-            selectionOnDrag={tool === 'select'}
-            panOnDrag={tool === 'hand' ? [0, 1, 2] : [1, 2]}
-            panActivationKeyCode='Space'
-            zoomOnDoubleClick={false}
-            minZoom={0.1}
-            maxZoom={4}
-            deleteKeyCode={['Delete', 'Backspace']}
-            onlyRenderVisibleElements
-            className='bg-muted/25'
-            attributionPosition='bottom-right'
-            ariaLabelConfig={{
-              'node.a11yDescription.default': t(
-                'Press Enter to select an image and use arrow keys to move it. Delete removes the selection.'
-              ),
-              'node.a11yDescription.keyboardDisabled': t(
-                'Press Enter to select an image.'
-              ),
-              'node.a11yDescription.ariaLiveMessage': ({ x, y }) =>
-                t('Image moved to {{x}}, {{y}}.', { x, y }),
-              'edge.a11yDescription.default': t('Reference connection'),
-              'handle.ariaLabel': t('Reference connection'),
-              'minimap.ariaLabel': t('Canvas overview'),
-            }}
-          >
-            <Background
-              variant={BackgroundVariant.Dots}
-              gap={24}
-              size={1}
-              color='var(--border)'
-            />
-            <CanvasViewportControls />
-            {!compact && nodes.length > 0 && (
-              <MiniMap
-                pannable
-                zoomable
-                position='bottom-right'
-                className='!bg-background !mb-8 !h-24 !w-36 !rounded-lg !border'
-                nodeColor='var(--muted-foreground)'
-                maskColor='var(--muted)'
+          <ImageRetryContext value={retry}>
+            <ReactFlow<DrawingNode>
+              nodes={nodes}
+              edges={canvasEdges}
+              nodeTypes={nodeTypes}
+              defaultViewport={viewport}
+              colorMode={resolvedTheme}
+              onNodesChange={changeNodes}
+              onEdgesChange={changeEdges}
+              onConnect={referenceConnections.onConnect}
+              onConnectStart={referenceConnections.onConnectStart}
+              isValidConnection={(connection) =>
+                canConnectReference(
+                  useDrawingStore.getState().nodes,
+                  connection
+                )
+              }
+              onNodeDragStart={checkpoint}
+              onMoveEnd={(_event, nextViewport) => setViewport(nextViewport)}
+              defaultEdgeOptions={defaultEdgeOptions}
+              nodesConnectable={tool === 'select'}
+              edgesReconnectable={false}
+              selectionOnDrag={tool === 'select'}
+              panOnDrag={tool === 'hand' ? [0, 1, 2] : [1, 2]}
+              panActivationKeyCode='Space'
+              zoomOnDoubleClick={false}
+              minZoom={0.1}
+              maxZoom={4}
+              deleteKeyCode={['Delete', 'Backspace']}
+              onlyRenderVisibleElements
+              className='bg-muted/25'
+              attributionPosition='bottom-right'
+              ariaLabelConfig={{
+                'node.a11yDescription.default': t(
+                  'Press Enter to select an image and use arrow keys to move it. Delete removes the selection.'
+                ),
+                'node.a11yDescription.keyboardDisabled': t(
+                  'Press Enter to select an image.'
+                ),
+                'node.a11yDescription.ariaLiveMessage': ({ x, y }) =>
+                  t('Image moved to {{x}}, {{y}}.', { x, y }),
+                'edge.a11yDescription.default': t('Reference connection'),
+                'handle.ariaLabel': t('Reference connection'),
+                'minimap.ariaLabel': t('Canvas overview'),
+              }}
+            >
+              <Background
+                variant={BackgroundVariant.Dots}
+                gap={24}
+                size={1}
+                color='var(--border)'
               />
-            )}
-          </ReactFlow>
+              <CanvasViewportControls />
+              {!compact && nodes.length > 0 && (
+                <MiniMap
+                  pannable
+                  zoomable
+                  position='bottom-right'
+                  className='!bg-background !mb-8 !overflow-hidden !rounded-lg !border'
+                  style={{ width: 144, height: 96 }}
+                  nodeColor='var(--muted-foreground)'
+                  maskColor='color-mix(in srgb, var(--background) 65%, transparent)'
+                  maskStrokeColor='var(--primary)'
+                  maskStrokeWidth={1}
+                />
+              )}
+            </ReactFlow>
+          </ImageRetryContext>
+          {selectedEdges.length > 0 && (
+            <div className='absolute bottom-14 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2'>
+              <Button
+                type='button'
+                variant='destructive'
+                size='sm'
+                className='min-h-10 shadow-sm'
+                disabled={selectedReferencesPending}
+                title={
+                  selectedReferencesPending
+                    ? t(
+                        'Reference images cannot be changed while generation is running.'
+                      )
+                    : undefined
+                }
+                onClick={() =>
+                  changeEdges(
+                    selectedEdges.map((edge) => ({
+                      type: 'remove',
+                      id: edge.id,
+                    }))
+                  )
+                }
+              >
+                <HugeiconsIcon
+                  icon={Delete02Icon}
+                  size={16}
+                  aria-hidden='true'
+                />
+                {t('Delete selected connections')}
+              </Button>
+              {selectedReferencesPending && (
+                <p
+                  className='bg-background/90 w-64 max-w-[calc(100vw-2rem)] rounded-md border p-2 text-center text-xs'
+                  role='status'
+                >
+                  {t(
+                    'Reference images cannot be changed while generation is running.'
+                  )}
+                </p>
+              )}
+            </div>
+          )}
           {nodes.length === 0 && (
             <div className='pointer-events-none absolute inset-0 flex items-center justify-center p-6 pb-20'>
               <Empty className='max-w-md flex-initial'>
