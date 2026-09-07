@@ -9,6 +9,7 @@ import (
 	"github.com/QuantumNous/new-api/middleware"
 	"github.com/QuantumNous/new-api/model"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	"github.com/QuantumNous/new-api/relay/helper"
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/relaykit/types"
 
@@ -20,9 +21,7 @@ func Playground(c *gin.Context) {
 
 	defer func() {
 		if newAPIError != nil {
-			c.JSON(newAPIError.StatusCode, gin.H{
-				"error": newAPIError.ToOpenAIError(),
-			})
+			writePlaygroundError(c, newAPIError)
 		}
 	}()
 
@@ -71,4 +70,15 @@ func Playground(c *gin.Context) {
 	}
 
 	Relay(c, types.RelayFormatOpenAI)
+}
+
+func writePlaygroundError(c *gin.Context, apiError *types.NewAPIError) {
+	body := gin.H{"error": apiError.ToOpenAIError()}
+	if c.Writer.Written() && strings.HasPrefix(c.Writer.Header().Get("Content-Type"), "text/event-stream") {
+		if err := helper.ObjectData(c, body); err == nil {
+			helper.Done(c)
+		}
+		return
+	}
+	c.JSON(apiError.StatusCode, body)
 }

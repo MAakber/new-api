@@ -10,10 +10,13 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"strings"
+	"sync"
+	"time"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/pkg/bingsearch"
+	"github.com/QuantumNous/new-api/relay/helper"
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/relaykit/types"
 
@@ -326,6 +329,53 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 	}
 
 	stream := request.Stream != nil && *request.Stream
+	var stopKeepalive func()
+	if stream && c != nil && c.Request != nil {
+		originalRequest := c.Request
+		searchContext, cancel := context.WithCancel(c.Request.Context())
+		defer func() {
+			cancel()
+			c.Request = originalRequest
+		}()
+		c.Request = c.Request.WithContext(searchContext)
+		helper.SetEventStreamHeaders(c)
+		if err := helper.PingData(c); err != nil {
+			return types.NewError(err, types.ErrorCodeBadResponse, types.ErrOptionWithSkipRetry())
+		}
+		stop := make(chan struct{})
+		done := make(chan struct{})
+		var once sync.Once
+		stopKeepalive = func() {
+			once.Do(func() { close(stop) })
+			<-done
+		}
+		defer stopKeepalive()
+		// Only this goroutine writes while model/search rounds are running. Join
+		// it before writing the final response or returning an error to Playground.
+		go func() {
+			defer close(done)
+			ticker := time.NewTicker(helper.DefaultPingInterval)
+			defer ticker.Stop()
+			writer := http.NewResponseController(c.Writer)
+			for {
+				select {
+				case <-stop:
+					return
+				case <-searchContext.Done():
+					return
+				case <-ticker.C:
+					// Bound a blocked client write so cleanup cannot wait indefinitely.
+					_ = writer.SetWriteDeadline(time.Now().Add(30 * time.Second))
+					err := helper.PingData(c)
+					_ = writer.SetWriteDeadline(time.Time{})
+					if err != nil {
+						cancel()
+						return
+					}
+				}
+			}
+		}()
+	}
 	request.WebSearch = nil
 	request.WebSearchOptions = nil
 	request.StreamOptions = nil
@@ -357,6 +407,9 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 
 		toolCalls := response.Choices[0].Message.ParseToolCalls()
 		if len(toolCalls) == 0 {
+			if stopKeepalive != nil {
+				stopKeepalive()
+			}
 			return writePlaygroundWebSearchResponse(c, response, sources, stream)
 		}
 		if round+1 >= maxPlaygroundWebSearchRounds {

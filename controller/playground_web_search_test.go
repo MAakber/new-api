@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -86,6 +87,48 @@ func TestWritePlaygroundWebSearchResponseIncludesSourcesForStream(t *testing.T) 
 	assert.Contains(t, writer.Body.String(), `"web_search":{"sources":[{"href":"https://example.com","title":"Example"}]}`)
 	assert.Contains(t, writer.Body.String(), `"content":"grounded answer"`)
 	assert.Contains(t, writer.Body.String(), "data: [DONE]")
+}
+
+func TestPlaygroundWebSearchFlushesBeforeWaitingForTheModel(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	writer := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(writer)
+	c.Request = httptest.NewRequest(http.MethodPost, "/pg/chat/completions", nil)
+	previousRelay := invokePlaygroundWebSearchRelayRound
+	t.Cleanup(func() { invokePlaygroundWebSearchRelayRound = previousRelay })
+	invokePlaygroundWebSearchRelayRound = func(_ *gin.Context, request *dto.GeneralOpenAIRequest) (*dto.OpenAITextResponse, *types.NewAPIError) {
+		assert.True(t, writer.Flushed, "send SSE headers before the blocking model/search rounds")
+		assert.Equal(t, "text/event-stream", writer.Header().Get("Content-Type"))
+		assert.Equal(t, "no", writer.Header().Get("X-Accel-Buffering"))
+		return &dto.OpenAITextResponse{Model: request.Model, Choices: []dto.OpenAITextResponseChoice{{Message: dto.Message{Role: "assistant", Content: "answer"}}}}, nil
+	}
+
+	err := playgroundWithWebSearch(c, &dto.GeneralOpenAIRequest{Model: "test-model", Stream: common.GetPointer(true)})
+	require.Nil(t, err)
+	assert.Contains(t, writer.Body.String(), ": PING\n\n")
+	assert.Contains(t, writer.Body.String(), `"content":"answer"`)
+	assert.Contains(t, writer.Body.String(), "data: [DONE]\n\n")
+}
+
+func TestPlaygroundWebSearchErrorsRemainSSEAfterTheFirstFlush(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	writer := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(writer)
+	c.Request = httptest.NewRequest(http.MethodPost, "/pg/chat/completions", nil)
+	previousRelay := invokePlaygroundWebSearchRelayRound
+	t.Cleanup(func() { invokePlaygroundWebSearchRelayRound = previousRelay })
+	invokePlaygroundWebSearchRelayRound = func(_ *gin.Context, _ *dto.GeneralOpenAIRequest) (*dto.OpenAITextResponse, *types.NewAPIError) {
+		return nil, types.NewErrorWithStatusCode(errors.New("upstream unavailable"), types.ErrorCodeBadResponse, http.StatusBadGateway, types.ErrOptionWithSkipRetry())
+	}
+
+	err := playgroundWithWebSearch(c, &dto.GeneralOpenAIRequest{Model: "test-model", Stream: common.GetPointer(true)})
+	require.NotNil(t, err)
+	writePlaygroundError(c, err)
+	assert.Equal(t, http.StatusOK, writer.Code)
+	assert.Equal(t, "text/event-stream", writer.Header().Get("Content-Type"))
+	assert.Contains(t, writer.Body.String(), `data: {"error":`)
+	assert.Contains(t, writer.Body.String(), `"message":"upstream unavailable"`)
+	assert.True(t, strings.HasSuffix(writer.Body.String(), "data: [DONE]\n\n"))
 }
 
 func TestPlaygroundWithWebSearchLetsModelChooseQueryAndReturnsSources(t *testing.T) {
