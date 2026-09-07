@@ -21,9 +21,13 @@ import type { PlaygroundConfig, ParameterEnabled } from '../../types'
 type ParameterValue = PlaygroundConfig[keyof PlaygroundConfig]
 
 export type PlaygroundParameterKey = keyof ParameterEnabled
+export type PlaygroundNumericParameterKey = Exclude<
+  PlaygroundParameterKey,
+  'reasoning_effort'
+>
 
 export type PlaygroundParameterControl = {
-  key: PlaygroundParameterKey
+  key: PlaygroundNumericParameterKey
   labelKey: string
   descriptionKey: string
   valueType: 'slider' | 'number'
@@ -93,7 +97,7 @@ export const PLAYGROUND_PARAMETER_PANEL_SCROLL_CLASS =
   'max-h-[min(28rem,calc(100vh-10rem))] overflow-y-auto pr-1'
 
 export function normalizeParameterNumberValue(
-  key: PlaygroundParameterKey,
+  key: PlaygroundNumericParameterKey,
   value: string | number
 ): number | null {
   if (value === '') {

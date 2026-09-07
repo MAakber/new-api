@@ -18,6 +18,10 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { ERROR_MESSAGES } from '../../constants'
 import type { ChatCompletionChunk, WebSearchSource } from '../../types'
+import {
+  parseAPIErrorDetails,
+  type RequestErrorDetails,
+} from './request-error-utils'
 
 const STREAM_DONE_MESSAGE = '[DONE]'
 const STREAM_CLOSED_READY_STATE = 2
@@ -34,43 +38,27 @@ export type StreamMessageUpdate =
       sources: WebSearchSource[]
     }
 
-type StreamErrorPayload = {
-  error?: {
-    code?: string
-    message?: string
+export type StreamErrorDetails = RequestErrorDetails
+
+export class StreamResponseError extends Error {
+  readonly errorCode?: string
+  constructor(details: StreamErrorDetails) {
+    super(details.errorMessage)
+    this.name = 'StreamResponseError'
+    this.errorCode = details.errorCode
   }
 }
 
-export type StreamErrorDetails = {
-  errorCode?: string
-  errorMessage: string
-}
-
-export function parseStreamErrorDetails(data?: string): StreamErrorDetails {
-  const fallbackMessage = data || ERROR_MESSAGES.API_REQUEST_ERROR
-
-  if (!data) {
-    return { errorMessage: fallbackMessage }
-  }
-
-  try {
-    const parsed = JSON.parse(data) as StreamErrorPayload
-
-    if (!parsed?.error) {
-      return { errorMessage: fallbackMessage }
-    }
-
-    return {
-      errorCode: parsed.error.code || undefined,
-      errorMessage: parsed.error.message || fallbackMessage,
-    }
-  } catch {
-    return { errorMessage: fallbackMessage }
-  }
+export function parseStreamErrorDetails(
+  data?: string,
+  status?: number
+): StreamErrorDetails {
+  return parseAPIErrorDetails(data, status)
 }
 
 export function parseStreamMessageUpdates(data: string): StreamMessageUpdate[] {
-  const chunk = JSON.parse(data) as ChatCompletionChunk
+  const chunk = JSON.parse(data) as ChatCompletionChunk & { error?: unknown }
+  if (chunk.error) throw new StreamResponseError(parseAPIErrorDetails(chunk))
   const delta = chunk.choices?.[0]?.delta
 
   if (!delta) {
@@ -157,18 +145,14 @@ export function isStreamClosedReadyState(readyState?: number): boolean {
 
 export function getStreamReadyStateError(
   eventReadyState: number | undefined,
-  source: unknown
+  responseCode?: number
 ): string | null {
-  const status = (source as { status?: number }).status
-
+  if (!isStreamClosedReadyState(eventReadyState)) return null
   if (
-    eventReadyState !== undefined &&
-    eventReadyState >= STREAM_CLOSED_READY_STATE &&
-    status !== undefined &&
-    status !== 200
+    responseCode !== undefined &&
+    (responseCode < 200 || responseCode >= 300)
   ) {
-    return `HTTP ${status}: ${ERROR_MESSAGES.CONNECTION_CLOSED}`
+    return parseAPIErrorDetails(undefined, responseCode).errorMessage
   }
-
-  return null
+  return ERROR_MESSAGES.INTERRUPTED
 }

@@ -33,6 +33,7 @@ export const playgroundConfigSchema = z.object({
   frequency_penalty: z.number().optional(),
   presence_penalty: z.number().optional(),
   seed: z.number().nullable().optional(),
+  reasoning_effort: z.string().optional(),
   stream: z.boolean().optional(),
   webSearchEnabled: z.boolean().optional(),
 })
@@ -44,6 +45,7 @@ export const parameterEnabledSchema = z.object({
   frequency_penalty: z.boolean().optional(),
   presence_penalty: z.boolean().optional(),
   seed: z.boolean().optional(),
+  reasoning_effort: z.boolean().optional(),
 })
 
 const messageRoleSchema = z.enum(['user', 'assistant', 'system'])

@@ -732,6 +732,10 @@ export const STATIC_I18N_KEYS = [
   'Keep this channel enabled when the upstream reports a temporary balance or quota limit.',
 
   // Misc
+  'A gateway error occurred (502). Please try again later.',
+  'The service is temporarily unavailable (503). Please try again later.',
+  'The request timed out at the gateway (504). Please try again later.',
+  'The server returned an error page. Please try again later.',
   'Cancel',
   'Status',
   'Upgrade Group',

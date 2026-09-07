@@ -9,6 +9,7 @@
     "build:check": "tsgo -b && rsbuild build",
     "typecheck": "tsgo -b",
     "test:drawing": "vitest run --config vitest.drawing.config.ts",
+    "test:playground": "vitest run --config vitest.playground.config.ts",
     "lint": "oxlint -c .oxlintrc.json .",
     "lint:fix": "oxlint -c .oxlintrc.json . --fix",
     "preview": "rsbuild preview",

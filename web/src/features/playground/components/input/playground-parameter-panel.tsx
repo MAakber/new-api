@@ -50,8 +50,10 @@ import {
   PLAYGROUND_PARAMETER_CONTROLS,
   PLAYGROUND_PARAMETER_PANEL_SCROLL_CLASS,
   type PlaygroundParameterKey,
+  type PlaygroundNumericParameterKey,
 } from '../../lib/parameters/playground-parameters'
 import type { ParameterEnabled, PlaygroundConfig } from '../../types'
+import { ReasoningEffortControl } from './reasoning-effort-control'
 
 type PlaygroundParameterPanelProps = {
   config: PlaygroundConfig
@@ -82,7 +84,7 @@ function PlaygroundParameterContent({
   const { t } = useTranslation()
 
   const updateParameterConfig = (
-    key: PlaygroundParameterKey,
+    key: PlaygroundNumericParameterKey,
     value: number | null
   ) => {
     if (key === 'seed') {
@@ -101,6 +103,15 @@ function PlaygroundParameterContent({
         compact ? 'px-4 pb-4' : 'p-1'
       )}
     >
+      <ReasoningEffortControl
+        value={config.reasoning_effort}
+        enabled={parameterEnabled.reasoning_effort}
+        disabled={disabled}
+        onValueChange={(value) => onConfigChange('reasoning_effort', value)}
+        onEnabledChange={(value) =>
+          onParameterEnabledChange('reasoning_effort', value)
+        }
+      />
       {PLAYGROUND_PARAMETER_CONTROLS.map((control) => {
         const enabled = parameterEnabled[control.key]
         const value = config[control.key]
@@ -199,8 +210,8 @@ function PlaygroundParameterContent({
 export function PlaygroundParameterPanel(props: PlaygroundParameterPanelProps) {
   const { t } = useTranslation()
   const isMobile = useIsMobile()
-  const activeCount = PLAYGROUND_PARAMETER_CONTROLS.filter(
-    (control) => props.parameterEnabled[control.key]
+  const activeCount = Object.values(props.parameterEnabled).filter(
+    Boolean
   ).length
 
   const trigger = (

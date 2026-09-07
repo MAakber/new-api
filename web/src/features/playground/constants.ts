@@ -53,6 +53,7 @@ export const DEFAULT_CONFIG: PlaygroundConfig = {
   frequency_penalty: 0,
   presence_penalty: 0,
   seed: null,
+  reasoning_effort: 'medium',
   stream: true,
   webSearchEnabled: false,
 }
@@ -64,6 +65,7 @@ export const DEFAULT_PARAMETER_ENABLED: ParameterEnabled = {
   frequency_penalty: true,
   presence_penalty: true,
   seed: false,
+  reasoning_effort: false,
 }
 
 // Storage keys
@@ -81,6 +83,12 @@ export const ERROR_MESSAGES = {
   STREAM_START_ERROR: 'Error establishing connection',
   CONNECTION_CLOSED: 'Connection closed',
   INTERRUPTED: 'Generation was interrupted',
+  BAD_GATEWAY: 'A gateway error occurred (502). Please try again later.',
+  SERVICE_UNAVAILABLE:
+    'The service is temporarily unavailable (503). Please try again later.',
+  GATEWAY_TIMEOUT:
+    'The request timed out at the gateway (504). Please try again later.',
+  HTML_RESPONSE: 'The server returned an error page. Please try again later.',
 } as const
 
 // Message action button styles

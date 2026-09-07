@@ -72,5 +72,9 @@ export function buildChatCompletionPayload(
     payload.seed = config.seed
   }
 
+  if (parameterEnabled.reasoning_effort && config.reasoning_effort.trim()) {
+    payload.reasoning_effort = config.reasoning_effort.trim()
+  }
+
   return payload
 }

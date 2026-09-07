@@ -17,7 +17,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import assert from 'node:assert/strict'
-import { describe, test } from 'node:test'
+
+import { describe, test } from 'vitest'
 
 import type { ParameterEnabled, PlaygroundConfig } from '../../../types'
 import { buildChatCompletionPayload } from '../payload-builder'
@@ -29,6 +30,7 @@ const parameterEnabled: ParameterEnabled = {
   frequency_penalty: true,
   presence_penalty: true,
   seed: false,
+  reasoning_effort: false,
 }
 
 function createConfig(webSearchEnabled: boolean): PlaygroundConfig {
@@ -41,6 +43,7 @@ function createConfig(webSearchEnabled: boolean): PlaygroundConfig {
     frequency_penalty: 0,
     presence_penalty: 0,
     seed: null,
+    reasoning_effort: 'medium',
     stream: true,
     webSearchEnabled,
   }
