@@ -3,6 +3,7 @@ package controller
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/middleware"
@@ -31,7 +32,11 @@ func Playground(c *gin.Context) {
 		return
 	}
 
-	relayInfo, err := relaycommon.GenRelayInfo(c, types.RelayFormatOpenAI, nil, nil)
+	relayFormat := types.RelayFormatOpenAI
+	if strings.HasPrefix(c.Request.URL.Path, "/pg/images/") {
+		relayFormat = types.RelayFormatOpenAIImage
+	}
+	relayInfo, err := relaycommon.GenRelayInfo(c, relayFormat, nil, nil)
 	if err != nil {
 		newAPIError = types.NewError(err, types.ErrorCodeInvalidRequest, types.ErrOptionWithSkipRetry())
 		return
@@ -53,6 +58,11 @@ func Playground(c *gin.Context) {
 		Group:  relayInfo.UsingGroup,
 	}
 	_ = middleware.SetupContextForToken(c, tempToken)
+
+	if relayFormat == types.RelayFormatOpenAIImage {
+		Relay(c, relayFormat)
+		return
+	}
 
 	var playgroundRequest dto.GeneralOpenAIRequest
 	if err := common.UnmarshalBodyReusable(c, &playgroundRequest); err == nil && isPlaygroundWebSearchEnabled(playgroundRequest.WebSearch) {

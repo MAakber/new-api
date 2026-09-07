@@ -553,7 +553,7 @@ func (a *Adaptor) ConvertImageRequest(c *gin.Context, info *relaycommon.RelayInf
 		// 写入所有非文件字段
 		if mf != nil {
 			for key, values := range mf.Value {
-				if key == "model" {
+				if key == "model" || (info.IsPlayground && key == "group") {
 					continue
 				}
 				for _, value := range values {
