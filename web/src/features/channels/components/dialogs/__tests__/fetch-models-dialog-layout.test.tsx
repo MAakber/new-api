@@ -16,139 +16,88 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import assert from 'node:assert/strict'
-import { after, describe, test } from 'node:test'
+import { screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { useState } from 'react'
+import { assert, describe, expect, it } from 'vitest'
 
-import { Window } from 'happy-dom'
+import {
+  renderChannelUI,
+  renderPicker,
+} from '../../../__tests__/fetch-models-fixtures'
+import { FetchModelsDialog } from '../fetch-models-dialog'
 
-const domWindow = new Window()
-const domGlobals = [
-  'window',
-  'document',
-  'navigator',
-  'localStorage',
-  'matchMedia',
-  'customElements',
-  'HTMLElement',
-  'HTMLInputElement',
-  'HTMLButtonElement',
-  'SVGElement',
-  'Node',
-  'Element',
-  'Event',
-  'CustomEvent',
-  'MutationObserver',
-  'requestAnimationFrame',
-  'cancelAnimationFrame',
-  'getComputedStyle',
-] as const
-
-for (const key of domGlobals) {
-  Object.defineProperty(globalThis, key, {
-    configurable: true,
-    value: domWindow[key],
-  })
-}
-
-const { act } = await import('react')
-const { createRoot } = await import('react-dom/client')
-const { QueryClient, QueryClientProvider } =
-  await import('@tanstack/react-query')
-const { createInstance } = await import('i18next')
-const { I18nextProvider, initReactI18next } = await import('react-i18next')
-const { FetchModelsDialog } = await import('../fetch-models-dialog')
-const { ChannelsProvider } = await import('../../channels-provider')
-
-const reactTestGlobals = globalThis as typeof globalThis & {
-  IS_REACT_ACT_ENVIRONMENT?: boolean
-}
-reactTestGlobals.IS_REACT_ACT_ENVIRONMENT = true
-
-const i18n = createInstance()
-await i18n.use(initReactI18next).init({
-  lng: 'en',
-  resources: { en: { translation: {} } },
-})
-
-describe('fetch models dialog layout', () => {
-  after(() => {
-    domWindow.close()
-  })
-
-  test('keeps mobile actions and selection status outside the model scroll', async () => {
-    const container = document.createElement('div')
-    document.body.append(container)
-    const root = createRoot(container)
-    const queryClient = new QueryClient({
-      defaultOptions: { queries: { retry: false } },
+describe('fetch models dialog layout and focus', () => {
+  it('keeps filters and actions outside the model scroll and wraps long model labels', async () => {
+    const user = userEvent.setup()
+    const modelName =
+      'provider/very-long-model-name-that-must-wrap-without-horizontal-overflow'
+    renderPicker({
+      customFetcher: async () => [modelName, 'provider/second-model'],
     })
-    const models = [
-      'provider/very-long-model-name-that-must-wrap-without-horizontal-overflow',
-      'provider/second-model',
-    ]
-    let resolveFetch: ((value: string[]) => void) | undefined
-    const customFetcher = () =>
-      new Promise<string[]>((resolve) => {
-        resolveFetch = resolve
-      })
-
-    await act(async () => {
-      root.render(
-        <QueryClientProvider client={queryClient}>
-          <I18nextProvider i18n={i18n}>
-            <ChannelsProvider>
-              <FetchModelsDialog
-                open
-                onOpenChange={() => undefined}
-                customFetcher={customFetcher}
-              />
-            </ChannelsProvider>
-          </I18nextProvider>
-        </QueryClientProvider>
-      )
-    })
-
-    assert.ok(resolveFetch)
-    await act(async () => {
-      resolveFetch?.(models)
-      await Promise.resolve()
-    })
-
-    const content = document.querySelector<HTMLElement>(
-      '[data-slot="dialog-content"]'
+    await screen.findByRole('checkbox', { name: modelName })
+    const content = screen.getByRole('dialog')
+    const filters = content.querySelector<HTMLElement>(
+      '[data-slot="fetch-models-filters"]'
     )
-    const footer = document.querySelector<HTMLElement>(
+    const footer = content.querySelector<HTMLElement>(
       '[data-slot="dialog-footer"]'
     )
-    const tabsList = document.querySelector<HTMLElement>(
-      '[data-slot="tabs-list"]'
-    )
-    const modelPanel = document.querySelector<HTMLElement>(
-      '[data-slot="tabs-content"]'
-    )
+    assert(filters)
+    assert(footer)
+    const panel = screen.getByRole('tabpanel')
 
-    assert.ok(content)
-    assert.ok(footer)
-    assert.ok(tabsList)
-    assert.ok(modelPanel)
-    assert.equal(content.classList.contains('max-md:h-[100dvh]'), true)
-    assert.equal(
-      content.classList.contains('max-md:[&>div:nth-child(2)]:flex-1'),
-      true
-    )
-    assert.equal(
+    expect(content.classList.contains('max-md:h-[100dvh]')).toBe(true)
+    expect(content.classList.contains('overflow-hidden')).toBe(true)
+    expect(panel.classList.contains('overflow-y-auto')).toBe(true)
+    expect(panel.contains(filters)).toBe(false)
+    expect(panel.contains(footer)).toBe(false)
+    expect(
       footer.classList.contains(
-        'max-md:!pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]'
-      ),
-      true
-    )
-    assert.equal(footer.querySelectorAll('button').length, 2)
-    assert.match(footer.textContent || '', /model\(s\) selected/)
-    assert.equal(tabsList.classList.contains('max-md:h-auto'), true)
-    assert.equal(modelPanel.classList.contains('max-md:overflow-visible'), true)
+        'max-md:pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]'
+      )
+    ).toBe(true)
+    expect(footer.textContent).toContain('0 model(s) selected')
+    expect(
+      filters
+        .querySelector('[data-slot="toggle-group"]')
+        ?.parentElement?.classList.contains('overflow-x-auto')
+    ).toBe(true)
+    const label = screen.getByText(modelName, { selector: 'label' })
+    expect(label.classList.contains('break-all')).toBe(true)
+    await user.click(label)
+    expect(
+      screen
+        .getByRole('checkbox', { name: modelName })
+        .getAttribute('aria-checked')
+    ).toBe('true')
+  })
 
-    await act(async () => root.unmount())
-    container.remove()
-    queryClient.clear()
+  it('closes with Escape and restores focus to the opener', async () => {
+    const user = userEvent.setup()
+    const customFetcher = async () => ['grok-4']
+    function Launcher() {
+      const [open, setOpen] = useState(false)
+      return (
+        <>
+          <button type='button' onClick={() => setOpen(true)}>
+            Open model picker
+          </button>
+          <FetchModelsDialog
+            open={open}
+            onOpenChange={setOpen}
+            customFetcher={customFetcher}
+          />
+        </>
+      )
+    }
+    renderChannelUI(<Launcher />)
+    const opener = screen.getByRole('button', { name: 'Open model picker' })
+    await user.click(opener)
+    await screen.findByRole('checkbox', { name: 'grok-4' })
+    await user.click(screen.getByRole('textbox', { name: 'Search models' }))
+    await user.keyboard('{Escape}')
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    await waitFor(() => expect(document.activeElement).toBe(opener))
   })
 })

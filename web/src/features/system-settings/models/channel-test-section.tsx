@@ -223,7 +223,7 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
               <h4 className='text-sm font-medium'>{t('Test request')}</h4>
               <p className='text-muted-foreground text-xs'>
                 {t(
-                  'Set the shared request used when the system checks channel connections.'
+                  'Shared request defaults for manual tests and background health checks.'
                 )}
               </p>
             </div>
@@ -243,7 +243,7 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                   </FormControl>
                   <FormDescription>
                     {t(
-                      'Used for scheduled and detailed channel tests when no temporary message is entered.'
+                      'Default text for conversation checks. Image and tool tests use built-in prompts; the dialog can override the text for basic conversation and image tests.'
                     )}
                   </FormDescription>
                   <FormMessage />
@@ -284,7 +284,7 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                       <FormLabel>{t('Show response preview')}</FormLabel>
                       <FormDescription>
                         {t(
-                          'Show a small, truncated response preview in detailed test results. Keep this off unless you need to inspect a response.'
+                          'Show the full, redacted response through the Preview button in test details. The response opens in a side panel with raw content collapsed by default.'
                         )}
                       </FormDescription>
                     </SettingsSwitchContent>
@@ -308,7 +308,9 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                 {t('Channel health checks')}
               </h4>
               <p className='text-muted-foreground text-xs'>
-                {t('Set how the system checks channels in the background.')}
+                {t(
+                  'Background checks use one test model per channel to monitor connectivity. The four capability checks are selected separately in the channel test dialog.'
+                )}
               </p>
             </div>
 
@@ -322,7 +324,7 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                       <FormLabel>{t('Scheduled channel tests')}</FormLabel>
                       <FormDescription>
                         {t(
-                          'Automatically probe all channels in the background'
+                          'Run background connection checks at the configured interval.'
                         )}
                       </FormDescription>
                     </SettingsSwitchContent>
@@ -341,16 +343,16 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                 name='monitor_setting.channel_test_mode'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('Channel test mode')}</FormLabel>
+                    <FormLabel>{t('Health check scope')}</FormLabel>
                     <Select
                       items={[
                         {
                           value: 'scheduled_all',
-                          label: t('Scheduled full test'),
+                          label: t('All eligible channels'),
                         },
                         {
                           value: 'passive_recovery',
-                          label: t('Passive recovery only'),
+                          label: t('Auto-disabled channels only'),
                         },
                       ]}
                       value={field.value}
@@ -364,17 +366,17 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                       <SelectContent alignItemWithTrigger={false}>
                         <SelectGroup>
                           <SelectItem value='scheduled_all'>
-                            {t('Scheduled full test')}
+                            {t('All eligible channels')}
                           </SelectItem>
                           <SelectItem value='passive_recovery'>
-                            {t('Passive recovery only')}
+                            {t('Auto-disabled channels only')}
                           </SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
                     <FormDescription>
                       {t(
-                        'Scheduled full test probes non-manually-disabled channels; passive recovery only checks auto-disabled channels after real request failures.'
+                        'Full checks include enabled and auto-disabled channels. Recovery checks only include auto-disabled channels. Manually disabled channels are always skipped.'
                       )}
                     </FormDescription>
                     <FormMessage />
@@ -401,7 +403,9 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                         ? t(
                             'How frequently the system checks auto-disabled channels for recovery'
                           )
-                        : t('How frequently the system tests all channels')}
+                        : t(
+                            'How frequently the system checks eligible channels'
+                          )}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

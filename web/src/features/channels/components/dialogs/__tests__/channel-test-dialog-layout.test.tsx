@@ -16,8 +16,17 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { act, cleanup, fireEvent, screen, within } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import {
+  act,
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import type { Window as HappyDOMWindow } from 'happy-dom'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   channelTestApiFixture,
@@ -25,16 +34,98 @@ import {
 } from '../../../__tests__/channel-test-fixture'
 
 let api: ReturnType<typeof channelTestApiFixture>
+const domWindow = window as unknown as HappyDOMWindow
 beforeEach(() => {
+  domWindow.happyDOM.setWindowSize({ width: 1024, height: 768 })
   api = channelTestApiFixture()
 })
 afterEach(async () => {
   cleanup()
   await api.finish()
   api.restore()
+  domWindow.happyDOM.setWindowSize({ width: 1024, height: 768 })
 })
 
 describe('channel test dialog layout', () => {
+  it('collapses mobile capabilities by default and keeps selections when expanded with the keyboard', async () => {
+    domWindow.happyDOM.setWindowSize({ width: 390, height: 844 })
+    const user = userEvent.setup()
+    renderChannelTest()
+    const toggle = screen.getByRole('button', { name: /^Test capabilities/ })
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+    expect(toggle.textContent).toContain('4 / 4 selected')
+    expect(
+      screen.queryByRole('group', { name: 'Test capabilities' })
+    ).toBeNull()
+    expect(screen.getByText('Estimated requests: 4')).toBeDefined()
+
+    await waitFor(() =>
+      expect(screen.getByRole('dialog').contains(document.activeElement)).toBe(
+        true
+      )
+    )
+    toggle.focus()
+    await user.keyboard('[Enter]')
+    const capabilities = screen.getByRole('group', {
+      name: 'Test capabilities',
+    })
+    expect(within(capabilities).getAllByRole('checkbox')).toHaveLength(4)
+    await user.click(
+      within(capabilities).getByRole('checkbox', {
+        name: 'Tools · non-streaming',
+      })
+    )
+    expect(screen.getByText('Estimated requests: 3')).toBeDefined()
+    await user.click(toggle)
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+    expect(toggle.textContent).toContain('3 / 4 selected')
+    await user.keyboard(' ')
+    expect(
+      screen
+        .getByRole('checkbox', { name: 'Tools · non-streaming' })
+        .getAttribute('aria-checked')
+    ).toBe('false')
+    expect(api.requests).toHaveLength(0)
+  })
+
+  it('keeps desktop capabilities visible and preserves selections across the mobile breakpoint', async () => {
+    const user = userEvent.setup()
+    const matchMedia = window.matchMedia.bind(window)
+    const mediaQueries = new Set<MediaQueryList>()
+    vi.spyOn(window, 'matchMedia').mockImplementation((query) => {
+      const media = matchMedia(query)
+      if (query === '(max-width: 767px)') mediaQueries.add(media)
+      return media
+    })
+    renderChannelTest()
+    expect(
+      screen.queryByRole('button', { name: /^Test capabilities/ })
+    ).toBeNull()
+    await user.click(screen.getByRole('checkbox', { name: 'Streaming' }))
+    await act(async () =>
+      domWindow.happyDOM.setWindowSize({ width: 390, height: 844 })
+    )
+    const toggle = screen.getByRole('button', { name: /^Test capabilities/ })
+    expect(toggle.getAttribute('aria-expanded')).toBe('false')
+    expect(toggle.textContent).toContain('3 / 4 selected')
+    await act(async () => {
+      domWindow.happyDOM.setWindowSize({ width: 1024, height: 768 })
+      // Happy DOM misses matched-to-unmatched events after a new subscription.
+      for (const media of mediaQueries) media.dispatchEvent(new Event('change'))
+    })
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('button', { name: /^Test capabilities/ })
+      ).toBeNull()
+    )
+    expect(
+      screen
+        .getByRole('checkbox', { name: 'Streaming' })
+        .getAttribute('aria-checked')
+    ).toBe('false')
+    expect(api.requests).toHaveLength(0)
+  })
+
   it('opens without requests, offers four capabilities and puts scrolling results between fixed controls', () => {
     renderChannelTest([
       'provider/very-long-model-name-that-wraps-without-breaking-the-result-columns',
@@ -85,11 +176,17 @@ describe('channel test dialog layout', () => {
   })
 
   it('exposes advanced settings and keeps them keyboard accessible without launching probes', async () => {
+    domWindow.happyDOM.setWindowSize({ width: 390, height: 844 })
     renderChannelTest()
     const advanced = screen.getByRole('button', { name: 'Advanced settings' })
     expect(advanced.getAttribute('aria-expanded')).toBe('false')
     await act(async () => fireEvent.click(advanced))
     expect(advanced.getAttribute('aria-expanded')).toBe('true')
+    expect(
+      screen
+        .getByRole('button', { name: /^Test capabilities/ })
+        .getAttribute('aria-expanded')
+    ).toBe('false')
     expect(
       screen.getByRole('textbox', { name: 'Test message override' })
     ).toBeDefined()

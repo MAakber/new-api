@@ -16,49 +16,42 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { useQueryClient } from '@tanstack/react-query'
-import { Loader2, Search, Info, ChevronDown } from 'lucide-react'
-import {
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  type ReactNode,
-} from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
-import { Dialog } from '@/components/dialog'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from '@/components/ui/empty'
+import { Spinner } from '@/components/ui/spinner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 
-import { fetchUpstreamModels, updateChannel } from '../../api'
+import { updateChannel } from '../../api'
 import {
-  channelsQueryKeys,
-  categorizeModelsWithRedirect,
-  normalizeModelName,
-  parseModelsString,
-} from '../../lib'
+  useFetchModels,
+  type FetchModelsTab,
+} from '../../hooks/use-fetch-models'
+import { channelsQueryKeys } from '../../lib/channel-actions'
 import type { Channel } from '../../types'
 import { useChannels } from '../channels-provider'
 import { resolveFetchModelsChannel } from './fetch-models-channel'
-
-function normalizeModelNameList(models: readonly string[]): string[] {
-  return [...new Set(models.map((m) => normalizeModelName(m)).filter(Boolean))]
-}
+import { FetchModelsFilters } from './fetch-models-filters'
+import { FetchModelsGroup } from './fetch-models-group'
 
 type FetchModelsDialogProps = {
   open: boolean
@@ -72,488 +65,297 @@ type FetchModelsDialogProps = {
   channel?: Channel | null
 }
 
-export function FetchModelsDialog({
-  open,
-  onOpenChange,
-  onModelsSelected,
-  redirectModels = [],
-  redirectSourceModels = [],
-  customFetcher,
-  existingModelsOverride,
-  channelName,
-  channel,
-}: FetchModelsDialogProps) {
-  const { t } = useTranslation()
+export function FetchModelsDialog(props: FetchModelsDialogProps) {
   const { currentRow } = useChannels()
-  const activeChannel = customFetcher
+  const activeChannel = props.customFetcher
     ? null
-    : resolveFetchModelsChannel(channel, currentRow)
-  const queryClient = useQueryClient()
-  const [isFetching, setIsFetching] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
-  const [fetchedModels, setFetchedModels] = useState<string[]>([])
-  const [selectedModels, setSelectedModels] = useState<string[]>([])
-  const [searchKeyword, setSearchKeyword] = useState('')
+    : resolveFetchModelsChannel(props.channel, currentRow)
 
-  // Parse existing models
-  const existingModels = useMemo(
-    () =>
-      existingModelsOverride ?? parseModelsString(activeChannel?.models || ''),
-    [existingModelsOverride, activeChannel?.models]
-  )
+  if (!props.open) return null
 
-  // Categorize models with redirect models
-  const modelCategories = useMemo(
-    () => categorizeModelsWithRedirect(existingModels, redirectModels),
-    [existingModels, redirectModels]
-  )
-
-  const { classificationSet, redirectOnlySet } = modelCategories
-
-  const fetchedModelSet = useMemo(
-    () => new Set(normalizeModelNameList(fetchedModels)),
-    [fetchedModels]
-  )
-
-  // Source keys in model_mapping are aliases, not real upstream IDs, so we
-  // must skip them when computing "removed upstream" entries to avoid false
-  // positives.
-  const redirectSourceKeysSet = useMemo(
-    () => new Set(normalizeModelNameList(redirectSourceModels)),
-    [redirectSourceModels]
-  )
-
-  const removedModels = useMemo(() => {
-    const kw = searchKeyword.toLowerCase().trim()
-    return normalizeModelNameList(selectedModels).filter((model) => {
-      if (fetchedModelSet.has(model)) return false
-      if (redirectSourceKeysSet.has(model)) return false
-      if (!kw) return true
-      return model.toLowerCase().includes(kw)
-    })
-  }, [fetchedModelSet, redirectSourceKeysSet, searchKeyword, selectedModels])
-
-  const activeChannelId = activeChannel?.id
-
-  const fetchModels = useCallback(async () => {
-    if (activeChannelId == null && !customFetcher) return
-
-    setIsFetching(true)
-    try {
-      if (customFetcher) {
-        const list = await customFetcher()
-        setFetchedModels(list)
-        setSelectedModels(existingModels)
-        toast.success(t('Fetched {{count}} models', { count: list.length }))
-      } else {
-        if (activeChannelId == null) return
-        const response = await fetchUpstreamModels(activeChannelId)
-        if (response.success) {
-          const list = Array.isArray(response.data) ? response.data : []
-          setFetchedModels(list)
-          setSelectedModels(existingModels)
-          toast.success(t('Fetched {{count}} models', { count: list.length }))
-        } else {
-          toast.error(response.message || t('Failed to fetch models'))
-          setFetchedModels([])
-        }
+  return (
+    <FetchModelsSession
+      {...props}
+      key={
+        props.customFetcher
+          ? `custom-${props.channel?.id ?? 'new'}`
+          : (activeChannel?.id ?? 'none')
       }
-    } catch (error: unknown) {
-      toast.error(
-        error instanceof Error ? error.message : t('Failed to fetch models')
-      )
-      setFetchedModels([])
-    } finally {
-      setIsFetching(false)
-    }
-  }, [activeChannelId, customFetcher, existingModels, t])
+      activeChannel={activeChannel}
+    />
+  )
+}
 
-  const handleFetchModels = fetchModels
-
+function FetchModelsSession(
+  props: FetchModelsDialogProps & { activeChannel: Channel | null }
+) {
+  const { t } = useTranslation()
+  const queryClient = useQueryClient()
+  const mounted = useRef(true)
   useEffect(() => {
-    if (open && (activeChannelId != null || customFetcher)) {
-      void handleFetchModels()
+    mounted.current = true
+    return () => {
+      mounted.current = false
     }
-  }, [open, activeChannelId, customFetcher, handleFetchModels])
+  }, [])
 
-  const handleSave = async () => {
-    // If onModelsSelected callback is provided, use it (form filling mode)
-    if (onModelsSelected) {
-      onModelsSelected(selectedModels)
+  const state = useFetchModels({
+    channel: props.activeChannel,
+    customFetcher: props.customFetcher,
+    existingModelsOverride: props.existingModelsOverride,
+    redirectModels: props.redirectModels,
+    redirectSourceModels: props.redirectSourceModels,
+  })
+  const save = useMutation({
+    mutationFn: async (models: string[]) => {
+      if (!props.activeChannel) throw new Error(t('No channel selected'))
+      return updateChannel(props.activeChannel.id, { models: models.join(',') })
+    },
+  })
+
+  async function handleSave() {
+    if (props.onModelsSelected) {
+      props.onModelsSelected([...state.selectedModels])
       toast.success(t('Models filled to form'))
-      onOpenChange(false)
+      props.onOpenChange(false)
       return
     }
+    if (!props.activeChannel) return
 
-    // Otherwise, directly save to API (standalone mode)
-    if (!activeChannel) return
-    setIsSaving(true)
     try {
-      const modelsString = selectedModels.join(',')
-      const response = await updateChannel(activeChannel.id, {
-        models: modelsString,
-      })
+      const response = await save.mutateAsync(state.selectedModels)
       if (response.success) {
-        toast.success(t('Models updated successfully'))
-        queryClient.invalidateQueries({ queryKey: channelsQueryKeys.lists() })
-        onOpenChange(false)
-      } else {
-        toast.error(response.message || t('Failed to update models'))
+        void queryClient.invalidateQueries({
+          queryKey: channelsQueryKeys.lists(),
+        })
       }
+      if (!mounted.current) return
+      if (!response.success) {
+        toast.error(response.message || t('Failed to update models'))
+        return
+      }
+      toast.success(t('Models updated successfully'))
+      props.onOpenChange(false)
     } catch (error: unknown) {
+      if (!mounted.current) return
       toast.error(
         error instanceof Error ? error.message : t('Failed to update models')
       )
-    } finally {
-      setIsSaving(false)
     }
   }
 
-  const handleClose = () => {
-    setFetchedModels([])
-    setSelectedModels([])
-    setSearchKeyword('')
-    onOpenChange(false)
-  }
-
-  // Categorize models by common prefixes
-  const categorizeModels = (models: string[]) => {
-    const categories: Record<string, string[]> = {}
-
-    models.forEach((model) => {
-      let category = 'Other'
-
-      // Determine category based on model name
-      if (
-        model.toLowerCase().includes('gpt') ||
-        model.toLowerCase().includes('o1') ||
-        model.toLowerCase().includes('o3')
-      ) {
-        category = 'OpenAI'
-      } else if (model.toLowerCase().includes('claude')) {
-        category = 'Anthropic'
-      } else if (model.toLowerCase().includes('gemini')) {
-        category = 'Gemini'
-      } else if (model.toLowerCase().includes('qwen')) {
-        category = 'Qwen'
-      } else if (model.toLowerCase().includes('deepseek')) {
-        category = 'DeepSeek'
-      } else if (model.toLowerCase().includes('glm')) {
-        category = 'Zhipu'
-      } else if (model.toLowerCase().includes('llama')) {
-        category = 'Meta'
-      } else if (model.toLowerCase().includes('mistral')) {
-        category = 'Mistral'
-      }
-
-      if (!categories[category]) {
-        categories[category] = []
-      }
-      categories[category].push(model)
+  const channelName = props.activeChannel?.name || props.channelName
+  const hasSource = !!(props.activeChannel || props.customFetcher)
+  const tabs: { value: FetchModelsTab; label: string }[] = [
+    {
+      value: 'new',
+      label: t('New Models ({{count}})', { count: state.tabCounts.new }),
+    },
+    {
+      value: 'existing',
+      label: t('Existing Models ({{count}})', {
+        count: state.tabCounts.existing,
+      }),
+    },
+  ]
+  if (state.hasRemovedModels) {
+    tabs.push({
+      value: 'removed',
+      label: t('Removed Models ({{count}})', {
+        count: state.tabCounts.removed,
+      }),
     })
-
-    return categories
-  }
-
-  // Filter models by search
-  const filteredModels = useMemo(() => {
-    if (!searchKeyword) return fetchedModels
-    return fetchedModels.filter((model) =>
-      model.toLowerCase().includes(searchKeyword.toLowerCase())
-    )
-  }, [fetchedModels, searchKeyword])
-
-  // Helper to check if a model is considered "existing" (in selected or redirect)
-  const isExistingModel = (model: string) =>
-    classificationSet.has(normalizeModelName(model))
-
-  // Separate new and existing models
-  const newModels = filteredModels.filter((m) => !isExistingModel(m))
-  const existingFilteredModels = filteredModels.filter((m) =>
-    isExistingModel(m)
-  )
-
-  const newModelsByCategory = categorizeModels(newModels)
-  const existingModelsByCategory = categorizeModels(existingFilteredModels)
-
-  // 厂商分类按 a-z 排序，Other 放最后，便于查找
-  const getSortedCategoryEntries = (
-    categories: Record<string, string[]>
-  ): [string, string[]][] =>
-    Object.entries(categories).sort(([a], [b]) => {
-      if (a === 'Other') return 1
-      if (b === 'Other') return -1
-      return a.localeCompare(b, undefined, { sensitivity: 'base' })
-    })
-
-  const toggleModel = (model: string) => {
-    setSelectedModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
-    )
-  }
-
-  const toggleCategory = (categoryModels: string[], isChecked: boolean) => {
-    setSelectedModels((prev) => {
-      if (isChecked) {
-        const newSelected = [...prev]
-        categoryModels.forEach((model) => {
-          if (!newSelected.includes(model)) {
-            newSelected.push(model)
-          }
-        })
-        return newSelected
-      } else {
-        return prev.filter((m) => !categoryModels.includes(m))
-      }
-    })
-  }
-
-  const isCategorySelected = (categoryModels: string[]) => {
-    return categoryModels.every((m) => selectedModels.includes(m))
-  }
-
-  const renderModelCategory = (
-    categoryName: string,
-    categoryModels: string[]
-  ) => {
-    const allSelected = isCategorySelected(categoryModels)
-
-    return (
-      <Collapsible key={categoryName} defaultOpen>
-        <CollapsibleTrigger className='hover:bg-muted/50 flex w-full min-w-0 items-center justify-between rounded-lg border p-3 max-md:items-start'>
-          <div className='flex min-w-0 items-center gap-2'>
-            <ChevronDown className='h-4 w-4' />
-            <span className='min-w-0 font-medium max-md:break-words'>
-              {categoryName} ({categoryModels.length})
-            </span>
-          </div>
-          <div className='flex shrink-0 items-center gap-2'>
-            <span className='text-muted-foreground text-sm max-md:text-xs'>
-              {categoryModels.filter((m) => selectedModels.includes(m)).length}{' '}
-              / {categoryModels.length} selected
-            </span>
-            <Checkbox
-              checked={allSelected}
-              onCheckedChange={(checked) =>
-                toggleCategory(categoryModels, !!checked)
-              }
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-        </CollapsibleTrigger>
-        <CollapsibleContent className='min-w-0 px-4 py-2'>
-          <div className='grid min-w-0 grid-cols-2 gap-2 max-md:grid-cols-1'>
-            {categoryModels.map((model) => (
-              <div key={model} className='flex min-w-0 items-center space-x-2'>
-                <Checkbox
-                  id={model}
-                  checked={selectedModels.includes(model)}
-                  onCheckedChange={() => toggleModel(model)}
-                />
-                <Label
-                  htmlFor={model}
-                  className='flex min-w-0 cursor-pointer items-center gap-1.5 text-sm font-normal'
-                >
-                  <span className='min-w-0 max-md:break-all'>{model}</span>
-                  {redirectOnlySet.has(normalizeModelName(model)) && (
-                    <Tooltip>
-                      <TooltipTrigger
-                        render={<Info className='h-3.5 w-3.5 text-amber-500' />}
-                      />
-                      <TooltipContent>
-                        {t('From model redirect, not yet added to models list')}
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-    )
-  }
-
-  const showFooterActions =
-    !!(activeChannel || customFetcher) &&
-    !isFetching &&
-    (fetchedModels.length > 0 || removedModels.length > 0)
-
-  let description: ReactNode = t('Fetch available models from upstream')
-  if (channelName) {
-    description = (
-      <>
-        {t('Channel:')} <strong>{channelName}</strong>
-      </>
-    )
-  }
-  if (activeChannel) {
-    description = (
-      <>
-        {t('Channel:')} <strong>{activeChannel.name}</strong>
-      </>
-    )
-  }
-
-  let defaultTab: 'new' | 'removed' | 'existing' = 'existing'
-  if (removedModels.length > 0) defaultTab = 'removed'
-  if (newModels.length > 0) defaultTab = 'new'
-
-  let content: ReactNode
-  if (!activeChannel && !customFetcher) {
-    content = (
-      <div className='text-muted-foreground py-8 text-center'>
-        {t('No channel selected')}
-      </div>
-    )
-  } else if (isFetching) {
-    content = (
-      <div className='flex items-center justify-center py-12'>
-        <Loader2 className='text-muted-foreground h-8 w-8 animate-spin' />
-      </div>
-    )
-  } else if (fetchedModels.length === 0 && removedModels.length === 0) {
-    content = (
-      <div className='text-muted-foreground py-8 text-center'>
-        <p>{t('No models fetched yet.')}</p>
-        <Button
-          className='mt-4'
-          onClick={handleFetchModels}
-          disabled={isFetching}
-        >
-          {t('Fetch Models')}
-        </Button>
-      </div>
-    )
-  } else {
-    content = (
-      <div className='min-w-0 space-y-4'>
-        {/* Search Bar */}
-        <div className='relative min-w-0'>
-          <Search className='text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2' />
-          <Input
-            placeholder={t('Search models...')}
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            className='pl-9'
-          />
-        </div>
-
-        {/* Tabs for New vs Existing vs Removed */}
-        <Tabs
-          key={`${activeChannel?.id ?? 'custom'}-${fetchedModels.length}-${removedModels.length}`}
-          defaultValue={defaultTab}
-          className='min-w-0'
-        >
-          <TabsList
-            className={`grid w-full max-md:h-auto ${removedModels.length > 0 ? 'grid-cols-3' : 'grid-cols-2'}`}
-          >
-            <TabsTrigger
-              value='new'
-              disabled={newModels.length === 0}
-              className='min-w-0 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
-            >
-              {t('New Models ({{count}})', { count: newModels.length })}
-            </TabsTrigger>
-            <TabsTrigger
-              value='existing'
-              disabled={existingFilteredModels.length === 0}
-              className='min-w-0 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
-            >
-              {t('Existing Models ({{count}})', {
-                count: existingFilteredModels.length,
-              })}
-            </TabsTrigger>
-            {removedModels.length > 0 && (
-              <TabsTrigger
-                value='removed'
-                className='min-w-0 max-md:text-center max-md:leading-tight max-md:whitespace-normal'
-              >
-                {t('Removed Models ({{count}})', {
-                  count: removedModels.length,
-                })}
-              </TabsTrigger>
-            )}
-          </TabsList>
-
-          <TabsContent
-            value='new'
-            className='max-h-96 min-w-0 space-y-2 overflow-y-auto max-md:max-h-none max-md:overflow-visible'
-          >
-            {getSortedCategoryEntries(newModelsByCategory).map(
-              ([category, models]) => renderModelCategory(category, models)
-            )}
-          </TabsContent>
-
-          <TabsContent
-            value='existing'
-            className='max-h-96 min-w-0 space-y-2 overflow-y-auto max-md:max-h-none max-md:overflow-visible'
-          >
-            {getSortedCategoryEntries(existingModelsByCategory).map(
-              ([category, models]) => renderModelCategory(category, models)
-            )}
-          </TabsContent>
-
-          {removedModels.length > 0 && (
-            <TabsContent
-              value='removed'
-              className='max-h-96 min-w-0 space-y-2 overflow-y-auto max-md:max-h-none max-md:overflow-visible'
-            >
-              <p className='text-muted-foreground text-xs'>
-                {t(
-                  'These models are still in your selection but were not returned by the upstream listing. Entries that are only model_mapping source aliases are omitted. Toggle to adjust before saving.'
-                )}
-              </p>
-              {renderModelCategory(t('Removed'), removedModels)}
-            </TabsContent>
-          )}
-        </Tabs>
-
-        {/* Selection Summary */}
-        <div className='bg-muted/50 rounded-lg border p-3 text-sm'>
-          {t('{{n}} model(s) selected', { n: selectedModels.length })}
-        </div>
-      </div>
-    )
   }
 
   return (
     <Dialog
-      open={open}
-      onOpenChange={handleClose}
-      title={t('Fetch Models')}
-      description={description}
-      contentClassName='max-w-3xl max-md:inset-0 max-md:h-[100dvh] max-md:max-h-[100dvh] max-md:!max-w-none max-md:translate-x-0 max-md:translate-y-0 max-md:!w-screen max-md:!rounded-none max-md:gap-3 max-md:!p-3 max-md:[&>div:nth-child(2)]:min-h-0 max-md:[&>div:nth-child(2)]:flex-1 max-md:[&>div:nth-child(2)]:h-auto max-md:[&>div:nth-child(2)]:max-h-none'
-      contentHeight='auto'
-      bodyClassName='space-y-4 max-md:min-w-0'
-      footerClassName='max-md:!flex-col max-md:items-stretch max-md:!-mx-3 max-md:!-mb-3 max-md:!p-3 max-md:!pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]'
-      footer={
-        showFooterActions ? (
-          <>
-            <span className='text-muted-foreground min-w-0 text-sm break-words md:hidden'>
-              {t('{{n}} model(s) selected', { n: selectedModels.length })}
-            </span>
+      open={props.open}
+      onOpenChange={(open) => {
+        if (!open && !save.isPending) props.onOpenChange(false)
+      }}
+    >
+      <DialogContent className='flex h-[min(46rem,90dvh)] max-h-[90dvh] flex-col gap-0 overflow-hidden p-0 max-md:inset-0 max-md:h-[100dvh] max-md:max-h-[100dvh] max-md:!w-screen max-md:!max-w-none max-md:translate-x-0 max-md:translate-y-0 max-md:!rounded-none sm:max-w-3xl'>
+        <DialogHeader className='shrink-0 gap-1.5 px-5 pt-5 pr-12 pb-4 max-md:px-4 max-md:pt-4 max-md:pr-12'>
+          <DialogTitle>{t('Fetch Models')}</DialogTitle>
+          <DialogDescription className='break-words'>
+            {channelName ? (
+              <>
+                {t('Channel:')} <strong>{channelName}</strong>
+              </>
+            ) : (
+              t('Fetch available models from upstream')
+            )}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className='flex min-h-0 min-w-0 flex-1 flex-col px-3 pb-3 md:px-4'>
+          {!hasSource && (
+            <Empty>
+              <EmptyHeader>
+                <EmptyTitle>{t('No channel selected')}</EmptyTitle>
+              </EmptyHeader>
+            </Empty>
+          )}
+          {hasSource && state.query.isPending && (
+            <div
+              role='status'
+              aria-label={t('Fetching models...')}
+              className='text-muted-foreground flex flex-1 items-center justify-center gap-2'
+            >
+              <Spinner />
+              {t('Fetching models...')}
+            </div>
+          )}
+          {hasSource && state.query.isError && (
+            <Empty>
+              <EmptyHeader>
+                <EmptyTitle>{t('Failed to fetch models')}</EmptyTitle>
+                <EmptyDescription className='break-all'>
+                  {state.query.error.message}
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent>
+                <Button
+                  variant='outline'
+                  onClick={() => void state.query.refetch()}
+                  disabled={state.query.isFetching}
+                >
+                  {state.query.isFetching && (
+                    <Spinner data-icon='inline-start' />
+                  )}
+                  {t('Retry')}
+                </Button>
+              </EmptyContent>
+            </Empty>
+          )}
+          {hasSource && state.query.isSuccess && (
+            <div className='flex min-h-0 min-w-0 flex-1 flex-col gap-3'>
+              <FetchModelsFilters
+                types={state.selectedTypes}
+                counts={state.typeCounts}
+                onTypesChange={state.changeTypes}
+                search={state.searchKeyword}
+                onSearchChange={state.setSearchKeyword}
+                onClear={state.clearFilters}
+              />
+              <Tabs
+                value={state.tab}
+                onValueChange={(value) => state.setTab(value as FetchModelsTab)}
+                className='flex min-h-0 min-w-0 flex-1 flex-col gap-3'
+              >
+                <TabsList
+                  className={cn(
+                    'mx-1 grid h-auto w-auto shrink-0',
+                    state.hasRemovedModels ? 'grid-cols-3' : 'grid-cols-2'
+                  )}
+                >
+                  {tabs.map((tab) => (
+                    <TabsTrigger
+                      key={tab.value}
+                      value={tab.value}
+                      className='min-w-0 whitespace-normal max-md:text-xs'
+                    >
+                      {tab.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                {tabs.map((tab) => (
+                  <TabsContent
+                    key={tab.value}
+                    value={tab.value}
+                    className='min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain px-1 pb-1'
+                  >
+                    {tab.value === state.tab && (
+                      <div className='flex min-w-0 flex-col gap-2'>
+                        {tab.value === 'removed' && (
+                          <p className='text-muted-foreground px-1 text-xs leading-relaxed'>
+                            {t(
+                              'These models were not returned by the upstream. Model redirect aliases are excluded. Adjust your selection before saving.'
+                            )}
+                          </p>
+                        )}
+                        {state.groups.map((group) => (
+                          <FetchModelsGroup
+                            key={group.provider?.id ?? 'other'}
+                            group={group}
+                            selected={state.selectedSet}
+                            onToggle={state.toggleModels}
+                            disabled={save.isPending}
+                          />
+                        ))}
+                        {state.groups.length === 0 && (
+                          <Empty className='min-h-48'>
+                            <EmptyHeader>
+                              <EmptyTitle>
+                                {state.hasModels
+                                  ? t('No models match these filters.')
+                                  : t('No models fetched yet.')}
+                              </EmptyTitle>
+                            </EmptyHeader>
+                            <EmptyContent>
+                              {(state.selectedTypes.length > 0 ||
+                                state.searchKeyword) && (
+                                <Button
+                                  variant='outline'
+                                  onClick={state.clearFilters}
+                                >
+                                  {t('Clear filters')}
+                                </Button>
+                              )}
+                              {!state.hasModels && (
+                                <Button
+                                  variant='outline'
+                                  onClick={() => void state.query.refetch()}
+                                  disabled={state.query.isFetching}
+                                >
+                                  {state.query.isFetching && (
+                                    <Spinner data-icon='inline-start' />
+                                  )}
+                                  {t('Fetch Models')}
+                                </Button>
+                              )}
+                            </EmptyContent>
+                          </Empty>
+                        )}
+                      </div>
+                    )}
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </div>
+          )}
+        </div>
+
+        <DialogFooter className='m-0 shrink-0 flex-col gap-3 rounded-none px-4 py-3 max-md:pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] md:flex-row md:items-center md:px-5'>
+          <span
+            role='status'
+            className='text-muted-foreground min-w-0 flex-1 text-sm break-words tabular-nums'
+          >
+            {t('{{n}} model(s) selected', { n: state.selectedModels.length })}
+          </span>
+          <div className='grid grid-cols-2 gap-2 md:flex'>
             <Button
               variant='outline'
-              onClick={handleClose}
-              disabled={isSaving}
-              className='max-md:w-full'
+              onClick={() => props.onOpenChange(false)}
+              disabled={save.isPending}
             >
               {t('Cancel')}
             </Button>
             <Button
-              onClick={handleSave}
-              disabled={isSaving}
-              className='max-md:w-full'
+              onClick={() => void handleSave()}
+              disabled={
+                save.isPending ||
+                !state.query.isSuccess ||
+                !state.hasModels ||
+                !(props.onModelsSelected || props.activeChannel)
+              }
             >
-              {isSaving && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
-              {isSaving ? t('Saving...') : t('Save Models')}
+              {save.isPending && <Spinner data-icon='inline-start' />}
+              {save.isPending ? t('Saving...') : t('Save Models')}
             </Button>
-          </>
-        ) : null
-      }
-    >
-      {content}
+          </div>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   )
 }

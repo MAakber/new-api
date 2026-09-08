@@ -16,18 +16,19 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-
 import {
   AiChat02Icon,
+  ArrowDown01Icon,
   CodeIcon,
   FunctionSquareIcon,
   Pulse01Icon,
   Settings02Icon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { useId } from 'react'
+import { useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -45,6 +46,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { useMediaQuery } from '@/hooks/use-media-query'
 import { cn } from '@/lib/utils'
 
 import {
@@ -131,51 +133,88 @@ export function ChannelTestControls(props: {
 }) {
   const { t } = useTranslation()
   const id = useId()
+  const isMobile = useMediaQuery('(max-width: 767px)')
+  const [capabilitiesExpanded, setCapabilitiesExpanded] = useState(false)
+  const capabilitiesOpen = !isMobile || capabilitiesExpanded
   return (
     <Collapsible className='flex shrink-0 flex-col gap-3 border-b px-4 pb-4 sm:px-6'>
-      <fieldset disabled={props.disabled} className='min-w-0'>
-        <legend className='text-muted-foreground mb-2 text-xs font-medium'>
-          {t('Test capabilities')}
-        </legend>
-        <div className='grid grid-cols-2 gap-2 sm:grid-cols-4'>
-          {CHANNEL_PROBES.map((probe, index) => {
-            const checked = props.selected.includes(probe.id)
-            return (
-              <label
-                key={probe.id}
-                className={cn(
-                  'flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 transition-colors',
-                  checked
-                    ? 'border-primary/35 bg-primary/5'
-                    : 'border-border text-muted-foreground',
-                  props.disabled && 'cursor-default opacity-60'
-                )}
-              >
-                <Checkbox
-                  checked={checked}
-                  disabled={props.disabled}
-                  aria-label={t(probe.labelKey)}
-                  onCheckedChange={(value) =>
-                    props.onSelectedChange(
-                      value
-                        ? [...props.selected, probe.id]
-                        : props.selected.filter((item) => item !== probe.id)
-                    )
-                  }
-                />
-                <HugeiconsIcon
-                  icon={probeIcons[index] ?? AiChat02Icon}
-                  className='text-muted-foreground hidden size-4 shrink-0 lg:block'
-                  aria-hidden='true'
-                />
-                <span className='text-xs leading-snug font-medium sm:text-sm'>
-                  {t(probe.labelKey)}
-                </span>
-              </label>
-            )
-          })}
-        </div>
-      </fieldset>
+      <Collapsible
+        open={capabilitiesOpen}
+        onOpenChange={setCapabilitiesExpanded}
+        className='min-w-0'
+      >
+        {isMobile && (
+          <CollapsibleTrigger
+            render={<Button variant='outline' />}
+            className='h-10 w-full justify-between gap-3 px-3'
+          >
+            <span>{t('Test capabilities')}</span>
+            <Badge variant='secondary' className='ml-auto tabular-nums'>
+              {t('{{selected}} / {{total}} selected', {
+                selected: props.selected.length,
+                total: CHANNEL_PROBES.length,
+              })}
+            </Badge>
+            <HugeiconsIcon
+              icon={ArrowDown01Icon}
+              aria-hidden='true'
+              className={cn(
+                'text-muted-foreground size-4 shrink-0 transition-transform motion-reduce:transition-none',
+                capabilitiesOpen && 'rotate-180'
+              )}
+            />
+          </CollapsibleTrigger>
+        )}
+        <CollapsibleContent className='pt-2 md:pt-0'>
+          <fieldset disabled={props.disabled} className='min-w-0'>
+            <legend
+              className={cn(
+                'text-muted-foreground text-xs font-medium',
+                isMobile ? 'sr-only' : 'mb-2'
+              )}
+            >
+              {t('Test capabilities')}
+            </legend>
+            <div className='grid grid-cols-2 gap-2 sm:grid-cols-4'>
+              {CHANNEL_PROBES.map((probe, index) => {
+                const checked = props.selected.includes(probe.id)
+                return (
+                  <label
+                    key={probe.id}
+                    className={cn(
+                      'flex min-h-11 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 transition-colors',
+                      checked
+                        ? 'border-primary/35 bg-primary/5'
+                        : 'border-border text-muted-foreground',
+                      props.disabled && 'cursor-default opacity-60'
+                    )}
+                  >
+                    <Checkbox
+                      checked={checked}
+                      disabled={props.disabled}
+                      onCheckedChange={(value) =>
+                        props.onSelectedChange(
+                          value
+                            ? [...props.selected, probe.id]
+                            : props.selected.filter((item) => item !== probe.id)
+                        )
+                      }
+                    />
+                    <HugeiconsIcon
+                      icon={probeIcons[index] ?? AiChat02Icon}
+                      className='text-muted-foreground hidden size-4 shrink-0 lg:block'
+                      aria-hidden='true'
+                    />
+                    <span className='text-xs leading-snug font-medium sm:text-sm'>
+                      {t(probe.labelKey)}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+          </fieldset>
+        </CollapsibleContent>
+      </Collapsible>
       <div className='flex flex-wrap items-center justify-between gap-2'>
         <div className='flex min-w-0 flex-1 items-center gap-3'>
           <span className='text-muted-foreground shrink-0 text-xs'>
