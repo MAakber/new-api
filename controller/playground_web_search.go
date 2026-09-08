@@ -75,8 +75,7 @@ func isPlaygroundWebSearchEnabled(raw json.RawMessage) bool {
 	return common.Unmarshal(raw, &enabled) == nil && enabled
 }
 
-func playgroundSourcesFromBingResults(results []bingsearch.Result) []playgroundWebSearchSource {
-	sources := make([]playgroundWebSearchSource, 0, len(results))
+func appendPlaygroundWebSearchSources(sources []playgroundWebSearchSource, results []bingsearch.Result) []playgroundWebSearchSource {
 	for _, result := range results {
 		if len(sources) >= maxPlaygroundWebSearchSources {
 			break
@@ -220,16 +219,6 @@ func playgroundWebSearchQuery(toolCall dto.ToolCallRequest) (string, *types.NewA
 		return "", playgroundWebSearchModelError("web search query is too long")
 	}
 	return query, nil
-}
-
-func appendPlaygroundWebSearchToolResult(request *dto.GeneralOpenAIRequest, response *dto.OpenAITextResponse, toolCall dto.ToolCallRequest, results []bingsearch.Result) {
-	assistantMessage := response.Choices[0].Message
-	assistantMessage.Role = "assistant"
-	request.Messages = append(request.Messages, assistantMessage)
-
-	toolMessage := dto.Message{Role: "tool", ToolCallId: toolCall.ID}
-	toolMessage.SetStringContent(playgroundWebSearchSafetyInstruction + buildPlaygroundWebSearchContext(results))
-	request.Messages = append(request.Messages, toolMessage)
 }
 
 func invokePlaygroundRelayRound(parent *gin.Context, request *dto.GeneralOpenAIRequest) (*dto.OpenAITextResponse, *types.NewAPIError) {
@@ -455,35 +444,50 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 			}
 			return writePlaygroundWebSearchResponse(c, response, sources, stream)
 		}
-		if len(toolCalls) != 1 {
-			return playgroundWebSearchModelError("parallel web search tool calls are not supported")
+		// Some upstreams return multiple calls despite parallel_tool_calls=false.
+		// Validate the whole batch before searching, then answer each call by ID.
+		queries := make([]string, len(toolCalls))
+		callIDs := make(map[string]struct{}, len(toolCalls))
+		for index, toolCall := range toolCalls {
+			query, queryErr := playgroundWebSearchQuery(toolCall)
+			if queryErr != nil {
+				return queryErr
+			}
+			if _, exists := callIDs[toolCall.ID]; exists {
+				return playgroundWebSearchModelError("web search tool call id was repeated")
+			}
+			callIDs[toolCall.ID] = struct{}{}
+			queryKey := playgroundWebSearchQueryKey(query)
+			if _, exists := searchedQueries[queryKey]; exists {
+				return playgroundWebSearchModelError("web search query was repeated")
+			}
+			searchedQueries[queryKey] = struct{}{}
+			queries[index] = query
 		}
 
-		query, queryErr := playgroundWebSearchQuery(toolCalls[0])
-		if queryErr != nil {
-			return queryErr
-		}
-		queryKey := playgroundWebSearchQueryKey(query)
-		if _, exists := searchedQueries[queryKey]; exists {
-			return playgroundWebSearchModelError("web search query was repeated")
-		}
-		searchedQueries[queryKey] = struct{}{}
-		if contextErr := playgroundWebSearchContextError(searchContext); contextErr != nil {
-			return contextErr
-		}
-		searcher := newPlaygroundBingSearchClient()
-		if searcher == nil {
-			return playgroundWebSearchAPIError(errors.New("bing search client is unavailable"))
-		}
-		results, searchErr := searcher.SearchWithLanguage(searchContext, query, acceptLanguage)
-		if searchErr != nil {
+		assistantMessage := response.Choices[0].Message
+		assistantMessage.Role = "assistant"
+		request.Messages = append(request.Messages, assistantMessage)
+		for index, toolCall := range toolCalls {
 			if contextErr := playgroundWebSearchContextError(searchContext); contextErr != nil {
 				return contextErr
 			}
-			return playgroundWebSearchAPIError(searchErr)
+			searcher := newPlaygroundBingSearchClient()
+			if searcher == nil {
+				return playgroundWebSearchAPIError(errors.New("bing search client is unavailable"))
+			}
+			results, searchErr := searcher.SearchWithLanguage(searchContext, queries[index], acceptLanguage)
+			if searchErr != nil {
+				if contextErr := playgroundWebSearchContextError(searchContext); contextErr != nil {
+					return contextErr
+				}
+				return playgroundWebSearchAPIError(searchErr)
+			}
+			sources = appendPlaygroundWebSearchSources(sources, results)
+			toolMessage := dto.Message{Role: "tool", ToolCallId: toolCall.ID}
+			toolMessage.SetStringContent(playgroundWebSearchSafetyInstruction + buildPlaygroundWebSearchContext(results))
+			request.Messages = append(request.Messages, toolMessage)
+			incrementPlaygroundWebSearchRequests(c)
 		}
-		sources = playgroundSourcesFromBingResults(results)
-		appendPlaygroundWebSearchToolResult(request, response, toolCalls[0], results)
-		incrementPlaygroundWebSearchRequests(c)
 	}
 }
