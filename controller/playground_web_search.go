@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -26,7 +27,6 @@ import (
 const (
 	maxPlaygroundWebSearchContextChars      = 60_000
 	maxPlaygroundWebSearchSources           = 8
-	maxPlaygroundWebSearchRounds            = 2
 	maxPlaygroundWebSearchToolArgumentBytes = 16 * 1024
 	maxPlaygroundWebSearchQueryChars        = 1_000
 )
@@ -156,6 +156,40 @@ func playgroundWebSearchAPIError(err error) *types.NewAPIError {
 
 func playgroundWebSearchModelError(message string) *types.NewAPIError {
 	return types.NewErrorWithStatusCode(errors.New(message), types.ErrorCodeBadResponse, http.StatusBadGateway, types.ErrOptionWithSkipRetry())
+}
+
+func playgroundWebSearchContextError(ctx context.Context) *types.NewAPIError {
+	if ctx == nil || ctx.Err() == nil {
+		return nil
+	}
+
+	err := ctx.Err()
+	statusCode := http.StatusRequestTimeout
+	message := "web search request was canceled"
+	if errors.Is(err, context.DeadlineExceeded) {
+		statusCode = http.StatusGatewayTimeout
+		message = "web search request timed out"
+	}
+	return types.NewErrorWithStatusCode(fmt.Errorf("%s: %w", message, err), types.ErrorCodeBadResponse, statusCode, types.ErrOptionWithSkipRetry())
+}
+
+func playgroundWebSearchQueryKey(query string) string {
+	return strings.ToLower(strings.Join(strings.Fields(strings.TrimSpace(query)), " "))
+}
+
+func incrementPlaygroundWebSearchRequests(c *gin.Context) {
+	if c == nil {
+		return
+	}
+
+	requests := common.GetContextKeyInt(c, constant.ContextKeyWebSearchRequests)
+	if requests < 0 {
+		requests = 0
+	}
+	if requests < math.MaxInt {
+		requests++
+	}
+	common.SetContextKey(c, constant.ContextKeyWebSearchRequests, requests)
 }
 
 func playgroundWebSearchQuery(toolCall dto.ToolCallRequest) (string, *types.NewAPIError) {
@@ -386,7 +420,9 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 	request.ToolChoice = "auto"
 	request.ParallelTooCalls = common.GetPointer(false)
 	request.N = common.GetPointer(1)
-	common.SetContextKey(c, constant.ContextKeyWebSearchRequests, 0)
+	if c != nil {
+		common.SetContextKey(c, constant.ContextKeyWebSearchRequests, 0)
+	}
 
 	searchContext := context.Background()
 	acceptLanguage := ""
@@ -396,8 +432,15 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 	}
 
 	var sources []playgroundWebSearchSource
-	for round := 0; round < maxPlaygroundWebSearchRounds; round++ {
+	searchedQueries := make(map[string]struct{})
+	for {
+		if contextErr := playgroundWebSearchContextError(searchContext); contextErr != nil {
+			return contextErr
+		}
 		response, relayErr := invokePlaygroundWebSearchRelayRound(c, request)
+		if contextErr := playgroundWebSearchContextError(searchContext); contextErr != nil {
+			return contextErr
+		}
 		if relayErr != nil {
 			return relayErr
 		}
@@ -412,9 +455,6 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 			}
 			return writePlaygroundWebSearchResponse(c, response, sources, stream)
 		}
-		if round+1 >= maxPlaygroundWebSearchRounds {
-			return playgroundWebSearchModelError("web search tool call limit exceeded")
-		}
 		if len(toolCalls) != 1 {
 			return playgroundWebSearchModelError("parallel web search tool calls are not supported")
 		}
@@ -423,18 +463,27 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 		if queryErr != nil {
 			return queryErr
 		}
+		queryKey := playgroundWebSearchQueryKey(query)
+		if _, exists := searchedQueries[queryKey]; exists {
+			return playgroundWebSearchModelError("web search query was repeated")
+		}
+		searchedQueries[queryKey] = struct{}{}
+		if contextErr := playgroundWebSearchContextError(searchContext); contextErr != nil {
+			return contextErr
+		}
 		searcher := newPlaygroundBingSearchClient()
 		if searcher == nil {
 			return playgroundWebSearchAPIError(errors.New("bing search client is unavailable"))
 		}
 		results, searchErr := searcher.SearchWithLanguage(searchContext, query, acceptLanguage)
 		if searchErr != nil {
+			if contextErr := playgroundWebSearchContextError(searchContext); contextErr != nil {
+				return contextErr
+			}
 			return playgroundWebSearchAPIError(searchErr)
 		}
 		sources = playgroundSourcesFromBingResults(results)
 		appendPlaygroundWebSearchToolResult(request, response, toolCalls[0], results)
-		common.SetContextKey(c, constant.ContextKeyWebSearchRequests, 1)
+		incrementPlaygroundWebSearchRequests(c)
 	}
-
-	return playgroundWebSearchModelError("web search did not produce a final response")
 }

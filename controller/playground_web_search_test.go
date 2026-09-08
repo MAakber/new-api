@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -23,11 +22,13 @@ import (
 type fakePlaygroundBingSearcher struct {
 	results  []bingsearch.Result
 	query    string
+	queries  []string
 	language string
 }
 
 func (f *fakePlaygroundBingSearcher) SearchWithLanguage(_ context.Context, query, language string) ([]bingsearch.Result, error) {
 	f.query = query
+	f.queries = append(f.queries, query)
 	f.language = language
 	return f.results, nil
 }
@@ -156,7 +157,8 @@ func TestPlaygroundWithWebSearchLetsModelChooseQueryAndReturnsSources(t *testing
 		require.NotNil(t, request.ParallelTooCalls)
 		assert.False(t, *request.ParallelTooCalls)
 		assert.False(t, request.Stream != nil && *request.Stream)
-		if relayRounds == 1 {
+		switch relayRounds {
+		case 1:
 			assert.Equal(t, 0, common.GetContextKeyInt(current, constant.ContextKeyWebSearchRequests))
 			require.Len(t, request.Messages, 1)
 			assistantMessage := dto.Message{Role: "assistant"}
@@ -174,23 +176,51 @@ func TestPlaygroundWithWebSearchLetsModelChooseQueryAndReturnsSources(t *testing
 				Object:  "chat.completion",
 				Choices: []dto.OpenAITextResponseChoice{{Message: assistantMessage, FinishReason: "tool_calls"}},
 			}, nil
+		case 2:
+			assert.Equal(t, 1, common.GetContextKeyInt(current, constant.ContextKeyWebSearchRequests))
+			require.Len(t, request.Messages, 3)
+			assert.Equal(t, "assistant", request.Messages[1].Role)
+			toolCalls := request.Messages[1].ParseToolCalls()
+			require.Len(t, toolCalls, 1)
+			assert.Equal(t, "call_1", toolCalls[0].ID)
+			assert.Equal(t, "tool", request.Messages[2].Role)
+			assert.Equal(t, "call_1", request.Messages[2].ToolCallId)
+			assert.Contains(t, request.Messages[2].StringContent(), "UNTRUSTED")
+			assistantMessage := dto.Message{Role: "assistant"}
+			assistantMessage.SetToolCalls([]dto.ToolCallRequest{{
+				ID:   "call_2",
+				Type: "function",
+				Function: dto.FunctionRequest{
+					Name:      "web_search",
+					Arguments: `{"query":"letcode second search"}`,
+				},
+			}})
+			return &dto.OpenAITextResponse{
+				Id:      "chatcmpl-tool-call-2",
+				Model:   request.Model,
+				Object:  "chat.completion",
+				Choices: []dto.OpenAITextResponseChoice{{Message: assistantMessage, FinishReason: "tool_calls"}},
+			}, nil
+		case 3:
+			assert.Equal(t, 2, common.GetContextKeyInt(current, constant.ContextKeyWebSearchRequests))
+			require.Len(t, request.Messages, 5)
+			assert.Equal(t, "assistant", request.Messages[3].Role)
+			toolCalls := request.Messages[3].ParseToolCalls()
+			require.Len(t, toolCalls, 1)
+			assert.Equal(t, "call_2", toolCalls[0].ID)
+			assert.Equal(t, "tool", request.Messages[4].Role)
+			assert.Equal(t, "call_2", request.Messages[4].ToolCallId)
+			assert.Contains(t, request.Messages[4].StringContent(), "UNTRUSTED")
+			return &dto.OpenAITextResponse{
+				Id:      "chatcmpl-test",
+				Model:   request.Model,
+				Object:  "chat.completion",
+				Choices: []dto.OpenAITextResponseChoice{{Message: dto.Message{Role: "assistant", Content: "answer"}, FinishReason: "stop"}},
+			}, nil
+		default:
+			require.Failf(t, "unexpected relay round", "relay round %d", relayRounds)
+			return nil, nil
 		}
-
-		assert.Equal(t, 1, common.GetContextKeyInt(current, constant.ContextKeyWebSearchRequests))
-		require.Len(t, request.Messages, 3)
-		assert.Equal(t, "assistant", request.Messages[1].Role)
-		toolCalls := request.Messages[1].ParseToolCalls()
-		require.Len(t, toolCalls, 1)
-		assert.Equal(t, "call_1", toolCalls[0].ID)
-		assert.Equal(t, "tool", request.Messages[2].Role)
-		assert.Equal(t, "call_1", request.Messages[2].ToolCallId)
-		assert.Contains(t, request.Messages[2].StringContent(), "UNTRUSTED")
-		return &dto.OpenAITextResponse{
-			Id:      "chatcmpl-test",
-			Model:   request.Model,
-			Object:  "chat.completion",
-			Choices: []dto.OpenAITextResponseChoice{{Message: dto.Message{Role: "assistant", Content: "answer"}, FinishReason: "stop"}},
-		}, nil
 	}
 
 	request := &dto.GeneralOpenAIRequest{
@@ -202,9 +232,10 @@ func TestPlaygroundWithWebSearchLetsModelChooseQueryAndReturnsSources(t *testing
 	err := playgroundWithWebSearch(context, request)
 
 	require.Nil(t, err)
-	assert.Equal(t, "QuantumNous new-api GitHub", searcher.query)
+	assert.Equal(t, []string{"QuantumNous new-api GitHub", "letcode second search"}, searcher.queries)
 	assert.Equal(t, "", searcher.language)
-	assert.Equal(t, 2, relayRounds)
+	assert.Equal(t, 3, relayRounds)
+	assert.Equal(t, 2, common.GetContextKeyInt(context, constant.ContextKeyWebSearchRequests))
 	assert.Contains(t, writer.Body.String(), `"sources":[{"href":"https://example.com","title":"Example"}]`)
 }
 
@@ -285,7 +316,7 @@ func TestPlaygroundWithWebSearchRejectsUnsupportedTool(t *testing.T) {
 	assert.Empty(t, searcher.query)
 }
 
-func TestPlaygroundWithWebSearchLimitsSearchRounds(t *testing.T) {
+func TestPlaygroundWithWebSearchRejectsRepeatedQuery(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	writer := httptest.NewRecorder()
 	context, _ := gin.CreateTestContext(writer)
@@ -302,17 +333,21 @@ func TestPlaygroundWithWebSearchLimitsSearchRounds(t *testing.T) {
 	newPlaygroundBingSearchClient = func() playgroundBingSearcher { return searcher }
 	invokePlaygroundWebSearchRelayRound = func(_ *gin.Context, request *dto.GeneralOpenAIRequest) (*dto.OpenAITextResponse, *types.NewAPIError) {
 		relayRounds++
+		query := `{"query":"  Foo   BAR  "}`
+		if relayRounds == 2 {
+			query = `{"query":"foo bar"}`
+		}
 		assistantMessage := dto.Message{Role: "assistant"}
 		assistantMessage.SetToolCalls([]dto.ToolCallRequest{{
-			ID:   fmt.Sprintf("call_%d", relayRounds),
+			ID:   "call_1",
 			Type: "function",
 			Function: dto.FunctionRequest{
 				Name:      "web_search",
-				Arguments: fmt.Sprintf(`{"query":"query-%d"}`, relayRounds),
+				Arguments: query,
 			},
 		}})
 		return &dto.OpenAITextResponse{
-			Id:      "chatcmpl-search-limit",
+			Id:      "chatcmpl-repeated-query",
 			Model:   request.Model,
 			Object:  "chat.completion",
 			Choices: []dto.OpenAITextResponseChoice{{Message: assistantMessage, FinishReason: "tool_calls"}},
@@ -327,6 +362,61 @@ func TestPlaygroundWithWebSearchLimitsSearchRounds(t *testing.T) {
 
 	require.Error(t, err)
 	assert.Equal(t, http.StatusBadGateway, err.StatusCode)
+	assert.Equal(t, "web search query was repeated", err.Error())
+	assert.True(t, types.IsSkipRetryError(err))
 	assert.Equal(t, 2, relayRounds)
-	assert.Equal(t, "query-1", searcher.query)
+	assert.Equal(t, []string{"Foo   BAR"}, searcher.queries)
+	assert.Equal(t, 1, common.GetContextKeyInt(context, constant.ContextKeyWebSearchRequests))
+}
+
+func TestPlaygroundWithWebSearchStopsWhenRequestIsCanceled(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	writer := httptest.NewRecorder()
+	requestContext, cancel := context.WithCancel(context.Background())
+	t.Cleanup(cancel)
+	c, _ := gin.CreateTestContext(writer)
+	c.Request = httptest.NewRequest(http.MethodPost, "/pg/chat/completions", nil).WithContext(requestContext)
+	searcher := &fakePlaygroundBingSearcher{results: []bingsearch.Result{{Title: "Example", URL: "https://example.com"}}}
+	relayRounds := 0
+
+	previousSearcher := newPlaygroundBingSearchClient
+	previousRelay := invokePlaygroundWebSearchRelayRound
+	t.Cleanup(func() {
+		newPlaygroundBingSearchClient = previousSearcher
+		invokePlaygroundWebSearchRelayRound = previousRelay
+	})
+	newPlaygroundBingSearchClient = func() playgroundBingSearcher { return searcher }
+	invokePlaygroundWebSearchRelayRound = func(_ *gin.Context, request *dto.GeneralOpenAIRequest) (*dto.OpenAITextResponse, *types.NewAPIError) {
+		relayRounds++
+		cancel()
+		assistantMessage := dto.Message{Role: "assistant"}
+		assistantMessage.SetToolCalls([]dto.ToolCallRequest{{
+			ID:   "call_1",
+			Type: "function",
+			Function: dto.FunctionRequest{
+				Name:      "web_search",
+				Arguments: `{"query":"canceled request"}`,
+			},
+		}})
+		return &dto.OpenAITextResponse{
+			Id:      "chatcmpl-canceled",
+			Model:   request.Model,
+			Object:  "chat.completion",
+			Choices: []dto.OpenAITextResponseChoice{{Message: assistantMessage, FinishReason: "tool_calls"}},
+		}, nil
+	}
+
+	err := playgroundWithWebSearch(c, &dto.GeneralOpenAIRequest{
+		Model:     "test-model",
+		WebSearch: json.RawMessage(`true`),
+		Messages:  []dto.Message{{Role: "user", Content: "取消搜索"}},
+	})
+
+	require.Error(t, err)
+	assert.ErrorIs(t, err, context.Canceled)
+	assert.Contains(t, err.Error(), "web search request was canceled")
+	assert.Equal(t, http.StatusRequestTimeout, err.StatusCode)
+	assert.True(t, types.IsSkipRetryError(err))
+	assert.Equal(t, 1, relayRounds)
+	assert.Empty(t, searcher.queries)
 }

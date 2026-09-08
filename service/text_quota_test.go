@@ -925,6 +925,25 @@ func TestCalculateTextToolCallSurchargePlaygroundWebSearch(t *testing.T) {
 	assert.Equal(t, 1, summary.ToolSurchargeItems[0].Count)
 }
 
+func TestCalculateTextToolCallSurchargePlaygroundWebSearchCountsMultipleRequests(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+	common.SetContextKey(ctx, constant.ContextKeyWebSearchRequests, 2)
+
+	relayInfo := &relaycommon.RelayInfo{OriginModelName: "test-model"}
+	summary := &textQuotaSummary{ModelName: "test-model", GroupRatio: 1}
+
+	surcharge := calculateTextToolCallSurcharge(ctx, relayInfo, summary)
+	expected := decimal.NewFromFloat(10.0 / 1000).
+		Mul(decimal.NewFromInt(2)).
+		Mul(decimal.NewFromFloat(common.QuotaPerUnit))
+
+	assert.True(t, expected.Equal(surcharge), "got %s want %s", surcharge, expected)
+	require.Len(t, summary.ToolSurchargeItems, 1)
+	assert.Equal(t, dto.BuildInToolWebSearch, summary.ToolSurchargeItems[0].Name)
+	assert.Equal(t, 2, summary.ToolSurchargeItems[0].Count)
+}
+
 func TestCalculateTextQuotaSummaryDoesNotApplyRequestMultipliersToToolSurcharge(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
