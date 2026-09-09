@@ -408,7 +408,9 @@ func playgroundWithWebSearch(c *gin.Context, request *dto.GeneralOpenAIRequest) 
 	request.Tools = []dto.ToolCallRequest{playgroundWebSearchTool}
 	request.ToolChoice = "auto"
 	request.ParallelTooCalls = common.GetPointer(false)
-	request.N = common.GetPointer(1)
+	// Leave N unset: it defaults to 1 upstream, and some providers reject the
+	// parameter outright with 400 "Unsupported parameter: n".
+	request.N = nil
 	if c != nil {
 		common.SetContextKey(c, constant.ContextKeyWebSearchRequests, 0)
 	}
