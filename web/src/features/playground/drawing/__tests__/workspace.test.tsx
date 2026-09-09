@@ -18,9 +18,11 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { ReactFlowProvider } from '@xyflow/react'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
+import { api } from '@/lib/api'
 import { useDrawingStore } from '@/stores/drawing-store'
 
 import { DrawingWorkspace } from '../components/DrawingWorkspace'
@@ -40,7 +42,7 @@ function renderWorkspace(userId: number) {
   )
   const view = render(
     <QueryClientProvider client={client}>
-      <ReactFlowProvider>
+      <ReactFlowProvider initialWidth={1000} initialHeight={700}>
         <DrawingWorkspace userId={userId} />
       </ReactFlowProvider>
     </QueryClientProvider>
@@ -49,6 +51,70 @@ function renderWorkspace(userId: number) {
 }
 
 describe('Drawing workspace', () => {
+  it.each([
+    { zoomButton: 'Zoom in', zoom: '120%', count: 1, userId: 851 },
+    { zoomButton: 'Zoom out', zoom: '83%', count: 2, userId: 852 },
+  ])(
+    'keeps the $zoom canvas view when generating $count images after using $zoomButton',
+    async ({ zoomButton, zoom, count, userId }) => {
+      vi.spyOn(api, 'post').mockRejectedValue(
+        new Error('Generation unavailable')
+      )
+      const user = userEvent.setup()
+      const { client, view } = renderWorkspace(userId)
+      try {
+        await screen.findByText('Room for every idea')
+        act(() =>
+          useDrawingStore.getState().updateSettings({
+            model: 'gpt-image-1',
+            n: count,
+          })
+        )
+        await user.type(
+          screen.getByRole('textbox', { name: 'Prompt' }),
+          'A cup'
+        )
+        await user.click(screen.getByRole('button', { name: zoomButton }))
+        await waitFor(() =>
+          expect(screen.getByLabelText('Zoom level').textContent).toBe(zoom)
+        )
+        const viewport = useDrawingStore.getState().viewport
+
+        await user.click(
+          screen.getByRole('button', { name: 'Generate images' })
+        )
+        await screen.findAllByText('Generation unavailable')
+        // Happy DOM does not measure nodes; provide the canvas layout event.
+        act(() =>
+          useDrawingStore.getState().changeNodes(
+            useDrawingStore.getState().nodes.map((node) => ({
+              id: node.id,
+              type: 'dimensions',
+              dimensions: { width: 280, height: 330 },
+            }))
+          )
+        )
+        await act(
+          () =>
+            new Promise<void>((resolve) => {
+              requestAnimationFrame(() =>
+                requestAnimationFrame(() => resolve())
+              )
+            })
+        )
+
+        expect(screen.getByLabelText('Zoom level').textContent).toBe(zoom)
+        expect(useDrawingStore.getState().viewport).toEqual(viewport)
+        expect(screen.getAllByRole('article', { name: 'A cup' })).toHaveLength(
+          count
+        )
+      } finally {
+        view.unmount()
+        client.clear()
+      }
+    }
+  )
+
   it('shows the empty canvas and settings when no reference image or mask exists', async () => {
     const { client, view } = renderWorkspace(801)
     await waitFor(() =>

@@ -58,7 +58,6 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { Spinner } from '@/components/ui/spinner'
-import { useTheme } from '@/context/theme-provider'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { useDrawingStore } from '@/stores/drawing-store'
 
@@ -78,6 +77,7 @@ import { ImagePreview } from './ImagePreview'
 import { MaskEditor } from './MaskEditor'
 
 import '@xyflow/react/dist/style.css'
+import '@/styles/drawing.css'
 
 const nodeTypes = { image: ImageCanvasNode }
 const defaultEdgeOptions = {
@@ -88,7 +88,6 @@ const defaultEdgeOptions = {
 
 export function DrawingWorkspace(props: { userId: number }) {
   const { t } = useTranslation()
-  const { resolvedTheme } = useTheme()
   const flow = useReactFlow<DrawingNode>()
   const saveStatus = useDrawingPersistence(props.userId)
   const ready = useDrawingStore(
@@ -153,10 +152,6 @@ export function DrawingWorkspace(props: { userId: number }) {
   const submit = (settings: ImageSettings) => {
     if (!generate(settings, insertionPoint(), mask)) return
     setSettingsOpen(false)
-    const newNodes = useDrawingStore.getState().nodes.slice(-settings.n)
-    requestAnimationFrame(() => {
-      void flow.fitView({ nodes: newNodes, padding: 0.3, maxZoom: 1 })
-    })
   }
   const settingsPanel = (
     <DrawingSettings
@@ -336,7 +331,8 @@ export function DrawingWorkspace(props: { userId: number }) {
               edges={canvasEdges}
               nodeTypes={nodeTypes}
               defaultViewport={viewport}
-              colorMode={resolvedTheme}
+              // Theme tokens come from the app; React Flow's dark class resets them.
+              colorMode='light'
               onNodesChange={changeNodes}
               onEdgesChange={changeEdges}
               onConnect={referenceConnections.onConnect}
@@ -360,7 +356,7 @@ export function DrawingWorkspace(props: { userId: number }) {
               maxZoom={4}
               deleteKeyCode={['Delete', 'Backspace']}
               onlyRenderVisibleElements
-              className='bg-muted/25'
+              className='drawing-canvas'
               attributionPosition='bottom-right'
               ariaLabelConfig={{
                 'node.a11yDescription.default': t(
