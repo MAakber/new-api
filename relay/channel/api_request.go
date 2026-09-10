@@ -10,6 +10,7 @@ import (
 	"regexp"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	common2 "github.com/QuantumNous/new-api/common"
@@ -34,6 +35,7 @@ import (
 // streaming request semantics.
 type requestDebugCaptureReadCloser struct {
 	io.ReadCloser
+	mu            sync.Mutex
 	buffer        bytes.Buffer
 	fullBody      bytes.Buffer
 	totalBytes    int64
@@ -44,6 +46,8 @@ type requestDebugCaptureReadCloser struct {
 func (r *requestDebugCaptureReadCloser) Read(p []byte) (int, error) {
 	n, err := r.ReadCloser.Read(p)
 	if n > 0 {
+		r.mu.Lock()
+		defer r.mu.Unlock()
 		r.totalBytes += int64(n)
 		remaining := common2.RequestDebugBodyLimit - r.buffer.Len()
 		if remaining > 0 {
@@ -74,15 +78,21 @@ func (r *requestDebugCaptureReadCloser) Read(p []byte) (int, error) {
 }
 
 func (r *requestDebugCaptureReadCloser) debugBody(contentType string, contentLength int64) map[string]interface{} {
-	return common2.RequestDebugBody(r.buffer.Bytes(), contentType, r.truncated || contentLength > common2.RequestDebugBodyLimit)
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return common2.RequestDebugBody(r.buffer.Bytes(), contentType, r.truncated || contentLength > common2.RequestDebugBodyLimit || contentLength > r.totalBytes)
 }
 
 func (r *requestDebugCaptureReadCloser) storeBody(ctx context.Context, requestID, contentType string, contentLength int64, readErr error) error {
 	if r == nil {
 		return nil
 	}
-	truncated := r.fullTruncated || contentLength > model.RequestDebugBodyMaxBytes || readErr != nil
-	return model.StoreRequestDebugBody(ctx, requestID, contentType, r.fullBody.Bytes(), r.totalBytes, truncated)
+	r.mu.Lock()
+	body := bytes.Clone(r.fullBody.Bytes())
+	totalBytes := r.totalBytes
+	truncated := r.fullTruncated || contentLength > model.RequestDebugBodyMaxBytes || contentLength > totalBytes || readErr != nil
+	r.mu.Unlock()
+	return model.StoreRequestDebugBody(ctx, requestID, contentType, body, totalBytes, truncated)
 }
 
 // ApplyUpstreamBodyMetadata restores metadata that net/http cannot infer from
@@ -637,9 +647,24 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 	// Capture only bytes that the transport consumes, and only while the explicit
 	// root-controlled raw diagnostics switch is enabled.
 	var bodyCapture *requestDebugCaptureReadCloser
+	var latestCapture atomic.Pointer[requestDebugCaptureReadCloser]
 	if common2.IsRequestDebugRawEnabled() && req != nil && req.Body != nil {
 		bodyCapture = &requestDebugCaptureReadCloser{ReadCloser: req.Body}
 		req.Body = bodyCapture
+		latestCapture.Store(bodyCapture)
+		if getBody := req.GetBody; getBody != nil {
+			req.GetBody = func() (io.ReadCloser, error) {
+				body, err := getBody()
+				if err != nil {
+					return nil, err
+				}
+				// Each retry owns its capture: an abandoned writer may still be
+				// finishing while the transport begins reading the next body.
+				capture := &requestDebugCaptureReadCloser{ReadCloser: body}
+				latestCapture.Store(capture)
+				return capture, nil
+			}
+		}
 	}
 	// Keep only the final attempt in the gin context. Retry callers reuse this
 	// context, so this does not create extra persisted log entries.
@@ -647,6 +672,7 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 		"upstream": requestDebugUpstream(req, bodyCapture),
 	})
 	resp, err := relayClient.Do(req)
+	bodyCapture = latestCapture.Load()
 	bodyStored := false
 	if bodyCapture != nil {
 		requestID := c.GetString(common2.RequestIdKey)
@@ -719,7 +745,9 @@ func requestDebugUpstreamReference(req *http.Request, bodyCapture *requestDebugC
 	delete(debug, "body")
 	debug["body_available"] = true
 	debug["body_ref"] = requestID
+	bodyCapture.mu.Lock()
 	debug["body_truncated"] = bodyCapture.fullTruncated || (req.ContentLength > model.RequestDebugBodyMaxBytes) || (req.ContentLength >= 0 && bodyCapture.totalBytes < req.ContentLength)
+	bodyCapture.mu.Unlock()
 	return debug
 }
 
