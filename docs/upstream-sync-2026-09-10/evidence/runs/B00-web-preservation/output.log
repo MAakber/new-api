@@ -1,0 +1,741 @@
+$ node scripts/test-preservation.mjs
+bun test v1.3.14 (0d9b296a)
+
+src\components\__tests__\authenticated-avatar-image.test.tsx:
+(pass) AuthenticatedAvatarImage > fetches a private avatar with fresh Bearer authentication [36.25ms]
+(pass) AuthenticatedAvatarImage > reuses one in-flight request for concurrent instances with the same URL [3.84ms]
+(pass) AuthenticatedAvatarImage > fetches again when the versioned avatar URL changes [3.94ms]
+(pass) AuthenticatedAvatarImage > keeps the avatar fallback when the authenticated request fails [3.47ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [1132.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\__tests__\password-input-i18n.test.tsx:
+(pass) PasswordInput translations > uses Chinese accessibility labels when visibility changes [28.34ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [322.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\__tests__\turnstile-layout.test.tsx:
+(pass) Turnstile layout > centers the Cloudflare verification widget in its container [16.68ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [226.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\floating-window\__tests__\floating-window-store.test.ts:
+(pass) floating window store > opens each channel create request as a distinct window [0.51ms]
+(pass) floating window store > activates and returns the existing edit window for the same channel [0.11ms]
+(pass) floating window store > brings an activated window above the current top window [0.08ms]
+(pass) floating window store > clears all windows when the authenticated layout is torn down [0.03ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [56.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\floating-window\__tests__\geometry.test.ts:
+(pass) floating window geometry > enforces desktop minimum dimensions and keeps the rect inside the viewport [0.18ms]
+(pass) floating window geometry > uses the available viewport when it is smaller than the desktop minimum [0.02ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [42.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\floating-window\__tests__\motion.test.ts:
+(pass) floating window motion > opens from a subtle offset into its resting state [0.14ms]
+(pass) floating window motion > fades and contracts before being removed [0.01ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [44.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\json-code-editor\__tests__\json-code-editor-utils.test.ts:
+(pass) json code editor utils > treats empty drafts as valid editable JSON drafts [0.15ms]
+(pass) json code editor utils > reports invalid JSON without throwing away the draft [0.33ms]
+(pass) json code editor utils > formats valid JSON with stable two-space indentation [0.09ms]
+(pass) json code editor utils > keeps invalid JSON drafts unchanged when formatting is requested [0.02ms]
+(pass) json code editor utils > derives the one-based cursor line and column from text offsets [0.08ms]
+(pass) json code editor utils > expands paired JSON brackets with a nested indentation line [0.14ms]
+(pass) json code editor utils > coalesces scroll updates while keeping line numbers horizontally fixed [0.10ms]
+
+ 7 pass
+ 0 fail
+Ran 7 tests across 1 file. [43.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\json-code-editor\__tests__\json-code-editor.test.tsx:
+(pass) JsonCodeEditor component > forwards form attributes and lifecycle callbacks to the textarea [49.07ms]
+(pass) JsonCodeEditor component > emits user edits and synchronizes a controlled value [18.54ms]
+(pass) JsonCodeEditor component > formats valid JSON through the public toolbar action [8.11ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [355.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\layout\components\__tests__\header-layout.test.tsx:
+(pass) authenticated header mobile layout > keeps the mobile sidebar trigger in its own accessible layout slot [41.22ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [2.02s]
+bun test v1.3.14 (0d9b296a)
+
+src\components\model-group-selector\__tests__\layout.test.ts:
+(pass) model group selector layout > keeps group options at a fixed height and aligned to the top [0.16ms]
+(pass) model group selector layout > centers the selected group inside its own scroll container [0.11ms]
+(pass) model group selector layout > falls back to scrollIntoView when no group container is provided [0.03ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [49.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\ui\__tests__\input-number.test.tsx:
+(pass) number input controls > increments, decrements, and preserves an empty draft [43.20ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [332.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\ui\dropdown-menu.test.tsx:
+(pass) DropdownMenuItem onSelect compatibility > calls the Radix-style onSelect handler on item click [0.19ms]
+(pass) DropdownMenuItem onSelect compatibility > keeps the Base UI menu open when onSelect prevents default [0.04ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [51.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\context\__tests__\theme-customization-provider.test.tsx:
+(pass) ThemeCustomizationProvider DOM attributes > keeps non-baseline global defaults applied after they are saved [11.35ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [243.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\api.test.ts:
+(pass) logout coordination > returns an unsuccessful response without pretending to sign out [0.32ms]
+(pass) logout coordination > recovers a cookie mismatch and retries with the refreshed SID [0.16ms]
+(pass) logout coordination > treats a mismatch that refresh confirms anonymous as signed out [0.07ms]
+(pass) logout coordination > preserves the active session when mismatch recovery is temporary [0.33ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [112.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\complete-registration\__tests__\flow-response.test.ts:
+(pass) pending registration response > accepts a registration-code challenge with a usable flow token [0.12ms]
+(pass) pending registration response > rejects authentication bundles and malformed challenges [0.07ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [43.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\complete-registration\__tests__\success-message-i18n.test.ts:
+(pass) registration completion success message translations > shows a Simplified Chinese message after registration succeeds [4.67ms]
+(pass) registration completion success message translations > shows a Traditional Chinese message after registration succeeds [1.06ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [57.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\components\__tests__\auth-login-background.test.tsx:
+(pass) AuthLoginBackground > keeps the ambient grid decorative and out of the tab order [11.62ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [209.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\components\__tests__\auth-login-layout.test.ts:
+(pass) sign-in responsive layout > keeps a short mobile viewport scrollable without centering overflow [0.30ms]
+(pass) sign-in responsive layout > keeps mobile brand and authentication links reachable [0.07ms]
+(pass) sign-in responsive layout > preserves reduced-motion and non-interactive background contracts [0.05ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [49.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\components\__tests__\legal-consent-i18n.test.tsx:
+(pass) LegalConsent translations > renders both legal links without English connector text in Chinese [27.94ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [652.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\components\__tests__\terms-footer-i18n.test.tsx:
+(pass) TermsFooter translations > renders the sign-in agreement text and links in Chinese [18.38ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [226.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\lib\auth-redirect.test.ts:
+(pass) authentication redirect validation > preserves safe internal paths, search parameters, and fragments [0.89ms]
+(pass) authentication redirect validation > rejects external and ambiguously parsed redirect targets [0.34ms]
+(pass) authentication redirect validation > rejects invalid or non-HTTP application origins [0.05ms]
+(pass) saved authentication language > prefers the explicit user language [0.05ms]
+(pass) saved authentication language > reads object and JSON string settings [0.06ms]
+(pass) saved authentication language > ignores malformed and non-string setting languages [0.06ms]
+
+ 6 pass
+ 0 fail
+Ran 6 tests across 1 file. [44.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\lib\oauth-bind-window.test.ts:
+(pass) OAuth bind popup lifecycle > parses Telegram success and stable error callbacks [0.13ms]
+(pass) OAuth bind popup lifecycle > rejects Telegram callbacks without a flow token and ignores descriptions [0.03ms]
+(pass) OAuth bind popup lifecycle > posts only complete Telegram bind results to an available opener [0.08ms]
+(pass) OAuth bind popup lifecycle > waits 30 seconds for the opener response and can be cancelled [0.09ms]
+(pass) OAuth bind popup lifecycle > reports a closed popup once and clears its poller [0.05ms]
+
+ 5 pass
+ 0 fail
+Ran 5 tests across 1 file. [95.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\lib\telegram-login.test.ts:
+(pass) Telegram login authorization > keeps only fields signed by the Telegram login contract [0.94ms]
+(pass) Telegram login authorization > rejects incomplete or structurally invalid callbacks [0.06ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [44.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\passkey\__tests__\name-validation.test.ts:
+(pass) Passkey display name validation > rejects empty and whitespace-only names [0.16ms]
+(pass) Passkey display name validation > rejects duplicate names ignoring case and surrounding whitespace [0.15ms]
+(pass) Passkey display name validation > rejects names longer than 64 Unicode characters [0.04ms]
+(pass) Passkey display name validation > accepts a distinct device name [0.03ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [43.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\banners\components\__tests__\banner-form-layout.test.tsx:
+(pass) banner form field layout > keeps publish date controls from shrinking into each other [106.76ms]
+(pass) banner form field layout > keeps sort order spinner controls inside the number field [24.19ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [1184.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\__tests__\channel-favicon.test.tsx:
+(pass) ChannelFavicon > renders a safe lazy image link to the upstream Base URL [16.92ms]
+(pass) ChannelFavicon > removes the icon after the favicon request fails [3.34ms]
+(pass) ChannelFavicon > does not render a link for an unsafe Base URL [0.63ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [315.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\__tests__\favicon-layout.test.tsx:
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+(pass) channel favicon layout > keeps the favicon column immediately before the name column [16.62ms]
+(pass) channel favicon layout > places the shared favicon cell before the channel name in cards [25.36ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [9.54s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\fetch-models-dialog-channel.test.ts:
+(pass) FetchModelsDialog channel selection > uses the floating editor channel before the provider currentRow [0.18ms]
+(pass) FetchModelsDialog channel selection > keeps channel ids isolated when two windows share a provider fallback [0.06ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [39.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\missing-models-confirmation-dialog-layout.test.tsx:
+(pass) missing models confirmation dialog layout > keeps actions visible while a long model list scrolls on mobile [49.48ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [271.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\multi-key-manage-dialog-layout.test.tsx:
+(pass) multi-key management dialog layout > wraps the toolbar and confines the table scroll on narrow screens [102.74ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [874.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\ollama-models-dialog-layout.test.tsx:
+(pass) Ollama models dialog layout > expands the model list into the mobile body while keeping the close action visible [180.43ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [876.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\param-override-editor-dialog-layout.test.tsx:
+(pass) parameter override editor dialog layout > stacks the rules panel on narrow screens and caps JSON editor height [143.64ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [795.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\upstream-update-dialog-layout.test.tsx:
+(pass) upstream update dialog layout > keeps footer actions visible while long model lists use the mobile body [154.67ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [693.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\drawers\sections\__tests__\channel-custom-balance-section.test.tsx:
+(pass) channel custom balance section > does not echo the credential and hides channel-key mode for New API [115.21ms]
+(pass) channel custom balance section > shows the backend failure message when saving the independent configuration fails [64.47ms]
+(pass) channel custom balance section > reports enabled state immediately for the editor navigation [62.30ms]
+(pass) channel custom balance section > shows the balance-limit auto-ban ignore switch [46.51ms]
+(pass) channel custom balance section > exposes the same save path for the parent channel submit [77.79ms]
+
+ 5 pass
+ 0 fail
+Ran 5 tests across 1 file. [1016.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-client-identity.test.ts:
+(pass) channel client identity settings > writes distinct Codex profiles with their official source [0.40ms]
+(pass) channel client identity settings > reads a persisted CodeBuddy identity and platform with legacy source data [0.24ms]
+(pass) channel client identity settings > removes client identity when a channel changes to an unrelated type [0.03ms]
+(pass) channel client identity settings > serializes a lightweight Codex identity with an automatic official source [0.03ms]
+(pass) channel client identity settings > serializes a CodeBuddy profile with an automatic official source [0.02ms]
+(pass) channel client identity settings > uses manual source for CodeBuddy on non-Windows platforms [0.02ms]
+(pass) channel client identity settings > maps client identity sources independently of legacy form source [0.01ms]
+(pass) channel client identity settings > serializes a Claude Code profile with an automatic official source [0.01ms]
+(pass) channel client identity settings > serializes the Claude Code 1M context flag when enabled [0.02ms]
+(pass) channel client identity settings > reads the persisted Claude Code 1M context flag [0.02ms]
+(pass) channel client identity settings > does not serialize the Claude Code 1M context flag when disabled [0.02ms]
+(pass) channel client identity settings > serializes manual lightweight profiles without using a legacy source [0.02ms]
+(pass) channel client identity settings > keeps standard channels on no-client defaults without identity settings [0.02ms]
+(pass) channel client identity settings > does not serialize a deep profile onto a standard channel [0.01ms]
+(pass) channel client identity settings > falls back to the deep channel template after a type switch [0.02ms]
+
+ 15 pass
+ 0 fail
+Ran 15 tests across 1 file. [63.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-favicon.test.ts:
+(pass) channel favicon URL utilities > requests favicon.ico from the upstream origin [0.18ms]
+(pass) channel favicon URL utilities > rejects missing, non-http, relative, and credential-bearing URLs [0.09ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [50.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-field-update.test.ts:
+(pass) channel field update scheduler > coalesces rapid schedules into one update with the latest value [0.38ms]
+(pass) channel field update scheduler > flush commits the pending value immediately and cancels the timer [0.04ms]
+(pass) channel field update scheduler > flush without a pending value does nothing [0.02ms]
+(pass) channel field update scheduler > preserves a pending value of 0 [0.02ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [42.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-form-queue.test.ts:
+(pass) channel queue setting serialization > keeps an existing queue configuration when the enabled switch is turned off [0.39ms]
+(pass) channel queue setting serialization > uses current form values when an existing queue is enabled again [0.06ms]
+(pass) channel queue setting serialization > omits queue when a channel has no existing queue and the switch is off [0.02ms]
+(pass) channel queue setting serialization > does not throw when the existing setting is malformed [0.15ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [65.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-key-append.test.ts:
+(pass) channel key append payload > includes append mode for a single-key channel edit [0.48ms]
+(pass) channel key append payload > hides append support for Codex and Vertex API-key channels [0.05ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [68.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-table-row-id.test.ts:
+(pass) channel table row identity > keeps each channel identity when priority updates reorder the rows [0.21ms]
+(pass) channel table row identity > uses separate namespaces for tag and channel rows [0.04ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [54.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\compatibility-channel.test.ts:
+(pass) compatibility channels > registers Codex, Code Buddy, and Claude Code as selectable API key channel types [0.45ms]
+(pass) compatibility channels > requires an explicit base URL for all compatibility channel types [3.55ms]
+(pass) compatibility channels > accepts a direct WorkBuddy upstream root URL for Code Buddy [0.07ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [76.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\custom-balance-api.test.ts:
+(pass) custom balance API contract > uses the channel-scoped custom balance endpoints [0.46ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [105.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\custom-balance.test.ts:
+(pass) custom balance serialization > uses safe defaults when the backend returns no configuration [0.27ms]
+(pass) custom balance serialization > switching to the channel key omits an independent credential [0.04ms]
+(pass) custom balance serialization > switching to an independent credential preserves an empty value [0.02ms]
+(pass) custom balance serialization > serializes a new independent credential only when entered [0.02ms]
+(pass) custom balance serialization > never echoes a credential from a response into editable values [0.02ms]
+(pass) custom balance serialization > preserves a supported compatible provider from the response [0.02ms]
+(pass) custom balance serialization > serializes the balance-limit auto-ban ignore switch [0.02ms]
+
+ 7 pass
+ 0 fail
+Ran 7 tests across 1 file. [62.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\new-api-channel.test.ts:
+(pass) New API channel > registers selection, ordering, model discovery, and icon metadata [0.33ms]
+(pass) New API channel > requires a non-blank Base URL [3.32ms]
+(pass) New API channel > keeps Sub2API Base URL validation unchanged [0.11ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [74.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\vercel-channel.test.ts:
+(pass) Vercel AI Gateway channel > registers the channel with model discovery and the Vercel icon [0.33ms]
+(pass) Vercel AI Gateway channel > accepts the provider default Base URL [3.44ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [77.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\dashboard\lib\flow-selection.test.ts:
+(pass) dashboard flow selection helpers > limits user chips to currently visible users [0.30ms]
+(pass) dashboard flow selection helpers > filters visible users without mutating the source options [0.06ms]
+(pass) dashboard flow selection helpers > formats compact selected counts for flow multiselect summaries [0.06ms]
+(pass) dashboard flow selection helpers > prioritizes loading and error states before empty flow data [0.05ms]
+(pass) dashboard flow selection helpers > throws unsuccessful flow responses instead of treating them as empty data [0.40ms]
+
+ 5 pass
+ 0 fail
+Ran 5 tests across 1 file. [43.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\dashboard\lib\flow.test.ts:
+(pass) dashboard flow data > builds normal user token-group-model flow [14.72ms]
+(pass) dashboard flow data > builds admin user-group-model-channel flow [0.41ms]
+(pass) dashboard flow data > builds root user-node-token-group-model-channel flow [0.44ms]
+(pass) dashboard flow data > filters by selected users [0.25ms]
+(pass) dashboard flow data > filters rows by selected flow nodes [0.42ms]
+(pass) dashboard flow data > combines node filters with OR inside a column and AND across columns [0.79ms]
+(pass) dashboard flow data > combines user and node filters [0.28ms]
+(pass) dashboard flow data > reconnects links when a middle stage is hidden [0.30ms]
+(pass) dashboard flow data > ignores stage filters that would leave fewer than two columns [0.20ms]
+(pass) dashboard flow data > builds user filter options with stable values [0.22ms]
+(pass) dashboard flow data > builds node filter options without applying top limits [0.46ms]
+(pass) dashboard flow data > facets node filter options by selected nodes from other columns [0.42ms]
+(pass) dashboard flow data > keeps same-column node options available for OR filtering [0.26ms]
+(pass) dashboard flow data > combines user filters with faceted node filter options [0.40ms]
+(pass) dashboard flow data > aggregates overflow nodes into per-column Other buckets [0.57ms]
+(pass) dashboard flow data > hides overflow paths when overflow mode is hide [0.43ms]
+(pass) dashboard flow data > ranks top nodes using the selected flow metric [0.96ms]
+(pass) dashboard flow data > applies top limits only to visible stages [0.30ms]
+(pass) dashboard flow data > applies top limits after node filters [0.30ms]
+(pass) dashboard flow data > ignores selected node filters for hidden stages [0.23ms]
+(pass) dashboard flow data > highlights full paths that contain the active user node [0.42ms]
+(pass) dashboard flow data > highlights full paths that traverse the active link [0.40ms]
+(pass) dashboard flow data > highlights shared aggregate edges when they contain an active path [0.22ms]
+(pass) dashboard flow data > does not emit highlight states without a visible active node [0.64ms]
+(pass) dashboard flow data > builds Sankey spec with quota token request tooltips [0.81ms]
+(pass) dashboard flow data > maps active flow highlight states into the Sankey spec [0.81ms]
+
+ 26 pass
+ 0 fail
+Ran 26 tests across 1 file. [89.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\playground\hooks\use-stream-request.test.ts:
+(pass) latest-wins stream request coordination > only creates a stream for the latest header request [2.86ms]
+(pass) latest-wins stream request coordination > stop cancels a request that is still waiting for headers [0.11ms]
+(pass) latest-wins stream request coordination > dispose cancels a pending header request without a state update [0.18ms]
+(pass) latest-wins stream request coordination > closes the previous source and ignores all of its later events [0.32ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [163.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\profile\components\__tests__\login-session-utils.test.ts:
+(pass) login session presentation > labels built-in and provider OAuth login methods [0.21ms]
+(pass) login session presentation > labels iPad Safari as iOS when its user agent also mentions Mac OS X [0.05ms]
+(pass) login session presentation > labels a touch-capable current iPad session as iOS when its desktop user agent says Macintosh [0.02ms]
+(pass) login session presentation > keeps touch-capable Windows Chrome sessions identifiable
+(pass) login session presentation > keeps Android Chrome sessions identifiable when their user agent mentions Linux
+(pass) login session presentation > keeps genuine macOS Safari sessions identifiable
+(pass) login session presentation > falls back to the unknown-device label for an empty user agent
+
+ 7 pass
+ 0 fail
+Ran 7 tests across 1 file. [41.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\profile\components\__tests__\profile-avatar-control.test.tsx:
+(pass) ProfileAvatarControl > keeps the empty avatar action hidden until hover or keyboard focus [59.33ms]
+(pass) ProfileAvatarControl > reveals replace and remove actions for an existing avatar [53.92ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [431.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\rankings\components\__tests__\availability.test.tsx:
+(pass) rankings availability compatibility > renders models when recent rates are null in a legacy response [25.58ms]
+(pass) rankings availability compatibility > gives the success-rate trend a wider column [1.77ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [2.71s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\rankings\components\__tests__\visibility.test.tsx:
+(pass) rankings security visibility > hides the user IP leaderboard from non-admin viewers [15.30ms]
+(pass) rankings security visibility > shows the user IP leaderboard to administrators [5.59ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [132.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\redemption-codes\lib\__tests__\status.test.ts:
+(pass) redemption status presentation > presents used codes as neutral invalid codes [0.15ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [41.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\system-settings\general\__tests__\checkin-settings-section.test.tsx:
+(pass) check-in balance reward tiers > adds, reorders, and removes a balance reward tier [98.01ms]
+(pass) check-in balance reward tiers > rejects duplicate balances and an invalid reward range [55.56ms]
+(pass) check-in balance reward tiers > requires a valid tier before enabling balance rewards [29.85ms]
+(pass) check-in balance reward tiers > rejects a legacy quota range where minimum exceeds maximum [31.18ms]
+(pass) check-in balance reward tiers > saves the legacy random quota fields while tiers are disabled [46.60ms]
+(pass) check-in balance reward tiers > saves enabled tiers as sorted backend JSON [78.07ms]
+(pass) check-in balance reward tiers > writes tiers before enabling balance rewards [46.76ms]
+(pass) check-in balance reward tiers > invalidates the status cache when check-in is enabled [15.46ms]
+
+ 8 pass
+ 0 fail
+Ran 8 tests across 1 file. [703.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\system-settings\models\__tests__\tool-price-validation.test.tsx:
+(pass) tool price validation > blocks an empty price without converting it to an explicit zero [75.97ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [717.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\components\__tests__\cost-display.test.tsx:
+(pass) log cost display > keeps the regular cost visible and adds an accessible surcharge marker [25.10ms]
+(pass) log cost display > preserves the subscription badge and adds the same legacy surcharge marker [7.63ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [539.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\components\__tests__\date-range-picker-layout.test.tsx:
+(pass) usage log date range picker layout > keeps the trigger and custom calendar controls usable at narrow widths [174.88ms]
+(pass) usage log date range picker layout > applies a changed time only after confirming the draft range [27.78ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [889.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\components\__tests__\user-avatar-visibility.test.tsx:
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+(pass) usage log user avatar visibility > requests visible user avatars and preserves the fallback when loading fails [35.07ms]
+(pass) usage log user avatar visibility > does not request avatars and keeps anonymous fallbacks when sensitive details are hidden [5.78ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [3.30s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\lib\__tests__\tool-surcharge.test.ts:
+(pass) tool surcharge detection > shows the marker for a charged structured tool surcharge [0.14ms]
+(pass) tool surcharge detection > keeps the marker visible for legacy Web Search charges [0.02ms]
+(pass) tool surcharge detection > keeps the marker visible for legacy File Search charges
+(pass) tool surcharge detection > keeps the marker visible for legacy Image Generation charges
+(pass) tool surcharge detection > hides the marker when surcharge entries are empty or not chargeable [0.04ms]
+
+ 5 pass
+ 0 fail
+Ran 5 tests across 1 file. [42.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\users\components\__tests__\users-columns.test.tsx:
+(pass) renders the username avatar in the mobile title with a 404 fallback [27.63ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [858.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\users\lib\__tests__\user-request-rate-limit.test.ts:
+(pass) user request rate limit form > maps the three UI modes to the backend values [0.09ms]
+(pass) user request rate limit form > reads the backend values as the matching UI mode [0.02ms]
+(pass) user request rate limit form > accepts only whole custom RPM values in the supported range [1.38ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [89.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\users\lib\__tests__\user-row-action-policy.test.ts:
+(pass) routes a current user edit to the self-service profile [0.76ms]
+(pass) keeps another user edit in the management workflow [0.02ms]
+(pass) keeps root self edits in the management workflow [0.01ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [39.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\wallet\hooks\use-payment.test.ts:
+(pass) payment amount routing > uses the dedicated Waffo amount calculator [0.31ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [139.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\wallet\lib\payment.test.ts:
+(pass) payment type classification > keeps Waffo and Waffo Pancake on their dedicated flows [0.12ms]
+(pass) payment dispatch > keeps the selected Waffo method index through confirmation [0.17ms]
+(pass) payment dispatch > does not create a Waffo order without a selected method index [0.06ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [40.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\__tests__\number-input.test.ts:
+(pass) number input parsing > preserves an empty draft instead of converting it to zero [0.12ms]
+(pass) number input parsing > parses finite decimal values [0.02ms]
+(pass) number input parsing > parses integer values without an empty fallback [0.03ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [39.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\__tests__\oauth.test.ts:
+(pass) LinuxDO OAuth URL > requests the profile scope and encodes OAuth parameters [0.50ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [41.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\__tests__\theme-customization.test.ts:
+(pass) custom theme colors > normalizes native color values and rejects values that cannot be safely inlined [0.26ms]
+(pass) custom theme colors > chooses a readable foreground for light and dark custom colors [0.09ms]
+(pass) custom theme colors > applies the selected color to all primary, sidebar, ring, and chart tokens [0.09ms]
+(pass) default theme settings > maps the public API payload to the frontend theme defaults [0.11ms]
+(pass) default theme settings > falls back field by field when the public default is invalid [0.02ms]
+(pass) default theme settings > serializes the active theme for the root option API [0.03ms]
+
+ 6 pass
+ 0 fail
+Ran 6 tests across 1 file. [40.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\auth-session.test.ts:
+(pass) authentication session coordination > bootstrap distinguishes a completed anonymous check from an active session [2.46ms]
+(pass) authentication session coordination > a session mismatch clears only local state and retries without the stale SID [0.33ms]
+(pass) authentication session coordination > a rejected refresh confirms anonymous state and synchronizes sign-out [0.08ms]
+(pass) authentication session coordination > a temporary refresh failure remains retryable without clearing the session [0.08ms]
+(pass) authentication session coordination > a rate limited refresh remains retryable without clearing the session [0.07ms]
+(pass) authentication session coordination > an exhausted refresh race clears the unusable local session [0.09ms]
+(pass) authentication session coordination > an unexpected successful response is treated as out of sync [0.06ms]
+(pass) authentication session coordination > a refresh response cannot restore credentials after a newer auth operation [0.08ms]
+(pass) authentication session coordination > explicit rotations update only the current session [0.34ms]
+(pass) authentication session coordination > sign-out clears user-scoped query, mutation, and authentication state [1.05ms]
+
+ 10 pass
+ 0 fail
+Ran 10 tests across 1 file. [101.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\legacy-route.test.ts:
+(pass) legacy frontend route migration > maps former public and console routes to their current destinations [0.32ms]
+(pass) legacy frontend route migration > preserves search and hash while applying route-specific behavior [0.47ms]
+(pass) legacy frontend route migration > maps legacy settings tabs and retains unrelated parameters [0.16ms]
+(pass) legacy frontend route migration > safely redirects unknown console locations without touching new routes [0.25ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [39.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\server-error-message.test.ts:
+(pass) server error message mapping > maps the active-session limit to recovery instructions [0.24ms]
+(pass) server error message mapping > maps an Axios-shaped issuance limit to rolling-window guidance [0.05ms]
+(pass) server error message mapping > maps stable Telegram bind errors without exposing server text [0.05ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [39.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\stores\__tests__\system-config-store.test.ts:
+(pass) system config persistence > restores missing theme defaults when hydrating legacy browser state [0.15ms]
+(pass) system config persistence > fills newly added fields in a partially persisted default theme [0.02ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [43.00ms]
+{"files":71,"passed":71,"failed":[]}

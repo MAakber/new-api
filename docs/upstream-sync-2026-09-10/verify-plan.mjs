@@ -152,7 +152,14 @@ function main() {
     live = { repository: repo, branch, head, operations, conflicts: conflictsResult.stdout.trim().split('\n').filter(Boolean), status: statusResult.stdout.trimEnd() }
     if (operations.length) reconcile.push('Git operation in progress; follow RESUME.md before starting another unit')
     if (state.active_operation && !operations.length) reconcile.push('Recorded operation is absent in Git; reconcile result before repeating it')
-    if (state.last_observed_head !== head) reconcile.push('HEAD differs from last_observed_head; inspect commits and ledger')
+    if (state.last_observed_head !== head) {
+      // A ledger commit cannot contain its own SHA. Accept only descendant
+      // commits that change this plan, while still rejecting any code drift.
+      const observed = state.last_observed_head
+      const ancestor = shaPattern.test(observed || '') && git(repo, ['merge-base', '--is-ancestor', observed, head]).status === 0
+      const planOnly = ancestor && git(repo, ['diff', '--quiet', observed, head, '--', '.', ':(exclude)docs/upstream-sync-2026-09-10/**']).status === 0
+      if (!planOnly) reconcile.push('HEAD differs in code/history from last_observed_head; inspect commits and ledger')
+    }
     if (state.integration.created && branch !== state.integration.branch && !(mode === 'final' && branch === 'main')) reconcile.push('Not on the recorded integration branch')
     if (!state.integration.created && fs.existsSync(designated)) reconcile.push('Designated worktree path exists; inspect before creating/reusing it')
     const tracked = git(repo, ['status', '--porcelain=v1', '--untracked-files=no']).stdout.trim()

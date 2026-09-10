@@ -1,0 +1,425 @@
+{
+  "baseline_commit": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "runner_commit": "8152abd51576cd39265ad1fcc319315889c1dbe3",
+  "completed_at": "2026-09-10T09:45:31.084Z",
+  "checks": [
+    {
+      "id": "B00-bun-install",
+      "command": [
+        "bun",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:13:03.160Z",
+      "finished_at": "2026-09-10T09:13:35.481Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-relaykit-build",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\relaykit",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:13:03.162Z",
+      "finished_at": "2026-09-10T09:13:22.341Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "off",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-relaykit-test",
+      "command": [
+        "go",
+        "test",
+        "./...",
+        "-count=1",
+        "-json"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\relaykit",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:13:22.486Z",
+      "finished_at": "2026-09-10T09:13:26.664Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "off",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-root-build",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:21:43.183Z",
+      "finished_at": "2026-09-10T09:22:12.685Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-root-test",
+      "command": [
+        "go",
+        "test",
+        "./...",
+        "-count=1",
+        "-json"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:22:12.797Z",
+      "finished_at": "2026-09-10T09:22:50.306Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-build",
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:14:57.243Z",
+      "finished_at": "2026-09-10T09:15:18.070Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-channels",
+      "command": [
+        "bun",
+        "run",
+        "test:channels"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:14:57.291Z",
+      "finished_at": "2026-09-10T09:16:11.059Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-copyright",
+      "command": [
+        "bun",
+        "run",
+        "copyright:check"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:21:09.753Z",
+      "finished_at": "2026-09-10T09:21:10.758Z",
+      "status": "failed",
+      "exit_code": 1,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-drawing",
+      "command": [
+        "bun",
+        "run",
+        "test:drawing"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:15:30.437Z",
+      "finished_at": "2026-09-10T09:15:44.698Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-format",
+      "command": [
+        "bun",
+        "run",
+        "format:check"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:21:06.816Z",
+      "finished_at": "2026-09-10T09:21:09.652Z",
+      "status": "failed",
+      "exit_code": 1,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-lint",
+      "command": [
+        "bun",
+        "run",
+        "lint"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:21:04.488Z",
+      "finished_at": "2026-09-10T09:21:06.701Z",
+      "status": "failed",
+      "exit_code": 1,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-playground",
+      "command": [
+        "bun",
+        "run",
+        "test:playground"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:14:57.242Z",
+      "finished_at": "2026-09-10T09:15:30.318Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-preservation",
+      "command": [
+        "bun",
+        "run",
+        "test:preservation"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "8152abd51576cd39265ad1fcc319315889c1dbe3",
+      "started_at": "2026-09-10T09:40:57.242Z",
+      "finished_at": "2026-09-10T09:41:34.500Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    },
+    {
+      "id": "B00-web-typecheck",
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+      "tested_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+      "started_at": "2026-09-10T09:14:57.263Z",
+      "finished_at": "2026-09-10T09:15:09.493Z",
+      "status": "passed",
+      "exit_code": 0,
+      "signal": null,
+      "environment": {
+        "platform": "win32",
+        "arch": "x64",
+        "node": "v22.15.0",
+        "GOWORK": "default",
+        "CGO_ENABLED": "default",
+        "mysql_test_dsn_present": false,
+        "postgres_test_dsn_present": false
+      },
+      "log": "output.log"
+    }
+  ],
+  "root_go": {
+    "packages_passed": 38,
+    "test_events_passed": 1807,
+    "skipped_tests": [
+      {
+        "package": "github.com/QuantumNous/new-api/controller",
+        "test": "TestTokenMigrationFromChar48ToVarchar128MySQL"
+      },
+      {
+        "package": "github.com/QuantumNous/new-api/controller",
+        "test": "TestTokenMigrationFromChar48ToVarchar128Postgres"
+      },
+      {
+        "package": "github.com/QuantumNous/new-api/model",
+        "test": "TestUserSessionPreviousRefreshHashMigrationConfiguredDatabases/mysql"
+      },
+      {
+        "package": "github.com/QuantumNous/new-api/model",
+        "test": "TestUserSessionPreviousRefreshHashMigrationConfiguredDatabases/postgres"
+      }
+    ],
+    "failed": []
+  },
+  "relaykit": {
+    "packages_passed": 6,
+    "test_events_passed": 317,
+    "skipped_tests": []
+  },
+  "frontend": {
+    "inventory": "evidence/runs/B00-002/frontend-test-inventory.json",
+    "vitest_unique_files": 30,
+    "vitest_unique_tests": 168,
+    "legacy_files": 71,
+    "legacy_tests_passed": 236
+  },
+  "existing_failures": [
+    {
+      "id": "baseline-lint",
+      "stage": "B15",
+      "errors": 298,
+      "log": "evidence/runs/B00-web-lint/output.log",
+      "action": "Resolve remaining full lint errors without disabling checks; prioritize files touched during adaptation."
+    },
+    {
+      "id": "baseline-format",
+      "stage": "B15",
+      "log": "evidence/runs/B00-web-format/output.log",
+      "action": "Format six reported files while preserving protected headers."
+    },
+    {
+      "id": "baseline-copyright",
+      "stage": "B16",
+      "log": "evidence/runs/B00-web-copyright/output.log",
+      "action": "Add missing canonical headers with repository script; preserve existing identity and licenses."
+    }
+  ],
+  "environment": {
+    "go": "1.25.5 windows/amd64",
+    "bun": "1.3.14",
+    "node": "22.15.0",
+    "docker": "29.1.3 via WSL Ubuntu-SF3D root; read-only version probe passed",
+    "production": "Only production exists; not accessed. Local test DBs will be isolated."
+  },
+  "acceptance_limit": "Baseline execution and coverage inventory complete; failures and external skips are tracked, not accepted as final passing gates."
+}

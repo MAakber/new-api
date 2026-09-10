@@ -20,3 +20,7 @@
 新依赖要记录来源提交及调用关系，并更新 batches.json。若改变阶段归属，同步修改 upstream-ledger.json 与 batches.json 后运行结构检查。
 
 保留与上游不同的行为时，需要确认没有遗漏新增功能；提交的“equivalent / preserved / superseded”不是默认免验标签。
+
+## 2026-09-10T09:33:32.625Z — A13 test isolation
+
+The user has production only. All migration and accounting tests will use new isolated local databases. Production connectivity, schema writes, deployment and real account operations are not implied by the merge authorization. Actual-version and sanitized-snapshot acceptance remains pending until supplied; continue independent work.

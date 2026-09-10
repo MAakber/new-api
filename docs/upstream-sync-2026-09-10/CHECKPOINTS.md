@@ -44,3 +44,20 @@
 - Created codex/upstream-sync-2026-09-10 at the same commit in D:/10178/Projects/new-api-upstream-sync. Main remains unchanged.
 - This worktree now owns the writable plan/ledger. The original checkout redirects here through verify-plan.mjs.
 - B00.2 next: commit this plan, review the 120 mappings against actual commit paths, install this worktree's dependencies, then record baseline tests and coverage gaps. No upstream patches have been applied.
+
+## 2026-09-10T09:33:32.625Z — B00.2 verified, B00.3 verifying
+
+- Reviewed all 120 mappings against Git diff-tree: all archived path lists matched. Reviewed the 28 entries without a direct source anchor and added concrete current source paths to their preservation features. Mapping acceptance only; all feature/final acceptance remains pending.
+- Isolated Bun frozen-lockfile install passed (1,146 packages). Frontend build/typecheck, three existing Vitest suites, and independent relaykit build/test passed at 0353ebeb59dd4947cf465b455f52e105cf3f7370. Root baseline is running.
+- Existing full frontend lint, format and copyright checks failed before any upstream/source edits; keep logs and fix by final acceptance.
+- User clarified only production exists. We will build isolated local databases. Production migration and upgrades are not authorized or attempted.
+- Next: inventory and execute legacy node:test files missing from the three scripts, then consolidate the baseline and start B01.
+
+## 2026-09-10T09:45:31.234Z — B00 complete — baseline and all existing test entry points recorded
+
+- Protected downstream main remains at 403f7d9dffc6a99728ede5d8f72770efc61f7b83. Integration test runner commit: 8152abd51576cd39265ad1fcc319315889c1dbe3.
+- Root build/test and independent relaykit build/test passed. Four actual tests were skipped because dedicated MySQL/PostgreSQL DSNs are absent; no database acceptance claimed.
+- All 30 Vitest files (168 unique tests) and all 71 legacy files (236 tests) passed. Frontend build/typecheck passed.
+- Existing lint (298 errors), six-file formatting and missing-header failures assigned to explicit B15/B16 units.
+- Fixed recovery verifier self-reference: later descendant commits changing only the plan may follow last_observed_head; business-code or ancestry drift still requires reconciliation.
+- B00 evidence: evidence/runs/B00-002/baseline-summary.json. Next: B01 small upstream units, with functional preservation first.

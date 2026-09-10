@@ -1,0 +1,10 @@
+$ vitest run --config vitest.drawing.config.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  13 passed (13)
+      Tests  60 passed (60)
+   Start at  17:15:30
+   Duration  13.77s (import 48%, environment 29%, setup 15%, tests 7%, transform 1%)
+

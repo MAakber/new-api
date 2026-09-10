@@ -1,0 +1,3778 @@
+{
+  "baseline": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "reviewed_at": "2026-09-10T09:10:17.040Z",
+  "scope": "Commit-to-feature mapping only; not functional acceptance",
+  "rows": [
+    {
+      "sha": "a66204cf78da1acd744b2bf31f7e100fc3b4a79e",
+      "subject": "feat: add custom theme color picker",
+      "preservationIds": [
+        "D17"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/context/theme-customization-provider.tsx",
+        "web/src/lib/__tests__/theme-customization.test.ts",
+        "web/src/lib/theme-customization.ts"
+      ],
+      "changed_paths": [
+        "web/src/components/config-drawer.tsx",
+        "web/src/context/theme-customization-provider.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/lib/__tests__/theme-customization.test.ts",
+        "web/src/lib/theme-customization.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "全局主题与持久化迁移: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2702456dd7d8b0d0daca15327f0f6596a92264a7",
+      "subject": "feat: add relay security restrictions and auto-bans",
+      "preservationIds": [
+        "D11"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/relay.go",
+        "middleware/relay_user_agent_blacklist_test.go",
+        "model/user.go",
+        "model/user_auto_ban_test.go",
+        "service/auto_ban_test.go"
+      ],
+      "changed_paths": [
+        "common/constants.go",
+        "common/relay_user_agent_blacklist.go",
+        "common/relay_user_agent_blacklist_test.go",
+        "controller/auth_session.go",
+        "controller/auth_session_test.go",
+        "controller/auto_ban.go",
+        "controller/passkey.go",
+        "controller/relay.go",
+        "controller/twofa.go",
+        "controller/user.go",
+        "i18n/keys.go",
+        "i18n/locales/en.yaml",
+        "i18n/locales/zh-CN.yaml",
+        "i18n/locales/zh-TW.yaml",
+        "middleware/auth.go",
+        "middleware/auth_test.go",
+        "middleware/distributor.go",
+        "middleware/relay_user_agent_blacklist.go",
+        "middleware/relay_user_agent_blacklist_test.go",
+        "model/main.go",
+        "model/option.go",
+        "model/option_auto_ban_test.go",
+        "model/option_relay_user_agent_blacklist_test.go",
+        "model/user.go",
+        "model/user_auth_cache.go",
+        "model/user_auto_ban.go",
+        "model/user_auto_ban_test.go",
+        "model/user_cache.go",
+        "router/api-router.go",
+        "router/relay-router.go",
+        "router/relay_user_agent_blacklist_test.go",
+        "router/video-router.go",
+        "service/auth_session.go",
+        "service/auth_session_test.go",
+        "service/auto_ban.go",
+        "service/auto_ban_test.go",
+        "setting/auto_ban.go",
+        "setting/auto_ban_test.go",
+        "web/src/features/system-settings/request-limits/auto-ban-history.tsx",
+        "web/src/features/system-settings/request-limits/auto-ban-section.tsx",
+        "web/src/features/system-settings/request-limits/auto-ban-types.ts",
+        "web/src/features/system-settings/request-limits/user-agent-restrictions-section.tsx",
+        "web/src/features/system-settings/security/index.tsx",
+        "web/src/features/system-settings/security/section-registry.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自动同步、上游拦截与安全封禁: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "3962f6cb26148d8470b5f4ff7f9693f5770fc87d",
+      "subject": "feat(auth): add configurable login proxy",
+      "preservationIds": [
+        "D13"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "model/option.go",
+        "model/option_login_proxy_test.go",
+        "service/http_client.go",
+        "service/login_http_client_test.go"
+      ],
+      "changed_paths": [
+        "controller/custom_oauth.go",
+        "controller/wechat.go",
+        "model/option.go",
+        "model/option_login_proxy_test.go",
+        "oauth/discord.go",
+        "oauth/generic.go",
+        "oauth/github.go",
+        "oauth/linuxdo.go",
+        "oauth/oidc.go",
+        "service/http_client.go",
+        "service/login_http_client_test.go",
+        "setting/login_proxy.go",
+        "setting/login_proxy_test.go",
+        "web/src/features/system-settings/auth/index.tsx",
+        "web/src/features/system-settings/auth/login-proxy-section.tsx",
+        "web/src/features/system-settings/auth/section-registry.tsx",
+        "web/src/features/system-settings/request-limits/auto-ban-section.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "登录代理与注册邀请码流程: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "b857b23733c682470cffeffef7c37b9fa08f5b85",
+      "subject": "feat(security): support permanent automatic bans",
+      "preservationIds": [
+        "D11"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "model/user_auto_ban_test.go",
+        "service/auto_ban_test.go"
+      ],
+      "changed_paths": [
+        "model/user_auto_ban.go",
+        "model/user_auto_ban_test.go",
+        "service/auto_ban.go",
+        "service/auto_ban_test.go",
+        "setting/auto_ban.go",
+        "setting/auto_ban_test.go",
+        "web/src/features/system-settings/request-limits/auto-ban-history.tsx",
+        "web/src/features/system-settings/request-limits/auto-ban-section.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自动同步、上游拦截与安全封禁: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "d2e059980919558174c3f277c1dc391bc9b5c826",
+      "subject": "feat: add automatic sync and upstream interception",
+      "preservationIds": [
+        "D11"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/auto_sync.go",
+        "controller/auto_sync_test.go",
+        "controller/relay.go",
+        "controller/relay_upstream_interception_test.go"
+      ],
+      "changed_paths": [
+        "controller/auto_sync.go",
+        "controller/auto_sync_test.go",
+        "controller/channel.go",
+        "controller/channel_ollama_authz_test.go",
+        "controller/channel_upstream_update.go",
+        "controller/model_meta.go",
+        "controller/model_sync.go",
+        "controller/model_vendor_active_name_delete_test.go",
+        "controller/option.go",
+        "controller/pricing.go",
+        "controller/pricing_options.go",
+        "controller/pricing_options_test.go",
+        "controller/ratio_sync.go",
+        "controller/relay.go",
+        "controller/relay_upstream_interception_test.go",
+        "controller/system_task_handlers.go",
+        "controller/vendor_meta.go",
+        "controller/video_proxy.go",
+        "controller/video_proxy_gemini.go",
+        "controller/video_proxy_guard_test.go",
+        "main.go",
+        "middleware/distributor.go",
+        "model/ability.go",
+        "model/auto_price_guard.go",
+        "model/auto_price_guard_test.go",
+        "model/auto_sync_event.go",
+        "model/auto_sync_event_test.go",
+        "model/channel.go",
+        "model/channel_cache.go",
+        "model/channel_request_selection_test.go",
+        "model/main.go",
+        "model/model_active_name_migration.go",
+        "model/model_active_name_migration_test.go",
+        "model/model_meta.go",
+        "model/named_lease.go",
+        "model/named_lease_test.go",
+        "model/option.go",
+        "model/option_upstream_interception_test.go",
+        "model/pricing_options.go",
+        "model/pricing_options_test.go",
+        "model/system_task.go",
+        "model/system_task_tx_test.go",
+        "model/vendor_meta.go",
+        "relay/channel/claude/relay-claude.go",
+        "relay/channel/openai/chat_via_responses.go",
+        "relay/channel/openai/helper.go",
+        "relay/channel/openai/relay_responses.go",
+        "relay/claude_handler.go",
+        "relay/compatible_handler.go",
+        "relay/gemini_handler.go",
+        "relay/helper/common.go",
+        "relay/mjproxy_guard_test.go",
+        "relay/mjproxy_handler.go",
+        "relay/relay_task.go",
+        "relay/responses_handler.go",
+        "router/api-router.go",
+        "service/auto_sync_status.go",
+        "service/auto_sync_tasks.go",
+        "service/auto_sync_tasks_test.go",
+        "service/channel_affinity_usage_cache_test.go",
+        "service/channel_auto_sync_snapshot.go",
+        "service/channel_auto_sync_snapshot_test.go",
+        "service/channel_mutation.go",
+        "service/channel_mutation_test.go",
+        "service/channel_select.go",
+        "service/model_metadata_sync.go",
+        "service/model_metadata_sync_test.go",
+        "service/named_lease.go",
+        "service/named_lease_test.go",
+        "service/pricing_options.go",
+        "service/pricing_options_test.go",
+        "service/request_guard.go",
+        "service/request_guard_test.go",
+        "service/system_task.go",
+        "service/system_task_test.go",
+        "service/upstream_interception_writer.go",
+        "service/upstream_interception_writer_test.go",
+        "service/upstream_pricing.go",
+        "service/upstream_pricing_test.go",
+        "setting/upstream_interception.go",
+        "setting/upstream_interception_test.go",
+        "web/src/components/auto-sync-status-strip.tsx",
+        "web/src/features/models/api.ts",
+        "web/src/features/models/components/drawers/model-mutate-drawer.tsx",
+        "web/src/features/models/components/model-auto-sync-control.tsx",
+        "web/src/features/models/index.tsx",
+        "web/src/features/system-settings/api.ts",
+        "web/src/features/system-settings/models/auto-price-sync-control.tsx",
+        "web/src/features/system-settings/models/pricing-patch.ts",
+        "web/src/features/system-settings/models/ratio-settings-card.tsx",
+        "web/src/features/system-settings/models/upstream-ratio-sync.tsx",
+        "web/src/features/system-settings/request-limits/upstream-interception-section.tsx",
+        "web/src/features/system-settings/security/index.tsx",
+        "web/src/features/system-settings/security/section-registry.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/types/auto-sync.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自动同步、上游拦截与安全封禁: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "5d192c878ba3270f622ca35db747ded53cb2ca19",
+      "subject": "feat(dashboard): add user token usage metric",
+      "preservationIds": [
+        "D19"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/dashboard/components/users/user-charts.tsx",
+        "web/src/features/dashboard/index.tsx",
+        "web/src/features/dashboard/lib/charts.ts",
+        "web/src/features/dashboard/types.ts"
+      ],
+      "changed_paths": [
+        "web/src/features/dashboard/components/users/user-charts.tsx",
+        "web/src/features/dashboard/index.tsx",
+        "web/src/features/dashboard/lib/charts.ts",
+        "web/src/features/dashboard/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可用性/安全榜单及用量指标: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "deea98b42402f841bb153e2ce445c9b28848987e",
+      "subject": "feat(logs): add admin request diagnostics",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "common/request_debug.go",
+        "model/log.go",
+        "model/log_request_debug_test.go",
+        "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+        "web/src/features/usage-logs/data/schema.ts",
+        "web/src/features/usage-logs/types.ts"
+      ],
+      "changed_paths": [
+        "common/request_debug.go",
+        "constant/context_key.go",
+        "controller/user.go",
+        "model/log.go",
+        "model/log_request_debug_test.go",
+        "relay/channel/api_request.go",
+        "relaykit/dto/user_settings.go",
+        "web/src/features/profile/components/tabs/notification-tab.tsx",
+        "web/src/features/profile/types.ts",
+        "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+        "web/src/features/usage-logs/data/schema.ts",
+        "web/src/features/usage-logs/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "e725a3a602e5d1ffdbd8bce64b9df8b280a67361",
+      "subject": "feat(logs): add raw request audit switch",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "common/request_debug.go",
+        "model/log_request_debug_test.go",
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+        "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+        "web/src/features/usage-logs/data/schema.ts"
+      ],
+      "changed_paths": [
+        "common/constants.go",
+        "common/request_debug.go",
+        "model/log_request_debug_test.go",
+        "model/option.go",
+        "model/option_request_debug_test.go",
+        "relay/channel/api_request.go",
+        "relay/channel/api_request_debug_test.go",
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+        "web/src/features/system-settings/operations/index.tsx",
+        "web/src/features/system-settings/operations/section-registry.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+        "web/src/features/usage-logs/data/schema.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "9c79845c36ab67692ef72a6fc64fd1b9ef9e6436",
+      "subject": "fix(settings): persist raw request logging toggle",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "6f2b3f07ac27fdb628f73dc38fbfaf5979faea9c",
+      "subject": "feat(logs): support full request body diagnostics",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "common/request_debug.go",
+        "model/request_debug_body_test.go",
+        "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+        "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+        "web/src/features/usage-logs/data/schema.ts",
+        "web/src/features/usage-logs/request-debug-api.ts"
+      ],
+      "changed_paths": [
+        "common/request_debug.go",
+        "controller/log.go",
+        "model/main.go",
+        "model/request_debug_body.go",
+        "model/request_debug_body_test.go",
+        "relay/channel/api_request.go",
+        "router/api-router.go",
+        "service/system_task.go",
+        "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+        "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+        "web/src/features/usage-logs/data/schema.ts",
+        "web/src/features/usage-logs/request-debug-api.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "02618a26f10e03d0261dd37e39559ef3cf4e6a19",
+      "subject": "feat(redemption): support subscription rewards and exports",
+      "preservationIds": [
+        "D20"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/redemption.go",
+        "controller/redemption_export_test.go",
+        "model/redemption.go",
+        "model/redemption_test.go",
+        "web/src/features/redemption-codes/api.ts",
+        "web/src/features/redemption-codes/components/data-table-bulk-actions.tsx",
+        "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+        "web/src/features/redemption-codes/components/redemptions-export-menu.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mobile-list.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+        "web/src/features/redemption-codes/components/redemptions-provider.tsx",
+        "web/src/features/redemption-codes/components/redemptions-table.tsx",
+        "web/src/features/redemption-codes/lib/redemption-form.ts",
+        "web/src/features/redemption-codes/types.ts"
+      ],
+      "changed_paths": [
+        "controller/audit.go",
+        "controller/redemption.go",
+        "controller/redemption_export_test.go",
+        "controller/user.go",
+        "middleware/audit.go",
+        "model/db_time.go",
+        "model/redemption.go",
+        "model/redemption_test.go",
+        "model/subscription.go",
+        "router/api-router.go",
+        "web/src/features/redemption-codes/api.ts",
+        "web/src/features/redemption-codes/components/data-table-bulk-actions.tsx",
+        "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+        "web/src/features/redemption-codes/components/redemptions-export-menu.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mobile-list.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+        "web/src/features/redemption-codes/components/redemptions-provider.tsx",
+        "web/src/features/redemption-codes/components/redemptions-table.tsx",
+        "web/src/features/redemption-codes/lib/redemption-form.ts",
+        "web/src/features/redemption-codes/types.ts",
+        "web/src/features/wallet/components/subscription-plans-card.tsx",
+        "web/src/features/wallet/hooks/use-redemption.ts",
+        "web/src/features/wallet/index.tsx",
+        "web/src/features/wallet/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "订阅兑换、注册码与 CSV 导出: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "9b514fe1ab4181b3bedd435e3801313154569eea",
+      "subject": "feat(channel): add Codex and Claude Code compatibility channels",
+      "preservationIds": [
+        "D01",
+        "D02"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "constant/channel.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/claude/compatibility_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go",
+        "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts"
+      ],
+      "changed_paths": [
+        "common/api_type.go",
+        "common/endpoint_type.go",
+        "constant/channel.go",
+        "controller/channel.go",
+        "controller/channel_test_internal_test.go",
+        "controller/channel_upstream_update_test.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/claude/compatibility_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go",
+        "relay/common/relay_info.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/lib/channel-type-config.ts",
+        "web/src/features/channels/lib/channel-utils.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道; Claude Code 与 count_tokens: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "f1c82c6c1926a7b6deadd04604b5b3426df36f6e",
+      "subject": "fix(channel): use official Codex CLI identity",
+      "preservationIds": [
+        "D01",
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "controller/channel_upstream_update_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道; 可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2c68d2215d7032fe3f04c6ef33dc71c12e5fbc8f",
+      "subject": "feat(auth): require registration codes for new accounts",
+      "preservationIds": [
+        "D13"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/auth_flow_test.go",
+        "controller/oauth.go",
+        "controller/registration_code_test.go",
+        "controller/user.go",
+        "model/option.go"
+      ],
+      "changed_paths": [
+        "common/constants.go",
+        "controller/auth_flow_test.go",
+        "controller/misc.go",
+        "controller/oauth.go",
+        "controller/redemption.go",
+        "controller/redemption_export_test.go",
+        "controller/registration_code_test.go",
+        "controller/user.go",
+        "controller/wechat.go",
+        "i18n/keys.go",
+        "i18n/locales/en.yaml",
+        "i18n/locales/zh-CN.yaml",
+        "i18n/locales/zh-TW.yaml",
+        "model/main.go",
+        "model/option.go",
+        "model/redemption.go",
+        "model/redemption_test.go",
+        "model/user.go",
+        "router/api-router.go",
+        "web/src/features/auth/api.ts",
+        "web/src/features/auth/components/oauth-providers.tsx",
+        "web/src/features/auth/constants.ts",
+        "web/src/features/auth/hooks/use-oauth-login.ts",
+        "web/src/features/auth/sign-in/components/user-auth-form.tsx",
+        "web/src/features/auth/sign-up/components/sign-up-form.tsx",
+        "web/src/features/auth/types.ts",
+        "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mobile-list.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+        "web/src/features/redemption-codes/constants.ts",
+        "web/src/features/redemption-codes/lib/redemption-form.ts",
+        "web/src/features/redemption-codes/types.ts",
+        "web/src/features/system-settings/auth/basic-auth-section.tsx",
+        "web/src/features/system-settings/auth/index.tsx",
+        "web/src/features/system-settings/auth/section-registry.tsx",
+        "web/src/features/system-settings/hooks/use-update-option.ts",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "登录代理与注册邀请码流程: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "edce7ef74a897657b533868e6893477612465f72",
+      "subject": "feat(channel): add Code Buddy WorkBuddy relay",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "constant/channel.go",
+        "controller/channel_upstream_update_test.go",
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go",
+        "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts"
+      ],
+      "changed_paths": [
+        "common/api_type.go",
+        "common/endpoint_type.go",
+        "constant/channel.go",
+        "controller/channel_test_internal_test.go",
+        "controller/channel_upstream_update_test.go",
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go",
+        "relay/common/relay_info.go",
+        "relay/common/relay_info_test.go",
+        "relay/compatible_handler.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/lib/channel-type-config.ts",
+        "web/src/features/channels/lib/channel-utils.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "358a4873866a5e5f961bd3bfab45df99603f29b1",
+      "subject": "fix(channel): align WorkBuddy relay profile",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "5036cc73f6eeac476344d953e85f6b4e1a1d6d1b",
+      "subject": "test(channel): update WorkBuddy fetch identity",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel_upstream_update_test.go"
+      ],
+      "changed_paths": [
+        "controller/channel_upstream_update_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "867f89cf82234261723f8565635c51a15cab602c",
+      "subject": "fix(channels): use CodeBuddy brand icon",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/assets/custom/icon-codebuddy.tsx",
+        "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts"
+      ],
+      "changed_paths": [
+        "web/public/codebuddy.png",
+        "web/src/assets/custom/icon-codebuddy.tsx",
+        "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts",
+        "web/src/features/channels/lib/channel-type-config.ts",
+        "web/src/features/channels/lib/channel-utils.ts",
+        "web/src/lib/lobe-icon.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "6f30ee13e2ea7e890f365381a1b27d193448a63a",
+      "subject": "fix(channels): preserve compatibility request sessions",
+      "preservationIds": [
+        "D01",
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go",
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道; CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "948d4d7473896a4dc3ddfd50982020b7fe319bfb",
+      "subject": "fix(channel): convert CodeBuddy responses via chat",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go",
+        "relay/responses_handler.go"
+      ],
+      "changed_paths": [
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go",
+        "relay/codebuddy_responses_test.go",
+        "relay/responses_handler.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "efcb8c7f2f852bc170447e92e12f4205442a80cc",
+      "subject": "feat(channels): configure channel test behavior",
+      "preservationIds": [
+        "D07"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go",
+        "model/option.go",
+        "model/option_channel_test_test.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/claude/compatibility_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go",
+        "relay/common/relay_info.go",
+        "router/channel-router.go",
+        "router/channel_router_test.go",
+        "setting/operation_setting/monitor_setting.go",
+        "setting/operation_setting/monitor_setting_test.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+        "web/src/features/channels/lib/channel-actions.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/models/components/drawers/model-mutate-drawer.tsx",
+        "web/src/features/system-settings/models/channel-test-section.tsx",
+        "web/src/features/system-settings/models/index.tsx",
+        "web/src/features/system-settings/models/routing-reliability-section.tsx",
+        "web/src/features/system-settings/models/section-registry.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "渠道测试模式和能力诊断: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "cf54a488e846bf12f5fdb570496dd3d4225213ab",
+      "subject": "fix(channel): preserve images in responses conversion",
+      "preservationIds": [
+        "D01",
+        "D23"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go",
+        "relaykit/relayconvert/internal/oai_responses/to_oai_chat_req_test.go"
+      ],
+      "changed_paths": [
+        "relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go",
+        "relaykit/relayconvert/internal/oai_responses/to_oai_chat_req_test.go",
+        "relaykit/relayconvert/testdata/golden/request/openai_responses_to_openai.golden.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道; 绘图画布、持久化与图片入口: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "598b977425344bbac11397948df120a9ea94ccc5",
+      "subject": "fix(channels): harden Claude Code profile",
+      "preservationIds": [
+        "D02",
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/api_request.go",
+        "relay/channel/api_request_test.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/claude/compatibility_test.go",
+        "relay/channel/compatibility.go"
+      ],
+      "changed_paths": [
+        "controller/channel.go",
+        "controller/channel_upstream_update_test.go",
+        "relay/channel/api_request.go",
+        "relay/channel/api_request_test.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/claude/compatibility_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/common/override.go",
+        "relay/common/override_test.go",
+        "relay/common/relay_info.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Claude Code 与 count_tokens; 可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "14282511c0b39233dffccc4263bafc8bd5e18cbb",
+      "subject": "fix(relay): handle headerless Codex streams",
+      "preservationIds": [
+        "D01"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/relay.go",
+        "relay/chat_completions_via_responses.go"
+      ],
+      "changed_paths": [
+        "controller/relay.go",
+        "controller/relay_retry_test.go",
+        "relay/chat_completions_via_responses.go",
+        "relay/chat_completions_via_responses_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "85660cf7e00386e95e7187a39e72ecf71bc9a878",
+      "subject": "test(logs): cover request debug body truncation",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "common/request_debug_test.go"
+      ],
+      "changed_paths": [
+        "common/request_debug_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "43c8e7d9e8d765bf159deb0e31e79abf0cb7fbb2",
+      "subject": "chore(repo): ignore Slim deepwork artifacts",
+      "preservationIds": [
+        "D25"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        ".gitignore"
+      ],
+      "changed_paths": [
+        ".gitignore"
+      ],
+      "mapping_review": "verified",
+      "rationale": "版本构建、工作树与项目治理: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "420e63815fc2c07c90e786b7ee84678ad7ff08be",
+      "subject": "fix(i18n): align auto-ban status labels and sync locales",
+      "preservationIds": [
+        "D11",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json"
+      ],
+      "changed_paths": [
+        "web/src/features/system-settings/request-limits/auto-ban-history.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自动同步、上游拦截与安全封禁; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "856349c2a2312b6addc63ae2dce6aef3cd2bead7",
+      "subject": "fix(relay): handle CodeBuddy done stream frame",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/openai/chat_via_responses_test.go",
+        "relay/channel/openai/responses_via_chat.go"
+      ],
+      "changed_paths": [
+        "relay/channel/openai/chat_via_responses_test.go",
+        "relay/channel/openai/responses_via_chat.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "bcd3c872113fdf274652a7804e7292e0d5cea59b",
+      "subject": "fix(channels): align CodeBuddy WorkBuddy profile",
+      "preservationIds": [
+        "D03",
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy; 可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "9ebeec92a511788495292b12a1950a35e08d409c",
+      "subject": "test(channels): cover CodeBuddy model prompt",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "3ec4ccce7e2e212db6a960f1abf8fd46033ec616",
+      "subject": "fix(relay): repair Codex compatibility channel upstream requests",
+      "preservationIds": [
+        "D01"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "614ae8fc7b49a4f88dd8ffbae96274523b8363cb",
+      "subject": "fix(relay): support Claude Code count_tokens and align client profile",
+      "preservationIds": [
+        "D02"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/api_request.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/claude/compatibility_test.go",
+        "relay/channel/compatibility.go",
+        "router/relay-router.go"
+      ],
+      "changed_paths": [
+        "controller/channel.go",
+        "controller/channel_upstream_update_test.go",
+        "controller/relay.go",
+        "relay/channel/api_request.go",
+        "relay/channel/claude/adaptor.go",
+        "relay/channel/claude/compatibility_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/claude_handler.go",
+        "relay/constant/relay_mode.go",
+        "router/relay-router.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Claude Code 与 count_tokens: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "fbe7a786772719ddfb227880ba3fc4eca513672a",
+      "subject": "feat: channel key append/multi-key, multi-passkey, self profile edit and CodeBuddy compact fix",
+      "preservationIds": [
+        "D03",
+        "D05",
+        "D14"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel.go",
+        "controller/passkey.go",
+        "controller/passkey_test.go",
+        "model/passkey_migration_test.go",
+        "relay/channel/openai/adaptor.go",
+        "service/channel_multi_key_append_test.go",
+        "service/passkey/user_test.go",
+        "web/src/features/auth/passkey/__tests__/name-validation.test.ts",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/hooks/use-channel-mutate-form.ts",
+        "web/src/features/channels/lib/__tests__/channel-key-append.test.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/profile/components/passkey-card.tsx"
+      ],
+      "changed_paths": [
+        "controller/channel.go",
+        "controller/passkey.go",
+        "controller/passkey_test.go",
+        "model/channel.go",
+        "model/main.go",
+        "model/passkey.go",
+        "model/passkey_migration.go",
+        "model/passkey_migration_test.go",
+        "model/user_authentication_test.go",
+        "relay/channel/openai/adaptor.go",
+        "router/api-router.go",
+        "service/channel_multi_key_append_test.go",
+        "service/channel_mutation.go",
+        "service/channel_mutation_test.go",
+        "service/passkey/session.go",
+        "service/passkey/user.go",
+        "service/passkey/user_test.go",
+        "web/src/features/auth/passkey/__tests__/name-validation.test.ts",
+        "web/src/features/auth/passkey/api.ts",
+        "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+        "web/src/features/auth/passkey/index.ts",
+        "web/src/features/auth/passkey/name-validation.ts",
+        "web/src/features/auth/passkey/types.ts",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/hooks/use-channel-mutate-form.ts",
+        "web/src/features/channels/lib/__tests__/channel-key-append.test.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/profile/components/passkey-card.tsx",
+        "web/src/features/profile/components/profile-header.tsx",
+        "web/src/features/profile/index.tsx",
+        "web/src/features/users/components/data-table-row-actions.tsx",
+        "web/src/features/users/lib/__tests__/user-row-action-policy.test.ts",
+        "web/src/features/users/lib/user-row-action-policy.ts",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy; 渠道抓模、密钥和表单增强; 多 Passkey、自助资料与 OAuth 绑定: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "6e607d7f6992aaaecaf105eb878e463f9a1cdfa7",
+      "subject": "feat(auth): defer registration code until completion",
+      "preservationIds": [
+        "D13"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/auth_flow_test.go",
+        "controller/oauth.go",
+        "controller/registration_code_test.go",
+        "controller/user.go",
+        "web/src/features/auth/complete-registration/__tests__/flow-response.test.ts"
+      ],
+      "changed_paths": [
+        "controller/auth_flow_test.go",
+        "controller/oauth.go",
+        "controller/registration_code_test.go",
+        "controller/registration_completion.go",
+        "controller/user.go",
+        "controller/wechat.go",
+        "i18n/keys.go",
+        "i18n/locales/en.yaml",
+        "i18n/locales/zh-CN.yaml",
+        "i18n/locales/zh-TW.yaml",
+        "model/auth_flow.go",
+        "model/user.go",
+        "router/api-router.go",
+        "web/src/features/auth/api.ts",
+        "web/src/features/auth/complete-registration/__tests__/flow-response.test.ts",
+        "web/src/features/auth/complete-registration/components/complete-registration-form.tsx",
+        "web/src/features/auth/complete-registration/flow-response.ts",
+        "web/src/features/auth/complete-registration/index.tsx",
+        "web/src/features/auth/components/oauth-providers.tsx",
+        "web/src/features/auth/constants.ts",
+        "web/src/features/auth/hooks/use-auth-redirect.ts",
+        "web/src/features/auth/hooks/use-oauth-login.ts",
+        "web/src/features/auth/sign-in/components/user-auth-form.tsx",
+        "web/src/features/auth/sign-up/components/sign-up-form.tsx",
+        "web/src/features/auth/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts",
+        "web/src/lib/server-error-message.ts",
+        "web/src/routeTree.gen.ts",
+        "web/src/routes/(auth)/complete-registration.tsx",
+        "web/src/routes/(auth)/oauth.tsx",
+        "web/src/routes/oauth/$provider.tsx",
+        "web/src/stores/auth-store.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "登录代理与注册邀请码流程: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "b216dc9846f7478785b746c47b55aa917908be46",
+      "subject": "fix(auth): quote registration option key",
+      "preservationIds": [
+        "D13"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "model/option.go"
+      ],
+      "changed_paths": [
+        "model/option.go",
+        "model/option_registration_code_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "登录代理与注册邀请码流程: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "f18f240b2118709361bc97f713eeee436c03a747",
+      "subject": "fix(auth): localize login legal text",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/auth/components/__tests__/terms-footer-i18n.test.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "changed_paths": [
+        "web/src/components/__tests__/turnstile-layout.test.tsx",
+        "web/src/components/turnstile.tsx",
+        "web/src/features/auth/components/__tests__/terms-footer-i18n.test.tsx",
+        "web/src/features/auth/components/terms-footer.tsx",
+        "web/src/features/auth/forgot-password/components/forgot-password-form.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "登录代理与注册邀请码流程; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "5f03bb647f21b9e9895dfaa2c42cad984bdbcb92",
+      "subject": "fix(auth): translate remaining login labels",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "changed_paths": [
+        "web/src/components/__tests__/password-input-i18n.test.tsx",
+        "web/src/components/password-input.tsx",
+        "web/src/features/auth/components/__tests__/legal-consent-i18n.test.tsx",
+        "web/src/features/auth/components/legal-consent.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "登录代理与注册邀请码流程; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2913be5e3c254f6b1548797555771e8de90211ca",
+      "subject": "feat(relay): scrub \"you are codex\" from Codex compatibility requests",
+      "preservationIds": [
+        "D01"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/openai/codex_cleanup.go",
+        "relay/channel/openai/codex_cleanup_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/openai/codex_cleanup.go",
+        "relay/channel/openai/codex_cleanup_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "1b85a5d7ed8baa6f45ed193773c4130d52fe944f",
+      "subject": "fix(redemption): delete exhausted registration codes",
+      "preservationIds": [
+        "D20"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "model/redemption.go",
+        "model/redemption_test.go",
+        "web/src/features/redemption-codes/constants.ts",
+        "web/src/features/redemption-codes/lib/__tests__/status.test.ts"
+      ],
+      "changed_paths": [
+        "model/redemption.go",
+        "model/redemption_test.go",
+        "web/src/features/redemption-codes/constants.ts",
+        "web/src/features/redemption-codes/lib/__tests__/status.test.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "订阅兑换、注册码与 CSV 导出: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "597eb248e763f27986ba03729ff71ba212b7076f",
+      "subject": "fix(relay): enforce CodeBuddy upstream rules",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/codebuddy_cleanup.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/codex_cleanup.go",
+        "relay/channel/openai/codex_cleanup_test.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/codebuddy_cleanup.go",
+        "relay/channel/codebuddy_cleanup_test.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/codex_cleanup.go",
+        "relay/channel/openai/codex_cleanup_test.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "0613a24fe6804c22378f24eedec2f873fde028e0",
+      "subject": "chore: ignore WorkBuddy scratch files",
+      "preservationIds": [
+        "D25"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        ".gitignore"
+      ],
+      "changed_paths": [
+        ".gitignore"
+      ],
+      "mapping_review": "verified",
+      "rationale": "版本构建、工作树与项目治理: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "25227b3ef7b666665a738d6eeaa44f25abee181b",
+      "subject": "fix(auth): localize registration success message",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "changed_paths": [
+        "web/src/features/auth/complete-registration/__tests__/success-message-i18n.test.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "登录代理与注册邀请码流程; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "0b188deab70583ccd9c705c5fdd7d398612401ba",
+      "subject": "feat(channels): add floating editor windows",
+      "preservationIds": [
+        "D06"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/floating-window/__tests__/floating-window-store.test.ts",
+        "web/src/components/floating-window/__tests__/geometry.test.ts",
+        "web/src/components/floating-window/content-registry.tsx",
+        "web/src/components/floating-window/floating-window-frame.tsx",
+        "web/src/components/floating-window/floating-window-host.tsx",
+        "web/src/components/floating-window/geometry.ts",
+        "web/src/components/floating-window/index.ts",
+        "web/src/components/floating-window/types.ts",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/stores/floating-window-store.ts"
+      ],
+      "changed_paths": [
+        "web/src/components/floating-window/__tests__/floating-window-store.test.ts",
+        "web/src/components/floating-window/__tests__/geometry.test.ts",
+        "web/src/components/floating-window/content-registry.tsx",
+        "web/src/components/floating-window/floating-window-frame.tsx",
+        "web/src/components/floating-window/floating-window-host.tsx",
+        "web/src/components/floating-window/geometry.ts",
+        "web/src/components/floating-window/index.ts",
+        "web/src/components/floating-window/types.ts",
+        "web/src/components/layout/components/authenticated-layout.tsx",
+        "web/src/features/channels/components/channels-dialogs.tsx",
+        "web/src/features/channels/components/channels-primary-buttons.tsx",
+        "web/src/features/channels/components/channels-provider.tsx",
+        "web/src/features/channels/components/data-table-row-actions.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/hooks/use-channel-mutate-form.ts",
+        "web/src/stores/floating-window-store.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可拖拽、多开浮动窗口: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "cb268226c8fba975602fe7b473d5eeafda9fd706",
+      "subject": "feat(ui): animate floating windows",
+      "preservationIds": [
+        "D06"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/floating-window/__tests__/motion.test.ts",
+        "web/src/components/floating-window/floating-window-frame.tsx",
+        "web/src/components/floating-window/floating-window-host.tsx"
+      ],
+      "changed_paths": [
+        "web/src/components/floating-window/__tests__/motion.test.ts",
+        "web/src/components/floating-window/floating-window-frame.tsx",
+        "web/src/components/floating-window/floating-window-host.tsx",
+        "web/src/lib/motion.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可拖拽、多开浮动窗口: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "d7437d5ad2a6af79e1271261217c3c5cbc8d837c",
+      "subject": "fix(relay): update CodeBuddy request handling",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/codebuddy_cleanup.go",
+        "relay/channel/codebuddy_system_prompt.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/codebuddy_cleanup.go",
+        "relay/channel/codebuddy_cleanup_test.go",
+        "relay/channel/codebuddy_system_prompt.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "02877a70e2c5d3b4bc2730c4a35b214aea1bdc45",
+      "subject": "fix(channels): preserve floating editor channel context",
+      "preservationIds": [
+        "D06"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/dialogs/__tests__/fetch-models-dialog-channel.test.ts",
+        "web/src/features/channels/components/dialogs/fetch-models-channel.ts",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可拖拽、多开浮动窗口: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "caaa889e10f2b0c5dcb574e5ba518fcd26d5bf77",
+      "subject": "perf(relay): minimize CodeBuddy system prompt",
+      "preservationIds": [
+        "D03"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "relay/channel/codebuddy.go",
+        "relay/channel/codebuddy_cleanup_test.go",
+        "relay/channel/compatibility_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "CodeBuddy / WorkBuddy: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "dbcb72e9eeba51abf4660a27cee65a96dce2f8eb",
+      "subject": "feat(channels): add parameter override presets",
+      "preservationIds": [
+        "D05"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "渠道抓模、密钥和表单增强: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "5660262d7aecd38b36c2d3da8c371a6edd6a3264",
+      "subject": "fix(channels): avoid refetching models on dialog interactions",
+      "preservationIds": [
+        "D05"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "渠道抓模、密钥和表单增强: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "5f9d21439e4a6cebe628ce4698491e0200fdde00",
+      "subject": "feat(channels): add client identity version settings",
+      "preservationIds": [
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/client_identity_versions.go",
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go",
+        "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts"
+      ],
+      "changed_paths": [
+        "controller/channel.go",
+        "controller/client_identity_versions.go",
+        "model/channel.go",
+        "relay/channel/api_request.go",
+        "relay/channel/codebuddy.go",
+        "relay/channel/codex/adaptor.go",
+        "relay/channel/codex/adaptor_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relaykit/dto/channel_settings.go",
+        "relaykit/dto/channel_settings_test.go",
+        "router/channel-router.go",
+        "router/channel_router_test.go",
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go",
+        "service/codex_channel_models.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx",
+        "web/src/features/channels/components/drawers/sections/index.ts",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts",
+        "web/src/features/channels/lib/channel-form-errors.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "124e87dca59040ad23caf5ba633dd2361aedc9f9",
+      "subject": "fix(channels): restore client identity version loading",
+      "preservationIds": [
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go"
+      ],
+      "changed_paths": [
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go",
+        "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "364a251048a187d3772ae6c71dd15916f3170329",
+      "subject": "feat(theme): allow root to set global defaults",
+      "preservationIds": [
+        "D17"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/theme_compat_test.go",
+        "setting/theme_setting_test.go",
+        "web/src/context/direction-provider.tsx",
+        "web/src/context/layout-provider.tsx",
+        "web/src/context/theme-customization-provider.tsx",
+        "web/src/context/theme-provider.tsx",
+        "web/src/lib/__tests__/theme-customization.test.ts",
+        "web/src/lib/theme-customization.ts",
+        "web/src/stores/system-config-store.ts"
+      ],
+      "changed_paths": [
+        "controller/misc.go",
+        "controller/option.go",
+        "controller/theme_compat_test.go",
+        "model/option.go",
+        "setting/theme_setting.go",
+        "setting/theme_setting_test.go",
+        "web/src/components/config-drawer.tsx",
+        "web/src/components/layout/components/authenticated-layout.tsx",
+        "web/src/components/ui/sidebar.tsx",
+        "web/src/context/direction-provider.tsx",
+        "web/src/context/layout-provider.tsx",
+        "web/src/context/theme-customization-provider.tsx",
+        "web/src/context/theme-provider.tsx",
+        "web/src/hooks/use-system-config.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/lib/__tests__/theme-customization.test.ts",
+        "web/src/lib/theme-customization.ts",
+        "web/src/stores/system-config-store.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "全局主题与持久化迁移: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "210419c92c113b515ea756e5591ef3ea3a5f8b43",
+      "subject": "fix(theme): migrate legacy persisted config",
+      "preservationIds": [
+        "D17"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/stores/system-config-store.ts"
+      ],
+      "changed_paths": [
+        "web/src/stores/__tests__/system-config-store.test.ts",
+        "web/src/stores/system-config-store.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "全局主题与持久化迁移: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "37e6cfdba20d535e65bf6d3c11086bdb51c52e28",
+      "subject": "fix(theme): preserve saved preset styles",
+      "preservationIds": [
+        "D17"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/context/__tests__/theme-customization-provider.test.tsx",
+        "web/src/context/theme-customization-provider.tsx"
+      ],
+      "changed_paths": [
+        "web/src/context/__tests__/theme-customization-provider.test.tsx",
+        "web/src/context/theme-customization-provider.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "全局主题与持久化迁移: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "69ef817fa6ebbd4eac339822939aac66351733fd",
+      "subject": "feat(rankings): add availability and security boards",
+      "preservationIds": [
+        "D19"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "service/rankings_security_test.go",
+        "web/src/features/rankings/api.ts",
+        "web/src/features/rankings/components/__tests__/visibility.test.tsx",
+        "web/src/features/rankings/components/availability-section.tsx",
+        "web/src/features/rankings/components/index.ts",
+        "web/src/features/rankings/components/security-section.tsx",
+        "web/src/features/rankings/hooks/use-rankings.ts",
+        "web/src/features/rankings/index.tsx",
+        "web/src/features/rankings/lib/format.ts",
+        "web/src/features/rankings/types.ts"
+      ],
+      "changed_paths": [
+        "controller/rankings.go",
+        "model/usedata_rankings.go",
+        "model/user_auto_ban.go",
+        "pkg/perf_metrics/metrics.go",
+        "pkg/perf_metrics/metrics_test.go",
+        "router/api-router.go",
+        "service/rankings.go",
+        "service/rankings_security_test.go",
+        "web/src/features/rankings/api.ts",
+        "web/src/features/rankings/components/__tests__/visibility.test.tsx",
+        "web/src/features/rankings/components/availability-section.tsx",
+        "web/src/features/rankings/components/index.ts",
+        "web/src/features/rankings/components/security-section.tsx",
+        "web/src/features/rankings/hooks/use-rankings.ts",
+        "web/src/features/rankings/index.tsx",
+        "web/src/features/rankings/lib/format.ts",
+        "web/src/features/rankings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可用性/安全榜单及用量指标: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "a07aab95f5504398a13a2915264d221f7b5360c0",
+      "subject": "fix(rankings): handle missing recent availability data",
+      "preservationIds": [
+        "D19"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/rankings/components/__tests__/availability.test.tsx",
+        "web/src/features/rankings/components/availability-section.tsx"
+      ],
+      "changed_paths": [
+        "pkg/perf_metrics/metrics.go",
+        "pkg/perf_metrics/metrics_test.go",
+        "service/rankings.go",
+        "web/src/features/rankings/components/__tests__/availability.test.tsx",
+        "web/src/features/rankings/components/availability-section.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可用性/安全榜单及用量指标: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "47366a8c3240f52865b47d9381f951c2455b6839",
+      "subject": "fix(channels): support lightweight client identity templates",
+      "preservationIds": [
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/client_identity_versions.go",
+        "controller/client_identity_versions_test.go",
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go",
+        "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts"
+      ],
+      "changed_paths": [
+        "controller/channel.go",
+        "controller/channel_upstream_update_test.go",
+        "controller/client_identity_versions.go",
+        "controller/client_identity_versions_test.go",
+        "model/channel_settings_test.go",
+        "relay/channel/api_request.go",
+        "relay/channel/api_request_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relaykit/dto/channel_settings.go",
+        "relaykit/dto/channel_settings_test.go",
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "db1c884dad73592779fe6e316aca22dcbf019974",
+      "subject": "fix(web): improve numeric input controls",
+      "preservationIds": [
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/ui/__tests__/input-number.test.tsx",
+        "web/src/lib/__tests__/number-input.test.ts"
+      ],
+      "changed_paths": [
+        "web/src/components/ui/__tests__/input-number.test.tsx",
+        "web/src/components/ui/input.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/keys/components/api-keys-mutate-drawer.tsx",
+        "web/src/features/models/components/dialogs/create-deployment-drawer.tsx",
+        "web/src/features/models/components/dialogs/extend-deployment-dialog.tsx",
+        "web/src/features/playground/components/input/playground-parameter-panel.tsx",
+        "web/src/features/profile/components/tabs/notification-tab.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+        "web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx",
+        "web/src/features/system-settings/general/channel-affinity/index.tsx",
+        "web/src/features/system-settings/general/pricing-section.tsx",
+        "web/src/features/system-settings/general/quota-settings-section.tsx",
+        "web/src/features/system-settings/integrations/amount-discount-dialog.tsx",
+        "web/src/features/system-settings/integrations/waffo-settings-section.tsx",
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+        "web/src/features/system-settings/request-limits/auto-ban-section.tsx",
+        "web/src/features/system-settings/request-limits/rate-limit-dialog.tsx",
+        "web/src/features/system-settings/request-limits/rate-limit-section.tsx",
+        "web/src/features/system-settings/request-limits/token-limit-section.tsx",
+        "web/src/features/system-settings/request-limits/upstream-interception-section.tsx",
+        "web/src/features/system-settings/utils/numeric-field.ts",
+        "web/src/features/users/components/user-quota-dialog.tsx",
+        "web/src/features/wallet/components/dialogs/transfer-dialog.tsx",
+        "web/src/features/wallet/components/recharge-form-card.tsx",
+        "web/src/lib/__tests__/number-input.test.ts",
+        "web/src/lib/number-input.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "84dfc38cfb7ee8c2d74d4c39198e2f781df9b390",
+      "subject": "fix(channels): filter platform builds from default versions",
+      "preservationIds": [
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go"
+      ],
+      "changed_paths": [
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "4a6d5f1c9a3934f7453df27f1558660d1303dc65",
+      "subject": "fix(rankings): widen success rate trend",
+      "preservationIds": [
+        "D19"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/rankings/components/__tests__/availability.test.tsx",
+        "web/src/features/rankings/components/availability-section.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/rankings/components/__tests__/availability.test.tsx",
+        "web/src/features/rankings/components/availability-section.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可用性/安全榜单及用量指标: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "73b3c0c035cafa389de8055b19711a52be3126f3",
+      "subject": "fix(channels): enforce stable client identity versions",
+      "preservationIds": [
+        "D08"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go",
+        "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts"
+      ],
+      "changed_paths": [
+        "relaykit/dto/channel_settings.go",
+        "relaykit/dto/channel_settings_test.go",
+        "service/client_identity_versions.go",
+        "service/client_identity_versions_test.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx",
+        "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts",
+        "web/src/features/channels/lib/channel-form.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可配置客户端身份版本: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "911b74f62af5d4b01af5193fde3d40899411e480",
+      "subject": "fix(logging): enable error logs by default",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "common/init.go"
+      ],
+      "changed_paths": [
+        "README.en.md",
+        "README.fr.md",
+        "README.ja.md",
+        "README.md",
+        "README.zh_CN.md",
+        "README.zh_TW.md",
+        "common/error_log_test.go",
+        "common/init.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "f87bafd9530565a15c452616d03c6096b5437b25",
+      "subject": "feat(rate-limit): add per-user RPM limits",
+      "preservationIds": [
+        "D12"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/user_request_rate_limit_test.go",
+        "middleware/user-request-rate-limit.go",
+        "middleware/user_request_rate_limit_test.go",
+        "model/user_request_rate_limit_test.go",
+        "router/user_request_rate_limit_routes_test.go",
+        "setting/rate_limit.go"
+      ],
+      "changed_paths": [
+        "controller/option.go",
+        "controller/option_user_rate_limit_test.go",
+        "controller/user.go",
+        "controller/user_request_rate_limit_test.go",
+        "i18n/keys.go",
+        "i18n/locales/en.yaml",
+        "i18n/locales/zh-CN.yaml",
+        "i18n/locales/zh-TW.yaml",
+        "middleware/rate-limit.go",
+        "middleware/user-request-rate-limit.go",
+        "middleware/user_request_rate_limit_test.go",
+        "model/option.go",
+        "model/option_user_rate_limit_test.go",
+        "model/user.go",
+        "model/user_auth_cache.go",
+        "model/user_cache.go",
+        "model/user_request_rate_limit_test.go",
+        "router/relay-router.go",
+        "router/user_request_rate_limit_routes_test.go",
+        "router/video-router.go",
+        "setting/rate_limit.go",
+        "setting/rate_limit_test.go",
+        "web/src/features/system-settings/request-limits/rate-limit-section.tsx",
+        "web/src/features/system-settings/security/index.tsx",
+        "web/src/features/system-settings/security/section-registry.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/features/users/components/users-mutate-drawer.tsx",
+        "web/src/features/users/lib/__tests__/user-request-rate-limit.test.ts",
+        "web/src/features/users/lib/index.ts",
+        "web/src/features/users/lib/user-form.ts",
+        "web/src/features/users/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "每用户 RPM 与重试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "132c6b7b6f2a4bd86d4ee0cffa14a75ff1216cb9",
+      "subject": "feat(announcements): add public banner system",
+      "preservationIds": [
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/layout/components/public-announcement-banner.tsx",
+        "web/src/components/layout/components/public-header.tsx",
+        "web/src/components/layout/components/public-layout.tsx"
+      ],
+      "changed_paths": [
+        "setting/console_setting/validation.go",
+        "setting/console_setting/validation_test.go",
+        "web/src/components/layout/components/public-announcement-banner.tsx",
+        "web/src/components/layout/components/public-header.tsx",
+        "web/src/components/layout/components/public-layout.tsx",
+        "web/src/features/dashboard/types.ts",
+        "web/src/features/system-settings/content/announcements-section.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts",
+        "web/src/lib/announcement-utils.ts",
+        "web/src/styles/index.css"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2234e9ab879437378e9ad3d1c1d346670d83e89d",
+      "subject": "feat(announcements): separate public banner management",
+      "preservationIds": [
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "model/banner_migration_test.go",
+        "router/banner_router_test.go",
+        "web/src/components/layout/components/public-announcement-banner.tsx",
+        "web/src/features/banners/api.ts",
+        "web/src/features/banners/components/banner-form.tsx",
+        "web/src/features/banners/hooks/use-banners.ts",
+        "web/src/features/banners/index.ts",
+        "web/src/features/banners/lib/banner-schema.ts",
+        "web/src/features/banners/lib/banner-utils.ts",
+        "web/src/features/banners/types.ts"
+      ],
+      "changed_paths": [
+        "controller/audit.go",
+        "controller/banner.go",
+        "dto/banner.go",
+        "dto/banner_test.go",
+        "main.go",
+        "middleware/audit.go",
+        "model/banner.go",
+        "model/banner_migration.go",
+        "model/banner_migration_test.go",
+        "model/banner_test.go",
+        "model/main.go",
+        "router/api-router.go",
+        "router/banner-router.go",
+        "router/banner_router_test.go",
+        "web/src/components/layout/components/public-announcement-banner.tsx",
+        "web/src/features/banners/api.ts",
+        "web/src/features/banners/components/banner-form.tsx",
+        "web/src/features/banners/hooks/use-banners.ts",
+        "web/src/features/banners/index.ts",
+        "web/src/features/banners/lib/banner-schema.ts",
+        "web/src/features/banners/lib/banner-utils.ts",
+        "web/src/features/banners/types.ts",
+        "web/src/features/dashboard/types.ts",
+        "web/src/features/system-settings/content/announcements-section.tsx",
+        "web/src/features/system-settings/content/banners-section.tsx",
+        "web/src/features/system-settings/content/section-registry.tsx",
+        "web/src/hooks/use-notifications.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/lib/announcement-utils.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "cc7d656b75ecec4b1b420e297077dda123e93c73",
+      "subject": "fix(announcements): localize and theme public banners",
+      "preservationIds": [
+        "D18",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/layout/components/public-announcement-banner.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "changed_paths": [
+        "web/src/components/layout/components/public-announcement-banner.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "73aa7d056628f139c6e7b5ff0a56dcd1ed54be37",
+      "subject": "fix(web): prevent banner date control overlap",
+      "preservationIds": [
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx",
+        "web/src/features/banners/components/banner-form.tsx"
+      ],
+      "changed_paths": [
+        "web/src/components/datetime-picker.tsx",
+        "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx",
+        "web/src/features/banners/components/banner-form.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "a9625b86ec8daa3c39922ec6631f8f94d1de5bb6",
+      "subject": "fix(web): keep banner date controls readable",
+      "preservationIds": [
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx"
+      ],
+      "changed_paths": [
+        "web/src/components/datetime-picker.tsx",
+        "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "32e501f5395bfe11290f4c65d7eb6d2e221b1fc1",
+      "subject": "fix(i18n): translate banner and OAuth client messages",
+      "preservationIds": [
+        "D18",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "changed_paths": [
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "27bbf84f412ed49ac1e3686f14d235a8d9fb7bbf",
+      "subject": "feat(web): add animated sign-in background",
+      "preservationIds": [
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/auth/sign-in/index.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/auth/auth-layout.tsx",
+        "web/src/features/auth/components/__tests__/auth-login-background.test.tsx",
+        "web/src/features/auth/components/auth-login-background.tsx",
+        "web/src/features/auth/sign-in/index.tsx",
+        "web/src/styles/auth.css",
+        "web/src/styles/index.css"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2cc9a2ffca84f1240e238281d11015f1c21fac71",
+      "subject": "fix(web): refine sign-in dark and mobile layout",
+      "preservationIds": [
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/auth/components/__tests__/auth-login-layout.test.ts",
+        "web/src/features/auth/sign-in/index.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/auth/auth-layout.tsx",
+        "web/src/features/auth/components/__tests__/auth-login-layout.test.ts",
+        "web/src/features/auth/sign-in/index.tsx",
+        "web/src/styles/auth.css"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "bd02ab04b09660b90f39999a8bff0490a7301ae0",
+      "subject": "fix(security): harden sensitive-word auto-bans",
+      "preservationIds": [
+        "D11"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/relay.go",
+        "controller/relay_sensitive_test.go",
+        "service/auto_ban_test.go"
+      ],
+      "changed_paths": [
+        "controller/relay.go",
+        "controller/relay_sensitive_test.go",
+        "model/user_auto_ban.go",
+        "service/auto_ban.go",
+        "service/auto_ban_test.go",
+        "setting/auto_ban.go",
+        "setting/auto_ban_test.go",
+        "web/src/features/system-settings/request-limits/auto-ban-section.tsx",
+        "web/src/features/system-settings/request-limits/auto-ban-types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自动同步、上游拦截与安全封禁: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "d1516953e0edae68040cd3b8aa72137eb5bbaada",
+      "subject": "feat(claude): add configurable 1m context header",
+      "preservationIds": [
+        "D02"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "relay/channel/compatibility.go",
+        "relaykit/dto/channel_settings.go",
+        "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx"
+      ],
+      "changed_paths": [
+        "relay/channel/compatibility.go",
+        "relay/channel/compatibility_test.go",
+        "relaykit/dto/channel_settings.go",
+        "relaykit/dto/channel_settings_test.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx",
+        "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Claude Code 与 count_tokens: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2d35b249eb3dfbc7c102bb5e43107e61883b5d63",
+      "subject": "feat(checkin): add balance-based reward tiers",
+      "preservationIds": [
+        "D21"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "model/checkin.go",
+        "model/checkin_test.go",
+        "setting/operation_setting/checkin_setting.go",
+        "setting/operation_setting/checkin_setting_test.go",
+        "web/src/features/system-settings/general/__tests__/checkin-settings-section.test.tsx"
+      ],
+      "changed_paths": [
+        "model/checkin.go",
+        "model/checkin_test.go",
+        "model/option.go",
+        "setting/config/config.go",
+        "setting/operation_setting/checkin_setting.go",
+        "setting/operation_setting/checkin_setting_test.go",
+        "web/src/features/system-settings/billing/index.tsx",
+        "web/src/features/system-settings/billing/section-registry.tsx",
+        "web/src/features/system-settings/general/__tests__/checkin-settings-section.test.tsx",
+        "web/src/features/system-settings/general/checkin-settings-section.tsx",
+        "web/src/features/system-settings/hooks/use-update-option.ts",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "按余额分档签到奖励: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "624dae1a483c4a13d50b0a814c9a0ed26f008939",
+      "subject": "feat(channel): add upstream queue warmer",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go",
+        "controller/channel_queue_warmer.go",
+        "controller/channel_queue_warmer_test.go",
+        "model/channel_queue_test.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx",
+        "web/src/features/channels/components/drawers/sections/index.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_queue_warmer.go",
+        "controller/channel_queue_warmer_test.go",
+        "controller/channel_test_internal_test.go",
+        "controller/system_task_handlers.go",
+        "model/channel.go",
+        "model/channel_queue_test.go",
+        "model/named_lease.go",
+        "model/named_lease_test.go",
+        "model/system_task.go",
+        "relaykit/dto/channel_settings.go",
+        "router/channel-router.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx",
+        "web/src/features/channels/components/drawers/sections/index.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/system-info/components/system-tasks-panel.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "99cf9102be06433139b368315e759b0d314c2e16",
+      "subject": "fix(channel): polish queue warmer indicators",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/channel-card.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/channel-card.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "e7b478c8ed82cf7511b52fef243b8af0dc8d7c8a",
+      "subject": "feat(user): add private profile avatars",
+      "preservationIds": [
+        "D16"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/user_avatar.go",
+        "controller/user_avatar_test.go",
+        "service/avatar_storage.go",
+        "service/avatar_storage_test.go",
+        "web/src/components/__tests__/authenticated-avatar-image.test.tsx",
+        "web/src/components/authenticated-avatar-image.tsx",
+        "web/src/components/layout/components/mobile-drawer.tsx",
+        "web/src/components/profile-dropdown.tsx",
+        "web/src/features/profile/components/profile-avatar-control.tsx"
+      ],
+      "changed_paths": [
+        "controller/user.go",
+        "controller/user_avatar.go",
+        "controller/user_avatar_test.go",
+        "controller/user_manage_test.go",
+        "model/main.go",
+        "model/task_cas_test.go",
+        "model/user.go",
+        "model/user_authentication_test.go",
+        "model/user_avatar.go",
+        "model/user_avatar_test.go",
+        "router/api-router.go",
+        "service/avatar_image.go",
+        "service/avatar_image_test.go",
+        "service/avatar_storage.go",
+        "service/avatar_storage_test.go",
+        "web/src/components/__tests__/authenticated-avatar-image.test.tsx",
+        "web/src/components/authenticated-avatar-image.tsx",
+        "web/src/components/layout/components/mobile-drawer.tsx",
+        "web/src/components/profile-dropdown.tsx",
+        "web/src/features/profile/api.ts",
+        "web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx",
+        "web/src/features/profile/components/profile-avatar-control.tsx",
+        "web/src/features/profile/components/profile-header.tsx",
+        "web/src/features/profile/hooks/use-profile.ts",
+        "web/src/features/profile/index.tsx",
+        "web/src/features/profile/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/stores/auth-store.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "私有头像、OAuth 导入与缓存: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "8a0fb409b95ba1fad540d2b2ab09924eef5c2dd2",
+      "subject": "fix(profile): make avatar shape consistently round",
+      "preservationIds": [
+        "D16"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/profile/components/profile-avatar-control.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/profile/components/profile-avatar-control.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "私有头像、OAuth 导入与缓存: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "814d5dd17a92b81b0ac6e0252b621e1df6589aec",
+      "subject": "fix(logs): prevent date filter overflow",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx",
+        "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx",
+        "web/src/features/usage-logs/components/logs-filter-toolbar.tsx",
+        "web/src/features/usage-logs/components/task-logs-filter-bar.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx",
+        "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx",
+        "web/src/features/usage-logs/components/logs-filter-toolbar.tsx",
+        "web/src/features/usage-logs/components/task-logs-filter-bar.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "f0e4a51d3711463d135b5cb6bbfc7a431150f647",
+      "subject": "fix(logs): use shared calendar for date ranges",
+      "preservationIds": [
+        "D15"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx",
+        "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx",
+        "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "6914171387c5066cb24405759165cb8f333470d7",
+      "subject": "feat(channel): add upstream favicon icons",
+      "preservationIds": [
+        "D05"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/__tests__/channel-favicon.test.tsx",
+        "web/src/features/channels/components/__tests__/favicon-layout.test.tsx",
+        "web/src/features/channels/components/channel-card.tsx",
+        "web/src/features/channels/components/channel-favicon.tsx",
+        "web/src/features/channels/components/channels-columns.tsx",
+        "web/src/features/channels/lib/__tests__/channel-favicon.test.ts",
+        "web/src/features/channels/lib/channel-utils.ts"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/__tests__/channel-favicon.test.tsx",
+        "web/src/features/channels/components/__tests__/favicon-layout.test.tsx",
+        "web/src/features/channels/components/channel-card.tsx",
+        "web/src/features/channels/components/channel-favicon.tsx",
+        "web/src/features/channels/components/channels-columns.tsx",
+        "web/src/features/channels/lib/__tests__/channel-favicon.test.ts",
+        "web/src/features/channels/lib/channel-utils.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "渠道抓模、密钥和表单增强: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2c488a7929aae5625c909171aeedc0d61cc2c5cd",
+      "subject": "feat(user): show avatars in admin user list",
+      "preservationIds": [
+        "D16"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/user_avatar.go",
+        "controller/user_avatar_test.go"
+      ],
+      "changed_paths": [
+        "controller/user_avatar.go",
+        "controller/user_avatar_test.go",
+        "router/api-router.go",
+        "router/user_avatar_routes_test.go",
+        "web/src/features/users/components/__tests__/users-columns.test.tsx",
+        "web/src/features/users/components/users-columns.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "私有头像、OAuth 导入与缓存: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "fd2ee5f168287b0065cba2739ea254d66f4a149d",
+      "subject": "fix(ui): improve responsive dialogs",
+      "preservationIds": [
+        "D06",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/data-table/toolbar/bulk-actions.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/fetch-models-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/missing-models-confirmation-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/multi-key-manage-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/ollama-models-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/param-override-editor-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/upstream-update-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/missing-models-confirmation-dialog.tsx",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/dialogs/ollama-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/features/channels/components/dialogs/upstream-update-dialog.tsx"
+      ],
+      "changed_paths": [
+        "web/src/components/data-table/toolbar/bulk-actions.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/fetch-models-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/missing-models-confirmation-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/multi-key-manage-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/ollama-models-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/param-override-editor-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/upstream-update-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/missing-models-confirmation-dialog.tsx",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/dialogs/ollama-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/features/channels/components/dialogs/upstream-update-dialog.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "可拖拽、多开浮动窗口; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2c4b668ae7d99b92ba98876d93cf1cae6d2d4b0d",
+      "subject": "fix(ui): refine avatar actions and number spinners",
+      "preservationIds": [
+        "D16",
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/ui/__tests__/input-number.test.tsx",
+        "web/src/components/ui/input.tsx",
+        "web/src/features/profile/components/profile-avatar-control.tsx"
+      ],
+      "changed_paths": [
+        "web/src/components/ui/__tests__/input-number.test.tsx",
+        "web/src/components/ui/input.tsx",
+        "web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx",
+        "web/src/features/profile/components/profile-avatar-control.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "私有头像、OAuth 导入与缓存; 共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "ba5af058c215d4ae37674fc65f4095f241a12e88",
+      "subject": "fix(ui): tighten banner inputs and avatar actions",
+      "preservationIds": [
+        "D16",
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/ui/__tests__/input-number.test.tsx",
+        "web/src/components/ui/input.tsx",
+        "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx",
+        "web/src/features/profile/components/profile-avatar-control.tsx"
+      ],
+      "changed_paths": [
+        ".gitignore",
+        "web/src/components/ui/__tests__/input-number.test.tsx",
+        "web/src/components/ui/input.tsx",
+        "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx",
+        "web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx",
+        "web/src/features/profile/components/profile-avatar-control.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "私有头像、OAuth 导入与缓存; 公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "f4da9e4d97bba12b9fc19b59b087d5be059dcd03",
+      "subject": "fix(channel): preserve queue settings when disabled",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/lib/__tests__/channel-form-queue.test.ts",
+        "web/src/features/channels/lib/channel-form.ts"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/lib/__tests__/channel-form-queue.test.ts",
+        "web/src/features/channels/lib/channel-form.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "08fd19e972ed905ae62b54079d47cf33b6946ef9",
+      "subject": "feat(channel): support queue warmup system prompts",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "272e00b923593dd914cdb1ecc129129d149db20c",
+      "subject": "fix(channel): use system prompt for queue warmup",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go",
+        "web/src/features/channels/components/drawers/sections/channel-queue-section.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "f85bc7416b1fde9d7880150430d3958e8206f902",
+      "subject": "fix(channel): avoid duplicate codex warmup prompts",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending. Preserve the final reverted state at the pinned baseline, not the intermediate patch."
+    },
+    {
+      "sha": "9982d04291c7b7764b5387728dc50dadbde67c21",
+      "subject": "Revert \"fix(channel): avoid duplicate codex warmup prompts\"",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending. Preserve the final reverted state at the pinned baseline, not the intermediate patch."
+    },
+    {
+      "sha": "6d0989f7a82ac795b865d3016a28b9fb5961d4ed",
+      "subject": "fix(logs): show user avatars",
+      "preservationIds": [
+        "D15",
+        "D16"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/usage-logs/components/__tests__/user-avatar-visibility.test.tsx",
+        "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+        "web/src/features/usage-logs/components/columns/task-logs-columns.tsx",
+        "web/src/features/usage-logs/components/usage-logs-mobile-card.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/usage-logs/components/__tests__/user-avatar-visibility.test.tsx",
+        "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+        "web/src/features/usage-logs/components/columns/task-logs-columns.tsx",
+        "web/src/features/usage-logs/components/usage-logs-mobile-card.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "完整请求诊断与日志体验; 私有头像、OAuth 导入与缓存: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "fa08084da243e71dc196ecf1fe24acf92a52949b",
+      "subject": "fix(avatar): enable browser caching",
+      "preservationIds": [
+        "D16"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/user_avatar.go",
+        "controller/user_avatar_test.go",
+        "web/src/components/__tests__/authenticated-avatar-image.test.tsx",
+        "web/src/components/authenticated-avatar-image.tsx"
+      ],
+      "changed_paths": [
+        "controller/user_avatar.go",
+        "controller/user_avatar_test.go",
+        "router/api-router.go",
+        "web/src/components/__tests__/authenticated-avatar-image.test.tsx",
+        "web/src/components/authenticated-avatar-image.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "私有头像、OAuth 导入与缓存: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "76bf5c8a204e8bf9a55bed83c880e295f0fd3a04",
+      "subject": "feat(channel): add custom balance and check-in",
+      "preservationIds": [
+        "D10"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel_custom_balance.go",
+        "controller/channel_custom_balance_test.go",
+        "model/channel_custom_balance_test.go",
+        "service/channel_custom_balance.go",
+        "service/channel_custom_balance_test.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx",
+        "web/src/features/channels/lib/__tests__/custom-balance.test.ts"
+      ],
+      "changed_paths": [
+        "common/crypto.go",
+        "controller/channel_custom_balance.go",
+        "controller/channel_custom_balance_test.go",
+        "controller/system_task_handlers.go",
+        "model/channel.go",
+        "model/channel_custom_balance.go",
+        "model/channel_custom_balance_test.go",
+        "model/main.go",
+        "model/system_task.go",
+        "router/channel-router.go",
+        "router/channel_router_test.go",
+        "service/channel_custom_balance.go",
+        "service/channel_custom_balance_test.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/__tests__/channel-custom-balance-section.test.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx",
+        "web/src/features/channels/components/drawers/sections/index.ts",
+        "web/src/features/channels/lib/__tests__/custom-balance-api.test.ts",
+        "web/src/features/channels/lib/__tests__/custom-balance.test.ts",
+        "web/src/features/channels/lib/custom-balance.ts",
+        "web/src/features/channels/lib/index.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/fr.untranslated.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/vi.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自定义余额与自动签到: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "821c1eacae8be407b6e5e9f16d9e31861d57f879",
+      "subject": "fix(channel): align custom balance refresh and navigation",
+      "preservationIds": [
+        "D10"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel_custom_balance_test.go",
+        "service/channel_custom_balance.go",
+        "service/channel_custom_balance_test.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx"
+      ],
+      "changed_paths": [
+        "controller/channel-billing.go",
+        "controller/channel_custom_balance_test.go",
+        "service/channel_custom_balance.go",
+        "service/channel_custom_balance_test.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/__tests__/channel-custom-balance-section.test.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx",
+        "web/src/features/channels/lib/custom-balance.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自定义余额与自动签到: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "e18ab7145425e19b7cbea4263b33b86a6ef08a3c",
+      "subject": "fix(channel): simplify custom balance credentials",
+      "preservationIds": [
+        "D10"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/__tests__/channel-custom-balance-section.test.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自定义余额与自动签到: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "e3d87ab4b37f3121a7f6691a960e052cc46da4f2",
+      "subject": "fix(channel): save custom balance with channel",
+      "preservationIds": [
+        "D10"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/__tests__/channel-custom-balance-section.test.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自定义余额与自动签到: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "c0471d33322c735ad6911e63fc65d4ec2dd6f2e6",
+      "subject": "chore(build): unify date and commit versioning",
+      "preservationIds": [
+        "D25"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        ".github/workflows/release.yml",
+        "scripts/version.sh"
+      ],
+      "changed_paths": [
+        ".github/workflows/docker-image-branch.yml",
+        ".github/workflows/electron-build.yml",
+        ".github/workflows/release.yml",
+        "electron/build.sh",
+        "scripts/version.sh"
+      ],
+      "mapping_review": "verified",
+      "rationale": "版本构建、工作树与项目治理: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "c07c0ada3893d5443708dbecf4c5772193b3ff07",
+      "subject": "fix(build): resolve Windows worktree versions",
+      "preservationIds": [
+        "D25"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "scripts/version.sh"
+      ],
+      "changed_paths": [
+        "scripts/version.sh"
+      ],
+      "mapping_review": "verified",
+      "rationale": "版本构建、工作树与项目治理: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "bc747c8ae5fe32fe1e090acbe5cf49ece8b091aa",
+      "subject": "feat(channel): show automatic check-in indicator",
+      "preservationIds": [
+        "D10"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/components/channel-card.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/components/channel-card.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自定义余额与自动签到: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "ccfa5efe31907dea2657c8ff99ff4d818d0847e8",
+      "subject": "fix(settings): remove retry count cap",
+      "preservationIds": [
+        "D12"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/system-settings/models/routing-reliability-section.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/system-settings/models/routing-reliability-section.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "mapping_review": "verified",
+      "rationale": "每用户 RPM 与重试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "805f412d94207689b410ea0641f2e37e641c37eb",
+      "subject": "feat(channel): add Vercel AI Gateway adapter",
+      "preservationIds": [
+        "D04"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "constant/channel.go",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/__tests__/vercel-channel.test.ts",
+        "web/src/features/channels/lib/channel-type-config.ts",
+        "web/src/features/channels/lib/channel-utils.ts"
+      ],
+      "changed_paths": [
+        "common/api_type.go",
+        "common/endpoint_type.go",
+        "constant/api_type.go",
+        "constant/channel.go",
+        "controller/channel_test_internal_test.go",
+        "relay/channel/vercel/adaptor.go",
+        "relay/channel/vercel/constants.go",
+        "relay/channel/vercel/convert.go",
+        "relay/channel/vercel/dto.go",
+        "relay/channel/vercel/response.go",
+        "relay/channel/vercel/vercel_test.go",
+        "relay/common/relay_info.go",
+        "relay/relay_adaptor.go",
+        "web/scripts/sync-i18n.mjs",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/__tests__/vercel-channel.test.ts",
+        "web/src/features/channels/lib/channel-type-config.ts",
+        "web/src/features/channels/lib/channel-utils.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Vercel AI Gateway 渠道: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "c01f5f0411ea51489a989f3c69bf12a13d76f87a",
+      "subject": "fix(channel): allow ignoring balance-limit auto-ban",
+      "preservationIds": [
+        "D10"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel_custom_balance.go",
+        "controller/channel_custom_balance_test.go",
+        "service/channel_custom_balance.go",
+        "service/channel_custom_balance_test.go",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx",
+        "web/src/features/channels/lib/__tests__/custom-balance.test.ts"
+      ],
+      "changed_paths": [
+        "controller/channel-billing.go",
+        "controller/channel-test.go",
+        "controller/channel_custom_balance.go",
+        "controller/channel_custom_balance_test.go",
+        "controller/relay.go",
+        "model/channel_custom_balance.go",
+        "service/channel_custom_balance.go",
+        "service/channel_custom_balance_test.go",
+        "web/src/features/channels/components/drawers/sections/__tests__/channel-custom-balance-section.test.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx",
+        "web/src/features/channels/lib/__tests__/custom-balance-api.test.ts",
+        "web/src/features/channels/lib/__tests__/custom-balance.test.ts",
+        "web/src/features/channels/lib/custom-balance.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "自定义余额与自动签到: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "20d7259414f4480ce6a16b70c399886ab3b7ac69",
+      "subject": "fix(channel): align Codex queue warm-up payload",
+      "preservationIds": [
+        "D09"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go",
+        "relay/channel/codex/adaptor.go",
+        "relay/channel/codex/adaptor_test.go"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go",
+        "relay/channel/codex/adaptor.go",
+        "relay/channel/codex/adaptor_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "排队预热及系统提示词: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "039310f6ef078c6c1218d1980aba842bda5a779b",
+      "subject": "feat(auth): import OAuth provider avatars",
+      "preservationIds": [
+        "D14",
+        "D16"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/oauth.go",
+        "controller/oauth_avatar_test.go"
+      ],
+      "changed_paths": [
+        "controller/auth_flow_test.go",
+        "controller/oauth.go",
+        "controller/oauth_avatar.go",
+        "controller/oauth_avatar_test.go",
+        "controller/registration_code_test.go",
+        "controller/registration_completion.go",
+        "oauth/avatar_test.go",
+        "oauth/discord.go",
+        "oauth/generic.go",
+        "oauth/github.go",
+        "oauth/linuxdo.go",
+        "oauth/oidc.go",
+        "oauth/types.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "多 Passkey、自助资料与 OAuth 绑定; 私有头像、OAuth 导入与缓存: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "1a2fdea55cc08fbdf3a3d6c47cdea3e8e7ab565c",
+      "subject": "fix(auth): request LinuxDO profile scope",
+      "preservationIds": [
+        "D14",
+        "D16"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/lib/oauth.ts"
+      ],
+      "changed_paths": [
+        "web/src/lib/__tests__/oauth.test.ts",
+        "web/src/lib/oauth.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "多 Passkey、自助资料与 OAuth 绑定; 私有头像、OAuth 导入与缓存: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "e1e50997951f08e58c9cacbb1c45c2b059716c0d",
+      "subject": "feat(playground): add Bing web search",
+      "preservationIds": [
+        "D22"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_test.go",
+        "web/src/features/playground/components/input/playground-input-tools.tsx",
+        "web/src/features/playground/constants.ts",
+        "web/src/features/playground/hooks/use-chat-handler.ts",
+        "web/src/features/playground/hooks/use-stream-request.test.ts",
+        "web/src/features/playground/hooks/use-stream-request.ts",
+        "web/src/features/playground/lib/input/input-tool-utils.ts",
+        "web/src/features/playground/lib/message/message-streaming-utils.ts",
+        "web/src/features/playground/lib/storage/storage-schema.ts",
+        "web/src/features/playground/lib/streaming/__tests__/payload-builder.test.ts",
+        "web/src/features/playground/lib/streaming/__tests__/stream-utils.test.ts",
+        "web/src/features/playground/lib/streaming/payload-builder.ts",
+        "web/src/features/playground/lib/streaming/stream-utils.ts",
+        "web/src/features/playground/types.ts"
+      ],
+      "changed_paths": [
+        "constant/context_key.go",
+        "controller/playground.go",
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_test.go",
+        "pkg/bingsearch/search.go",
+        "pkg/bingsearch/search_test.go",
+        "service/text_quota.go",
+        "service/text_quota_test.go",
+        "web/src/features/playground/components/input/playground-input-tools.tsx",
+        "web/src/features/playground/constants.ts",
+        "web/src/features/playground/hooks/use-chat-handler.ts",
+        "web/src/features/playground/hooks/use-stream-request.test.ts",
+        "web/src/features/playground/hooks/use-stream-request.ts",
+        "web/src/features/playground/lib/input/input-tool-utils.ts",
+        "web/src/features/playground/lib/message/message-streaming-utils.ts",
+        "web/src/features/playground/lib/storage/storage-schema.ts",
+        "web/src/features/playground/lib/streaming/__tests__/payload-builder.test.ts",
+        "web/src/features/playground/lib/streaming/__tests__/stream-utils.test.ts",
+        "web/src/features/playground/lib/streaming/payload-builder.ts",
+        "web/src/features/playground/lib/streaming/stream-utils.ts",
+        "web/src/features/playground/types.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "聊天、Bing 搜索与批量工具调用: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "bed94d792d34112204f872decba22d0c01fb0a9d",
+      "subject": "fix(ui): stabilize mobile header layout",
+      "preservationIds": [
+        "D18"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/components/layout/components/__tests__/header-layout.test.tsx",
+        "web/src/components/layout/components/header.tsx"
+      ],
+      "changed_paths": [
+        "web/src/components/layout/components/__tests__/header-layout.test.tsx",
+        "web/src/components/layout/components/header.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "公开公告与登录/移动界面: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "9c1d4e3caf6dc5bbbb511cdb468303d454e0e5d1",
+      "subject": "fix(playground): prevent sending before history load",
+      "preservationIds": [
+        "D22"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/playground_web_search_test.go",
+        "web/src/features/playground/hooks/use-playground-conversation.ts",
+        "web/src/features/playground/index.tsx"
+      ],
+      "changed_paths": [
+        "controller/playground_web_search_test.go",
+        "web/src/features/playground/hooks/use-playground-conversation.ts",
+        "web/src/features/playground/index.tsx"
+      ],
+      "mapping_review": "verified",
+      "rationale": "聊天、Bing 搜索与批量工具调用: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "8cdc84f80a8f51ae00bec7b64ded12626cbe40c8",
+      "subject": "fix(codex): align compatibility channel test requests",
+      "preservationIds": [
+        "D01",
+        "D07"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_internal_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility.go",
+        "relay/channel/openai/compatibility_test.go"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_queue_warmer_test.go",
+        "controller/channel_test_internal_test.go",
+        "relay/channel/compatibility.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/compatibility.go",
+        "relay/channel/openai/compatibility_test.go",
+        "relay/codebuddy_responses_test.go",
+        "relay/common/relay_info.go",
+        "relay/responses_handler.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "Codex 兼容渠道; 渠道测试模式和能力诊断: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "e8e33b71b26a85f8ef4f4533f931163f1974f0f5",
+      "subject": "feat(playground): add image drawing workspace",
+      "preservationIds": [
+        "D23"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "docs/playground-drawing.md",
+        "middleware/playground_images_test.go",
+        "relay/playground_images_test.go",
+        "router/relay-router.go",
+        "web/src/features/playground/drawing/__tests__/api.test.ts",
+        "web/src/features/playground/drawing/__tests__/setup.ts",
+        "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+        "web/src/features/playground/drawing/api.ts",
+        "web/src/features/playground/drawing/components/CanvasToolbar.tsx",
+        "web/src/features/playground/drawing/components/CanvasViewportControls.tsx",
+        "web/src/features/playground/drawing/components/DrawingSettings.tsx",
+        "web/src/features/playground/drawing/components/DrawingWorkspace.tsx",
+        "web/src/features/playground/drawing/components/ImageCanvasNode.tsx",
+        "web/src/features/playground/drawing/components/ImageParameterFields.tsx",
+        "web/src/features/playground/drawing/components/ImagePreview.tsx",
+        "web/src/features/playground/drawing/components/MaskEditor.tsx",
+        "web/src/features/playground/drawing/components/ReferenceImages.tsx",
+        "web/src/features/playground/drawing/components/__tests__/image-node.test.tsx",
+        "web/src/features/playground/drawing/components/__tests__/mask.test.tsx",
+        "web/src/features/playground/drawing/hooks/__tests__/generation.test.tsx",
+        "web/src/features/playground/drawing/hooks/__tests__/settings-and-persistence.test.tsx",
+        "web/src/features/playground/drawing/hooks/use-canvas-files.ts",
+        "web/src/features/playground/drawing/hooks/use-drawing-persistence.ts",
+        "web/src/features/playground/drawing/hooks/use-image-generation.ts",
+        "web/src/features/playground/drawing/hooks/use-image-options.ts",
+        "web/src/features/playground/drawing/index.tsx",
+        "web/src/features/playground/drawing/lib/__tests__/canvas-document.test.ts",
+        "web/src/features/playground/drawing/lib/__tests__/image-settings.test.ts",
+        "web/src/features/playground/drawing/lib/__tests__/image-stream.test.ts",
+        "web/src/features/playground/drawing/lib/canvas-document.ts",
+        "web/src/features/playground/drawing/lib/canvas-storage.ts",
+        "web/src/features/playground/drawing/lib/image-assets.ts",
+        "web/src/features/playground/drawing/lib/image-settings.ts",
+        "web/src/features/playground/drawing/lib/image-stream.ts",
+        "web/src/features/playground/drawing/types.ts",
+        "web/src/stores/drawing-store.ts"
+      ],
+      "changed_paths": [
+        "controller/playground.go",
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_test.go",
+        "docs/playground-drawing.md",
+        "middleware/distributor.go",
+        "middleware/playground_images_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/channel/openai/playground_image_edit_test.go",
+        "relay/constant/relay_mode.go",
+        "relay/image_handler.go",
+        "relay/playground_images_test.go",
+        "router/relay-router.go",
+        "web/bun.lock",
+        "web/package.json",
+        "web/src/features/playground/drawing/__tests__/api.test.ts",
+        "web/src/features/playground/drawing/__tests__/setup.ts",
+        "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+        "web/src/features/playground/drawing/api.ts",
+        "web/src/features/playground/drawing/components/CanvasToolbar.tsx",
+        "web/src/features/playground/drawing/components/CanvasViewportControls.tsx",
+        "web/src/features/playground/drawing/components/DrawingSettings.tsx",
+        "web/src/features/playground/drawing/components/DrawingWorkspace.tsx",
+        "web/src/features/playground/drawing/components/ImageCanvasNode.tsx",
+        "web/src/features/playground/drawing/components/ImageParameterFields.tsx",
+        "web/src/features/playground/drawing/components/ImagePreview.tsx",
+        "web/src/features/playground/drawing/components/MaskEditor.tsx",
+        "web/src/features/playground/drawing/components/ReferenceImages.tsx",
+        "web/src/features/playground/drawing/components/__tests__/image-node.test.tsx",
+        "web/src/features/playground/drawing/components/__tests__/mask.test.tsx",
+        "web/src/features/playground/drawing/hooks/__tests__/generation.test.tsx",
+        "web/src/features/playground/drawing/hooks/__tests__/settings-and-persistence.test.tsx",
+        "web/src/features/playground/drawing/hooks/use-canvas-files.ts",
+        "web/src/features/playground/drawing/hooks/use-drawing-persistence.ts",
+        "web/src/features/playground/drawing/hooks/use-image-generation.ts",
+        "web/src/features/playground/drawing/hooks/use-image-options.ts",
+        "web/src/features/playground/drawing/index.tsx",
+        "web/src/features/playground/drawing/lib/__tests__/canvas-document.test.ts",
+        "web/src/features/playground/drawing/lib/__tests__/image-settings.test.ts",
+        "web/src/features/playground/drawing/lib/__tests__/image-stream.test.ts",
+        "web/src/features/playground/drawing/lib/canvas-document.ts",
+        "web/src/features/playground/drawing/lib/canvas-storage.ts",
+        "web/src/features/playground/drawing/lib/image-assets.ts",
+        "web/src/features/playground/drawing/lib/image-settings.ts",
+        "web/src/features/playground/drawing/lib/image-stream.ts",
+        "web/src/features/playground/drawing/types.ts",
+        "web/src/hooks/use-sidebar-config.ts",
+        "web/src/hooks/use-sidebar-data.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/_reports/ja.untranslated.json",
+        "web/src/i18n/locales/_reports/ru.untranslated.json",
+        "web/src/i18n/locales/_reports/zh.untranslated.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts",
+        "web/src/routeTree.gen.ts",
+        "web/src/routes/_authenticated/playground/chat.tsx",
+        "web/src/routes/_authenticated/playground/drawing.tsx",
+        "web/src/routes/_authenticated/playground/index.tsx",
+        "web/src/routes/_authenticated/playground/route.tsx",
+        "web/src/stores/drawing-store.ts",
+        "web/vitest.drawing.config.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "绘图画布、持久化与图片入口: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "ab0261dcc9d99110f011fc60b73d418c8f04c7a5",
+      "subject": "fix(playground): harden web search responses",
+      "preservationIds": [
+        "D22"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_test.go"
+      ],
+      "changed_paths": [
+        "controller/playground.go",
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "聊天、Bing 搜索与批量工具调用: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "480cba740b9a52c394c5eb1f6b445c84dde0c663",
+      "subject": "fix(playground): improve reasoning and stream errors",
+      "preservationIds": [
+        "D22"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/playground/components/input/__tests__/reasoning-effort.test.tsx",
+        "web/src/features/playground/components/input/playground-parameter-panel.tsx",
+        "web/src/features/playground/components/input/reasoning-effort-control.tsx",
+        "web/src/features/playground/constants.ts",
+        "web/src/features/playground/hooks/__tests__/stream-errors.test.ts",
+        "web/src/features/playground/hooks/use-stream-request.ts",
+        "web/src/features/playground/lib/parameters/__tests__/reasoning-effort.test.ts",
+        "web/src/features/playground/lib/parameters/playground-parameters.ts",
+        "web/src/features/playground/lib/storage/storage-schema.ts",
+        "web/src/features/playground/lib/streaming/__tests__/payload-builder.test.ts",
+        "web/src/features/playground/lib/streaming/__tests__/request-errors.test.ts",
+        "web/src/features/playground/lib/streaming/__tests__/stream-utils.test.ts",
+        "web/src/features/playground/lib/streaming/payload-builder.ts",
+        "web/src/features/playground/lib/streaming/request-error-utils.ts",
+        "web/src/features/playground/lib/streaming/stream-utils.ts",
+        "web/src/features/playground/types.ts"
+      ],
+      "changed_paths": [
+        "web/package.json",
+        "web/src/features/playground/components/input/__tests__/reasoning-effort.test.tsx",
+        "web/src/features/playground/components/input/playground-parameter-panel.tsx",
+        "web/src/features/playground/components/input/reasoning-effort-control.tsx",
+        "web/src/features/playground/constants.ts",
+        "web/src/features/playground/hooks/__tests__/stream-errors.test.ts",
+        "web/src/features/playground/hooks/use-stream-request.ts",
+        "web/src/features/playground/lib/parameters/__tests__/reasoning-effort.test.ts",
+        "web/src/features/playground/lib/parameters/playground-parameters.ts",
+        "web/src/features/playground/lib/storage/storage-schema.ts",
+        "web/src/features/playground/lib/streaming/__tests__/payload-builder.test.ts",
+        "web/src/features/playground/lib/streaming/__tests__/request-errors.test.ts",
+        "web/src/features/playground/lib/streaming/__tests__/stream-utils.test.ts",
+        "web/src/features/playground/lib/streaming/payload-builder.ts",
+        "web/src/features/playground/lib/streaming/request-error-utils.ts",
+        "web/src/features/playground/lib/streaming/stream-utils.ts",
+        "web/src/features/playground/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "聊天、Bing 搜索与批量工具调用: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "e39518faa128f043723300131b7aa6aabe24910f",
+      "subject": "feat(channel-test): add capability diagnostics",
+      "preservationIds": [
+        "D07"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_diagnostics.go",
+        "controller/channel_test_diagnostics_test.go",
+        "controller/channel_test_probe_relay_test.go",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-interactions.test.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx"
+      ],
+      "changed_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_diagnostics.go",
+        "controller/channel_test_diagnostics_test.go",
+        "controller/channel_test_probe.go",
+        "controller/channel_test_probe_relay_test.go",
+        "web/package.json",
+        "web/src/features/channels/__tests__/channel-test-fixture.tsx",
+        "web/src/features/channels/__tests__/channel-test-harness.tsx",
+        "web/src/features/channels/__tests__/channel-test-setup.ts",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-interactions.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-preview.test.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-controls.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-matrix.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-preview.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-result.tsx",
+        "web/src/features/channels/hooks/use-channel-probes.ts",
+        "web/src/features/channels/lib/__tests__/channel-test-configuration.test.ts",
+        "web/src/features/channels/lib/__tests__/channel-test-preview.test.ts",
+        "web/src/features/channels/lib/channel-test-preview.ts",
+        "web/src/features/channels/lib/channel-test.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts",
+        "web/vitest.channels.config.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "渠道测试模式和能力诊断: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "99f18c18f4a478d4a78b619099d0f1d90409698c",
+      "subject": "test(playground): add vitest workspace config",
+      "preservationIds": [
+        "D24"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/vitest.playground.config.ts"
+      ],
+      "changed_paths": [
+        "web/vitest.playground.config.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "共享控件、七语翻译与测试配置: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "2416765c3ff4992c0eebbc1f24ba875c18dffb84",
+      "subject": "fix(playground): improve drawing retries and progress",
+      "preservationIds": [
+        "D23"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/playground/drawing/__tests__/connections.test.tsx",
+        "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+        "web/src/features/playground/drawing/components/DrawingWorkspace.tsx",
+        "web/src/features/playground/drawing/components/ImageCanvasNode.tsx",
+        "web/src/features/playground/drawing/components/ImageGenerationProgress.tsx",
+        "web/src/features/playground/drawing/components/__tests__/generation-progress.test.tsx",
+        "web/src/features/playground/drawing/components/__tests__/image-node.test.tsx",
+        "web/src/features/playground/drawing/context/image-retry-context.ts",
+        "web/src/features/playground/drawing/hooks/__tests__/generation.test.tsx",
+        "web/src/features/playground/drawing/hooks/__tests__/retry.test.tsx",
+        "web/src/features/playground/drawing/hooks/use-image-generation.ts",
+        "web/src/features/playground/drawing/hooks/use-reference-connections.ts",
+        "web/src/features/playground/drawing/lib/__tests__/reference-connections.test.ts",
+        "web/src/features/playground/drawing/lib/canvas-document.ts",
+        "web/src/features/playground/drawing/lib/reference-connections.ts",
+        "web/src/features/playground/drawing/types.ts",
+        "web/src/stores/drawing-store.ts"
+      ],
+      "changed_paths": [
+        "web/src/features/playground/drawing/__tests__/connections.test.tsx",
+        "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+        "web/src/features/playground/drawing/components/DrawingWorkspace.tsx",
+        "web/src/features/playground/drawing/components/ImageCanvasNode.tsx",
+        "web/src/features/playground/drawing/components/ImageGenerationProgress.tsx",
+        "web/src/features/playground/drawing/components/__tests__/generation-progress.test.tsx",
+        "web/src/features/playground/drawing/components/__tests__/image-node.test.tsx",
+        "web/src/features/playground/drawing/context/image-retry-context.ts",
+        "web/src/features/playground/drawing/hooks/__tests__/generation.test.tsx",
+        "web/src/features/playground/drawing/hooks/__tests__/retry.test.tsx",
+        "web/src/features/playground/drawing/hooks/use-image-generation.ts",
+        "web/src/features/playground/drawing/hooks/use-reference-connections.ts",
+        "web/src/features/playground/drawing/lib/__tests__/reference-connections.test.ts",
+        "web/src/features/playground/drawing/lib/canvas-document.ts",
+        "web/src/features/playground/drawing/lib/reference-connections.ts",
+        "web/src/features/playground/drawing/types.ts",
+        "web/src/stores/drawing-store.ts",
+        "web/src/styles/index.css"
+      ],
+      "mapping_review": "verified",
+      "rationale": "绘图画布、持久化与图片入口: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "cbc4d809aa6d4679f24becaa5153259af61bf51d",
+      "subject": "fix(playground): remove web search round cap",
+      "preservationIds": [
+        "D22"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_test.go"
+      ],
+      "changed_paths": [
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_test.go",
+        "service/text_quota_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "聊天、Bing 搜索与批量工具调用: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "c0ee46798f3182a8658bea57133596e4f13b14f1",
+      "subject": "feat(channels): improve model fetching workflow",
+      "preservationIds": [
+        "D05"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/channels/__tests__/fetch-models-fixtures.tsx",
+        "web/src/features/channels/__tests__/fetch-models-lifecycle.test.tsx",
+        "web/src/features/channels/__tests__/fetch-models-selection.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/fetch-models-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-controls.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-filters.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-group.tsx",
+        "web/src/features/channels/hooks/use-fetch-models.ts"
+      ],
+      "changed_paths": [
+        "web/src/features/channels/__tests__/fetch-models-fixtures.tsx",
+        "web/src/features/channels/__tests__/fetch-models-lifecycle.test.tsx",
+        "web/src/features/channels/__tests__/fetch-models-selection.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/channel-test-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/__tests__/fetch-models-dialog-layout.test.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-controls.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-filters.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-group.tsx",
+        "web/src/features/channels/hooks/use-fetch-models.ts",
+        "web/src/features/system-settings/models/__tests__/channel-test-section.test.tsx",
+        "web/src/features/system-settings/models/channel-test-section.tsx",
+        "web/src/features/usage-logs/components/model-badge.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/lib/__tests__/model-classification.test.ts",
+        "web/src/lib/model-classification.ts",
+        "web/src/stores/__tests__/fetch-model-preferences.test.ts",
+        "web/src/stores/fetch-model-preferences-store.ts",
+        "web/vitest.channels.config.ts"
+      ],
+      "mapping_review": "verified",
+      "rationale": "渠道抓模、密钥和表单增强: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "9befcf1e6a5f9a7149c437f3852bc544c856997e",
+      "subject": "fix(playground): handle batched web searches",
+      "preservationIds": [
+        "D22"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_batch_test.go"
+      ],
+      "changed_paths": [
+        "controller/playground_web_search.go",
+        "controller/playground_web_search_batch_test.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "聊天、Bing 搜索与批量工具调用: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "208f7c91e2a7abc5d9dab4b02de84ba5c2d2213f",
+      "subject": "fix(playground): preserve drawing viewport and theme",
+      "preservationIds": [
+        "D23"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+        "web/src/features/playground/drawing/components/DrawingWorkspace.tsx",
+        "web/src/features/playground/drawing/components/ImageCanvasNode.tsx"
+      ],
+      "changed_paths": [
+        "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+        "web/src/features/playground/drawing/components/DrawingWorkspace.tsx",
+        "web/src/features/playground/drawing/components/ImageCanvasNode.tsx",
+        "web/src/styles/drawing.css"
+      ],
+      "mapping_review": "verified",
+      "rationale": "绘图画布、持久化与图片入口: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    },
+    {
+      "sha": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+      "subject": "fix(playground): omit unsupported search n parameter",
+      "preservationIds": [
+        "D22"
+      ],
+      "paths_match_inventory": true,
+      "matched_paths": [
+        "controller/playground_web_search.go"
+      ],
+      "changed_paths": [
+        "controller/playground_web_search.go"
+      ],
+      "mapping_review": "verified",
+      "rationale": "聊天、Bing 搜索与批量工具调用: reviewed commit subject and actual changed paths; functional acceptance remains pending."
+    }
+  ]
+}

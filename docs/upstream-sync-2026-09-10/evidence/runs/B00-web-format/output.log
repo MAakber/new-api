@@ -1,0 +1,10 @@
+$ node scripts/format-with-protected-headers.mjs --check
+Finished in 898ms on 1231 files using 16 threads.
+Format issues found in protected-header-safe check:
+scripts\add-copyright.mjs
+scripts\format-with-protected-headers.mjs
+scripts\sync-i18n.mjs
+src\features\usage-logs\components\dialogs\details-dialog.tsx
+src\features\usage-logs\components\usage-logs-mobile-card.tsx
+src\features\usage-logs\components\__tests__\user-avatar-visibility.test.tsx
+error: script "format:check" exited with code 1

@@ -1,0 +1,35 @@
+$ node scripts/add-copyright.mjs --check
+copyright: checked 1201, added 6, updated 25, skipped generated 1, skipped third-party 4
+copyright: headers need to be updated in:
+- src/components/auto-sync-status-strip.tsx
+- src/components/floating-window/types.ts
+- src/components/layout/components/public-announcement-banner.tsx
+- src/features/auth/components/auth-login-background.tsx
+- src/features/banners/api.ts
+- src/features/banners/components/banner-form.tsx
+- src/features/banners/hooks/use-banners.ts
+- src/features/banners/index.ts
+- src/features/banners/lib/banner-schema.ts
+- src/features/banners/lib/banner-utils.ts
+- src/features/banners/types.ts
+- src/features/channels/components/dialogs/__tests__/channel-test-preview.test.tsx
+- src/features/channels/components/dialogs/channel-test-matrix.tsx
+- src/features/channels/components/dialogs/channel-test-preview.tsx
+- src/features/channels/components/dialogs/channel-test-result.tsx
+- src/features/channels/components/drawers/sections/__tests__/channel-custom-balance-section.test.tsx
+- src/features/channels/hooks/use-channel-probes.ts
+- src/features/channels/lib/__tests__/channel-test-preview.test.ts
+- src/features/channels/lib/__tests__/custom-balance-api.test.ts
+- src/features/channels/lib/channel-field-update.ts
+- src/features/channels/lib/channel-test-preview.ts
+- src/features/channels/lib/channel-test.ts
+- src/features/models/components/model-auto-sync-control.tsx
+- src/features/system-settings/content/announcements-section.tsx
+- src/features/system-settings/content/banners-section.tsx
+- src/features/system-settings/models/auto-price-sync-control.tsx
+- src/features/system-settings/request-limits/auto-ban-types.ts
+- src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx
+- src/lib/number-input.ts
+- src/styles/auth.css
+- src/types/auto-sync.ts
+error: script "copyright:check" exited with code 1

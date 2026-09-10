@@ -15,7 +15,10 @@
     "sourcePaths": [
       "constant/channel.go",
       "relay/channel/openai",
-      "relay/channel/api_request.go"
+      "relay/channel/api_request.go",
+      "relaykit/relayconvert/internal/oai_responses",
+      "relay/chat_completions_via_responses.go",
+      "controller/relay.go"
     ],
     "existingTests": [
       "relay/channel/api_request_test.go",
@@ -25,7 +28,7 @@
       "61 的既有含义不变；客户端身份、请求整理、会话标识可连续使用",
       "Responses 图片、工具、多轮、无 Content-Type 流及结束事件不回退"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -45,7 +48,10 @@
     "sourcePaths": [
       "router/relay-router.go",
       "relay/channel/claude",
-      "relay/channel/api_request.go"
+      "relay/channel/api_request.go",
+      "relay/channel/compatibility.go",
+      "relaykit/dto/channel_settings.go",
+      "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx"
     ],
     "existingTests": [
       "relay/channel/api_request_test.go",
@@ -55,7 +61,7 @@
       "62 的既有含义不变；/v1/messages/count_tokens 可用",
       "客户端 headers、beta 配置、1m context 开关及工具/思考内容按现有契约处理"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -84,7 +90,14 @@
     "sourcePaths": [
       "constant/channel.go",
       "relay/channel/api_request.go",
-      "web/src/assets/custom/icon-codebuddy.tsx"
+      "web/src/assets/custom/icon-codebuddy.tsx",
+      "relay/channel/codebuddy.go",
+      "relay/channel/codebuddy_cleanup.go",
+      "relay/channel/codebuddy_system_prompt.go",
+      "relay/channel/openai",
+      "relay/responses_handler.go",
+      "controller/channel_upstream_update_test.go",
+      "relay/channel/compatibility_test.go"
     ],
     "existingTests": [
       "relay/channel/api_request_test.go",
@@ -94,7 +107,7 @@
       "63 保留；请求身份、system 规则、会话续接及 compact 兼容",
       "Responses 经 Chat 转换、DONE 流帧、图片与工具语义不丢失"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -119,7 +132,7 @@
       "64 保留；前后端类型、URL、鉴权及模型分发一致",
       "生成、流式、错误与额度按既有支持范围回归"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -152,7 +165,7 @@
       "保留追加/多密钥、分类抓模、多选同步、偏好保存和缺失模型确认",
       "弹窗交互不重复抓模，图标、参数预设及其他字段保存不互相覆盖"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -183,7 +196,7 @@
       "同一功能可同时打开独立实例，instance ID、form 状态与 channel ID 不串台",
       "拖拽边界、激活层级、关闭、动画、滚动、键盘及移动布局有效"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -214,7 +227,7 @@
       "scheduled_all/passive_recovery、Codex 测试请求及诊断内容保留",
       "新并发/自动禁用模式兼容队列、取消、错误与现有 UI 预览"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -248,7 +261,7 @@
       "配置读取、稳定版本筛选、轻量身份模板、渠道覆盖正确",
       "版本清单异常有现有降级行为，不污染其他渠道身份"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -271,7 +284,9 @@
     ],
     "sourcePaths": [
       "controller/channel_queue_warmer.go",
-      "web/src/features/channels"
+      "web/src/features/channels",
+      "controller/channel-test.go",
+      "relay/channel/codex"
     ],
     "existingTests": [
       "controller/channel_queue_warmer_test.go",
@@ -282,7 +297,7 @@
       "禁用预热不丢保存值，系统提示词和 Codex payload 遵循当前最终状态",
       "队列/指标/重试/取消有效；保留已 revert 后的行为，不复活撤回补丁"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -303,7 +318,10 @@
     ],
     "sourcePaths": [
       "controller/channel_custom_balance.go",
-      "service/channel_custom_balance.go"
+      "service/channel_custom_balance.go",
+      "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+      "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx",
+      "web/src/features/channels/components/channel-card.tsx"
     ],
     "existingTests": [
       "controller/channel_custom_balance_test.go",
@@ -315,7 +333,7 @@
       "余额凭据、刷新、导航、随渠道保存与签到指示保留",
       "余额限制自动封禁的忽略设置可用，未编辑字段不会被清零"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -350,7 +368,7 @@
       "同步触发、快照、拦截和配置持久化不回退",
       "敏感词/UA 限制、临时及永久封禁、提示与审计仍正确"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -367,7 +385,8 @@
     ],
     "sourcePaths": [
       "setting/rate_limit.go",
-      "middleware/user-request-rate-limit.go"
+      "middleware/user-request-rate-limit.go",
+      "web/src/features/system-settings/models/routing-reliability-section.tsx"
     ],
     "existingTests": [
       "controller/user_request_rate_limit_test.go",
@@ -379,7 +398,7 @@
       "用户级 RPM 与现有模型/分组/令牌限流叠加正确",
       "新自动分组和跨组重试不绕过限流，不重新施加已移除的配置上限"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -402,7 +421,8 @@
     "sourcePaths": [
       "controller/oauth.go",
       "controller/user.go",
-      "service/http_client.go"
+      "service/http_client.go",
+      "model/option.go"
     ],
     "existingTests": [
       "service/login_http_client_test.go",
@@ -415,7 +435,7 @@
       "登录代理覆盖既有登录/OAuth 请求，失败仍给出可用反馈",
       "邀请码在注册完成时校验/消耗，重复提交与失败不会错误扣次数，法律文案支持语言切换"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -434,7 +454,8 @@
     "sourcePaths": [
       "controller/passkey.go",
       "controller/oauth.go",
-      "web/src/features/profile/components/passkey-card.tsx"
+      "web/src/features/profile/components/passkey-card.tsx",
+      "web/src/lib/oauth.ts"
     ],
     "existingTests": [
       "controller/passkey_test.go",
@@ -446,7 +467,7 @@
       "已有多个凭据、命名、登录与删除保留；会话安全升级兼容已有账户",
       "自助资料和 OAuth 绑定/头像 scope 正确，敏感操作重新验证不丢状态"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -471,7 +492,9 @@
     "sourcePaths": [
       "common/request_debug.go",
       "model/log.go",
-      "web/src/features/usage-logs"
+      "web/src/features/usage-logs",
+      "common/init.go",
+      "web/src/features/system-settings/maintenance/log-settings-section.tsx"
     ],
     "existingTests": [
       "common/request_debug_test.go",
@@ -483,7 +506,7 @@
       "原始请求开关持久化、完整正文与截断/脱敏边界可验证",
       "普通用户不可读管理诊断，管理员仍可排错；默认错误日志与日期筛选保留"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -508,7 +531,9 @@
     "sourcePaths": [
       "controller/user_avatar.go",
       "service/avatar_storage.go",
-      "web/src/components"
+      "web/src/components",
+      "web/src/features/profile/components/profile-avatar-control.tsx",
+      "web/src/lib/oauth.ts"
     ],
     "existingTests": [
       "controller/user_avatar_test.go",
@@ -521,7 +546,7 @@
       "本人/管理员访问权限、删除/更新、OAuth 导入和浏览器缓存隔离",
       "用户列表、日志、个人资料中的头像形状和交互保持可用"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -541,7 +566,8 @@
     "sourcePaths": [
       "web/src/context",
       "web/src/lib",
-      "setting/theme_setting_test.go"
+      "setting/theme_setting_test.go",
+      "web/src/stores/system-config-store.ts"
     ],
     "existingTests": [
       "controller/theme_compat_test.go",
@@ -553,7 +579,7 @@
       "自定义颜色、root 全局默认、个人偏好优先级与旧存储迁移",
       "预设、明暗主题、刷新与账号切换不丢设置"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -592,7 +618,7 @@
       "公告管理/时间区间/公开可见性、语言与主题保留",
       "登录动画、暗色、移动头部、日期控件不重叠，键盘可访问"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -623,7 +649,7 @@
       "健康序列 API 变化兼容已有榜单，缺少历史数据正确降级",
       "安全榜单权限、趋势显示、用户 token 用量指标语义保留"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -653,7 +679,7 @@
       "余额/订阅奖励与可多次使用注册码保持原语义",
       "耗尽注册码处理、CSV 字段和新增 TXT/Markdown/批量删除可共存，并发兑换与审计正确"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -680,7 +706,7 @@
       "余额分档边界、每日幂等、时区及奖励上下限正确",
       "新钱包范围和定价 UI 不改变既有签到配置与奖励语义"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -702,7 +728,8 @@
     ],
     "sourcePaths": [
       "web/src/features/playground",
-      "controller/relay.go"
+      "controller/relay.go",
+      "controller/playground_web_search.go"
     ],
     "existingTests": [
       "controller/playground_web_search_test.go",
@@ -714,7 +741,7 @@
       "历史载入前不能误发送；批量搜索、异常响应、推理和流错误正确",
       "保留现有搜索轮次策略与取消，不传供应商不支持的 n 参数"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -749,7 +776,7 @@
       "生成/编辑/蒙版/多参考图/连线/流式进度/失败重试可用",
       "拖拽/缩放/撤销/导入导出及 IndexedDB 账号隔离，主题/视口刷新不丢失"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -777,7 +804,9 @@
       "web/vitest.channels.config.ts",
       "web/vitest.playground.config.ts",
       "web/vitest.drawing.config.ts",
-      "web/src/i18n"
+      "web/src/i18n",
+      "web/src/components/data-table/toolbar/bulk-actions.tsx",
+      "web/src/features/channels/components/dialogs"
     ],
     "existingTests": [
       "web/src/components/ui/__tests__/input-number.test.tsx",
@@ -788,7 +817,7 @@
       "数值输入、响应式弹层、焦点与禁用/加载状态保持可用",
       "en/zh/zh-TW/fr/ru/ja/vi 文案完整，旧测试入口不丢失；盘点三套配置外的保护测试"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -810,14 +839,15 @@
       "makefile",
       "web/rsbuild.config.ts",
       ".gitignore",
-      "AGENTS.md"
+      "AGENTS.md",
+      "scripts/version.sh"
     ],
     "existingTests": [],
     "acceptance": [
       "日期/commit 版本在 Windows 独立工作树、Docker 与发布产物一致",
       "保持许可证、项目/作者标识、下游发布目标与个人临时文件忽略行为"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {
@@ -847,7 +877,7 @@
       "数量/时长/token 上限、显式零值、饱和 checked 审计、比率校验不削弱",
       "预扣/结算/退款不出现负扣费；root 与 relaykit 独立构建且三库兼容"
     ],
-    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
     "evidence": [],
     "final_review": {

@@ -6,7 +6,7 @@
     "depends_on": [],
     "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
     "upstreamCommits": [],
-    "status": "in_progress",
+    "status": "verified",
     "units": [
       {
         "id": "B00.1",
@@ -16,21 +16,26 @@
       {
         "id": "B00.2",
         "action": "建立独立工作树和唯一台账；逐项复核 120 个提交映射",
-        "status": "applying"
+        "status": "verified"
       },
       {
         "id": "B00.3",
         "action": "盘点现有测试 include 与缺口；执行基线并保存证据",
-        "status": "pending"
+        "status": "verified"
       }
     ],
-    "codeCommits": [],
+    "codeCommits": [
+      "8152abd51576cd39265ad1fcc319315889c1dbe3"
+    ],
     "evidence": [
       "evidence/runs/B00-001/backup-result.json",
       "evidence/runs/B00-001/files-manifest.json",
-      "evidence/runs/B00-001/bundle-verify.log"
+      "evidence/runs/B00-001/bundle-verify.log",
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/runs/B00-002/baseline-summary.json",
+      "evidence/runs/B00-002/frontend-test-inventory.json"
     ],
-    "nextAction": "B00.2: commit canonical plan in integration worktree, review all 120 downstream mappings, install isolated frontend dependencies and inventory baseline test coverage."
+    "nextAction": "Completed baseline inventory; known failures and four external-database skips remain explicit follow-up work."
   },
   {
     "id": "B01",
@@ -672,6 +677,22 @@
         "id": "B15.3",
         "action": "审查 Go 风格整理的所有交叉文件，不以整文件覆盖解决",
         "status": "pending"
+      },
+      {
+        "id": "B15.baseline-lint",
+        "action": "Resolve remaining full lint errors without disabling checks; prioritize files touched during adaptation.",
+        "status": "pending",
+        "evidence": [
+          "evidence/runs/B00-web-lint/output.log"
+        ]
+      },
+      {
+        "id": "B15.baseline-format",
+        "action": "Format six reported files while preserving protected headers.",
+        "status": "pending",
+        "evidence": [
+          "evidence/runs/B00-web-format/output.log"
+        ]
       }
     ],
     "codeCommits": [],
@@ -719,6 +740,14 @@
         "id": "B16.3",
         "action": "按实际交付平台构建，记录新旧配置与运维变更",
         "status": "pending"
+      },
+      {
+        "id": "B16.baseline-copyright",
+        "action": "Add missing canonical headers with repository script; preserve existing identity and licenses.",
+        "status": "pending",
+        "evidence": [
+          "evidence/runs/B00-web-copyright/output.log"
+        ]
       }
     ],
     "codeCommits": [],

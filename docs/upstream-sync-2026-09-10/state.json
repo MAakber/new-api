@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T17:03:01.8538561+08:00",
+  "updatedAt": "2026-09-10T09:45:31.144Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,16 +18,35 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B00",
-  "current_unit": "B00.2",
+  "current_batch": "B01",
+  "current_unit": "B01.1",
   "active_operation": null,
-  "last_observed_head": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "last_observed_head": "8152abd51576cd39265ad1fcc319315889c1dbe3",
   "last_verified_code_commit": null,
-  "last_checkpoint_commit": null,
+  "last_checkpoint_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B00.2: commit canonical plan in integration worktree, review all 120 downstream mappings, install isolated frontend dependencies and inventory baseline test coverage.",
-  "blockers": [],
+  "next_action": "B01.1: inspect and apply the first bounded unit (Docker build context, VolcEngine model endpoint, Ali top_p, NewAPI multipart), with local regression coverage and recorded upstream SHAs.",
+  "blockers": [
+    {
+      "id": "production_snapshot",
+      "stages": [
+        "B11",
+        "B14",
+        "B18"
+      ],
+      "status": "pending_environment",
+      "detail": "User has production only, no test deployment. Build isolated local test databases; production data migration needs a sanitized snapshot and actual database type/version. Do not access or migrate production."
+    },
+    {
+      "id": "provider_interop",
+      "stages": [
+        "B18"
+      ],
+      "status": "pending_environment",
+      "detail": "No dedicated provider test configurations supplied; continue all independent implementation and local protocol checks."
+    }
+  ],
   "gates": [
     {
       "id": "upstream_behavior",
