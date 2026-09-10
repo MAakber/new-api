@@ -204,3 +204,4 @@ func (provider *existingOAuthTestProvider) FillUserByProviderID(user *model.User
 }
 func (*existingOAuthTestProvider) SetProviderUserID(*model.User, string) {}
 func (*existingOAuthTestProvider) GetProviderPrefix() string             { return "existing_" }
+func (*existingOAuthTestProvider) ProviderUserIDColumn() string          { return "" }
