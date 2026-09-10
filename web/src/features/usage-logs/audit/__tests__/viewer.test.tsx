@@ -517,6 +517,17 @@ it('mobile access history keeps pagination visible and puts result filters in a 
     value: () => undefined,
   })
   try {
+    // Happy DOM omits the browser's default computed CSS values and does not
+    // run CSS animations. Vaul and Radix need those defaults for closing.
+    const getComputedStyle = window.getComputedStyle.bind(window)
+    vi.spyOn(window, 'getComputedStyle').mockImplementation((element) => {
+      const style = getComputedStyle(element)
+      Object.defineProperties(style, {
+        transform: { configurable: true, value: style.transform || 'none' },
+        animationName: { configurable: true, value: 'none' },
+      })
+      return style
+    })
     const matchMedia = window.matchMedia.bind(window)
     vi.spyOn(window, 'matchMedia').mockImplementation((query) => {
       const media = matchMedia(query)
