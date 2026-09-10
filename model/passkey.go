@@ -259,6 +259,14 @@ func UpdatePasskeyAssertionState(userID int, credential *webauthn.Credential, la
 // security-sensitive, so it advances the user's auth version exactly once and
 // refreshes the user-auth cache after the transaction commits.
 func CreatePasskeyCredential(credential *PasskeyCredential, additionalEnrollmentVerified bool) error {
+	return createPasskeyCredential(credential, additionalEnrollmentVerified, nil)
+}
+
+func RegisterPasskeyForSession(identity AuthSessionIdentity, credential *PasskeyCredential) error {
+	return createPasskeyCredential(credential, true, &identity)
+}
+
+func createPasskeyCredential(credential *PasskeyCredential, additionalEnrollmentVerified bool, identity *AuthSessionIdentity) error {
 	if credential == nil || credential.UserID <= 0 || strings.TrimSpace(credential.CredentialID) == "" || strings.TrimSpace(credential.PublicKey) == "" {
 		return fmt.Errorf("Passkey 保存失败，请重试")
 	}
@@ -268,6 +276,14 @@ func CreatePasskeyCredential(credential *PasskeyCredential, additionalEnrollment
 	}
 	credential.DisplayName = displayName
 	if err := DB.Transaction(func(tx *gorm.DB) error {
+		if identity != nil {
+			if identity.UserID != credential.UserID {
+				return ErrUserSessionInactive
+			}
+			if err := ValidateAuthSessionWithTx(tx, *identity); err != nil {
+				return err
+			}
+		}
 		// Serialize enrollment decisions on the owning user so concurrent finish
 		// requests cannot bypass either the count limit or name uniqueness rule.
 		var owner User
@@ -307,10 +323,23 @@ func CreatePasskeyCredential(credential *PasskeyCredential, additionalEnrollment
 // affecting the user's other devices. The auth version changes once only when
 // a credential was actually deleted.
 func DeletePasskeyCredentialByIDAndUserID(id, userID int) error {
+	return deletePasskeyCredentialByIDAndUserID(id, userID, nil)
+}
+
+func DeletePasskeyCredentialForSession(identity AuthSessionIdentity, id int) error {
+	return deletePasskeyCredentialByIDAndUserID(id, identity.UserID, &identity)
+}
+
+func deletePasskeyCredentialByIDAndUserID(id, userID int, identity *AuthSessionIdentity) error {
 	if id <= 0 || userID <= 0 {
 		return fmt.Errorf("删除失败，请重试")
 	}
 	if err := DB.Transaction(func(tx *gorm.DB) error {
+		if identity != nil {
+			if err := ValidateAuthSessionWithTx(tx, *identity); err != nil {
+				return err
+			}
+		}
 		var owner User
 		if err := lockForUpdate(tx).Select("id").Where("id = ?", userID).First(&owner).Error; err != nil {
 			return err
@@ -341,10 +370,23 @@ func DeletePasskeyCredentialByIDAndUserID(id, userID int) error {
 // This intentionally advances the auth version once for the single security
 // mutation, regardless of how many credentials are removed.
 func DeleteAllPasskeyCredentialsByUserID(userID int) error {
+	return deleteAllPasskeyCredentialsByUserID(userID, nil)
+}
+
+func DeletePasskeyForSession(identity AuthSessionIdentity) error {
+	return deleteAllPasskeyCredentialsByUserID(identity.UserID, &identity)
+}
+
+func deleteAllPasskeyCredentialsByUserID(userID int, identity *AuthSessionIdentity) error {
 	if userID <= 0 {
 		return fmt.Errorf("删除失败，请重试")
 	}
 	if err := DB.Transaction(func(tx *gorm.DB) error {
+		if identity != nil {
+			if err := ValidateAuthSessionWithTx(tx, *identity); err != nil {
+				return err
+			}
+		}
 		var owner User
 		if err := lockForUpdate(tx).Select("id").Where("id = ?", userID).First(&owner).Error; err != nil {
 			return err

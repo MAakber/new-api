@@ -423,7 +423,8 @@ export async function deleteDisabledChannels(): Promise<{
  */
 export async function getChannelKey(
   id: number,
-  proofToken?: string
+  proofToken: string,
+  signal?: AbortSignal
 ): Promise<{
   success: boolean
   message?: string
@@ -433,7 +434,8 @@ export async function getChannelKey(
     `/api/channel/${id}/key`,
     undefined,
     channelActionConfig({
-      headers: proofToken ? { 'X-Security-Proof': proofToken } : undefined,
+      headers: { 'X-Security-Proof': proofToken },
+      signal,
     })
   )
   return res.data

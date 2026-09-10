@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/QuantumNous/new-api/oauth"
 	"github.com/QuantumNous/new-api/setting"
 	"github.com/stretchr/testify/require"
 )
@@ -29,7 +30,7 @@ func TestGetLoginHTTPClientUsesConfiguredProxyAndPreservesTimeout(t *testing.T) 
 	require.NoError(t, err)
 
 	timeout := 123 * time.Millisecond
-	client, err := GetLoginHTTPClient(timeout)
+	client, err := oauth.GetLoginHTTPClient(timeout)
 	require.NoError(t, err)
 	require.Equal(t, timeout, client.Timeout)
 	require.Nil(t, client.CheckRedirect)

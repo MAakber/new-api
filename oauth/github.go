@@ -14,7 +14,6 @@ import (
 	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/model"
-	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -52,8 +51,6 @@ func (p *GitHubProvider) ExchangeToken(ctx context.Context, code string, c *gin.
 		return nil, NewOAuthError(i18n.MsgOAuthInvalidCode, nil)
 	}
 
-	logger.LogDebug(ctx, "[OAuth-GitHub] ExchangeToken: code=%s...", code[:min(len(code), 10)])
-
 	values := map[string]string{
 		"client_id":     common.GitHubClientId,
 		"client_secret": common.GitHubClientSecret,
@@ -71,7 +68,7 @@ func (p *GitHubProvider) ExchangeToken(ctx context.Context, code string, c *gin.
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 
-	client, err := service.GetLoginHTTPClient(20 * time.Second)
+	client, err := GetLoginHTTPClient(20 * time.Second)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +111,7 @@ func (p *GitHubProvider) GetUserInfo(ctx context.Context, token *OAuthToken) (*O
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token.AccessToken))
 
-	client, err := service.GetLoginHTTPClient(20 * time.Second)
+	client, err := GetLoginHTTPClient(20 * time.Second)
 	if err != nil {
 		return nil, err
 	}

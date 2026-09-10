@@ -21,18 +21,9 @@ import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
+import { ConfirmDialog } from '@/components/confirm-dialog'
 import { Dialog } from '@/components/dialog'
 import { StatusBadge } from '@/components/status-badge'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -58,10 +49,9 @@ import {
 import {
   SecureVerificationDialog,
   useSecureVerification,
-  type VerificationMethod,
-  type VerificationMethods,
 } from '@/features/auth/secure-verification'
 import dayjs from '@/lib/dayjs'
+import { AuthOperationError } from '@/lib/secure-verification'
 
 interface PasskeyCardProps {
   loading: boolean
@@ -82,11 +72,11 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
   const [nameError, setNameError] = useState<PasskeyNameValidationError>(null)
   const [deleteTarget, setDeleteTarget] =
     useState<PasskeyCredentialSummary | null>(null)
-  const [restrictedMethod, setRestrictedMethod] =
-    useState<VerificationMethod | null>(null)
 
   const {
     credentials,
+    statusError,
+    fetchStatus,
     loading,
     registering,
     removingId,
@@ -97,30 +87,7 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
     remove,
   } = usePasskeyManagement()
 
-  const {
-    open: verificationOpen,
-    setOpen: setVerificationOpen,
-    methods: verificationMethods,
-    state: verificationState,
-    startVerification,
-    executeVerification,
-    cancel: cancelVerification,
-    setCode,
-    switchMethod,
-    fetchVerificationMethods,
-  } = useSecureVerification({
-    onSuccess: () => setRestrictedMethod(null),
-  })
-
-  const dialogMethods = useMemo<VerificationMethods>(() => {
-    if (!restrictedMethod) return verificationMethods
-    return {
-      ...verificationMethods,
-      has2FA: restrictedMethod === '2fa' && verificationMethods.has2FA,
-      hasPasskey:
-        restrictedMethod === 'passkey' && verificationMethods.hasPasskey,
-    }
-  }, [restrictedMethod, verificationMethods])
+  const verification = useSecureVerification()
 
   const validationMessage = useMemo(() => {
     if (nameError === 'required') return t('Passkey name is required')
@@ -133,20 +100,8 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
     return null
   }, [nameError, t])
 
-  const performRegistration = useCallback(
-    async (name: string, proofToken?: string) => {
-      const registered = await register(name, proofToken)
-      if (registered) {
-        setNameDialogOpen(false)
-        setDisplayName('')
-        setNameError(null)
-      }
-      return registered
-    },
-    [register]
-  )
-
   const handleRegister = useCallback(async () => {
+    if (registering || removingId !== null || verification.isActive) return
     if (!supported) {
       toast.info(t('This device does not support Passkey'))
       return
@@ -162,102 +117,56 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
     const validationError = validatePasskeyName(displayName, credentials)
     setNameError(validationError)
     if (validationError) return
-
     const name = displayName.trim()
-    const methods = await fetchVerificationMethods()
-    if (credentials.length === 0 && !methods.has2FA) {
-      await performRegistration(name)
-      return
-    }
-
-    const requiredMethod: VerificationMethod = methods.has2FA
-      ? '2fa'
-      : 'passkey'
-    if (requiredMethod === 'passkey' && !methods.passkeySupported) {
-      toast.info(t('This device does not support Passkey'))
-      return
-    }
-
     setNameDialogOpen(false)
-    setRestrictedMethod(requiredMethod)
-    await startVerification(
-      (proofToken) => performRegistration(name, proofToken),
-      {
-        scope: 'passkey.register',
-        preferredMethod: requiredMethod,
-        title: t('Security verification'),
-        description: t(
-          'Confirm your identity before adding a Passkey to your account.'
-        ),
-      }
-    )
+    const proof = await verification.requestVerification({
+      scope: 'passkey.register',
+    })
+    if (!proof) return
+    try {
+      await register(name, proof.proof_token)
+      setDisplayName('')
+      setNameError(null)
+      toast.success(t('Passkey registered successfully'))
+    } catch (error) {
+      const failure = AuthOperationError.from(error)
+      if (failure.code !== 'AUTH_CANCELLED') toast.error(t(failure.message))
+    }
   }, [
     credentials,
     displayName,
-    fetchVerificationMethods,
-    performRegistration,
-    startVerification,
+    register,
+    registering,
+    removingId,
     supported,
     t,
+    verification,
   ])
 
   const handleRemove = useCallback(async () => {
-    if (!deleteTarget) return
+    if (
+      !deleteTarget ||
+      registering ||
+      removingId !== null ||
+      verification.isActive
+    ) {
+      return
+    }
     const target = deleteTarget
-    const methods = await fetchVerificationMethods()
-    let requiredMethod: VerificationMethod | null = null
-    if (methods.has2FA) {
-      requiredMethod = '2fa'
-    } else if (methods.hasPasskey) {
-      requiredMethod = 'passkey'
-    }
-    if (!requiredMethod) {
-      toast.error(
-        t(
-          'Please enable Two-factor Authentication or Passkey before proceeding'
-        )
-      )
-      return
-    }
-    if (requiredMethod === 'passkey' && !methods.passkeySupported) {
-      toast.info(t('This device does not support Passkey'))
-      return
-    }
-
     setDeleteTarget(null)
-    setRestrictedMethod(requiredMethod)
-    await startVerification(
-      async (proofToken) => {
-        const removed = await remove(target.id, proofToken)
-        if (removed) setDeleteTarget(null)
-        return removed
-      },
-      {
-        scope: 'passkey.delete',
-        preferredMethod: requiredMethod,
-        title: t('Security verification'),
-        description: t(
-          'Confirm your identity before removing this Passkey from your account.'
-        ),
-      }
-    )
-  }, [deleteTarget, fetchVerificationMethods, remove, startVerification, t])
-
-  const handleVerificationCancel = useCallback(() => {
-    setRestrictedMethod(null)
-    cancelVerification()
-  }, [cancelVerification])
-
-  const handleDialogVerify = useCallback(
-    async (method: VerificationMethod, code?: string) => {
-      try {
-        await executeVerification(method, code)
-      } catch {
-        // Errors are surfaced by useSecureVerification.
-      }
-    },
-    [executeVerification]
-  )
+    const proof = await verification.requestVerification({
+      scope: 'passkey.delete',
+      context: { credential_id: target.id },
+    })
+    if (!proof) return
+    try {
+      await remove(target.id, proof.proof_token)
+      toast.success(t('Passkey removed successfully'))
+    } catch (error) {
+      const failure = AuthOperationError.from(error)
+      if (failure.code !== 'AUTH_CANCELLED') toast.error(t(failure.message))
+    }
+  }, [deleteTarget, registering, remove, removingId, t, verification])
 
   if (pageLoading || loading) {
     return (
@@ -269,6 +178,20 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
         <CardContent className='space-y-3'>
           <Skeleton className='h-20 w-full' />
           <Skeleton className='h-20 w-full' />
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (statusError) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('Passkey Login')}</CardTitle>
+        </CardHeader>
+        <CardContent className='space-y-3'>
+          <p role='alert'>{t(statusError)}</p>
+          <Button onClick={() => void fetchStatus()}>{t('Retry')}</Button>
         </CardContent>
       </Card>
     )
@@ -289,7 +212,13 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
             <Button
               type='button'
               size='sm'
-              disabled={!supported || registering || atLimit}
+              disabled={
+                !supported ||
+                registering ||
+                atLimit ||
+                removingId !== null ||
+                verification.isActive
+              }
               onClick={() => setNameDialogOpen(true)}
             >
               {registering ? (
@@ -391,7 +320,11 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
                         variant='ghost'
                         size='sm'
                         className='text-destructive hover:text-destructive self-start sm:self-auto'
-                        disabled={removingId === credential.id}
+                        disabled={
+                          removingId !== null ||
+                          registering ||
+                          verification.isActive
+                        }
                         onClick={() => setDeleteTarget(credential)}
                       >
                         {removingId === credential.id ? (
@@ -487,51 +420,20 @@ export function PasskeyCard({ loading: pageLoading }: PasskeyCardProps) {
         </div>
       </Dialog>
 
-      <AlertDialog
+      <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(next) => !next && setDeleteTarget(null)}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {t('Remove {{name}}?', {
-                name: deleteTarget?.display_name ?? '',
-              })}
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {t(
-                'Remove this Passkey from your account. Your other Passkeys will continue to work.'
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
-            <AlertDialogAction
-              variant='destructive'
-              onClick={(event) => {
-                event.preventDefault()
-                void handleRemove()
-              }}
-            >
-              {t('Remove')}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      <SecureVerificationDialog
-        open={verificationOpen}
-        onOpenChange={(next) => {
-          if (!next) setRestrictedMethod(null)
-          setVerificationOpen(next)
-        }}
-        methods={dialogMethods}
-        state={verificationState}
-        onVerify={handleDialogVerify}
-        onCancel={handleVerificationCancel}
-        onCodeChange={setCode}
-        onMethodChange={switchMethod}
+        title={t('Remove {{name}}?', {
+          name: deleteTarget?.display_name ?? '',
+        })}
+        desc={t(
+          'Remove this Passkey from your account. Your other Passkeys will continue to work.'
+        )}
+        confirmText={t('Remove')}
+        destructive
+        handleConfirm={() => void handleRemove()}
       />
+      <SecureVerificationDialog {...verification.dialogProps} />
     </>
   )
 }

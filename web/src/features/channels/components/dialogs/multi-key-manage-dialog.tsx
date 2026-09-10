@@ -46,11 +46,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
-import {
-  SecureVerificationDialog,
-  useSecureVerification,
-  type VerificationMethod,
-} from '@/features/auth/secure-verification'
+import { SecureVerificationDialog } from '@/features/auth/secure-verification'
 import {
   ADMIN_PERMISSION_ACTIONS,
   ADMIN_PERMISSION_RESOURCES,
@@ -67,9 +63,9 @@ import {
   enableAllMultiKeys,
   disableAllMultiKeys,
   deleteDisabledMultiKeys,
-  getChannelKey,
 } from '../../api'
 import { MULTI_KEY_FILTER_OPTIONS } from '../../constants'
+import { useChannelKeyDisclosure } from '../../hooks/use-channel-key-disclosure'
 import {
   channelsQueryKeys,
   formatTimestamp,
@@ -119,19 +115,13 @@ export function MultiKeyManageDialog({
   const [confirmAction, setConfirmAction] =
     useState<MultiKeyConfirmAction | null>(null)
   const [isPerformingAction, setIsPerformingAction] = useState(false)
-  const [revealedKeys, setRevealedKeys] = useState<string[] | null>(null)
-  const [isRevealingKeys, setIsRevealingKeys] = useState(false)
   const {
-    open: verificationOpen,
-    setOpen: setVerificationOpen,
-    methods: verificationMethods,
-    state: verificationState,
-    withVerification,
-    executeVerification,
-    cancel: cancelVerification,
-    setCode: setVerificationCode,
-    switchMethod: switchVerificationMethod,
-  } = useSecureVerification()
+    channelKeys: revealedKeys,
+    isChannelKeyLoading: isRevealingKeys,
+    hideKey,
+    handleRevealKey,
+    verification,
+  } = useChannelKeyDisclosure(open, currentRowId ?? null)
 
   const loadKeyStatus = useCallback(
     async (page: number, size: number, status: number | null) => {
@@ -177,11 +167,11 @@ export function MultiKeyManageDialog({
       setCurrentPage(1)
       setStatusFilter(null)
       void loadKeyStatus(1, pageSize, null)
-      setRevealedKeys(null)
+      hideKey()
     } else if (!open) {
-      setRevealedKeys(null)
+      hideKey()
     }
-  }, [currentRowId, loadKeyStatus, open, pageSize])
+  }, [currentRowId, hideKey, loadKeyStatus, open, pageSize])
 
   const handleStatusFilterChange = (value: string) => {
     const newFilter = value === 'all' ? null : Number.parseInt(value)
@@ -195,55 +185,12 @@ export function MultiKeyManageDialog({
     void loadKeyStatus(newPage, pageSize, statusFilter)
   }
 
-  const fetchFullKeys = async (proofToken?: string) => {
-    if (!currentRow) return null
-    setIsRevealingKeys(true)
-    try {
-      const response = await getChannelKey(currentRow.id, proofToken)
-      if (!response.success || !response.data) {
-        throw new Error(response.message || t('Failed to fetch channel key'))
-      }
-      const fullKeys = response.data.keys ?? [response.data.key]
-      setRevealedKeys(fullKeys)
-      toast.success(t('Channel key unlocked'))
-      return response
-    } finally {
-      setIsRevealingKeys(false)
-    }
-  }
-
   const handleRevealKeys = async () => {
     if (revealedKeys) {
-      setRevealedKeys(null)
+      hideKey()
       return
     }
-    try {
-      await withVerification(fetchFullKeys, {
-        scope: 'channel.key.read',
-        preferredMethod: 'passkey',
-        title: t('Verify to view channel key'),
-        description: t(
-          'Use Passkey or 2FA to confirm your identity before revealing this channel key.'
-        ),
-      })
-    } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : t('Failed to fetch channel key')
-      )
-    }
-  }
-
-  const handleDialogVerify = async (
-    method: VerificationMethod,
-    code?: string
-  ) => {
-    try {
-      await executeVerification(method, code)
-    } catch {
-      // Verification errors are surfaced by the shared hook.
-    }
+    await handleRevealKey()
   }
 
   const performAction = async () => {
@@ -283,7 +230,7 @@ export function MultiKeyManageDialog({
         toast.success(response.message || t('Operation successful'))
         queryClient.invalidateQueries({ queryKey: channelsQueryKeys.lists() })
         if (type === 'delete' || type === 'delete-disabled') {
-          setRevealedKeys(null)
+          hideKey()
         }
 
         // Reload data - reset to page 1 for bulk actions
@@ -325,7 +272,7 @@ export function MultiKeyManageDialog({
   }
 
   let revealIcon = <Eye className='h-4 w-4' />
-  if (isRevealingKeys || verificationState.loading) {
+  if (isRevealingKeys || verification.isActive) {
     revealIcon = <Loader2 className='h-4 w-4 animate-spin' />
   } else if (revealedKeys) {
     revealIcon = <EyeOff className='h-4 w-4' />
@@ -419,7 +366,7 @@ export function MultiKeyManageDialog({
                   variant='outline'
                   size='sm'
                   onClick={handleRevealKeys}
-                  disabled={isRevealingKeys || verificationState.loading}
+                  disabled={isRevealingKeys || verification.isActive}
                 >
                   {revealIcon}
                   {revealedKeys ? t('Hide') : t('Reveal key')}
@@ -621,16 +568,7 @@ export function MultiKeyManageDialog({
         isLoading={isPerformingAction}
         handleConfirm={performAction}
       />
-      <SecureVerificationDialog
-        open={verificationOpen}
-        onOpenChange={setVerificationOpen}
-        methods={verificationMethods}
-        state={verificationState}
-        onVerify={handleDialogVerify}
-        onCancel={cancelVerification}
-        onCodeChange={setVerificationCode}
-        onMethodChange={switchVerificationMethod}
-      />
+      <SecureVerificationDialog {...verification.dialogProps} />
     </>
   )
 }

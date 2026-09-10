@@ -8,38 +8,43 @@ import (
 	"github.com/QuantumNous/new-api/model"
 
 	webauthn "github.com/go-webauthn/webauthn/webauthn"
+	"gorm.io/gorm"
 )
-
-var errSessionNotFound = errors.New("Passkey 会话不存在或已过期")
 
 const passkeyFlowTTL = 5 * time.Minute
 
 type flowPayload struct {
 	SessionData webauthn.SessionData `json:"session_data"`
-	Scope       string               `json:"scope,omitempty"`
-	DisplayName string               `json:"display_name,omitempty"`
+	Security    FlowSecurity         `json:"security"`
 }
 
-func CreateSessionDataFlow(purpose string, userID int, sessionID, scope string, data *webauthn.SessionData) (string, int64, error) {
-	return CreateSessionDataFlowWithDisplayName(purpose, userID, sessionID, scope, "", data)
+type FlowSecurity struct {
+	DisplayName string `json:"display_name,omitempty"`
+	model.AuthSessionIdentity
+	Scope         string                       `json:"scope"`
+	ContextHash   string                       `json:"context_hash"`
+	Authorization *model.AuthFlowAuthorization `json:"authorization,omitempty"`
 }
 
-// CreateSessionDataFlowWithDisplayName binds the registration device name to
-// the same one-time, user-and-session-bound flow that stores ceremony state.
-// Finish handlers must consume this payload rather than trusting their body.
-func CreateSessionDataFlowWithDisplayName(purpose string, userID int, sessionID, scope, displayName string, data *webauthn.SessionData) (string, int64, error) {
+func CreateSessionDataFlow(purpose string, security FlowSecurity, data *webauthn.SessionData) (string, int64, error) {
 	if data == nil {
 		return "", 0, errors.New("Passkey 会话数据不能为空")
 	}
-	payload, err := common.Marshal(flowPayload{SessionData: *data, Scope: scope, DisplayName: displayName})
+	if purpose != model.AuthFlowPurposePasskeyLogin && (security.UserID <= 0 || security.SessionID == "" || security.Scope == "" || security.ContextHash == "" || security.UserAuthVersion <= 0 || security.SessionVersion <= 0) {
+		return "", 0, model.ErrAuthFlowInvalid
+	}
+	if purpose == model.AuthFlowPurposePasskeyRegister && (security.Authorization == nil || security.Authorization.ProofID <= 0 || security.Authorization.AuthSessionIdentity != security.AuthSessionIdentity) {
+		return "", 0, model.ErrAuthFlowInvalid
+	}
+	payload, err := common.Marshal(flowPayload{SessionData: *data, Security: security})
 	if err != nil {
 		return "", 0, err
 	}
 	expiresAt := time.Now().Add(passkeyFlowTTL)
 	token, _, err := model.CreateAuthFlow(model.AuthFlowCreate{
 		Purpose:   purpose,
-		UserId:    userID,
-		SessionId: sessionID,
+		UserId:    security.UserID,
+		SessionId: security.SessionID,
 		Payload:   string(payload),
 		ExpiresAt: expiresAt,
 	})
@@ -49,28 +54,30 @@ func CreateSessionDataFlowWithDisplayName(purpose string, userID int, sessionID,
 	return token, expiresAt.Unix(), nil
 }
 
-func PopSessionDataFlow(token, purpose string, userID int, sessionID string) (*webauthn.SessionData, string, error) {
-	sessionData, scope, _, err := PopSessionDataFlowWithDisplayName(token, purpose, userID, sessionID)
-	return sessionData, scope, err
-}
-
-// PopSessionDataFlowWithDisplayName consumes the flow before exposing its
-// payload, preserving the existing one-time and identity-binding guarantees.
-func PopSessionDataFlowWithDisplayName(token, purpose string, userID int, sessionID string) (*webauthn.SessionData, string, string, error) {
-	flow, err := model.ConsumeAuthFlow(token, model.AuthFlowMatch{
+func PopSessionDataFlow(token, purpose string, identity model.AuthSessionIdentity) (*webauthn.SessionData, *FlowSecurity, error) {
+	var payload flowPayload
+	_, err := model.ConsumeAuthFlowWithAction(token, model.AuthFlowMatch{
 		Purpose:   purpose,
-		UserId:    userID,
-		SessionId: sessionID,
+		UserId:    identity.UserID,
+		SessionId: identity.SessionID,
+	}, func(tx *gorm.DB, flow *model.AuthFlow) error {
+		if err := common.UnmarshalJsonStr(flow.Payload, &payload); err != nil {
+			return err
+		}
+		if purpose == model.AuthFlowPurposePasskeyLogin {
+			return nil
+		}
+		security := payload.Security
+		if security.AuthSessionIdentity != identity || security.Scope == "" || security.ContextHash == "" {
+			return model.ErrAuthFlowInvalid
+		}
+		if purpose == model.AuthFlowPurposePasskeyRegister && (security.Authorization == nil || security.Authorization.ProofID <= 0 || security.Authorization.AuthSessionIdentity != identity) {
+			return model.ErrAuthFlowInvalid
+		}
+		return model.ValidateAuthSessionWithTx(tx, identity)
 	})
 	if err != nil {
-		if errors.Is(err, model.ErrAuthFlowInvalid) || errors.Is(err, model.ErrAuthFlowExpired) || errors.Is(err, model.ErrAuthFlowConsumed) {
-			return nil, "", "", errSessionNotFound
-		}
-		return nil, "", "", err
+		return nil, nil, err
 	}
-	var payload flowPayload
-	if err := common.UnmarshalJsonStr(flow.Payload, &payload); err != nil {
-		return nil, "", "", err
-	}
-	return &payload.SessionData, payload.Scope, payload.DisplayName, nil
+	return &payload.SessionData, &payload.Security, nil
 }

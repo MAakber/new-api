@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import axios from 'axios'
 
 import { api, refreshAuthentication, type RefreshOutcome } from '@/lib/api'
+import { AuthOperationError } from '@/lib/secure-verification'
 import { useAuthStore } from '@/stores/auth-store'
 
 import {
@@ -27,6 +28,7 @@ import {
 } from './lib/password-encryption'
 import { getAffiliateCode } from './lib/storage'
 import type { TelegramAuthorization } from './lib/telegram-login'
+import type { VerificationOperation } from './secure-verification/types'
 import type {
   CompleteRegistrationPayload,
   LoginPayload,
@@ -168,7 +170,9 @@ export async function githubOAuthStart(clientId: string, state: string) {
 // Get OAuth state for CSRF protection
 export async function createOAuthFlow(
   provider: string,
-  intent: 'login' | 'bind'
+  intent: 'login' | 'bind' | 'verify',
+  operation?: VerificationOperation,
+  signal?: AbortSignal
 ): Promise<string> {
   const aff = intent === 'login' ? getAffiliateCode() : ''
   const res = await api.post(
@@ -177,8 +181,15 @@ export async function createOAuthFlow(
       provider,
       intent,
       aff: aff || undefined,
+      scope: operation?.scope,
+      ...(operation?.context ? { context: operation.context } : {}),
     },
-    { skipAuthRefresh: intent === 'login' }
+    {
+      skipAuthRefresh: intent === 'login',
+      signal,
+      skipBusinessError: true,
+      skipErrorHandler: true,
+    }
   )
   if (res.data?.success) {
     if (typeof res.data.data === 'string') return res.data.data
@@ -186,7 +197,10 @@ export async function createOAuthFlow(
       return res.data.data.flow_token
     }
   }
-  throw new Error(res.data?.message || 'Failed to initialize OAuth')
+  throw new AuthOperationError(
+    res.data?.message || 'Failed to initialize OAuth',
+    res.data?.code
+  )
 }
 
 // WeChat login by authorization code

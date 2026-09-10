@@ -27,6 +27,9 @@ export default defineConfig({
     include: [
       'src/features/usage-logs/components/__tests__/reject-reason.test.tsx',
       'src/features/auth/__tests__/*.test.ts',
+      'src/features/auth/lib/__tests__/*.test.ts',
+      'src/features/auth/secure-verification/__tests__/*.test.{ts,tsx}',
+      'src/features/channels/hooks/__tests__/channel-key-disclosure.test.tsx',
       'src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx',
       'src/features/profile/__tests__/*.test.{ts,tsx}',
       'src/features/security/**/__tests__/*.test.tsx',
