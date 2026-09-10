@@ -85,7 +85,7 @@ func TestRequestDebugCaptureUsesReplayedBodyAndHonorsRawSetting(t *testing.T) {
 			require.NoError(t, err)
 			t.Cleanup(func() { require.NoError(t, response.Body.Close()) })
 			assert.Equal(t, payload, replayed)
-			debug := common2.GetContextKey[map[string]interface{}](ctx, constant.ContextKeyRequestDebug)
+			debug := common2.GetContextKeyStringMap(ctx, constant.ContextKeyRequestDebug)
 			upstream, ok := debug["upstream"].(map[string]interface{})
 			require.True(t, ok)
 			if rawEnabled {
