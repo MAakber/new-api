@@ -1,0 +1,7 @@
+{
+  "upstream": "0cd9dc85e334018d15c5a480e39753d0866e2035",
+  "before_head": "e7c2f96929caa1ccdf2bf28b513a2221372c71b1",
+  "after_head": "232e9a7687ba93c9722b318343cd4fd10eeddf04",
+  "rationale": "Rotate access tokens through a targeted column update; make invitation increments atomic and exclude concurrent accounting/token fields from general user updates. Preserve per-user RPM validation, profile authorization, avatar routes and named multiple Passkeys.",
+  "recorded_at": "2026-09-10T22:30:04.377Z"
+}

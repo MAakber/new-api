@@ -1,0 +1,25 @@
+{
+  "upstream": "9f506dd7f905c288b4a119a8197cd64b77eb4a3f",
+  "unit": "B08.1-log-projection",
+  "before_head": "c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4",
+  "after_head": "c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "9f506dd7f905c288b4a119a8197cd64b77eb4a3f"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "model/log_other.go",
+    "service/task_billing_test.go"
+  ],
+  "files": [
+    "model/log_format_test.go",
+    "model/log_other.go",
+    "model/log_other_test.go",
+    "service/task_billing.go",
+    "service/task_billing_test.go",
+    "service/text_quota_test.go"
+  ]
+}

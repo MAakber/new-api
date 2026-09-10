@@ -137,12 +137,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Use a popup-scoped provider/state stamp to distinguish binding from foreign-opener login, retaining the downstream pending-registration challenge and sanitized auth redirect flow.",
+    "resolution_commits": [
+      "e7c2f96929caa1ccdf2bf28b513a2221372c71b1"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.1-oauth-popup-e78e1db1e/resolution.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -597,12 +601,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Rotate access tokens through a targeted column update; make invitation increments atomic and exclude concurrent accounting/token fields from general user updates. Preserve per-user RPM validation, profile authorization, avatar routes and named multiple Passkeys.",
+    "resolution_commits": [
+      "232e9a7687ba93c9722b318343cd4fd10eeddf04"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.1-account-updates-0cd9dc85e/resolution.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -713,12 +721,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Apply user-scoped access-token and affiliate-transfer limits through the existing Redis/in-memory limiter, preserving Retry-After and local account routes. Add deterministic Redis behavior tests for IP rotation, separate actions, separate users and missing authentication.",
+    "resolution_commits": [
+      "e90ba1e7830748c565269c8595f4dd8998bf1e73"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.1-user-critical-limit-1da23d6b3/resolution.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1239,12 +1251,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Opening the token dialog no longer changes credentials. Regeneration requires confirmation, is guarded during the request, and closes with the one-time token display cleared.",
+    "resolution_commits": [
+      "b42403aac4ec235f8768c0deb468c7ad98e8a6ac"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-token-confirmation-9c97e78ac/resolution.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1503,12 +1519,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "aa6e3fde09b6e6ff808aef44e8d4227112b91924"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.1-binding-columns-d7992672a/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2202,12 +2222,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Use the actual numeric provider IDs and provider_user_id fields in both self and administrator binding views. Preserve OAuth popup ownership, avatars and profile state, and restore configurable policy examples with seven-language guidance.",
+    "resolution_commits": [
+      "5f65b61bf9c988ead3471248484da3ee44d9b51a"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-custom-bindings-116255f07/resolution.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2896,12 +2920,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Keep stored user fields unchanged and send provider type names accepted by the backend. Tests cover all seven built-in bindings and custom bindings for enabled and removed/disabled providers.",
+    "resolution_commits": [
+      "29f9977582c529d3db361bc205b3271af2f3aee3"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-admin-unbind-692e8d6ee/resolution.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3504,12 +3532,20 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Persist a shared RSA key in its own table and expose only the public key through the existing login API. Add the table to the downstream ordered migrator; do not resurrect the removed concurrent migrator. Verify together with the dependent opt-in change.",
+    "resolution_commits": [
+      "4a4adcee738e78421fbe4eb55a730be19f612c4e"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-password-encryption-b80d633cf/resolution.json",
+      "evidence/runs/B08-password-go/result.json",
+      "evidence/runs/B08-password-ui/result.json",
+      "evidence/runs/B08-password-types/result.json",
+      "evidence/runs/B08-password-lint/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3592,12 +3628,20 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "42728d59e95b85d8f22794569d492748cbb97766"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-encryption-opt-in-918427d8a/result.json",
+      "evidence/runs/B08-password-go/result.json",
+      "evidence/runs/B08-password-ui/result.json",
+      "evidence/runs/B08-password-types/result.json",
+      "evidence/runs/B08-password-lint/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4864,12 +4908,20 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Use LogOther audience scopes and lossless legacy projection for all existing log writers. Preserve downstream mandatory IP capture, safe request-debug metadata and private stream diagnostics. Pending B10/B12/B14 units record changes requiring later-only types; final verification must include them.",
+    "resolution_commits": [
+      "c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.1-log-metadata-057f71c23/resolution.json",
+      "evidence/runs/B08-logs-go/result.json",
+      "evidence/runs/B08-logs-ui/result.json",
+      "evidence/runs/B08-logs-types/result.json",
+      "evidence/runs/B08-logs-lint/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4951,12 +5003,20 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Share legacy-sensitive keys and non-mutating LogOther snapshots while preserving downstream stream diagnostic privacy. Keep future plugin/snapshot tests in the pending B14 scoped-log unit.",
+    "resolution_commits": [
+      "a783eaa720d5efb6cd5d7dbbccab3f3895f63593"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.1-log-projection-9f506dd7f/resolution.json",
+      "evidence/runs/B08-logs-go/result.json",
+      "evidence/runs/B08-logs-ui/result.json",
+      "evidence/runs/B08-logs-types/result.json",
+      "evidence/runs/B08-logs-lint/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

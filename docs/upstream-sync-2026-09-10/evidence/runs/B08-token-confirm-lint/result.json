@@ -1,0 +1,31 @@
+{
+  "id": "B08-token-confirm-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/profile/components/dialogs/access-token-dialog.tsx",
+    "src/features/profile/hooks/use-access-token.ts",
+    "src/features/profile/components/__tests__/access-token-dialog.test.tsx",
+    "vitest.sync.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "b42403aac4ec235f8768c0deb468c7ad98e8a6ac",
+  "started_at": "2026-09-10T22:35:35.156Z",
+  "finished_at": "2026-09-10T22:35:35.647Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

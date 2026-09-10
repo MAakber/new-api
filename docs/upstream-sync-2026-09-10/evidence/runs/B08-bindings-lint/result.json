@@ -1,0 +1,36 @@
+{
+  "id": "B08-bindings-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/profile/api.ts",
+    "src/features/profile/components/tabs/account-bindings-tab.tsx",
+    "src/features/users/api.ts",
+    "src/features/users/components/dialogs/user-binding-dialog.tsx",
+    "src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+    "src/features/system-settings/auth/custom-oauth/components/provider-form-dialog.tsx",
+    "src/features/system-settings/auth/custom-oauth/components/access-policy-templates.ts",
+    "src/lib/oauth.ts",
+    "vitest.sync.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "29f9977582c529d3db361bc205b3271af2f3aee3",
+  "started_at": "2026-09-10T22:43:37.358Z",
+  "finished_at": "2026-09-10T22:43:37.857Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

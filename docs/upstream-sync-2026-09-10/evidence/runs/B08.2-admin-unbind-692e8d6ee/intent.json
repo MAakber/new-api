@@ -1,0 +1,10 @@
+{
+  "upstream": "692e8d6ee6a9a1620c2d731cb51a1e3154a7042b",
+  "unit": "B08.2-admin-unbind",
+  "before_head": "5f65b61bf9c988ead3471248484da3ee44d9b51a",
+  "rationale": "Restore built-in unbind API type names without changing stored provider fields; test built-in and numeric custom-provider bindings using the real dialogs.",
+  "files": [
+    "web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+    "web/src/features/users/components/dialogs/user-binding-dialog.tsx"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "upstream": "e78e1db1e4ed7d65e37c2527826f290c0c63b041",
+  "unit": "B08.1-oauth-popup",
+  "before_head": "1377546b607a5c7e0bd77356fdc212ebb6c22d46",
+  "after_head": "1377546b607a5c7e0bd77356fdc212ebb6c22d46",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "e78e1db1e4ed7d65e37c2527826f290c0c63b041"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "web/src/routes/oauth/$provider.tsx"
+  ],
+  "files": [
+    "web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts",
+    "web/src/features/auth/lib/oauth-callback-mode.ts",
+    "web/src/features/profile/components/tabs/account-bindings-tab.tsx",
+    "web/src/routes/oauth/$provider.tsx"
+  ]
+}

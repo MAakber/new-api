@@ -1,0 +1,7 @@
+{
+  "upstream": "e78e1db1e4ed7d65e37c2527826f290c0c63b041",
+  "before_head": "1377546b607a5c7e0bd77356fdc212ebb6c22d46",
+  "after_head": "e7c2f96929caa1ccdf2bf28b513a2221372c71b1",
+  "rationale": "Use a popup-scoped provider/state stamp to distinguish binding from foreign-opener login, retaining the downstream pending-registration challenge and sanitized auth redirect flow.",
+  "recorded_at": "2026-09-10T22:29:10.126Z"
+}

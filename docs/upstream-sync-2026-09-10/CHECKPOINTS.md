@@ -1125,3 +1125,199 @@
 - Channels: 138 tests; preservation: 24 files; affected Go and worker race checks passed; independent relaykit DTO tests/build passed.
 - Evidence: evidence/B07-acceptance.json.
 - B08 next; final downstream acceptance remains pending.
+
+## 2026-09-10T22:28:30.217Z — B08.1-oauth-popup applying e78e1db1e
+
+- Before HEAD: 1377546b607a5c7e0bd77356fdc212ebb6c22d46.
+- Upstream: e78e1db1e4ed7d65e37c2527826f290c0c63b041 — fix(oauth): stop treating a foreign window.opener as a bind flow (#6425).
+- Reviewed paths: web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts, web/src/features/auth/lib/oauth-callback-mode.ts, web/src/features/profile/components/tabs/account-bindings-tab.tsx, web/src/routes/oauth/$provider.tsx.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T22:28:30.460Z — B08.1-oauth-popup conflicts
+
+- Result: exit 1; HEAD 1377546b607a5c7e0bd77356fdc212ebb6c22d46.
+- Conflicts: web/src/routes/oauth/$provider.tsx.
+- Evidence: evidence/runs/B08.1-oauth-popup-e78e1db1e/result.json.
+- Next: B08.1-oauth-popup: reconcile failed cherry-pick using evidence/runs/B08.1-oauth-popup-e78e1db1e; do not restart or abort automatically.
+
+## 2026-09-10T22:29:10.137Z — B08.1-oauth-popup conflict resolution recorded
+
+- Code: e7c2f96929caa1ccdf2bf28b513a2221372c71b1.
+- Use a popup-scoped provider/state stamp to distinguish binding from foreign-opener login, retaining the downstream pending-registration challenge and sanitized auth redirect flow.
+- Evidence: evidence/runs/B08.1-oauth-popup-e78e1db1e/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T22:29:10.550Z — B08.1-account-updates applying 0cd9dc85e
+
+- Before HEAD: e7c2f96929caa1ccdf2bf28b513a2221372c71b1.
+- Upstream: 0cd9dc85e334018d15c5a480e39753d0866e2035 — Merge commit from fork.
+- Reviewed paths: controller/user.go, model/user.go, model/user_update_test.go, router/api-router.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T22:29:10.806Z — B08.1-account-updates conflicts
+
+- Result: exit 1; HEAD e7c2f96929caa1ccdf2bf28b513a2221372c71b1.
+- Conflicts: router/api-router.go.
+- Evidence: evidence/runs/B08.1-account-updates-0cd9dc85e/result.json.
+- Next: B08.1-account-updates: reconcile failed cherry-pick using evidence/runs/B08.1-account-updates-0cd9dc85e; do not restart or abort automatically.
+
+## 2026-09-10T22:30:04.389Z — B08.1-account-updates conflict resolution recorded
+
+- Code: 232e9a7687ba93c9722b318343cd4fd10eeddf04.
+- Rotate access tokens through a targeted column update; make invitation increments atomic and exclude concurrent accounting/token fields from general user updates. Preserve per-user RPM validation, profile authorization, avatar routes and named multiple Passkeys.
+- Evidence: evidence/runs/B08.1-account-updates-0cd9dc85e/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T22:30:04.791Z — B08.1-user-critical-limit applying 1da23d6b3
+
+- Before HEAD: 232e9a7687ba93c9722b318343cd4fd10eeddf04.
+- Upstream: 1da23d6b33421daf88a1a15a6821d6304940691a — feat(rate-limit): add user critical rate limit middleware for access token and aff transfer routes.
+- Reviewed paths: middleware/rate-limit.go, router/api-router.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T22:30:05.018Z — B08.1-user-critical-limit conflicts
+
+- Result: exit 1; HEAD 232e9a7687ba93c9722b318343cd4fd10eeddf04.
+- Conflicts: router/api-router.go.
+- Evidence: evidence/runs/B08.1-user-critical-limit-1da23d6b3/result.json.
+- Next: B08.1-user-critical-limit: reconcile failed cherry-pick using evidence/runs/B08.1-user-critical-limit-1da23d6b3; do not restart or abort automatically.
+
+## 2026-09-10T22:31:39.802Z — B08.1-user-critical-limit conflict resolution recorded
+
+- Code: e90ba1e7830748c565269c8595f4dd8998bf1e73.
+- Apply user-scoped access-token and affiliate-transfer limits through the existing Redis/in-memory limiter, preserving Retry-After and local account routes. Add deterministic Redis behavior tests for IP rotation, separate actions, separate users and missing authentication.
+- Evidence: evidence/runs/B08.1-user-critical-limit-1da23d6b3/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T22:33:33.938Z — B08.2-token-confirmation adaptation begun
+
+- Before HEAD: e90ba1e7830748c565269c8595f4dd8998bf1e73.
+- Upstream: 9c97e78aced572d540f227007a675d7d007666ac.
+- Require explicit confirmation before rotating a dashboard access token, clear one-time token display on close, and preserve the existing profile dialog lifecycle.
+- Evidence: evidence/runs/B08.2-token-confirmation-9c97e78ac/intent.json.
+
+## 2026-09-10T22:35:30.275Z — B08.2-token-confirmation adaptation recorded
+
+- Code: b42403aac4ec235f8768c0deb468c7ad98e8a6ac.
+- Opening the token dialog no longer changes credentials. Regeneration requires confirmation, is guarded during the request, and closes with the one-time token display cleared.
+- Evidence: evidence/runs/B08.2-token-confirmation-9c97e78ac/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T22:36:04.378Z — B08.1-binding-columns applying d7992672a
+
+- Before HEAD: b42403aac4ec235f8768c0deb468c7ad98e8a6ac.
+- Upstream: d7992672a606c3e97257ed411d77adecf22559c0 — fix(oauth): avoid overwriting user state when binding.
+- Reviewed paths: controller/auth_flow_test.go, controller/oauth.go, controller/wechat.go, model/user.go, model/user_update_test.go, oauth/discord.go, oauth/generic.go, oauth/github.go, oauth/linuxdo.go, oauth/oidc.go, oauth/provider.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T22:36:04.644Z — B08.1-binding-columns implemented
+
+- Result: exit 0; HEAD aa6e3fde09b6e6ff808aef44e8d4227112b91924.
+- Conflicts: none.
+- Evidence: evidence/runs/B08.1-binding-columns-d7992672a/result.json.
+- Next: B08.1-binding-columns: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T22:38:32.638Z — B08.2-custom-bindings adaptation begun
+
+- Before HEAD: 60aa95870b3797eecdce69f144069a3690a802c0.
+- Upstream: 116255f076a3e9d92b0c9a85303daae73997b55e.
+- Align custom OAuth bindings with the actual numeric provider_id and provider_user_id API, preserve downstream profile/avatar state and restore access-policy template guidance.
+- Evidence: evidence/runs/B08.2-custom-bindings-116255f07/intent.json.
+
+## 2026-09-10T22:41:01.246Z — B08.2-custom-bindings adaptation recorded
+
+- Code: 5f65b61bf9c988ead3471248484da3ee44d9b51a.
+- Use the actual numeric provider IDs and provider_user_id fields in both self and administrator binding views. Preserve OAuth popup ownership, avatars and profile state, and restore configurable policy examples with seven-language guidance.
+- Evidence: evidence/runs/B08.2-custom-bindings-116255f07/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T22:41:01.644Z — B08.2-admin-unbind adaptation begun
+
+- Before HEAD: 5f65b61bf9c988ead3471248484da3ee44d9b51a.
+- Upstream: 692e8d6ee6a9a1620c2d731cb51a1e3154a7042b.
+- Restore built-in unbind API type names without changing stored provider fields; test built-in and numeric custom-provider bindings using the real dialogs.
+- Evidence: evidence/runs/B08.2-admin-unbind-692e8d6ee/intent.json.
+
+## 2026-09-10T22:43:32.301Z — B08.2-admin-unbind adaptation recorded
+
+- Code: 29f9977582c529d3db361bc205b3271af2f3aee3.
+- Keep stored user fields unchanged and send provider type names accepted by the backend. Tests cover all seven built-in bindings and custom bindings for enabled and removed/disabled providers.
+- Evidence: evidence/runs/B08.2-admin-unbind-692e8d6ee/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T22:49:04.932Z — B08.2-password-encryption adaptation begun
+
+- Before HEAD: bf289dcceff54056e57657d9f898f2ad8faafaeb.
+- Upstream: b80d633cf586b001cfbb4200bae93e65abe57c2b.
+- Add persisted RSA-OAEP login transport keys through the existing auth API and migration paths, preserving downstream login auditing, ban checks and session flows. Regenerate the Bun lockfile without replacing downstream dependencies.
+- Evidence: evidence/runs/B08.2-password-encryption-b80d633cf/intent.json.
+
+## 2026-09-10T22:50:12.835Z — B08.2-password-encryption adaptation recorded
+
+- Code: 4a4adcee738e78421fbe4eb55a730be19f612c4e.
+- Persist a shared RSA key in its own table and expose only the public key through the existing login API. Add the table to the downstream ordered migrator; do not resurrect the removed concurrent migrator. Verify together with the dependent opt-in change.
+- Evidence: evidence/runs/B08.2-password-encryption-b80d633cf/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T22:50:13.242Z — B08.2-encryption-opt-in applying 918427d8a
+
+- Before HEAD: 4a4adcee738e78421fbe4eb55a730be19f612c4e.
+- Upstream: 918427d8ab41f6adaa4113d0496f1f8621855b70 — feat(auth): make password encryption opt-in #6743.
+- Reviewed paths: .env.example, common/constants.go, common/init.go, controller/misc.go, controller/user.go, main.go, web/src/features/auth/api.ts, web/src/features/auth/sign-in/components/user-auth-form.tsx, web/src/features/auth/types.ts.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T22:50:13.525Z — B08.2-encryption-opt-in implemented
+
+- Result: exit 0; HEAD 42728d59e95b85d8f22794569d492748cbb97766.
+- Conflicts: none.
+- Evidence: evidence/runs/B08.2-encryption-opt-in-918427d8a/result.json.
+- Next: B08.2-encryption-opt-in: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T22:56:28.381Z — B08.1-log-metadata adaptation begun
+
+- Before HEAD: 4edf345e05ed65019f42c3381f7eb932ced78aa3.
+- Upstream: 057f71c2336c3981187b732a9d06f65490e9a946.
+- Separate public/admin/root audit metadata while preserving downstream billing-model labels, saturation audits, debug diagnostics and native protocol logs. The plugin audit adapter depends on B14 types and will be tracked there explicitly.
+- Evidence: evidence/runs/B08.1-log-metadata-057f71c23/intent.json.
+
+## 2026-09-10T22:58:37.869Z — B08.1 scoped logs dependency review
+
+- Reviewed all conflicting hunks individually; evidence/B08-log-metadata-conflicts.json preserves the inspected source and selected result.
+- Later-only Midjourney refund functions, pricing request rules and plugin task models are tracked in explicit pending B10/B12/B14 units. Their final gates remain required.
+- Preserve downstream request debug capture, mandatory IP audit and private stream diagnostics while adopting audience-scoped metadata.
+
+## 2026-09-10T23:00:10.809Z — B08.1-log-metadata adaptation recorded
+
+- Code: c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4.
+- Use LogOther audience scopes and lossless legacy projection for all existing log writers. Preserve downstream mandatory IP capture, safe request-debug metadata and private stream diagnostics. Pending B10/B12/B14 units record changes requiring later-only types; final verification must include them.
+- Evidence: evidence/runs/B08.1-log-metadata-057f71c23/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T23:00:11.223Z — B08.1-log-projection applying 9f506dd7f
+
+- Before HEAD: c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4.
+- Upstream: 9f506dd7f905c288b4a119a8197cd64b77eb4a3f — refactor(logs): simplify LogOther projection and dedupe sensitive keys.
+- Reviewed paths: model/log_format_test.go, model/log_other.go, model/log_other_test.go, service/task_billing.go, service/task_billing_test.go, service/text_quota_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T23:00:11.462Z — B08.1-log-projection conflicts
+
+- Result: exit 1; HEAD c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4.
+- Conflicts: model/log_other.go, service/task_billing_test.go.
+- Evidence: evidence/runs/B08.1-log-projection-9f506dd7f/result.json.
+- Next: B08.1-log-projection: reconcile failed cherry-pick using evidence/runs/B08.1-log-projection-9f506dd7f; do not restart or abort automatically.
+
+## 2026-09-10T23:01:08.000Z — B08.1-log-projection conflict resolution recorded
+
+- Code: a783eaa720d5efb6cd5d7dbbccab3f3895f63593.
+- Share legacy-sensitive keys and non-mutating LogOther snapshots while preserving downstream stream diagnostic privacy. Keep future plugin/snapshot tests in the pending B14 scoped-log unit.
+- Evidence: evidence/runs/B08.1-log-projection-9f506dd7f/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T23:03:08.845Z — B08 password transport and log projection checked
+
+- Code HEAD: a783eaa720d5efb6cd5d7dbbccab3f3895f63593.
+- B08-password-go/ui/types/lint passed. SQLite restart recovery passed; MySQL/PostgreSQL cases explicitly skipped until their local fixture run.
+- B08-logs-go passed model/service/controller/relay/middleware; log dialog UI/types/lint passed.
+- Eleven B08 upstream rows are implemented; complete-stage and final-candidate acceptance remain pending.
+- Next: security center and independent audit storage; preserve downstream multi-Passkey, avatars, historical audits and floating windows.

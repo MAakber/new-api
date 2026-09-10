@@ -1,0 +1,7 @@
+{
+  "upstream": "1da23d6b33421daf88a1a15a6821d6304940691a",
+  "before_head": "232e9a7687ba93c9722b318343cd4fd10eeddf04",
+  "after_head": "e90ba1e7830748c565269c8595f4dd8998bf1e73",
+  "rationale": "Apply user-scoped access-token and affiliate-transfer limits through the existing Redis/in-memory limiter, preserving Retry-After and local account routes. Add deterministic Redis behavior tests for IP rotation, separate actions, separate users and missing authentication.",
+  "recorded_at": "2026-09-10T22:31:39.791Z"
+}

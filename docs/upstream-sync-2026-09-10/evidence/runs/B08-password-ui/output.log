@@ -1,0 +1,10 @@
+$ vitest run --config vitest.sync.config.ts src/features/auth/__tests__/password-login.test.ts src/features/auth/sign-in/components/__tests__/turnstile-retry.test.tsx
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  2 passed (2)
+      Tests  7 passed (7)
+   Start at  06:54:32
+   Duration  7.46s (import 47%, environment 22%, tests 15%, setup 11%, transform 5%)
+

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T22:27:56.625Z",
+  "updatedAt": "2026-09-10T23:03:08.788Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -19,14 +19,14 @@
     "created": true
   },
   "current_batch": "B08",
-  "current_unit": "B08.1",
+  "current_unit": "B08.1-log-projection",
   "active_operation": null,
-  "last_observed_head": "6ef2e3c9cdfdb3b9e6584ed0b0a23634e740cfc7",
+  "last_observed_head": "a783eaa720d5efb6cd5d7dbbccab3f3895f63593",
   "last_verified_code_commit": "54c948f715414eada868462b3c60882ce745a57f",
-  "last_checkpoint_commit": "ca1d9d2340494db144e6c0d4b012b9b3ae41964d",
+  "last_checkpoint_commit": "1377546b607a5c7e0bd77356fdc212ebb6c22d46",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B08: integrate OAuth callback flow identification and account-update isolation; preserve login proxy, invitation registration, named Passkeys and OAuth avatars.",
+  "next_action": "B08.2-security-center: integrate independent audit storage, security page and token lifecycle; preserve multiple named Passkeys, avatar/profile fields, historical audit access and floating-window navigation.",
   "blockers": [
     {
       "id": "production_snapshot",

@@ -1,0 +1,25 @@
+{
+  "id": "B08-bindings-types-fixed",
+  "command": [
+    "bun",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "bf289dcceff54056e57657d9f898f2ad8faafaeb",
+  "started_at": "2026-09-10T22:48:17.651Z",
+  "finished_at": "2026-09-10T22:48:20.722Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1,0 +1,18 @@
+{
+  "upstream": "b80d633cf586b001cfbb4200bae93e65abe57c2b",
+  "before_head": "bf289dcceff54056e57657d9f898f2ad8faafaeb",
+  "after_head": "4a4adcee738e78421fbe4eb55a730be19f612c4e",
+  "files": [
+    "common/password_crypto.go",
+    "controller/user.go",
+    "main.go",
+    "model/main.go",
+    "model/password_crypto.go",
+    "router/api-router.go",
+    "web/bun.lock",
+    "web/package.json",
+    "web/src/features/auth/api.ts",
+    "web/src/features/auth/lib/password-encryption.ts"
+  ],
+  "rationale": "Persist a shared RSA key in its own table and expose only the public key through the existing login API. Add the table to the downstream ordered migrator; do not resurrect the removed concurrent migrator. Verify together with the dependent opt-in change."
+}

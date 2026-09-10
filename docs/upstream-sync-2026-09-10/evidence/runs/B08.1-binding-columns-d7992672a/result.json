@@ -1,0 +1,27 @@
+{
+  "upstream": "d7992672a606c3e97257ed411d77adecf22559c0",
+  "unit": "B08.1-binding-columns",
+  "before_head": "b42403aac4ec235f8768c0deb468c7ad98e8a6ac",
+  "after_head": "aa6e3fde09b6e6ff808aef44e8d4227112b91924",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "d7992672a606c3e97257ed411d77adecf22559c0"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "controller/auth_flow_test.go",
+    "controller/oauth.go",
+    "controller/wechat.go",
+    "model/user.go",
+    "model/user_update_test.go",
+    "oauth/discord.go",
+    "oauth/generic.go",
+    "oauth/github.go",
+    "oauth/linuxdo.go",
+    "oauth/oidc.go",
+    "oauth/provider.go"
+  ]
+}

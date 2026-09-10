@@ -1,0 +1,25 @@
+{
+  "upstream": "918427d8ab41f6adaa4113d0496f1f8621855b70",
+  "unit": "B08.2-encryption-opt-in",
+  "before_head": "4a4adcee738e78421fbe4eb55a730be19f612c4e",
+  "after_head": "42728d59e95b85d8f22794569d492748cbb97766",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "918427d8ab41f6adaa4113d0496f1f8621855b70"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    ".env.example",
+    "common/constants.go",
+    "common/init.go",
+    "controller/misc.go",
+    "controller/user.go",
+    "main.go",
+    "web/src/features/auth/api.ts",
+    "web/src/features/auth/sign-in/components/user-auth-form.tsx",
+    "web/src/features/auth/types.ts"
+  ]
+}

@@ -1,0 +1,52 @@
+$ node scripts/test-preservation.mjs oauth auth-redirect auth-bundle
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\lib\__tests__\oauth-callback-mode.test.ts:
+(pass) resolveOAuthCallbackMode > matching provider and state mark is treated as a bind flow [0.17ms]
+(pass) resolveOAuthCallbackMode > login redirect in a tab with a foreign opener stays a login flow [0.02ms]
+(pass) resolveOAuthCallbackMode > bind marker for another provider does not hijack this callback [0.02ms]
+(pass) resolveOAuthCallbackMode > stale bind marker does not hijack a later callback [0.02ms]
+(pass) resolveOAuthCallbackMode > bind marker without an opener falls back to login [0.01ms]
+(pass) resolveOAuthCallbackMode > closed opener falls back to login [0.01ms]
+(pass) resolveOAuthCallbackMode > missing storage degrades to login instead of throwing [0.02ms]
+(pass) resolveOAuthCallbackMode > storage read failure degrades to login instead of throwing [0.06ms]
+(pass) OAuth bind popup storage > blocked sessionStorage getter is contained [0.04ms]
+(pass) OAuth bind popup storage > marking reports unavailable or unwritable storage [0.05ms]
+
+ 10 pass
+ 0 fail
+Ran 10 tests across 1 file. [46.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\lib\auth-redirect.test.ts:
+(pass) authentication redirect validation > preserves safe internal paths, search parameters, and fragments [0.31ms]
+(pass) authentication redirect validation > rejects external and ambiguously parsed redirect targets [0.42ms]
+(pass) authentication redirect validation > rejects invalid or non-HTTP application origins [0.06ms]
+(pass) saved authentication language > prefers the explicit user language [0.06ms]
+(pass) saved authentication language > reads object and JSON string settings [0.05ms]
+(pass) saved authentication language > ignores malformed and non-string setting languages [0.10ms]
+
+ 6 pass
+ 0 fail
+Ran 6 tests across 1 file. [41.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\auth\lib\oauth-bind-window.test.ts:
+(pass) OAuth bind popup lifecycle > parses Telegram success and stable error callbacks [0.12ms]
+(pass) OAuth bind popup lifecycle > rejects Telegram callbacks without a flow token and ignores descriptions [0.06ms]
+(pass) OAuth bind popup lifecycle > posts only complete Telegram bind results to an available opener [0.06ms]
+(pass) OAuth bind popup lifecycle > waits 30 seconds for the opener response and can be cancelled [0.08ms]
+(pass) OAuth bind popup lifecycle > reports a closed popup once and clears its poller [0.05ms]
+
+ 5 pass
+ 0 fail
+Ran 5 tests across 1 file. [94.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\__tests__\oauth.test.ts:
+(pass) LinuxDO OAuth URL > requests the profile scope and encodes OAuth parameters [2.17ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [41.00ms]
+{"files":4,"passed":4,"failed":[]}

@@ -1,0 +1,6 @@
+{
+  "upstream": "116255f076a3e9d92b0c9a85303daae73997b55e",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/features/profile/api.ts' cleanly.\nApplied patch to 'web/src/features/profile/components/tabs/account-bindings-tab.tsx' cleanly.\nFalling back to direct application...\nApplied patch to 'web/src/features/system-settings/auth/custom-oauth/components/provider-form-dialog.tsx' cleanly.\nApplied patch to 'web/src/features/users/api.ts' cleanly.\nApplied patch to 'web/src/features/users/components/dialogs/user-binding-dialog.tsx' cleanly.\nApplied patch to 'web/src/lib/oauth.ts' cleanly.\n"
+}

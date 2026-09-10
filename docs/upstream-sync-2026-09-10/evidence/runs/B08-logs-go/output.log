@@ -1,0 +1,5 @@
+ok  	github.com/QuantumNous/new-api/model	10.628s
+ok  	github.com/QuantumNous/new-api/service	4.844s
+ok  	github.com/QuantumNous/new-api/controller	2.022s
+ok  	github.com/QuantumNous/new-api/relay	0.786s
+ok  	github.com/QuantumNous/new-api/middleware	0.675s

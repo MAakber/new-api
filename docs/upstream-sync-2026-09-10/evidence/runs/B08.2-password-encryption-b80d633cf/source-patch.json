@@ -1,0 +1,8 @@
+{
+  "upstream": "b80d633cf586b001cfbb4200bae93e65abe57c2b",
+  "excluded": [
+    "web/bun.lock"
+  ],
+  "exit_code": 1,
+  "output": "Falling back to direct application...\nApplied patch to 'controller/user.go' cleanly.\nApplied patch to 'main.go' cleanly.\nApplied patch to 'model/main.go' with conflicts.\nFalling back to direct application...\nApplied patch to 'router/api-router.go' cleanly.\nApplied patch to 'web/package.json' cleanly.\nApplied patch to 'web/src/features/auth/api.ts' cleanly.\nFalling back to direct application...\nU model/main.go\n"
+}

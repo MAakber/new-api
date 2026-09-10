@@ -1,0 +1,61 @@
+=== RUN   TestPasswordEncryptionProtocol
+=== RUN   TestPasswordEncryptionProtocol/stale_key
+=== RUN   TestPasswordEncryptionProtocol/missing_key
+=== RUN   TestPasswordEncryptionProtocol/invalid_base64
+=== RUN   TestPasswordEncryptionProtocol/truncated_payload
+=== RUN   TestPasswordEncryptionProtocol/wrong_hash
+=== RUN   TestPasswordEncryptionProtocol/empty_password
+=== RUN   TestPasswordEncryptionProtocol/invalid_replacement_leaves_the_active_key_usable
+--- PASS: TestPasswordEncryptionProtocol (0.02s)
+    --- PASS: TestPasswordEncryptionProtocol/stale_key (0.00s)
+    --- PASS: TestPasswordEncryptionProtocol/missing_key (0.00s)
+    --- PASS: TestPasswordEncryptionProtocol/invalid_base64 (0.00s)
+    --- PASS: TestPasswordEncryptionProtocol/truncated_payload (0.00s)
+    --- PASS: TestPasswordEncryptionProtocol/wrong_hash (0.00s)
+    --- PASS: TestPasswordEncryptionProtocol/empty_password (0.00s)
+    --- PASS: TestPasswordEncryptionProtocol/invalid_replacement_leaves_the_active_key_usable (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/common	0.533s
+=== RUN   TestPasswordEncryptionPersistence
+=== RUN   TestPasswordEncryptionPersistence/sqlite
+[SYS] 2026/09/11 - 06:54:41 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 06:54:41 | SQL_DSN not set, using SQLite as database 
+=== RUN   TestPasswordEncryptionPersistence/mysql
+    password_crypto_test.go:30: test database DSN is not configured
+=== RUN   TestPasswordEncryptionPersistence/postgres
+    password_crypto_test.go:30: test database DSN is not configured
+--- PASS: TestPasswordEncryptionPersistence (0.16s)
+    --- PASS: TestPasswordEncryptionPersistence/sqlite (0.16s)
+    --- SKIP: TestPasswordEncryptionPersistence/mysql (0.00s)
+    --- SKIP: TestPasswordEncryptionPersistence/postgres (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/model	0.845s
+=== RUN   TestPasswordLoginEncryptionPreservesAuthentication
+
+2026/09/11 06:54:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/password_crypto.go:27 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `login_encryption_keys` WHERE slot = "active" ORDER BY `login_encryption_keys`.`id` LIMIT 1
+=== RUN   TestPasswordLoginEncryptionPreservesAuthentication/disabled_keeps_normal_login
+
+2026/09/11 06:54:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/twofa.go:45 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `two_fas` WHERE user_id = 1 AND `two_fas`.`deleted_at` IS NULL ORDER BY `two_fas`.`id` LIMIT 1
+
+2026/09/11 06:54:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+=== RUN   TestPasswordLoginEncryptionPreservesAuthentication/enabled_decrypts_login
+
+2026/09/11 06:54:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/twofa.go:45 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `two_fas` WHERE user_id = 1 AND `two_fas`.`deleted_at` IS NULL ORDER BY `two_fas`.`id` LIMIT 1
+
+2026/09/11 06:54:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+=== RUN   TestPasswordLoginEncryptionPreservesAuthentication/enabled_rejects_plaintext
+=== RUN   TestPasswordLoginEncryptionPreservesAuthentication/invalid_ciphertext_cannot_fall_back_to_plaintext
+=== RUN   TestPasswordLoginEncryptionPreservesAuthentication/stale_key_is_rejected
+--- PASS: TestPasswordLoginEncryptionPreservesAuthentication (0.23s)
+    --- PASS: TestPasswordLoginEncryptionPreservesAuthentication/disabled_keeps_normal_login (0.04s)
+    --- PASS: TestPasswordLoginEncryptionPreservesAuthentication/enabled_decrypts_login (0.04s)
+    --- PASS: TestPasswordLoginEncryptionPreservesAuthentication/enabled_rejects_plaintext (0.00s)
+    --- PASS: TestPasswordLoginEncryptionPreservesAuthentication/invalid_ciphertext_cannot_fall_back_to_plaintext (0.00s)
+    --- PASS: TestPasswordLoginEncryptionPreservesAuthentication/stale_key_is_rejected (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	0.964s

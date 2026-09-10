@@ -1,0 +1,11 @@
+Auto-merging middleware/rate-limit.go
+Auto-merging router/api-router.go
+CONFLICT (content): Merge conflict in router/api-router.go
+error: could not apply 1da23d6b3... feat(rate-limit): add user critical rate limit middleware for access token and aff transfer routes
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

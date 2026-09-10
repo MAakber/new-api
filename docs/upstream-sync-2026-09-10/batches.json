@@ -871,7 +871,7 @@
       "3f8a50cf8877683669cd812240a0beaf7b171c32",
       "6f2333990613bf3e9dd36f541fc380148c7b5175"
     ],
-    "status": "pending",
+    "status": "in_progress",
     "units": [
       {
         "id": "B08.1",
@@ -887,9 +887,109 @@
         "id": "B08.3",
         "action": "逐角色/旧会话/旧账户/凭据迁移验收，防止数据泄漏",
         "status": "pending"
+      },
+      {
+        "id": "B08.1-oauth-popup",
+        "action": "fix(oauth): stop treating a foreign window.opener as a bind flow (#6425)",
+        "status": "verifying",
+        "upstreamCommits": [
+          "e78e1db1e4ed7d65e37c2527826f290c0c63b041"
+        ]
+      },
+      {
+        "id": "B08.1-account-updates",
+        "action": "Merge commit from fork",
+        "status": "verifying",
+        "upstreamCommits": [
+          "0cd9dc85e334018d15c5a480e39753d0866e2035"
+        ]
+      },
+      {
+        "id": "B08.1-user-critical-limit",
+        "action": "feat(rate-limit): add user critical rate limit middleware for access token and aff transfer routes",
+        "status": "verifying",
+        "upstreamCommits": [
+          "1da23d6b33421daf88a1a15a6821d6304940691a"
+        ]
+      },
+      {
+        "id": "B08.2-token-confirmation",
+        "action": "fix(web): require confirmation before rotating access token (#6749)",
+        "status": "verifying",
+        "upstreamCommits": [
+          "9c97e78aced572d540f227007a675d7d007666ac"
+        ]
+      },
+      {
+        "id": "B08.1-binding-columns",
+        "action": "fix(oauth): avoid overwriting user state when binding",
+        "status": "verifying",
+        "upstreamCommits": [
+          "d7992672a606c3e97257ed411d77adecf22559c0"
+        ]
+      },
+      {
+        "id": "B08.2-custom-bindings",
+        "action": "fix(oauth): align custom binding response fields in frontend (#6818)",
+        "status": "verifying",
+        "upstreamCommits": [
+          "116255f076a3e9d92b0c9a85303daae73997b55e"
+        ]
+      },
+      {
+        "id": "B08.2-admin-unbind",
+        "action": "fix(web): restore admin unbinding for built-in providers (#6987)",
+        "status": "verifying",
+        "upstreamCommits": [
+          "692e8d6ee6a9a1620c2d731cb51a1e3154a7042b"
+        ]
+      },
+      {
+        "id": "B08.2-password-encryption",
+        "action": "feat(auth): encrypt password login transport",
+        "status": "verifying",
+        "upstreamCommits": [
+          "b80d633cf586b001cfbb4200bae93e65abe57c2b"
+        ]
+      },
+      {
+        "id": "B08.2-encryption-opt-in",
+        "action": "feat(auth): make password encryption opt-in #6743",
+        "status": "verifying",
+        "upstreamCommits": [
+          "918427d8ab41f6adaa4113d0496f1f8621855b70"
+        ]
+      },
+      {
+        "id": "B08.1-log-metadata",
+        "action": "fix(logs): isolate privileged metadata",
+        "status": "verifying",
+        "upstreamCommits": [
+          "057f71c2336c3981187b732a9d06f65490e9a946"
+        ]
+      },
+      {
+        "id": "B08.1-log-projection",
+        "action": "refactor(logs): simplify LogOther projection and dedupe sensitive keys",
+        "status": "verifying",
+        "upstreamCommits": [
+          "9f506dd7f905c288b4a119a8197cd64b77eb4a3f"
+        ]
       }
     ],
-    "codeCommits": [],
+    "codeCommits": [
+      "e7c2f96929caa1ccdf2bf28b513a2221372c71b1",
+      "232e9a7687ba93c9722b318343cd4fd10eeddf04",
+      "e90ba1e7830748c565269c8595f4dd8998bf1e73",
+      "b42403aac4ec235f8768c0deb468c7ad98e8a6ac",
+      "aa6e3fde09b6e6ff808aef44e8d4227112b91924",
+      "5f65b61bf9c988ead3471248484da3ee44d9b51a",
+      "29f9977582c529d3db361bc205b3271af2f3aee3",
+      "4a4adcee738e78421fbe4eb55a730be19f612c4e",
+      "42728d59e95b85d8f22794569d492748cbb97766",
+      "c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4",
+      "a783eaa720d5efb6cd5d7dbbccab3f3895f63593"
+    ],
     "evidence": [],
     "nextAction": "按会话、验证、审计、日志投影与配置依赖拆分"
   },
@@ -968,6 +1068,13 @@
         "id": "B10.3",
         "action": "三库并发、免费付费跨组、钱包订阅、退款和饱和审计对账",
         "status": "pending"
+      },
+      {
+        "id": "B10.1-scoped-midjourney-logs",
+        "action": "When adding upstream durable Midjourney billing/refund helpers, adapt the 057f71c2336c3981187b732a9d06f65490e9a946 delta to model.LogOther; preserve quota saturation and request diagnostics.",
+        "status": "pending",
+        "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
+        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
       }
     ],
     "codeCommits": [],
@@ -1056,6 +1163,13 @@
         "upstreamCommits": [
           "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
         ]
+      },
+      {
+        "id": "B12.1-scoped-request-rule-logs",
+        "action": "When adding request-rule billing details, use LogOther.SetPublic for request_rules and update channel test Snapshot assertions from 057f71c2336c3981187b732a9d06f65490e9a946.",
+        "status": "pending",
+        "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
+        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
       }
     ],
     "codeCommits": [],
@@ -1156,6 +1270,13 @@
         "id": "B14.3",
         "action": "完整引入插件市场/能力/新视频支持，验证升级、轮询、幂等与退款",
         "status": "pending"
+      },
+      {
+        "id": "B14.1-scoped-plugin-logs",
+        "action": "Apply pending 057f71c2336c3981187b732a9d06f65490e9a946 plugin/task log adaptations and their tests: service/task_plugin_audit.go, appendTaskLogInfo, task TieredSnapshot/UsageFacts, controller context audit and frontend plugin/root metadata types. New plugin metadata must use admin/root scopes and user APIs must strip them.",
+        "status": "pending",
+        "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
+        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
       }
     ],
     "codeCommits": [],

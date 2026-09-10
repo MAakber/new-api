@@ -1,0 +1,28 @@
+{
+  "id": "B08-popup-ui",
+  "command": [
+    "bun",
+    "run",
+    "test:preservation",
+    "oauth",
+    "auth-redirect",
+    "auth-bundle"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "e7c2f96929caa1ccdf2bf28b513a2221372c71b1",
+  "started_at": "2026-09-10T22:29:34.002Z",
+  "finished_at": "2026-09-10T22:29:34.702Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

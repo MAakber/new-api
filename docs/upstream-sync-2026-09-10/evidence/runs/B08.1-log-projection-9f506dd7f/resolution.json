@@ -1,0 +1,7 @@
+{
+  "upstream": "9f506dd7f905c288b4a119a8197cd64b77eb4a3f",
+  "before_head": "c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4",
+  "after_head": "a783eaa720d5efb6cd5d7dbbccab3f3895f63593",
+  "rationale": "Share legacy-sensitive keys and non-mutating LogOther snapshots while preserving downstream stream diagnostic privacy. Keep future plugin/snapshot tests in the pending B14 scoped-log unit.",
+  "recorded_at": "2026-09-10T23:01:07.990Z"
+}

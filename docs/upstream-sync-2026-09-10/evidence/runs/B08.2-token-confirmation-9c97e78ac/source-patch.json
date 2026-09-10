@@ -1,0 +1,6 @@
+{
+  "upstream": "9c97e78aced572d540f227007a675d7d007666ac",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/features/profile/components/dialogs/access-token-dialog.tsx' cleanly.\nApplied patch to 'web/src/features/profile/hooks/use-access-token.ts' cleanly.\n"
+}

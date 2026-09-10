@@ -1,0 +1,30 @@
+{
+  "id": "B08-account-go",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./model",
+    "./controller",
+    "./middleware",
+    "./router",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "e90ba1e7830748c565269c8595f4dd8998bf1e73",
+  "started_at": "2026-09-10T22:31:39.898Z",
+  "finished_at": "2026-09-10T22:31:58.834Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

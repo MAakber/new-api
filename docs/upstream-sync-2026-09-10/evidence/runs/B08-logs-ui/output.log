@@ -1,0 +1,10 @@
+$ vitest run --config vitest.sync.config.ts src/features/usage-logs/components/__tests__/reject-reason.test.tsx
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  07:01:11
+   Duration  7.54s (import 66%, environment 14%, transform 12%, setup 7%, tests 1%)
+

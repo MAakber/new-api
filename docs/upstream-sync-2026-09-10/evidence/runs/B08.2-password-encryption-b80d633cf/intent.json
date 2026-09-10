@@ -1,0 +1,18 @@
+{
+  "upstream": "b80d633cf586b001cfbb4200bae93e65abe57c2b",
+  "unit": "B08.2-password-encryption",
+  "before_head": "bf289dcceff54056e57657d9f898f2ad8faafaeb",
+  "rationale": "Add persisted RSA-OAEP login transport keys through the existing auth API and migration paths, preserving downstream login auditing, ban checks and session flows. Regenerate the Bun lockfile without replacing downstream dependencies.",
+  "files": [
+    "common/password_crypto.go",
+    "controller/user.go",
+    "main.go",
+    "model/main.go",
+    "model/password_crypto.go",
+    "router/api-router.go",
+    "web/bun.lock",
+    "web/package.json",
+    "web/src/features/auth/api.ts",
+    "web/src/features/auth/lib/password-encryption.ts"
+  ]
+}

@@ -1,0 +1,13 @@
+Auto-merging .env.example
+Auto-merging common/constants.go
+Auto-merging common/init.go
+Auto-merging controller/misc.go
+Auto-merging controller/user.go
+Auto-merging main.go
+Auto-merging web/src/features/auth/api.ts
+Auto-merging web/src/features/auth/sign-in/components/user-auth-form.tsx
+Auto-merging web/src/features/auth/types.ts
+[codex/upstream-sync-2026-09-10 42728d59e] feat(auth): make password encryption opt-in #6743
+ Author: CaIon <i@caion.me>
+ Date: Sat Aug 29 20:53:42 2026 +0800
+ 9 files changed, 46 insertions(+), 9 deletions(-)

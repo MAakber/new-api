@@ -1,0 +1,33 @@
+{
+  "upstream": "057f71c2336c3981187b732a9d06f65490e9a946",
+  "unit": "B08.1-log-metadata",
+  "before_head": "4edf345e05ed65019f42c3381f7eb932ced78aa3",
+  "rationale": "Separate public/admin/root audit metadata while preserving downstream billing-model labels, saturation audits, debug diagnostics and native protocol logs. The plugin audit adapter depends on B14 types and will be tracked there explicitly.",
+  "files": [
+    ".gitignore",
+    "controller/channel-test.go",
+    "controller/channel_test_internal_test.go",
+    "controller/log.go",
+    "controller/relay.go",
+    "controller/relay_error_log_test.go",
+    "model/log.go",
+    "model/log_format_test.go",
+    "model/log_other.go",
+    "model/log_other_test.go",
+    "relay/convert_request_error_test.go",
+    "service/billing_usage.go",
+    "service/channel_affinity.go",
+    "service/log_info_generate.go",
+    "service/midjourney.go",
+    "service/quota_saturation_test.go",
+    "service/task_billing.go",
+    "service/task_billing_test.go",
+    "service/task_plugin_audit.go",
+    "service/text_quota.go",
+    "service/text_quota_test.go",
+    "service/violation_fee.go",
+    "web/src/features/usage-logs/components/__tests__/reject-reason.test.tsx",
+    "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+    "web/src/features/usage-logs/types.ts"
+  ]
+}

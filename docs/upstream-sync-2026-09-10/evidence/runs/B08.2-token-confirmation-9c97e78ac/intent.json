@@ -1,0 +1,17 @@
+{
+  "upstream": "9c97e78aced572d540f227007a675d7d007666ac",
+  "unit": "B08.2-token-confirmation",
+  "before_head": "e90ba1e7830748c565269c8595f4dd8998bf1e73",
+  "rationale": "Require explicit confirmation before rotating a dashboard access token, clear one-time token display on close, and preserve the existing profile dialog lifecycle.",
+  "files": [
+    "web/src/features/profile/components/dialogs/access-token-dialog.tsx",
+    "web/src/features/profile/hooks/use-access-token.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ]
+}

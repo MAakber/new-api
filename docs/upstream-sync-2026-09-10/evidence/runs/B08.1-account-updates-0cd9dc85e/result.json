@@ -1,0 +1,22 @@
+{
+  "upstream": "0cd9dc85e334018d15c5a480e39753d0866e2035",
+  "unit": "B08.1-account-updates",
+  "before_head": "e7c2f96929caa1ccdf2bf28b513a2221372c71b1",
+  "after_head": "e7c2f96929caa1ccdf2bf28b513a2221372c71b1",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "0cd9dc85e334018d15c5a480e39753d0866e2035"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "router/api-router.go"
+  ],
+  "files": [
+    "controller/user.go",
+    "model/user.go",
+    "model/user_update_test.go",
+    "router/api-router.go"
+  ]
+}

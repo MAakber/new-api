@@ -1,0 +1,13 @@
+Auto-merging controller/auth_flow_test.go
+Auto-merging controller/oauth.go
+Auto-merging controller/wechat.go
+Auto-merging model/user.go
+Auto-merging oauth/discord.go
+Auto-merging oauth/generic.go
+Auto-merging oauth/github.go
+Auto-merging oauth/linuxdo.go
+Auto-merging oauth/oidc.go
+[codex/upstream-sync-2026-09-10 aa6e3fde0] fix(oauth): avoid overwriting user state when binding
+ Author: CaIon <i@caion.me>
+ Date: Mon Aug 10 22:01:59 2026 +0800
+ 11 files changed, 125 insertions(+), 22 deletions(-)

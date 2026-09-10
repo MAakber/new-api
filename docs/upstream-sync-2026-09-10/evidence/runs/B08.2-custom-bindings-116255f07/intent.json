@@ -1,0 +1,22 @@
+{
+  "upstream": "116255f076a3e9d92b0c9a85303daae73997b55e",
+  "unit": "B08.2-custom-bindings",
+  "before_head": "60aa95870b3797eecdce69f144069a3690a802c0",
+  "rationale": "Align custom OAuth bindings with the actual numeric provider_id and provider_user_id API, preserve downstream profile/avatar state and restore access-policy template guidance.",
+  "files": [
+    "web/src/features/profile/api.ts",
+    "web/src/features/profile/components/tabs/account-bindings-tab.tsx",
+    "web/src/features/system-settings/auth/custom-oauth/components/access-policy-templates.ts",
+    "web/src/features/system-settings/auth/custom-oauth/components/provider-form-dialog.tsx",
+    "web/src/features/users/api.ts",
+    "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json",
+    "web/src/lib/oauth.ts"
+  ]
+}
