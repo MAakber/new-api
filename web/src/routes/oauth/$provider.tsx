@@ -41,6 +41,7 @@ import {
 } from '@/features/auth/lib/oauth-bind-window'
 import {
   getOAuthSessionStorage,
+  consumeOAuthLoginRedirect,
   resolveOAuthCallbackMode,
 } from '@/features/auth/lib/oauth-callback-mode'
 import { api, applyAuthBundle, isAuthBundle } from '@/lib/api'
@@ -218,7 +219,7 @@ function OAuthCallback() {
         }
         if (response.data?.success && isAuthBundle(response.data?.data)) {
           applyAuthBundle(response.data.data)
-          safeNavigate(search.redirect)
+          safeNavigate(search.redirect ?? consumeOAuthLoginRedirect(state))
           toast.success(i18next.t('Signed in successfully!'))
           return
         }

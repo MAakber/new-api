@@ -19,6 +19,7 @@ const (
 	VerificationMethodPasskey        = "passkey"
 	VerificationMethodPassword       = "password"
 	VerificationMethodOAuth          = "oauth"
+	VerificationMethodSession        = "session"
 	VerificationScopeChannelKeyRead  = "channel.key.read"
 	VerificationScopePasskeyRegister = "passkey.register"
 	VerificationScopePasskeyDelete   = "passkey.delete"
@@ -130,11 +131,12 @@ type VerificationRequirements struct {
 }
 
 type verificationAccountState struct {
-	HasPassword    bool
-	HasTwoFA       bool
-	TwoFALocked    bool
-	HasPasskey     bool
-	PasskeyEnabled bool
+	HasPassword      bool
+	HasTwoFA         bool
+	TwoFALocked      bool
+	HasPasskey       bool
+	PasskeyEnabled   bool
+	WeChatEnrollment bool
 }
 
 // securityVerificationPolicy is the only operation-to-method policy. Device
@@ -166,6 +168,8 @@ func securityVerificationPolicy(scope string, state verificationAccountState) ([
 			methods = []string{VerificationMethodPasskey}
 		case state.HasPassword:
 			methods = []string{VerificationMethodPassword}
+		case state.WeChatEnrollment:
+			methods = []string{VerificationMethodSession}
 		default:
 			methods = []string{VerificationMethodOAuth}
 		}
@@ -210,6 +214,16 @@ func GetVerificationRequirements(identity AuthIdentity, scope string) (*Verifica
 		TwoFALocked: twoFA != nil && twoFA.IsLocked(), HasPasskey: err == nil,
 		PasskeyEnabled: system_setting.GetPasskeySettings().Enabled,
 	}
+	if (scope == VerificationScopeTwoFASetup || scope == VerificationScopePasskeyRegister) &&
+		!state.HasPassword && !state.HasTwoFA && !state.HasPasskey &&
+		user.WeChatId != "" && user.TelegramId == "" && user.GitHubId == "" &&
+		user.DiscordId == "" && user.OidcId == "" && user.LinuxDOId == "" {
+		bindings, err := model.GetUserOAuthBindingsByUserId(user.Id)
+		if err != nil {
+			return nil, err
+		}
+		state.WeChatEnrollment = len(bindings) == 0
+	}
 	methods, err := securityVerificationPolicy(scope, state)
 	if err != nil {
 		return nil, err
@@ -225,6 +239,11 @@ func GetVerificationRequirements(identity AuthIdentity, scope string) (*Verifica
 		}
 		if len(requirements.OAuthProviders) == 0 {
 			methods[i].Available, methods[i].Reason = false, "No linked OAuth provider is available."
+			if user.TelegramId != "" {
+				if err := oauth.TelegramConfigurationError(); err != nil {
+					methods[i].Reason = err.Error()
+				}
+			}
 		}
 	}
 	return requirements, nil
@@ -259,6 +278,8 @@ func verificationOAuthProviders(user *model.User) ([]VerificationOAuthProvider, 
 				userID = user.OidcId
 			case "linux_do_id":
 				userID = user.LinuxDOId
+			case "telegram_id":
+				userID = user.TelegramId
 			}
 		}
 		if userID != "" {
@@ -379,6 +400,9 @@ func VerifySecurityInput(identity AuthIdentity, input VerificationInput) (*Secur
 		return nil, err
 	}
 	switch input.Method {
+	case VerificationMethodSession:
+		// The policy above permits only first enrollment for a WeChat-only
+		// account. CompleteSecurityVerification rechecks its live session.
 	case VerificationMethodPassword:
 		password := input.Password
 		if common.PasswordLoginEncryptionEnabled {
