@@ -206,6 +206,30 @@ func configureChannelProbeRequest(request dto.Request, testType string, stream b
 			limit = max(limit, *req.MaxOutputTokens)
 		}
 		req.MaxOutputTokens = &limit
+	case *dto.ClaudeRequest:
+		req.Messages = []dto.ClaudeMessage{{Role: "user", Content: channelTestToolMessage}}
+		req.Tools = []dto.Tool{{Name: channelTestToolName, Description: "Echo the probe message to verify tool calling.", InputSchema: parameters}}
+		req.ToolChoice = dto.ClaudeToolChoice{Type: "auto"}
+		limit := uint(1024)
+		if req.MaxTokens != nil {
+			limit = max(limit, *req.MaxTokens)
+		}
+		req.MaxTokens = &limit
+	case *dto.GeminiChatRequest:
+		req.Contents = []dto.GeminiChatContent{{Role: "user", Parts: []dto.GeminiPart{{Text: channelTestToolMessage}}}}
+		tools, err := common.Marshal([]dto.GeminiChatTool{{FunctionDeclarations: []map[string]any{{
+			"name": channelTestToolName, "description": "Echo the probe message to verify tool calling.", "parameters": parameters,
+		}}}})
+		if err != nil {
+			return err
+		}
+		req.Tools = tools
+		req.ToolConfig = &dto.ToolConfig{FunctionCallingConfig: &dto.FunctionCallingConfig{Mode: "AUTO"}}
+		limit := uint(1024)
+		if req.GenerationConfig.MaxOutputTokens != nil {
+			limit = max(limit, *req.GenerationConfig.MaxOutputTokens)
+		}
+		req.GenerationConfig.MaxOutputTokens = &limit
 	default:
 		return fmt.Errorf("tool probe is not applicable to this request")
 	}

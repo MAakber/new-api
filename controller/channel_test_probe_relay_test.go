@@ -69,7 +69,7 @@ func TestChannelProbeForwardsAllConversationProtocols(t *testing.T) {
 		},
 	}
 	for _, protocol := range protocols {
-		for _, testType := range []string{"basic", "tool_call"} {
+		for _, testType := range []string{"", "basic", "tool_call"} {
 			for _, stream := range []bool{false, true} {
 				mode := "json"
 				if stream {
@@ -118,7 +118,9 @@ func TestChannelProbeForwardsAllConversationProtocols(t *testing.T) {
 						expectedPath := protocol.path
 						if routing == "custom" {
 							channel.Type = constant.ChannelTypeAdvancedCustom
-							endpoint = ""
+							if testType != "" {
+								endpoint = ""
+							}
 							endpointInfo, ok := common.GetDefaultEndpointInfo(constant.EndpointType(protocol.endpoint))
 							require.True(t, ok)
 							routes := []dto.AdvancedCustomRoute{{IncomingPath: endpointInfo.Path, UpstreamPath: "/fixture" + endpointInfo.Path}}
@@ -128,14 +130,25 @@ func TestChannelProbeForwardsAllConversationProtocols(t *testing.T) {
 							channel.SetOtherSettings(dto.ChannelOtherSettings{AdvancedCustom: &dto.AdvancedCustomConfig{Routes: routes}})
 							expectedPath = "/fixture" + protocol.path
 						}
-						result := testChannelWithOptions(context.Background(), channel, user.Id, "gpt-4o", endpoint, stream, channelTestOptions{testType: testType, capturePreview: true})
+						result := testChannelWithOptions(context.Background(), channel, user.Id, "gpt-4o", endpoint, stream, channelTestOptions{testType: testType, capturePreview: testType != ""})
 						require.NoError(t, result.localErr)
 						require.Nil(t, result.newAPIError)
-						require.NotNil(t, result.diagnostics)
-						assert.Equal(t, "passed", result.diagnostics.Status, result.diagnostics.Reason+" "+result.responsePreview)
-						assert.Equal(t, protocol.endpoint, result.diagnostics.EndpointType)
+						if testType != "" {
+							require.NotNil(t, result.diagnostics)
+							assert.Equal(t, "passed", result.diagnostics.Status, result.diagnostics.Reason+" "+result.responsePreview)
+							assert.Equal(t, protocol.endpoint, result.diagnostics.EndpointType)
+						} else {
+							assert.Nil(t, result.diagnostics)
+						}
 						require.Len(t, requests, 1)
 						request := <-requests
+						if protocol.endpoint == "gemini" {
+							if stream {
+								expectedPath += "streamGenerateContent"
+							} else {
+								expectedPath += "generateContent"
+							}
+						}
 						assert.True(t, strings.HasPrefix(<-paths, expectedPath))
 						if testType == "tool_call" {
 							assert.Equal(t, channelTestToolName, gjson.GetBytes(request, protocol.toolPath).String(), string(request))
@@ -149,7 +162,7 @@ func TestChannelProbeForwardsAllConversationProtocols(t *testing.T) {
 	}
 	var logs []model.Log
 	require.NoError(t, db.Find(&logs).Error)
-	assert.Len(t, logs, 32)
+	assert.Len(t, logs, 48)
 }
 
 func TestChannelProbeImageForwardingAndIncompleteUpstream(t *testing.T) {

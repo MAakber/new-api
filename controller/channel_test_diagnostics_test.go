@@ -145,11 +145,20 @@ func TestChannelProbeToolRequestPreservesModelBudget(t *testing.T) {
 			require.NoError(t, configureChannelProbeRequest(request, "tool_call", true, "custom message"))
 			data, err := common.Marshal(request)
 			require.NoError(t, err)
-			assert.True(t, gjson.GetBytes(data, "stream").Bool())
-			if endpoint == "openai-response" {
+			if endpoint != "gemini" {
+				assert.True(t, gjson.GetBytes(data, "stream").Bool())
+			}
+			switch endpoint {
+			case "openai-response":
 				assert.Equal(t, channelTestToolName, gjson.GetBytes(data, "tools.0.name").String())
 				assert.GreaterOrEqual(t, gjson.GetBytes(data, "max_output_tokens").Int(), int64(1024))
-			} else {
+			case "anthropic":
+				assert.Equal(t, channelTestToolName, gjson.GetBytes(data, "tools.0.name").String())
+				assert.GreaterOrEqual(t, gjson.GetBytes(data, "max_tokens").Int(), int64(1024))
+			case "gemini":
+				assert.Equal(t, channelTestToolName, gjson.GetBytes(data, "tools.0.functionDeclarations.0.name").String())
+				assert.Equal(t, int64(3000), gjson.GetBytes(data, "generationConfig.maxOutputTokens").Int())
+			default:
 				assert.Equal(t, channelTestToolName, gjson.GetBytes(data, "tools.0.function.name").String())
 				assert.GreaterOrEqual(t, gjson.GetBytes(data, "max_tokens").Int(), int64(1024))
 			}

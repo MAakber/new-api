@@ -240,11 +240,9 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	if strings.HasPrefix(requestPath, "/v1/responses/compact") {
 		testModel = ratio_setting.WithCompactModelSuffix(testModel)
 	}
-	if diagnostics != nil {
-		requestPath = strings.ReplaceAll(requestPath, "{model}", url.PathEscape(testModel))
-		if endpointType == string(constant.EndpointTypeGemini) && isStream {
-			requestPath = strings.ReplaceAll(requestPath, ":generateContent", ":streamGenerateContent") + "?alt=sse"
-		}
+	requestPath = strings.ReplaceAll(requestPath, "{model}", url.PathEscape(testModel))
+	if endpointType == string(constant.EndpointTypeGemini) && isStream {
+		requestPath = strings.ReplaceAll(requestPath, ":generateContent", ":streamGenerateContent") + "?alt=sse"
 	}
 
 	c.Request = httptest.NewRequestWithContext(ctx, http.MethodPost, requestPath, nil)
@@ -348,20 +346,6 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 	info.IsChannelTest = true
 	info.DisableChannelTestClientProfile = !options.useChannelStyle
 	info.InitChannelMeta(c)
-
-	if diagnostics != nil && (relayFormat == types.RelayFormatClaude || relayFormat == types.RelayFormatGemini) {
-		// Build native input using the same conversion registry as normal relay
-		// requests, so custom native routes and provider-specific tools agree.
-		converted, convertErr := service.ConvertRequest(c, info, relayFormat, request)
-		if convertErr != nil {
-			return testResult{context: c, localErr: convertErr, newAPIError: types.NewError(convertErr, types.ErrorCodeConvertRequestFailed)}
-		}
-		nativeRequest, ok := converted.Value.(dto.Request)
-		if !ok {
-			return testResult{context: c, localErr: fmt.Errorf("invalid native channel probe request: %T", converted.Value)}
-		}
-		request, info.Request = nativeRequest, nativeRequest
-	}
 
 	err = attachTestBillingRequestInput(info, request)
 	if err != nil {
@@ -504,8 +488,8 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 		default:
 			return testResult{
 				context:     c,
-				localErr:    errors.New("invalid general request type"),
-				newAPIError: types.NewError(errors.New("invalid general request type"), types.ErrorCodeConvertRequestFailed),
+				localErr:    errors.New("invalid chat request type"),
+				newAPIError: types.NewError(errors.New("invalid chat request type"), types.ErrorCodeConvertRequestFailed),
 			}
 		}
 	}
@@ -1075,12 +1059,21 @@ func buildTestRequestWithMessage(model string, endpointType string, channel *mod
 				Input:        testResponsesInput,
 				Instructions: testInstructions,
 			}
-		case constant.EndpointTypeAnthropic, constant.EndpointTypeGemini, constant.EndpointTypeOpenAI:
-			// 返回 GeneralOpenAIRequest
-			maxTokens := uint(16)
-			if constant.EndpointType(endpointType) == constant.EndpointTypeGemini {
-				maxTokens = 3000
+		case constant.EndpointTypeAnthropic:
+			return &dto.ClaudeRequest{
+				Model:     model,
+				Stream:    lo.ToPtr(isStream),
+				MaxTokens: lo.ToPtr(uint(16)),
+				Messages:  []dto.ClaudeMessage{{Role: "user", Content: message}},
 			}
+		case constant.EndpointTypeGemini:
+			return &dto.GeminiChatRequest{
+				Contents: []dto.GeminiChatContent{{Role: "user", Parts: []dto.GeminiPart{{Text: message}}}},
+				GenerationConfig: dto.GeminiChatGenerationConfig{
+					MaxOutputTokens: lo.ToPtr(uint(3000)),
+				},
+			}
+		case constant.EndpointTypeOpenAI:
 			req := &dto.GeneralOpenAIRequest{
 				Model:  model,
 				Stream: lo.ToPtr(isStream),
@@ -1090,7 +1083,7 @@ func buildTestRequestWithMessage(model string, endpointType string, channel *mod
 						Content: message,
 					},
 				},
-				MaxTokens: lo.ToPtr(maxTokens),
+				MaxTokens: lo.ToPtr(uint(16)),
 			}
 			if isStream {
 				req.StreamOptions = &dto.StreamOptions{IncludeUsage: true}
@@ -1505,6 +1498,10 @@ func applyTestRequestMaxTokens(request dto.Request, maxTokens uint) {
 	case *dto.ClaudeRequest:
 		if r.MaxTokens == nil || *r.MaxTokens > maxTokens {
 			r.MaxTokens = &maxTokens
+		}
+	case *dto.GeminiChatRequest:
+		if r.GenerationConfig.MaxOutputTokens == nil || *r.GenerationConfig.MaxOutputTokens > maxTokens {
+			r.GenerationConfig.MaxOutputTokens = &maxTokens
 		}
 	}
 }
