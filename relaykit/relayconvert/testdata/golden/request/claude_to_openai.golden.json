@@ -43,7 +43,8 @@
     }
   ],
   "stream": true,
-  "max_tokens": 1024,
+  "max_tokens": 2048,
+  "reasoning_effort": "low",
   "tools": [
     {
       "type": "function",

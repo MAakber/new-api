@@ -19,6 +19,7 @@
       "parts": [
         {
           "functionCall": {
+            "id": "toolu_abc",
             "name": "get_weather",
             "args": {
               "city": "Paris"
@@ -36,7 +37,8 @@
             "name": "get_weather",
             "response": {
               "content": "15 degrees"
-            }
+            },
+            "id": "toolu_abc"
           }
         }
       ]
@@ -61,7 +63,10 @@
     }
   ],
   "generationConfig": {
-    "maxOutputTokens": 1024
+    "maxOutputTokens": 2048,
+    "thinkingConfig": {
+      "thinkingBudget": 1024
+    }
   },
   "tools": [
     {

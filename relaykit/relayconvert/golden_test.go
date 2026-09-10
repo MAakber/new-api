@@ -318,7 +318,11 @@ func TestGoldenRequestConversionMatrix(t *testing.T) {
 			}
 			name := fmt.Sprintf("request/%s_to_%s", from, to)
 			t.Run(name, func(t *testing.T) {
-				result, err := ConvertRequest(nil, goldenInfo(), to, deepCopyFixture(t, requests[from]))
+				info := goldenInfo().(*convmeta.Values)
+				if to == types.RelayFormatGemini {
+					info.UpstreamModelName = "gemini-2.5-pro"
+				}
+				result, err := ConvertRequest(nil, info, to, deepCopyFixture(t, requests[from]))
 				require.NoError(t, err)
 				checkGolden(t, name, marshalGolden(t, result.Value))
 			})
