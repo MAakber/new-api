@@ -769,49 +769,49 @@ func (a *Adaptor) ConvertOpenAIResponsesRequest(c *gin.Context, info *relaycommo
 			}
 			info.SetReasoningEffort(rawEffort)
 		}
-		return request, nil
-	}
-	currentIntent, err := kitreasoning.FromOpenAIResponses(&request)
-	if err != nil {
-		return nil, kitreasoning.AsClientError(err)
-	}
-	mergeSuffix := func(modelName, rawEffort string) error {
-		if rawEffort == "" {
-			return nil
-		}
-		suffixEffort, err := kitreasoning.ParseEffort(rawEffort)
+	} else {
+		currentIntent, err := kitreasoning.FromOpenAIResponses(&request)
 		if err != nil {
-			return err
-		}
-		mode := kitreasoning.ModeEnabled
-		if suffixEffort == kitreasoning.EffortNone {
-			mode = kitreasoning.ModeDisabled
-		}
-		currentIntent, err = kitreasoning.MergeExplicitAndSuffix(currentIntent, kitreasoning.Intent{Mode: mode, Effort: suffixEffort, Source: kitreasoning.SourceSuffix}, modelName)
-		return err
-	}
-	if err := mergeSuffix(request.Model, effort); err != nil {
-		return nil, kitreasoning.AsClientError(err)
-	}
-	if !preserveSuffix && info != nil && info.OriginModelName != request.Model {
-		originEffort, _ := reasoning.ParseOpenAIReasoningEffortFromModelSuffix(info.OriginModelName)
-		if err := mergeSuffix(info.OriginModelName, originEffort); err != nil {
 			return nil, kitreasoning.AsClientError(err)
 		}
-	}
-	if effort != "" {
-		request.Model = originModel
-		if info != nil {
-			info.UpstreamModelName = originModel
+		mergeSuffix := func(modelName, rawEffort string) error {
+			if rawEffort == "" {
+				return nil
+			}
+			suffixEffort, err := kitreasoning.ParseEffort(rawEffort)
+			if err != nil {
+				return err
+			}
+			mode := kitreasoning.ModeEnabled
+			if suffixEffort == kitreasoning.EffortNone {
+				mode = kitreasoning.ModeDisabled
+			}
+			currentIntent, err = kitreasoning.MergeExplicitAndSuffix(currentIntent, kitreasoning.Intent{Mode: mode, Effort: suffixEffort, Source: kitreasoning.SourceSuffix}, modelName)
+			return err
 		}
-	}
-	if canonicalEffort := kitreasoning.EffectiveEffort(currentIntent); canonicalEffort != "" {
-		if request.Reasoning == nil {
-			request.Reasoning = &dto.Reasoning{}
+		if err := mergeSuffix(request.Model, effort); err != nil {
+			return nil, kitreasoning.AsClientError(err)
 		}
-		request.Reasoning.Effort = string(canonicalEffort)
-		if info != nil {
-			info.SetReasoningEffort(string(canonicalEffort))
+		if !preserveSuffix && info != nil && info.OriginModelName != request.Model {
+			originEffort, _ := reasoning.ParseOpenAIReasoningEffortFromModelSuffix(info.OriginModelName)
+			if err := mergeSuffix(info.OriginModelName, originEffort); err != nil {
+				return nil, kitreasoning.AsClientError(err)
+			}
+		}
+		if effort != "" {
+			request.Model = originModel
+			if info != nil {
+				info.UpstreamModelName = originModel
+			}
+		}
+		if canonicalEffort := kitreasoning.EffectiveEffort(currentIntent); canonicalEffort != "" {
+			if request.Reasoning == nil {
+				request.Reasoning = &dto.Reasoning{}
+			}
+			request.Reasoning.Effort = string(canonicalEffort)
+			if info != nil {
+				info.SetReasoningEffort(string(canonicalEffort))
+			}
 		}
 	}
 	if info != nil && info.ChannelType == constant.ChannelTypeCodeBuddy {
