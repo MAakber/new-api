@@ -1,0 +1,9 @@
+Auto-merging relay/channel/claude/adaptor.go
+Auto-merging relay/channel/claude/relay-claude.go
+Auto-merging relay/channel/openai/helper.go
+Auto-merging relay/common/relay_info.go
+Auto-merging relay/common/relay_info_test.go
+[codex/upstream-sync-2026-09-10 b67fbd012] fix(relay): follow-up billing integrity and conversion completions (#7170)
+ Author: Calcium-Ion <i@caion.me>
+ Date: Thu Sep 3 10:40:05 2026 +0800
+ 18 files changed, 958 insertions(+), 103 deletions(-)

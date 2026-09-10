@@ -1,0 +1,17 @@
+Auto-merging relay/channel/openai/adaptor.go
+Auto-merging relay/claude_handler.go
+Auto-merging relay/common/override.go
+CONFLICT (content): Merge conflict in relay/common/override.go
+Auto-merging relay/common/override_test.go
+Auto-merging relay/common/relay_info.go
+Auto-merging relay/common/relay_info_test.go
+CONFLICT (content): Merge conflict in relay/common/relay_info_test.go
+Auto-merging web/src/features/usage-logs/components/dialogs/details-dialog.tsx
+error: could not apply eab18a835... fix: record reasoning effort consistently in usage logs (#6641)
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

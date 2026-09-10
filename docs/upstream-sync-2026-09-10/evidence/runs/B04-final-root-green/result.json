@@ -1,0 +1,26 @@
+{
+  "id": "B04-final-root-green",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./..."
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "54c948f715414eada868462b3c60882ce745a57f",
+  "started_at": "2026-09-10T21:24:48.848Z",
+  "finished_at": "2026-09-10T21:25:13.456Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

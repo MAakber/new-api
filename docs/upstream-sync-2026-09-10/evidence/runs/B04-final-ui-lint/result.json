@@ -1,0 +1,28 @@
+{
+  "id": "B04-final-ui-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/system-settings/models/global-settings-card.tsx"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "c532c2108815a09dd541769fa4ab3ca170f4ce76",
+  "started_at": "2026-09-10T21:21:39.120Z",
+  "finished_at": "2026-09-10T21:21:39.640Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

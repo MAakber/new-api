@@ -1,0 +1,18 @@
+{
+  "upstream": "7d09c6954ef3e6d65a37840ed3a566eb9acedaaa",
+  "unit": "B04.1-cache-key",
+  "before_head": "8cbdaa420af12948129cea75c0c8cd997e7a683a",
+  "after_head": "d9d133156f978409fb701476b17ea71cb53a6d99",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "7d09c6954ef3e6d65a37840ed3a566eb9acedaaa"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relaykit/relayconvert/internal/oai_chat/to_oai_responses_req.go",
+    "relaykit/relayconvert/internal/oai_chat/to_oai_responses_req_test.go"
+  ]
+}

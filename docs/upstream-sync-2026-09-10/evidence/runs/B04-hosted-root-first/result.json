@@ -1,0 +1,31 @@
+{
+  "id": "B04-hosted-root-first",
+  "command": [
+    "go",
+    "test",
+    "./relay/...",
+    "./service",
+    "./controller",
+    "./router",
+    "./model",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "e4efdab8c17b8b4a3bfbba8a43b2a5098ec1ba97",
+  "started_at": "2026-09-10T20:34:23.330Z",
+  "finished_at": "2026-09-10T20:34:57.204Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

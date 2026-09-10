@@ -1,0 +1,17 @@
+{
+  "upstream": "8f6961c675932f406260ff0c218bc2aa0603e9b2",
+  "unit": "B04.1-vllm-budget",
+  "before_head": "d9d133156f978409fb701476b17ea71cb53a6d99",
+  "after_head": "40f4fa64c2097c018abf3cff299e607218e3122e",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "8f6961c675932f406260ff0c218bc2aa0603e9b2"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relaykit/dto/openai_request.go"
+  ]
+}

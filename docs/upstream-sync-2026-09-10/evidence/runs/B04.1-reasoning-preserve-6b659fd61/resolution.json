@@ -1,0 +1,7 @@
+{
+  "upstream": "6b659fd61c50e35d559c41520a0fff7b8aea56a4",
+  "before_head": "a067ec3aea1c281606878267e6269c94f32d8eb6",
+  "after_head": "595e9d2de4ce8f77ecbddf72ae4c3ebc4f62f5c3",
+  "rationale": "Preserve the CodeBuddy stream-options exception and request profile, then adopt conditional reasoning rendering and exact effort preservation.",
+  "recorded_at": "2026-09-10T21:19:09.371Z"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "B04-native-count-tokens",
+  "command": [
+    "go",
+    "test",
+    "./router",
+    "-run",
+    "TestClaudeCodeCountTokens",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "e753c9db706e7d8fd3466148419c29cdd43f401b",
+  "started_at": "2026-09-10T20:48:01.848Z",
+  "finished_at": "2026-09-10T20:48:12.385Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

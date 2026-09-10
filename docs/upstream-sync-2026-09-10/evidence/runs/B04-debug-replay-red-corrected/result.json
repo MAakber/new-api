@@ -1,0 +1,29 @@
+{
+  "id": "B04-debug-replay-red-corrected",
+  "command": [
+    "go",
+    "test",
+    "./relay/channel",
+    "-run",
+    "TestRequestDebugCapture",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "e749e7ad69b50303ceb98c289ef16796fbda4ec8",
+  "started_at": "2026-09-10T20:02:37.345Z",
+  "finished_at": "2026-09-10T20:02:40.094Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

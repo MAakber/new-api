@@ -1,0 +1,41 @@
+Applied patch to 'controller/channel-test.go' cleanly.
+Applied patch to 'controller/model.go' with conflicts.
+Applied patch to 'middleware/distributor.go' cleanly.
+Applied patch to 'model/channel_cache.go' with conflicts.
+Applied patch to 'model/channel_satisfy.go' cleanly.
+Applied patch to 'relay/channel/claude/adaptor_test.go' cleanly.
+Applied patch to 'relay/channel/claude/relay_claude_test.go' cleanly.
+Applied patch to 'relay/channel/openai/adaptor.go' cleanly.
+Applied patch to 'relay/claude_handler.go' cleanly.
+Applied patch to 'relay/common/relay_info.go' cleanly.
+Applied patch to 'relay/common/relay_info_test.go' cleanly.
+Applied patch to 'relay/compatible_handler.go' cleanly.
+Applied patch to 'relay/convert_request_error_test.go' cleanly.
+Applied patch to 'relay/gemini_handler.go' cleanly.
+Applied patch to 'relay/helper/model_mapped.go' with conflicts.
+Falling back to direct application...
+Applied patch to 'relay/helper/price.go' cleanly.
+Applied patch to 'relay/helper/price_test.go' cleanly.
+Applied patch to 'relay/helper/reasoning_suffix.go' cleanly.
+Applied patch to 'relay/helper/reasoning_suffix_test.go' cleanly.
+Applied patch to 'relay/responses_handler.go' cleanly.
+Falling back to direct application...
+Applied patch to 'relaykit/relayconvert/internal/oai_chat/to_claude_messages_req.go' cleanly.
+Applied patch to 'relaykit/relayconvert/internal/oai_responses/to_claude_messages_req.go' cleanly.
+Applied patch to 'relaykit/relayconvert/internal/shared/claude/reasoning.go' cleanly.
+Applied patch to 'relaykit/relayconvert/internal/shared/gemini/request.go' cleanly.
+Applied patch to 'relaykit/relayconvert/reasoning/claude.go' cleanly.
+Applied patch to 'relaykit/relayconvert/reasoning/suffix.go' cleanly.
+Applied patch to 'relaykit/relayconvert/reasoning/suffix_test.go' cleanly.
+Applied patch to 'relaykit/relayconvert/request_compat.go' cleanly.
+Applied patch to 'relaykit/relayconvert/request_registry.go' cleanly.
+Applied patch to 'setting/model_setting/global.go' cleanly.
+Falling back to direct application...
+Falling back to direct application...
+Applied patch to 'setting/ratio_setting/model_ratio.go' cleanly.
+Applied patch to 'setting/reasoning/suffix.go' cleanly.
+Falling back to direct application...
+Applied patch to 'web/src/features/system-settings/models/global-settings-card.tsx' cleanly.
+U controller/model.go
+U model/channel_cache.go
+U relay/helper/model_mapped.go

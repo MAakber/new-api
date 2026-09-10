@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "commit": "54c948f715414eada868462b3c60882ce745a57f",
+  "checked_at": "2026-09-10T21:30:59.997Z",
+  "checks": [
+    "evidence/runs/B04-final-root-recheck/result.json",
+    "evidence/runs/B04-final-kit/result.json",
+    "evidence/runs/B04-final-kit-build/result.json",
+    "evidence/runs/B04-final-ui-lint/result.json",
+    "evidence/runs/B04-final-i18n/result.json",
+    "evidence/runs/B04-modifiers-types/result.json",
+    "evidence/runs/B04-modifier-compat-green/result.json",
+    "evidence/runs/B04-replay-race/result.json"
+  ],
+  "root_pass_events": 2172,
+  "relaykit_pass_events": 440,
+  "notes": [
+    "Root count includes deterministic subtests; 10 configured-DB cases are skipped in this invocation and are not counted as passed. B06 contains actual SQLite/MySQL/MariaDB/PostgreSQL migration evidence; final database acceptance remains B18.",
+    "Native count_tokens forwards original bytes and the actual local Claude Code response with unchanged balances.",
+    "Exact and wildcard compact prices, mapped model names, request exclusions and legacy model aliases remain supported; cache-disabled routing and compact modifier retries have regression coverage.",
+    "Fixed upstream header-timeout disable inheritance, cumulative Gemini stream usage double-counting, and an upstream early return that bypassed Codex/CodeBuddy request profiles.",
+    "Kept the complete original conversion golden matrix and billing sidecars; reviewed updated output rather than narrowing coverage.",
+    "B04-final-root-green retained two transient Windows filesystem failures (package discovery and TempDir cleanup). Read-only go list and the unchanged-source B04-final-root-recheck passed; no check or assertion was disabled.",
+    "Pure DecodeJsonWithValidation helper/test from pending B08 45c3fbe8a accompanies codec integration. Security proofs and actions still pending in B08.",
+    "Provider interoperability and production snapshot acceptance remain pending final gates."
+  ]
+}

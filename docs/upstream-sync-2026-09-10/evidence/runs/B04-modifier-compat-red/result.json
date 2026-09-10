@@ -1,0 +1,28 @@
+{
+  "id": "B04-modifier-compat-red",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./model",
+    "./relay/helper",
+    "-run=^TestModelModifierChannelSelection$|^TestCompactModifiersRetainMappingPriceAndRetryIdentity$"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "bffe6a9d30b3025f8807df62f33f030a97998d05",
+  "started_at": "2026-09-10T21:11:07.268Z",
+  "finished_at": "2026-09-10T21:11:11.566Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -665,3 +665,329 @@
 - Sync: 13 files / 78 tests; playground: 20 files / 83 tests; downstream preservation: 71 files / 236 tests. Build, typecheck, touched lint, console Unicode/lifecycle regressions and seven-language copy checks passed.
 - Evidence: evidence/B03-acceptance.json.
 - Next: B04.1: integrate inspected request cancellation/replay patches; preserve downstream count_tokens path during replay metadata migration.
+
+## 2026-09-10T19:47:39.408Z — B04.2-cancel applying bd585d78e
+
+- Before HEAD: 440a9ecb9ad606e1ad9a6c83f3f8ce14d3f0c465.
+- Upstream: bd585d78efd418aaf7baa7e34fa48c5536581868 — fix(aws): cancel Bedrock requests on client disconnect (#6589).
+- Reviewed paths: relay/channel/aws/relay-aws.go, relay/channel/aws/relay_aws_test.go, service/billing_usage.go, service/text_quota_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:47:39.666Z — B04.2-cancel implemented
+
+- Result: exit 0; HEAD 0068eeb068b63ce9cc13fae6cf06e970e76368b8.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.2-cancel-bd585d78e/result.json.
+- Next: B04.2-cancel: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T19:47:42.155Z — B04.2-replay applying d6b5ce99d
+
+- Before HEAD: 0068eeb068b63ce9cc13fae6cf06e970e76368b8.
+- Upstream: d6b5ce99de4930f348cda8dd3bb14f739ac38e22 — fix(relay): set Request.GetBody so the HTTP/2 transport can transparently retry after an upstream stream reset (#6249).
+- Reviewed paths: common/body_storage.go, relay/alpha_search_handler.go, relay/channel/api_request.go, relay/channel/api_request_getbody_test.go, relay/channel/api_request_redirect_test.go, relay/channel/jimeng/adaptor.go, relay/channel/task/sora/adaptor.go, relay/channel/task/sora/adaptor_test.go, relay/chat_completions_via_responses.go, relay/claude_handler.go, relay/common/outbound_body.go, relay/common/outbound_body_test.go, relay/common/relay_info.go, relay/common/relay_info_test.go, relay/compatible_handler.go, relay/embedding_handler.go, relay/gemini_handler.go, relay/image_handler.go, relay/rerank_handler.go, relay/responses_handler.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:47:42.438Z — B04.2-replay conflicts
+
+- Result: exit 1; HEAD 0068eeb068b63ce9cc13fae6cf06e970e76368b8.
+- Conflicts: relay/channel/api_request.go, relay/common/relay_info_test.go.
+- Evidence: evidence/runs/B04.2-replay-d6b5ce99d/result.json.
+- Next: B04.2-replay: reconcile failed cherry-pick using evidence/runs/B04.2-replay-d6b5ce99d; do not restart or abort automatically.
+
+## 2026-09-10T19:50:01.076Z — B04.2-replay conflict resolution recorded
+
+- Code: a507a86db5b4d7f87209a5132b21965b3c463797.
+- Retained downstream raw diagnostic capture and admin-only storage around the redirect-disabled copy of the shared HTTP client. Retained downstream converter-option tests alongside new replay metadata assertions.
+- Evidence: evidence/runs/B04.2-replay-d6b5ce99d/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T19:50:03.560Z — B04.2-replay-body applying ea4f02101
+
+- Before HEAD: a507a86db5b4d7f87209a5132b21965b3c463797.
+- Upstream: ea4f021012cddc52126123ab4ed8ced3df260b85 — refactor(relay): move replay metadata onto request bodies.
+- Reviewed paths: common/body_storage.go, common/body_storage_test.go, relay/alpha_search_handler.go, relay/channel/api_request.go, relay/channel/api_request_getbody_test.go, relay/channel/jimeng/adaptor.go, relay/channel/task/sora/adaptor.go, relay/channel/task/sora/adaptor_test.go, relay/chat_completions_via_responses.go, relay/claude_handler.go, relay/common/outbound_body.go, relay/common/outbound_body_test.go, relay/common/relay_info.go, relay/common/relay_info_test.go, relay/compatible_handler.go, relay/embedding_handler.go, relay/gemini_handler.go, relay/image_handler.go, relay/rerank_handler.go, relay/responses_handler.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:50:03.823Z — B04.2-replay-body conflicts
+
+- Result: exit 1; HEAD a507a86db5b4d7f87209a5132b21965b3c463797.
+- Conflicts: relay/channel/api_request.go.
+- Evidence: evidence/runs/B04.2-replay-body-ea4f02101/result.json.
+- Next: B04.2-replay-body: reconcile failed cherry-pick using evidence/runs/B04.2-replay-body-ea4f02101; do not restart or abort automatically.
+
+## 2026-09-10T19:53:42.381Z — B04.2-replay-body conflict resolution recorded
+
+- Code: ee8e3e51628db015e93aae7ecff41de0fc800890.
+- Preserved downstream raw diagnostics while moving replay metadata to bodies. Adapted downstream ClaudeCountTokensHelper to NewReplayableBodyReader so count_tokens retains complete body replay and zero-charge handling. No uses of removed ReaderOnly or RelayInfo replay fields remain.
+- Evidence: evidence/runs/B04.2-replay-body-ea4f02101/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T20:09:49.986Z — B04.1-effort-log applying eab18a835
+
+- Before HEAD: 116d8003fd067c4a6ca8111890b473dc00a474f7.
+- Upstream: eab18a83579187f880139894dd9e7f06d1a492ce — fix: record reasoning effort consistently in usage logs (#6641).
+- Reviewed paths: relay/channel/deepseek/adaptor.go, relay/channel/openai/adaptor.go, relay/channel/xai/adaptor.go, relay/claude_handler.go, relay/common/override.go, relay/common/override_test.go, relay/common/relay_info.go, relay/common/relay_info_test.go, web/src/features/usage-logs/components/dialogs/details-dialog.tsx, web/src/features/usage-logs/lib/format.ts.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T20:09:50.278Z — B04.1-effort-log conflicts
+
+- Result: exit 1; HEAD 116d8003fd067c4a6ca8111890b473dc00a474f7.
+- Conflicts: relay/common/override.go, relay/common/relay_info_test.go.
+- Evidence: evidence/runs/B04.1-effort-log-eab18a835/result.json.
+- Next: B04.1-effort-log: reconcile failed cherry-pick using evidence/runs/B04.1-effort-log-eab18a835; do not restart or abort automatically.
+
+## 2026-09-10T20:19:48.639Z — B04.1-effort-log conflict resolution recorded
+
+- Code: 0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4.
+- Combine upstream reasoning-effort synchronization and usage-log display with downstream Claude Code header validation; retain converter options and CodeBuddy StreamOptions regression cases.
+- Evidence: evidence/runs/B04.1-effort-log-eab18a835/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T20:21:03.331Z — B04.1-responses-penalties applying 253a74dd1
+
+- Before HEAD: 0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4.
+- Upstream: 253a74dd1b47e2bde6dd6027c6aa1b5e0ee67827 — fix(relay): preserve presence/frequency penalty in Responses conversion (#6654).
+- Reviewed paths: relay/channel/codex/adaptor.go, relay/channel/codex/adaptor_test.go, relaykit/dto/openai_request.go, relaykit/dto/openai_request_zero_value_test.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_req.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_req_test.go, relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go, relaykit/relayconvert/internal/oai_responses/to_oai_chat_req_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T20:21:03.602Z — B04.1-responses-penalties conflicts
+
+- Result: exit 1; HEAD 0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4.
+- Conflicts: relay/channel/codex/adaptor_test.go.
+- Evidence: evidence/runs/B04.1-responses-penalties-253a74dd1/result.json.
+- Next: B04.1-responses-penalties: reconcile failed cherry-pick using evidence/runs/B04.1-responses-penalties-253a74dd1; do not restart or abort automatically.
+
+## 2026-09-10T20:22:10.089Z — B04.1-responses-penalties conflict resolution recorded
+
+- Code: 8cbdaa420af12948129cea75c0c8cd997e7a683a.
+- Retain legacy Codex identity, channel-test shaping and compact request tests alongside penalty stripping; Responses conversions preserve explicit zero penalties for compatible upstreams.
+- Evidence: evidence/runs/B04.1-responses-penalties-253a74dd1/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T20:22:12.566Z — B04.1-cache-key applying 7d09c6954
+
+- Before HEAD: 8cbdaa420af12948129cea75c0c8cd997e7a683a.
+- Upstream: 7d09c6954ef3e6d65a37840ed3a566eb9acedaaa — fix: prompt_cache_key openai chat -> openai responses (#6861).
+- Reviewed paths: relaykit/relayconvert/internal/oai_chat/to_oai_responses_req.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_req_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T20:22:12.813Z — B04.1-cache-key implemented
+
+- Result: exit 0; HEAD d9d133156f978409fb701476b17ea71cb53a6d99.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.1-cache-key-7d09c6954/result.json.
+- Next: B04.1-cache-key: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T20:22:15.344Z — B04.1-vllm-budget applying 8f6961c67
+
+- Before HEAD: d9d133156f978409fb701476b17ea71cb53a6d99.
+- Upstream: 8f6961c675932f406260ff0c218bc2aa0603e9b2 — feat: vllm thinking_token_budget (#7027).
+- Reviewed paths: relaykit/dto/openai_request.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T20:22:15.575Z — B04.1-vllm-budget implemented
+
+- Result: exit 0; HEAD 40f4fa64c2097c018abf3cff299e607218e3122e.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.1-vllm-budget-8f6961c67/result.json.
+- Next: B04.1-vllm-budget: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T20:22:18.127Z — B04.2-header-timeout applying b518d0033
+
+- Before HEAD: 40f4fa64c2097c018abf3cff299e607218e3122e.
+- Upstream: b518d0033b670f5518b8a2f1cf8ea0142a9d1b8d — fix(relay): bound the wait for upstream response headers (fixes unbounded heap growth → OOM) (#6949).
+- Reviewed paths: .env.example, README.md, common/constants.go, common/init.go, service/http_client.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T20:22:18.393Z — B04.2-header-timeout implemented
+
+- Result: exit 0; HEAD 25a89b54e1584debead8a9aa41a3e6eed4d5fc1f.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.2-header-timeout-b518d0033/result.json.
+- Next: B04.2-header-timeout: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T20:27:48.445Z — B04.3-compact-compat adaptation begun
+
+- Before HEAD: e1bf6be758141e04641727992a9427a581c3c389.
+- Upstream: bb234ff4186140091db0defab250763861de2b45.
+- Adopt channel-aware compact capability API while retaining legacy suffix routing, model mapping, configured prices and advertised aliases under A05.
+- Evidence: evidence/runs/B04.3-compact-compat-bb234ff41/intent.json.
+
+## 2026-09-10T20:27:53.489Z — B04.3-compact-compat adaptation recorded
+
+- Code: 6e90a5c9aaa31b675d14ed2df9c1d686b3deae66.
+- Channel-aware compact support checks adopted. Existing suffix names remain in discovery and channel tests, are mapped to provider models, and retain exact/wildcard pricing; removal would break current saved configurations.
+- Evidence: evidence/runs/B04.3-compact-compat-bb234ff41/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T20:29:19.056Z — B04.3 compact test conflict correction
+
+- Retained Vercel registration test alongside renamed compact capability test; unfinished markers in the prior unverified adaptation commit were removed before testing. Added marker guard to adaptation recorder.
+- Code: b217969149189d018ffb501159e2165c7bfda631
+
+## 2026-09-10T20:30:13.310Z — B04.1-hosted-conversion applying 0ed497f06
+
+- Before HEAD: b217969149189d018ffb501159e2165c7bfda631.
+- Upstream: 0ed497f066a68613375124303ef54f220267b334 — feat(relay): hosted-tool conversion fidelity, reasoning normalization, and billing usage integrity (#7137).
+- Reviewed paths: .gitignore, controller/channel-test.go, controller/relay.go, controller/relay_count_tokens_test.go, model/channel.go, relay/channel/aws/adaptor.go, relay/channel/aws/relay_aws_test.go, relay/channel/claude/adaptor.go, relay/channel/claude/adaptor_test.go, relay/channel/claude/relay-claude.go, relay/channel/claude/relay_claude_test.go, relay/channel/claude/relay_responses.go, relay/channel/gemini/adaptor.go, relay/channel/gemini/relay-gemini-native.go, relay/channel/gemini/relay-gemini.go, relay/channel/gemini/relay_responses.go, relay/channel/newapi/adaptor.go, relay/channel/openai/adaptor.go, relay/channel/openai/chat_via_responses.go, relay/channel/openai/chat_via_responses_test.go, relay/channel/openai/helper.go, relay/channel/openai/relay-openai.go, relay/channel/openai/relay_responses.go, relay/channel/openai/responses_via_chat.go, relay/channel/sub2api/adaptor_test.go, relay/channel/vertex/adaptor.go, relay/channel/zhipu_4v/adaptor.go, relay/chat_completions_via_responses.go, relay/chat_completions_via_responses_test.go, relay/claude_handler.go, relay/common/conversion_diagnostics.go, relay/common/override.go, relay/common/relay_info.go, relay/common/relay_info_test.go, relay/common/tool_usage.go, relay/compatible_handler.go, relay/convert_request_error.go, relay/convert_request_error_test.go, relay/gemini_handler.go, relay/helper/price.go, relay/helper/price_test.go, relay/helper/reasoning_suffix.go, relay/helper/reasoning_suffix_test.go, relay/responses_handler.go, relaykit/README.md, relaykit/dto/billing_usage.go, relaykit/dto/channel_settings.go, relaykit/dto/channel_settings_test.go, relaykit/dto/claude.go, relaykit/dto/gemini.go, relaykit/dto/openai_request.go, relaykit/dto/openai_response.go, relaykit/dto/reasoning_state.go, relaykit/dto/usage_merge.go, relaykit/dto/usage_merge_test.go, relaykit/reasonmap/reasonmap.go, relaykit/relayconvert/claude_default_max_tokens_test.go, relaykit/relayconvert/convmeta/meta.go, relaykit/relayconvert/convmeta/meta_test.go, relaykit/relayconvert/convmeta/options.go, relaykit/relayconvert/golden_test.go, relaykit/relayconvert/internal/claude_messages/citations.go, relaykit/relayconvert/internal/claude_messages/stream_billing_usage_test.go, relaykit/relayconvert/internal/claude_messages/to_oai_chat_req.go, relaykit/relayconvert/internal/claude_messages/to_oai_chat_resp.go, relaykit/relayconvert/internal/claude_messages/to_oai_responses_hosted_stream.go, relaykit/relayconvert/internal/claude_messages/to_oai_responses_req.go, relaykit/relayconvert/internal/gemini_chat/grounding.go, relaykit/relayconvert/internal/gemini_chat/to_oai_chat_req.go, relaykit/relayconvert/internal/gemini_chat/to_oai_chat_resp.go, relaykit/relayconvert/internal/gemini_chat/to_oai_responses_hosted_stream.go, relaykit/relayconvert/internal/oai_chat/citations.go, relaykit/relayconvert/internal/oai_chat/to_claude_messages_req.go, relaykit/relayconvert/internal/oai_chat/to_claude_messages_resp.go, relaykit/relayconvert/internal/oai_chat/to_claude_messages_resp_test.go, relaykit/relayconvert/internal/oai_chat/to_gemini_chat_req.go, relaykit/relayconvert/internal/oai_chat/to_gemini_chat_resp.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_req.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_resp.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_resp_test.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_stream_resp.go, relaykit/relayconvert/internal/oai_responses/to_claude_messages_req.go, relaykit/relayconvert/internal/oai_responses/to_claude_messages_resp.go, relaykit/relayconvert/internal/oai_responses/to_claude_messages_stream_resp.go, relaykit/relayconvert/internal/oai_responses/to_claude_messages_stream_resp_test.go, relaykit/relayconvert/internal/oai_responses/to_gemini_chat_req.go, relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go, relaykit/relayconvert/internal/oai_responses/to_oai_chat_resp.go, relaykit/relayconvert/internal/oai_responses/to_oai_chat_resp_test.go, relaykit/relayconvert/internal/oai_responses/to_oai_chat_stream_resp.go, relaykit/relayconvert/internal/shared/claude/reasoning.go, relaykit/relayconvert/internal/shared/claude/usage.go, relaykit/relayconvert/internal/shared/gemini/request.go, relaykit/relayconvert/internal/toolconv/decode.go, relaykit/relayconvert/internal/toolconv/encode.go, relaykit/relayconvert/internal/toolconv/hosted_values.go, relaykit/relayconvert/internal/toolconv/model.go, relaykit/relayconvert/internal/toolconv/policy_test.go, relaykit/relayconvert/internal/toolconv/response.go, relaykit/relayconvert/internal/toolconv/response_artifacts.go, relaykit/relayconvert/reasoning/claude.go, relaykit/relayconvert/reasoning/gemini.go, relaykit/relayconvert/reasoning/intent.go, relaykit/relayconvert/reasoning/intent_test.go, relaykit/relayconvert/reasoning/suffix.go, relaykit/relayconvert/reasoning/suffix_test.go, relaykit/relayconvert/request_compat.go, relaykit/relayconvert/request_registry.go, relaykit/relayconvert/request_registry_test.go, relaykit/relayconvert/response_compat.go, relaykit/relayconvert/response_registry.go, relaykit/relayconvert/response_registry_test.go, relaykit/relayconvert/terminal_stream_test.go, relaykit/relayconvert/testdata/golden/request/claude_to_gemini.golden.json, relaykit/relayconvert/testdata/golden/request/claude_to_openai.golden.json, relaykit/relayconvert/testdata/golden/request/claude_to_openai_responses.golden.json, relaykit/relayconvert/testdata/golden/request/gemini_to_claude.golden.json, relaykit/relayconvert/testdata/golden/request/gemini_to_openai.golden.json, relaykit/relayconvert/testdata/golden/request/gemini_to_openai_responses.golden.json, relaykit/relayconvert/testdata/golden/request/openai_responses_to_gemini.golden.json, relaykit/relayconvert/testdata/golden/request/openai_to_gemini.golden.json, relaykit/relayconvert/testdata/golden/response/claude_to_gemini.golden.json, relaykit/relayconvert/testdata/golden/response/gemini_to_claude.golden.json, relaykit/relayconvert/testdata/golden/response/openai_responses_to_claude.golden.json, relaykit/relayconvert/testdata/golden/response/openai_responses_to_gemini.golden.json, relaykit/relayconvert/testdata/golden/response/openai_responses_to_openai.golden.json, relaykit/relayconvert/testdata/golden/response/openai_to_claude.golden.json, relaykit/relayconvert/testdata/golden/response/openai_to_gemini.golden.json, relaykit/relayconvert/testdata/golden/response/openai_to_openai_responses.golden.json, relaykit/relayconvert/testdata/golden/stream/claude_to_gemini.golden.json, relaykit/relayconvert/testdata/golden/stream/gemini_to_claude.golden.json, relaykit/relayconvert/text_converter_registry.go, relaykit/relayconvert/text_converter_registry_test.go, relaykit/relayconvert/tool_loss_policy_test.go, relaykit/types/conversion.go, router/relay-router.go, router/relay_router_test.go, service/billing_session.go, service/billing_usage.go, service/log_info_generate.go, service/quota.go, service/request_converter.go, service/response_converter.go, service/text_quota.go, service/text_quota_test.go, service/token_counter.go, setting/model_setting/global.go, setting/ratio_setting/model_ratio.go, setting/reasoning/suffix.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T20:30:14.171Z — B04.1-hosted-conversion conflicts
+
+- Result: exit 1; HEAD b217969149189d018ffb501159e2165c7bfda631.
+- Conflicts: controller/channel-test.go, controller/relay.go, model/channel.go, relay/channel/openai/helper.go, relay/claude_handler.go, relay/common/override.go, relay/common/relay_info.go, relay/compatible_handler.go, relaykit/dto/channel_settings_test.go, service/billing_usage.go, service/text_quota_test.go.
+- Evidence: evidence/runs/B04.1-hosted-conversion-0ed497f06/result.json.
+- Next: B04.1-hosted-conversion: reconcile failed cherry-pick using evidence/runs/B04.1-hosted-conversion-0ed497f06; do not restart or abort automatically.
+
+## 2026-09-10T20:34:20.946Z — B04.1-hosted-conversion conflict resolution recorded
+
+- Code: e4efdab8c17b8b4a3bfbba8a43b2a5098ec1ba97.
+- Integrate hosted-tool and reasoning conversions, canonical usage and admin diagnostics while preserving upstream interception, Claude Code headers, Codex session identities, Vercel and compact compatibility. Keep native count_tokens forwarding and its sole route; omit conflicting local estimator. Keep complete existing golden conversion matrix and deleted fixtures for verification rather than narrowing tests. Channel health-check call is adapted to the current loop; worker refactor remains B07.
+- Evidence: evidence/runs/B04.1-hosted-conversion-0ed497f06/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T20:36:45.479Z — B04.1-hosted-followup applying bbd97446c
+
+- Before HEAD: e4efdab8c17b8b4a3bfbba8a43b2a5098ec1ba97.
+- Upstream: bbd97446c26092f2e7250af429096064b9e0f899 — fix(relay): follow-up billing integrity and conversion completions (#7170).
+- Reviewed paths: relay/channel/claude/adaptor.go, relay/channel/claude/adaptor_test.go, relay/channel/claude/relay-claude.go, relay/channel/gemini/relay-gemini.go, relay/channel/gemini/relay_gemini_usage_test.go, relay/channel/openai/helper.go, relay/common/relay_info.go, relay/common/relay_info_test.go, relaykit/dto/billing_usage.go, relaykit/dto/billing_usage_test.go, relaykit/dto/usage_merge.go, relaykit/dto/usage_merge_test.go, relaykit/relayconvert/internal/gemini_chat/to_oai_chat_resp.go, relaykit/relayconvert/internal/oai_chat/to_claude_messages_resp.go, relaykit/relayconvert/internal/oai_chat/to_claude_messages_resp_test.go, relaykit/relayconvert/internal/oai_chat/to_gemini_chat_req.go, relaykit/relayconvert/internal/toolconv/decode.go, relaykit/relayconvert/internal/toolconv/encode.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T20:36:45.786Z — B04.1-hosted-followup implemented
+
+- Result: exit 0; HEAD b67fbd012203a1ebe950853b230c313c3d779660.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.1-hosted-followup-bbd97446c/result.json.
+- Next: B04.1-hosted-followup: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T20:46:38.597Z — B04.3-count-tokens adaptation begun
+
+- Before HEAD: e753c9db706e7d8fd3466148419c29cdd43f401b.
+- Upstream: 3a9f41ee85cc369f5b8d7fe6e62ff4e7bf3a9ec8.
+- Preserve native count_tokens forwarding under A04; validate exact upstream response, original request and zero net quota through the real router instead of disabling the endpoint.
+- Evidence: evidence/runs/B04.3-count-tokens-3a9f41ee8/intent.json.
+
+## 2026-09-10T20:47:58.884Z — B04.3 counting intent reconciled
+
+- Git automatic packing delayed the intent recorder. Actual source boundary recovered from e753c9db7 parent; initial intent retained with separate reconciliation evidence.
+
+## 2026-09-10T20:47:59.469Z — B04.3-count-tokens adaptation recorded
+
+- Code: e753c9db706e7d8fd3466148419c29cdd43f401b.
+- Retain the sole native forwarding route and add authenticated router coverage with a local Claude Code upstream and explicit user/token quota assertions; no local estimator or endpoint removal.
+- Evidence: evidence/runs/B04.3-count-tokens-3a9f41ee8/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T20:51:09.497Z — B04.1-model-modifiers adaptation begun
+
+- Before HEAD: 9bde49415e59044b8fa468af7396abd8d818ad45.
+- Upstream: 7c044d7c5c2d2beadf16b21910950f8f593bc3ef.
+- Integrate explicit model modifiers and canonical pricing with legacy compact compatibility. Apply source patch separately from locales; add the reviewed setting-description key through add-missing-keys.mjs and i18n:sync.
+- Evidence: evidence/runs/B04.1-model-modifiers-7c044d7c5/intent.json.
+
+## 2026-09-10T21:02:31.302Z — B04.1-model-modifiers adaptation recorded
+
+- Code: eadd2943260f0e393ade612715c26889351471b2.
+- Adopt explicit modifiers and canonical billing while retaining custom path filtering and compact alias mappings. Apply routing normalization to request-local exclusion selection as well; retain current model-list pricing behavior until its B14 prerequisite. Transplant only independent token-limit tests; all seven translations use the required script. Compact combinations and database routing are under verification.
+- Evidence: evidence/runs/B04.1-model-modifiers-7c044d7c5/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T21:18:08.148Z — B04 model modifier compatibility verified
+
+- Red evidence: evidence/runs/B04-modifier-compat-red/result.json.
+- Correction: a067ec3aea1c281606878267e6269c94f32d8eb6.
+- Green: evidence/runs/B04-modifier-compat-green/result.json.
+- Preserve exact and legacy wildcard routing in cache and DB, including request exclusions. Compact can fall back to base-configured channels, while token-limit policy keeps its legacy compact distinction. Mapped compact billing uses BillingModelName; OriginModelName is retained for modifier parsing and retries.
+- B14 model-list filtering must use RoutingMatchModelName when its prerequisite is integrated.
+
+## 2026-09-10T21:18:10.652Z — B04.1-reasoning-preserve applying 6b659fd61
+
+- Before HEAD: a067ec3aea1c281606878267e6269c94f32d8eb6.
+- Upstream: 6b659fd61c50e35d559c41520a0fff7b8aea56a4 — fix(relay): preserve reasoning effort without implicit remapping.
+- Reviewed paths: relay/channel/deepseek/adaptor.go, relay/channel/openai/adaptor.go, relay/channel/volcengine/adaptor.go, relay/channel/xai/adaptor.go, relay/common/relay_info.go, relay/helper/model_modifier.go, relay/helper/reasoning_suffix.go, relaykit/relayconvert/internal/shared/claude/reasoning.go, relaykit/relayconvert/internal/shared/gemini/request.go, relaykit/relayconvert/reasoning/intent.go, relaykit/relayconvert/reasoning/intent_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T21:18:10.898Z — B04.1-reasoning-preserve conflicts
+
+- Result: exit 1; HEAD a067ec3aea1c281606878267e6269c94f32d8eb6.
+- Conflicts: relay/channel/openai/adaptor.go.
+- Evidence: evidence/runs/B04.1-reasoning-preserve-6b659fd61/result.json.
+- Next: B04.1-reasoning-preserve: reconcile failed cherry-pick using evidence/runs/B04.1-reasoning-preserve-6b659fd61; do not restart or abort automatically.
+
+## 2026-09-10T21:19:09.381Z — B04.1-reasoning-preserve conflict resolution recorded
+
+- Code: 595e9d2de4ce8f77ecbddf72ae4c3ebc4f62f5c3.
+- Preserve the CodeBuddy stream-options exception and request profile, then adopt conditional reasoning rendering and exact effort preservation.
+- Evidence: evidence/runs/B04.1-reasoning-preserve-6b659fd61/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T21:19:11.939Z — B04.2-raw-clone applying 2cf177ac4
+
+- Before HEAD: 595e9d2de4ce8f77ecbddf72ae4c3ebc4f62f5c3.
+- Upstream: 2cf177ac487e62c627c7d423b65735ba2481ef4f — perf(common): 批量复制 RawMessage，优化请求深拷贝 (#7221).
+- Reviewed paths: common/copy.go, relay/request_clone_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T21:19:12.173Z — B04.2-raw-clone implemented
+
+- Result: exit 0; HEAD bc4e88bfcef19b1cf9c24a9add5a06265e542265.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.2-raw-clone-2cf177ac4/result.json.
+- Next: B04.2-raw-clone: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T21:19:14.958Z — B04.1-model-capabilities applying 49ec46966
+
+- Before HEAD: bc4e88bfcef19b1cf9c24a9add5a06265e542265.
+- Upstream: 49ec4696682530781a036eab1ac195f0b04706c0 — fix(relay): apply model-specific OpenAI chat capabilities (#7211).
+- Reviewed paths: controller/channel_test_request_test.go, relay/channel/openai/adaptor.go, relaykit/dto/openai_request.go, relaykit/dto/openai_request_zero_value_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T21:19:15.206Z — B04.1-model-capabilities implemented
+
+- Result: exit 0; HEAD 3d4329a5f662e4ebbb63b5bfc93f7bb8c71f2179.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.1-model-capabilities-49ec46966/result.json.
+- Next: B04.1-model-capabilities: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T21:19:17.726Z — B04.1-kimi-tools applying 6e10f9bc9
+
+- Before HEAD: 3d4329a5f662e4ebbb63b5bfc93f7bb8c71f2179.
+- Upstream: 6e10f9bc927a4eae889864a6ef601359d53526b9 — fix(relay): preserve Kimi K3 dynamic tool loading messages.
+- Reviewed paths: relay/channel/moonshot/constants.go, relay/chat_completions_via_responses.go, relay/chat_completions_via_responses_test.go, relay/compatible_handler.go, relaykit/dto/openai_request.go, relaykit/dto/openai_request_zero_value_test.go, relaykit/relayconvert/kitutil/json_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T21:19:17.976Z — B04.1-kimi-tools implemented
+
+- Result: exit 0; HEAD 250021999958adc48097a6a9a75c9f73edf33f1b.
+- Conflicts: none.
+- Evidence: evidence/runs/B04.1-kimi-tools-6e10f9bc9/result.json.
+- Next: B04.1-kimi-tools: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T21:19:20.538Z — B04.1-json-codec applying 7bbe85bcb
+
+- Before HEAD: 250021999958adc48097a6a9a75c9f73edf33f1b.
+- Upstream: 7bbe85bcb09546e0b89572bf97198fc94889be3d — refactor(json): route JSON helpers through a host-injectable codec.
+- Reviewed paths: common/json.go, common/json_test.go, relaykit/dto/values.go, relaykit/relayconvert/internal/oai_chat/to_oai_responses_stream_resp.go, relaykit/relayconvert/kitutil/json.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T21:19:20.779Z — B04.1-json-codec conflicts
+
+- Result: exit 1; HEAD 250021999958adc48097a6a9a75c9f73edf33f1b.
+- Conflicts: common/json.go, common/json_test.go.
+- Evidence: evidence/runs/B04.1-json-codec-7bbe85bcb/result.json.
+- Next: B04.1-json-codec: reconcile failed cherry-pick using evidence/runs/B04.1-json-codec-7bbe85bcb; do not restart or abort automatically.
+
+## 2026-09-10T21:21:07.743Z — B04.1-json-codec conflict resolution recorded
+
+- Code: c532c2108815a09dd541769fa4ab3ca170f4ce76.
+- Install the host codec and conformance suite while retaining existing raw-string behavior. Include the pure DecodeJsonWithValidation helper and regression test from B08 commit 45c3fbe8a as a codec precursor; its security-session/action implementation remains pending in B08. No root-module dependency is introduced into relaykit.
+- Evidence: evidence/runs/B04.1-json-codec-7bbe85bcb/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T21:31:00.010Z — B04 stage verified
+
+- Code: 54c948f715414eada868462b3c60882ce745a57f.
+- Evidence: evidence/B04-acceptance.json.
+- All 18 B04 upstream rows have implementation and local stage verification; final review remains pending.
+- Root 2172 passing test events; independent relaykit 440, plus independent build.
+- Next: B07 fetched-model categories; preserve downstream picker and custom routes.

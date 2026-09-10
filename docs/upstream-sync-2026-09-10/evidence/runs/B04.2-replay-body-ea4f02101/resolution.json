@@ -1,0 +1,7 @@
+{
+  "upstream": "ea4f021012cddc52126123ab4ed8ced3df260b85",
+  "before_head": "a507a86db5b4d7f87209a5132b21965b3c463797",
+  "after_head": "ee8e3e51628db015e93aae7ecff41de0fc800890",
+  "rationale": "Preserved downstream raw diagnostics while moving replay metadata to bodies. Adapted downstream ClaudeCountTokensHelper to NewReplayableBodyReader so count_tokens retains complete body replay and zero-charge handling. No uses of removed ReaderOnly or RelayInfo replay fields remain.",
+  "recorded_at": "2026-09-10T19:53:42.371Z"
+}

@@ -1,0 +1,20 @@
+{
+  "upstream": "49ec4696682530781a036eab1ac195f0b04706c0",
+  "unit": "B04.1-model-capabilities",
+  "before_head": "bc4e88bfcef19b1cf9c24a9add5a06265e542265",
+  "after_head": "3d4329a5f662e4ebbb63b5bfc93f7bb8c71f2179",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "49ec4696682530781a036eab1ac195f0b04706c0"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "controller/channel_test_request_test.go",
+    "relay/channel/openai/adaptor.go",
+    "relaykit/dto/openai_request.go",
+    "relaykit/dto/openai_request_zero_value_test.go"
+  ]
+}

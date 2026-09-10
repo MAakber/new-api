@@ -1,0 +1,30 @@
+{
+  "id": "B04-modifiers-root",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./model",
+    "./middleware",
+    "./controller",
+    "./relay/...",
+    "./setting/..."
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "eadd2943260f0e393ade612715c26889351471b2",
+  "started_at": "2026-09-10T21:03:07.981Z",
+  "finished_at": "2026-09-10T21:04:13.504Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

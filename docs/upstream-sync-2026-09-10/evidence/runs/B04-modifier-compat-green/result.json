@@ -1,0 +1,29 @@
+{
+  "id": "B04-modifier-compat-green",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./model",
+    "./relay/helper",
+    "./setting/ratio_setting",
+    "./middleware"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "a067ec3aea1c281606878267e6269c94f32d8eb6",
+  "started_at": "2026-09-10T21:16:31.664Z",
+  "finished_at": "2026-09-10T21:16:48.542Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

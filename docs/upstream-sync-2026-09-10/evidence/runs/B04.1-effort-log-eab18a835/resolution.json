@@ -1,0 +1,7 @@
+{
+  "upstream": "eab18a83579187f880139894dd9e7f06d1a492ce",
+  "before_head": "116d8003fd067c4a6ca8111890b473dc00a474f7",
+  "after_head": "0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4",
+  "rationale": "Combine upstream reasoning-effort synchronization and usage-log display with downstream Claude Code header validation; retain converter options and CodeBuddy StreamOptions regression cases.",
+  "recorded_at": "2026-09-10T20:19:48.627Z"
+}

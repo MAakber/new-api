@@ -1,0 +1,18 @@
+Auto-merging relay/channel/api_request.go
+CONFLICT (content): Merge conflict in relay/channel/api_request.go
+Auto-merging relay/chat_completions_via_responses.go
+Auto-merging relay/claude_handler.go
+Auto-merging relay/common/relay_info.go
+Auto-merging relay/common/relay_info_test.go
+Auto-merging relay/compatible_handler.go
+Auto-merging relay/gemini_handler.go
+Auto-merging relay/image_handler.go
+Auto-merging relay/responses_handler.go
+error: could not apply ea4f02101... refactor(relay): move replay metadata onto request bodies
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

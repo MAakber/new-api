@@ -1,0 +1,29 @@
+{
+  "upstream": "6b659fd61c50e35d559c41520a0fff7b8aea56a4",
+  "unit": "B04.1-reasoning-preserve",
+  "before_head": "a067ec3aea1c281606878267e6269c94f32d8eb6",
+  "after_head": "a067ec3aea1c281606878267e6269c94f32d8eb6",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "6b659fd61c50e35d559c41520a0fff7b8aea56a4"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "relay/channel/openai/adaptor.go"
+  ],
+  "files": [
+    "relay/channel/deepseek/adaptor.go",
+    "relay/channel/openai/adaptor.go",
+    "relay/channel/volcengine/adaptor.go",
+    "relay/channel/xai/adaptor.go",
+    "relay/common/relay_info.go",
+    "relay/helper/model_modifier.go",
+    "relay/helper/reasoning_suffix.go",
+    "relaykit/relayconvert/internal/shared/claude/reasoning.go",
+    "relaykit/relayconvert/internal/shared/gemini/request.go",
+    "relaykit/relayconvert/reasoning/intent.go",
+    "relaykit/relayconvert/reasoning/intent_test.go"
+  ]
+}

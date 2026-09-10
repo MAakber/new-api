@@ -1,0 +1,7 @@
+{
+  "upstream": "d6b5ce99de4930f348cda8dd3bb14f739ac38e22",
+  "before_head": "0068eeb068b63ce9cc13fae6cf06e970e76368b8",
+  "after_head": "a507a86db5b4d7f87209a5132b21965b3c463797",
+  "rationale": "Retained downstream raw diagnostic capture and admin-only storage around the redirect-disabled copy of the shared HTTP client. Retained downstream converter-option tests alongside new replay metadata assertions.",
+  "recorded_at": "2026-09-10T19:50:01.065Z"
+}

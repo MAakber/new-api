@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 40f4fa64c] feat: vllm thinking_token_budget (#7027)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Wed Aug 26 21:06:22 2026 +0800
+ 1 file changed, 10 insertions(+), 8 deletions(-)

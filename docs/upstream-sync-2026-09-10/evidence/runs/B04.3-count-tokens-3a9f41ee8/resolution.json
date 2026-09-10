@@ -1,0 +1,9 @@
+{
+  "upstream": "3a9f41ee85cc369f5b8d7fe6e62ff4e7bf3a9ec8",
+  "before_head": "45d815cb33f309b459a20b607f234da6df086873",
+  "after_head": "e753c9db706e7d8fd3466148419c29cdd43f401b",
+  "files": [
+    "router/claude_count_tokens_test.go"
+  ],
+  "rationale": "Retain the sole native forwarding route and add authenticated router coverage with a local Claude Code upstream and explicit user/token quota assertions; no local estimator or endpoint removal."
+}

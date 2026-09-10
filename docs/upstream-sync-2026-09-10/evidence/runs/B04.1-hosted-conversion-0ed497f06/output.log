@@ -1,0 +1,54 @@
+Auto-merging .gitignore
+Auto-merging controller/channel-test.go
+CONFLICT (content): Merge conflict in controller/channel-test.go
+Auto-merging controller/relay.go
+CONFLICT (content): Merge conflict in controller/relay.go
+Auto-merging model/channel.go
+CONFLICT (content): Merge conflict in model/channel.go
+Auto-merging relay/channel/claude/adaptor.go
+Auto-merging relay/channel/claude/relay-claude.go
+Auto-merging relay/channel/openai/adaptor.go
+Auto-merging relay/channel/openai/chat_via_responses.go
+Auto-merging relay/channel/openai/chat_via_responses_test.go
+Auto-merging relay/channel/openai/helper.go
+CONFLICT (content): Merge conflict in relay/channel/openai/helper.go
+Auto-merging relay/channel/openai/relay_responses.go
+Auto-merging relay/channel/openai/responses_via_chat.go
+Auto-merging relay/channel/zhipu_4v/adaptor.go
+Auto-merging relay/chat_completions_via_responses.go
+Auto-merging relay/chat_completions_via_responses_test.go
+Auto-merging relay/claude_handler.go
+CONFLICT (content): Merge conflict in relay/claude_handler.go
+Auto-merging relay/common/override.go
+CONFLICT (content): Merge conflict in relay/common/override.go
+Auto-merging relay/common/relay_info.go
+CONFLICT (content): Merge conflict in relay/common/relay_info.go
+Auto-merging relay/common/relay_info_test.go
+Auto-merging relay/compatible_handler.go
+CONFLICT (content): Merge conflict in relay/compatible_handler.go
+Auto-merging relay/gemini_handler.go
+Auto-merging relay/helper/price_test.go
+Auto-merging relay/responses_handler.go
+Auto-merging relaykit/dto/channel_settings.go
+Auto-merging relaykit/dto/channel_settings_test.go
+CONFLICT (content): Merge conflict in relaykit/dto/channel_settings_test.go
+Auto-merging relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go
+Auto-merging router/relay-router.go
+Auto-merging service/billing_session.go
+Auto-merging service/billing_usage.go
+CONFLICT (content): Merge conflict in service/billing_usage.go
+Auto-merging service/log_info_generate.go
+Auto-merging service/quota.go
+Auto-merging service/text_quota.go
+Auto-merging service/text_quota_test.go
+CONFLICT (content): Merge conflict in service/text_quota_test.go
+Auto-merging service/token_counter.go
+Auto-merging setting/ratio_setting/model_ratio.go
+error: could not apply 0ed497f06... feat(relay): hosted-tool conversion fidelity, reasoning normalization, and billing usage integrity (#7137)
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

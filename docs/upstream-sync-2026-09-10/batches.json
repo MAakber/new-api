@@ -373,27 +373,194 @@
       "6e10f9bc927a4eae889864a6ef601359d53526b9",
       "7bbe85bcb09546e0b89572bf97198fc94889be3d"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B04.1",
         "action": "审查 DTO、JSON codec、模型修饰符及调用依赖，拆小单元",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B04.2",
         "action": "适配 HTTP 重放/取消/超时和多供应商转换",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B04.3",
         "action": "保留 count_tokens、旧模型别名和兼容渠道，验证 relaykit 独立性",
-        "status": "pending"
+        "status": "verified"
+      },
+      {
+        "id": "B04.2-cancel",
+        "action": "fix(aws): cancel Bedrock requests on client disconnect (#6589)",
+        "status": "verified",
+        "upstreamCommits": [
+          "bd585d78efd418aaf7baa7e34fa48c5536581868"
+        ]
+      },
+      {
+        "id": "B04.2-replay",
+        "action": "fix(relay): set Request.GetBody so the HTTP/2 transport can transparently retry after an upstream stream reset (#6249)",
+        "status": "verified",
+        "upstreamCommits": [
+          "d6b5ce99de4930f348cda8dd3bb14f739ac38e22"
+        ]
+      },
+      {
+        "id": "B04.2-replay-body",
+        "action": "refactor(relay): move replay metadata onto request bodies",
+        "status": "verified",
+        "upstreamCommits": [
+          "ea4f021012cddc52126123ab4ed8ced3df260b85"
+        ]
+      },
+      {
+        "id": "B04.1-effort-log",
+        "action": "fix: record reasoning effort consistently in usage logs (#6641)",
+        "status": "verified",
+        "upstreamCommits": [
+          "eab18a83579187f880139894dd9e7f06d1a492ce"
+        ]
+      },
+      {
+        "id": "B04.1-responses-penalties",
+        "action": "fix(relay): preserve presence/frequency penalty in Responses conversion (#6654)",
+        "status": "verified",
+        "upstreamCommits": [
+          "253a74dd1b47e2bde6dd6027c6aa1b5e0ee67827"
+        ]
+      },
+      {
+        "id": "B04.1-cache-key",
+        "action": "fix: prompt_cache_key openai chat -> openai responses (#6861)",
+        "status": "verified",
+        "upstreamCommits": [
+          "7d09c6954ef3e6d65a37840ed3a566eb9acedaaa"
+        ]
+      },
+      {
+        "id": "B04.1-vllm-budget",
+        "action": "feat: vllm thinking_token_budget (#7027)",
+        "status": "verified",
+        "upstreamCommits": [
+          "8f6961c675932f406260ff0c218bc2aa0603e9b2"
+        ]
+      },
+      {
+        "id": "B04.2-header-timeout",
+        "action": "fix(relay): bound the wait for upstream response headers (fixes unbounded heap growth → OOM) (#6949)",
+        "status": "verified",
+        "upstreamCommits": [
+          "b518d0033b670f5518b8a2f1cf8ea0142a9d1b8d"
+        ]
+      },
+      {
+        "id": "B04.3-compact-compat",
+        "action": "refactor(responses): remove compact model suffix handling (#6770)",
+        "status": "verified",
+        "upstreamCommits": [
+          "bb234ff4186140091db0defab250763861de2b45"
+        ]
+      },
+      {
+        "id": "B04.1-hosted-conversion",
+        "action": "feat(relay): hosted-tool conversion fidelity, reasoning normalization, and billing usage integrity (#7137)",
+        "status": "verified",
+        "upstreamCommits": [
+          "0ed497f066a68613375124303ef54f220267b334"
+        ]
+      },
+      {
+        "id": "B04.1-hosted-followup",
+        "action": "fix(relay): follow-up billing integrity and conversion completions (#7170)",
+        "status": "verified",
+        "upstreamCommits": [
+          "bbd97446c26092f2e7250af429096064b9e0f899"
+        ]
+      },
+      {
+        "id": "B04.3-count-tokens",
+        "action": "fix: temp disable /messages/count_tokens",
+        "status": "verified",
+        "upstreamCommits": [
+          "3a9f41ee85cc369f5b8d7fe6e62ff4e7bf3a9ec8"
+        ]
+      },
+      {
+        "id": "B04.1-model-modifiers",
+        "action": "feat(relay): explicit @ model modifiers and canonical billing identity",
+        "status": "verified",
+        "upstreamCommits": [
+          "7c044d7c5c2d2beadf16b21910950f8f593bc3ef"
+        ]
+      },
+      {
+        "id": "B04.1-reasoning-preserve",
+        "action": "fix(relay): preserve reasoning effort without implicit remapping",
+        "status": "verified",
+        "upstreamCommits": [
+          "6b659fd61c50e35d559c41520a0fff7b8aea56a4"
+        ]
+      },
+      {
+        "id": "B04.2-raw-clone",
+        "action": "perf(common): 批量复制 RawMessage，优化请求深拷贝 (#7221)",
+        "status": "verified",
+        "upstreamCommits": [
+          "2cf177ac487e62c627c7d423b65735ba2481ef4f"
+        ]
+      },
+      {
+        "id": "B04.1-model-capabilities",
+        "action": "fix(relay): apply model-specific OpenAI chat capabilities (#7211)",
+        "status": "verified",
+        "upstreamCommits": [
+          "49ec4696682530781a036eab1ac195f0b04706c0"
+        ]
+      },
+      {
+        "id": "B04.1-kimi-tools",
+        "action": "fix(relay): preserve Kimi K3 dynamic tool loading messages",
+        "status": "verified",
+        "upstreamCommits": [
+          "6e10f9bc927a4eae889864a6ef601359d53526b9"
+        ]
+      },
+      {
+        "id": "B04.1-json-codec",
+        "action": "refactor(json): route JSON helpers through a host-injectable codec",
+        "status": "verified",
+        "upstreamCommits": [
+          "7bbe85bcb09546e0b89572bf97198fc94889be3d"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "审查 DTO、JSON codec、模型修饰符及调用依赖，拆小单元"
+    "codeCommits": [
+      "0068eeb068b63ce9cc13fae6cf06e970e76368b8",
+      "a507a86db5b4d7f87209a5132b21965b3c463797",
+      "ee8e3e51628db015e93aae7ecff41de0fc800890",
+      "0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4",
+      "8cbdaa420af12948129cea75c0c8cd997e7a683a",
+      "d9d133156f978409fb701476b17ea71cb53a6d99",
+      "40f4fa64c2097c018abf3cff299e607218e3122e",
+      "25a89b54e1584debead8a9aa41a3e6eed4d5fc1f",
+      "6e90a5c9aaa31b675d14ed2df9c1d686b3deae66",
+      "e4efdab8c17b8b4a3bfbba8a43b2a5098ec1ba97",
+      "b67fbd012203a1ebe950853b230c313c3d779660",
+      "e753c9db706e7d8fd3466148419c29cdd43f401b",
+      "eadd2943260f0e393ade612715c26889351471b2",
+      "595e9d2de4ce8f77ecbddf72ae4c3ebc4f62f5c3",
+      "bc4e88bfcef19b1cf9c24a9add5a06265e542265",
+      "3d4329a5f662e4ebbb63b5bfc93f7bb8c71f2179",
+      "250021999958adc48097a6a9a75c9f73edf33f1b",
+      "c532c2108815a09dd541769fa4ab3ca170f4ce76",
+      "54c948f715414eada868462b3c60882ce745a57f",
+      "a067ec3aea1c281606878267e6269c94f32d8eb6"
+    ],
+    "evidence": [
+      "evidence/B04-acceptance.json"
+    ],
+    "nextAction": "Local stage verified; retain final B18 acceptance gates."
   },
   {
     "id": "B05",

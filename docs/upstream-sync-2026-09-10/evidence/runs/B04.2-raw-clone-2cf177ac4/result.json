@@ -1,0 +1,18 @@
+{
+  "upstream": "2cf177ac487e62c627c7d423b65735ba2481ef4f",
+  "unit": "B04.2-raw-clone",
+  "before_head": "595e9d2de4ce8f77ecbddf72ae4c3ebc4f62f5c3",
+  "after_head": "bc4e88bfcef19b1cf9c24a9add5a06265e542265",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "2cf177ac487e62c627c7d423b65735ba2481ef4f"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "common/copy.go",
+    "relay/request_clone_test.go"
+  ]
+}

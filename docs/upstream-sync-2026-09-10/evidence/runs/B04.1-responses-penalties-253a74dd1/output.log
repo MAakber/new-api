@@ -1,0 +1,13 @@
+Auto-merging relay/channel/codex/adaptor.go
+Auto-merging relay/channel/codex/adaptor_test.go
+CONFLICT (content): Merge conflict in relay/channel/codex/adaptor_test.go
+Auto-merging relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go
+Auto-merging relaykit/relayconvert/internal/oai_responses/to_oai_chat_req_test.go
+error: could not apply 253a74dd1... fix(relay): preserve presence/frequency penalty in Responses conversion (#6654)
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

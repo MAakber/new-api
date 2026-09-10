@@ -1,0 +1,29 @@
+{
+  "upstream": "eab18a83579187f880139894dd9e7f06d1a492ce",
+  "unit": "B04.1-effort-log",
+  "before_head": "116d8003fd067c4a6ca8111890b473dc00a474f7",
+  "after_head": "116d8003fd067c4a6ca8111890b473dc00a474f7",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "eab18a83579187f880139894dd9e7f06d1a492ce"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "relay/common/override.go",
+    "relay/common/relay_info_test.go"
+  ],
+  "files": [
+    "relay/channel/deepseek/adaptor.go",
+    "relay/channel/openai/adaptor.go",
+    "relay/channel/xai/adaptor.go",
+    "relay/claude_handler.go",
+    "relay/common/override.go",
+    "relay/common/override_test.go",
+    "relay/common/relay_info.go",
+    "relay/common/relay_info_test.go",
+    "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+    "web/src/features/usage-logs/lib/format.ts"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "B04-parameters-timeout-green",
+  "command": [
+    "go",
+    "test",
+    "./service",
+    "./relay/common",
+    "./relay/channel/codex",
+    "./relay/channel/openai",
+    "./relay/channel/deepseek",
+    "./relay/channel/xai",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "e1bf6be758141e04641727992a9427a581c3c389",
+  "started_at": "2026-09-10T20:25:08.728Z",
+  "finished_at": "2026-09-10T20:25:19.695Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

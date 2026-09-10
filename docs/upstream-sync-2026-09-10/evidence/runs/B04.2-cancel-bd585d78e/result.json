@@ -1,0 +1,20 @@
+{
+  "upstream": "bd585d78efd418aaf7baa7e34fa48c5536581868",
+  "unit": "B04.2-cancel",
+  "before_head": "440a9ecb9ad606e1ad9a6c83f3f8ce14d3f0c465",
+  "after_head": "0068eeb068b63ce9cc13fae6cf06e970e76368b8",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "bd585d78efd418aaf7baa7e34fa48c5536581868"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/aws/relay-aws.go",
+    "relay/channel/aws/relay_aws_test.go",
+    "service/billing_usage.go",
+    "service/text_quota_test.go"
+  ]
+}

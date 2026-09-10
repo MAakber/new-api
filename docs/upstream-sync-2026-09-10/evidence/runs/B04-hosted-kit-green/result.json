@@ -1,0 +1,27 @@
+{
+  "id": "B04-hosted-kit-green",
+  "command": [
+    "go",
+    "test",
+    "./...",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\relaykit",
+  "tested_commit": "e753c9db706e7d8fd3466148419c29cdd43f401b",
+  "started_at": "2026-09-10T20:48:01.865Z",
+  "finished_at": "2026-09-10T20:48:05.140Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "off",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

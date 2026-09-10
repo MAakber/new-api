@@ -1,0 +1,7 @@
+{
+  "upstream": "0ed497f066a68613375124303ef54f220267b334",
+  "before_head": "b217969149189d018ffb501159e2165c7bfda631",
+  "after_head": "e4efdab8c17b8b4a3bfbba8a43b2a5098ec1ba97",
+  "rationale": "Integrate hosted-tool and reasoning conversions, canonical usage and admin diagnostics while preserving upstream interception, Claude Code headers, Codex session identities, Vercel and compact compatibility. Keep native count_tokens forwarding and its sole route; omit conflicting local estimator. Keep complete existing golden conversion matrix and deleted fixtures for verification rather than narrowing tests. Channel health-check call is adapted to the current loop; worker refactor remains B07.",
+  "recorded_at": "2026-09-10T20:34:20.936Z"
+}

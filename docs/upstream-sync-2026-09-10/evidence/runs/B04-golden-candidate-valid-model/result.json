@@ -1,0 +1,30 @@
+{
+  "id": "B04-golden-candidate-valid-model",
+  "command": [
+    "go",
+    "test",
+    "./relayconvert",
+    "-run",
+    "TestGolden",
+    "-update",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\relaykit",
+  "tested_commit": "eeef1fc90accf709d97cb46d76e73709d2789b7b",
+  "started_at": "2026-09-10T20:44:01.903Z",
+  "finished_at": "2026-09-10T20:44:03.622Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "off",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

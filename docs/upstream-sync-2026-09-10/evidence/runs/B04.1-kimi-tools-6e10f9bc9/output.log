@@ -1,0 +1,8 @@
+Auto-merging relay/chat_completions_via_responses.go
+Auto-merging relay/chat_completions_via_responses_test.go
+Auto-merging relay/compatible_handler.go
+[codex/upstream-sync-2026-09-10 250021999] fix(relay): preserve Kimi K3 dynamic tool loading messages
+ Author: CaIon <i@caion.me>
+ Date: Mon Sep 7 13:16:19 2026 +0800
+ 7 files changed, 283 insertions(+), 57 deletions(-)
+ create mode 100644 relaykit/relayconvert/kitutil/json_test.go

@@ -1,0 +1,10 @@
+{
+  "upstream": "3a9f41ee85cc369f5b8d7fe6e62ff4e7bf3a9ec8",
+  "unit": "B04.3-count-tokens",
+  "before_head": "e753c9db706e7d8fd3466148419c29cdd43f401b",
+  "rationale": "Preserve native count_tokens forwarding under A04; validate exact upstream response, original request and zero net quota through the real router instead of disabling the endpoint.",
+  "files": [
+    "router/relay-router.go",
+    "router/relay_router_test.go"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "B04-gemini-cumulative-red",
+  "command": [
+    "go",
+    "test",
+    "./dto",
+    "-run",
+    "TestGeminiCumulativeModalityUsageDoesNotAccumulateAcrossFrames",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\relaykit",
+  "tested_commit": "798bf446a615ad63ca5708d5c994a6f2917a14e3",
+  "started_at": "2026-09-10T20:38:51.026Z",
+  "finished_at": "2026-09-10T20:38:52.649Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "off",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

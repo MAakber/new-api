@@ -1,0 +1,23 @@
+{
+  "upstream": "6e10f9bc927a4eae889864a6ef601359d53526b9",
+  "unit": "B04.1-kimi-tools",
+  "before_head": "3d4329a5f662e4ebbb63b5bfc93f7bb8c71f2179",
+  "after_head": "250021999958adc48097a6a9a75c9f73edf33f1b",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "6e10f9bc927a4eae889864a6ef601359d53526b9"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/moonshot/constants.go",
+    "relay/chat_completions_via_responses.go",
+    "relay/chat_completions_via_responses_test.go",
+    "relay/compatible_handler.go",
+    "relaykit/dto/openai_request.go",
+    "relaykit/dto/openai_request_zero_value_test.go",
+    "relaykit/relayconvert/kitutil/json_test.go"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "B04-header-timeout-red",
+  "command": [
+    "go",
+    "test",
+    "./service",
+    "-run",
+    "TestRelayHeaderTimeout",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "45e75eed29aca05df2958445f885487f7668e581",
+  "started_at": "2026-09-10T20:23:46.507Z",
+  "finished_at": "2026-09-10T20:23:54.298Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1,0 +1,21 @@
+{
+  "upstream": "b518d0033b670f5518b8a2f1cf8ea0142a9d1b8d",
+  "unit": "B04.2-header-timeout",
+  "before_head": "40f4fa64c2097c018abf3cff299e607218e3122e",
+  "after_head": "25a89b54e1584debead8a9aa41a3e6eed4d5fc1f",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "b518d0033b670f5518b8a2f1cf8ea0142a9d1b8d"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    ".env.example",
+    "README.md",
+    "common/constants.go",
+    "common/init.go",
+    "service/http_client.go"
+  ]
+}

@@ -1,0 +1,6 @@
+{"ImportPath":"github.com/QuantumNous/new-api/relay/channel [github.com/QuantumNous/new-api/relay/channel.test]","Action":"build-output","Output":"# github.com/QuantumNous/new-api/relay/channel [github.com/QuantumNous/new-api/relay/channel.test]\n"}
+{"ImportPath":"github.com/QuantumNous/new-api/relay/channel [github.com/QuantumNous/new-api/relay/channel.test]","Action":"build-output","Output":"relay\\channel\\api_request_debug_test.go:88:34: cannot index common2.GetContextKey (value of type func(c *gin.Context, key \"github.com/QuantumNous/new-api/constant\".ContextKey) (any, bool))\n"}
+{"ImportPath":"github.com/QuantumNous/new-api/relay/channel [github.com/QuantumNous/new-api/relay/channel.test]","Action":"build-fail"}
+{"Time":"2026-09-11T03:59:48.6889901+08:00","Action":"start","Package":"github.com/QuantumNous/new-api/relay/channel"}
+{"Time":"2026-09-11T03:59:48.6889901+08:00","Action":"output","Package":"github.com/QuantumNous/new-api/relay/channel","Output":"FAIL\tgithub.com/QuantumNous/new-api/relay/channel [build failed]\n"}
+{"Time":"2026-09-11T03:59:48.6889901+08:00","Action":"fail","Package":"github.com/QuantumNous/new-api/relay/channel","Elapsed":0,"FailedBuild":"github.com/QuantumNous/new-api/relay/channel [github.com/QuantumNous/new-api/relay/channel.test]"}

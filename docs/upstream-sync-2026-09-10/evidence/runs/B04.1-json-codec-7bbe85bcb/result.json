@@ -1,0 +1,24 @@
+{
+  "upstream": "7bbe85bcb09546e0b89572bf97198fc94889be3d",
+  "unit": "B04.1-json-codec",
+  "before_head": "250021999958adc48097a6a9a75c9f73edf33f1b",
+  "after_head": "250021999958adc48097a6a9a75c9f73edf33f1b",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "7bbe85bcb09546e0b89572bf97198fc94889be3d"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "common/json.go",
+    "common/json_test.go"
+  ],
+  "files": [
+    "common/json.go",
+    "common/json_test.go",
+    "relaykit/dto/values.go",
+    "relaykit/relayconvert/internal/oai_chat/to_oai_responses_stream_resp.go",
+    "relaykit/relayconvert/kitutil/json.go"
+  ]
+}

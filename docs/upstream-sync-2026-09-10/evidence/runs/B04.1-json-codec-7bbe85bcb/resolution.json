@@ -1,0 +1,7 @@
+{
+  "upstream": "7bbe85bcb09546e0b89572bf97198fc94889be3d",
+  "before_head": "250021999958adc48097a6a9a75c9f73edf33f1b",
+  "after_head": "c532c2108815a09dd541769fa4ab3ca170f4ce76",
+  "rationale": "Install the host codec and conformance suite while retaining existing raw-string behavior. Include the pure DecodeJsonWithValidation helper and regression test from B08 commit 45c3fbe8a as a codec precursor; its security-session/action implementation remains pending in B08. No root-module dependency is introduced into relaykit.",
+  "recorded_at": "2026-09-10T21:21:07.733Z"
+}

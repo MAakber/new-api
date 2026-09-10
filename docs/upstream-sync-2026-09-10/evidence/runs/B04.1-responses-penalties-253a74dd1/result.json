@@ -1,0 +1,26 @@
+{
+  "upstream": "253a74dd1b47e2bde6dd6027c6aa1b5e0ee67827",
+  "unit": "B04.1-responses-penalties",
+  "before_head": "0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4",
+  "after_head": "0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "253a74dd1b47e2bde6dd6027c6aa1b5e0ee67827"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "relay/channel/codex/adaptor_test.go"
+  ],
+  "files": [
+    "relay/channel/codex/adaptor.go",
+    "relay/channel/codex/adaptor_test.go",
+    "relaykit/dto/openai_request.go",
+    "relaykit/dto/openai_request_zero_value_test.go",
+    "relaykit/relayconvert/internal/oai_chat/to_oai_responses_req.go",
+    "relaykit/relayconvert/internal/oai_chat/to_oai_responses_req_test.go",
+    "relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go",
+    "relaykit/relayconvert/internal/oai_responses/to_oai_chat_req_test.go"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "upstream": "253a74dd1b47e2bde6dd6027c6aa1b5e0ee67827",
+  "before_head": "0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4",
+  "after_head": "8cbdaa420af12948129cea75c0c8cd997e7a683a",
+  "rationale": "Retain legacy Codex identity, channel-test shaping and compact request tests alongside penalty stripping; Responses conversions preserve explicit zero penalties for compatible upstreams.",
+  "recorded_at": "2026-09-10T20:22:10.080Z"
+}

@@ -1,0 +1,5 @@
+[codex/upstream-sync-2026-09-10 bc4e88bfc] perf(common): 批量复制 RawMessage，优化请求深拷贝 (#7221)
+ Author: mingisrookie <99650899+mingisrookie@users.noreply.github.com>
+ Date: Sun Sep 6 14:02:39 2026 +0800
+ 2 files changed, 320 insertions(+), 1 deletion(-)
+ create mode 100644 relay/request_clone_test.go

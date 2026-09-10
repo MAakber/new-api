@@ -1,0 +1,12 @@
+{
+  "upstream": "bb234ff4186140091db0defab250763861de2b45",
+  "before_head": "e1bf6be758141e04641727992a9427a581c3c389",
+  "after_head": "6e90a5c9aaa31b675d14ed2df9c1d686b3deae66",
+  "files": [
+    "common/api_type.go",
+    "controller/channel-test.go",
+    "controller/channel_test_internal_test.go",
+    "relay/responses_handler.go"
+  ],
+  "rationale": "Channel-aware compact support checks adopted. Existing suffix names remain in discovery and channel tests, are mapped to provider models, and retain exact/wildcard pricing; removal would break current saved configurations."
+}

@@ -1,0 +1,6 @@
+Auto-merging relay/channel/openai/adaptor.go
+[codex/upstream-sync-2026-09-10 3d4329a5f] fix(relay): apply model-specific OpenAI chat capabilities (#7211)
+ Author: PDMaker <86941825+pdmaker@users.noreply.github.com>
+ Date: Sun Sep 6 15:47:45 2026 +0800
+ 4 files changed, 369 insertions(+), 35 deletions(-)
+ create mode 100644 controller/channel_test_request_test.go

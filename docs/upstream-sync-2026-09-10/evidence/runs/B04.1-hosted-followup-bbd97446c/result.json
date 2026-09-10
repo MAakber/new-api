@@ -1,0 +1,34 @@
+{
+  "upstream": "bbd97446c26092f2e7250af429096064b9e0f899",
+  "unit": "B04.1-hosted-followup",
+  "before_head": "e4efdab8c17b8b4a3bfbba8a43b2a5098ec1ba97",
+  "after_head": "b67fbd012203a1ebe950853b230c313c3d779660",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "bbd97446c26092f2e7250af429096064b9e0f899"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/claude/adaptor.go",
+    "relay/channel/claude/adaptor_test.go",
+    "relay/channel/claude/relay-claude.go",
+    "relay/channel/gemini/relay-gemini.go",
+    "relay/channel/gemini/relay_gemini_usage_test.go",
+    "relay/channel/openai/helper.go",
+    "relay/common/relay_info.go",
+    "relay/common/relay_info_test.go",
+    "relaykit/dto/billing_usage.go",
+    "relaykit/dto/billing_usage_test.go",
+    "relaykit/dto/usage_merge.go",
+    "relaykit/dto/usage_merge_test.go",
+    "relaykit/relayconvert/internal/gemini_chat/to_oai_chat_resp.go",
+    "relaykit/relayconvert/internal/oai_chat/to_claude_messages_resp.go",
+    "relaykit/relayconvert/internal/oai_chat/to_claude_messages_resp_test.go",
+    "relaykit/relayconvert/internal/oai_chat/to_gemini_chat_req.go",
+    "relaykit/relayconvert/internal/toolconv/decode.go",
+    "relaykit/relayconvert/internal/toolconv/encode.go"
+  ]
+}

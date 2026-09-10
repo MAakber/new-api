@@ -1,0 +1,364 @@
+[
+  {
+    "path": "request/claude_to_openai.golden.json.max_tokens",
+    "before": 1024,
+    "after": 2048
+  },
+  {
+    "path": "request/claude_to_openai.golden.json.reasoning_effort",
+    "after": "low"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.1.content",
+    "before": ""
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.1.role",
+    "before": "assistant"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.1.arguments",
+    "after": "{\"city\":\"Paris\"}"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.1.call_id",
+    "after": "toolu_abc"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.1.name",
+    "after": "get_weather"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.1.type",
+    "after": "function_call"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.2.arguments",
+    "before": "{\"city\":\"Paris\"}"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.2.name",
+    "before": "get_weather"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.2.type",
+    "before": "function_call",
+    "after": "function_call_output"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.2.output",
+    "after": "15 degrees"
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.input.3",
+    "before": {
+      "call_id": "toolu_abc",
+      "output": "15 degrees",
+      "type": "function_call_output"
+    }
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.max_output_tokens",
+    "before": 1024,
+    "after": 2048
+  },
+  {
+    "path": "request/claude_to_openai_responses.golden.json.reasoning",
+    "after": {
+      "effort": "low",
+      "summary": "detailed"
+    }
+  },
+  {
+    "path": "request/gemini_to_claude.golden.json.messages.0.content.0",
+    "after": {
+      "type": "text",
+      "text": "What is in this image?"
+    }
+  },
+  {
+    "path": "request/gemini_to_claude.golden.json.messages.0.content.1",
+    "after": {
+      "type": "image",
+      "source": {
+        "type": "base64",
+        "media_type": "image/png",
+        "data": "aGVsbG8="
+      }
+    }
+  },
+  {
+    "path": "request/gemini_to_claude.golden.json.messages.2.content.0.tool_use_id",
+    "before": "call_0",
+    "after": "call_1"
+  },
+  {
+    "path": "request/gemini_to_openai.golden.json.messages.3.tool_call_id",
+    "before": "call_0",
+    "after": "call_1"
+  },
+  {
+    "path": "request/gemini_to_openai_responses.golden.json.input.3.call_id",
+    "before": "call_0",
+    "after": "call_1"
+  },
+  {
+    "path": "request/openai_responses_to_gemini.golden.json.contents.1.parts.0.functionCall.id",
+    "after": "call_abc"
+  },
+  {
+    "path": "request/openai_responses_to_gemini.golden.json.contents.2.parts.0.functionResponse.id",
+    "after": "call_abc"
+  },
+  {
+    "path": "request/openai_to_gemini.golden.json.contents.1.parts.0.functionCall.id",
+    "after": "call_abc"
+  },
+  {
+    "path": "request/openai_to_gemini.golden.json.contents.2.parts.0.functionResponse.id",
+    "after": "call_abc"
+  },
+  {
+    "path": "response/claude_to_gemini.golden.json.candidates.0.content.parts.1.functionCall.id",
+    "after": "toolu_abc"
+  },
+  {
+    "path": "response/claude_to_gemini.golden.json.usageMetadata.billing_usage.source",
+    "before": "oai_chat",
+    "after": "claude_messages"
+  },
+  {
+    "path": "response/claude_to_gemini.golden.json.usageMetadata.billing_usage.semantic",
+    "before": "openai",
+    "after": "anthropic"
+  },
+  {
+    "path": "response/claude_to_gemini.golden.json.usageMetadata.billing_usage.openai_usage",
+    "before": {
+      "prompt_tokens": 15,
+      "completion_tokens": 5,
+      "total_tokens": 20,
+      "usage_semantic": "openai",
+      "usage_source": "anthropic",
+      "prompt_tokens_details": {
+        "cached_tokens": 3,
+        "cached_creation_tokens": 2,
+        "cache_write_tokens": 2,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "input_tokens": 15,
+      "output_tokens": 0,
+      "input_tokens_details": null,
+      "claude_cache_creation_5_m_tokens": 2,
+      "claude_cache_creation_1_h_tokens": 0
+    }
+  },
+  {
+    "path": "response/claude_to_gemini.golden.json.usageMetadata.billing_usage.claude_usage",
+    "after": {
+      "input_tokens": 10,
+      "cache_creation_input_tokens": 2,
+      "cache_read_input_tokens": 3,
+      "output_tokens": 5,
+      "claude_cache_creation_5_m_tokens": 0,
+      "claude_cache_creation_1_h_tokens": 0
+    }
+  },
+  {
+    "path": "response/openai_responses_to_gemini.golden.json.candidates.0.content.parts.1.functionCall.id",
+    "after": "call_abc"
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.0.type",
+    "before": "text",
+    "after": "thinking"
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.0.text",
+    "before": "The answer is 42."
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.0.thinking",
+    "after": "Deep thought."
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.1.type",
+    "before": "tool_use",
+    "after": "text"
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.1.id",
+    "before": "call_abc"
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.1.name",
+    "before": "get_weather"
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.1.input",
+    "before": {
+      "city": "Paris"
+    }
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.1.text",
+    "after": "The answer is 42."
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.content.2",
+    "after": {
+      "type": "tool_use",
+      "id": "call_abc",
+      "name": "get_weather",
+      "input": {
+        "city": "Paris"
+      }
+    }
+  },
+  {
+    "path": "response/openai_to_claude.golden.json.usage.input_tokens",
+    "before": 10,
+    "after": 7
+  },
+  {
+    "path": "response/openai_to_gemini.golden.json.candidates.0.content.parts.1.functionCall.id",
+    "after": "call_abc"
+  },
+  {
+    "path": "stream/claude_to_gemini.golden.json.usage",
+    "after": {
+      "prompt_tokens": 4,
+      "completion_tokens": 2,
+      "total_tokens": 6,
+      "usage_semantic": "openai",
+      "usage_source": "anthropic",
+      "billing_usage": {
+        "source": "claude_messages",
+        "semantic": "anthropic",
+        "claude_usage": {
+          "input_tokens": 4,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 2,
+          "claude_cache_creation_5_m_tokens": 0,
+          "claude_cache_creation_1_h_tokens": 0
+        }
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "input_tokens": 4,
+      "output_tokens": 2,
+      "input_tokens_details": null,
+      "claude_cache_creation_5_m_tokens": 0,
+      "claude_cache_creation_1_h_tokens": 0
+    }
+  },
+  {
+    "path": "stream/claude_to_openai.golden.json.usage.prompt_tokens",
+    "before": 0,
+    "after": 4
+  },
+  {
+    "path": "stream/claude_to_openai.golden.json.usage.total_tokens",
+    "before": 2,
+    "after": 6
+  },
+  {
+    "path": "stream/claude_to_openai.golden.json.usage.billing_usage.claude_usage.input_tokens",
+    "before": 0,
+    "after": 4
+  },
+  {
+    "path": "stream/claude_to_openai.golden.json.usage.input_tokens",
+    "before": 0,
+    "after": 4
+  },
+  {
+    "path": "stream/claude_to_openai_responses.golden.json.usage.prompt_tokens",
+    "before": 0,
+    "after": 4
+  },
+  {
+    "path": "stream/claude_to_openai_responses.golden.json.usage.total_tokens",
+    "before": 2,
+    "after": 6
+  },
+  {
+    "path": "stream/claude_to_openai_responses.golden.json.usage.billing_usage.claude_usage.input_tokens",
+    "before": 0,
+    "after": 4
+  },
+  {
+    "path": "stream/claude_to_openai_responses.golden.json.usage.input_tokens",
+    "before": 0,
+    "after": 4
+  },
+  {
+    "path": "stream/gemini_to_claude.golden.json.usage",
+    "after": {
+      "prompt_tokens": 4,
+      "completion_tokens": 2,
+      "total_tokens": 6,
+      "billing_usage": {
+        "source": "gemini_chat",
+        "semantic": "gemini",
+        "gemini_usage_metadata": {
+          "promptTokenCount": 4,
+          "toolUsePromptTokenCount": 0,
+          "candidatesTokenCount": 2,
+          "totalTokenCount": 6,
+          "thoughtsTokenCount": 0,
+          "cachedContentTokenCount": 0,
+          "promptTokensDetails": [],
+          "toolUsePromptTokensDetails": [],
+          "candidatesTokensDetails": []
+        }
+      },
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "text_tokens": 4,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "input_tokens": 4,
+      "output_tokens": 2,
+      "input_tokens_details": {
+        "cached_tokens": 0,
+        "text_tokens": 4,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "claude_cache_creation_5_m_tokens": 0,
+      "claude_cache_creation_1_h_tokens": 0
+    }
+  },
+  {
+    "path": "stream/gemini_to_openai_responses.golden.json.usage.prompt_tokens_details.text_tokens",
+    "before": 0,
+    "after": 4
+  }
+]

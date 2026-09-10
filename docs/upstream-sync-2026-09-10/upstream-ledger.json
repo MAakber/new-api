@@ -325,12 +325,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "0068eeb068b63ce9cc13fae6cf06e970e76368b8"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.2-cancel-bd585d78e/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -475,12 +480,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retained downstream raw diagnostic capture and admin-only storage around the redirect-disabled copy of the shared HTTP client. Retained downstream converter-option tests alongside new replay metadata assertions.",
+    "resolution_commits": [
+      "a507a86db5b4d7f87209a5132b21965b3c463797"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.2-replay-d6b5ce99d/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -545,12 +555,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Preserved downstream raw diagnostics while moving replay metadata to bodies. Adapted downstream ClaudeCountTokensHelper to NewReplayableBodyReader so count_tokens retains complete body replay and zero-charge handling. No uses of removed ReaderOnly or RelayInfo replay fields remain.",
+    "resolution_commits": [
+      "ee8e3e51628db015e93aae7ecff41de0fc800890"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.2-replay-body-ea4f02101/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -987,12 +1002,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Combine upstream reasoning-effort synchronization and usage-log display with downstream Claude Code header validation; retain converter options and CodeBuddy StreamOptions regression cases.",
+    "resolution_commits": [
+      "0159d041ea5bffa9fc1eaf74eaed1a9ef32bc8c4"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-effort-log-eab18a835/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1244,12 +1264,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retain legacy Codex identity, channel-test shaping and compact request tests alongside penalty stripping; Responses conversions preserve explicit zero penalties for compatible upstreams.",
+    "resolution_commits": [
+      "8cbdaa420af12948129cea75c0c8cd997e7a683a"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-responses-penalties-253a74dd1/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1288,12 +1313,18 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Channel-aware compact support checks adopted. Existing suffix names remain in discovery and channel tests, are mapped to provider models, and retain exact/wildcard pricing; removal would break current saved configurations.",
+    "resolution_commits": [
+      "6e90a5c9aaa31b675d14ed2df9c1d686b3deae66",
+      "b217969149189d018ffb501159e2165c7bfda631"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.3-compact-compat-bb234ff41/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2009,12 +2040,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "d9d133156f978409fb701476b17ea71cb53a6d99"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-cache-key-7d09c6954/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2664,12 +2700,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "40f4fa64c2097c018abf3cff299e607218e3122e"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-vllm-budget-8f6961c67/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3933,12 +3974,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "25a89b54e1584debead8a9aa41a3e6eed4d5fc1f"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.2-header-timeout-b518d0033/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4523,12 +4569,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrate hosted-tool and reasoning conversions, canonical usage and admin diagnostics while preserving upstream interception, Claude Code headers, Codex session identities, Vercel and compact compatibility. Keep native count_tokens forwarding and its sole route; omit conflicting local estimator. Keep complete existing golden conversion matrix and deleted fixtures for verification rather than narrowing tests. Channel health-check call is adapted to the current loop; worker refactor remains B07.",
+    "resolution_commits": [
+      "e4efdab8c17b8b4a3bfbba8a43b2a5098ec1ba97"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-hosted-conversion-0ed497f06/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4584,12 +4635,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "b67fbd012203a1ebe950853b230c313c3d779660"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-hosted-followup-bbd97446c/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5105,12 +5161,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retain the sole native forwarding route and add authenticated router coverage with a local Claude Code upstream and explicit user/token quota assertions; no local estimator or endpoint removal.",
+    "resolution_commits": [
+      "e753c9db706e7d8fd3466148419c29cdd43f401b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.3-count-tokens-3a9f41ee8/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5221,12 +5282,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Adopt explicit modifiers and canonical billing while retaining custom path filtering and compact alias mappings. Apply routing normalization to request-local exclusion selection as well; retain current model-list pricing behavior until its B14 prerequisite. Transplant only independent token-limit tests; all seven translations use the required script. Compact combinations and database routing are under verification.",
+    "resolution_commits": [
+      "eadd2943260f0e393ade612715c26889351471b2"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-model-modifiers-7c044d7c5/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5273,12 +5339,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Preserve the CodeBuddy stream-options exception and request profile, then adopt conditional reasoning rendering and exact effort preservation.",
+    "resolution_commits": [
+      "595e9d2de4ce8f77ecbddf72ae4c3ebc4f62f5c3"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-reasoning-preserve-6b659fd61/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5377,12 +5448,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "bc4e88bfcef19b1cf9c24a9add5a06265e542265"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.2-raw-clone-2cf177ac4/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5414,12 +5490,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "3d4329a5f662e4ebbb63b5bfc93f7bb8c71f2179"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-model-capabilities-49ec46966/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -6625,12 +6706,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "250021999958adc48097a6a9a75c9f73edf33f1b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-kimi-tools-6e10f9bc9/result.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -6665,12 +6751,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Install the host codec and conformance suite while retaining existing raw-string behavior. Include the pure DecodeJsonWithValidation helper and regression test from B08 commit 45c3fbe8a as a codec precursor; its security-session/action implementation remains pending in B08. No root-module dependency is introduced into relaykit.",
+    "resolution_commits": [
+      "c532c2108815a09dd541769fa4ab3ca170f4ce76"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B04.1-json-codec-7bbe85bcb/resolution.json",
+      "evidence/B04-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

@@ -1,0 +1,38 @@
+{
+  "upstream": "ea4f021012cddc52126123ab4ed8ced3df260b85",
+  "unit": "B04.2-replay-body",
+  "before_head": "a507a86db5b4d7f87209a5132b21965b3c463797",
+  "after_head": "a507a86db5b4d7f87209a5132b21965b3c463797",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "ea4f021012cddc52126123ab4ed8ced3df260b85"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "relay/channel/api_request.go"
+  ],
+  "files": [
+    "common/body_storage.go",
+    "common/body_storage_test.go",
+    "relay/alpha_search_handler.go",
+    "relay/channel/api_request.go",
+    "relay/channel/api_request_getbody_test.go",
+    "relay/channel/jimeng/adaptor.go",
+    "relay/channel/task/sora/adaptor.go",
+    "relay/channel/task/sora/adaptor_test.go",
+    "relay/chat_completions_via_responses.go",
+    "relay/claude_handler.go",
+    "relay/common/outbound_body.go",
+    "relay/common/outbound_body_test.go",
+    "relay/common/relay_info.go",
+    "relay/common/relay_info_test.go",
+    "relay/compatible_handler.go",
+    "relay/embedding_handler.go",
+    "relay/gemini_handler.go",
+    "relay/image_handler.go",
+    "relay/rerank_handler.go",
+    "relay/responses_handler.go"
+  ]
+}
