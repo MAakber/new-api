@@ -56,6 +56,16 @@ type migrationDecimalV3 struct {
 	Price float64 `gorm:"type:decimal(12,6);not null;default:1.25"`
 }
 
+type migrationJSONText struct {
+	ID      int    `gorm:"primaryKey"`
+	Payload string `gorm:"type:longtext"`
+}
+
+type migrationJSONValidated struct {
+	ID      int    `gorm:"primaryKey"`
+	Payload string `gorm:"type:json;not null"`
+}
+
 func TestMigrationSchemaStability(t *testing.T) {
 	for _, dialect := range []string{"sqlite", "mysql", "postgres"} {
 		t.Run(dialect, func(t *testing.T) {
@@ -142,6 +152,21 @@ func TestMigrationSchemaStability(t *testing.T) {
 			})
 
 			if dialect == "mysql" {
+				t.Run("json_alias_retains_validation", func(t *testing.T) {
+					const table = "migration_json_test"
+					t.Cleanup(func() { _ = db.Migrator().DropTable(table) })
+					require.NoError(t, db.Table(table).AutoMigrate(&migrationJSONText{}))
+					require.NoError(t, db.Table(table).Create(&migrationJSONText{ID: 1, Payload: `{"enabled":false,"count":0}`}).Error)
+					require.NoError(t, db.Table(table).AutoMigrate(&migrationJSONValidated{}))
+					recorder.reset()
+					require.NoError(t, db.Table(table).AutoMigrate(&migrationJSONValidated{}))
+					assert.Empty(t, recorder.schemaMutations())
+					var saved migrationJSONValidated
+					require.NoError(t, db.Table(table).First(&saved, 1).Error)
+					assert.JSONEq(t, `{"enabled":false,"count":0}`, saved.Payload)
+					assert.Error(t, db.Table(table).Where("id = ?", 1).Update("payload", "invalid-json").Error)
+					assert.Error(t, db.Table(table).Where("id = ?", 1).Update("payload", nil).Error)
+				})
 				t.Run("decimal_default_and_real_changes", func(t *testing.T) {
 					const table = "migration_decimal_test"
 					t.Cleanup(func() { _ = db.Migrator().DropTable(table) })

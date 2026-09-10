@@ -121,6 +121,8 @@ func seedDatabaseUpgradeFixture(t *testing.T) {
 	require.NoError(t, DB.Create(&task).Error)
 	require.NoError(t, DB.Create(&PrefillGroup{Id: 9101, Name: "保留预填", Type: "model", Items: JSONValue(`["legacy-model"]`)}).Error)
 	require.NoError(t, DB.Create(&Option{Key: "ModelPrice", Value: `{"legacy-model":0.02345}`}).Error)
+	require.NoError(t, (&Vendor{Id: 9101, Name: "legacy-vendor", Description: "保留供应商"}).Insert())
+	require.NoError(t, (&Model{Id: 9101, ModelName: "legacy-model", VendorID: 9101, Description: "保留模型"}).Insert())
 	require.NoError(t, LOG_DB.Create(&Log{Id: 9101, UserId: user.Id, Type: 2, CreatedAt: 1789000000, ModelName: "legacy-model", Quota: 500, RequestId: "fixture-request", Other: `{"admin_info":{"quota_saturation":{"reason":"fixture"}}}`}).Error)
 }
 
@@ -199,6 +201,22 @@ func verifyDatabaseUpgradeFixture(t *testing.T) {
 	var price Option
 	require.NoError(t, DB.Where(&Option{Key: "ModelPrice"}).First(&price).Error)
 	assert.JSONEq(t, `{"legacy-model":0.02345}`, price.Value)
+	var storedModel Model
+	var storedVendor Vendor
+	require.NoError(t, DB.First(&storedModel, 9101).Error)
+	require.NoError(t, DB.First(&storedVendor, 9101).Error)
+	assert.Equal(t, "保留模型", storedModel.Description)
+	assert.Equal(t, "保留供应商", storedVendor.Description)
+	require.NotNil(t, storedModel.ActiveName)
+	require.NotNil(t, storedVendor.ActiveName)
+	assert.Equal(t, storedModel.ModelName, *storedModel.ActiveName)
+	assert.Equal(t, storedVendor.Name, *storedVendor.ActiveName)
+	duplicateModel := Model{ModelName: storedModel.ModelName}
+	duplicateVendor := Vendor{Name: storedVendor.Name}
+	require.NoError(t, duplicateModel.Insert())
+	require.NoError(t, duplicateVendor.Insert())
+	assert.Equal(t, storedModel.Id, duplicateModel.Id)
+	assert.Equal(t, storedVendor.Id, duplicateVendor.Id)
 	var logRow Log
 	require.NoError(t, LOG_DB.First(&logRow, 9101).Error)
 	assert.Equal(t, 500, logRow.Quota)
