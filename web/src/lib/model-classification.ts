@@ -57,7 +57,7 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
     },
     namespaces: ['openai', 'azure-openai'],
     family:
-      /^(?:gpt(?:-|$)|chatgpt(?:-|$)|o[1-9](?:[-.]|$)|text-(?:embedding|moderation)(?:-|$)|omni-moderation(?:-|$)|dall-e(?:-|$)|whisper(?:-|$)|tts(?:-|$)|sora(?:[-.]|$))/,
+      /^(?:gpt(?:-|$)|chatgpt(?:-|$)|codex(?:-|$)|o[1-9](?:[-.]|$)|text-(?:embedding-(?:ada|3)|moderation|ada|babbage|curie)(?:-|$)|davinci(?:-|$)|babbage(?:-|$)|computer-use-preview(?:-|$)|omni-moderation(?:-|$)|dall-e(?:-|$)|whisper(?:-|$)|tts(?:-|$)|sora(?:[-.]|$))/,
   },
   {
     provider: {
@@ -78,7 +78,7 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
     },
     namespaces: ['google', 'google-deepmind', 'gemini'],
     family:
-      /^(?:gemini|gemma|learnlm|imagen|veo|nano-banana|deep-research-pro)(?:[-.]|\d|$)/,
+      /^(?:gemini|gemma|learnlm|imagen|veo|nano-banana|deep-research-pro|palm|aqa)(?:[-.]|\d|$)/,
   },
   {
     provider: { id: 'xai', name: 'xAI', icon: 'Grok.Color', label: 'Grok' },
@@ -103,7 +103,8 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
       label: 'Qwen',
     },
     namespaces: ['alibaba', 'qwen', 'qwenlm', 'wan-ai', 'wan'],
-    family: /^(?:qwen|qwq|qvq|wan)(?:[-.]|\d|$)/,
+    family:
+      /^(?:qwen|qwq|qvq|wanx?|tongyi|gte|gui-plus|z-image|text-embedding-v\d+)(?:[-.]|\d|$)/,
   },
   {
     provider: {
@@ -139,7 +140,7 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
       label: 'Doubao',
     },
     namespaces: ['bytedance', 'volcengine', 'doubao', 'bytedance-seed'],
-    family: /^(?:doubao|seedream|seedance)(?:[-.]|\d|$)/,
+    family: /^(?:doubao|seedream|seedance|seed-1)(?:[-.]|\d|$)/,
   },
   {
     provider: {
@@ -160,7 +161,7 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
     },
     namespaces: ['minimax', 'minimaxai', 'minimax-ai'],
     family:
-      /^(?:minimax(?:[-.]|$)|abab\d|hailuo(?:[-.]|\d|$)|speech-\d|image-01(?:-|$)|music-\d|video-01(?:-|$))/,
+      /^(?:minimax(?:[-.]|$)|abab\d|hailuo(?:[-.]|\d|$)|speech-\d|image-01(?:-|$)|music-\d|video-01(?:-|$)|(?:t2v|i2v|s2v)-01(?:-|$))/,
   },
   {
     provider: {
@@ -180,7 +181,7 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
       label: 'Baidu',
     },
     namespaces: ['baidu', 'baidubce', 'paddlepaddle'],
-    family: /^ernie(?:[-.]|\d|$)/,
+    family: /^(?:ernie|wenxin|baidu)(?:[-.]|\d|$)/,
   },
   {
     provider: {
@@ -200,7 +201,7 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
       label: 'Tencent',
     },
     namespaces: ['tencent', 'tencent-hunyuan'],
-    family: /^hunyuan(?:[-.]|\d|$)/,
+    family: /^(?:hunyuan(?:[-.]|\d|$)|hy\d*(?:[-.]|$))/,
   },
   {
     provider: {
@@ -338,6 +339,51 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
     namespaces: ['microsoft'],
     family: /^phi(?:[-.]|\d|$)/,
   },
+  {
+    provider: { id: 'amazon', name: 'Amazon', icon: 'Aws.Color', label: 'Amazon' },
+    namespaces: ['amazon', 'aws'],
+    family: /^(?:nova|titan)(?:[-.]|$)/,
+  },
+  {
+    provider: { id: 'ai21', name: 'AI21 Labs', icon: 'Ai21', label: 'AI21 Labs' },
+    namespaces: ['ai21', 'ai21labs'],
+    family: /^(?:ai21|jamba)(?:[-.]|$)/,
+  },
+  {
+    provider: {
+      id: 'nous',
+      name: 'Nous Research',
+      icon: 'NousResearch',
+      label: 'Nous Research',
+    },
+    namespaces: ['nousresearch'],
+    family: /^hermes(?:[-.]|$)/,
+  },
+  {
+    provider: { id: '360ai', name: '360 AI', icon: 'Ai360.Color', label: '360 AI' },
+    namespaces: ['360ai', '360zhinao'],
+    family: /^360(?:gpt|zhinao)(?:[-.]|\d|$)/,
+  },
+  {
+    provider: {
+      id: 'midjourney',
+      name: 'Midjourney',
+      icon: 'Midjourney',
+      label: 'Midjourney',
+    },
+    namespaces: ['midjourney'],
+    family: /^(?:(?:midjourney|mj)(?:[-.]|$)|swap-face$)/,
+  },
+  {
+    provider: { id: 'vidu', name: 'Vidu', icon: 'Vidu.Color', label: 'Vidu' },
+    namespaces: ['vidu'],
+    family: /^vidu(?:[-.]|\d|$)/,
+  },
+  {
+    provider: { id: 'jimeng', name: 'Jimeng', icon: 'Jimeng.Color', label: 'Jimeng' },
+    namespaces: ['jimeng'],
+    family: /^jimeng(?:[-.]|\d|$)/,
+  },
 ]
 
 const PROVIDERS_BY_NAMESPACE = new Map(
@@ -390,6 +436,14 @@ export function classifyModel(modelName: string): ModelClassification {
   }
   // Ollama tags and OpenRouter variants leave the underlying family intact.
   name = name.split(':')[0]
+  // A publisher's named derivative takes precedence over its Llama/Mixtral base
+  // family. An explicit namespace above still wins, including custom mirrors.
+  if (!provider && /^(?:llama|mixtral)[-.].*-nemotron(?:[-.]|$)/.test(name)) {
+    provider = PROVIDERS_BY_NAMESPACE.get('nvidia') ?? null
+  }
+  if (!provider && /^(?:llama|mixtral)[-.].*-sonar(?:[-.]|$)/.test(name)) {
+    provider = PROVIDERS_BY_NAMESPACE.get('perplexity') ?? null
+  }
   provider ??=
     PROVIDER_RULES.find((rule) => rule.family.test(name))?.provider ?? null
 
