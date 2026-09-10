@@ -265,22 +265,29 @@ func normalizeGeminiModality(modality string) string {
 }
 
 func mergeGeminiTokenDetails(current []GeminiPromptTokensDetails, incoming []GeminiPromptTokensDetails) []GeminiPromptTokensDetails {
-	merged := append([]GeminiPromptTokensDetails{}, current...)
-	indexes := make(map[string]int, len(merged))
-	for index, detail := range merged {
-		indexes[normalizeGeminiModality(detail.Modality)] = index
-	}
-	for _, detail := range incoming {
-		if detail.TokenCount <= 0 {
-			continue
+	merged := make([]GeminiPromptTokensDetails, 0, len(current)+len(incoming))
+	indexes := make(map[string]int)
+	// Each frame contains cumulative counts. Sum duplicate modalities within
+	// that frame, then replace the previous frame's count for that modality.
+	for _, snapshot := range [][]GeminiPromptTokensDetails{current, incoming} {
+		seen := make(map[string]bool, len(snapshot))
+		for _, detail := range snapshot {
+			if detail.TokenCount <= 0 {
+				continue
+			}
+			key := normalizeGeminiModality(detail.Modality)
+			if index, ok := indexes[key]; ok {
+				if seen[key] {
+					merged[index].TokenCount += detail.TokenCount
+				} else {
+					merged[index] = detail
+				}
+			} else {
+				indexes[key] = len(merged)
+				merged = append(merged, detail)
+			}
+			seen[key] = true
 		}
-		key := normalizeGeminiModality(detail.Modality)
-		if index, ok := indexes[key]; ok {
-			merged[index].TokenCount += detail.TokenCount
-			continue
-		}
-		indexes[key] = len(merged)
-		merged = append(merged, detail)
 	}
 	return merged
 }

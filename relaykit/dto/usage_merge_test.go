@@ -72,21 +72,17 @@ func TestGeminiModalityKeysSettleConsistentlyAndDuplicateEntriesSum(t *testing.T
 		})
 	}
 
-	mergedDetails := mergeGeminiTokenDetails(
-		[]GeminiPromptTokensDetails{{Modality: "AUDIO", TokenCount: 10}},
-		[]GeminiPromptTokensDetails{{Modality: "audio", TokenCount: 15}},
-	)
-	require.Len(t, mergedDetails, 1)
-	assert.Equal(t, 25, mergedDetails[0].TokenCount)
-
 	streamMerged := MergeGeminiUsageMetadataNonZero(
 		&GeminiUsageMetadata{
 			PromptTokenCount:    10,
 			PromptTokensDetails: []GeminiPromptTokensDetails{{Modality: "AUDIO", TokenCount: 10}},
 		},
 		&GeminiUsageMetadata{
-			PromptTokenCount:    25,
-			PromptTokensDetails: []GeminiPromptTokensDetails{{Modality: "audio", TokenCount: 15}},
+			PromptTokenCount: 25,
+			PromptTokensDetails: []GeminiPromptTokensDetails{
+				{Modality: "AUDIO", TokenCount: 10},
+				{Modality: "audio", TokenCount: 15},
+			},
 		},
 	)
 	require.NotNil(t, streamMerged)
@@ -172,8 +168,8 @@ func TestMergeClaudeUsageNonZeroPreservesBillingUsage(t *testing.T) {
 	t.Parallel()
 
 	currentSidecar := NewGeminiChatBillingUsage(&GeminiUsageMetadata{
-		PromptTokenCount:    3868,
-		TotalTokenCount:     3868,
+		PromptTokenCount:        3868,
+		TotalTokenCount:         3868,
 		CachedContentTokenCount: 20,
 	})
 	incomingSidecar := NewGeminiChatBillingUsage(&GeminiUsageMetadata{

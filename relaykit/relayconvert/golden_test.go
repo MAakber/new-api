@@ -123,7 +123,7 @@ func fixtureRequests() map[types.RelayFormat]any {
 	claude := &dto.ClaudeRequest{}
 	mustUnmarshalFixture(`{
 		"model": "claude-test",
-		"max_tokens": 1024,
+		"max_tokens": 2048,
 		"stream": true,
 		"system": "You are a helpful assistant.",
 		"messages": [
@@ -138,7 +138,7 @@ func fixtureRequests() map[types.RelayFormat]any {
 			{"role": "user", "content": [{"type": "tool_result", "tool_use_id": "toolu_abc", "content": "15 degrees"}]}
 		],
 		"tools": [{"name": "get_weather", "description": "Get weather by city", "input_schema": {"type": "object", "properties": {"city": {"type": "string"}}, "required": ["city"]}}],
-		"thinking": {"type": "enabled", "budget_tokens": 512}
+		"thinking": {"type": "enabled", "budget_tokens": 1024}
 	}`, claude)
 
 	gemini := &dto.GeminiChatRequest{}
