@@ -24,9 +24,14 @@ import {
   RouterProvider,
 } from '@tanstack/react-router'
 import { act, cleanup, render, screen } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 let client: QueryClient
+
+beforeAll(async () => {
+  // Transform the root's application imports before timing individual route checks.
+  await import('../__root')
+})
 
 beforeEach(() => {
   vi.resetModules()
