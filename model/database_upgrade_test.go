@@ -222,6 +222,45 @@ func verifyDatabaseUpgradeFixture(t *testing.T) {
 	assert.Equal(t, 500, logRow.Quota)
 	assert.Equal(t, "fixture-request", logRow.RequestId)
 	assert.JSONEq(t, `{"admin_info":{"quota_saturation":{"reason":"fixture"}}}`, logRow.Other)
+	t.Run("task_state_noop_keeps_only_a_valid_lease", func(t *testing.T) {
+		state := testSystemTaskState{Total: 10, Processed: 10, Progress: 100, Remaining: 0}
+		task, err := CreateSystemTask("fixture-startup-state", nil, state)
+		require.NoError(t, err)
+		t.Cleanup(func() {
+			require.NoError(t, DB.Where("task_id = ?", task.TaskID).Delete(&SystemTaskLock{}).Error)
+			require.NoError(t, DB.Where("task_id = ?", task.TaskID).Delete(&SystemTask{}).Error)
+		})
+		_, claimed, err := ClaimSystemTask(task.ID, task.Type, "fixture-runner", common.GetTimestamp()+60)
+		require.NoError(t, err)
+		require.True(t, claimed)
+		var storedTask SystemTask
+		require.NoError(t, DB.First(&storedTask, task.ID).Error)
+		// Freeze only the timestamp of this fixture's state write. This forces
+		// an actual unchanged-row UPDATE without depending on wall-clock timing.
+		const callback = "fixture:unchanged_task_state"
+		require.NoError(t, DB.Callback().Update().Before("gorm:update").Register(callback, func(tx *gorm.DB) {
+			values, ok := tx.Statement.Dest.(map[string]interface{})
+			if ok && tx.Statement.Table == "system_tasks" && values["state"] != nil {
+				values["updated_at"] = storedTask.UpdatedAt
+			}
+		}))
+		t.Cleanup(func() { require.NoError(t, DB.Callback().Update().Remove(callback)) })
+		var changedRows int64 = -1
+		require.NoError(t, DB.Callback().Update().After("gorm:update").Register(callback+":result", func(tx *gorm.DB) {
+			values, ok := tx.Statement.Dest.(map[string]interface{})
+			if ok && tx.Statement.Table == "system_tasks" && values["state"] != nil {
+				changedRows = tx.RowsAffected
+			}
+		}))
+		t.Cleanup(func() { require.NoError(t, DB.Callback().Update().Remove(callback+":result")) })
+		require.NoError(t, UpdateSystemTaskState(task.TaskID, "fixture-runner", state))
+		if common.UsingMainDatabase(common.DatabaseTypeMySQL) {
+			assert.Zero(t, changedRows, "the real MySQL/MariaDB driver must exercise unchanged-row semantics")
+		}
+		require.ErrorIs(t, UpdateSystemTaskState(task.TaskID, "wrong-runner", state), ErrSystemTaskLockLost)
+		require.NoError(t, DB.Model(&SystemTaskLock{}).Where("task_id = ?", task.TaskID).Update("locked_until", common.GetTimestamp()-1).Error)
+		require.ErrorIs(t, UpdateSystemTaskState(task.TaskID, "fixture-runner", state), ErrSystemTaskLockLost)
+	})
 	// Use the same persisted user to prove multi-device credentials and unique
 	// token identities still work after upgrading, rather than only inspecting indexes.
 	verificationTx := DB.Begin()
