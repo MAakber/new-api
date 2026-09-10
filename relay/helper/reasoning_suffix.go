@@ -3,13 +3,16 @@ package helper
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	relayconstant "github.com/QuantumNous/new-api/relay/constant"
 	"github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/relaykit/relayconvert/convmeta"
 	"github.com/QuantumNous/new-api/relaykit/relayconvert/reasoning"
 	"github.com/QuantumNous/new-api/relaykit/types"
 	"github.com/QuantumNous/new-api/setting/model_setting"
+	"github.com/QuantumNous/new-api/setting/ratio_setting"
 	hostreasoning "github.com/QuantumNous/new-api/setting/reasoning"
 	"github.com/gin-gonic/gin"
 )
@@ -33,6 +36,9 @@ func ApplyReasoningModelSuffix(c *gin.Context, info *relaycommon.RelayInfo, outb
 
 	opts := info.ConvOptions()
 	origin := info.GetOriginModelName()
+	if info.RelayMode == relayconstant.RelayModeResponsesCompact {
+		origin = strings.TrimSuffix(origin, ratio_setting.CompactModelSuffix)
+	}
 	upstream := ""
 	if info.ChannelMeta != nil {
 		upstream = info.UpstreamModelName

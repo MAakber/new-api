@@ -715,7 +715,29 @@ func GetAudioCompletionRatioCopy() map[string]float64 {
 // fallback matching: strip @ modifiers and legacy aliases first, then apply
 // wildcard normalization.
 func RoutingMatchModelName(name string) string {
+	if strings.HasSuffix(name, CompactModelSuffix) {
+		return WithCompactModelSuffix(FormatMatchingModelName(hostreasoning.BaseModelName(strings.TrimSuffix(name, CompactModelSuffix))))
+	}
 	return FormatMatchingModelName(hostreasoning.BaseModelName(name))
+}
+
+// RoutingModelNames keeps configured legacy aliases ahead of normalized names.
+// Compact requests may also use channels configured with the provider base name.
+func RoutingModelNames(name string) []string {
+	candidates := []string{name, FormatMatchingModelName(name), RoutingMatchModelName(name)}
+	if strings.HasSuffix(name, CompactModelSuffix) {
+		base := strings.TrimSuffix(name, CompactModelSuffix)
+		candidates = append(candidates, base, FormatMatchingModelName(base), RoutingMatchModelName(base))
+	}
+	names := make([]string, 0, len(candidates))
+	seen := make(map[string]bool, len(candidates))
+	for _, candidate := range candidates {
+		if candidate != "" && !seen[candidate] {
+			seen[candidate] = true
+			names = append(names, candidate)
+		}
+	}
+	return names
 }
 
 // HasConfiguredModelRatio reports whether name has an explicit ratio entry

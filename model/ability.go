@@ -9,6 +9,7 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/relaykit/dto"
+	"github.com/QuantumNous/new-api/setting/ratio_setting"
 
 	"github.com/samber/lo"
 	"gorm.io/gorm"
@@ -106,22 +107,41 @@ func getChannelQuery(group string, model string, retry int) (*gorm.DB, error) {
 }
 
 func GetChannel(group string, model string, retry int, requestPath string) (*Channel, error) {
-	var abilities []Ability
-
-	var err error = nil
-	channelQuery, err := getChannelQuery(group, model, retry)
+	abilities, err := matchingChannelAbilities(group, model, requestPath)
 	if err != nil {
 		return nil, err
 	}
-	if common.UsingMainDatabase(common.DatabaseTypeSQLite) || common.UsingMainDatabase(common.DatabaseTypePostgreSQL) {
-		err = channelQuery.Order("weight DESC").Find(&abilities).Error
-	} else {
-		err = channelQuery.Order("weight DESC").Find(&abilities).Error
+	if len(abilities) == 0 {
+		return nil, nil
 	}
-	if err != nil {
-		return nil, err
+	// Keep the legacy priority boundary: one priority per retry, with retries
+	// beyond the available priorities clamped to the lowest one.
+	priorities := make([]int64, 0)
+	for _, ability := range abilities {
+		priority := int64(0)
+		if ability.Priority != nil {
+			priority = *ability.Priority
+		}
+		if len(priorities) == 0 || priorities[len(priorities)-1] != priority {
+			priorities = append(priorities, priority)
+		}
 	}
-	abilities = filterAbilitiesByRequestPathAndModel(abilities, requestPath, model)
+	if retry < 0 {
+		retry = 0
+	} else if retry >= len(priorities) {
+		retry = len(priorities) - 1
+	}
+	selected := abilities[:0]
+	for _, ability := range abilities {
+		priority := int64(0)
+		if ability.Priority != nil {
+			priority = *ability.Priority
+		}
+		if priority == priorities[retry] {
+			selected = append(selected, ability)
+		}
+	}
+	abilities = selected
 	channel := Channel{}
 	if len(abilities) > 0 {
 		// Randomly choose one
@@ -149,16 +169,10 @@ func GetChannel(group string, model string, retry int, requestPath string) (*Cha
 // GetChannelExcluding mirrors DB selection for request-local exclusions without
 // changing legacy GetChannel retry semantics used by non-request callers.
 func GetChannelExcluding(group, model string, retry int, requestPath string, excluded map[int]struct{}) (*Channel, error) {
-	var abilities []Ability
-	groupColumn := commonGroupCol
-	// Unit callers may initialize a lightweight DB without InitDB/initCol.
-	if groupColumn == "" {
-		groupColumn = `"group"`
-	}
-	if err := DB.Where(groupColumn+" = ? and model = ? and enabled = ?", group, model, true).Order("priority DESC, weight DESC").Find(&abilities).Error; err != nil {
+	abilities, err := matchingChannelAbilities(group, model, requestPath)
+	if err != nil {
 		return nil, err
 	}
-	abilities = filterAbilitiesByRequestPathAndModel(abilities, requestPath, model)
 	priorities := make([]int64, 0)
 	seen := map[int64]struct{}{}
 	for _, ability := range abilities {
@@ -215,6 +229,24 @@ func GetChannelExcluding(group, model string, retry int, requestPath string, exc
 			return nil, err
 		}
 		return &channel, nil
+	}
+	return nil, nil
+}
+
+func matchingChannelAbilities(group, model, requestPath string) ([]Ability, error) {
+	groupColumn := commonGroupCol
+	if groupColumn == "" {
+		groupColumn = `"group"`
+	}
+	for _, name := range ratio_setting.RoutingModelNames(model) {
+		var abilities []Ability
+		if err := DB.Where(groupColumn+" = ? and model = ? and enabled = ?", group, name, true).Order("priority DESC, weight DESC").Find(&abilities).Error; err != nil {
+			return nil, err
+		}
+		abilities = filterAbilitiesByRequestPathAndModel(abilities, requestPath, model)
+		if len(abilities) > 0 {
+			return abilities, nil
+		}
 	}
 	return nil, nil
 }

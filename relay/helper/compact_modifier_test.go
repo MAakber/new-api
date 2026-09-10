@@ -26,7 +26,7 @@ func TestCompactModifiersRetainMappingPriceAndRetryIdentity(t *testing.T) {
 	c.Request = httptest.NewRequest("POST", "/v1/responses/compact", nil)
 	c.Set("model_mapping", `{"public":"gpt-4.1"}`)
 	common.SetContextKey(c, constant.ContextKeyOriginalModel, origin)
-	common.SetContextKey(c, constant.ContextKeyChannelType, constant.ChannelTypeCodex)
+	common.SetContextKey(c, constant.ContextKeyChannelType, constant.ChannelTypeCodexCompatibility)
 	info := &relaycommon.RelayInfo{
 		OriginModelName: origin,
 		RelayMode:       relayconstant.RelayModeResponsesCompact,

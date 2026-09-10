@@ -78,7 +78,9 @@ func ModelMappedHelper(c *gin.Context, info *relaycommon.RelayInfo, request dto.
 			finalUpstreamModelName = info.UpstreamModelName
 		}
 		info.UpstreamModelName = finalUpstreamModelName
-		info.OriginModelName = ratio_setting.WithCompactModelSuffix(finalUpstreamModelName)
+		// Legacy compact requests settle against the mapped compact price. Keep
+		// that identity separate so retries and modifiers retain the client name.
+		info.BillingModelName = resolveBillingModelName(ratio_setting.WithCompactModelSuffix(hostreasoning.BaseModelName(finalUpstreamModelName)))
 	}
 	if request != nil {
 		request.SetModelName(info.UpstreamModelName)

@@ -38,7 +38,7 @@ func TestModelModifierChannelSelection(t *testing.T) {
 				t.Cleanup(func() { commonGroupCol = previousGroupCol })
 				for index, configured := range tc.configured {
 					priority := int64(index + 1)
-					channel := Channel{Id: index + 1, Type: constant.ChannelTypeCodex, Status: common.ChannelStatusEnabled, Models: configured, Group: "g", Priority: &priority}
+					channel := Channel{Id: index + 1, Type: constant.ChannelTypeCodexCompatibility, Status: common.ChannelStatusEnabled, Models: configured, Group: "g", Priority: &priority}
 					require.NoError(t, db.Create(&channel).Error)
 					require.NoError(t, db.Create(&Ability{Group: "g", Model: configured, ChannelId: channel.Id, Enabled: true, Priority: &priority, Weight: 1}).Error)
 				}

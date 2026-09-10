@@ -120,13 +120,12 @@ func GetRandomSatisfiedChannel(group string, model string, retry int, requestPat
 	channelSyncLock.RLock()
 	defer channelSyncLock.RUnlock()
 
-	// First, try to find channels with the exact model name.
-	channels := filterChannelsByRequestPathAndModel(group2model2channels[group][model], requestPath, model)
-
-	// If no channels found, try to find channels with the normalized model name.
-	if len(channels) == 0 {
-		normalizedModel := ratio_setting.RoutingMatchModelName(model)
-		channels = filterChannelsByRequestPathAndModel(group2model2channels[group][normalizedModel], requestPath, model)
+	var channels []int
+	for _, name := range ratio_setting.RoutingModelNames(model) {
+		channels = filterChannelsByRequestPathAndModel(group2model2channels[group][name], requestPath, model)
+		if len(channels) > 0 {
+			break
+		}
 	}
 
 	if len(channels) == 0 {
@@ -217,9 +216,12 @@ func GetRandomSatisfiedChannelExcluding(group, model string, retry int, requestP
 	}
 	channelSyncLock.RLock()
 	defer channelSyncLock.RUnlock()
-	channels := filterChannelsByRequestPathAndModel(group2model2channels[group][model], requestPath, model)
-	if len(channels) == 0 {
-		channels = filterChannelsByRequestPathAndModel(group2model2channels[group][ratio_setting.RoutingMatchModelName(model)], requestPath, model)
+	var channels []int
+	for _, name := range ratio_setting.RoutingModelNames(model) {
+		channels = filterChannelsByRequestPathAndModel(group2model2channels[group][name], requestPath, model)
+		if len(channels) > 0 {
+			break
+		}
 	}
 	priorities := map[int64]struct{}{}
 	for _, id := range channels {

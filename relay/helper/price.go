@@ -73,7 +73,7 @@ func HandleGroupRatio(ctx *gin.Context, relayInfo *relaycommon.RelayInfo) hostty
 }
 
 func ModelPriceHelper(c *gin.Context, info *relaycommon.RelayInfo, promptTokens int, meta *types.TokenCountMeta) (hosttypes.PriceData, error) {
-	if info != nil {
+	if info != nil && info.BillingModelName == "" {
 		if matched := resolveBillingModelName(info.GetOriginModelName()); matched != "" && matched != info.OriginModelName {
 			info.BillingModelName = matched
 		}
@@ -289,6 +289,17 @@ func HasPriceOrRatioEntry(name string) bool {
 }
 
 func resolveBillingModelName(origin string) string {
+	if strings.HasSuffix(origin, ratio_setting.CompactModelSuffix) {
+		modelName := strings.TrimSuffix(origin, ratio_setting.CompactModelSuffix)
+		compactBase := ratio_setting.WithCompactModelSuffix(hostreasoning.BaseModelName(modelName))
+		if !reasoning.ParseModelModifiers(modelName).HasModifiers() && HasPriceOrRatioEntry(origin) {
+			return origin
+		}
+		if HasPriceOrRatioEntry(compactBase) {
+			return compactBase
+		}
+		return resolveBillingModelName(modelName)
+	}
 	var candidates []string
 	if !reasoning.ParseModelModifiers(origin).HasModifiers() {
 		candidates = append(candidates, origin)
