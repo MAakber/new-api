@@ -1,0 +1,33 @@
+{
+  "id": "B01-docker-pull",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu-SF3D",
+    "-u",
+    "root",
+    "--",
+    "docker",
+    "pull",
+    "--platform",
+    "linux/amd64",
+    "golang:1.26.1-alpine"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "6c333a2a7d5cc5fa68eca6f857f7bf58c5f46911",
+  "started_at": "2026-09-10T10:50:25.955Z",
+  "finished_at": "2026-09-10T10:50:43.553Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

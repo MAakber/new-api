@@ -1,0 +1,17 @@
+{
+  "upstream": "7037ac15bd8a29f8ee3e2b74e784bcdb75d67d22",
+  "unit": "B01.1-docker",
+  "before_head": "ae41b291e6bbdaf4b110f52a16b3d0891d38bbf2",
+  "after_head": "da282eba311a7d9a71bf7e2d0c87449d86f6174d",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "7037ac15bd8a29f8ee3e2b74e784bcdb75d67d22"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "Dockerfile.dev"
+  ]
+}

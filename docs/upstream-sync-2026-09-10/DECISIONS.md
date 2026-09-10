@@ -24,3 +24,7 @@
 ## 2026-09-10T09:33:32.625Z — A13 test isolation
 
 The user has production only. All migration and accounting tests will use new isolated local databases. Production connectivity, schema writes, deployment and real account operations are not implied by the merge authorization. Actual-version and sanitized-snapshot acceptance remains pending until supplied; continue independent work.
+
+## 2026-09-10T10:59:41.213Z — A14 read-only production inventory
+
+User explicitly authorized ssh nep to inspect database type/version. Scope is read-only deployment metadata and database version/schema inspection as needed; no production write, migration, deployment or account operation. Continue migration experiments only on isolated local databases.

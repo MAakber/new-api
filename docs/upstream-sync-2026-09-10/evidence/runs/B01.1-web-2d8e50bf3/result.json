@@ -1,0 +1,18 @@
+{
+  "upstream": "2d8e50bf36e94200b809dfb39e73624ec48b1e23",
+  "unit": "B01.1-web",
+  "before_head": "33025596842fc286a69a1455254fc590f14dafae",
+  "after_head": "2fc8ce77db5a7dbd4192edc52cf618f2a9c5c190",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "2d8e50bf36e94200b809dfb39e73624ec48b1e23"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/src/features/usage-logs/components/common-logs-filter-bar.tsx",
+    "web/src/features/usage-logs/components/logs-filter-toolbar.tsx"
+  ]
+}

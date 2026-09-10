@@ -1,0 +1,127 @@
+$ vitest run --config vitest.sync.config.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/features/wallet/hooks/__tests__/billing-history-search.test.ts (2 tests | 2 failed) 153ms
+   ❯ billing history search (2)
+     × sends only the settled keyword and resets pagination after typing 81ms
+     × keeps the latest results when an older request finishes last 71ms
+ ❯ src/features/wallet/components/__tests__/subscription-preference.test.tsx (2 tests | 2 failed) 87ms
+   ❯ persisted subscription billing preference (2)
+     × shows subscription_only honestly when the last subscription has expired 73ms
+     × shows subscription_first honestly when the last subscription has expired 13ms
+ ❯ src/features/auth/sign-in/components/__tests__/turnstile-retry.test.tsx (2 tests | 2 failed) 1050ms
+   ❯ password login Turnstile lifecycle (2)
+     × submits the solved token once and requires a fresh token for a retry 564ms
+     × does not submit a token after the provider reports that it expired 486ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/wallet/components/__tests__/subscription-preference.test.tsx > persisted subscription billing preference > shows subscription_only honestly when the last subscription has expired
+AssertionError: expected 'Wallet First' to contain 'Subscription Only'
+
+Expected: "Subscription Only"
+Received: "Wallet First"
+
+ ❯ src/features/wallet/components/__tests__/subscription-preference.test.tsx:88:56
+     86|       )
+     87|       await screen.findByText('My Subscriptions')
+     88|       expect(screen.getByRole('combobox').textContent).toContain(test.…
+       |                                                        ^
+     89|       expect(
+     90|         screen.getByText((text) => text.endsWith(test.explanation))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/features/wallet/components/__tests__/subscription-preference.test.tsx > persisted subscription billing preference > shows subscription_first honestly when the last subscription has expired
+AssertionError: expected 'Wallet First' to contain 'Subscription First'
+
+Expected: "Subscription First"
+Received: "Wallet First"
+
+ ❯ src/features/wallet/components/__tests__/subscription-preference.test.tsx:88:56
+     86|       )
+     87|       await screen.findByText('My Subscriptions')
+     88|       expect(screen.getByRole('combobox').textContent).toContain(test.…
+       |                                                        ^
+     89|       expect(
+     90|         screen.getByText((text) => text.endsWith(test.explanation))
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/features/wallet/hooks/__tests__/billing-history-search.test.ts > billing history search > sends only the settled keyword and resets pagination after typing
+AssertionError: expected [ { …(2) }, { …(2) }, { …(2) } ] to have a length of 1 but got 3
+
+- Expected
++ Received
+
+- 1
++ 3
+
+ ❯ src/features/wallet/hooks/__tests__/billing-history-search.test.ts:66:22
+     64|       await vi.advanceTimersByTimeAsync(499)
+     65|     })
+     66|     expect(requests).toHaveLength(1)
+       |                      ^
+     67|     await act(async () => {
+     68|       await vi.advanceTimersByTimeAsync(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/features/wallet/hooks/__tests__/billing-history-search.test.ts > billing history search > keeps the latest results when an older request finishes last
+AssertionError: expected 7 to be 42 // Object.is equality
+
+- Expected
++ Received
+
+- 42
++ 7
+
+ ❯ src/features/wallet/hooks/__tests__/billing-history-search.test.ts:97:39
+     95|       requests[0].reply({ success: true, data: { items: [], total: 7 }…
+     96|     )
+     97|     expect(view.result.current.total).toBe(42)
+       |                                       ^
+     98|     expect(view.result.current.loading).toBe(false)
+     99|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/features/auth/sign-in/components/__tests__/turnstile-retry.test.tsx > password login Turnstile lifecycle > submits the solved token once and requires a fresh token for a retry
+AssertionError: expected 1 to be greater than 1
+ ❯ src/features/auth/sign-in/components/__tests__/turnstile-retry.test.tsx:123:28
+    121|       ).toBe(false)
+    122|     )
+    123|     expect(widgets.length).toBeGreaterThan(1)
+       |                            ^
+    124|     await user.click(screen.getByRole('button', { name: 'Sign in' }))
+    125|     expect(submissions).toHaveLength(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/features/auth/sign-in/components/__tests__/turnstile-retry.test.tsx > password login Turnstile lifecycle > does not submit a token after the provider reports that it expired
+AssertionError: expected [ Array(1) ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/features/auth/sign-in/components/__tests__/turnstile-retry.test.tsx:138:25
+    136|     act(() => widgets.at(-1)?.expire())
+    137|     await user.click(screen.getByRole('button', { name: 'Sign in' }))
+    138|     expect(submissions).toHaveLength(0)
+       |                         ^
+    139|   })
+    140| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  6 failed (6)
+   Start at  18:36:52
+   Duration  6.59s (import 48%, environment 19%, setup 19%, tests 9%, transform 4%)
+
+error: script "test:sync" exited with code 1

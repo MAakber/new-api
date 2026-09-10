@@ -1,0 +1,30 @@
+{
+  "id": "B01-provider-red-corrected",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "./relay/channel/newapi",
+    "-run",
+    "TestFetchVolcEngineModels|TestNewAPIImage",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "f7a2b2e937b6fb4470541332765599f51b052b65",
+  "started_at": "2026-09-10T10:01:45.750Z",
+  "finished_at": "2026-09-10T10:01:49.213Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

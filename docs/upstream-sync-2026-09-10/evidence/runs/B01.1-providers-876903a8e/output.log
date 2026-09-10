@@ -1,0 +1,5 @@
+Auto-merging controller/channel_upstream_update.go
+[codex/upstream-sync-2026-09-10 d66fa7314] fix: 修正火山方舟渠道获取模型列表的端点路径 (#7203)
+ Author: captainold <wenyuxin@gmail.com>
+ Date: Wed Sep 9 14:33:38 2026 +0800
+ 1 file changed, 4 insertions(+), 1 deletion(-)

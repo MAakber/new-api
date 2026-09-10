@@ -1,0 +1,26 @@
+{
+  "upstream": "7dd1000a190d1c810fa0d5723770341106742a1b",
+  "unit": "B01.1-web",
+  "before_head": "43632cf08a666ede11fc468d629d28d3e07f9c67",
+  "after_head": "c57d432b46177d6af0e84ac41ab9b9c346976217",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "7dd1000a190d1c810fa0d5723770341106742a1b"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/src/features/keys/components/api-keys-table.tsx",
+    "web/src/features/models/components/deployments-table.tsx",
+    "web/src/features/models/components/dialogs/upstream-conflict-dialog.tsx",
+    "web/src/features/models/components/models-table.tsx",
+    "web/src/features/pricing/hooks/use-filters.ts",
+    "web/src/features/redemption-codes/components/redemptions-table.tsx",
+    "web/src/features/system-settings/models/channel-selector-dialog.tsx",
+    "web/src/features/system-settings/models/model-ratio-visual-editor.tsx",
+    "web/src/features/system-settings/models/upstream-ratio-sync-table.tsx",
+    "web/src/features/wallet/hooks/use-billing-history.ts"
+  ]
+}

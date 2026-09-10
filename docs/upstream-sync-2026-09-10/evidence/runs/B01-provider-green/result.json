@@ -1,0 +1,29 @@
+{
+  "id": "B01-provider-green",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "./relay/...",
+    "./middleware/...",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "b6ac8fcf88b7511d8cf13bc4ec3063577eb04464",
+  "started_at": "2026-09-10T10:05:15.784Z",
+  "finished_at": "2026-09-10T10:05:33.448Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

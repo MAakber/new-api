@@ -1,0 +1,5 @@
+Auto-merging web/src/features/auth/sign-in/components/user-auth-form.tsx
+[codex/upstream-sync-2026-09-10 43632cf08] fix(web): refresh Turnstile token after login attempt (#6764)
+ Author: Wod <102715297+thiswod@users.noreply.github.com>
+ Date: Tue Aug 11 13:55:01 2026 +0800
+ 1 file changed, 10 insertions(+), 1 deletion(-)

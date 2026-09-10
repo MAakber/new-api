@@ -1,0 +1,15 @@
+Sending build context to Docker daemon  25.24MB
+Step 1/20 : FROM golang:1.26.1-alpine AS builder
+1.26.1-alpine: Pulling from library/golang
+4f4fb700ef54: Pulling fs layer
+644a983862e3: Pulling fs layer
+13short read: expected 67216879 bytes but got 5060607: unexpected EOF
+0eae: Pulling fs layer
+391498a63c0e: Download complete
+eaf43e45e2d1: Download complete
+13ee208a3600: Download complete
+4f4fb700ef54: Download complete
+644a983862e3: Download complete
+589002ba0eae: Download complete
+589002ba0eae: Pull complete
+644a983862e3: Pull complete

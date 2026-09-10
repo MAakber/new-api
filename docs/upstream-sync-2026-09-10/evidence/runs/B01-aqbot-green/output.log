@@ -1,0 +1,10 @@
+$ vitest run --config vitest.sync.config.ts chat-links
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  18:52:29
+   Duration  1.35s (environment 66%, setup 27%, transform 4%, import 2%)
+

@@ -86,12 +86,18 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "NewAPI delegates image conversion to the existing OpenAI converter; image/mask bytes, mapped model, explicit zero/false and Playground-only group isolation pass real multipart tests.",
+    "resolution_commits": [
+      "b6ac8fcf88b7511d8cf13bc4ec3063577eb04464"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-providers-8461e5339/result.json",
+      "evidence/runs/B01-provider-green/result.json",
+      "evidence/runs/B01-provider-red-corrected/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -764,12 +770,18 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Omitted top_p remains nil; explicit endpoint values clamp at two decimal precision. Full ali and relay tests passed.",
+    "resolution_commits": [
+      "2d998e60d8f504cb0d4824d093ce47b4904bbc81"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-providers-2399de97d/result.json",
+      "evidence/runs/B01-provider-green/result.json",
+      "evidence/runs/B01-provider-red-corrected/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -893,12 +905,22 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "c57d432b46177d6af0e84ac41ab9b9c346976217"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-web-7dd1000a1/result.json",
+      "evidence/runs/B01-web-final/result.json",
+      "evidence/runs/B01-preservation/result.json",
+      "evidence/runs/B01-typecheck-final/result.json",
+      "evidence/runs/B01-web-lint/result.json",
+      "evidence/runs/B01-aqbot-green/result.json",
+      "evidence/runs/B01-aqbot-lint-green/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1285,12 +1307,22 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "43632cf08a666ede11fc468d629d28d3e07f9c67"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-web-ffeb1b24e/result.json",
+      "evidence/runs/B01-web-final/result.json",
+      "evidence/runs/B01-preservation/result.json",
+      "evidence/runs/B01-typecheck-final/result.json",
+      "evidence/runs/B01-web-lint/result.json",
+      "evidence/runs/B01-aqbot-green/result.json",
+      "evidence/runs/B01-aqbot-lint-green/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2355,12 +2387,22 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "2fc8ce77db5a7dbd4192edc52cf618f2a9c5c190"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-web-2d8e50bf3/result.json",
+      "evidence/runs/B01-web-final/result.json",
+      "evidence/runs/B01-preservation/result.json",
+      "evidence/runs/B01-typecheck-final/result.json",
+      "evidence/runs/B01-web-lint/result.json",
+      "evidence/runs/B01-aqbot-green/result.json",
+      "evidence/runs/B01-aqbot-lint-green/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2717,12 +2759,17 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "da282eba311a7d9a71bf7e2d0c87449d86f6174d"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-docker-7037ac15b/result.json",
+      "evidence/runs/B01-docker-final/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3256,12 +3303,22 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "f76efe4d575930e1f916635e152864ba9cd53809"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-aqbot-8454082f9/result.json",
+      "evidence/runs/B01-web-final/result.json",
+      "evidence/runs/B01-preservation/result.json",
+      "evidence/runs/B01-typecheck-final/result.json",
+      "evidence/runs/B01-web-lint/result.json",
+      "evidence/runs/B01-aqbot-green/result.json",
+      "evidence/runs/B01-aqbot-lint-green/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3540,12 +3597,23 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Preserve saved preference and distinguish rejection from wallet fallback after subscription expiry; all seven reviewed translations added via the project script and i18n sync.",
+    "resolution_commits": [
+      "94859d2a7451a726b8b973599dd5d8b518936d91"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01-web-red/result.json",
+      "evidence/runs/B01-web-red/subscription-translations.mjs",
+      "evidence/runs/B01-web-final/result.json",
+      "evidence/runs/B01-preservation/result.json",
+      "evidence/runs/B01-typecheck-final/result.json",
+      "evidence/runs/B01-web-lint/result.json",
+      "evidence/runs/B01-aqbot-green/result.json",
+      "evidence/runs/B01-aqbot-lint-green/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7893,12 +7961,18 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Ark uses /api/v3/models while explicitly mapped coding plans and local model-list normalization/authentication are preserved.",
+    "resolution_commits": [
+      "d66fa73144d2c3e42ddd0fb6611413fa9e444cdc"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B01.1-providers-876903a8e/result.json",
+      "evidence/runs/B01-provider-green/result.json",
+      "evidence/runs/B01-provider-red-corrected/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

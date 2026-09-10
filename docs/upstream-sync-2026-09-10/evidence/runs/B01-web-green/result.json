@@ -1,0 +1,25 @@
+{
+  "id": "B01-web-green",
+  "command": [
+    "bun",
+    "run",
+    "test:sync"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "94859d2a7451a726b8b973599dd5d8b518936d91",
+  "started_at": "2026-09-10T10:47:50.286Z",
+  "finished_at": "2026-09-10T10:47:57.717Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "B01-docker-build-retry",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu-SF3D",
+    "-u",
+    "root",
+    "--",
+    "sh",
+    "-lc",
+    "docker build -f Dockerfile.dev -t codex-new-api-sync-20260910:dev-b01 - < /mnt/d/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B01-docker-b6ac8fcf8.tar"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "b6ac8fcf88b7511d8cf13bc4ec3063577eb04464",
+  "started_at": "2026-09-10T10:05:16.246Z",
+  "finished_at": "2026-09-10T10:05:33.672Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

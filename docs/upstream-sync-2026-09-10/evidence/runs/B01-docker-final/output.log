@@ -1,0 +1,144 @@
+Sending build context to Docker daemon  25.27MB
+Step 1/20 : FROM golang:1.26.1-alpine AS builder
+ ---> 2389ebfa5b7f
+Step 2/20 : ENV GO111MODULE=on CGO_ENABLED=0
+ ---> Running in ea0768a9626a
+ ---> Removed intermediate container ea0768a9626a
+ ---> 96c3a8cdcb08
+Step 3/20 : ARG TARGETOS
+ ---> Running in 386bb0f3f09a
+ ---> Removed intermediate container 386bb0f3f09a
+ ---> 8e3c89662f29
+Step 4/20 : ARG TARGETARCH
+ ---> Running in f65aa0f28903
+ ---> Removed intermediate container f65aa0f28903
+ ---> 203ee2969921
+Step 5/20 : ENV GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64}
+ ---> Running in a0c54a97d0c5
+ ---> Removed intermediate container a0c54a97d0c5
+ ---> dc14ce8123b2
+Step 6/20 : ENV GOEXPERIMENT=greenteagc
+ ---> Running in 31a1984a42c5
+ ---> Removed intermediate container 31a1984a42c5
+ ---> 2bd896823151
+Step 7/20 : WORKDIR /build
+ ---> Running in 1d723069bd9e
+ ---> Removed intermediate container 1d723069bd9e
+ ---> 53a0c23b43f2
+Step 8/20 : ADD go.mod go.sum ./
+ ---> 362e2e6cc15e
+Step 9/20 : ADD relaykit/go.mod ./relaykit/go.mod
+ ---> 8bd60bf236b8
+Step 10/20 : RUN go mod download
+ ---> Running in 0a1145e3cc1f
+ ---> Removed intermediate container 0a1145e3cc1f
+ ---> 64508d9d22b5
+Step 11/20 : COPY . .
+ ---> c45053cc1f08
+Step 12/20 : RUN mkdir -p web/dist &&     echo '<!doctype html><html><head><title>dev</title></head><body>use frontend dev server</body></html>' > web/dist/index.html
+ ---> Running in 6f1aa0fd18d7
+ ---> Removed intermediate container 6f1aa0fd18d7
+ ---> a811abc880bc
+Step 13/20 : RUN go build -ldflags "-s -w -X 'github.com/QuantumNous/new-api/common.Version=$(cat VERSION)'" -o new-api
+ ---> Running in 533c40930bab
+ ---> Removed intermediate container 533c40930bab
+ ---> 1e91a7bd5daa
+Step 14/20 : FROM debian:bookworm-slim
+bookworm-slim: Pulling from library/debian
+a8ac7f6c67ab: Pulling fs layer
+88efe71721f2: Download complete
+a8ac7f6c67ab: Download complete
+a8ac7f6c67ab: Pull complete
+Digest: sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
+Status: Downloaded newer image for debian:bookworm-slim
+ ---> 88200866dfff
+Step 15/20 : RUN apt-get update     && apt-get install -y --no-install-recommends ca-certificates tzdata wget     && rm -rf /var/lib/apt/lists/*     && update-ca-certificates
+ ---> Running in fe2a8407ed0f
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [338 kB]
+Fetched 9376 kB in 4s (2100 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+tzdata is already the newest version (2026b-0+deb12u1).
+tzdata set to manually installed.
+The following additional packages will be installed:
+  libpsl5 libssl3 openssl
+Recommended packages:
+  publicsuffix
+The following NEW packages will be installed:
+  ca-certificates libpsl5 libssl3 openssl wget
+0 upgraded, 5 newly installed, 0 to remove and 1 not upgraded.
+Need to get 4633 kB of archives.
+After this operation, 12.6 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bookworm/main amd64 libssl3 amd64 3.0.20-1~deb12u2 [2036 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 openssl amd64 3.0.20-1~deb12u2 [1439 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security/main amd64 ca-certificates all 20250419~deb12u1 [162 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+Get:5 http://deb.debian.org/debian bookworm/main amd64 wget amd64 1.21.3-1+deb12u1 [937 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 4633 kB in 3s (1789 kB/s)
+Selecting previously unselected package libssl3:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6096 files and directories currently installed.)
+Preparing to unpack .../libssl3_3.0.20-1~deb12u2_amd64.deb ...
+Unpacking libssl3:amd64 (3.0.20-1~deb12u2) ...
+Selecting previously unselected package openssl.
+Preparing to unpack .../openssl_3.0.20-1~deb12u2_amd64.deb ...
+Unpacking openssl (3.0.20-1~deb12u2) ...
+Selecting previously unselected package ca-certificates.
+Preparing to unpack .../ca-certificates_20250419~deb12u1_all.deb ...
+Unpacking ca-certificates (20250419~deb12u1) ...
+Selecting previously unselected package libpsl5:amd64.
+Preparing to unpack .../libpsl5_0.21.2-1_amd64.deb ...
+Unpacking libpsl5:amd64 (0.21.2-1) ...
+Selecting previously unselected package wget.
+Preparing to unpack .../wget_1.21.3-1+deb12u1_amd64.deb ...
+Unpacking wget (1.21.3-1+deb12u1) ...
+Setting up libpsl5:amd64 (0.21.2-1) ...
+Setting up wget (1.21.3-1+deb12u1) ...
+Setting up libssl3:amd64 (3.0.20-1~deb12u2) ...
+Setting up openssl (3.0.20-1~deb12u2) ...
+Setting up ca-certificates (20250419~deb12u1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Updating certificates in /etc/ssl/certs...
+150 added, 0 removed; done.
+Processing triggers for libc-bin (2.36-9+deb12u14) ...
+Processing triggers for ca-certificates (20250419~deb12u1) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+ ---> Removed intermediate container fe2a8407ed0f
+ ---> efa9afaa7a13
+Step 16/20 : COPY --from=builder /build/new-api /
+ ---> faee40076d99
+Step 17/20 : COPY LICENSE NOTICE THIRD-PARTY-LICENSES.md /licenses/
+ ---> a1aa2a48fb90
+Step 18/20 : EXPOSE 3000
+ ---> Running in 5c90aedc64a1
+ ---> Removed intermediate container 5c90aedc64a1
+ ---> 44d06c9f84b0
+Step 19/20 : WORKDIR /data
+ ---> Running in 1cc19762051a
+ ---> Removed intermediate container 1cc19762051a
+ ---> 18e46efc9158
+Step 20/20 : ENTRYPOINT ["/new-api"]
+ ---> Running in d3465073fed1
+ ---> Removed intermediate container d3465073fed1
+ ---> 89b0004f0e02
+Successfully built 89b0004f0e02
+Successfully tagged codex-new-api-sync-20260910:dev-b01

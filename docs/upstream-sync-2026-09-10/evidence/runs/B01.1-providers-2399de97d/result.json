@@ -1,0 +1,18 @@
+{
+  "upstream": "2399de97daf6ac76e5378a7c7c244ff0628a8186",
+  "unit": "B01.1-providers",
+  "before_head": "d66fa73144d2c3e42ddd0fb6611413fa9e444cdc",
+  "after_head": "2d998e60d8f504cb0d4824d093ce47b4904bbc81",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "2399de97daf6ac76e5378a7c7c244ff0628a8186"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/ali/text.go",
+    "relay/channel/ali/text_test.go"
+  ]
+}

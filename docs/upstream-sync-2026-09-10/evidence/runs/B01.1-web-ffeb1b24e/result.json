@@ -1,0 +1,17 @@
+{
+  "upstream": "ffeb1b24ef85ee98c048649a554136f9fe9d43cf",
+  "unit": "B01.1-web",
+  "before_head": "2fc8ce77db5a7dbd4192edc52cf618f2a9c5c190",
+  "after_head": "43632cf08a666ede11fc468d629d28d3e07f9c67",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "ffeb1b24ef85ee98c048649a554136f9fe9d43cf"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/src/features/auth/sign-in/components/user-auth-form.tsx"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "upstream": "8461e5339d483f3c0699fb009567be9cec25846d",
+  "unit": "B01.1-providers",
+  "before_head": "2d998e60d8f504cb0d4824d093ce47b4904bbc81",
+  "after_head": "b6ac8fcf88b7511d8cf13bc4ec3063577eb04464",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "8461e5339d483f3c0699fb009567be9cec25846d"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/newapi/adaptor.go"
+  ]
+}

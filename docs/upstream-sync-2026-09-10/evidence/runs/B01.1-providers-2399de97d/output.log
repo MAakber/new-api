@@ -1,0 +1,5 @@
+[codex/upstream-sync-2026-09-10 2d998e60d] fix(ali): stop injecting top_p into requests that omit it (#6674)
+ Author: ENCHIGO <38551565+ENCHIGO@users.noreply.github.com>
+ Date: Sat Aug 8 13:54:00 2026 +0800
+ 2 files changed, 72 insertions(+), 5 deletions(-)
+ create mode 100644 relay/channel/ali/text_test.go

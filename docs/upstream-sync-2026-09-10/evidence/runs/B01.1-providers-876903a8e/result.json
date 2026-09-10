@@ -1,0 +1,17 @@
+{
+  "upstream": "876903a8eb22c44e395c03da38f6701c650651ae",
+  "unit": "B01.1-providers",
+  "before_head": "f7a2b2e937b6fb4470541332765599f51b052b65",
+  "after_head": "d66fa73144d2c3e42ddd0fb6611413fa9e444cdc",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "876903a8eb22c44e395c03da38f6701c650651ae"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "controller/channel_upstream_update.go"
+  ]
+}

@@ -56,27 +56,94 @@
       "b5b94bc685fd2251551df826dab3575ab262f6dc",
       "8454082f930f44593e92791c2581ffc63eb30a59"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B01.1",
         "action": "按已验证顺序拆分 9 个补丁，记录每单元依赖",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B01.2",
         "action": "验证受影响后端/前端和 Dockerfile.dev 的实际构建",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B01.3",
         "action": "完成上游处置与相关保护项阶段复核",
-        "status": "pending"
+        "status": "verified"
+      },
+      {
+        "id": "B01.1-docker",
+        "action": "fix(docker): add relaykit go.mod to dev build context (#7072)",
+        "status": "verified",
+        "upstreamCommits": [
+          "7037ac15bd8a29f8ee3e2b74e784bcdb75d67d22"
+        ]
+      },
+      {
+        "id": "B01.1-providers",
+        "action": "Add and run failure-reproducing VolcEngine endpoint and NewAPI multipart regressions before applying three inspected provider fixes.",
+        "status": "verified",
+        "preservationIds": [
+          "D05",
+          "D23",
+          "D26"
+        ],
+        "upstreamCommits": [
+          "876903a8eb22c44e395c03da38f6701c650651ae",
+          "2399de97daf6ac76e5378a7c7c244ff0628a8186",
+          "8461e5339d483f3c0699fb009567be9cec25846d"
+        ]
+      },
+      {
+        "id": "B01.1-web",
+        "action": "Protect Turnstile replay, billing search races and persisted subscription preference; apply reviewed UI fixes.",
+        "status": "verified",
+        "upstreamCommits": [
+          "2d8e50bf36e94200b809dfb39e73624ec48b1e23",
+          "ffeb1b24ef85ee98c048649a554136f9fe9d43cf",
+          "7dd1000a190d1c810fa0d5723770341106742a1b"
+        ]
+      },
+      {
+        "id": "B01.1-subscription",
+        "action": "Adapt subscription preference UI and use add-missing-keys.mjs plus i18n:sync for the seven upstream translations; preserve existing locale keys.",
+        "status": "verified",
+        "upstreamCommits": [
+          "b5b94bc685fd2251551df826dab3575ab262f6dc"
+        ]
+      },
+      {
+        "id": "B01.1-aqbot",
+        "action": "feat(chat): add AQBot preset (#7079)",
+        "status": "verified",
+        "upstreamCommits": [
+          "8454082f930f44593e92791c2581ffc63eb30a59"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "按已验证顺序拆分 9 个补丁，记录每单元依赖",
+    "codeCommits": [
+      "da282eba311a7d9a71bf7e2d0c87449d86f6174d",
+      "d66fa73144d2c3e42ddd0fb6611413fa9e444cdc",
+      "2d998e60d8f504cb0d4824d093ce47b4904bbc81",
+      "b6ac8fcf88b7511d8cf13bc4ec3063577eb04464",
+      "2fc8ce77db5a7dbd4192edc52cf618f2a9c5c190",
+      "43632cf08a666ede11fc468d629d28d3e07f9c67",
+      "c57d432b46177d6af0e84ac41ab9b9c346976217",
+      "94859d2a7451a726b8b973599dd5d8b518936d91",
+      "f76efe4d575930e1f916635e152864ba9cd53809"
+    ],
+    "evidence": [
+      "evidence/runs/B01-web-final/result.json",
+      "evidence/runs/B01-preservation/result.json",
+      "evidence/runs/B01-typecheck-final/result.json",
+      "evidence/runs/B01-web-lint/result.json",
+      "evidence/runs/B01-aqbot-green/result.json",
+      "evidence/runs/B01-aqbot-lint-green/result.json",
+      "evidence/runs/B01-docker-final/result.json"
+    ],
+    "nextAction": "Stage verified; final integration review remains in B17/B18.",
     "orderEvidence": "evidence/baseline-review/batch-simulations.json"
   },
   {

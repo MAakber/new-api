@@ -1,0 +1,1 @@
+src/features/chat/lib/__tests__/chat-links.test.ts:71:28: error typescript(no-non-null-assertion): Forbidden non-null assertion.

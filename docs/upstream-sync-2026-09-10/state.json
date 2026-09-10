@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T09:45:31.144Z",
+  "updatedAt": "2026-09-10T10:59:41.203Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B01",
-  "current_unit": "B01.1",
+  "current_batch": "B05",
+  "current_unit": "B05.1",
   "active_operation": null,
-  "last_observed_head": "8152abd51576cd39265ad1fcc319315889c1dbe3",
-  "last_verified_code_commit": null,
+  "last_observed_head": "df7a7ea2f5c3fe79454048c7b5a7c6e10e41cc96",
+  "last_verified_code_commit": "df7a7ea2f5c3fe79454048c7b5a7c6e10e41cc96",
   "last_checkpoint_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B01.1: inspect and apply the first bounded unit (Docker build context, VolcEngine model endpoint, Ali top_p, NewAPI multipart), with local regression coverage and recorded upstream SHAs.",
+  "next_action": "Reproduce and fix time range billing expression while checking production database version via authorized read-only ssh nep.",
   "blockers": [
     {
       "id": "production_snapshot",
