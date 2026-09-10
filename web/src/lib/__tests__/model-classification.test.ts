@@ -82,6 +82,44 @@ describe('model classification', () => {
   )
 
   it.each([
+    ['codex-mini-latest', 'OpenAI'],
+    ['text-ada-001', 'OpenAI'],
+    ['davinci-002', 'OpenAI'],
+    ['babbage-002', 'OpenAI'],
+    ['computer-use-preview', 'OpenAI'],
+    ['palm-2', 'Google'],
+    ['aqa', 'Google'],
+    ['tongyi-deepresearch-30b', 'Alibaba'],
+    ['gte-large', 'Alibaba'],
+    ['text-embedding-v4', 'Alibaba'],
+    ['gui-plus', 'Alibaba'],
+    ['z-image-turbo', 'Alibaba'],
+    ['wanx2.1-t2v-plus', 'Alibaba'],
+    ['seed-1-6-250615', 'ByteDance'],
+    ['t2v-01', 'MiniMax'],
+    ['i2v-01-live', 'MiniMax'],
+    ['s2v-01', 'MiniMax'],
+    ['wenxin-4', 'Baidu'],
+    ['hy3-preview', 'Tencent'],
+    ['hy-2', 'Tencent'],
+    ['Llama-3.1-Nemotron-70B-Instruct', 'NVIDIA'],
+    ['llama-3.1-sonar-large-128k-online', 'Perplexity'],
+    ['amazon.nova-pro-v1:0', 'Amazon'],
+    ['titan-embed-text-v2', 'Amazon'],
+    ['ai21/jamba-1.5-large', 'AI21 Labs'],
+    ['jamba-1.5-large', 'AI21 Labs'],
+    ['nousresearch/hermes-3-llama-3.1-405b', 'Nous Research'],
+    ['hermes-3-llama-3.1-405b', 'Nous Research'],
+    ['360gpt-pro', '360 AI'],
+    ['mj_imagine', 'Midjourney'],
+    ['swap_face', 'Midjourney'],
+    ['vidu-q1', 'Vidu'],
+    ['jimeng-4.0', 'Jimeng'],
+  ])('groups upstream model family %s under %s', (id, vendor) => {
+    expect(classifyModel(id).provider?.name).toBe(vendor)
+  })
+
+  it.each([
     'custom-model',
     'notgrok-4',
     'business-o3-report',
