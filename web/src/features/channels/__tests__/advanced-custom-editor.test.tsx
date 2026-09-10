@@ -93,9 +93,7 @@ describe('advanced custom management and forwarding routes', () => {
     )
     await user.click(screen.getByRole('combobox', { name: 'Add template' }))
     await user.click(screen.getByRole('option', { name: 'Claude only' }))
-    await user.click(
-      screen.getByRole('button', { name: 'Replace', exact: true })
-    )
+    await user.click(screen.getByRole('button', { name: 'Replace' }))
     await user.click(screen.getByRole('button', { name: 'Save changes' }))
     expect(onSave).toHaveBeenCalledTimes(1)
     const saved = JSON.parse(onSave.mock.calls[0][0]) as AdvancedCustomConfig

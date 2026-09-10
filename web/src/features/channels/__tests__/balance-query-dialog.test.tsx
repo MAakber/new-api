@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { act, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { assert, describe, expect, it, vi } from 'vitest'
 
 import { updateChannelBalance } from '../api'
 import { BalanceQueryDialog } from '../components/dialogs/balance-query-dialog'
@@ -43,7 +43,24 @@ describe('balance query window ownership', () => {
       success: true,
       raw_response: '{"source":"refreshed second"}',
     })
-    renderChannelUI(
+    const view = renderChannelUI(
+      <>
+        <BalanceQueryDialog
+          open
+          channel={first}
+          initialRawResponse='{"source":"first"}'
+          onOpenChange={vi.fn()}
+        />
+        <BalanceQueryDialog
+          open={false}
+          channel={second}
+          initialRawResponse='{"source":"second"}'
+          onOpenChange={vi.fn()}
+        />
+      </>
+    )
+    await screen.findByRole('dialog', { name: 'Query Balance' })
+    view.rerender(
       <>
         <BalanceQueryDialog
           open
@@ -62,15 +79,24 @@ describe('balance query window ownership', () => {
     const secondDialog = screen
       .getAllByRole('dialog')
       .find((dialog) => within(dialog).queryByText('Second balance'))
-    expect(secondDialog).toBeDefined()
+    assert(secondDialog)
     await user.click(
-      within(secondDialog!).getByRole('button', { name: 'Update Balance' })
+      within(secondDialog).getByRole('button', { name: 'Update Balance' })
     )
     await waitFor(() =>
       expect(screen.getByText('{"source":"refreshed second"}')).toBeDefined()
     )
-    expect(screen.getByText('{"source":"first"}')).toBeDefined()
     expect(updateChannelBalance).toHaveBeenCalledExactlyOnceWith(402)
+    view.rerender(
+      <BalanceQueryDialog
+        open
+        channel={first}
+        initialRawResponse='{"source":"first"}'
+        onOpenChange={vi.fn()}
+      />
+    )
+    expect(screen.getByText('{"source":"first"}')).toBeVisible()
+    expect(screen.queryByText('{"source":"refreshed second"}')).toBeNull()
   })
 
   it('discards an old result after changing the active channel', async () => {

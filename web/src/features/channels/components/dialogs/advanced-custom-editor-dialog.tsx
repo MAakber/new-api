@@ -732,6 +732,7 @@ export function AdvancedCustomEditorDialog({
               >
                 <SelectTrigger
                   size='sm'
+                  aria-label={t('Add route')}
                   disabled={availableIncomingPathOptions.length === 0}
                 >
                   <Plus data-icon='inline-start' />
@@ -766,7 +767,7 @@ export function AdvancedCustomEditorDialog({
                   if (typeof value === 'string') selectTemplate(value)
                 }}
               >
-                <SelectTrigger size='sm'>
+                <SelectTrigger size='sm' aria-label={t('Add template')}>
                   <SelectValue placeholder={t('Add template')} />
                 </SelectTrigger>
                 <SelectContent align='end' alignItemWithTrigger={false}>
