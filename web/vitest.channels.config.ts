@@ -32,6 +32,8 @@ export default defineConfig({
     include: [
       'src/features/channels/**/__tests__/channel-test-*.test.{ts,tsx}',
       'src/features/channels/__tests__/fetch-models-*.test.{ts,tsx}',
+      'src/features/channels/__tests__/advanced-custom-editor.test.tsx',
+      'src/features/channels/__tests__/balance-query-dialog.test.tsx',
       'src/features/channels/components/dialogs/__tests__/fetch-models-dialog-layout.test.tsx',
       'src/lib/__tests__/model-classification.test.ts',
       'src/stores/__tests__/fetch-model-preferences.test.ts',
