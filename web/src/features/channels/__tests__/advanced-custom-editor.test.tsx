@@ -49,6 +49,26 @@ const scoped = {
 }
 
 describe('advanced custom management and forwarding routes', () => {
+  it('adds a model split from an expanded group with a collapsible header', async () => {
+    const user = userEvent.setup()
+    renderChannelUI(
+      <AdvancedCustomEditorDialog
+        open
+        value={JSON.stringify({ advanced_routes: [fallback] })}
+        onOpenChange={vi.fn()}
+        onSave={vi.fn()}
+      />
+    )
+    await user.click(screen.getByRole('button', { name: 'Collapse all' }))
+    expect(screen.queryByRole('button', { name: 'Add split' })).toBeNull()
+    await user.click(screen.getByRole('button', { name: 'Expand all' }))
+    await user.click(screen.getByRole('button', { name: 'Add split' }))
+    expect(screen.getByRole('tab', { name: 'Forwarding Routes 2' })).toBeVisible()
+    expect(screen.getByRole('button', {
+      name: /OpenAI Chat.*\/v1\/chat\/completions 2 Routes/,
+    })).toHaveAttribute('aria-expanded', 'true')
+  })
+
   it('fixes fallback ordering without removing model discovery or balance routes', async () => {
     const user = userEvent.setup()
     const onSave = vi.fn<(value: string) => void>()
