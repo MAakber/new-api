@@ -63,9 +63,9 @@ describe('saved request rules in the pricing editor', () => {
     fireEvent.change(end, { target: { value: '13' } })
     fireEvent.blur(end)
     await waitFor(() => {
-      expect(screen.getByLabelText('Saved request rule draft').textContent).toBe(
-        '(hour("UTC") >= 9 && hour("UTC") < 13 ? 2 : 1)'
-      )
+      expect(
+        screen.getByLabelText('Saved request rule draft').textContent
+      ).toBe('(hour("UTC") >= 9 && hour("UTC") < 13 ? 2 : 1)')
     })
   })
 })
