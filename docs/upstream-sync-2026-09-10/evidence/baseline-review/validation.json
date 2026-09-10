@@ -1,0 +1,38 @@
+{
+  "scope": "21-commit small_candidates temporary snapshot, not main",
+  "snapshot": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-upstream-review-lets37\\snapshot-python",
+  "frontendDependencies": "Existing downstream node_modules; no dependency install or upgrade",
+  "checks": [
+    {
+      "name": "Go adapters, parameter overrides and routing",
+      "command": "go test ./relay/channel/ali ./relay/channel/newapi ./relay/channel/deepseek ./relay/channel/zhipu_4v ./relay/channel/ollama ./relay/common ./router -count=1",
+      "exitCode": 0,
+      "output": "ok  \tgithub.com/QuantumNous/new-api/relay/channel/ali\t1.043s\n?   \tgithub.com/QuantumNous/new-api/relay/channel/newapi\t[no test files]\n?   \tgithub.com/QuantumNous/new-api/relay/channel/deepseek\t[no test files]\n?   \tgithub.com/QuantumNous/new-api/relay/channel/zhipu_4v\t[no test files]\nok  \tgithub.com/QuantumNous/new-api/relay/channel/ollama\t0.906s\nok  \tgithub.com/QuantumNous/new-api/relay/common\t0.697s\nok  \tgithub.com/QuantumNous/new-api/router\t1.170s\n"
+    },
+    {
+      "name": "Independent relaykit build",
+      "command": "GOWORK=off go build ./...",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "name": "Frontend typecheck",
+      "command": "bun run typecheck",
+      "exitCode": 0,
+      "output": "$ tsgo -b\n"
+    },
+    {
+      "name": "Downstream channel regression suite",
+      "command": "bun run test:channels",
+      "exitCode": 0,
+      "output": "$ vitest run --config vitest.channels.config.ts\n\n RUN  v5.0.0 C:/Users/10178/AppData/Local/Temp/new-api-upstream-review-lets37/snapshot-python/web\n\n\n Test Files  11 passed (11)\n      Tests  90 passed (90)\n   Start at  15:04:19\n   Duration  83.02s (import 56%, transform 17%, environment 15%, setup 8%, tests 3%)\n\n"
+    },
+    {
+      "name": "Downstream playground regression suite",
+      "command": "bun run test:playground",
+      "exitCode": 0,
+      "output": "$ vitest run --config vitest.playground.config.ts\n\n RUN  v5.0.0 C:/Users/10178/AppData/Local/Temp/new-api-upstream-review-lets37/snapshot-python/web\n\n\n Test Files  19 passed (19)\n      Tests  78 passed (78)\n   Start at  15:04:19\n   Duration  36.88s (import 44%, environment 30%, setup 15%, transform 7%, tests 3%)\n\n"
+    }
+  ]
+}
+

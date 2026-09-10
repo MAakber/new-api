@@ -1,0 +1,858 @@
+[
+  {
+    "id": "D01",
+    "title": "Codex 兼容渠道",
+    "baselineCommitShorts": [
+      "9b514fe1a",
+      "f1c82c6c1",
+      "6f30ee13e",
+      "cf54a488e",
+      "14282511c",
+      "3ec4ccce7",
+      "2913be5e3",
+      "8cdc84f80"
+    ],
+    "sourcePaths": [
+      "constant/channel.go",
+      "relay/channel/openai",
+      "relay/channel/api_request.go"
+    ],
+    "existingTests": [
+      "relay/channel/api_request_test.go",
+      "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts"
+    ],
+    "acceptance": [
+      "61 的既有含义不变；客户端身份、请求整理、会话标识可连续使用",
+      "Responses 图片、工具、多轮、无 Content-Type 流及结束事件不回退"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D02",
+    "title": "Claude Code 与 count_tokens",
+    "baselineCommitShorts": [
+      "9b514fe1a",
+      "598b97742",
+      "614ae8fc7",
+      "d1516953e"
+    ],
+    "sourcePaths": [
+      "router/relay-router.go",
+      "relay/channel/claude",
+      "relay/channel/api_request.go"
+    ],
+    "existingTests": [
+      "relay/channel/api_request_test.go",
+      "controller/option_claude_test.go"
+    ],
+    "acceptance": [
+      "62 的既有含义不变；/v1/messages/count_tokens 可用",
+      "客户端 headers、beta 配置、1m context 开关及工具/思考内容按现有契约处理"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D03",
+    "title": "CodeBuddy / WorkBuddy",
+    "baselineCommitShorts": [
+      "edce7ef74",
+      "358a48738",
+      "5036cc73f",
+      "867f89cf8",
+      "6f30ee13e",
+      "948d4d747",
+      "856349c2a",
+      "bcd3c8721",
+      "9ebeec92a",
+      "fbe7a7867",
+      "597eb248e",
+      "d7437d5ad",
+      "caaa889e1"
+    ],
+    "sourcePaths": [
+      "constant/channel.go",
+      "relay/channel/api_request.go",
+      "web/src/assets/custom/icon-codebuddy.tsx"
+    ],
+    "existingTests": [
+      "relay/channel/api_request_test.go",
+      "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts"
+    ],
+    "acceptance": [
+      "63 保留；请求身份、system 规则、会话续接及 compact 兼容",
+      "Responses 经 Chat 转换、DONE 流帧、图片与工具语义不丢失"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D04",
+    "title": "Vercel AI Gateway 渠道",
+    "baselineCommitShorts": [
+      "805f412d9"
+    ],
+    "sourcePaths": [
+      "constant/channel.go",
+      "web/src/features/channels"
+    ],
+    "existingTests": [
+      "web/src/features/channels/lib/__tests__/vercel-channel.test.ts"
+    ],
+    "acceptance": [
+      "64 保留；前后端类型、URL、鉴权及模型分发一致",
+      "生成、流式、错误与额度按既有支持范围回归"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D05",
+    "title": "渠道抓模、密钥和表单增强",
+    "baselineCommitShorts": [
+      "fbe7a7867",
+      "dbcb72e9e",
+      "5660262d7",
+      "691417138",
+      "c0ee46798"
+    ],
+    "sourcePaths": [
+      "controller/channel.go",
+      "controller/channel_upstream_update.go",
+      "web/src/features/channels"
+    ],
+    "existingTests": [
+      "controller/channel_upstream_update_test.go",
+      "service/channel_multi_key_append_test.go",
+      "web/src/features/channels/__tests__/fetch-models-selection.test.tsx",
+      "web/src/features/channels/lib/__tests__/channel-key-append.test.ts"
+    ],
+    "acceptance": [
+      "保留追加/多密钥、分类抓模、多选同步、偏好保存和缺失模型确认",
+      "弹窗交互不重复抓模，图标、参数预设及其他字段保存不互相覆盖"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D06",
+    "title": "可拖拽、多开浮动窗口",
+    "baselineCommitShorts": [
+      "0b188deab",
+      "cb268226c",
+      "02877a70e",
+      "fd2ee5f16"
+    ],
+    "sourcePaths": [
+      "web/src/stores/floating-window-store.ts",
+      "web/src/components/floating-window",
+      "web/src/features/channels/components/drawers"
+    ],
+    "existingTests": [
+      "web/src/components/floating-window/__tests__/floating-window-store.test.ts",
+      "web/src/components/floating-window/__tests__/geometry.test.ts",
+      "web/src/components/floating-window/__tests__/motion.test.ts"
+    ],
+    "acceptance": [
+      "同一功能可同时打开独立实例，instance ID、form 状态与 channel ID 不串台",
+      "拖拽边界、激活层级、关闭、动画、滚动、键盘及移动布局有效"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D07",
+    "title": "渠道测试模式和能力诊断",
+    "baselineCommitShorts": [
+      "efcb8c7f2",
+      "8cdc84f80",
+      "e39518faa"
+    ],
+    "sourcePaths": [
+      "controller/channel-test.go",
+      "controller/channel_test_diagnostics.go",
+      "web/src/features/channels/components/dialogs/channel-test-dialog.tsx"
+    ],
+    "existingTests": [
+      "controller/channel_test_internal_test.go",
+      "controller/channel_test_diagnostics_test.go",
+      "controller/channel_test_probe_relay_test.go",
+      "web/src/features/channels/components/dialogs/__tests__/channel-test-interactions.test.tsx"
+    ],
+    "acceptance": [
+      "scheduled_all/passive_recovery、Codex 测试请求及诊断内容保留",
+      "新并发/自动禁用模式兼容队列、取消、错误与现有 UI 预览"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D08",
+    "title": "可配置客户端身份版本",
+    "baselineCommitShorts": [
+      "5f9d21439",
+      "124e87dca",
+      "47366a8c3",
+      "84dfc38cf",
+      "73b3c0c03",
+      "f1c82c6c1",
+      "598b97742",
+      "bcd3c8721"
+    ],
+    "sourcePaths": [
+      "controller/client_identity_versions.go",
+      "service/client_identity_versions.go"
+    ],
+    "existingTests": [
+      "controller/client_identity_versions_test.go",
+      "service/client_identity_versions_test.go",
+      "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts"
+    ],
+    "acceptance": [
+      "配置读取、稳定版本筛选、轻量身份模板、渠道覆盖正确",
+      "版本清单异常有现有降级行为，不污染其他渠道身份"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D09",
+    "title": "排队预热及系统提示词",
+    "baselineCommitShorts": [
+      "624dae1a4",
+      "99cf9102b",
+      "f4da9e4d9",
+      "08fd19e97",
+      "272e00b92",
+      "f85bc7416",
+      "9982d0429",
+      "20d725941"
+    ],
+    "sourcePaths": [
+      "controller/channel_queue_warmer.go",
+      "web/src/features/channels"
+    ],
+    "existingTests": [
+      "controller/channel_queue_warmer_test.go",
+      "model/channel_queue_test.go",
+      "web/src/features/channels/lib/__tests__/channel-form-queue.test.ts"
+    ],
+    "acceptance": [
+      "禁用预热不丢保存值，系统提示词和 Codex payload 遵循当前最终状态",
+      "队列/指标/重试/取消有效；保留已 revert 后的行为，不复活撤回补丁"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D10",
+    "title": "自定义余额与自动签到",
+    "baselineCommitShorts": [
+      "76bf5c8a2",
+      "821c1eaca",
+      "e18ab7145",
+      "e3d87ab4b",
+      "bc747c8ae",
+      "c01f5f041"
+    ],
+    "sourcePaths": [
+      "controller/channel_custom_balance.go",
+      "service/channel_custom_balance.go"
+    ],
+    "existingTests": [
+      "controller/channel_custom_balance_test.go",
+      "service/channel_custom_balance_test.go",
+      "model/channel_custom_balance_test.go",
+      "web/src/features/channels/lib/__tests__/custom-balance.test.ts"
+    ],
+    "acceptance": [
+      "余额凭据、刷新、导航、随渠道保存与签到指示保留",
+      "余额限制自动封禁的忽略设置可用，未编辑字段不会被清零"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D11",
+    "title": "自动同步、上游拦截与安全封禁",
+    "baselineCommitShorts": [
+      "2702456dd",
+      "b857b2373",
+      "d2e059980",
+      "420e63815",
+      "bd02ab04b"
+    ],
+    "sourcePaths": [
+      "controller/auto_sync.go",
+      "controller/relay.go",
+      "model/user.go"
+    ],
+    "existingTests": [
+      "controller/auto_sync_test.go",
+      "controller/relay_upstream_interception_test.go",
+      "controller/relay_sensitive_test.go",
+      "service/auto_ban_test.go",
+      "model/user_auto_ban_test.go",
+      "middleware/relay_user_agent_blacklist_test.go"
+    ],
+    "acceptance": [
+      "同步触发、快照、拦截和配置持久化不回退",
+      "敏感词/UA 限制、临时及永久封禁、提示与审计仍正确"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D12",
+    "title": "每用户 RPM 与重试配置",
+    "baselineCommitShorts": [
+      "f87bafd95",
+      "ccfa5efe3"
+    ],
+    "sourcePaths": [
+      "setting/rate_limit.go",
+      "middleware/user-request-rate-limit.go"
+    ],
+    "existingTests": [
+      "controller/user_request_rate_limit_test.go",
+      "middleware/user_request_rate_limit_test.go",
+      "model/user_request_rate_limit_test.go",
+      "router/user_request_rate_limit_routes_test.go"
+    ],
+    "acceptance": [
+      "用户级 RPM 与现有模型/分组/令牌限流叠加正确",
+      "新自动分组和跨组重试不绕过限流，不重新施加已移除的配置上限"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D13",
+    "title": "登录代理与注册邀请码流程",
+    "baselineCommitShorts": [
+      "3962f6cb2",
+      "2c68d2215",
+      "6e607d7f6",
+      "b216dc984",
+      "f18f240b2",
+      "5f03bb647",
+      "25227b3ef"
+    ],
+    "sourcePaths": [
+      "controller/oauth.go",
+      "controller/user.go",
+      "service/http_client.go"
+    ],
+    "existingTests": [
+      "service/login_http_client_test.go",
+      "controller/registration_code_test.go",
+      "controller/auth_flow_test.go",
+      "model/option_login_proxy_test.go",
+      "web/src/features/auth/complete-registration/__tests__/flow-response.test.ts"
+    ],
+    "acceptance": [
+      "登录代理覆盖既有登录/OAuth 请求，失败仍给出可用反馈",
+      "邀请码在注册完成时校验/消耗，重复提交与失败不会错误扣次数，法律文案支持语言切换"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D14",
+    "title": "多 Passkey、自助资料与 OAuth 绑定",
+    "baselineCommitShorts": [
+      "fbe7a7867",
+      "039310f6e",
+      "1a2fdea55"
+    ],
+    "sourcePaths": [
+      "controller/passkey.go",
+      "controller/oauth.go",
+      "web/src/features/profile/components/passkey-card.tsx"
+    ],
+    "existingTests": [
+      "controller/passkey_test.go",
+      "model/passkey_migration_test.go",
+      "service/passkey/user_test.go",
+      "web/src/features/auth/passkey/__tests__/name-validation.test.ts"
+    ],
+    "acceptance": [
+      "已有多个凭据、命名、登录与删除保留；会话安全升级兼容已有账户",
+      "自助资料和 OAuth 绑定/头像 scope 正确，敏感操作重新验证不丢状态"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D15",
+    "title": "完整请求诊断与日志体验",
+    "baselineCommitShorts": [
+      "deea98b42",
+      "e725a3a60",
+      "9c79845c3",
+      "6f2b3f07a",
+      "85660cf7e",
+      "911b74f62",
+      "814d5dd17",
+      "f0e4a51d3",
+      "6d0989f7a"
+    ],
+    "sourcePaths": [
+      "common/request_debug.go",
+      "model/log.go",
+      "web/src/features/usage-logs"
+    ],
+    "existingTests": [
+      "common/request_debug_test.go",
+      "model/request_debug_body_test.go",
+      "model/log_request_debug_test.go",
+      "web/src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx"
+    ],
+    "acceptance": [
+      "原始请求开关持久化、完整正文与截断/脱敏边界可验证",
+      "普通用户不可读管理诊断，管理员仍可排错；默认错误日志与日期筛选保留"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D16",
+    "title": "私有头像、OAuth 导入与缓存",
+    "baselineCommitShorts": [
+      "e7b478c8e",
+      "8a0fb409b",
+      "2c488a792",
+      "2c4b668ae",
+      "ba5af058c",
+      "6d0989f7a",
+      "fa08084da",
+      "039310f6e",
+      "1a2fdea55"
+    ],
+    "sourcePaths": [
+      "controller/user_avatar.go",
+      "service/avatar_storage.go",
+      "web/src/components"
+    ],
+    "existingTests": [
+      "controller/user_avatar_test.go",
+      "controller/oauth_avatar_test.go",
+      "service/avatar_storage_test.go",
+      "web/src/components/__tests__/authenticated-avatar-image.test.tsx",
+      "web/src/features/usage-logs/components/__tests__/user-avatar-visibility.test.tsx"
+    ],
+    "acceptance": [
+      "本人/管理员访问权限、删除/更新、OAuth 导入和浏览器缓存隔离",
+      "用户列表、日志、个人资料中的头像形状和交互保持可用"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D17",
+    "title": "全局主题与持久化迁移",
+    "baselineCommitShorts": [
+      "a66204cf7",
+      "364a25104",
+      "210419c92",
+      "37e6cfdba"
+    ],
+    "sourcePaths": [
+      "web/src/context",
+      "web/src/lib",
+      "setting/theme_setting_test.go"
+    ],
+    "existingTests": [
+      "controller/theme_compat_test.go",
+      "setting/theme_setting_test.go",
+      "web/src/context/__tests__/theme-customization-provider.test.tsx",
+      "web/src/lib/__tests__/theme-customization.test.ts"
+    ],
+    "acceptance": [
+      "自定义颜色、root 全局默认、个人偏好优先级与旧存储迁移",
+      "预设、明暗主题、刷新与账号切换不丢设置"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D18",
+    "title": "公开公告与登录/移动界面",
+    "baselineCommitShorts": [
+      "132c6b7b6",
+      "2234e9ab8",
+      "cc7d656b7",
+      "73aa7d056",
+      "a9625b86e",
+      "32e501f53",
+      "27bbf84f4",
+      "2cc9a2ffc",
+      "ba5af058c",
+      "bed94d792"
+    ],
+    "sourcePaths": [
+      "web/src/features/banners",
+      "web/src/features/auth/sign-in",
+      "web/src/components/layout"
+    ],
+    "existingTests": [
+      "router/banner_router_test.go",
+      "model/banner_migration_test.go",
+      "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx",
+      "web/src/features/auth/components/__tests__/auth-login-layout.test.ts",
+      "web/src/components/layout/components/__tests__/header-layout.test.tsx"
+    ],
+    "acceptance": [
+      "公告管理/时间区间/公开可见性、语言与主题保留",
+      "登录动画、暗色、移动头部、日期控件不重叠，键盘可访问"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D19",
+    "title": "可用性/安全榜单及用量指标",
+    "baselineCommitShorts": [
+      "5d192c878",
+      "69ef817fa",
+      "a07aab95f",
+      "4a6d5f1c9"
+    ],
+    "sourcePaths": [
+      "web/src/features/rankings",
+      "web/src/features/dashboard"
+    ],
+    "existingTests": [
+      "service/rankings_security_test.go",
+      "controller/usedata_flow_test.go",
+      "web/src/features/rankings/components/__tests__/availability.test.tsx",
+      "web/src/features/rankings/components/__tests__/visibility.test.tsx"
+    ],
+    "acceptance": [
+      "健康序列 API 变化兼容已有榜单，缺少历史数据正确降级",
+      "安全榜单权限、趋势显示、用户 token 用量指标语义保留"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D20",
+    "title": "订阅兑换、注册码与 CSV 导出",
+    "baselineCommitShorts": [
+      "02618a26f",
+      "1b85a5d7e"
+    ],
+    "sourcePaths": [
+      "model/redemption.go",
+      "controller/redemption.go",
+      "web/src/features/redemption-codes"
+    ],
+    "existingTests": [
+      "model/redemption_test.go",
+      "controller/redemption_export_test.go",
+      "controller/registration_code_test.go",
+      "web/src/features/redemption-codes/lib/__tests__/status.test.ts"
+    ],
+    "acceptance": [
+      "余额/订阅奖励与可多次使用注册码保持原语义",
+      "耗尽注册码处理、CSV 字段和新增 TXT/Markdown/批量删除可共存，并发兑换与审计正确"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D21",
+    "title": "按余额分档签到奖励",
+    "baselineCommitShorts": [
+      "2d35b249e"
+    ],
+    "sourcePaths": [
+      "model/checkin.go",
+      "setting/operation_setting/checkin_setting.go"
+    ],
+    "existingTests": [
+      "model/checkin_test.go",
+      "setting/operation_setting/checkin_setting_test.go",
+      "web/src/features/system-settings/general/__tests__/checkin-settings-section.test.tsx"
+    ],
+    "acceptance": [
+      "余额分档边界、每日幂等、时区及奖励上下限正确",
+      "新钱包范围和定价 UI 不改变既有签到配置与奖励语义"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D22",
+    "title": "聊天、Bing 搜索与批量工具调用",
+    "baselineCommitShorts": [
+      "e1e509979",
+      "9c1d4e3ca",
+      "ab0261dcc",
+      "480cba740",
+      "cbc4d809a",
+      "9befcf1e6",
+      "403f7d9df"
+    ],
+    "sourcePaths": [
+      "web/src/features/playground",
+      "controller/relay.go"
+    ],
+    "existingTests": [
+      "controller/playground_web_search_test.go",
+      "controller/playground_web_search_batch_test.go",
+      "web/src/features/playground/hooks/__tests__/stream-errors.test.ts",
+      "web/src/features/playground/lib/streaming/__tests__/payload-builder.test.ts"
+    ],
+    "acceptance": [
+      "历史载入前不能误发送；批量搜索、异常响应、推理和流错误正确",
+      "保留现有搜索轮次策略与取消，不传供应商不支持的 n 参数"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D23",
+    "title": "绘图画布、持久化与图片入口",
+    "baselineCommitShorts": [
+      "e8e33b71b",
+      "2416765c3",
+      "208f7c91e",
+      "cf54a488e"
+    ],
+    "sourcePaths": [
+      "router/relay-router.go",
+      "web/src/features/playground/drawing",
+      "web/src/stores/drawing-store.ts",
+      "docs/playground-drawing.md"
+    ],
+    "existingTests": [
+      "relay/playground_images_test.go",
+      "middleware/playground_images_test.go",
+      "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+      "web/src/features/playground/drawing/hooks/__tests__/retry.test.tsx",
+      "web/src/features/playground/drawing/hooks/__tests__/settings-and-persistence.test.tsx"
+    ],
+    "acceptance": [
+      "/pg/images/generations 与 edits 的权限、分组、模型映射和计费保留",
+      "生成/编辑/蒙版/多参考图/连线/流式进度/失败重试可用",
+      "拖拽/缩放/撤销/导入导出及 IndexedDB 账号隔离，主题/视口刷新不丢失"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D24",
+    "title": "共享控件、七语翻译与测试配置",
+    "baselineCommitShorts": [
+      "db1c884da",
+      "2c4b668ae",
+      "fd2ee5f16",
+      "f18f240b2",
+      "5f03bb647",
+      "32e501f53",
+      "25227b3ef",
+      "420e63815",
+      "cc7d656b7",
+      "99f18c18f"
+    ],
+    "sourcePaths": [
+      "web/package.json",
+      "web/vitest.channels.config.ts",
+      "web/vitest.playground.config.ts",
+      "web/vitest.drawing.config.ts",
+      "web/src/i18n"
+    ],
+    "existingTests": [
+      "web/src/components/ui/__tests__/input-number.test.tsx",
+      "web/src/lib/__tests__/number-input.test.ts",
+      "web/src/features/auth/components/__tests__/terms-footer-i18n.test.tsx"
+    ],
+    "acceptance": [
+      "数值输入、响应式弹层、焦点与禁用/加载状态保持可用",
+      "en/zh/zh-TW/fr/ru/ja/vi 文案完整，旧测试入口不丢失；盘点三套配置外的保护测试"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D25",
+    "title": "版本构建、工作树与项目治理",
+    "baselineCommitShorts": [
+      "43c8e7d9e",
+      "0613a24fe",
+      "c0471d333",
+      "c07c0ada3"
+    ],
+    "sourcePaths": [
+      ".github/workflows/release.yml",
+      "makefile",
+      "web/rsbuild.config.ts",
+      ".gitignore",
+      "AGENTS.md"
+    ],
+    "existingTests": [],
+    "acceptance": [
+      "日期/commit 版本在 Windows 独立工作树、Docker 与发布产物一致",
+      "保持许可证、项目/作者标识、下游发布目标与个人临时文件忽略行为"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  },
+  {
+    "id": "D26",
+    "title": "计费安全与独立 relaykit",
+    "baselineCommitShorts": [],
+    "sourcePaths": [
+      "common/quota_math.go",
+      "relay/helper/valid_request.go",
+      "service/quota.go",
+      "pkg/billingexpr/expr.md",
+      "relaykit/go.mod"
+    ],
+    "existingTests": [
+      "common/quota_math_test.go",
+      "relay/helper/openai_image_request_test.go",
+      "relay/helper/max_tokens_bounds_test.go",
+      "service/quota_saturation_test.go",
+      "service/tiered_settle_test.go"
+    ],
+    "acceptance": [
+      "数量/时长/token 上限、显式零值、饱和 checked 审计、比率校验不削弱",
+      "预扣/结算/退款不出现负扣费；root 与 relaykit 独立构建且三库兼容"
+    ],
+    "coverageReview": "pending; listed tests are entry points, not proof of full coverage",
+    "status": "pending",
+    "evidence": [],
+    "final_review": {
+      "status": "pending",
+      "commit": null
+    }
+  }
+]

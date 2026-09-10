@@ -1,0 +1,987 @@
+{
+  "baseline": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "comparedTo": "bdef117505247769268b209665fb3ad7554c3da7",
+  "commits": [
+    {
+      "sha": "a66204cf78da1acd744b2bf31f7e100fc3b4a79e",
+      "short": "a66204cf7",
+      "subject": "feat: add custom theme color picker",
+      "preservationIds": [
+        "D17"
+      ]
+    },
+    {
+      "sha": "2702456dd7d8b0d0daca15327f0f6596a92264a7",
+      "short": "2702456dd",
+      "subject": "feat: add relay security restrictions and auto-bans",
+      "preservationIds": [
+        "D11"
+      ]
+    },
+    {
+      "sha": "3962f6cb26148d8470b5f4ff7f9693f5770fc87d",
+      "short": "3962f6cb2",
+      "subject": "feat(auth): add configurable login proxy",
+      "preservationIds": [
+        "D13"
+      ]
+    },
+    {
+      "sha": "b857b23733c682470cffeffef7c37b9fa08f5b85",
+      "short": "b857b2373",
+      "subject": "feat(security): support permanent automatic bans",
+      "preservationIds": [
+        "D11"
+      ]
+    },
+    {
+      "sha": "d2e059980919558174c3f277c1dc391bc9b5c826",
+      "short": "d2e059980",
+      "subject": "feat: add automatic sync and upstream interception",
+      "preservationIds": [
+        "D11"
+      ]
+    },
+    {
+      "sha": "5d192c878ba3270f622ca35db747ded53cb2ca19",
+      "short": "5d192c878",
+      "subject": "feat(dashboard): add user token usage metric",
+      "preservationIds": [
+        "D19"
+      ]
+    },
+    {
+      "sha": "deea98b42402f841bb153e2ce445c9b28848987e",
+      "short": "deea98b42",
+      "subject": "feat(logs): add admin request diagnostics",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "e725a3a602e5d1ffdbd8bce64b9df8b280a67361",
+      "short": "e725a3a60",
+      "subject": "feat(logs): add raw request audit switch",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "9c79845c36ab67692ef72a6fc64fd1b9ef9e6436",
+      "short": "9c79845c3",
+      "subject": "fix(settings): persist raw request logging toggle",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "6f2b3f07ac27fdb628f73dc38fbfaf5979faea9c",
+      "short": "6f2b3f07a",
+      "subject": "feat(logs): support full request body diagnostics",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "02618a26f10e03d0261dd37e39559ef3cf4e6a19",
+      "short": "02618a26f",
+      "subject": "feat(redemption): support subscription rewards and exports",
+      "preservationIds": [
+        "D20"
+      ]
+    },
+    {
+      "sha": "9b514fe1ab4181b3bedd435e3801313154569eea",
+      "short": "9b514fe1a",
+      "subject": "feat(channel): add Codex and Claude Code compatibility channels",
+      "preservationIds": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "sha": "f1c82c6c1926a7b6deadd04604b5b3426df36f6e",
+      "short": "f1c82c6c1",
+      "subject": "fix(channel): use official Codex CLI identity",
+      "preservationIds": [
+        "D01",
+        "D08"
+      ]
+    },
+    {
+      "sha": "2c68d2215d7032fe3f04c6ef33dc71c12e5fbc8f",
+      "short": "2c68d2215",
+      "subject": "feat(auth): require registration codes for new accounts",
+      "preservationIds": [
+        "D13"
+      ]
+    },
+    {
+      "sha": "edce7ef74a897657b533868e6893477612465f72",
+      "short": "edce7ef74",
+      "subject": "feat(channel): add Code Buddy WorkBuddy relay",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "358a4873866a5e5f961bd3bfab45df99603f29b1",
+      "short": "358a48738",
+      "subject": "fix(channel): align WorkBuddy relay profile",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "5036cc73f6eeac476344d953e85f6b4e1a1d6d1b",
+      "short": "5036cc73f",
+      "subject": "test(channel): update WorkBuddy fetch identity",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "867f89cf82234261723f8565635c51a15cab602c",
+      "short": "867f89cf8",
+      "subject": "fix(channels): use CodeBuddy brand icon",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "6f30ee13e2ea7e890f365381a1b27d193448a63a",
+      "short": "6f30ee13e",
+      "subject": "fix(channels): preserve compatibility request sessions",
+      "preservationIds": [
+        "D01",
+        "D03"
+      ]
+    },
+    {
+      "sha": "948d4d7473896a4dc3ddfd50982020b7fe319bfb",
+      "short": "948d4d747",
+      "subject": "fix(channel): convert CodeBuddy responses via chat",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "efcb8c7f2f852bc170447e92e12f4205442a80cc",
+      "short": "efcb8c7f2",
+      "subject": "feat(channels): configure channel test behavior",
+      "preservationIds": [
+        "D07"
+      ]
+    },
+    {
+      "sha": "cf54a488e846bf12f5fdb570496dd3d4225213ab",
+      "short": "cf54a488e",
+      "subject": "fix(channel): preserve images in responses conversion",
+      "preservationIds": [
+        "D01",
+        "D23"
+      ]
+    },
+    {
+      "sha": "598b977425344bbac11397948df120a9ea94ccc5",
+      "short": "598b97742",
+      "subject": "fix(channels): harden Claude Code profile",
+      "preservationIds": [
+        "D02",
+        "D08"
+      ]
+    },
+    {
+      "sha": "14282511c0b39233dffccc4263bafc8bd5e18cbb",
+      "short": "14282511c",
+      "subject": "fix(relay): handle headerless Codex streams",
+      "preservationIds": [
+        "D01"
+      ]
+    },
+    {
+      "sha": "85660cf7e00386e95e7187a39e72ecf71bc9a878",
+      "short": "85660cf7e",
+      "subject": "test(logs): cover request debug body truncation",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "43c8e7d9e8d765bf159deb0e31e79abf0cb7fbb2",
+      "short": "43c8e7d9e",
+      "subject": "chore(repo): ignore Slim deepwork artifacts",
+      "preservationIds": [
+        "D25"
+      ]
+    },
+    {
+      "sha": "420e63815fc2c07c90e786b7ee84678ad7ff08be",
+      "short": "420e63815",
+      "subject": "fix(i18n): align auto-ban status labels and sync locales",
+      "preservationIds": [
+        "D11",
+        "D24"
+      ]
+    },
+    {
+      "sha": "856349c2a2312b6addc63ae2dce6aef3cd2bead7",
+      "short": "856349c2a",
+      "subject": "fix(relay): handle CodeBuddy done stream frame",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "bcd3c872113fdf274652a7804e7292e0d5cea59b",
+      "short": "bcd3c8721",
+      "subject": "fix(channels): align CodeBuddy WorkBuddy profile",
+      "preservationIds": [
+        "D03",
+        "D08"
+      ]
+    },
+    {
+      "sha": "9ebeec92a511788495292b12a1950a35e08d409c",
+      "short": "9ebeec92a",
+      "subject": "test(channels): cover CodeBuddy model prompt",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "3ec4ccce7e2e212db6a960f1abf8fd46033ec616",
+      "short": "3ec4ccce7",
+      "subject": "fix(relay): repair Codex compatibility channel upstream requests",
+      "preservationIds": [
+        "D01"
+      ]
+    },
+    {
+      "sha": "614ae8fc7b49a4f88dd8ffbae96274523b8363cb",
+      "short": "614ae8fc7",
+      "subject": "fix(relay): support Claude Code count_tokens and align client profile",
+      "preservationIds": [
+        "D02"
+      ]
+    },
+    {
+      "sha": "fbe7a786772719ddfb227880ba3fc4eca513672a",
+      "short": "fbe7a7867",
+      "subject": "feat: channel key append/multi-key, multi-passkey, self profile edit and CodeBuddy compact fix",
+      "preservationIds": [
+        "D03",
+        "D05",
+        "D14"
+      ]
+    },
+    {
+      "sha": "6e607d7f6992aaaecaf105eb878e463f9a1cdfa7",
+      "short": "6e607d7f6",
+      "subject": "feat(auth): defer registration code until completion",
+      "preservationIds": [
+        "D13"
+      ]
+    },
+    {
+      "sha": "b216dc9846f7478785b746c47b55aa917908be46",
+      "short": "b216dc984",
+      "subject": "fix(auth): quote registration option key",
+      "preservationIds": [
+        "D13"
+      ]
+    },
+    {
+      "sha": "f18f240b2118709361bc97f713eeee436c03a747",
+      "short": "f18f240b2",
+      "subject": "fix(auth): localize login legal text",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ]
+    },
+    {
+      "sha": "5f03bb647f21b9e9895dfaa2c42cad984bdbcb92",
+      "short": "5f03bb647",
+      "subject": "fix(auth): translate remaining login labels",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ]
+    },
+    {
+      "sha": "2913be5e3c254f6b1548797555771e8de90211ca",
+      "short": "2913be5e3",
+      "subject": "feat(relay): scrub \"you are codex\" from Codex compatibility requests",
+      "preservationIds": [
+        "D01"
+      ]
+    },
+    {
+      "sha": "1b85a5d7ed8baa6f45ed193773c4130d52fe944f",
+      "short": "1b85a5d7e",
+      "subject": "fix(redemption): delete exhausted registration codes",
+      "preservationIds": [
+        "D20"
+      ]
+    },
+    {
+      "sha": "597eb248e763f27986ba03729ff71ba212b7076f",
+      "short": "597eb248e",
+      "subject": "fix(relay): enforce CodeBuddy upstream rules",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "0613a24fe6804c22378f24eedec2f873fde028e0",
+      "short": "0613a24fe",
+      "subject": "chore: ignore WorkBuddy scratch files",
+      "preservationIds": [
+        "D25"
+      ]
+    },
+    {
+      "sha": "25227b3ef7b666665a738d6eeaa44f25abee181b",
+      "short": "25227b3ef",
+      "subject": "fix(auth): localize registration success message",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ]
+    },
+    {
+      "sha": "0b188deab70583ccd9c705c5fdd7d398612401ba",
+      "short": "0b188deab",
+      "subject": "feat(channels): add floating editor windows",
+      "preservationIds": [
+        "D06"
+      ]
+    },
+    {
+      "sha": "cb268226c8fba975602fe7b473d5eeafda9fd706",
+      "short": "cb268226c",
+      "subject": "feat(ui): animate floating windows",
+      "preservationIds": [
+        "D06"
+      ]
+    },
+    {
+      "sha": "d7437d5ad2a6af79e1271261217c3c5cbc8d837c",
+      "short": "d7437d5ad",
+      "subject": "fix(relay): update CodeBuddy request handling",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "02877a70e2c5d3b4bc2730c4a35b214aea1bdc45",
+      "short": "02877a70e",
+      "subject": "fix(channels): preserve floating editor channel context",
+      "preservationIds": [
+        "D06"
+      ]
+    },
+    {
+      "sha": "caaa889e10f2b0c5dcb574e5ba518fcd26d5bf77",
+      "short": "caaa889e1",
+      "subject": "perf(relay): minimize CodeBuddy system prompt",
+      "preservationIds": [
+        "D03"
+      ]
+    },
+    {
+      "sha": "dbcb72e9eeba51abf4660a27cee65a96dce2f8eb",
+      "short": "dbcb72e9e",
+      "subject": "feat(channels): add parameter override presets",
+      "preservationIds": [
+        "D05"
+      ]
+    },
+    {
+      "sha": "5660262d7aecd38b36c2d3da8c371a6edd6a3264",
+      "short": "5660262d7",
+      "subject": "fix(channels): avoid refetching models on dialog interactions",
+      "preservationIds": [
+        "D05"
+      ]
+    },
+    {
+      "sha": "5f9d21439e4a6cebe628ce4698491e0200fdde00",
+      "short": "5f9d21439",
+      "subject": "feat(channels): add client identity version settings",
+      "preservationIds": [
+        "D08"
+      ]
+    },
+    {
+      "sha": "124e87dca59040ad23caf5ba633dd2361aedc9f9",
+      "short": "124e87dca",
+      "subject": "fix(channels): restore client identity version loading",
+      "preservationIds": [
+        "D08"
+      ]
+    },
+    {
+      "sha": "364a251048a187d3772ae6c71dd15916f3170329",
+      "short": "364a25104",
+      "subject": "feat(theme): allow root to set global defaults",
+      "preservationIds": [
+        "D17"
+      ]
+    },
+    {
+      "sha": "210419c92c113b515ea756e5591ef3ea3a5f8b43",
+      "short": "210419c92",
+      "subject": "fix(theme): migrate legacy persisted config",
+      "preservationIds": [
+        "D17"
+      ]
+    },
+    {
+      "sha": "37e6cfdba20d535e65bf6d3c11086bdb51c52e28",
+      "short": "37e6cfdba",
+      "subject": "fix(theme): preserve saved preset styles",
+      "preservationIds": [
+        "D17"
+      ]
+    },
+    {
+      "sha": "69ef817fa6ebbd4eac339822939aac66351733fd",
+      "short": "69ef817fa",
+      "subject": "feat(rankings): add availability and security boards",
+      "preservationIds": [
+        "D19"
+      ]
+    },
+    {
+      "sha": "a07aab95f5504398a13a2915264d221f7b5360c0",
+      "short": "a07aab95f",
+      "subject": "fix(rankings): handle missing recent availability data",
+      "preservationIds": [
+        "D19"
+      ]
+    },
+    {
+      "sha": "47366a8c3240f52865b47d9381f951c2455b6839",
+      "short": "47366a8c3",
+      "subject": "fix(channels): support lightweight client identity templates",
+      "preservationIds": [
+        "D08"
+      ]
+    },
+    {
+      "sha": "db1c884dad73592779fe6e316aca22dcbf019974",
+      "short": "db1c884da",
+      "subject": "fix(web): improve numeric input controls",
+      "preservationIds": [
+        "D24"
+      ]
+    },
+    {
+      "sha": "84dfc38cfb7ee8c2d74d4c39198e2f781df9b390",
+      "short": "84dfc38cf",
+      "subject": "fix(channels): filter platform builds from default versions",
+      "preservationIds": [
+        "D08"
+      ]
+    },
+    {
+      "sha": "4a6d5f1c9a3934f7453df27f1558660d1303dc65",
+      "short": "4a6d5f1c9",
+      "subject": "fix(rankings): widen success rate trend",
+      "preservationIds": [
+        "D19"
+      ]
+    },
+    {
+      "sha": "73b3c0c035cafa389de8055b19711a52be3126f3",
+      "short": "73b3c0c03",
+      "subject": "fix(channels): enforce stable client identity versions",
+      "preservationIds": [
+        "D08"
+      ]
+    },
+    {
+      "sha": "911b74f62af5d4b01af5193fde3d40899411e480",
+      "short": "911b74f62",
+      "subject": "fix(logging): enable error logs by default",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "f87bafd9530565a15c452616d03c6096b5437b25",
+      "short": "f87bafd95",
+      "subject": "feat(rate-limit): add per-user RPM limits",
+      "preservationIds": [
+        "D12"
+      ]
+    },
+    {
+      "sha": "132c6b7b6f2a4bd86d4ee0cffa14a75ff1216cb9",
+      "short": "132c6b7b6",
+      "subject": "feat(announcements): add public banner system",
+      "preservationIds": [
+        "D18"
+      ]
+    },
+    {
+      "sha": "2234e9ab879437378e9ad3d1c1d346670d83e89d",
+      "short": "2234e9ab8",
+      "subject": "feat(announcements): separate public banner management",
+      "preservationIds": [
+        "D18"
+      ]
+    },
+    {
+      "sha": "cc7d656b75ecec4b1b420e297077dda123e93c73",
+      "short": "cc7d656b7",
+      "subject": "fix(announcements): localize and theme public banners",
+      "preservationIds": [
+        "D18",
+        "D24"
+      ]
+    },
+    {
+      "sha": "73aa7d056628f139c6e7b5ff0a56dcd1ed54be37",
+      "short": "73aa7d056",
+      "subject": "fix(web): prevent banner date control overlap",
+      "preservationIds": [
+        "D18"
+      ]
+    },
+    {
+      "sha": "a9625b86ec8daa3c39922ec6631f8f94d1de5bb6",
+      "short": "a9625b86e",
+      "subject": "fix(web): keep banner date controls readable",
+      "preservationIds": [
+        "D18"
+      ]
+    },
+    {
+      "sha": "32e501f5395bfe11290f4c65d7eb6d2e221b1fc1",
+      "short": "32e501f53",
+      "subject": "fix(i18n): translate banner and OAuth client messages",
+      "preservationIds": [
+        "D18",
+        "D24"
+      ]
+    },
+    {
+      "sha": "27bbf84f412ed49ac1e3686f14d235a8d9fb7bbf",
+      "short": "27bbf84f4",
+      "subject": "feat(web): add animated sign-in background",
+      "preservationIds": [
+        "D18"
+      ]
+    },
+    {
+      "sha": "2cc9a2ffca84f1240e238281d11015f1c21fac71",
+      "short": "2cc9a2ffc",
+      "subject": "fix(web): refine sign-in dark and mobile layout",
+      "preservationIds": [
+        "D18"
+      ]
+    },
+    {
+      "sha": "bd02ab04b09660b90f39999a8bff0490a7301ae0",
+      "short": "bd02ab04b",
+      "subject": "fix(security): harden sensitive-word auto-bans",
+      "preservationIds": [
+        "D11"
+      ]
+    },
+    {
+      "sha": "d1516953e0edae68040cd3b8aa72137eb5bbaada",
+      "short": "d1516953e",
+      "subject": "feat(claude): add configurable 1m context header",
+      "preservationIds": [
+        "D02"
+      ]
+    },
+    {
+      "sha": "2d35b249eb3dfbc7c102bb5e43107e61883b5d63",
+      "short": "2d35b249e",
+      "subject": "feat(checkin): add balance-based reward tiers",
+      "preservationIds": [
+        "D21"
+      ]
+    },
+    {
+      "sha": "624dae1a483c4a13d50b0a814c9a0ed26f008939",
+      "short": "624dae1a4",
+      "subject": "feat(channel): add upstream queue warmer",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "99cf9102be06433139b368315e759b0d314c2e16",
+      "short": "99cf9102b",
+      "subject": "fix(channel): polish queue warmer indicators",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "e7b478c8ed82cf7511b52fef243b8af0dc8d7c8a",
+      "short": "e7b478c8e",
+      "subject": "feat(user): add private profile avatars",
+      "preservationIds": [
+        "D16"
+      ]
+    },
+    {
+      "sha": "8a0fb409b95ba1fad540d2b2ab09924eef5c2dd2",
+      "short": "8a0fb409b",
+      "subject": "fix(profile): make avatar shape consistently round",
+      "preservationIds": [
+        "D16"
+      ]
+    },
+    {
+      "sha": "814d5dd17a92b81b0ac6e0252b621e1df6589aec",
+      "short": "814d5dd17",
+      "subject": "fix(logs): prevent date filter overflow",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "f0e4a51d3711463d135b5cb6bbfc7a431150f647",
+      "short": "f0e4a51d3",
+      "subject": "fix(logs): use shared calendar for date ranges",
+      "preservationIds": [
+        "D15"
+      ]
+    },
+    {
+      "sha": "6914171387c5066cb24405759165cb8f333470d7",
+      "short": "691417138",
+      "subject": "feat(channel): add upstream favicon icons",
+      "preservationIds": [
+        "D05"
+      ]
+    },
+    {
+      "sha": "2c488a7929aae5625c909171aeedc0d61cc2c5cd",
+      "short": "2c488a792",
+      "subject": "feat(user): show avatars in admin user list",
+      "preservationIds": [
+        "D16"
+      ]
+    },
+    {
+      "sha": "fd2ee5f168287b0065cba2739ea254d66f4a149d",
+      "short": "fd2ee5f16",
+      "subject": "fix(ui): improve responsive dialogs",
+      "preservationIds": [
+        "D06",
+        "D24"
+      ]
+    },
+    {
+      "sha": "2c4b668ae7d99b92ba98876d93cf1cae6d2d4b0d",
+      "short": "2c4b668ae",
+      "subject": "fix(ui): refine avatar actions and number spinners",
+      "preservationIds": [
+        "D16",
+        "D24"
+      ]
+    },
+    {
+      "sha": "ba5af058c215d4ae37674fc65f4095f241a12e88",
+      "short": "ba5af058c",
+      "subject": "fix(ui): tighten banner inputs and avatar actions",
+      "preservationIds": [
+        "D16",
+        "D18"
+      ]
+    },
+    {
+      "sha": "f4da9e4d97bba12b9fc19b59b087d5be059dcd03",
+      "short": "f4da9e4d9",
+      "subject": "fix(channel): preserve queue settings when disabled",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "08fd19e972ed905ae62b54079d47cf33b6946ef9",
+      "short": "08fd19e97",
+      "subject": "feat(channel): support queue warmup system prompts",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "272e00b923593dd914cdb1ecc129129d149db20c",
+      "short": "272e00b92",
+      "subject": "fix(channel): use system prompt for queue warmup",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "f85bc7416b1fde9d7880150430d3958e8206f902",
+      "short": "f85bc7416",
+      "subject": "fix(channel): avoid duplicate codex warmup prompts",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "9982d04291c7b7764b5387728dc50dadbde67c21",
+      "short": "9982d0429",
+      "subject": "Revert \"fix(channel): avoid duplicate codex warmup prompts\"",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "6d0989f7a82ac795b865d3016a28b9fb5961d4ed",
+      "short": "6d0989f7a",
+      "subject": "fix(logs): show user avatars",
+      "preservationIds": [
+        "D15",
+        "D16"
+      ]
+    },
+    {
+      "sha": "fa08084da243e71dc196ecf1fe24acf92a52949b",
+      "short": "fa08084da",
+      "subject": "fix(avatar): enable browser caching",
+      "preservationIds": [
+        "D16"
+      ]
+    },
+    {
+      "sha": "76bf5c8a204e8bf9a55bed83c880e295f0fd3a04",
+      "short": "76bf5c8a2",
+      "subject": "feat(channel): add custom balance and check-in",
+      "preservationIds": [
+        "D10"
+      ]
+    },
+    {
+      "sha": "821c1eacae8be407b6e5e9f16d9e31861d57f879",
+      "short": "821c1eaca",
+      "subject": "fix(channel): align custom balance refresh and navigation",
+      "preservationIds": [
+        "D10"
+      ]
+    },
+    {
+      "sha": "e18ab7145425e19b7cbea4263b33b86a6ef08a3c",
+      "short": "e18ab7145",
+      "subject": "fix(channel): simplify custom balance credentials",
+      "preservationIds": [
+        "D10"
+      ]
+    },
+    {
+      "sha": "e3d87ab4b37f3121a7f6691a960e052cc46da4f2",
+      "short": "e3d87ab4b",
+      "subject": "fix(channel): save custom balance with channel",
+      "preservationIds": [
+        "D10"
+      ]
+    },
+    {
+      "sha": "c0471d33322c735ad6911e63fc65d4ec2dd6f2e6",
+      "short": "c0471d333",
+      "subject": "chore(build): unify date and commit versioning",
+      "preservationIds": [
+        "D25"
+      ]
+    },
+    {
+      "sha": "c07c0ada3893d5443708dbecf4c5772193b3ff07",
+      "short": "c07c0ada3",
+      "subject": "fix(build): resolve Windows worktree versions",
+      "preservationIds": [
+        "D25"
+      ]
+    },
+    {
+      "sha": "bc747c8ae5fe32fe1e090acbe5cf49ece8b091aa",
+      "short": "bc747c8ae",
+      "subject": "feat(channel): show automatic check-in indicator",
+      "preservationIds": [
+        "D10"
+      ]
+    },
+    {
+      "sha": "ccfa5efe31907dea2657c8ff99ff4d818d0847e8",
+      "short": "ccfa5efe3",
+      "subject": "fix(settings): remove retry count cap",
+      "preservationIds": [
+        "D12"
+      ]
+    },
+    {
+      "sha": "805f412d94207689b410ea0641f2e37e641c37eb",
+      "short": "805f412d9",
+      "subject": "feat(channel): add Vercel AI Gateway adapter",
+      "preservationIds": [
+        "D04"
+      ]
+    },
+    {
+      "sha": "c01f5f0411ea51489a989f3c69bf12a13d76f87a",
+      "short": "c01f5f041",
+      "subject": "fix(channel): allow ignoring balance-limit auto-ban",
+      "preservationIds": [
+        "D10"
+      ]
+    },
+    {
+      "sha": "20d7259414f4480ce6a16b70c399886ab3b7ac69",
+      "short": "20d725941",
+      "subject": "fix(channel): align Codex queue warm-up payload",
+      "preservationIds": [
+        "D09"
+      ]
+    },
+    {
+      "sha": "039310f6ef078c6c1218d1980aba842bda5a779b",
+      "short": "039310f6e",
+      "subject": "feat(auth): import OAuth provider avatars",
+      "preservationIds": [
+        "D14",
+        "D16"
+      ]
+    },
+    {
+      "sha": "1a2fdea55cc08fbdf3a3d6c47cdea3e8e7ab565c",
+      "short": "1a2fdea55",
+      "subject": "fix(auth): request LinuxDO profile scope",
+      "preservationIds": [
+        "D14",
+        "D16"
+      ]
+    },
+    {
+      "sha": "e1e50997951f08e58c9cacbb1c45c2b059716c0d",
+      "short": "e1e509979",
+      "subject": "feat(playground): add Bing web search",
+      "preservationIds": [
+        "D22"
+      ]
+    },
+    {
+      "sha": "bed94d792d34112204f872decba22d0c01fb0a9d",
+      "short": "bed94d792",
+      "subject": "fix(ui): stabilize mobile header layout",
+      "preservationIds": [
+        "D18"
+      ]
+    },
+    {
+      "sha": "9c1d4e3caf6dc5bbbb511cdb468303d454e0e5d1",
+      "short": "9c1d4e3ca",
+      "subject": "fix(playground): prevent sending before history load",
+      "preservationIds": [
+        "D22"
+      ]
+    },
+    {
+      "sha": "8cdc84f80a8f51ae00bec7b64ded12626cbe40c8",
+      "short": "8cdc84f80",
+      "subject": "fix(codex): align compatibility channel test requests",
+      "preservationIds": [
+        "D01",
+        "D07"
+      ]
+    },
+    {
+      "sha": "e8e33b71b26a85f8ef4f4533f931163f1974f0f5",
+      "short": "e8e33b71b",
+      "subject": "feat(playground): add image drawing workspace",
+      "preservationIds": [
+        "D23"
+      ]
+    },
+    {
+      "sha": "ab0261dcc9d99110f011fc60b73d418c8f04c7a5",
+      "short": "ab0261dcc",
+      "subject": "fix(playground): harden web search responses",
+      "preservationIds": [
+        "D22"
+      ]
+    },
+    {
+      "sha": "480cba740b9a52c394c5eb1f6b445c84dde0c663",
+      "short": "480cba740",
+      "subject": "fix(playground): improve reasoning and stream errors",
+      "preservationIds": [
+        "D22"
+      ]
+    },
+    {
+      "sha": "e39518faa128f043723300131b7aa6aabe24910f",
+      "short": "e39518faa",
+      "subject": "feat(channel-test): add capability diagnostics",
+      "preservationIds": [
+        "D07"
+      ]
+    },
+    {
+      "sha": "99f18c18f4a478d4a78b619099d0f1d90409698c",
+      "short": "99f18c18f",
+      "subject": "test(playground): add vitest workspace config",
+      "preservationIds": [
+        "D24"
+      ]
+    },
+    {
+      "sha": "2416765c3ff4992c0eebbc1f24ba875c18dffb84",
+      "short": "2416765c3",
+      "subject": "fix(playground): improve drawing retries and progress",
+      "preservationIds": [
+        "D23"
+      ]
+    },
+    {
+      "sha": "cbc4d809aa6d4679f24becaa5153259af61bf51d",
+      "short": "cbc4d809a",
+      "subject": "fix(playground): remove web search round cap",
+      "preservationIds": [
+        "D22"
+      ]
+    },
+    {
+      "sha": "c0ee46798f3182a8658bea57133596e4f13b14f1",
+      "short": "c0ee46798",
+      "subject": "feat(channels): improve model fetching workflow",
+      "preservationIds": [
+        "D05"
+      ]
+    },
+    {
+      "sha": "9befcf1e6a5f9a7149c437f3852bc544c856997e",
+      "short": "9befcf1e6",
+      "subject": "fix(playground): handle batched web searches",
+      "preservationIds": [
+        "D22"
+      ]
+    },
+    {
+      "sha": "208f7c91e2a7abc5d9dab4b02de84ba5c2d2213f",
+      "short": "208f7c91e",
+      "subject": "fix(playground): preserve drawing viewport and theme",
+      "preservationIds": [
+        "D23"
+      ]
+    },
+    {
+      "sha": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+      "short": "403f7d9df",
+      "subject": "fix(playground): omit unsupported search n parameter",
+      "preservationIds": [
+        "D22"
+      ]
+    }
+  ]
+}

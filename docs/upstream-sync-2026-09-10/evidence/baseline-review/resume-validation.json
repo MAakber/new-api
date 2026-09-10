@@ -1,0 +1,48 @@
+{
+  "scope": "Additional checks during continuation, against the existing 21-commit small_candidates temporary snapshot",
+  "snapshot": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-upstream-review-lets37\\snapshot-python",
+  "tree": "69c059c98f141d330354950c1ac43ea2064d086a",
+  "checks": [
+    {
+      "name": "Changed frontend files lint",
+      "startedAt": "2026-09-10T07:38:44.300Z",
+      "completedAt": "2026-09-10T07:38:46.912Z",
+      "tree": "69c059c98f141d330354950c1ac43ea2064d086a",
+      "snapshot": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-upstream-review-lets37\\snapshot-python",
+      "command": [
+        "bun",
+        "x",
+        "--no-install",
+        "oxlint",
+        "-c",
+        ".oxlintrc.json",
+        "src/features/auth/sign-in/components/user-auth-form.tsx",
+        "src/features/chat/lib/chat-links.ts",
+        "src/features/keys/components/api-keys-table.tsx",
+        "src/features/models/components/deployments-table.tsx",
+        "src/features/models/components/dialogs/upstream-conflict-dialog.tsx",
+        "src/features/models/components/models-table.tsx",
+        "src/features/pricing/hooks/use-filters.ts",
+        "src/features/redemption-codes/components/redemptions-table.tsx",
+        "src/features/system-settings/models/channel-selector-dialog.tsx",
+        "src/features/system-settings/models/model-ratio-visual-editor.tsx",
+        "src/features/system-settings/models/upstream-ratio-sync-table.tsx",
+        "src/features/usage-logs/components/common-logs-filter-bar.tsx",
+        "src/features/usage-logs/components/logs-filter-toolbar.tsx",
+        "src/features/wallet/components/subscription-plans-card.tsx",
+        "src/features/wallet/hooks/use-billing-history.ts"
+      ],
+      "files": 15,
+      "exitCode": 0,
+      "stdout": "src/features/system-settings/models/model-ratio-visual-editor.tsx:530:24: warning unicorn(prefer-number-properties): Use `Number.parseFloat` instead of the global `parseFloat` help: Replace it with `Number.parseFloat`\n",
+      "stderr": ""
+    },
+    {
+      "name": "Independent relaykit Claude conversion tests",
+      "command": "GOWORK=off go test ./relayconvert ./relayconvert/internal/oai_chat ./relayconvert/internal/oai_responses ./relayconvert/internal/shared/claude -count=1",
+      "workingDirectory": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-upstream-review-lets37\\snapshot-python\\relaykit",
+      "exitCode": 0,
+      "output": "ok  \tgithub.com/QuantumNous/new-api/relaykit/relayconvert\t0.411s\nok  \tgithub.com/QuantumNous/new-api/relaykit/relayconvert/internal/oai_chat\t0.288s\nok  \tgithub.com/QuantumNous/new-api/relaykit/relayconvert/internal/oai_responses\t0.360s\n?   \tgithub.com/QuantumNous/new-api/relaykit/relayconvert/internal/shared/claude\t[no test files]\n"
+    }
+  ]
+}

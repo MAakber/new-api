@@ -1,0 +1,836 @@
+[
+  {
+    "id": "B00",
+    "title": "基线、备份、工作树与保护测试",
+    "priority": 0,
+    "depends_on": [],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [],
+    "status": "in_progress",
+    "units": [
+      {
+        "id": "B00.1",
+        "action": "记录固定引用并核实 3 个本地提交；备份 Git 对象与未跟踪计划",
+        "status": "verified"
+      },
+      {
+        "id": "B00.2",
+        "action": "建立独立工作树和唯一台账；逐项复核 120 个提交映射",
+        "status": "applying"
+      },
+      {
+        "id": "B00.3",
+        "action": "盘点现有测试 include 与缺口；执行基线并保存证据",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [
+      "evidence/runs/B00-001/backup-result.json",
+      "evidence/runs/B00-001/files-manifest.json",
+      "evidence/runs/B00-001/bundle-verify.log"
+    ],
+    "nextAction": "B00.2: commit canonical plan in integration worktree, review all 120 downstream mappings, install isolated frontend dependencies and inventory baseline test coverage."
+  },
+  {
+    "id": "B01",
+    "title": "首批九项低风险修复",
+    "priority": 1,
+    "depends_on": [
+      "B00"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "7037ac15bd8a29f8ee3e2b74e784bcdb75d67d22",
+      "876903a8eb22c44e395c03da38f6701c650651ae",
+      "2399de97daf6ac76e5378a7c7c244ff0628a8186",
+      "8461e5339d483f3c0699fb009567be9cec25846d",
+      "2d8e50bf36e94200b809dfb39e73624ec48b1e23",
+      "ffeb1b24ef85ee98c048649a554136f9fe9d43cf",
+      "7dd1000a190d1c810fa0d5723770341106742a1b",
+      "b5b94bc685fd2251551df826dab3575ab262f6dc",
+      "8454082f930f44593e92791c2581ffc63eb30a59"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B01.1",
+        "action": "按已验证顺序拆分 9 个补丁，记录每单元依赖",
+        "status": "pending"
+      },
+      {
+        "id": "B01.2",
+        "action": "验证受影响后端/前端和 Dockerfile.dev 的实际构建",
+        "status": "pending"
+      },
+      {
+        "id": "B01.3",
+        "action": "完成上游处置与相关保护项阶段复核",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "按已验证顺序拆分 9 个补丁，记录每单元依赖",
+    "orderEvidence": "evidence/baseline-review/batch-simulations.json"
+  },
+  {
+    "id": "B02",
+    "title": "供应商、公共入口与基础 Claude 工具",
+    "priority": 2,
+    "depends_on": [
+      "B01"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "85feb7a345d2d94d3ed4df89eb67ac504e0c1560",
+      "9724ef1b248a436ea47270bb5b394a0fdb013a6c",
+      "cae3676ec6f46ee5ef596443256f78c4e9b34ceb",
+      "8ad159a3bbc2da9f7432848a58c99bc2dafee227",
+      "ba2e9287bb7a8002116c03daa4c457a330054871",
+      "0f2a2075ab072ea7e20ffa5dd5d58dbf1b6b5b22",
+      "0f9f668c6076214680f87e89a88a426cb08228ad",
+      "3d5dc36f1d85ccae8d5cb2864764011795b559b5",
+      "93d2df85f824e4343a114e1f18dde4f795e2d55b",
+      "0bee5d4410296e972bf0076414ade786c2c799c8",
+      "4442bb302898fef9763c91dab8c638ae2b27fbe7",
+      "3dda1d50c6d4a35edf1c74200fcb02d46d0fd075"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B02.1",
+        "action": "按供应商分单元，阿里两项与 Claude 两项按依赖引入",
+        "status": "pending"
+      },
+      {
+        "id": "B02.2",
+        "action": "验证压缩边界、400/413、鉴权、工具与多协议转换",
+        "status": "pending"
+      },
+      {
+        "id": "B02.3",
+        "action": "联调授权渠道；未具备的运行条件明确记账",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "按供应商分单元，阿里两项与 Claude 两项按依赖引入",
+    "orderEvidence": "evidence/baseline-review/batch-simulations.json"
+  },
+  {
+    "id": "B03",
+    "title": "局部界面、规则与依赖",
+    "priority": 3,
+    "depends_on": [
+      "B01"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "aa7d0d39a4a783fe1a9358fee4fed8d093cd1e02",
+      "823e26304a396854ace30b52b98ec497c2dd9c36",
+      "d49160f0e5433a2b87e1431c0b7bf01d8e429e75",
+      "4eaeefbdf5b979fb777884df24090740bd2a3ef3",
+      "f250f3b589c836764954f646448084e93873798b",
+      "137d1171f2b4b24cd7fb14bcef212de303fa963e",
+      "98d50d5383a33432ff6c30b129461b170e5cbffc",
+      "521cebf585efc2e782dd9fb93d0f66752c8d3c32"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B03.1",
+        "action": "用 Bun 更新 DOMPurify 和锁文件，检查实际版本",
+        "status": "pending"
+      },
+      {
+        "id": "B03.2",
+        "action": "逐项适配移动界面、首页、分类和输入规则",
+        "status": "pending"
+      },
+      {
+        "id": "B03.3",
+        "action": "按行为补齐测试和七语翻译检查",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "用 Bun 更新 DOMPurify 和锁文件，检查实际版本"
+  },
+  {
+    "id": "B04",
+    "title": "协议保真、核心转换与 HTTP 生命周期",
+    "priority": 5,
+    "depends_on": [
+      "B02"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "bd585d78efd418aaf7baa7e34fa48c5536581868",
+      "d6b5ce99de4930f348cda8dd3bb14f739ac38e22",
+      "ea4f021012cddc52126123ab4ed8ced3df260b85",
+      "eab18a83579187f880139894dd9e7f06d1a492ce",
+      "253a74dd1b47e2bde6dd6027c6aa1b5e0ee67827",
+      "bb234ff4186140091db0defab250763861de2b45",
+      "7d09c6954ef3e6d65a37840ed3a566eb9acedaaa",
+      "8f6961c675932f406260ff0c218bc2aa0603e9b2",
+      "b518d0033b670f5518b8a2f1cf8ea0142a9d1b8d",
+      "0ed497f066a68613375124303ef54f220267b334",
+      "bbd97446c26092f2e7250af429096064b9e0f899",
+      "3a9f41ee85cc369f5b8d7fe6e62ff4e7bf3a9ec8",
+      "7c044d7c5c2d2beadf16b21910950f8f593bc3ef",
+      "6b659fd61c50e35d559c41520a0fff7b8aea56a4",
+      "2cf177ac487e62c627c7d423b65735ba2481ef4f",
+      "49ec4696682530781a036eab1ac195f0b04706c0",
+      "6e10f9bc927a4eae889864a6ef601359d53526b9",
+      "7bbe85bcb09546e0b89572bf97198fc94889be3d"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B04.1",
+        "action": "审查 DTO、JSON codec、模型修饰符及调用依赖，拆小单元",
+        "status": "pending"
+      },
+      {
+        "id": "B04.2",
+        "action": "适配 HTTP 重放/取消/超时和多供应商转换",
+        "status": "pending"
+      },
+      {
+        "id": "B04.3",
+        "action": "保留 count_tokens、旧模型别名和兼容渠道，验证 relaykit 独立性",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "审查 DTO、JSON codec、模型修饰符及调用依赖，拆小单元"
+  },
+  {
+    "id": "B05",
+    "title": "时间段计费条件修复",
+    "priority": 2,
+    "depends_on": [
+      "B01"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "ac381acf4bf41204b97bb26b4c58c83275877a2e"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B05.1",
+        "action": "阅读计费表达式设计；先写能复现日内 OR 缺陷的测试",
+        "status": "pending"
+      },
+      {
+        "id": "B05.2",
+        "action": "适配生成与解析、边界与往返；复查存量表达式方案",
+        "status": "pending"
+      },
+      {
+        "id": "B05.3",
+        "action": "在实际候选上验收金额语义并记录迁移影响",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "阅读计费表达式设计；先写能复现日内 OR 缺陷的测试"
+  },
+  {
+    "id": "B06",
+    "title": "数据库驱动、锁、约束与撤回记录",
+    "priority": 6,
+    "depends_on": [
+      "B00"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "e5efc73cdb49f60e513f760ded4d3268a4304645",
+      "66031a09d99f2ac4e0b94e2c41f04ed691a79304",
+      "1751f43ee07edc9eb0c56fd9b23586861b43df46",
+      "6eb6f35ed211b7459cae3b9f13286b9c93fc1bd6",
+      "74158715cde6d7b767ead23d9a2af64b7b58a588",
+      "69a41eeadc81adb08d04346512c76d62fd6203db",
+      "2bf0820f4b89530acf14d389ba3e8229211933fa",
+      "2b6f1dfefbe217fed31fc0726717cc7de6958e8e",
+      "27ff6a8767e728f879d52770c273d4f73214a430",
+      "b7017c251badaacaab840646a959635d00665e2d",
+      "9a8674425c5a43435a259b58bb928a55d26be990",
+      "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B06.1",
+        "action": "确认真实数据库版本和隔离数据库夹具，不能假定 SQLite 代表三库",
+        "status": "pending"
+      },
+      {
+        "id": "B06.2",
+        "action": "按依赖引入驱动/约束/锁，验证旧库和重复启动",
+        "status": "pending"
+      },
+      {
+        "id": "B06.3",
+        "action": "对撤回与空补丁逐项建立替代/无变化证据",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "确认真实数据库版本和隔离数据库夹具，不能假定 SQLite 代表三库"
+  },
+  {
+    "id": "B07",
+    "title": "渠道测试、路由与抓取模型",
+    "priority": 7,
+    "depends_on": [
+      "B02",
+      "B04"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "c9bc038649d1d1f6f1fe9d6bca3b09f842cdcf6b",
+      "b941253aea6b9bccf1bc8de503bf3477caafebfe",
+      "5d3423bec13f6da2498bdc5b288c9ee2507fd3ef",
+      "15cfdeddef464d109a60992c802e17d9d1e4a3b4",
+      "e90a7c48e5e47aab3b93ce663e5f1cda0964de11",
+      "2b0efd8484cc1e20b6de64f8600586fe61dee867",
+      "4add708ebe3b74e02dcf141887da2c81cb9b1526",
+      "bdef117505247769268b209665fb3ad7554c3da7"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B07.1",
+        "action": "为模式/并发/路由增量建立下游适配接口",
+        "status": "pending"
+      },
+      {
+        "id": "B07.2",
+        "action": "对照 c0ee46798 逐项合并抓模能力，不覆盖旧功能",
+        "status": "pending"
+      },
+      {
+        "id": "B07.3",
+        "action": "验证浮窗上下文、61–64 渠道、队列、余额、图标和多密钥",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "为模式/并发/路由增量建立下游适配接口"
+  },
+  {
+    "id": "B08",
+    "title": "账号安全与日志权限",
+    "priority": 8,
+    "depends_on": [
+      "B03",
+      "B06"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "e78e1db1e4ed7d65e37c2527826f290c0c63b041",
+      "0cd9dc85e334018d15c5a480e39753d0866e2035",
+      "1da23d6b33421daf88a1a15a6821d6304940691a",
+      "9c97e78aced572d540f227007a675d7d007666ac",
+      "d7992672a606c3e97257ed411d77adecf22559c0",
+      "116255f076a3e9d92b0c9a85303daae73997b55e",
+      "692e8d6ee6a9a1620c2d731cb51a1e3154a7042b",
+      "b80d633cf586b001cfbb4200bae93e65abe57c2b",
+      "918427d8ab41f6adaa4113d0496f1f8621855b70",
+      "057f71c2336c3981187b732a9d06f65490e9a946",
+      "9f506dd7f905c288b4a119a8197cd64b77eb4a3f",
+      "d8cb177440ceaae422d5bfd96c258d47af4e0f1d",
+      "45c3fbe8aeb049f03c13e14298a40b87aea5bd87",
+      "3e84ec0ab8239cf2277f8a10d45566630a9c10fa",
+      "a8729b5c3709cc01d88fc3f2db5b91347fc9129e",
+      "0973dc2b8f550de71b75fdd3805576d3ce6ccf42",
+      "3f8a50cf8877683669cd812240a0beaf7b171c32",
+      "6f2333990613bf3e9dd36f541fc380148c7b5175"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B08.1",
+        "action": "按会话、验证、审计、日志投影与配置依赖拆分",
+        "status": "pending"
+      },
+      {
+        "id": "B08.2",
+        "action": "迁移安全中心和密码加密开关，保留全部下游账户能力",
+        "status": "pending"
+      },
+      {
+        "id": "B08.3",
+        "action": "逐角色/旧会话/旧账户/凭据迁移验收，防止数据泄漏",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "按会话、验证、审计、日志投影与配置依赖拆分"
+  },
+  {
+    "id": "B09",
+    "title": "公开缓存与榜单兼容",
+    "priority": 9,
+    "depends_on": [
+      "B07",
+      "B08"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "219c9e06341f1b100e2c572a5f97c45f151fd280",
+      "36dbbf0f77e710455e745048f4a32e8120ad3fd2",
+      "5c7cca015525212a7ac2741da7f3b51fa2e30db0",
+      "c79b74b68358180c68440057596bdc34a99cc649"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B09.1",
+        "action": "按已知缓存提交依赖适配 use-system-config 与绑定",
+        "status": "pending"
+      },
+      {
+        "id": "B09.2",
+        "action": "兼容新旧健康序列消费者",
+        "status": "pending"
+      },
+      {
+        "id": "B09.3",
+        "action": "验证账号切换、主题/公告失效及榜单权限",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "按已知缓存提交依赖适配 use-system-config 与绑定"
+  },
+  {
+    "id": "B10",
+    "title": "账务一致性与自动分组",
+    "priority": 10,
+    "depends_on": [
+      "B04",
+      "B05",
+      "B06",
+      "B08"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "df43f801536b348b00bfa4da7639b42c2c036821",
+      "cfaba1dd6754d4238e1360247c198a64a313e96c",
+      "0ab02020603d22e5613bc4cf46bfab06f8567769",
+      "50e5377ea5feec326c416450e4e8bcc0bdfe7749",
+      "ccd535ef8e50cf6e5846a59278c40b7ff59d1b7d",
+      "58d4e9bd3bb035df8ea235dd682ccc8a45d0332a",
+      "2a0ce3475c2df51ef5fd725f1eb0249822eb1c35",
+      "47ba9d2c63d6dcbf3a183ee421b136ee1b1331ed",
+      "f116414284162ad15d8925f7bca494c109b83e93"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B10.1",
+        "action": "先配对 df43f8015 与 cfaba1dd6，再按依赖补齐充值/退款/缓存扣费",
+        "status": "pending"
+      },
+      {
+        "id": "B10.2",
+        "action": "整合令牌自动分组和下游每用户 RPM",
+        "status": "pending"
+      },
+      {
+        "id": "B10.3",
+        "action": "三库并发、免费付费跨组、钱包订阅、退款和饱和审计对账",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "先配对 df43f8015 与 cfaba1dd6，再按依赖补齐充值/退款/缓存扣费"
+  },
+  {
+    "id": "B11",
+    "title": "64 位钱包与存量 schema",
+    "priority": 11,
+    "depends_on": [
+      "B06",
+      "B10"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "a073f74b38a33bb154821089c097658cbdcc0fbe"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B11.1",
+        "action": "建立列类型/余额/账单基线及兼容新 schema 的回退方案",
+        "status": "pending"
+      },
+      {
+        "id": "B11.2",
+        "action": "在隔离副本迁移、启动检查与重复启动",
+        "status": "pending"
+      },
+      {
+        "id": "B11.3",
+        "action": "验证大余额、精度、单请求 int32 上限与迁移后写入恢复",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "建立列类型/余额/账单基线及兼容新 schema 的回退方案"
+  },
+  {
+    "id": "B12",
+    "title": "模型管理与定价体系",
+    "priority": 12,
+    "depends_on": [
+      "B04",
+      "B05",
+      "B06",
+      "B10",
+      "B11"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "eb99ab1b40343c3317bb47981cccdbb2b159a5fa",
+      "0c76e4dae77a279e015329b7478e6f02d6b62edd",
+      "bee45b58a3c0b77e8dc81e6b5aeb4474aa9058d1",
+      "75e533209490a8ef3a8b5e3d93e4dac03ba19bcf",
+      "0e0ba152bdcc6891f6053047ccf14d41b3cad60a",
+      "71c1fd7caad738db4d13aabbf28eeadb293d0cfe",
+      "d52bdc0b4087d50d87eb06387e86b2be53e85cd4",
+      "7cf9b473f61eb7dc09f6f0782192f17595140a08",
+      "064ed943e1ac40e3eaca1b58ffb7fa5dacb3fde3"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B12.1",
+        "action": "按 model-pricing 与 options 接口依赖整合管理/可见性",
+        "status": "pending"
+      },
+      {
+        "id": "B12.2",
+        "action": "迁移站点货币和动态/按次表达式，保留模型分类/别名",
+        "status": "pending"
+      },
+      {
+        "id": "B12.3",
+        "action": "检查存储美元语义、目录权限、编辑/预览/实际结算一致",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "按 model-pricing 与 options 接口依赖整合管理/可见性"
+  },
+  {
+    "id": "B13",
+    "title": "日志额度 UI 与兑换码",
+    "priority": 13,
+    "depends_on": [
+      "B07",
+      "B08",
+      "B10",
+      "B12"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "84834eee859fd69ed6b8ab3c848f86f1ff98b992",
+      "e926e5cacee22fc838d94e8b95b438e825508e11",
+      "4cf9107f043709b3364a48f7a7bacc5f8ca80928",
+      "8c8c4153d4b80d54352d21593de41aa9a6178f7e",
+      "a5e41a893379e49bd9e1d025e775c04df8961c95",
+      "2bec370629aa72d74d3f598b953a4d33b8bcbf7d",
+      "8f72ecbbfd86ded5ee15373921533eed3d334a9a",
+      "551bb63edf4007d7c4b0930504faf6db87012d73",
+      "bd22e45a740a7c02c328704dc419d8795237cb74",
+      "950644c9d54445bdd8796643e4e2e18e13167a4c",
+      "524455fac3c438321df4ae9ed4ffd11bc635cc4f",
+      "ea7cb0ba4e0f82e2bfa5e55752eb68bdf902f71b"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B13.1",
+        "action": "合并共享额度/日志组件并保持私有诊断与头像",
+        "status": "pending"
+      },
+      {
+        "id": "B13.2",
+        "action": "整合批量删除及 TXT/Markdown 与已有 CSV/订阅/注册码",
+        "status": "pending"
+      },
+      {
+        "id": "B13.3",
+        "action": "验证导出权限、字段、精度、移动界面和审计",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "合并共享额度/日志组件并保持私有诊断与头像"
+  },
+  {
+    "id": "B14",
+    "title": "任务插件、市场与新视频模型",
+    "priority": 14,
+    "depends_on": [
+      "B04",
+      "B06",
+      "B08",
+      "B10",
+      "B11",
+      "B12"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "eb48396d5fe97d27772d0cd5e3ca8aa5caa4f3e9",
+      "6c22550ea325d4fea0e0ece52412cb1e4449291c",
+      "dc4732cfed712b004d3d3d94a414d3ff127a93cc",
+      "aece11d2f7f095a33052696c5d28d3656609a99e",
+      "73afad588ca7af07134fa423e8a33fdea6c855b2",
+      "9df450fe54e1a874a5339b7c38a61014217f02c3",
+      "32c261923a9786c64d2af087327ef057e7bde7e3",
+      "3b4652269a6a6d9e2c8650a84ee8c4e447e6473b",
+      "6298b0f3238461b9629dfc1c00866f8325123aa1",
+      "92bc7ff73c5ef215496d09d3e4b5769c9e35006b",
+      "210734bb73bc3c6e37548af90360aa4226566fe2",
+      "99974a814f00a26dfa7431beb313e487529bbeed",
+      "984330920061e014159c7581b8fcdb726de2c247",
+      "eb76b136b85ecba9d6ad19c714c5781e51815530",
+      "9bf328d9749751757d5d6b74088d514813a618bd",
+      "a20574136b2746e9afc4b268c99cf99b3f6cc68b"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B14.1",
+        "action": "盘点编号/索引数组/数据导入，确定新编号并记录决策",
+        "status": "pending"
+      },
+      {
+        "id": "B14.2",
+        "action": "保留旧内置渠道和在途任务语义，完成价格与任务迁移",
+        "status": "pending"
+      },
+      {
+        "id": "B14.3",
+        "action": "完整引入插件市场/能力/新视频支持，验证升级、轮询、幂等与退款",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "盘点编号/索引数组/数据导入，确定新编号并记录决策"
+  },
+  {
+    "id": "B15",
+    "title": "全局通知、弹层、测试和风格整合",
+    "priority": 15,
+    "depends_on": [
+      "B07",
+      "B08",
+      "B09",
+      "B13",
+      "B14"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "e2c7aa7b102c2075eae2377df3508658d45e88dc",
+      "387a40914853310d69adc2f52474134ced5f4811",
+      "ebe4c368f28787919ea478c0abf1ea7101978179",
+      "12be9975c0bf01fa175a2bb3360607767c8ba5fb"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B15.1",
+        "action": "保留现有可多开浮窗，按交互语义整合通知/对话框",
+        "status": "pending"
+      },
+      {
+        "id": "B15.2",
+        "action": "合并测试配置并确认所有保护测试仍可发现",
+        "status": "pending"
+      },
+      {
+        "id": "B15.3",
+        "action": "审查 Go 风格整理的所有交叉文件，不以整文件覆盖解决",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "保留现有可多开浮窗，按交互语义整合通知/对话框"
+  },
+  {
+    "id": "B16",
+    "title": "文档治理、发布和桌面依赖",
+    "priority": 16,
+    "depends_on": [
+      "B03",
+      "B11",
+      "B14",
+      "B15"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [
+      "5c3abffe8572aa8a49f15c3916707d2019d66af4",
+      "626058075524f61bfaf38d7b478d3501144be14e",
+      "53a8739eedbf69decd621c1a8313cc0b8b367dee",
+      "cf38105a9946f041890ed404a8b81f63bee2568f",
+      "bbf67df0499c4881779c7fdd04761f5b09567fdb",
+      "8c25eee71ba03ea19851dcc4f12ee4ecfcfb0808",
+      "e468b73915e5028e9849de62c5018a0faa203012",
+      "67a0585d0f252dfca445c11b7600971b7eeb8eea",
+      "d8ca0ed0bb596e910e1955461e7691e40d224d70",
+      "8f5ab8e4048a90d88b20ae1e6d5228b04233d3b8",
+      "d5803532bdccde3a2b1583291f51e92d3519b1c6",
+      "fff0635bb14b8ec5f10df9e582a83591df841902"
+    ],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B16.1",
+        "action": "适配上游文档与发布流程，保留保护信息和下游目标",
+        "status": "pending"
+      },
+      {
+        "id": "B16.2",
+        "action": "统一 Bun/Electron 依赖和锁文件，校验现有版本机制",
+        "status": "pending"
+      },
+      {
+        "id": "B16.3",
+        "action": "按实际交付平台构建，记录新旧配置与运维变更",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "适配上游文档与发布流程，保留保护信息和下游目标"
+  },
+  {
+    "id": "B17",
+    "title": "真实合并上游历史与残余复核",
+    "priority": 17,
+    "depends_on": [
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B06",
+      "B07",
+      "B08",
+      "B09",
+      "B10",
+      "B11",
+      "B12",
+      "B13",
+      "B14",
+      "B15",
+      "B16"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B17.1",
+        "action": "建立合并前检查点，执行固定目标真实 merge --no-ff --no-commit",
+        "status": "pending"
+      },
+      {
+        "id": "B17.2",
+        "action": "按 ledger 复核冲突和自动合并结果、保留策略及完整行为差异",
+        "status": "pending"
+      },
+      {
+        "id": "B17.3",
+        "action": "创建双亲合并提交并核对上下游祖先关系",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "建立合并前检查点，执行固定目标真实 merge --no-ff --no-commit"
+  },
+  {
+    "id": "B18",
+    "title": "最终回归与迁移验收",
+    "priority": 18,
+    "depends_on": [
+      "B17"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B18.1",
+        "action": "对最终代码提交运行前后端、独立模块、所有保护测试与浏览器验收",
+        "status": "pending"
+      },
+      {
+        "id": "B18.2",
+        "action": "完成三库迁移/对账与供应商/任务生命周期联调",
+        "status": "pending"
+      },
+      {
+        "id": "B18.3",
+        "action": "逐项完成 153/120/26 项最终复核及全部质量门槛",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "对最终代码提交运行前后端、独立模块、所有保护测试与浏览器验收"
+  },
+  {
+    "id": "B19",
+    "title": "合入下游 main 与完整交付",
+    "priority": 19,
+    "depends_on": [
+      "B18"
+    ],
+    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "upstreamCommits": [],
+    "status": "pending",
+    "units": [
+      {
+        "id": "B19.1",
+        "action": "核对最新下游 main 与新提交，必要时补充保护及重验",
+        "status": "pending"
+      },
+      {
+        "id": "B19.2",
+        "action": "向下游 main 保留历史合并；PR 使用模板且不伪填人工确认",
+        "status": "pending"
+      },
+      {
+        "id": "B19.3",
+        "action": "记录最终 SHA、证据、迁移/回退边界和完成状态",
+        "status": "pending"
+      }
+    ],
+    "codeCommits": [],
+    "evidence": [],
+    "nextAction": "核对最新下游 main 与新提交，必要时补充保护及重验"
+  }
+]

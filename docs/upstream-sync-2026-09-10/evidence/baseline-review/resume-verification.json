@@ -1,0 +1,148 @@
+{
+  "verifiedAt": "2026-09-10T07:43:01.418Z",
+  "direction": "QuantumNous/new-api upstream/main -> MAakber/new-api local main",
+  "head": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "origin": "c0ee46798f3182a8658bea57133596e4f13b14f1",
+  "upstream": "bdef117505247769268b209665fb3ad7554c3da7",
+  "remoteHeads": {
+    "source": "Authenticated gh api repos/{repository}/branches/main, checked in this continuation",
+    "downstream": "c0ee46798f3182a8658bea57133596e4f13b14f1",
+    "upstream": "bdef117505247769268b209665fb3ad7554c3da7",
+    "changedSinceInterruptedAssessment": false
+  },
+  "inventory": {
+    "commitCount": 153,
+    "classified": 153,
+    "groupCount": 37,
+    "riskCounts": {
+      "risk_1": 11,
+      "risk_2": 23,
+      "risk_3": 37,
+      "risk_4": 48,
+      "risk_5": 17,
+      "not_scheduled": 17
+    },
+    "issues": []
+  },
+  "smallBatch": {
+    "tree": "69c059c98f141d330354950c1ac43ea2064d086a",
+    "commitCount": 21,
+    "snapshot": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-upstream-review-lets37\\snapshot-python",
+    "comparedFiles": 2305,
+    "byteIdenticalFiles": 2278,
+    "lineEndingOnlyFiles": [
+      ".agents/skills/shadcn-ui/vendor/shadcn/UPSTREAM.txt",
+      ".dockerignore",
+      ".env.example",
+      ".gitattributes",
+      ".gitignore",
+      "Dockerfile",
+      "Dockerfile.dev",
+      "LICENSE",
+      "NOTICE",
+      "bin/migration_v0.2-v0.3.sql",
+      "bin/migration_v0.3-v0.4.sql",
+      "common/limiter/lua/rate_limit.lua",
+      "electron/entitlements.mac.plist",
+      "go.mod",
+      "go.sum",
+      "makefile",
+      "new-api.service",
+      "relaykit/go.mod",
+      "relaykit/go.sum",
+      "web/.gitignore",
+      "web/.node-version",
+      "web/bun.lock",
+      "web/public/waffo-logo-dark.svg",
+      "web/public/waffo-logo-light.svg",
+      "web/scripts/add-copyright.mjs",
+      "web/scripts/format-with-protected-headers.mjs",
+      "web/scripts/sync-i18n.mjs"
+    ],
+    "snapshotIssues": []
+  },
+  "firstBatch": {
+    "name": "first_batch_low_risk",
+    "requested": [
+      "7037ac15b",
+      "876903a8e",
+      "2399de97d",
+      "8461e5339",
+      "2d8e50bf3",
+      "ffeb1b24e",
+      "7dd1000a1",
+      "b5b94bc68",
+      "8454082f9"
+    ],
+    "complete": true,
+    "tree": "33dc1109b02f8ef3eb1a0a222e82548e6fe34683",
+    "steps": [
+      {
+        "short": "7037ac15b",
+        "exitCode": 0,
+        "tree": "8f25d23abae5ee8c977ebc431d504792b29534af",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "876903a8e",
+        "exitCode": 0,
+        "tree": "3e95c50678788986086f6c97af8739fe036f5363",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "2399de97d",
+        "exitCode": 0,
+        "tree": "9d1bd1e1d1a6e610149927929ed17283eb517db9",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "8461e5339",
+        "exitCode": 0,
+        "tree": "46793e75aed5dfdc0a99ed0d01860f6b6cb61d8e",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "2d8e50bf3",
+        "exitCode": 0,
+        "tree": "3b0c2725aff9ca8b1f763d8dd94bf6355f48ddd5",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "ffeb1b24e",
+        "exitCode": 0,
+        "tree": "664d23120d9f01b288eedd4c0fa62aae8cca16e4",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "7dd1000a1",
+        "exitCode": 0,
+        "tree": "b83306239f2c5b99a57c2196b6c499f529257e80",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "b5b94bc68",
+        "exitCode": 0,
+        "tree": "7a177f4eaa95172cd24c50082ce68d22ac3e580f",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "8454082f9",
+        "exitCode": 0,
+        "tree": "33dc1109b02f8ef3eb1a0a222e82548e6fe34683",
+        "conflicts": [],
+        "stderr": ""
+      }
+    ],
+    "validationScope": "Text-only combination of the 9 recommended low-risk commits; runtime checks were run on the 21-commit superset snapshot."
+  },
+  "trackedStatus": "",
+  "previousValidation": "The earlier 5 successful checks in validation.json were retained; source snapshot was reverified against the recorded candidate tree with CRLF/LF normalization."
+}

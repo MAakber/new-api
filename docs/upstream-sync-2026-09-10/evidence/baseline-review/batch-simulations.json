@@ -1,0 +1,325 @@
+[
+  {
+    "name": "small_candidates",
+    "requested": [
+      "7037ac15b",
+      "876903a8e",
+      "2399de97d",
+      "8461e5339",
+      "2d8e50bf3",
+      "ffeb1b24e",
+      "7dd1000a1",
+      "b5b94bc68",
+      "8454082f9",
+      "85feb7a34",
+      "9724ef1b2",
+      "cae3676ec",
+      "8ad159a3b",
+      "ba2e9287b",
+      "0f2a2075a",
+      "0f9f668c6",
+      "3d5dc36f1",
+      "93d2df85f",
+      "0bee5d441",
+      "4442bb302",
+      "3dda1d50c"
+    ],
+    "complete": true,
+    "tree": "69c059c98f141d330354950c1ac43ea2064d086a",
+    "steps": [
+      {
+        "short": "7037ac15b",
+        "exitCode": 0,
+        "tree": "8f25d23abae5ee8c977ebc431d504792b29534af",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "876903a8e",
+        "exitCode": 0,
+        "tree": "3e95c50678788986086f6c97af8739fe036f5363",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "2399de97d",
+        "exitCode": 0,
+        "tree": "9d1bd1e1d1a6e610149927929ed17283eb517db9",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "8461e5339",
+        "exitCode": 0,
+        "tree": "46793e75aed5dfdc0a99ed0d01860f6b6cb61d8e",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "2d8e50bf3",
+        "exitCode": 0,
+        "tree": "3b0c2725aff9ca8b1f763d8dd94bf6355f48ddd5",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "ffeb1b24e",
+        "exitCode": 0,
+        "tree": "664d23120d9f01b288eedd4c0fa62aae8cca16e4",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "7dd1000a1",
+        "exitCode": 0,
+        "tree": "b83306239f2c5b99a57c2196b6c499f529257e80",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "b5b94bc68",
+        "exitCode": 0,
+        "tree": "7a177f4eaa95172cd24c50082ce68d22ac3e580f",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "8454082f9",
+        "exitCode": 0,
+        "tree": "33dc1109b02f8ef3eb1a0a222e82548e6fe34683",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "85feb7a34",
+        "exitCode": 0,
+        "tree": "11bb68e2cbd462b4dcd6543973436b723e60c7da",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "9724ef1b2",
+        "exitCode": 0,
+        "tree": "a8a4971ee274a196c82a8cbcede6b00b2b90c93b",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "cae3676ec",
+        "exitCode": 0,
+        "tree": "b4ae0876ff71f89a409cd50f581f9447f356c18e",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "8ad159a3b",
+        "exitCode": 0,
+        "tree": "8ec2ffb09d29d192b5ddcb1a7527ce4a96bd437e",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "ba2e9287b",
+        "exitCode": 0,
+        "tree": "25cc88bfcbcaeb2fc337158bd0e1db21a13b92e3",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "0f2a2075a",
+        "exitCode": 0,
+        "tree": "93e9f33ce519778f86ff5ec0196c646fd29e85e6",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "0f9f668c6",
+        "exitCode": 0,
+        "tree": "42c7efe60d3e21dd7193ffb3d4e7e956a6ec4950",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "3d5dc36f1",
+        "exitCode": 0,
+        "tree": "02bd82081062d9943f86f40ca914d9960afd57ef",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "93d2df85f",
+        "exitCode": 0,
+        "tree": "300f6c83ff9013507ff8599d7380d191fc13b33c",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "0bee5d441",
+        "exitCode": 0,
+        "tree": "7e407741ef22b3fd7084c035c7023379577bb649",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "4442bb302",
+        "exitCode": 0,
+        "tree": "af901a0356e72dadedffe1d5db11484d692c1ac5",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "3dda1d50c",
+        "exitCode": 0,
+        "tree": "69c059c98f141d330354950c1ac43ea2064d086a",
+        "conflicts": [],
+        "stderr": ""
+      }
+    ],
+    "snapshot": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-upstream-review-lets37\\snapshot-python",
+    "frontendDependencies": "Current downstream node_modules (no install)"
+  },
+  {
+    "name": "retry_billing",
+    "requested": [
+      "df43f8015",
+      "cfaba1dd6"
+    ],
+    "complete": true,
+    "tree": "853aa68b7f9acccd851b91dba26a508985699028",
+    "steps": [
+      {
+        "short": "df43f8015",
+        "exitCode": 0,
+        "tree": "9c6259d4f82c3598208571182aa7bce0800aa1a6",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "cfaba1dd6",
+        "exitCode": 0,
+        "tree": "853aa68b7f9acccd851b91dba26a508985699028",
+        "conflicts": [],
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "name": "claude_tools_and_cache",
+    "requested": [
+      "4442bb302",
+      "3dda1d50c",
+      "253a74dd1",
+      "7d09c6954"
+    ],
+    "complete": false,
+    "tree": "14f4cadf3a5bf5667354bd7a22c17770da021cb1",
+    "steps": [
+      {
+        "short": "4442bb302",
+        "exitCode": 0,
+        "tree": "2fadb6d047ae402548c33da490dc2227ff6892a6",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "3dda1d50c",
+        "exitCode": 0,
+        "tree": "14f4cadf3a5bf5667354bd7a22c17770da021cb1",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "253a74dd1",
+        "exitCode": 1,
+        "tree": "37e44692f351204f9b3aeefcaec605d7789b4048",
+        "conflicts": [
+          "relay/channel/codex/adaptor_test.go"
+        ],
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "name": "public_caching",
+    "requested": [
+      "219c9e063",
+      "36dbbf0f7",
+      "c79b74b68"
+    ],
+    "complete": false,
+    "tree": "e633bf2f97b476e3bf2880b404d8bc80a57573b0",
+    "steps": [
+      {
+        "short": "219c9e063",
+        "exitCode": 0,
+        "tree": "758e6ecc93a6e82fa1a8a0a4cf8be0ae36cdc886",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "36dbbf0f7",
+        "exitCode": 0,
+        "tree": "e633bf2f97b476e3bf2880b404d8bc80a57573b0",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "c79b74b68",
+        "exitCode": 1,
+        "tree": "4e578682228f1adaa6bc5420ea0efe07b89241f3",
+        "conflicts": [
+          "web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+          "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+          "web/src/hooks/use-system-config.ts"
+        ],
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "name": "channel_testing",
+    "requested": [
+      "b941253ae",
+      "5d3423bec",
+      "4add708eb"
+    ],
+    "complete": false,
+    "tree": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+    "steps": [
+      {
+        "short": "b941253ae",
+        "exitCode": 1,
+        "tree": "bd6843417fb96fe5b3febe2db2448041a5c56a4c",
+        "conflicts": [
+          "controller/channel-test.go"
+        ],
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "name": "alibaba_images",
+    "requested": [
+      "93d2df85f",
+      "0bee5d441"
+    ],
+    "complete": true,
+    "tree": "07abc0b4fa816920c7d1e15990a7ee7919111069",
+    "steps": [
+      {
+        "short": "93d2df85f",
+        "exitCode": 0,
+        "tree": "c33f1c2d1a5d7fc0e6e6e66eb342e0efca07cd18",
+        "conflicts": [],
+        "stderr": ""
+      },
+      {
+        "short": "0bee5d441",
+        "exitCode": 0,
+        "tree": "07abc0b4fa816920c7d1e15990a7ee7919111069",
+        "conflicts": [],
+        "stderr": ""
+      }
+    ]
+  }
+]

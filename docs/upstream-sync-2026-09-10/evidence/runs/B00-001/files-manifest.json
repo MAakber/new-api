@@ -1,0 +1,314 @@
+[
+  {
+    "backup": "plan/batches.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\batches.json",
+    "bytes": 27475,
+    "sha256": "037D45F44A905F03F2CF5CBBF6B026F72EBE0C8C19B2458224538D6BF8FC5096"
+  },
+  {
+    "backup": "plan/batches.json.previous",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\batches.json.previous",
+    "bytes": 26638,
+    "sha256": "0B7EF0A6BAEBC9B037BAEFB46B4EFAC2F41EBE186D84E4140C4318FA7428128E"
+  },
+  {
+    "backup": "plan/CHECKPOINTS.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\CHECKPOINTS.md",
+    "bytes": 2448,
+    "sha256": "2DF3CFD502358797DC7486F0F91170C9F363614A4FA0AC9D716610281A3A61A6"
+  },
+  {
+    "backup": "plan/DECISIONS.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\DECISIONS.md",
+    "bytes": 1887,
+    "sha256": "FB1B24CFED0E54CC88888F6BC64603D51A97524A79E6AAF11FAEB483365933AE"
+  },
+  {
+    "backup": "plan/downstream-ledger.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\downstream-ledger.json",
+    "bytes": 121940,
+    "sha256": "1FA2467BE3E18E48E65C7F85484744C3C521F9ED29DFCC2DE7AF5DFE07A30040"
+  },
+  {
+    "backup": "plan/PLAN.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\PLAN.md",
+    "bytes": 18849,
+    "sha256": "469602FD2EF59EA8E091BBC512F30041EDC6C52DFA4322AFD0F32E7C3A194538"
+  },
+  {
+    "backup": "plan/preservation.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\preservation.json",
+    "bytes": 25973,
+    "sha256": "E94B474401A2A35E535B1B73D199FC2BE5E1B5CA0D7BD6693DCD59F31B69BABE"
+  },
+  {
+    "backup": "plan/PRESERVATION.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\PRESERVATION.md",
+    "bytes": 13954,
+    "sha256": "148878A33B18FE0FEAA10E3CAE4A0B37ABDD147BB66BFC3D1A8670CA4B2FFBA5"
+  },
+  {
+    "backup": "plan/RESUME.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\RESUME.md",
+    "bytes": 8074,
+    "sha256": "D10C6C9C664F769BF0E31A3CA0A15608C0B356B086023F002885DEB3B1278B3E"
+  },
+  {
+    "backup": "plan/state.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\state.json",
+    "bytes": 3792,
+    "sha256": "CF24AFC04D3C2CBCFFDBEDDD9AF03FA9F7F032C78F34567F78B2442F94B651F0"
+  },
+  {
+    "backup": "plan/state.json.previous",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\state.json.previous",
+    "bytes": 3541,
+    "sha256": "7BF5B8A71462A70556F22B560F8D85A84A7AFDBFAFF57DE88AECF8FDE6B1E54B"
+  },
+  {
+    "backup": "plan/upstream-ledger.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\upstream-ledger.json",
+    "bytes": 310539,
+    "sha256": "B059C8C6FAE7F247B81D929C95ABDCD01223AE0DF7EE0206739F88B5F9D9997C"
+  },
+  {
+    "backup": "plan/verify-plan.mjs",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\verify-plan.mjs",
+    "bytes": 15601,
+    "sha256": "79A6FC84EE2F530D9AFAF926807A292FC0DFC126B1FAA6767412B86A161CC2E4"
+  },
+  {
+    "backup": "plan/evidence\\downstream-baseline.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\downstream-baseline.json",
+    "bytes": 26305,
+    "sha256": "C305E49B7D6CC9DD48CE7FC6CD3D72BE4F9B4BE8974596F4496A222BC06B9469"
+  },
+  {
+    "backup": "plan/evidence\\plan-validation.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\plan-validation.json",
+    "bytes": 8959,
+    "sha256": "E0B2A651FD34EA68A0F32A4BFA8BD073D65B5027A6EDC09535528BAB6661DBBC"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\assessment-groups.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\assessment-groups.json",
+    "bytes": 14319,
+    "sha256": "DB508E3123DC54CE99A29819970E384B59465F0A66EF1A81D8163AE0BFCF6CF1"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\assessment.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\assessment.md",
+    "bytes": 14719,
+    "sha256": "DDD6387813F0DE68439D643E2057E0FD36958DD1F91C46F7EA6E17EDAC54A2E3"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\batch-simulations.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\batch-simulations.json",
+    "bytes": 7802,
+    "sha256": "3BD058FD6324CDF474120E9B729F536EA2638A862D2C12D5A1B29B44096F6F7B"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\commit-inventory.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\commit-inventory.md",
+    "bytes": 48031,
+    "sha256": "6B07C5BBD962203025ED48E07167525FC8EE600A9520815B0CD8FE8E3D83118A"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\full-merge-simulation.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\full-merge-simulation.json",
+    "bytes": 31312,
+    "sha256": "4BCA4B846382DE13C84BC49B892EA35D84B99982B9BA919D7CA33E891EBD3EE9"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\inventory.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\inventory.json",
+    "bytes": 765431,
+    "sha256": "C9455C8A3889041D145100789022DB377B162B895D5BA18A4C65B46433E514B5"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\resume-validation.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\resume-validation.json",
+    "bytes": 2819,
+    "sha256": "3B076F313EB463CCF8AC1C48C8D5C0E07474899763450D9BC1BB5F04D318DAED"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\resume-verification.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\resume-verification.json",
+    "bytes": 4268,
+    "sha256": "CBEE9A91CDD581CFA9FB1CEEF6EE5E6C7F37364920CD9DF13406392C52CAF003"
+  },
+  {
+    "backup": "plan/evidence\\baseline-review\\validation.json",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\baseline-review\\validation.json",
+    "bytes": 2290,
+    "sha256": "896AB2928D235D903F2FB2AACE275ABDE9B662E964899D1378D17BB8C6AA814C"
+  },
+  {
+    "backup": "plan/evidence\\runs\\README.md",
+    "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10\\evidence\\runs\\README.md",
+    "bytes": 1166,
+    "sha256": "C931C36BA0CC261DCA1267D3E0371EA45CBAE55D5C6B0D101592C0CA9D89EB93"
+  },
+  {
+    "backup": "output/playwright\\channel-matrix-mobile-dark.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-matrix-mobile-dark.png",
+    "bytes": 67399,
+    "sha256": "172C37610AB2BC0711C81DB164700B192D614DF9A4C093D6E0719759129CEBE7"
+  },
+  {
+    "backup": "output/playwright\\channel-response-preview.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-response-preview.png",
+    "bytes": 501817,
+    "sha256": "2B9546A216C136C62150C2923CDAF63FBACDC2C431CA9BD6CE442E0F301CA453"
+  },
+  {
+    "backup": "output/playwright\\channel-test-desktop-dark.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-test-desktop-dark.png",
+    "bytes": 117847,
+    "sha256": "08780B6EE37D8A366B308A9119B51547930291AB2E9EADD8E198AB6F04ABAFA2"
+  },
+  {
+    "backup": "output/playwright\\channel-test-mobile-collapsed.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-test-mobile-collapsed.png",
+    "bytes": 52933,
+    "sha256": "E7294BC5902284D8A74B1162AD2F88012FDE8F360844DE2557FFFB0A17354CB8"
+  },
+  {
+    "backup": "output/playwright\\channel-test-mobile-expanded.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-test-mobile-expanded.png",
+    "bytes": 56114,
+    "sha256": "82C3A246C3736E236C59F7AE01FD94D4A700762AB791BBF07DAF76D1D8A2C390"
+  },
+  {
+    "backup": "output/playwright\\channel-test-mobile-light.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-test-mobile-light.png",
+    "bytes": 50908,
+    "sha256": "8F08E20F4C03D86B4343C51413C8605F7989A8805DFF6B85E7739980206AB323"
+  },
+  {
+    "backup": "output/playwright\\channel-test-mobile-narrow.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-test-mobile-narrow.png",
+    "bytes": 46370,
+    "sha256": "058E3C7228E2E497ADBFA00768865E376214B3C8CBA22996AB38839ED9F84796"
+  },
+  {
+    "backup": "output/playwright\\channel-test-settings-dark.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-test-settings-dark.png",
+    "bytes": 117866,
+    "sha256": "F3CD687245C49D698BD5BB93F2EB531F8A878F4DAEF391D64113B2B1262E0608"
+  },
+  {
+    "backup": "output/playwright\\channel-test-settings-light.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\channel-test-settings-light.png",
+    "bytes": 116244,
+    "sha256": "4FDF0EB994097E36E6AE13C0F7E2534D475B5CEC22981D7AE5630F975355CDE9"
+  },
+  {
+    "backup": "output/playwright\\drawing-theme-dark-fixed.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\drawing-theme-dark-fixed.png",
+    "bytes": 83403,
+    "sha256": "0DD8B71EB6A93CA09B3DED8B6C236A9B71FF50094A6B2EF2489069A4AA15CE5D"
+  },
+  {
+    "backup": "output/playwright\\drawing-theme-light-fixed.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\drawing-theme-light-fixed.png",
+    "bytes": 88931,
+    "sha256": "7440A986D234F0CFC68B2C9DCDE4F58426082D234C454AC75FBF4E69E33976B9"
+  },
+  {
+    "backup": "output/playwright\\fetch-models-desktop-dark.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\fetch-models-desktop-dark.png",
+    "bytes": 73429,
+    "sha256": "893C5D04E0648D7B69ABBD068829EF7B7BFC3D0A9C7192A2A3A329C353E92996"
+  },
+  {
+    "backup": "output/playwright\\fetch-models-desktop-light.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\fetch-models-desktop-light.png",
+    "bytes": 74584,
+    "sha256": "58B3BFD05F2D5DA7DA09BBA439CA081F42BD946874F83EE9571FF72AD46C3AF8"
+  },
+  {
+    "backup": "output/playwright\\fetch-models-light-qa.js",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\fetch-models-light-qa.js",
+    "bytes": 1425,
+    "sha256": "22E46E48C2B969449AEFD2D6886005329A92DC7FF7F652B766B7A79BC7473CFA"
+  },
+  {
+    "backup": "output/playwright\\fetch-models-metrics.js",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\fetch-models-metrics.js",
+    "bytes": 2002,
+    "sha256": "EFBDEE4F3C6E48832C626482B43A15AE96D7B1A9F84C9FA3F4E9FD917CDBB176"
+  },
+  {
+    "backup": "output/playwright\\fetch-models-mobile-dark.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\fetch-models-mobile-dark.png",
+    "bytes": 55305,
+    "sha256": "D7530DFCFC6D507877959426F908DAD8C8F632D338F0EA2E172C173D35DCC8A2"
+  },
+  {
+    "backup": "output/playwright\\fetch-models-mobile-light.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\fetch-models-mobile-light.png",
+    "bytes": 54194,
+    "sha256": "453B292F66D1DB3F062CE0AD2B1934E050F4280CCD4962599D14DB8EF1A510FE"
+  },
+  {
+    "backup": "output/playwright\\fetch-models-mobile-long-name.png",
+    "source": "D:\\10178\\Projects\\new-api\\output\\playwright\\fetch-models-mobile-long-name.png",
+    "bytes": 53377,
+    "sha256": "390854B0EA4764936B4F9DF1753DC8C231E6E27BD9F8CDCEBA1CCE07FE799CFC"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\assessment-groups.json",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\assessment-groups.json",
+    "bytes": 14319,
+    "sha256": "DB508E3123DC54CE99A29819970E384B59465F0A66EF1A81D8163AE0BFCF6CF1"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\assessment.md",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\assessment.md",
+    "bytes": 15211,
+    "sha256": "D6FCF8C745367A696B4600BE1A19AF460241AAE441BA35FA3CFA8331BEB63712"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\batch-simulations.json",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\batch-simulations.json",
+    "bytes": 7802,
+    "sha256": "3BD058FD6324CDF474120E9B729F536EA2638A862D2C12D5A1B29B44096F6F7B"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\commit-inventory.md",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\commit-inventory.md",
+    "bytes": 48263,
+    "sha256": "3544E7FD9882C41F9760A12A77292BA1CF19D3DDAD11F80AF8B146D2FF54648E"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\full-merge-simulation.json",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\full-merge-simulation.json",
+    "bytes": 31312,
+    "sha256": "4BCA4B846382DE13C84BC49B892EA35D84B99982B9BA919D7CA33E891EBD3EE9"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\inventory.json",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\inventory.json",
+    "bytes": 765431,
+    "sha256": "C9455C8A3889041D145100789022DB377B162B895D5BA18A4C65B46433E514B5"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\resume-validation.json",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\resume-validation.json",
+    "bytes": 2819,
+    "sha256": "3B076F313EB463CCF8AC1C48C8D5C0E07474899763450D9BC1BB5F04D318DAED"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\resume-verification.json",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\resume-verification.json",
+    "bytes": 4268,
+    "sha256": "CBEE9A91CDD581CFA9FB1CEEF6EE5E6C7F37364920CD9DF13406392C52CAF003"
+  },
+  {
+    "backup": "output/upstream-review-2026-09-10\\validation.json",
+    "source": "D:\\10178\\Projects\\new-api\\output\\upstream-review-2026-09-10\\validation.json",
+    "bytes": 2290,
+    "sha256": "896AB2928D235D903F2FB2AACE275ABDE9B662E964899D1378D17BB8C6AA814C"
+  }
+]

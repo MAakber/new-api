@@ -1,0 +1,289 @@
+{
+  "verifiedAt": "2026-09-10T08:44:53.256Z",
+  "scope": "Plan, inventories and read-only recovery checker only; no business code was merged or retested",
+  "syntaxExitCode": 0,
+  "checks": [
+    {
+      "name": "Plan structure and complete inventories",
+      "expectedExitCode": 0,
+      "actualExitCode": 0,
+      "passed": true,
+      "report": {
+        "mode": "validate",
+        "planDirectory": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [
+          "B00"
+        ],
+        "verified": {
+          "upstream": 0,
+          "downstream": 0
+        },
+        "live": null,
+        "errors": [],
+        "reconcile": []
+      }
+    },
+    {
+      "name": "Live resume state identifies B00 without modifying Git",
+      "expectedExitCode": 0,
+      "actualExitCode": 0,
+      "passed": true,
+      "report": {
+        "mode": "status",
+        "planDirectory": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [
+          "B00"
+        ],
+        "verified": {
+          "upstream": 0,
+          "downstream": 0
+        },
+        "live": {
+          "repository": "D:\\10178\\Projects\\new-api",
+          "branch": "main",
+          "head": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+          "operations": [],
+          "conflicts": [],
+          "status": "?? docs/upstream-sync-2026-09-10/\n?? output/"
+        },
+        "errors": [],
+        "reconcile": []
+      }
+    },
+    {
+      "name": "Missing upstream commit is rejected",
+      "expectedExitCode": 1,
+      "actualExitCode": 1,
+      "passed": true,
+      "report": {
+        "mode": "validate",
+        "planDirectory": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-plan-check-LbMe0Y",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 152,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [
+          "B00"
+        ],
+        "verified": {
+          "upstream": 0,
+          "downstream": 0
+        },
+        "live": null,
+        "errors": [
+          "Upstream ledger differs from pinned 153-commit inventory",
+          "upstream: unexpected count 152, expected 153",
+          "Wrong commit assignment: B07 bdef117505247769268b209665fb3ad7554c3da7"
+        ],
+        "reconcile": []
+      }
+    },
+    {
+      "name": "Dependency cycle is rejected",
+      "expectedExitCode": 1,
+      "actualExitCode": 1,
+      "passed": true,
+      "report": {
+        "mode": "validate",
+        "planDirectory": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-plan-check-LbMe0Y",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [],
+        "verified": {
+          "upstream": 0,
+          "downstream": 0
+        },
+        "live": null,
+        "errors": [
+          "Dependency cycle at B00",
+          "Dependency cycle at B00"
+        ],
+        "reconcile": []
+      }
+    },
+    {
+      "name": "Missing downstream protection is rejected",
+      "expectedExitCode": 1,
+      "actualExitCode": 1,
+      "passed": true,
+      "report": {
+        "mode": "validate",
+        "planDirectory": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-plan-check-LbMe0Y",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [
+          "B00"
+        ],
+        "verified": {
+          "upstream": 0,
+          "downstream": 0
+        },
+        "live": null,
+        "errors": [
+          "Missing/invalid preservation mapping: a66204cf7"
+        ],
+        "reconcile": []
+      }
+    },
+    {
+      "name": "Completion without resolution and evidence is rejected",
+      "expectedExitCode": 1,
+      "actualExitCode": 1,
+      "passed": true,
+      "report": {
+        "mode": "validate",
+        "planDirectory": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-plan-check-LbMe0Y",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [
+          "B00"
+        ],
+        "verified": {
+          "upstream": 1,
+          "downstream": 0
+        },
+        "live": null,
+        "errors": [
+          "Verified upstream row lacks resolution: 0f9f668c6",
+          "Verified row has no evidence: 0f9f668c6"
+        ],
+        "reconcile": []
+      }
+    },
+    {
+      "name": "Removing mandatory acceptance gates is rejected",
+      "expectedExitCode": 1,
+      "actualExitCode": 1,
+      "passed": true,
+      "report": {
+        "mode": "validate",
+        "planDirectory": "C:\\Users\\10178\\AppData\\Local\\Temp\\new-api-plan-check-LbMe0Y",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [
+          "B00"
+        ],
+        "verified": {
+          "upstream": 0,
+          "downstream": 0
+        },
+        "live": null,
+        "errors": [
+          "Required acceptance gates are missing or duplicated"
+        ],
+        "reconcile": []
+      }
+    },
+    {
+      "name": "Final completion is rejected before real merge and acceptance",
+      "expectedExitCode": 1,
+      "actualExitCode": 1,
+      "passed": true,
+      "report": {
+        "mode": "final",
+        "planDirectory": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10",
+        "redirectedFrom": null,
+        "state": "planned",
+        "currentBatch": "B00",
+        "currentUnit": "B00.1",
+        "nextAction": "B00.1：核对固定上下游引用，保存 Git bundle、未跟踪计划与证据，再准备独立集成工作树。",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26,
+          "batches": 20
+        },
+        "readyBatches": [
+          "B00"
+        ],
+        "verified": {
+          "upstream": 0,
+          "downstream": 0
+        },
+        "live": {
+          "repository": "D:\\10178\\Projects\\new-api",
+          "branch": "main",
+          "head": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+          "operations": [],
+          "conflicts": [],
+          "status": "?? docs/upstream-sync-2026-09-10/\n?? output/"
+        },
+        "errors": [
+          "Plan status is not completed",
+          "Unfinished upstream/downstream/feature/batch rows remain",
+          "Missing final verified code commit",
+          "Final history lacks pinned ancestor: bdef117505247769268b209665fb3ad7554c3da7",
+          "Missing actual upstream merge commit",
+          "Downstream main has not received the recorded integration"
+        ],
+        "reconcile": []
+      }
+    }
+  ],
+  "brokenLinks": []
+}

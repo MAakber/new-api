@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-10T08:21:11.277Z",
+  "updatedAt": "2026-09-10T17:03:01.8538561+08:00",
+  "status": "in_progress",
+  "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
+  "baseline": {
+    "downstream": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+    "origin": "c0ee46798f3182a8658bea57133596e4f13b14f1",
+    "upstream": "bdef117505247769268b209665fb3ad7554c3da7",
+    "mergeBase": "66ee6b8f9889050ffef1f863a4314ce4a0516fb9",
+    "upstreamCommitCount": 153,
+    "downstreamCommitCount": 120,
+    "preservationCount": 26
+  },
+  "integration": {
+    "branch": "codex/upstream-sync-2026-09-10",
+    "worktree": "D:/10178/Projects/new-api-upstream-sync",
+    "created": true
+  },
+  "current_batch": "B00",
+  "current_unit": "B00.2",
+  "active_operation": null,
+  "last_observed_head": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "last_verified_code_commit": null,
+  "last_checkpoint_commit": null,
+  "final_merge_commit": null,
+  "final_downstream_commit": null,
+  "next_action": "B00.2: commit canonical plan in integration worktree, review all 120 downstream mappings, install isolated frontend dependencies and inventory baseline test coverage.",
+  "blockers": [],
+  "gates": [
+    {
+      "id": "upstream_behavior",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "downstream_preservation",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "backend_regression",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "relaykit_independence",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "frontend_regression",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "frontend_build",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "browser_acceptance",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "i18n",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "sqlite_migration",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "mysql_migration",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "postgres_migration",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "billing_reconciliation",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "provider_interop",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "task_plugin_migration",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "build_release",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "ancestry",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    },
+    {
+      "id": "downstream_main_merge",
+      "status": "pending",
+      "verified_commit": null,
+      "evidence": []
+    }
+  ],
+  "evidencePolicy": "Record command, working directory, tested commit, environment, exit code, summary and log. Skipped or interrupted checks are not passed.",
+  "additional_downstream_commits": [],
+  "backup_directory": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10"
+}
