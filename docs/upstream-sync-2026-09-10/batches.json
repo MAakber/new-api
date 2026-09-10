@@ -427,30 +427,29 @@
       "2b6f1dfefbe217fed31fc0726717cc7de6958e8e",
       "27ff6a8767e728f879d52770c273d4f73214a430",
       "b7017c251badaacaab840646a959635d00665e2d",
-      "9a8674425c5a43435a259b58bb928a55d26be990",
-      "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
+      "9a8674425c5a43435a259b58bb928a55d26be990"
     ],
-    "status": "in_progress",
+    "status": "verified",
     "units": [
       {
         "id": "B06.1",
         "action": "确认真实数据库版本和隔离数据库夹具，不能假定 SQLite 代表三库",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B06.2",
         "action": "按依赖引入驱动/约束/锁，验证旧库和重复启动",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B06.3",
         "action": "对撤回与空补丁逐项建立替代/无变化证据",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B06.2-drivers",
         "action": "fix(model): disable PostgreSQL prepared statements for pooler compatibility",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "66031a09d99f2ac4e0b94e2c41f04ed691a79304",
           "1751f43ee07edc9eb0c56fd9b23586861b43df46",
@@ -460,9 +459,41 @@
       {
         "id": "B06.2-json",
         "action": "fix(model): return string from JSON column Valuers for pg simple protocol",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "6eb6f35ed211b7459cae3b9f13286b9c93fc1bd6"
+        ]
+      },
+      {
+        "id": "B06.2-prefill",
+        "action": "fix(model): drop leftover prefill_groups unique constraints before AutoMigrate",
+        "status": "verified",
+        "upstreamCommits": [
+          "2b6f1dfefbe217fed31fc0726717cc7de6958e8e"
+        ]
+      },
+      {
+        "id": "B06.2-token",
+        "action": "fix(model): migrate legacy token key constraints",
+        "status": "verified",
+        "upstreamCommits": [
+          "27ff6a8767e728f879d52770c273d4f73214a430"
+        ]
+      },
+      {
+        "id": "B06.2-task-lock",
+        "action": "fix(model): do not treat no-op system task state writes as lock loss (#7135)",
+        "status": "verified",
+        "upstreamCommits": [
+          "b7017c251badaacaab840646a959635d00665e2d"
+        ]
+      },
+      {
+        "id": "B06.2-restart",
+        "action": "fix(db): avoid redundant schema migrations on restart",
+        "status": "verified",
+        "upstreamCommits": [
+          "9a8674425c5a43435a259b58bb928a55d26be990"
         ]
       }
     ],
@@ -470,10 +501,34 @@
       "6be86f0a01348e000a91b22deb4b54db89d4d7f0",
       "e741f0ce8bbc9e9bc2438c0368424af3ddf9937d",
       "97b04db766cb5527a2394bfba425439e5f9e096f",
-      "a1d6925f27ae47919b40ad4e26ce4e6239a67752"
+      "a1d6925f27ae47919b40ad4e26ce4e6239a67752",
+      "0d02f1e894b12a0031cc32133575b47e3f183992",
+      "b46cbca4237cec3ef5e6209d99fde7340d3c62fc",
+      "1289a84e9b2772fcea2d613325ceaef1c05e30e1",
+      "e0f75813032458694274ad7ef8328a764ef08683",
+      "54df4c986af83c308afcd348030e1d1aa3c8a867",
+      "685e8c6ad67c88b715ce097a83309e92e4c55794",
+      "5fe432598",
+      "d164a919158fa712045aa33859d6649b3b7744af"
     ],
-    "evidence": [],
-    "nextAction": "确认真实数据库版本和隔离数据库夹具，不能假定 SQLite 代表三库"
+    "evidence": [
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
+    "nextAction": "B12 retains pending options/price-row repair; B10/B11 retain settlement/wallet migration. B18 final candidate and sanitized production-snapshot acceptance remain pending."
   },
   {
     "id": "B07",
@@ -693,7 +748,7 @@
       "B10",
       "B11"
     ],
-    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "dependencyStatus": "Inspected extra dependency: 4fc9d1f1f edits model/model_pricing_config.go introduced by 0c76e4dae in this batch. Complete them together while retaining downstream canonical pricing and CAS semantics.",
     "upstreamCommits": [
       "eb99ab1b40343c3317bb47981cccdbb2b159a5fa",
       "0c76e4dae77a279e015329b7478e6f02d6b62edd",
@@ -703,7 +758,8 @@
       "71c1fd7caad738db4d13aabbf28eeadb293d0cfe",
       "d52bdc0b4087d50d87eb06387e86b2be53e85cd4",
       "7cf9b473f61eb7dc09f6f0782192f17595140a08",
-      "064ed943e1ac40e3eaca1b58ffb7fa5dacb3fde3"
+      "064ed943e1ac40e3eaca1b58ffb7fa5dacb3fde3",
+      "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
     ],
     "status": "pending",
     "units": [
@@ -721,6 +777,14 @@
         "id": "B12.3",
         "action": "检查存储美元语义、目录权限、编辑/预览/实际结算一致",
         "status": "pending"
+      },
+      {
+        "id": "B12.4-options-integrity",
+        "action": "Adapt options primary-key repair and missing-only defaults to downstream canonical pricing/CAS service after 0c76e4dae; verify duplicate values, restart and concurrent writes on all databases",
+        "status": "pending",
+        "upstreamCommits": [
+          "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
+        ]
       }
     ],
     "codeCommits": [],

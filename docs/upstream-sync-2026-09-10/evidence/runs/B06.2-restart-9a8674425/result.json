@@ -1,0 +1,23 @@
+{
+  "upstream": "9a8674425c5a43435a259b58bb928a55d26be990",
+  "unit": "B06.2-restart",
+  "before_head": "1289a84e9b2772fcea2d613325ceaef1c05e30e1",
+  "after_head": "e0f75813032458694274ad7ef8328a764ef08683",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "9a8674425c5a43435a259b58bb928a55d26be990"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "AGENTS.md",
+    "go.mod",
+    "go.sum",
+    "model/main.go",
+    "model/migration_dialector.go",
+    "model/migration_dialector_test.go",
+    "model/user_session_migration_test.go"
+  ]
+}

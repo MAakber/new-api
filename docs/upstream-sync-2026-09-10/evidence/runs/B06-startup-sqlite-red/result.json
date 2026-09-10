@@ -1,0 +1,29 @@
+{
+  "id": "B06-startup-sqlite-red",
+  "command": [
+    "go",
+    "test",
+    "./model",
+    "-run",
+    "^TestDatabaseUpgradePreservesDownstreamData$",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "54df4c986af83c308afcd348030e1d1aa3c8a867",
+  "started_at": "2026-09-10T18:35:35.463Z",
+  "finished_at": "2026-09-10T18:35:40.377Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

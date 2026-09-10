@@ -1,0 +1,32 @@
+{
+  "id": "B06-mariadb-existing",
+  "command": [
+    "go",
+    "test",
+    "-p",
+    "1",
+    "./model",
+    "./controller",
+    "-run",
+    "Migration|Migrate|JSONColumn|IdenticalPayload",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "e0f75813032458694274ad7ef8328a764ef08683",
+  "started_at": "2026-09-10T13:18:12.851Z",
+  "finished_at": "2026-09-10T13:18:28.582Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": true,
+    "postgres_test_dsn_present": true
+  },
+  "log": "output.log"
+}

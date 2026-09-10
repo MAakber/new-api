@@ -1,0 +1,18 @@
+{
+  "upstream": "b7017c251badaacaab840646a959635d00665e2d",
+  "unit": "B06.2-task-lock",
+  "before_head": "b46cbca4237cec3ef5e6209d99fde7340d3c62fc",
+  "after_head": "1289a84e9b2772fcea2d613325ceaef1c05e30e1",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "b7017c251badaacaab840646a959635d00665e2d"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "model/system_task.go",
+    "model/system_task_test.go"
+  ]
+}

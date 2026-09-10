@@ -1,0 +1,10 @@
+Auto-merging AGENTS.md
+Auto-merging go.mod
+Auto-merging go.sum
+Auto-merging model/main.go
+[codex/upstream-sync-2026-09-10 e0f758130] fix(db): avoid redundant schema migrations on restart
+ Author: CaIon <i@caion.me>
+ Date: Sat Sep 5 20:45:37 2026 +0800
+ 7 files changed, 260 insertions(+), 5 deletions(-)
+ create mode 100644 model/migration_dialector.go
+ create mode 100644 model/migration_dialector_test.go

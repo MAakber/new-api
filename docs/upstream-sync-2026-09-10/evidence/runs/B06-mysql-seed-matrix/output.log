@@ -1,0 +1,8 @@
+=== RUN   TestDatabaseUpgradePreservesDownstreamData
+[SYS] 2026/09/11 - 02:52:05 | using MySQL as database 
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: 5.7.44
+[SYS] 2026/09/11 - 02:52:05 | using MySQL as database 
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 5.7.44
+    database_upgrade_test.go:54: released schema and downstream data seeded; verification belongs to the upgraded checkout
+--- PASS: TestDatabaseUpgradePreservesDownstreamData (5.88s)
+PASS

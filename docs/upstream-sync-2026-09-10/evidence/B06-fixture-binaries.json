@@ -1,0 +1,17 @@
+{
+  "baseline": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-baseline-2.test.exe",
+    "sha256": "605ef7dc1a75c026ae16d99e9542ba5c045697e31c767a10fec004e6b359b56f",
+    "source_commit": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B06-build-baseline-fixture-2/result.json",
+    "note": "Exact git archive of released downstream commit plus the same integration test fixture."
+  },
+  "current": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-current-2.test.exe",
+    "sha256": "bdaf4240fd4de1a3bb345d0f9ba2fe3cc8e4780b17b5bdad4057bdd2bc3d3069",
+    "source_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B06-build-current-fixture-2/result.json"
+  }
+}

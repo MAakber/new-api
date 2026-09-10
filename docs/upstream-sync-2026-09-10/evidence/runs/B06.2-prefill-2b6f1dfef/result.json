@@ -1,0 +1,22 @@
+{
+  "upstream": "2b6f1dfefbe217fed31fc0726717cc7de6958e8e",
+  "unit": "B06.2-prefill",
+  "before_head": "f46aaf20e9b748085acb3564998e17c1fcb0af43",
+  "after_head": "f46aaf20e9b748085acb3564998e17c1fcb0af43",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "2b6f1dfefbe217fed31fc0726717cc7de6958e8e"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "model/main.go"
+  ],
+  "files": [
+    "AGENTS.md",
+    "model/main.go",
+    "model/prefill_group_migration.go",
+    "model/prefill_group_migration_test.go"
+  ]
+}

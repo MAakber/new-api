@@ -32,3 +32,11 @@ User explicitly authorized ssh nep to inspect database type/version. Scope is re
 ## 2026-09-10T11:56:49.059Z — A15 stage versus final interoperability
 
 B02.3 explicitly permits documenting unavailable runtime conditions. Its environment inventory is complete; real provider interoperability remains a required, pending B18 gate. Local protocol tests and stage verification do not satisfy that gate. This permits independent integration work to proceed without claiming provider acceptance or requesting production provider access.
+
+## 2026-09-10T12:25:57.636Z — A16 options repair depends on B12 pricing management
+
+4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a edits model/model_pricing_config.go, created by 0c76e4dae77a279e015329b7478e6f02d6b62edd (B12). Our downstream instead has model/pricing_options.go and service/pricing_options.go with canonical rows and CAS. Move the complete, still-pending commit from B06 to B12 to adapt both together, without adding a circular dependency or duplicating the pricing writer. Total remains 153 commits. B12 must preserve administrator prices under missing primary keys, duplicate rows, restarts and concurrent writes. MySQL 5.7.44 and MariaDB 11.4.4 reject atomic RENAME TABLE while LOCK TABLES is held (1192); do not infer the upstream advisory lock alone protects against other writers.
+
+## 2026-09-10T18:58:08.005Z — A17 startup preservation fixes proven by real database failures
+
+Full startup tests exposed downstream Passkey index churn on all databases, model/vendor active-name index churn on MySQL/MariaDB, and MariaDB JSON alias churn. The corrections preserve the existing custom migration order and JSON validation. Baseline-source test binaries seed the old schemas before current binaries upgrade them; artifact hashes and exact source commits are recorded. B06-database-matrix.json contains passing evidence and retained earlier failures. B12 options repair remains pending under A16.

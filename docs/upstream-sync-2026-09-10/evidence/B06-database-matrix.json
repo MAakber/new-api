@@ -1,0 +1,62 @@
+{
+  "tested_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+  "baseline_source": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "matrix": [
+    {
+      "flavor": "sqlite",
+      "versions": [
+        "database_upgrade_test.go:42: TEST_UPGRADE_DSN: 3.50.4",
+        "database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 3.50.4"
+      ],
+      "runs": [
+        "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+        "evidence/runs/B06-sqlite-seed-matrix/result.json",
+        "evidence/runs/B06-sqlite-upgrade-matrix/result.json"
+      ]
+    },
+    {
+      "flavor": "mysql",
+      "versions": [
+        "database_upgrade_test.go:42: TEST_UPGRADE_DSN: 5.7.44",
+        "database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 5.7.44"
+      ],
+      "runs": [
+        "evidence/runs/B06-mysql-fresh-matrix/result.json",
+        "evidence/runs/B06-mysql-seed-matrix/result.json",
+        "evidence/runs/B06-mysql-upgrade-matrix/result.json"
+      ]
+    },
+    {
+      "flavor": "mariadb",
+      "versions": [
+        "database_upgrade_test.go:42: TEST_UPGRADE_DSN: 11.4.4-MariaDB-ubu2404",
+        "database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 11.4.4-MariaDB-ubu2404"
+      ],
+      "runs": [
+        "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+        "evidence/runs/B06-mariadb-seed-matrix/result.json",
+        "evidence/runs/B06-mariadb-upgrade-matrix/result.json"
+      ]
+    },
+    {
+      "flavor": "postgres",
+      "versions": [
+        "database_upgrade_test.go:42: TEST_UPGRADE_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit",
+        "database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit"
+      ],
+      "runs": [
+        "evidence/runs/B06-postgres-fresh-matrix/result.json",
+        "evidence/runs/B06-postgres-seed-matrix/result.json",
+        "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+      ]
+    }
+  ],
+  "go_passed_tests": 1904,
+  "go_skipped_tests": [],
+  "additional_fixes": [
+    "Passkey legacy-name fallback no longer drops the already-correct non-unique user index.",
+    "Externally managed model/vendor active-name unique indexes remain intact during MySQL AutoMigrate.",
+    "MariaDB JSON aliases are normalized only when JSON_VALID validation exists; real LONGTEXT-to-JSON and nullability changes still migrate."
+  ],
+  "remaining": "B12 retains pending options/price-row repair; B10/B11 retain settlement/wallet migration. B18 final candidate and sanitized production-snapshot acceptance remain pending."
+}

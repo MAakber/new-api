@@ -1,0 +1,46 @@
+9.6.24: Pulling from library/postgres
+1cb79db8a9e7: Pulling fs layer
+874d4d2a09fd: Pulling fs layer
+4e2c4902efbd: Pulling fs layer
+4b9a74ac6ea0: Pulling fs layer
+f955a6cf127b: Pulling fs layer
+2d87c3a4038c: Pulling fs layer
+d6d74bba3a57: Pulling fs layer
+01c676df543a: Pulling fs layer
+f6bae7873dd7: Pulling fs layer
+1e3d335ef0b7: Pulling fs layer
+8f7722dc50a7: Pulling fs layer
+11087f2b0d87: Pulling fs layer
+e8622b8cb6f3: Pulling fs layer
+f62dc55c568d: Pulling fs layer
+4b9a74ac6ea0: Download complete
+2d87c3a4038c: Download complete
+01c676df543a: Download complete
+1e3d335ef0b7: Download complete
+8f7722dc50a7: Download complete
+f955a6cf127b: Download complete
+11087f2b0d87: Download complete
+4e2c4902efbd: Download complete
+874d4d2a09fd: Download complete
+e8622b8cb6f3: Download complete
+f6bae7873dd7: Download complete
+d6d74bba3a57: Download complete
+1cb79db8a9e7: Download complete
+1cb79db8a9e7: Pull complete
+8f7722dc50a7: Pull complete
+e8622b8cb6f3: Pull complete
+f6bae7873dd7: Pull complete
+d6d74bba3a57: Pull complete
+2d87c3a4038c: Pull complete
+f955a6cf127b: Pull complete
+874d4d2a09fd: Pull complete
+f62dc55c568d: Download complete
+f62dc55c568d: Pull complete
+4b9a74ac6ea0: Pull complete
+01c676df543a: Pull complete
+1e3d335ef0b7: Pull complete
+11087f2b0d87: Pull complete
+4e2c4902efbd: Pull complete
+Digest: sha256:caddd35b05cdd56c614ab1f674e63be778e0abdf54e71a7507ff3e28d4902698
+Status: Downloaded newer image for mirror.gcr.io/library/postgres:9.6.24
+mirror.gcr.io/library/postgres:9.6.24

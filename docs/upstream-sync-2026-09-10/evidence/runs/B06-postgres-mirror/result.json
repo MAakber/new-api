@@ -1,0 +1,31 @@
+{
+  "id": "B06-postgres-mirror",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu-SF3D",
+    "-u",
+    "root",
+    "--",
+    "docker",
+    "pull",
+    "mirror.gcr.io/library/postgres:9.6.24"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "f46aaf20e9b748085acb3564998e17c1fcb0af43",
+  "started_at": "2026-09-10T12:11:49.883Z",
+  "finished_at": "2026-09-10T12:12:15.133Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

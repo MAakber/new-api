@@ -1,0 +1,29 @@
+{
+  "id": "B06-go-final",
+  "command": [
+    "go",
+    "test",
+    "-p",
+    "2",
+    "./...",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+  "started_at": "2026-09-10T18:53:20.742Z",
+  "finished_at": "2026-09-10T18:54:47.464Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": true,
+    "postgres_test_dsn_present": true
+  },
+  "log": "output.log"
+}

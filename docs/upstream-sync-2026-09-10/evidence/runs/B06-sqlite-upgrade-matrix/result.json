@@ -1,0 +1,35 @@
+{
+  "id": "B06-sqlite-upgrade-matrix",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-current-2.test.exe",
+    "-test.run=^TestDatabaseUpgradePreservesDownstreamData$",
+    "-test.v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+  "started_at": "2026-09-10T18:53:13.314Z",
+  "finished_at": "2026-09-10T18:53:13.494Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log",
+  "runner_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+  "fixture": {
+    "flavor": "sqlite",
+    "phase": "verify",
+    "database": "codex_sync_upgrade2",
+    "log_database": "codex_sync_upgrade2_log",
+    "artifact_sha256": "bdaf4240fd4de1a3bb345d0f9ba2fe3cc8e4780b17b5bdad4057bdd2bc3d3069",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B06-build-current-fixture-2/result.json"
+  }
+}

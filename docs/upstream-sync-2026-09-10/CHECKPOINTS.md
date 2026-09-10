@@ -465,3 +465,80 @@
 - Conflicts: none.
 - Evidence: evidence/runs/B06.2-drivers-74158715c/result.json.
 - Next: B06.2-drivers: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T12:10:21.689Z — B06.2-prefill applying 2b6f1dfef
+
+- Before HEAD: f46aaf20e9b748085acb3564998e17c1fcb0af43.
+- Upstream: 2b6f1dfefbe217fed31fc0726717cc7de6958e8e — fix(model): drop leftover prefill_groups unique constraints before AutoMigrate.
+- Reviewed paths: AGENTS.md, model/main.go, model/prefill_group_migration.go, model/prefill_group_migration_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T12:10:21.927Z — B06.2-prefill conflicts
+
+- Result: exit 1; HEAD f46aaf20e9b748085acb3564998e17c1fcb0af43.
+- Conflicts: model/main.go.
+- Evidence: evidence/runs/B06.2-prefill-2b6f1dfef/result.json.
+- Next: B06.2-prefill: reconcile failed cherry-pick using evidence/runs/B06.2-prefill-2b6f1dfef; do not restart or abort automatically.
+
+## 2026-09-10T12:13:31.494Z — B06.2-prefill conflict resolved
+
+- Commit: 0d02f1e894b12a0031cc32133575b47e3f183992.
+- Retained all downstream serial model, Passkey, vendor-name and account migrations. Removed only unused migrateDBFast after repository-wide caller search; added guarded PostgreSQL prefill uniqueness migration before AutoMigrate.
+- Matrix verification pending.
+
+## 2026-09-10T12:13:34.695Z — B06.2-token applying 27ff6a876
+
+- Before HEAD: 0d02f1e894b12a0031cc32133575b47e3f183992.
+- Upstream: 27ff6a8767e728f879d52770c273d4f73214a430 — fix(model): migrate legacy token key constraints.
+- Reviewed paths: model/main.go, model/token_migration.go, model/token_migration_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T12:13:34.952Z — B06.2-token implemented
+
+- Result: exit 0; HEAD b46cbca4237cec3ef5e6209d99fde7340d3c62fc.
+- Conflicts: none.
+- Evidence: evidence/runs/B06.2-token-27ff6a876/result.json.
+- Next: B06.2-token: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T12:14:31.222Z — B06.2-task-lock applying b7017c251
+
+- Before HEAD: b46cbca4237cec3ef5e6209d99fde7340d3c62fc.
+- Upstream: b7017c251badaacaab840646a959635d00665e2d — fix(model): do not treat no-op system task state writes as lock loss (#7135).
+- Reviewed paths: model/system_task.go, model/system_task_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T12:14:31.476Z — B06.2-task-lock implemented
+
+- Result: exit 0; HEAD 1289a84e9b2772fcea2d613325ceaef1c05e30e1.
+- Conflicts: none.
+- Evidence: evidence/runs/B06.2-task-lock-b7017c251/result.json.
+- Next: B06.2-task-lock: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T12:14:34.586Z — B06.2-restart applying 9a8674425
+
+- Before HEAD: 1289a84e9b2772fcea2d613325ceaef1c05e30e1.
+- Upstream: 9a8674425c5a43435a259b58bb928a55d26be990 — fix(db): avoid redundant schema migrations on restart.
+- Reviewed paths: AGENTS.md, go.mod, go.sum, model/main.go, model/migration_dialector.go, model/migration_dialector_test.go, model/user_session_migration_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T12:14:34.871Z — B06.2-restart implemented
+
+- Result: exit 0; HEAD e0f75813032458694274ad7ef8328a764ef08683.
+- Conflicts: none.
+- Evidence: evidence/runs/B06.2-restart-9a8674425/result.json.
+- Next: B06.2-restart: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T12:25:57.646Z — B06 no-op evidence and B12 dependency correction
+
+- Identical empty-commit trees and exact prefill revert diff saved to evidence/B06-empty-and-revert.json.
+- 4fc9d1f1f remains pending in B12 with its actual source dependency; no patch skipped.
+- Three real database servers are isolated on loopback ports; version checks match requested matrix.
+
+## 2026-09-10T18:58:08.061Z — B06 stage verified
+
+- Code: d164a919158fa712045aa33859d6649b3b7744af.
+- Four engines passed fresh creation and upgrades seeded by exact downstream baseline, with separate log databases and two DDL-free restarts.
+- Preserved account/quota/session/Passkey/avatar/registration/banner/channel 61-64/custom balance/autosync/task JSON/pricing/model/vendor/log data. Real MySQL/MariaDB no-op task writes exercised zero changed rows while retaining only valid leases.
+- Root backend regression: 1904 passed test events; 0 skipped (see matrix evidence, not counted as acceptance).
+- Evidence: evidence/B06-database-matrix.json.
+- Next: B03: pin DOMPurify with Bun, then integrate mobile navigation, editor/setup fixes and boundary regressions while preserving floating windows.

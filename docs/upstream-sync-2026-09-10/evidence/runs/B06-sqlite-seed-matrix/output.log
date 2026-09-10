@@ -1,0 +1,8 @@
+=== RUN   TestDatabaseUpgradePreservesDownstreamData
+[SYS] 2026/09/11 - 02:52:05 | SQL_DSN not set, using SQLite as database 
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: 3.50.4
+[SYS] 2026/09/11 - 02:52:05 | SQL_DSN not set, using SQLite as database 
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 3.50.4
+    database_upgrade_test.go:54: released schema and downstream data seeded; verification belongs to the upgraded checkout
+--- PASS: TestDatabaseUpgradePreservesDownstreamData (0.61s)
+PASS

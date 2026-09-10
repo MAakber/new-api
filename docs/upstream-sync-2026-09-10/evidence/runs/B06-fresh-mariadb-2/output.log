@@ -1,0 +1,17 @@
+=== RUN   TestDatabaseUpgradePreservesDownstreamData
+[SYS] 2026/09/11 - 02:40:23 | using MySQL as database 
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: 11.4.4-MariaDB-ubu2404
+[SYS] 2026/09/11 - 02:40:23 | using MySQL as database 
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 11.4.4-MariaDB-ubu2404
+    database_upgrade_test.go:61: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:61
+        	Error:      	Should be empty, but was [ALTER TABLE `channels` MODIFY COLUMN `channel_info` json ALTER TABLE `tasks` MODIFY COLUMN `properties` json ALTER TABLE `tasks` MODIFY COLUMN `private_data` json ALTER TABLE `tasks` MODIFY COLUMN `data` json DROP INDEX `uk_model_active_name` ON `models` DROP INDEX `uk_vendor_active_name` ON `vendors` ALTER TABLE `prefill_groups` MODIFY COLUMN `items` json CREATE UNIQUE INDEX `uk_model_active_name` ON `models`(`active_name`) CREATE UNIQUE INDEX `uk_vendor_active_name` ON `vendors`(`active_name`)]
+        	Test:       	TestDatabaseUpgradePreservesDownstreamData
+        	Messages:   	unchanged restart 1 must not issue DDL
+    database_upgrade_test.go:61: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:61
+        	Error:      	Should be empty, but was [ALTER TABLE `channels` MODIFY COLUMN `channel_info` json ALTER TABLE `tasks` MODIFY COLUMN `properties` json ALTER TABLE `tasks` MODIFY COLUMN `private_data` json ALTER TABLE `tasks` MODIFY COLUMN `data` json DROP INDEX `uk_model_active_name` ON `models` DROP INDEX `uk_vendor_active_name` ON `vendors` ALTER TABLE `prefill_groups` MODIFY COLUMN `items` json CREATE UNIQUE INDEX `uk_model_active_name` ON `models`(`active_name`) CREATE UNIQUE INDEX `uk_vendor_active_name` ON `vendors`(`active_name`)]
+        	Test:       	TestDatabaseUpgradePreservesDownstreamData
+        	Messages:   	unchanged restart 2 must not issue DDL
+--- FAIL: TestDatabaseUpgradePreservesDownstreamData (5.01s)
+FAIL

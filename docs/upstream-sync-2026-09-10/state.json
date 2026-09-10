@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T12:00:07.465Z",
+  "updatedAt": "2026-09-10T18:58:08.005Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B06",
-  "current_unit": "B06.2-drivers",
+  "current_batch": "B03",
+  "current_unit": "B03.1",
   "active_operation": null,
-  "last_observed_head": "a1d6925f27ae47919b40ad4e26ce4e6239a67752",
-  "last_verified_code_commit": "cc4c51af1c7736cb0783e6dd3f36d5e8995f4533",
+  "last_observed_head": "d164a919158fa712045aa33859d6649b3b7744af",
+  "last_verified_code_commit": "d164a919158fa712045aa33859d6649b3b7744af",
   "last_checkpoint_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B06.2-drivers: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.",
+  "next_action": "B03: pin DOMPurify with Bun, then integrate mobile navigation, editor/setup fixes and boundary regressions while preserving floating windows.",
   "blockers": [
     {
       "id": "production_snapshot",

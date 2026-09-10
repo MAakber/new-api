@@ -1,0 +1,29 @@
+{
+  "tested_commit": "e0f75813032458694274ad7ef8328a764ef08683",
+  "recorded_at": "2026-09-10T12:25:57.346Z",
+  "empty": {
+    "command": [
+      "git",
+      "show",
+      "-s",
+      "--format=%H %T %P",
+      "e5efc73cdb49f60e513f760ded4d3268a4304645",
+      "53a8739eedbf69decd621c1a8313cc0b8b367dee"
+    ],
+    "exit_code": 0,
+    "stdout": "e5efc73cdb49f60e513f760ded4d3268a4304645 5ff56fde6ade7aab3dfaca9c7a92522382deb66f 53a8739eedbf69decd621c1a8313cc0b8b367dee\n53a8739eedbf69decd621c1a8313cc0b8b367dee 5ff56fde6ade7aab3dfaca9c7a92522382deb66f f250f3b589c836764954f646448084e93873798b\n",
+    "stderr": ""
+  },
+  "reverted": {
+    "command": [
+      "git",
+      "diff",
+      "69a41eeadc81adb08d04346512c76d62fd6203db^",
+      "2bf0820f4b89530acf14d389ba3e8229211933fa",
+      "--stat"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

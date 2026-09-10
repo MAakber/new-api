@@ -1,0 +1,19 @@
+{
+  "upstream": "27ff6a8767e728f879d52770c273d4f73214a430",
+  "unit": "B06.2-token",
+  "before_head": "0d02f1e894b12a0031cc32133575b47e3f183992",
+  "after_head": "b46cbca4237cec3ef5e6209d99fde7340d3c62fc",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "27ff6a8767e728f879d52770c273d4f73214a430"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "model/main.go",
+    "model/token_migration.go",
+    "model/token_migration_test.go"
+  ]
+}

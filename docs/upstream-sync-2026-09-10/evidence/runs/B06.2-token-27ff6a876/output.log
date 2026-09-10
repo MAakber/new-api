@@ -1,0 +1,7 @@
+Auto-merging model/main.go
+[codex/upstream-sync-2026-09-10 b46cbca42] fix(model): migrate legacy token key constraints
+ Author: CaIon <i@caion.me>
+ Date: Mon Aug 31 11:51:38 2026 +0800
+ 3 files changed, 515 insertions(+)
+ create mode 100644 model/token_migration.go
+ create mode 100644 model/token_migration_test.go

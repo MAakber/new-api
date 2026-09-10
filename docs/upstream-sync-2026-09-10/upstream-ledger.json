@@ -1773,12 +1773,31 @@
       "empty": true,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "equivalent",
+    "resolution_rationale": "Empty upstream commit has the identical tree as its parent, so no source change is required. Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
+    "resolution_commits": [
+      "e0f75813032458694274ad7ef8328a764ef08683"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/B06-empty-and-revert.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3566,15 +3585,30 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "applied",
-    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained;  Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
     "resolution_commits": [
       "6be86f0a01348e000a91b22deb4b54db89d4d7f0"
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B06.2-drivers-66031a09d/result.json"
+      "evidence/runs/B06.2-drivers-66031a09d/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
     ],
     "final_review": {
       "status": "pending",
@@ -3749,15 +3783,30 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "applied",
-    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained;  Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
     "resolution_commits": [
       "e741f0ce8bbc9e9bc2438c0368424af3ddf9937d"
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B06.2-drivers-1751f43ee/result.json"
+      "evidence/runs/B06.2-drivers-1751f43ee/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
     ],
     "final_review": {
       "status": "pending",
@@ -3789,15 +3838,30 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "applied",
-    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained;  Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
     "resolution_commits": [
       "97b04db766cb5527a2394bfba425439e5f9e096f"
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B06.2-json-6eb6f35ed/result.json"
+      "evidence/runs/B06.2-json-6eb6f35ed/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
     ],
     "final_review": {
       "status": "pending",
@@ -3865,15 +3929,30 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "applied",
-    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained;  Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
     "resolution_commits": [
       "a1d6925f27ae47919b40ad4e26ce4e6239a67752"
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B06.2-drivers-74158715c/result.json"
+      "evidence/runs/B06.2-drivers-74158715c/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
     ],
     "final_review": {
       "status": "pending",
@@ -3902,12 +3981,31 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "superseded",
+    "resolution_rationale": "Original attempt and exact revert have no net change; corrected guarded implementation from 2b6f1dfef retained at the recorded integration commit. Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
+    "resolution_commits": [
+      "0d02f1e894b12a0031cc32133575b47e3f183992"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/B06-empty-and-revert.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3935,12 +4033,31 @@
       "empty": true,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "superseded",
+    "resolution_rationale": "Original attempt and exact revert have no net change; corrected guarded implementation from 2b6f1dfef retained at the recorded integration commit. Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
+    "resolution_commits": [
+      "0d02f1e894b12a0031cc32133575b47e3f183992"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/B06-empty-and-revert.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3972,12 +4089,31 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retained all downstream serial model, Passkey, vendor-name and account migrations. Removed only unused migrateDBFast after repository-wide caller search; added guarded PostgreSQL prefill uniqueness migration before AutoMigrate. Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
+    "resolution_commits": [
+      "0d02f1e894b12a0031cc32133575b47e3f183992"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-prefill-2b6f1dfef/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4040,12 +4176,31 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained;  Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
+    "resolution_commits": [
+      "b46cbca4237cec3ef5e6209d99fde7340d3c62fc"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-token-27ff6a876/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4110,12 +4265,31 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained;  Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
+    "resolution_commits": [
+      "1289a84e9b2772fcea2d613325ceaef1c05e30e1"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-task-lock-b7017c251/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5430,12 +5604,31 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained;  Stage regression passed on SQLite, MySQL 5.7.44, PostgreSQL 9.6.24 and MariaDB 11.4.4, including actual released-schema upgrades; final candidate review remains pending.",
+    "resolution_commits": [
+      "e0f75813032458694274ad7ef8328a764ef08683"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-restart-9a8674425/result.json",
+      "evidence/B06-database-matrix.json",
+      "evidence/runs/B06-go-final/result.json",
+      "evidence/runs/B06-mariadb-migration-green/result.json",
+      "evidence/runs/B06-sqlite-fresh-matrix/result.json",
+      "evidence/runs/B06-sqlite-seed-matrix/result.json",
+      "evidence/runs/B06-sqlite-upgrade-matrix/result.json",
+      "evidence/runs/B06-mysql-fresh-matrix/result.json",
+      "evidence/runs/B06-mysql-seed-matrix/result.json",
+      "evidence/runs/B06-mysql-upgrade-matrix/result.json",
+      "evidence/runs/B06-mariadb-fresh-matrix/result.json",
+      "evidence/runs/B06-mariadb-seed-matrix/result.json",
+      "evidence/runs/B06-mariadb-upgrade-matrix/result.json",
+      "evidence/runs/B06-postgres-fresh-matrix/result.json",
+      "evidence/runs/B06-postgres-seed-matrix/result.json",
+      "evidence/runs/B06-postgres-upgrade-matrix/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7994,7 +8187,7 @@
     ],
     "assessmentGroup": "数据库驱动、约束和迁移修复",
     "assessmentRisk": 4,
-    "batchId": "B06",
+    "batchId": "B12",
     "plannedResolution": "adapted",
     "baselineSimulation": {
       "exitCode": 1,

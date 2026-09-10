@@ -1,0 +1,29 @@
+{
+  "id": "B06-mariadb-migration-green",
+  "command": [
+    "go",
+    "test",
+    "./model",
+    "-run",
+    "Migration|Migrate|JSONColumn|DatabaseUpgrade",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+  "started_at": "2026-09-10T18:47:38.069Z",
+  "finished_at": "2026-09-10T18:47:50.702Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": true,
+    "postgres_test_dsn_present": true
+  },
+  "log": "output.log"
+}

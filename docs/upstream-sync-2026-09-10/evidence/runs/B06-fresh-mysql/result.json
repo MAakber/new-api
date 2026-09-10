@@ -1,0 +1,28 @@
+{
+  "id": "B06-fresh-mysql",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-current.test.exe",
+    "-test",
+    ".run",
+    "^TestDatabaseUpgradePreservesDownstreamData$",
+    "-test",
+    ".v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "685e8c6ad67c88b715ce097a83309e92e4c55794",
+  "started_at": "2026-09-10T18:39:46.015Z",
+  "finished_at": "2026-09-10T18:39:46.689Z",
+  "status": "failed",
+  "exit_code": 2,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1,0 +1,5 @@
+Auto-merging model/system_task.go
+[codex/upstream-sync-2026-09-10 1289a84e9] fix(model): do not treat no-op system task state writes as lock loss (#7135)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Tue Sep 1 20:54:17 2026 +0800
+ 2 files changed, 48 insertions(+), 1 deletion(-)

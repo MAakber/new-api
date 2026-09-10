@@ -1,0 +1,17 @@
+=== RUN   TestDatabaseUpgradePreservesDownstreamData
+[SYS] 2026/09/11 - 02:40:23 | using MySQL as database 
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: 5.7.44
+[SYS] 2026/09/11 - 02:40:23 | using MySQL as database 
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 5.7.44
+    database_upgrade_test.go:61: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:61
+        	Error:      	Should be empty, but was [DROP INDEX `uk_model_active_name` ON `models` DROP INDEX `uk_vendor_active_name` ON `vendors` CREATE UNIQUE INDEX `uk_model_active_name` ON `models`(`active_name`) CREATE UNIQUE INDEX `uk_vendor_active_name` ON `vendors`(`active_name`)]
+        	Test:       	TestDatabaseUpgradePreservesDownstreamData
+        	Messages:   	unchanged restart 1 must not issue DDL
+    database_upgrade_test.go:61: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:61
+        	Error:      	Should be empty, but was [DROP INDEX `uk_model_active_name` ON `models` DROP INDEX `uk_vendor_active_name` ON `vendors` CREATE UNIQUE INDEX `uk_model_active_name` ON `models`(`active_name`) CREATE UNIQUE INDEX `uk_vendor_active_name` ON `vendors`(`active_name`)]
+        	Test:       	TestDatabaseUpgradePreservesDownstreamData
+        	Messages:   	unchanged restart 2 must not issue DDL
+--- FAIL: TestDatabaseUpgradePreservesDownstreamData (5.21s)
+FAIL

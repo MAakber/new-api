@@ -1,0 +1,35 @@
+{
+  "id": "B06-postgres-seed-matrix",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-baseline-2.test.exe",
+    "-test.run=^TestDatabaseUpgradePreservesDownstreamData$",
+    "-test.v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "started_at": "2026-09-10T18:52:05.288Z",
+  "finished_at": "2026-09-10T18:52:08.226Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": true
+  },
+  "log": "output.log",
+  "runner_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+  "fixture": {
+    "flavor": "postgres",
+    "phase": "seed",
+    "database": "codex_sync_upgrade2",
+    "log_database": "codex_sync_upgrade2_log",
+    "artifact_sha256": "605ef7dc1a75c026ae16d99e9542ba5c045697e31c767a10fec004e6b359b56f",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B06-build-baseline-fixture-2/result.json"
+  }
+}

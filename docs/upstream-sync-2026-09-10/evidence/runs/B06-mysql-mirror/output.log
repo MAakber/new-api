@@ -1,0 +1,39 @@
+5.7.44: Pulling from library/mysql
+1c56c3d4ce74: Pulling fs layer
+ffc89e9dfd88: Pulling fs layer
+68c3898c2015: Pulling fs layer
+43d05e938198: Pulling fs layer
+064b2d298fba: Pulling fs layer
+6b95a940e7b6: Pulling fs layer
+90986bb8de6e: Pulling fs layer
+ae71319cb779: Pulling fs layer
+e9f03a1c24ce: Pulling fs layer
+20e4dcae4c69: Pulling fs layer
+df9a4d85569b: Pulling fs layer
+1c56c3d4ce74: Download complete
+6b95a940e7b6: Download complete
+ffc89e9dfd88: Download complete
+df9a4d85569b: Download complete
+96889c47a44a: Download complete
+90986bb8de6e: Download complete
+064b2d298fba: Download complete
+e9f03a1c24ce: Download complete
+68c3898c2015: Download complete
+9eb6a52b8441: Download complete
+ae71319cb779: Download complete
+20e4dcae4c69: Download complete
+1c56c3d4ce74: Pull complete
+e9f03a1c24ce: Pull complete
+20e4dcae4c69: Pull complete
+6b95a940e7b6: Pull complete
+90986bb8de6e: Pull complete
+68c3898c2015: Pull complete
+ffc89e9dfd88: Pull complete
+ae71319cb779: Pull complete
+43d05e938198: Download complete
+43d05e938198: Pull complete
+064b2d298fba: Pull complete
+df9a4d85569b: Pull complete
+Digest: sha256:4bc6bc963e6d8443453676cae56536f4b8156d78bae03c0145cbe47c2aad73bb
+Status: Downloaded newer image for mirror.gcr.io/library/mysql:5.7.44
+mirror.gcr.io/library/mysql:5.7.44
