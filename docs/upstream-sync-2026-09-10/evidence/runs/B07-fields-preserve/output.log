@@ -1,0 +1,40 @@
+$ node scripts/test-preservation.mjs channel-form compatibility-channel
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-form-passthrough.test.ts:
+(pass) channel field passthrough settings > persists only supported request fields for channel 1 [1.28ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 14 [0.09ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 57 [0.12ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 58 [0.10ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 59 [0.03ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 60 [0.02ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 61 [0.09ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 62 [0.06ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 63 [0.02ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 64 [0.03ms]
+
+ 10 pass
+ 0 fail
+Ran 10 tests across 1 file. [131.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-form-queue.test.ts:
+(pass) channel queue setting serialization > keeps an existing queue configuration when the enabled switch is turned off [12.67ms]
+(pass) channel queue setting serialization > uses current form values when an existing queue is enabled again [0.21ms]
+(pass) channel queue setting serialization > omits queue when a channel has no existing queue and the switch is off [0.04ms]
+(pass) channel queue setting serialization > does not throw when the existing setting is malformed [0.23ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [100.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\compatibility-channel.test.ts:
+(pass) compatibility channels > registers Codex, Code Buddy, and Claude Code as selectable API key channel types [0.31ms]
+(pass) compatibility channels > requires an explicit base URL for all compatibility channel types [3.63ms]
+(pass) compatibility channels > accepts a direct WorkBuddy upstream root URL for Code Buddy [0.07ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [77.00ms]
+{"files":3,"passed":3,"failed":[]}

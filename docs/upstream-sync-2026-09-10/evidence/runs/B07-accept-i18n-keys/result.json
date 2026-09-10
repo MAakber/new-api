@@ -1,0 +1,25 @@
+{
+  "id": "B07-accept-i18n-keys",
+  "command": [
+    "node",
+    "docs/upstream-sync-2026-09-10/check-literal-i18n.mjs",
+    "ca1d9d2340494db144e6c0d4b012b9b3ae41964d"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "6ef2e3c9cdfdb3b9e6584ed0b0a23634e740cfc7",
+  "started_at": "2026-09-10T22:25:54.070Z",
+  "finished_at": "2026-09-10T22:25:54.115Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

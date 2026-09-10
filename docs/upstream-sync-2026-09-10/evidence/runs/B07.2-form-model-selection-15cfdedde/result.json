@@ -1,0 +1,21 @@
+{
+  "upstream": "15cfdeddef464d109a60992c802e17d9d1e4a3b4",
+  "unit": "B07.2-form-model-selection",
+  "before_head": "01343a4981f5b7517d2679d6f02237406d83ec38",
+  "after_head": "01343a4981f5b7517d2679d6f02237406d83ec38",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "15cfdeddef464d109a60992c802e17d9d1e4a3b4"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+  ],
+  "files": [
+    "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+  ]
+}

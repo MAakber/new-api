@@ -1,0 +1,22 @@
+{
+  "upstream": "e90a7c48e5e47aab3b93ce663e5f1cda0964de11",
+  "unit": "B07.1-gateway-fields",
+  "before_head": "2c4349984543a258ff80bec698fb285127a980f1",
+  "after_head": "2c4349984543a258ff80bec698fb285127a980f1",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "e90a7c48e5e47aab3b93ce663e5f1cda0964de11"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "web/src/features/channels/lib/channel-form.ts"
+  ],
+  "files": [
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "web/src/features/channels/constants.ts",
+    "web/src/features/channels/lib/channel-form.ts"
+  ]
+}

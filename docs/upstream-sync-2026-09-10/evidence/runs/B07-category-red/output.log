@@ -1,0 +1,379 @@
+$ vitest run --config vitest.channels.config.ts src/lib/__tests__/model-classification.test.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/lib/__tests__/model-classification.test.ts (84 tests | 33 failed) 17ms
+   ❯ model classification (84)
+     × groups upstream model family codex-mini-latest under OpenAI 3ms
+     × groups upstream model family text-ada-001 under OpenAI 0ms
+     × groups upstream model family davinci-002 under OpenAI 0ms
+     × groups upstream model family babbage-002 under OpenAI 0ms
+     × groups upstream model family computer-use-preview under OpenAI 0ms
+     × groups upstream model family palm-2 under Google 0ms
+     × groups upstream model family aqa under Google 0ms
+     × groups upstream model family tongyi-deepresearch-30b under Alibaba 0ms
+     × groups upstream model family gte-large under Alibaba 0ms
+     × groups upstream model family text-embedding-v4 under Alibaba 1ms
+     × groups upstream model family gui-plus under Alibaba 0ms
+     × groups upstream model family z-image-turbo under Alibaba 0ms
+     × groups upstream model family wanx2.1-t2v-plus under Alibaba 0ms
+     × groups upstream model family seed-1-6-250615 under ByteDance 0ms
+     × groups upstream model family t2v-01 under MiniMax 0ms
+     × groups upstream model family i2v-01-live under MiniMax 0ms
+     × groups upstream model family s2v-01 under MiniMax 0ms
+     × groups upstream model family wenxin-4 under Baidu 0ms
+     × groups upstream model family hy3-preview under Tencent 0ms
+     × groups upstream model family hy-2 under Tencent 0ms
+     × groups upstream model family Llama-3.1-Nemotron-70B-Instruct under NVIDIA 0ms
+     × groups upstream model family llama-3.1-sonar-large-128k-online under Perplexity 0ms
+     × groups upstream model family amazon.nova-pro-v1:0 under Amazon 0ms
+     × groups upstream model family titan-embed-text-v2 under Amazon 0ms
+     × groups upstream model family ai21/jamba-1.5-large under AI21 Labs 0ms
+     × groups upstream model family jamba-1.5-large under AI21 Labs 0ms
+     × groups upstream model family nousresearch/hermes-3-llama-3.1-405b under Nous Research 0ms
+     × groups upstream model family hermes-3-llama-3.1-405b under Nous Research 0ms
+     × groups upstream model family 360gpt-pro under 360 AI 0ms
+     × groups upstream model family mj_imagine under Midjourney 0ms
+     × groups upstream model family swap_face under Midjourney 0ms
+     × groups upstream model family vidu-q1 under Vidu 0ms
+     × groups upstream model family jimeng-4.0 under Jimeng 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 33 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family codex-mini-latest under OpenAI
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family text-ada-001 under OpenAI
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family davinci-002 under OpenAI
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family babbage-002 under OpenAI
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family computer-use-preview under OpenAI
+AssertionError: expected undefined to be 'OpenAI' // Object.is equality
+
+- Expected:
+"OpenAI"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family palm-2 under Google
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family aqa under Google
+AssertionError: expected undefined to be 'Google' // Object.is equality
+
+- Expected:
+"Google"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family tongyi-deepresearch-30b under Alibaba
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family gte-large under Alibaba
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family gui-plus under Alibaba
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family z-image-turbo under Alibaba
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family wanx2.1-t2v-plus under Alibaba
+AssertionError: expected undefined to be 'Alibaba' // Object.is equality
+
+- Expected:
+"Alibaba"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family text-embedding-v4 under Alibaba
+AssertionError: expected 'OpenAI' to be 'Alibaba' // Object.is equality
+
+Expected: "Alibaba"
+Received: "OpenAI"
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family seed-1-6-250615 under ByteDance
+AssertionError: expected undefined to be 'ByteDance' // Object.is equality
+
+- Expected:
+"ByteDance"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family t2v-01 under MiniMax
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family i2v-01-live under MiniMax
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family s2v-01 under MiniMax
+AssertionError: expected undefined to be 'MiniMax' // Object.is equality
+
+- Expected:
+"MiniMax"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family wenxin-4 under Baidu
+AssertionError: expected undefined to be 'Baidu' // Object.is equality
+
+- Expected:
+"Baidu"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family hy3-preview under Tencent
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family hy-2 under Tencent
+AssertionError: expected undefined to be 'Tencent' // Object.is equality
+
+- Expected:
+"Tencent"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family Llama-3.1-Nemotron-70B-Instruct under NVIDIA
+AssertionError: expected 'Meta' to be 'NVIDIA' // Object.is equality
+
+Expected: "NVIDIA"
+Received: "Meta"
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family llama-3.1-sonar-large-128k-online under Perplexity
+AssertionError: expected 'Meta' to be 'Perplexity' // Object.is equality
+
+Expected: "Perplexity"
+Received: "Meta"
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family amazon.nova-pro-v1:0 under Amazon
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family titan-embed-text-v2 under Amazon
+AssertionError: expected undefined to be 'Amazon' // Object.is equality
+
+- Expected:
+"Amazon"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family ai21/jamba-1.5-large under AI21 Labs
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family jamba-1.5-large under AI21 Labs
+AssertionError: expected undefined to be 'AI21 Labs' // Object.is equality
+
+- Expected:
+"AI21 Labs"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family nousresearch/hermes-3-llama-3.1-405b under Nous Research
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family hermes-3-llama-3.1-405b under Nous Research
+AssertionError: expected undefined to be 'Nous Research' // Object.is equality
+
+- Expected:
+"Nous Research"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family 360gpt-pro under 360 AI
+AssertionError: expected undefined to be '360 AI' // Object.is equality
+
+- Expected:
+"360 AI"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family mj_imagine under Midjourney
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family swap_face under Midjourney
+AssertionError: expected undefined to be 'Midjourney' // Object.is equality
+
+- Expected:
+"Midjourney"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family vidu-q1 under Vidu
+AssertionError: expected undefined to be 'Vidu' // Object.is equality
+
+- Expected:
+"Vidu"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/33]⎯
+
+ FAIL  src/lib/__tests__/model-classification.test.ts > model classification > groups upstream model family jimeng-4.0 under Jimeng
+AssertionError: expected undefined to be 'Jimeng' // Object.is equality
+
+- Expected:
+"Jimeng"
+
++ Received:
+undefined
+
+ ❯ src/lib/__tests__/model-classification.test.ts:119:46
+    117|     ['jimeng-4.0', 'Jimeng'],
+    118|   ])('groups upstream model family %s under %s', (id, vendor) => {
+    119|     expect(classifyModel(id).provider?.name).toBe(vendor)
+       |                                              ^
+    120|   })
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/33]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  33 failed | 51 passed (84)
+   Start at  05:32:38
+   Duration  1.27s (environment 58%, setup 34%, transform 4%, tests 2%, import 1%)
+
+error: script "test:channels" exited with code 1

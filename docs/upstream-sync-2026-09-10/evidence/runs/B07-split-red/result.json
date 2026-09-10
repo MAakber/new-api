@@ -1,0 +1,30 @@
+{
+  "id": "B07-split-red",
+  "command": [
+    "bun",
+    "x",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.channels.config.ts",
+    "src/features/channels/__tests__/advanced-custom-editor.test.tsx",
+    "-t=adds a model split"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "b6fe1dc8a9d2d19639c14884f44fe632396c7606",
+  "started_at": "2026-09-10T22:20:47.650Z",
+  "finished_at": "2026-09-10T22:21:18.398Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

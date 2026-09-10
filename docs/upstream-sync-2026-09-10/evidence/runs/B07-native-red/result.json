@@ -1,0 +1,28 @@
+{
+  "id": "B07-native-red",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./controller",
+    "-run=^TestNativeChannelTestRequestBudgetAndMessage$",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "1d7db1ae9208b06322f05331377a04815925a866",
+  "started_at": "2026-09-10T21:41:38.675Z",
+  "finished_at": "2026-09-10T21:41:43.119Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

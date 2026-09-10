@@ -1,0 +1,30 @@
+{
+  "id": "B07-fetch-ui",
+  "command": [
+    "bun",
+    "x",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.channels.config.ts",
+    "src/features/channels/__tests__/fetch-models-lifecycle.test.tsx",
+    "src/features/channels/__tests__/fetch-models-selection.test.tsx"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "2c4349984543a258ff80bec698fb285127a980f1",
+  "started_at": "2026-09-10T21:49:56.928Z",
+  "finished_at": "2026-09-10T21:50:32.086Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

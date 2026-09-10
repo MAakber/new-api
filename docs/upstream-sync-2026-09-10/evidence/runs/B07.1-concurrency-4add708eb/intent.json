@@ -1,0 +1,25 @@
+{
+  "upstream": "4add708ebe3b74e02dcf141887da2c81cb9b1526",
+  "unit": "B07.1-concurrency",
+  "before_head": "4f98ccc930533ebfe95c54e448c5d0c9b38d42b4",
+  "rationale": "Add bounded background channel test workers and validate concurrency 1-32. Preserve downstream task queues, cancellation, native protocol diagnostics, client profiles, prompts and the dedicated channel-test settings page.",
+  "files": [
+    "controller/channel-test.go",
+    "controller/channel_test_internal_test.go",
+    "model/option.go",
+    "setting/operation_setting/monitor_setting.go",
+    "setting/operation_setting/monitor_setting_test.go",
+    "web/src/features/models/components/drawers/model-mutate-drawer.tsx",
+    "web/src/features/system-settings/models/index.tsx",
+    "web/src/features/system-settings/models/routing-reliability-section.tsx",
+    "web/src/features/system-settings/models/section-registry.tsx",
+    "web/src/features/system-settings/types.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ]
+}

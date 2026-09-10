@@ -745,27 +745,102 @@
       "4add708ebe3b74e02dcf141887da2c81cb9b1526",
       "bdef117505247769268b209665fb3ad7554c3da7"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B07.1",
         "action": "为模式/并发/路由增量建立下游适配接口",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B07.2",
         "action": "对照 c0ee46798 逐项合并抓模能力，不覆盖旧功能",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B07.3",
         "action": "验证浮窗上下文、61–64 渠道、队列、余额、图标和多密钥",
-        "status": "pending"
+        "status": "verified"
+      },
+      {
+        "id": "B07.1-model-categories",
+        "action": "feat(channels): refine fetched model categorization (#6632)",
+        "status": "verified",
+        "upstreamCommits": [
+          "c9bc038649d1d1f6f1fe9d6bca3b09f842cdcf6b"
+        ]
+      },
+      {
+        "id": "B07.1-native-probes",
+        "action": "fix: test Claude/Gemini endpoints with native request format (#6698)",
+        "status": "verified",
+        "upstreamCommits": [
+          "b941253aea6b9bccf1bc8de503bf3477caafebfe"
+        ]
+      },
+      {
+        "id": "B07.1-auto-ban-mode",
+        "action": "feat(channels): add auto-disable-only channel test mode (#6728)",
+        "status": "verified",
+        "upstreamCommits": [
+          "5d3423bec13f6da2498bdc5b288c9ee2507fd3ef"
+        ]
+      },
+      {
+        "id": "B07.2-form-model-selection",
+        "action": "fix(web): keep fetched model selection in sync with form (#6841)",
+        "status": "verified",
+        "upstreamCommits": [
+          "15cfdeddef464d109a60992c802e17d9d1e4a3b4"
+        ]
+      },
+      {
+        "id": "B07.1-gateway-fields",
+        "action": "feat: add field passthrough controls for gateway channels (#6847)",
+        "status": "verified",
+        "upstreamCommits": [
+          "e90a7c48e5e47aab3b93ce663e5f1cda0964de11"
+        ]
+      },
+      {
+        "id": "B07.1-advanced-routes",
+        "action": "refactor: advanced custom channel route editor (#6865)",
+        "status": "verified",
+        "upstreamCommits": [
+          "2b0efd8484cc1e20b6de64f8600586fe61dee867"
+        ]
+      },
+      {
+        "id": "B07.1-concurrency",
+        "action": "feat: channel test (#6917)",
+        "status": "verified",
+        "upstreamCommits": [
+          "4add708ebe3b74e02dcf141887da2c81cb9b1526"
+        ]
+      },
+      {
+        "id": "B07.1-add-split",
+        "action": "fix: restore add split button in advanced custom routes (#7289)",
+        "status": "verified",
+        "upstreamCommits": [
+          "bdef117505247769268b209665fb3ad7554c3da7"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "为模式/并发/路由增量建立下游适配接口"
+    "codeCommits": [
+      "47f3087072ae32bf7a12398ba5b2192c67a9cdad",
+      "251b9a68a66fd664dd58870e382e8fe6eaa247a3",
+      "01343a4981f5b7517d2679d6f02237406d83ec38",
+      "2c4349984543a258ff80bec698fb285127a980f1",
+      "ae7d822f457f3974d1f6a9ba4c7158ec16d127a9",
+      "423c7dc52f1a5412b1a101a8dd37676b979b65bb",
+      "cb71aed06a131615a78952d2e906125c6da6a4e3",
+      "951cd06ea813a499d43f630dace89f9c59bfad9d"
+    ],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
+    "nextAction": "B18 final candidate must revalidate downstream features and remaining environment gates."
   },
   {
     "id": "B08",

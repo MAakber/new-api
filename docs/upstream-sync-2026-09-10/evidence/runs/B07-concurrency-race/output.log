@@ -1,0 +1,12 @@
+{"Time":"2026-09-11T06:19:51.8741467+08:00","Action":"start","Package":"github.com/QuantumNous/new-api/controller"}
+{"Time":"2026-09-11T06:19:52.7597507+08:00","Action":"run","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersHonorsConfiguredConcurrency"}
+{"Time":"2026-09-11T06:19:52.7597507+08:00","Action":"output","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersHonorsConfiguredConcurrency","Output":"=== RUN   TestRunChannelTestWorkersHonorsConfiguredConcurrency\n"}
+{"Time":"2026-09-11T06:19:52.7597507+08:00","Action":"output","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersHonorsConfiguredConcurrency","Output":"--- PASS: TestRunChannelTestWorkersHonorsConfiguredConcurrency (0.00s)\n"}
+{"Time":"2026-09-11T06:19:52.7602891+08:00","Action":"pass","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersHonorsConfiguredConcurrency","Elapsed":0}
+{"Time":"2026-09-11T06:19:52.7602891+08:00","Action":"run","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersStopsAfterCancellation"}
+{"Time":"2026-09-11T06:19:52.7602891+08:00","Action":"output","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersStopsAfterCancellation","Output":"=== RUN   TestRunChannelTestWorkersStopsAfterCancellation\n"}
+{"Time":"2026-09-11T06:19:52.7602891+08:00","Action":"output","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersStopsAfterCancellation","Output":"--- PASS: TestRunChannelTestWorkersStopsAfterCancellation (0.00s)\n"}
+{"Time":"2026-09-11T06:19:52.7602891+08:00","Action":"pass","Package":"github.com/QuantumNous/new-api/controller","Test":"TestRunChannelTestWorkersStopsAfterCancellation","Elapsed":0}
+{"Time":"2026-09-11T06:19:52.7602891+08:00","Action":"output","Package":"github.com/QuantumNous/new-api/controller","Output":"PASS\n"}
+{"Time":"2026-09-11T06:19:53.7710846+08:00","Action":"output","Package":"github.com/QuantumNous/new-api/controller","Output":"ok  \tgithub.com/QuantumNous/new-api/controller\t1.897s\n"}
+{"Time":"2026-09-11T06:19:53.7710846+08:00","Action":"pass","Package":"github.com/QuantumNous/new-api/controller","Elapsed":1.897}

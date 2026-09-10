@@ -1,0 +1,29 @@
+{
+  "id": "B07-auto-mode-ui",
+  "command": [
+    "bun",
+    "x",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.channels.config.ts",
+    "src/features/system-settings/models/__tests__/channel-test-section.test.tsx"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "01343a4981f5b7517d2679d6f02237406d83ec38",
+  "started_at": "2026-09-10T21:47:29.692Z",
+  "finished_at": "2026-09-10T21:47:36.595Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

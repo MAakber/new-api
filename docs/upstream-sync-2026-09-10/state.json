@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T21:21:07.735Z",
+  "updatedAt": "2026-09-10T22:27:56.625Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B07",
-  "current_unit": "B07.1",
+  "current_batch": "B08",
+  "current_unit": "B08.1",
   "active_operation": null,
-  "last_observed_head": "54c948f715414eada868462b3c60882ce745a57f",
+  "last_observed_head": "6ef2e3c9cdfdb3b9e6584ed0b0a23634e740cfc7",
   "last_verified_code_commit": "54c948f715414eada868462b3c60882ce745a57f",
-  "last_checkpoint_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
+  "last_checkpoint_commit": "ca1d9d2340494db144e6c0d4b012b9b3ae41964d",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Adapt upstream fetched-model categories onto the existing downstream classifier and session-safe picker, then continue B07 native probes and route editor.",
+  "next_action": "B08: integrate OAuth callback flow identification and account-update isolation; preserve login proxy, invitation registration, named Passkeys and OAuth avatars.",
   "blockers": [
     {
       "id": "production_snapshot",

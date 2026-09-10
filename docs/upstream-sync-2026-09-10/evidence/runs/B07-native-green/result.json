@@ -1,0 +1,28 @@
+{
+  "id": "B07-native-green",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./controller",
+    "./relay/channel/advancedcustom",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "9d2bad13c082832e7af190b9fe5c105146336ae9",
+  "started_at": "2026-09-10T21:44:35.380Z",
+  "finished_at": "2026-09-10T21:44:41.229Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

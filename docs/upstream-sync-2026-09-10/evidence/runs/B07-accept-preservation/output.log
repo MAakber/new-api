@@ -1,0 +1,253 @@
+$ node scripts/test-preservation.mjs channels floating-window model-classification
+bun test v1.3.14 (0d9b296a)
+
+src\components\floating-window\__tests__\floating-window-store.test.ts:
+(pass) floating window store > opens each channel create request as a distinct window [1.73ms]
+(pass) floating window store > activates and returns the existing edit window for the same channel [0.20ms]
+(pass) floating window store > brings an activated window above the current top window [0.16ms]
+(pass) floating window store > clears all windows when the authenticated layout is torn down [0.07ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [164.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\floating-window\__tests__\geometry.test.ts:
+(pass) floating window geometry > enforces desktop minimum dimensions and keeps the rect inside the viewport [0.33ms]
+(pass) floating window geometry > uses the available viewport when it is smaller than the desktop minimum [0.06ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [88.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\floating-window\__tests__\motion.test.ts:
+(pass) floating window motion > opens from a subtle offset into its resting state [0.19ms]
+(pass) floating window motion > fades and contracts before being removed [0.04ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [156.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\__tests__\channel-favicon.test.tsx:
+(pass) ChannelFavicon > renders a safe lazy image link to the upstream Base URL [53.76ms]
+(pass) ChannelFavicon > removes the icon after the favicon request fails [13.26ms]
+(pass) ChannelFavicon > does not render a link for an unsafe Base URL [1.34ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [919.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\__tests__\favicon-layout.test.tsx:
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+(pass) channel favicon layout > keeps the favicon column immediately before the name column [30.45ms]
+(pass) channel favicon layout > places the shared favicon cell before the channel name in cards [27.78ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [5.36s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\fetch-models-dialog-channel.test.ts:
+(pass) FetchModelsDialog channel selection > uses the floating editor channel before the provider currentRow [0.16ms]
+(pass) FetchModelsDialog channel selection > keeps channel ids isolated when two windows share a provider fallback [0.06ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [51.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\missing-models-confirmation-dialog-layout.test.tsx:
+(pass) missing models confirmation dialog layout > keeps actions visible while a long model list scrolls on mobile [69.50ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [349.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\multi-key-manage-dialog-layout.test.tsx:
+(pass) multi-key management dialog layout > wraps the toolbar and confines the table scroll on narrow screens [123.77ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [1041.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\ollama-models-dialog-layout.test.tsx:
+(pass) Ollama models dialog layout > expands the model list into the mobile body while keeping the close action visible [193.06ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [1001.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\param-override-editor-dialog-layout.test.tsx:
+(pass) parameter override editor dialog layout > stacks the rules panel on narrow screens and caps JSON editor height [164.46ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [895.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\dialogs\__tests__\upstream-update-dialog-layout.test.tsx:
+(pass) upstream update dialog layout > keeps footer actions visible while long model lists use the mobile body [181.77ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [865.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\components\drawers\sections\__tests__\channel-custom-balance-section.test.tsx:
+(pass) channel custom balance section > does not echo the credential and hides channel-key mode for New API [139.82ms]
+(pass) channel custom balance section > shows the backend failure message when saving the independent configuration fails [107.46ms]
+(pass) channel custom balance section > reports enabled state immediately for the editor navigation [77.81ms]
+(pass) channel custom balance section > shows the balance-limit auto-ban ignore switch [78.20ms]
+(pass) channel custom balance section > exposes the same save path for the parent channel submit [141.91ms]
+
+ 5 pass
+ 0 fail
+Ran 5 tests across 1 file. [1492.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-client-identity.test.ts:
+(pass) channel client identity settings > writes distinct Codex profiles with their official source [0.59ms]
+(pass) channel client identity settings > reads a persisted CodeBuddy identity and platform with legacy source data [0.30ms]
+(pass) channel client identity settings > removes client identity when a channel changes to an unrelated type [0.10ms]
+(pass) channel client identity settings > serializes a lightweight Codex identity with an automatic official source [0.07ms]
+(pass) channel client identity settings > serializes a CodeBuddy profile with an automatic official source [0.04ms]
+(pass) channel client identity settings > uses manual source for CodeBuddy on non-Windows platforms [0.03ms]
+(pass) channel client identity settings > maps client identity sources independently of legacy form source [0.03ms]
+(pass) channel client identity settings > serializes a Claude Code profile with an automatic official source [0.04ms]
+(pass) channel client identity settings > serializes the Claude Code 1M context flag when enabled [0.02ms]
+(pass) channel client identity settings > reads the persisted Claude Code 1M context flag [0.04ms]
+(pass) channel client identity settings > does not serialize the Claude Code 1M context flag when disabled [0.06ms]
+(pass) channel client identity settings > serializes manual lightweight profiles without using a legacy source [0.02ms]
+(pass) channel client identity settings > keeps standard channels on no-client defaults without identity settings [0.01ms]
+(pass) channel client identity settings > does not serialize a deep profile onto a standard channel [0.01ms]
+(pass) channel client identity settings > falls back to the deep channel template after a type switch [0.02ms]
+
+ 15 pass
+ 0 fail
+Ran 15 tests across 1 file. [82.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-favicon.test.ts:
+(pass) channel favicon URL utilities > requests favicon.ico from the upstream origin [0.28ms]
+(pass) channel favicon URL utilities > rejects missing, non-http, relative, and credential-bearing URLs [0.23ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [65.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-field-update.test.ts:
+(pass) channel field update scheduler > coalesces rapid schedules into one update with the latest value [0.48ms]
+(pass) channel field update scheduler > flush commits the pending value immediately and cancels the timer [0.07ms]
+(pass) channel field update scheduler > flush without a pending value does nothing [0.04ms]
+(pass) channel field update scheduler > preserves a pending value of 0 [0.03ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [61.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-form-passthrough.test.ts:
+(pass) channel field passthrough settings > persists only supported request fields for channel 1 [0.89ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 14 [0.06ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 57 [0.10ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 58 [0.09ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 59 [0.02ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 60 [0.02ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 61 [0.02ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 62 [0.04ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 63 [0.02ms]
+(pass) channel field passthrough settings > persists only supported request fields for channel 64 [0.03ms]
+
+ 10 pass
+ 0 fail
+Ran 10 tests across 1 file. [157.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-form-queue.test.ts:
+(pass) channel queue setting serialization > keeps an existing queue configuration when the enabled switch is turned off [1.24ms]
+(pass) channel queue setting serialization > uses current form values when an existing queue is enabled again [0.32ms]
+(pass) channel queue setting serialization > omits queue when a channel has no existing queue and the switch is off [0.04ms]
+(pass) channel queue setting serialization > does not throw when the existing setting is malformed [0.23ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [137.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-key-append.test.ts:
+(pass) channel key append payload > includes append mode for a single-key channel edit [0.80ms]
+(pass) channel key append payload > hides append support for Codex and Vertex API-key channels [0.08ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [108.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\channel-table-row-id.test.ts:
+(pass) channel table row identity > keeps each channel identity when priority updates reorder the rows [0.24ms]
+(pass) channel table row identity > uses separate namespaces for tag and channel rows [0.34ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [92.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\compatibility-channel.test.ts:
+(pass) compatibility channels > registers Codex, Code Buddy, and Claude Code as selectable API key channel types [0.73ms]
+(pass) compatibility channels > requires an explicit base URL for all compatibility channel types [12.56ms]
+(pass) compatibility channels > accepts a direct WorkBuddy upstream root URL for Code Buddy [0.81ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [120.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\custom-balance-api.test.ts:
+(pass) custom balance API contract > uses the channel-scoped custom balance endpoints [0.49ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [202.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\custom-balance.test.ts:
+(pass) custom balance serialization > uses safe defaults when the backend returns no configuration [0.37ms]
+(pass) custom balance serialization > switching to the channel key omits an independent credential [0.04ms]
+(pass) custom balance serialization > switching to an independent credential preserves an empty value [0.02ms]
+(pass) custom balance serialization > serializes a new independent credential only when entered [0.02ms]
+(pass) custom balance serialization > never echoes a credential from a response into editable values [0.02ms]
+(pass) custom balance serialization > preserves a supported compatible provider from the response [0.02ms]
+(pass) custom balance serialization > serializes the balance-limit auto-ban ignore switch [0.01ms]
+
+ 7 pass
+ 0 fail
+Ran 7 tests across 1 file. [81.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\new-api-channel.test.ts:
+(pass) New API channel > registers selection, ordering, model discovery, and icon metadata [0.50ms]
+(pass) New API channel > requires a non-blank Base URL [4.19ms]
+(pass) New API channel > keeps Sub2API Base URL validation unchanged [0.11ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [106.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\channels\lib\__tests__\vercel-channel.test.ts:
+(pass) Vercel AI Gateway channel > registers the channel with model discovery and the Vercel icon [2.42ms]
+(pass) Vercel AI Gateway channel > accepts the provider default Base URL [5.35ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [96.00ms]
+{"files":24,"passed":24,"failed":[]}

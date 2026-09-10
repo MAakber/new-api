@@ -40,3 +40,7 @@ B02.3 explicitly permits documenting unavailable runtime conditions. Its environ
 ## 2026-09-10T18:58:08.005Z — A17 startup preservation fixes proven by real database failures
 
 Full startup tests exposed downstream Passkey index churn on all databases, model/vendor active-name index churn on MySQL/MariaDB, and MariaDB JSON alias churn. The corrections preserve the existing custom migration order and JSON validation. Baseline-source test binaries seed the old schemas before current binaries upgrade them; artifact hashes and exact source commits are recorded. B06-database-matrix.json contains passing evidence and retained earlier failures. B12 options repair remains pending under A16.
+
+## 2026-09-10T22:27:56.643Z — A06 B07 downstream preservation
+
+The upstream channel improvements are adapted into the existing classifier, session-safe model picker, dedicated test settings and custom balance path. All eight units passed local stage checks; D01-D10 and final browser/provider acceptance remain subject to the final candidate gates. See evidence/B07-acceptance.json.

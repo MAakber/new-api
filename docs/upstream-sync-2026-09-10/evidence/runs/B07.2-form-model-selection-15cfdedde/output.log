@@ -1,0 +1,12 @@
+Auto-merging web/src/features/channels/components/dialogs/fetch-models-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/dialogs/fetch-models-dialog.tsx
+Auto-merging web/src/features/channels/components/drawers/channel-mutate-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/drawers/channel-mutate-drawer.tsx
+error: could not apply 15cfdedde... fix(web): keep fetched model selection in sync with form (#6841)
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

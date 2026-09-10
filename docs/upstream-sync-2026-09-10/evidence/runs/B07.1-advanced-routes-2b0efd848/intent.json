@@ -1,0 +1,29 @@
+{
+  "upstream": "2b0efd8484cc1e20b6de64f8600586fe61dee867",
+  "unit": "B07.1-advanced-routes",
+  "before_head": "ae7d822f457f3974d1f6a9ba4c7158ec16d127a9",
+  "rationale": "Integrate forwarding and management route editing, explicit balance routes, native balance summaries and raw JSON fallback. Preserve downstream custom-balance precedence and auto-ban exemptions, model/path routing, prompt fields, and per-window ownership.",
+  "files": [
+    "common/json.go",
+    "controller/channel-billing.go",
+    "controller/channel_upstream_update.go",
+    "controller/channel_upstream_update_test.go",
+    "relay/channel/advancedcustom/adaptor.go",
+    "relay/channel/advancedcustom/adaptor_test.go",
+    "relaykit/dto/channel_settings.go",
+    "relaykit/dto/channel_settings_test.go",
+    "web/src/features/channels/components/channels-columns.tsx",
+    "web/src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx",
+    "web/src/features/channels/components/dialogs/balance-query-dialog.tsx",
+    "web/src/features/channels/lib/advanced-custom.ts",
+    "web/src/features/channels/lib/channel-actions.ts",
+    "web/src/features/channels/types.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ]
+}

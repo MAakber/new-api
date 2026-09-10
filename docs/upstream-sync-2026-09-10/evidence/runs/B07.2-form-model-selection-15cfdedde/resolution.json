@@ -1,0 +1,7 @@
+{
+  "upstream": "15cfdeddef464d109a60992c802e17d9d1e4a3b4",
+  "before_head": "01343a4981f5b7517d2679d6f02237406d83ec38",
+  "after_head": "2c4349984543a258ff80bec698fb285127a980f1",
+  "rationale": "Require an explicit current form selection when returning models through a callback. Always pass currentModelsArray, including empty arrays; preserve explicit channel ownership and per-window session lifecycle. Add unsaved/reopened selection regression coverage.",
+  "recorded_at": "2026-09-10T21:49:37.121Z"
+}

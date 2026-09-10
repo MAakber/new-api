@@ -1,0 +1,10 @@
+$ vitest run --config vitest.channels.config.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  13 passed (13)
+      Tests  138 passed (138)
+   Start at  06:22:56
+   Duration  46.34s (import 62%, transform 17%, environment 12%, tests 5%, setup 4%)
+

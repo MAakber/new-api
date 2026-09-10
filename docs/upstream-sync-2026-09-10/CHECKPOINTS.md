@@ -991,3 +991,137 @@
 - All 18 B04 upstream rows have implementation and local stage verification; final review remains pending.
 - Root 2172 passing test events; independent relaykit 440, plus independent build.
 - Next: B07 fetched-model categories; preserve downstream picker and custom routes.
+
+## 2026-09-10T21:31:01.659Z — B07.1-model-categories adaptation begun
+
+- Before HEAD: ca1d9d2340494db144e6c0d4b012b9b3ae41964d.
+- Upstream: c9bc038649d1d1f6f1fe9d6bca3b09f842cdcf6b.
+- Extend the shared downstream publisher classifier with upstream model families and priority rules. Preserve session-safe fetch dialogs, multi-window context, type filters, redirect classification, selected hidden models and error/loading states.
+- Evidence: evidence/runs/B07.1-model-categories-c9bc03864/intent.json.
+
+## 2026-09-10T21:33:56.107Z — B07.1-model-categories adaptation recorded
+
+- Code: 47f3087072ae32bf7a12398ba5b2192c67a9cdad.
+- Extend the existing shared publisher classifier with missing upstream families and Sonar/Nemotron derivative priority. Preserve downstream names/icons, namespace precedence, type classification and the session-safe multi-window picker; its existing loading/error/selection behavior supersedes the old upstream dialog refactor.
+- Evidence: evidence/runs/B07.1-model-categories-c9bc03864/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T21:40:48.095Z — B07.1-native-probes adaptation begun
+
+- Before HEAD: 47f3087072ae32bf7a12398ba5b2192c67a9cdad.
+- Upstream: b941253aea6b9bccf1bc8de503bf3477caafebfe.
+- Use native Claude and Gemini request DTOs for ordinary tests and diagnostics. Preserve configured prompts, tool probes, custom routes, stream URL semantics and bounded queue warm-up.
+- Evidence: evidence/runs/B07.1-native-probes-b941253ae/intent.json.
+
+## 2026-09-10T21:42:50.310Z — B07.1-native-probes adaptation recorded
+
+- Code: 251b9a68a66fd664dd58870e382e8fe6eaa247a3.
+- Native DTOs now feed both ordinary tests and diagnostics, with Gemini action paths for streaming. Adapt native tool definitions and warm-up caps; retain channel profiles, custom-route dispatch, prompt configuration and diagnostic validation.
+- Evidence: evidence/runs/B07.1-native-probes-b941253ae/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T21:45:11.735Z — B07.1-auto-ban-mode adaptation begun
+
+- Before HEAD: 9d2bad13c082832e7af190b9fe5c105146336ae9.
+- Upstream: 5d3423bec13f6da2498bdc5b288c9ee2507fd3ef.
+- Add automatic testing limited to auto-disable-enabled channels. Adapt mode controls into the downstream dedicated channel-test settings section and retain manual task queue behavior, prompt/profile settings and all seven locales.
+- Evidence: evidence/runs/B07.1-auto-ban-mode-5d3423bec/intent.json.
+
+## 2026-09-10T21:47:27.320Z — B07.1-auto-ban-mode adaptation recorded
+
+- Code: 01343a4981f5b7517d2679d6f02237406d83ec38.
+- Apply backend filter and normalization with upstream regression cases. Add the mode to the dedicated downstream settings page and verify save/reload, retaining existing scope labels and prompt/profile/preview controls. Translate the two added UI strings through the approved script in seven locales.
+- Evidence: evidence/runs/B07.1-auto-ban-mode-5d3423bec/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T21:48:12.264Z — B07.2-form-model-selection applying 15cfdedde
+
+- Before HEAD: 01343a4981f5b7517d2679d6f02237406d83ec38.
+- Upstream: 15cfdeddef464d109a60992c802e17d9d1e4a3b4 — fix(web): keep fetched model selection in sync with form (#6841).
+- Reviewed paths: web/src/features/channels/components/dialogs/fetch-models-dialog.tsx, web/src/features/channels/components/drawers/channel-mutate-drawer.tsx.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T21:48:12.507Z — B07.2-form-model-selection conflicts
+
+- Result: exit 1; HEAD 01343a4981f5b7517d2679d6f02237406d83ec38.
+- Conflicts: web/src/features/channels/components/dialogs/fetch-models-dialog.tsx, web/src/features/channels/components/drawers/channel-mutate-drawer.tsx.
+- Evidence: evidence/runs/B07.2-form-model-selection-15cfdedde/result.json.
+- Next: B07.2-form-model-selection: reconcile failed cherry-pick using evidence/runs/B07.2-form-model-selection-15cfdedde; do not restart or abort automatically.
+
+## 2026-09-10T21:49:37.131Z — B07.2-form-model-selection conflict resolution recorded
+
+- Code: 2c4349984543a258ff80bec698fb285127a980f1.
+- Require an explicit current form selection when returning models through a callback. Always pass currentModelsArray, including empty arrays; preserve explicit channel ownership and per-window session lifecycle. Add unsaved/reopened selection regression coverage.
+- Evidence: evidence/runs/B07.2-form-model-selection-15cfdedde/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T21:51:14.201Z — B07.1-gateway-fields applying e90a7c48e
+
+- Before HEAD: 2c4349984543a258ff80bec698fb285127a980f1.
+- Upstream: e90a7c48e5e47aab3b93ce663e5f1cda0964de11 — feat: add field passthrough controls for gateway channels (#6847).
+- Reviewed paths: web/src/features/channels/components/drawers/channel-mutate-drawer.tsx, web/src/features/channels/constants.ts, web/src/features/channels/lib/channel-form.ts.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T21:51:14.443Z — B07.1-gateway-fields conflicts
+
+- Result: exit 1; HEAD 2c4349984543a258ff80bec698fb285127a980f1.
+- Conflicts: web/src/features/channels/components/drawers/channel-mutate-drawer.tsx, web/src/features/channels/lib/channel-form.ts.
+- Evidence: evidence/runs/B07.1-gateway-fields-e90a7c48e/result.json.
+- Next: B07.1-gateway-fields: reconcile failed cherry-pick using evidence/runs/B07.1-gateway-fields-e90a7c48e; do not restart or abort automatically.
+
+## 2026-09-10T21:54:11.274Z — B07.1-gateway-fields conflict resolution recorded
+
+- Code: ae7d822f457f3974d1f6a9ba4c7158ec16d127a9.
+- Share request-field eligibility between serialization and editor controls. Include downstream Codex 61/CodeBuddy 63 for OpenAI and Claude Code 62 for Claude; Vercel 64 uses its own converted AI Gateway protocol and has no such field settings. Retain client identities, per-window element IDs, proxies and HTTP transport settings. Keep forced beta query separate from native field support.
+- Evidence: evidence/runs/B07.1-gateway-fields-e90a7c48e/resolution.json.
+- Behavior verification remains pending.
+
+## 2026-09-10T21:58:58.490Z — B07.1-advanced-routes adaptation begun
+
+- Before HEAD: ae7d822f457f3974d1f6a9ba4c7158ec16d127a9.
+- Upstream: 2b0efd8484cc1e20b6de64f8600586fe61dee867.
+- Integrate forwarding and management route editing, explicit balance routes, native balance summaries and raw JSON fallback. Preserve downstream custom-balance precedence and auto-ban exemptions, model/path routing, prompt fields, and per-window ownership.
+- Evidence: evidence/runs/B07.1-advanced-routes-2b0efd848/intent.json.
+
+## 2026-09-10T22:06:04.138Z — B07.1-advanced-routes adaptation recorded
+
+- Code: 423c7dc52f1a5412b1a101a8dd37676b979b65bb.
+- Integrate route management tabs/templates and explicit balance discovery with bounded JSON fallback. Keep custom-balance API precedence and insufficient-balance exemptions. Balance dialogs are scoped to channel/session rather than shared selected-row state. Add balance response, editor preservation and simultaneous-window regressions; translate all upstream additions and four missing validation keys.
+- Evidence: evidence/runs/B07.1-advanced-routes-2b0efd848/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T22:13:52.807Z — B07.1-concurrency adaptation begun
+
+- Before HEAD: 4f98ccc930533ebfe95c54e448c5d0c9b38d42b4.
+- Upstream: 4add708ebe3b74e02dcf141887da2c81cb9b1526.
+- Add bounded background channel test workers and validate concurrency 1-32. Preserve downstream task queues, cancellation, native protocol diagnostics, client profiles, prompts and the dedicated channel-test settings page.
+- Evidence: evidence/runs/B07.1-concurrency-4add708eb/intent.json.
+
+## 2026-09-10T22:19:09.355Z — B07.1-concurrency adaptation recorded
+
+- Code: cb71aed06a131615a78952d2e906125c6da6a4e3.
+- Bounded workers serialize summary/progress and honor cancellation. Preserve processChannelError audit argument and capture downstream test options before parallel execution. Adapt controls and translated validation to separate downstream settings sections; retain all custom request defaults.
+- Evidence: evidence/runs/B07.1-concurrency-4add708eb/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T22:20:43.284Z — B07.1-add-split adaptation begun
+
+- Before HEAD: cb71aed06a131615a78952d2e906125c6da6a4e3.
+- Upstream: bdef117505247769268b209665fb3ad7554c3da7.
+- Restore Add split inside expanded advanced route groups while keeping the collapsible group header, downstream model matching and preserved management routes.
+- Evidence: evidence/runs/B07.1-add-split-bdef11750/intent.json.
+
+## 2026-09-10T22:21:59.837Z — B07.1-add-split adaptation recorded
+
+- Code: 951cd06ea813a499d43f630dace89f9c59bfad9d.
+- Restore Add split outside the optional internal header, keeping downstream Select and collapsible route grouping. Added a reproducing UI regression for collapse, expand and creation.
+- Evidence: evidence/runs/B07.1-add-split-bdef11750/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T22:27:56.642Z — B07 local acceptance complete
+
+- Code: 6ef2e3c9cdfdb3b9e6584ed0b0a23634e740cfc7.
+- All eight upstream units verified locally; 67/153 upstream rows verified.
+- Channels: 138 tests; preservation: 24 files; affected Go and worker race checks passed; independent relaykit DTO tests/build passed.
+- Evidence: evidence/B07-acceptance.json.
+- B08 next; final downstream acceptance remains pending.

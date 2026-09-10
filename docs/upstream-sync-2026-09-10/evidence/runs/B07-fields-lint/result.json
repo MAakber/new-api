@@ -1,0 +1,31 @@
+{
+  "id": "B07-fields-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "src/features/channels/lib/channel-form.ts",
+    "src/features/channels/constants.ts",
+    "src/features/channels/lib/__tests__/channel-form-passthrough.test.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "ae7d822f457f3974d1f6a9ba4c7158ec16d127a9",
+  "started_at": "2026-09-10T21:54:14.331Z",
+  "finished_at": "2026-09-10T21:54:15.023Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

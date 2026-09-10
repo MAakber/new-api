@@ -1,0 +1,37 @@
+{
+  "id": "B07-routes-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/channels/components/channels-columns.tsx",
+    "src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx",
+    "src/features/channels/components/dialogs/balance-query-dialog.tsx",
+    "src/features/channels/lib/advanced-custom.ts",
+    "src/features/channels/lib/channel-actions.ts",
+    "src/features/channels/types.ts",
+    "src/features/channels/__tests__/advanced-custom-editor.test.tsx",
+    "src/features/channels/__tests__/balance-query-dialog.test.tsx",
+    "src/i18n/static-keys.ts",
+    "vitest.channels.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "423c7dc52f1a5412b1a101a8dd37676b979b65bb",
+  "started_at": "2026-09-10T22:06:53.698Z",
+  "finished_at": "2026-09-10T22:06:54.351Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

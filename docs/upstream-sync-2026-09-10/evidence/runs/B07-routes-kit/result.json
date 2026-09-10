@@ -1,0 +1,27 @@
+{
+  "id": "B07-routes-kit",
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./dto",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\relaykit",
+  "tested_commit": "423c7dc52f1a5412b1a101a8dd37676b979b65bb",
+  "started_at": "2026-09-10T22:06:06.725Z",
+  "finished_at": "2026-09-10T22:06:11.270Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "off",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

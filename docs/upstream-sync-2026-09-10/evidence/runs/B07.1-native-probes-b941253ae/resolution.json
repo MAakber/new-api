@@ -1,0 +1,13 @@
+{
+  "upstream": "b941253aea6b9bccf1bc8de503bf3477caafebfe",
+  "before_head": "47f3087072ae32bf7a12398ba5b2192c67a9cdad",
+  "after_head": "251b9a68a66fd664dd58870e382e8fe6eaa247a3",
+  "files": [
+    "controller/channel-test.go",
+    "controller/channel_test_diagnostics_test.go",
+    "controller/channel_test_native_request_test.go",
+    "controller/channel_test_probe.go",
+    "controller/channel_test_probe_relay_test.go"
+  ],
+  "rationale": "Native DTOs now feed both ordinary tests and diagnostics, with Gemini action paths for streaming. Adapt native tool definitions and warm-up caps; retain channel profiles, custom-route dispatch, prompt configuration and diagnostic validation."
+}

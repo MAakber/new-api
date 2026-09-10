@@ -1,0 +1,7 @@
+{
+  "upstream": "e90a7c48e5e47aab3b93ce663e5f1cda0964de11",
+  "before_head": "2c4349984543a258ff80bec698fb285127a980f1",
+  "after_head": "ae7d822f457f3974d1f6a9ba4c7158ec16d127a9",
+  "rationale": "Share request-field eligibility between serialization and editor controls. Include downstream Codex 61/CodeBuddy 63 for OpenAI and Claude Code 62 for Claude; Vercel 64 uses its own converted AI Gateway protocol and has no such field settings. Retain client identities, per-window element IDs, proxies and HTTP transport settings. Keep forced beta query separate from native field support.",
+  "recorded_at": "2026-09-10T21:54:11.264Z"
+}

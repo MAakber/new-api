@@ -1,0 +1,5 @@
+$ tsgo -b
+src/features/channels/__tests__/advanced-custom-editor.test.tsx(97,53): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+error: script "typecheck" exited with code 1

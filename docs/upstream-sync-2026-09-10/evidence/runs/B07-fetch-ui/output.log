@@ -1,0 +1,13 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  2 passed (2)
+      Tests  13 passed (13)
+   Start at  05:49:57
+   Duration  34.07s (import 57%, transform 31%, tests 7%, environment 3%, setup 1%)
+
+  Transform  transforming modules took 20.74s · 31% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+

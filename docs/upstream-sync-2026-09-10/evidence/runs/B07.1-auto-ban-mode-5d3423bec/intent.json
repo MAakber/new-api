@@ -1,0 +1,21 @@
+{
+  "upstream": "5d3423bec13f6da2498bdc5b288c9ee2507fd3ef",
+  "unit": "B07.1-auto-ban-mode",
+  "before_head": "9d2bad13c082832e7af190b9fe5c105146336ae9",
+  "rationale": "Add automatic testing limited to auto-disable-enabled channels. Adapt mode controls into the downstream dedicated channel-test settings section and retain manual task queue behavior, prompt/profile settings and all seven locales.",
+  "files": [
+    "controller/channel-test.go",
+    "controller/channel_test_internal_test.go",
+    "setting/operation_setting/monitor_setting.go",
+    "setting/operation_setting/monitor_setting_test.go",
+    "web/src/features/system-settings/models/routing-reliability-section.tsx",
+    "web/src/features/system-settings/types.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ]
+}

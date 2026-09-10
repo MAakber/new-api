@@ -1,0 +1,25 @@
+{
+  "id": "B07-accept-i18n",
+  "command": [
+    "bun",
+    "run",
+    "i18n:sync"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "951cd06ea813a499d43f630dace89f9c59bfad9d",
+  "started_at": "2026-09-10T22:22:55.786Z",
+  "finished_at": "2026-09-10T22:22:56.098Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

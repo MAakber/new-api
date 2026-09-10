@@ -1,0 +1,27 @@
+{
+  "upstream": "4add708ebe3b74e02dcf141887da2c81cb9b1526",
+  "before_head": "4f98ccc930533ebfe95c54e448c5d0c9b38d42b4",
+  "after_head": "cb71aed06a131615a78952d2e906125c6da6a4e3",
+  "files": [
+    "controller/channel-test.go",
+    "controller/channel_test_internal_test.go",
+    "model/option.go",
+    "setting/operation_setting/monitor_setting.go",
+    "setting/operation_setting/monitor_setting_test.go",
+    "web/src/features/models/components/drawers/model-mutate-drawer.tsx",
+    "web/src/features/system-settings/models/__tests__/channel-test-section.test.tsx",
+    "web/src/features/system-settings/models/channel-test-section.tsx",
+    "web/src/features/system-settings/models/index.tsx",
+    "web/src/features/system-settings/models/routing-reliability-section.tsx",
+    "web/src/features/system-settings/models/section-registry.tsx",
+    "web/src/features/system-settings/types.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ],
+  "rationale": "Bounded workers serialize summary/progress and honor cancellation. Preserve processChannelError audit argument and capture downstream test options before parallel execution. Adapt controls and translated validation to separate downstream settings sections; retain all custom request defaults."
+}

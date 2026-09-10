@@ -1,0 +1,9 @@
+{
+  "upstream": "b941253aea6b9bccf1bc8de503bf3477caafebfe",
+  "unit": "B07.1-native-probes",
+  "before_head": "47f3087072ae32bf7a12398ba5b2192c67a9cdad",
+  "rationale": "Use native Claude and Gemini request DTOs for ordinary tests and diagnostics. Preserve configured prompts, tool probes, custom routes, stream URL semantics and bounded queue warm-up.",
+  "files": [
+    "controller/channel-test.go"
+  ]
+}

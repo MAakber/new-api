@@ -1,0 +1,11 @@
+{
+  "upstream": "c9bc038649d1d1f6f1fe9d6bca3b09f842cdcf6b",
+  "unit": "B07.1-model-categories",
+  "before_head": "ca1d9d2340494db144e6c0d4b012b9b3ae41964d",
+  "rationale": "Extend the shared downstream publisher classifier with upstream model families and priority rules. Preserve session-safe fetch dialogs, multi-window context, type filters, redirect classification, selected hidden models and error/loading states.",
+  "files": [
+    "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+    "web/src/features/channels/lib/index.ts",
+    "web/src/features/channels/lib/model-categories.ts"
+  ]
+}

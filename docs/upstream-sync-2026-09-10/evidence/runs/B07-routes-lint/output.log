@@ -1,0 +1,1 @@
+src/features/channels/__tests__/balance-query-dialog.test.tsx:67:14: error typescript(no-non-null-assertion): Forbidden non-null assertion.

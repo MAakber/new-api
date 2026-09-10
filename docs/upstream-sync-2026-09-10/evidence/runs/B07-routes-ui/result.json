@@ -1,0 +1,30 @@
+{
+  "id": "B07-routes-ui",
+  "command": [
+    "bun",
+    "x",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.channels.config.ts",
+    "src/features/channels/__tests__/advanced-custom-editor.test.tsx",
+    "src/features/channels/__tests__/balance-query-dialog.test.tsx"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "423c7dc52f1a5412b1a101a8dd37676b979b65bb",
+  "started_at": "2026-09-10T22:06:06.723Z",
+  "finished_at": "2026-09-10T22:06:43.400Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

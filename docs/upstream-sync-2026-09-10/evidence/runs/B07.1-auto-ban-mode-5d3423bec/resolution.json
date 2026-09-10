@@ -1,0 +1,22 @@
+{
+  "upstream": "5d3423bec13f6da2498bdc5b288c9ee2507fd3ef",
+  "before_head": "9d2bad13c082832e7af190b9fe5c105146336ae9",
+  "after_head": "01343a4981f5b7517d2679d6f02237406d83ec38",
+  "files": [
+    "controller/channel-test.go",
+    "controller/channel_test_internal_test.go",
+    "setting/operation_setting/monitor_setting.go",
+    "setting/operation_setting/monitor_setting_test.go",
+    "web/src/features/system-settings/models/__tests__/channel-test-section.test.tsx",
+    "web/src/features/system-settings/models/channel-test-section.tsx",
+    "web/src/features/system-settings/types.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ],
+  "rationale": "Apply backend filter and normalization with upstream regression cases. Add the mode to the dedicated downstream settings page and verify save/reload, retaining existing scope labels and prompt/profile/preview controls. Translate the two added UI strings through the approved script in seven locales."
+}

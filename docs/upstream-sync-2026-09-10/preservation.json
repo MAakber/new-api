@@ -30,7 +30,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -63,7 +65,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -109,7 +113,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -134,7 +140,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -167,7 +175,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -198,7 +208,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -229,7 +241,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -263,7 +277,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -299,7 +315,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -335,7 +353,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -508,7 +528,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -819,7 +841,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -879,7 +903,9 @@
     ],
     "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
     "status": "pending",
-    "evidence": [],
+    "evidence": [
+      "evidence/B07-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

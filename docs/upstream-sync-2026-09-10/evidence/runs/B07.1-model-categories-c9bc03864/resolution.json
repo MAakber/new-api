@@ -1,0 +1,10 @@
+{
+  "upstream": "c9bc038649d1d1f6f1fe9d6bca3b09f842cdcf6b",
+  "before_head": "ca1d9d2340494db144e6c0d4b012b9b3ae41964d",
+  "after_head": "47f3087072ae32bf7a12398ba5b2192c67a9cdad",
+  "files": [
+    "web/src/lib/__tests__/model-classification.test.ts",
+    "web/src/lib/model-classification.ts"
+  ],
+  "rationale": "Extend the existing shared publisher classifier with missing upstream families and Sonar/Nemotron derivative priority. Preserve downstream names/icons, namespace precedence, type classification and the session-safe multi-window picker; its existing loading/error/selection behavior supersedes the old upstream dialog refactor."
+}

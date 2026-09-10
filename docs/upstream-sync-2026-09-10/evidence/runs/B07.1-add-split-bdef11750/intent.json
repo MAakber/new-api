@@ -1,0 +1,9 @@
+{
+  "upstream": "bdef117505247769268b209665fb3ad7554c3da7",
+  "unit": "B07.1-add-split",
+  "before_head": "cb71aed06a131615a78952d2e906125c6da6a4e3",
+  "rationale": "Restore Add split inside expanded advanced route groups while keeping the collapsible group header, downstream model matching and preserved management routes.",
+  "files": [
+    "web/src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx"
+  ]
+}

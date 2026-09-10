@@ -1,0 +1,13 @@
+Auto-merging web/src/features/channels/components/drawers/channel-mutate-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/drawers/channel-mutate-drawer.tsx
+Auto-merging web/src/features/channels/constants.ts
+Auto-merging web/src/features/channels/lib/channel-form.ts
+CONFLICT (content): Merge conflict in web/src/features/channels/lib/channel-form.ts
+error: could not apply e90a7c48e... feat: add field passthrough controls for gateway channels (#6847)
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

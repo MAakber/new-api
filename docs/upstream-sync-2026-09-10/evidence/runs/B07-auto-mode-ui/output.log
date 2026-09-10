@@ -1,0 +1,9 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  05:47:30
+   Duration  6.27s (import 60%, environment 17%, tests 11%, setup 7%, transform 5%)
+

@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "scope": "B07 local stage acceptance, final candidate acceptance pending",
+  "commit": "6ef2e3c9cdfdb3b9e6584ed0b0a23634e740cfc7",
+  "checked_at": "2026-09-10T22:27:56.608Z",
+  "checks": [
+    "evidence/runs/B07-accept-channels/result.json",
+    "evidence/runs/B07-accept-preservation/result.json",
+    "evidence/runs/B07-accept-types/result.json",
+    "evidence/runs/B07-accept-lint/result.json",
+    "evidence/runs/B07-accept-i18n/result.json",
+    "evidence/runs/B07-accept-i18n-keys2/result.json",
+    "evidence/runs/B07-concurrency-go/result.json",
+    "evidence/runs/B07-concurrency-race/result.json",
+    "evidence/runs/B07-routes-go/result.json",
+    "evidence/runs/B07-routes-kit/result.json",
+    "evidence/runs/B07-routes-kit-build/result.json"
+  ],
+  "channel_tests": 138,
+  "preservation_files": 24,
+  "literal_i18n_keys": 524,
+  "preservation_ids": [
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D07",
+    "D08",
+    "D09",
+    "D10",
+    "D15",
+    "D24",
+    "D26"
+  ],
+  "notes": [
+    "All eight B07 commits implemented; preserve channel 61/62/63/64 identities and independent floating editor sessions.",
+    "Native Claude/Gemini probes cover ordinary and diagnostic routes; downstream native Gemini custom routes now preserve streaming action paths.",
+    "Custom balance configuration takes precedence. Unknown valid JSON is displayed without changing stored balance or triggering zero-balance disabling.",
+    "Worker results and progress are serialized; request defaults are captured before workers. Concurrency and cancellation tests passed with the race detector.",
+    "Latest Go changes were tested at cb71aed06a131615a78952d2e906125c6da6a4e3. Subsequent changes affect only frontend route control/tests and locales.",
+    "Frontend channels and preservation passed at 951cd06ea813a499d43f630dace89f9c59bfad9d. Current HEAD adds four missing translation keys in every locale; read-only literal-key audit passed.",
+    "Dynamic advanced-route validation strings are registered in static-keys.ts; upstream technical provider names are retained.",
+    "Provider interoperability, browser acceptance and sanitized production-snapshot rehearsal remain pending B18 gates."
+  ]
+}

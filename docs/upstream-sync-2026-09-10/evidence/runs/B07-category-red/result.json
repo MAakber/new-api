@@ -1,0 +1,26 @@
+{
+  "id": "B07-category-red",
+  "command": [
+    "bun",
+    "run",
+    "test:channels",
+    "src/lib/__tests__/model-classification.test.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "0a7aec680026338e7dd4f013bd581007e2486f56",
+  "started_at": "2026-09-10T21:32:37.537Z",
+  "finished_at": "2026-09-10T21:32:39.352Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

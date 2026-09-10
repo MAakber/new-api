@@ -1,0 +1,25 @@
+{
+  "id": "B07-routes-types2",
+  "command": [
+    "bun",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "4f98ccc930533ebfe95c54e448c5d0c9b38d42b4",
+  "started_at": "2026-09-10T22:12:27.990Z",
+  "finished_at": "2026-09-10T22:12:30.720Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}
