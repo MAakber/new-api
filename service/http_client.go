@@ -106,6 +106,7 @@ func newRelayHTTPTransport() *http.Transport {
 	// This only covers the wait for the headers; streaming after the headers arrive
 	// is not affected. Set RELAY_RESPONSE_HEADER_TIMEOUT=0 to restore the old
 	// unbounded behaviour.
+	transport.ResponseHeaderTimeout = 0
 	if seconds := common.RelayResponseHeaderTimeout; seconds > 0 {
 		// Clamp before converting: seconds beyond maxTimeoutSeconds overflow
 		// time.Duration and can wrap into a tiny positive timeout, which would cut
