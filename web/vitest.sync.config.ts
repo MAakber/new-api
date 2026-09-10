@@ -31,6 +31,12 @@ export default defineConfig({
       'src/features/auth/sign-in/**/__tests__/*.test.{ts,tsx}',
       'src/features/wallet/hooks/__tests__/*.test.{ts,tsx}',
       'src/features/wallet/components/__tests__/*.test.{ts,tsx}',
+      'src/features/dashboard/components/overview/__tests__/*.test.{ts,tsx}',
+      'src/features/playground/components/message/__tests__/*.test.{ts,tsx}',
+      'src/components/ai-elements/__tests__/*.test.{ts,tsx}',
+      'src/components/layout/components/__tests__/*.test.{ts,tsx}',
+      'src/components/ui/__tests__/*.test.{ts,tsx}',
+      'src/routes/__tests__/*.test.{ts,tsx}',
     ],
   },
 })
