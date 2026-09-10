@@ -380,7 +380,7 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 			newAPIError: types.NewError(err, types.ErrorCodeChannelModelMappedError),
 		}
 	}
-	if err = helper.ApplyReasoningModelSuffix(info, request); err != nil {
+	if err := helper.ApplyReasoningModelSuffix(c, info, request); err != nil {
 		return testResult{
 			context:     c,
 			localErr:    err,
