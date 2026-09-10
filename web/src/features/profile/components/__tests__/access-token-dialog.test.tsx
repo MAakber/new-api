@@ -30,7 +30,9 @@ vi.mock('../../api', async (importOriginal) => ({
 
 beforeEach(() => {
   vi.mocked(generateAccessToken).mockReset().mockResolvedValue({
-    success: true, message: '', data: 'local-test-access-token',
+    success: true,
+    message: '',
+    data: 'local-test-access-token',
   })
 })
 
@@ -40,9 +42,13 @@ describe('access token rotation confirmation', () => {
     render(<AccessTokenDialog open onOpenChange={vi.fn()} />)
     expect(generateAccessToken).not.toHaveBeenCalled()
     await user.click(screen.getByRole('button', { name: 'Regenerate' }))
-    const confirmation = screen.getByRole('alertdialog', { name: 'Regenerate access token?' })
+    const confirmation = screen.getByRole('alertdialog', {
+      name: 'Regenerate access token?',
+    })
     expect(generateAccessToken).not.toHaveBeenCalled()
-    await user.click(within(confirmation).getByRole('button', { name: 'Cancel' }))
+    await user.click(
+      within(confirmation).getByRole('button', { name: 'Cancel' })
+    )
     expect(generateAccessToken).not.toHaveBeenCalled()
     expect(screen.queryByRole('alertdialog')).toBeNull()
   })
@@ -53,12 +59,18 @@ describe('access token rotation confirmation', () => {
     const view = render(<AccessTokenDialog open onOpenChange={onOpenChange} />)
     await user.click(screen.getByRole('button', { name: 'Regenerate' }))
     await user.click(screen.getByRole('button', { name: 'Regenerate token' }))
-    expect(await screen.findByRole('textbox', { name: 'Token' })).toHaveValue('local-test-access-token')
+    expect(await screen.findByRole('textbox', { name: 'Token' })).toHaveValue(
+      'local-test-access-token'
+    )
     expect(generateAccessToken).toHaveBeenCalledTimes(1)
     const dialog = screen.getByRole('dialog', { name: 'Access Token' })
-    await user.click(within(dialog).getAllByRole('button', { name: 'Close' })[0])
+    await user.click(
+      within(dialog).getAllByRole('button', { name: 'Close' })[0]
+    )
     expect(onOpenChange).toHaveBeenCalledWith(false)
-    view.rerender(<AccessTokenDialog open={false} onOpenChange={onOpenChange} />)
+    view.rerender(
+      <AccessTokenDialog open={false} onOpenChange={onOpenChange} />
+    )
     view.rerender(<AccessTokenDialog open onOpenChange={onOpenChange} />)
     expect(screen.queryByRole('textbox', { name: 'Token' })).toBeNull()
     expect(generateAccessToken).toHaveBeenCalledTimes(1)
