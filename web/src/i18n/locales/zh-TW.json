@@ -3901,6 +3901,7 @@
     "Pre-Consume for Free Models": "免費模型預消耗",
     "Pre-consumed": "預扣費",
     "Pre-Consumed Quota": "預消耗配額",
+    "Preference saved as {{pref}}, but no active subscription. Requests will be rejected.": "已儲存偏好為{{pref}}，目前無生效訂閱，請求將被拒絕",
     "Preference saved as {{pref}}, but no active subscription. Wallet will be used automatically.": "已儲存偏好為{{pref}}，目前無生效訂閱，將自動使用錢包",
     "Preferences": "偏好設定",
     "Prefill Group Management": "預填充分組管理",
