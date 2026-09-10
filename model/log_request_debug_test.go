@@ -72,8 +72,11 @@ func TestRecordLogsUseClientIPAndNeverStoreBody(t *testing.T) {
 	c.Request.RemoteAddr = "198.51.100.7:1234"
 	c.Set("username", "test-user")
 
-	RecordConsumeLog(c, 1, RecordConsumeLogParams{Content: "consume", Other: map[string]interface{}{}})
-	RecordErrorLog(c, 1, 0, "model", "token", "error", 0, 0, false, "default", map[string]interface{}{})
+	other := NewLogOther()
+	other.SetPublic("model_price", 2)
+	other.SetAdmin("billing_model", "mapped-billing-model")
+	RecordConsumeLog(c, 1, RecordConsumeLogParams{Content: "consume", Other: other})
+	RecordErrorLog(c, 1, 0, "model", "token", "error", 0, 0, false, "default", other)
 
 	var logs []Log
 	require.NoError(t, db.Order("type").Find(&logs).Error)
@@ -84,6 +87,8 @@ func TestRecordLogsUseClientIPAndNeverStoreBody(t *testing.T) {
 		parsed, parseErr := common.StrToMap(log.Other)
 		require.NoError(t, parseErr)
 		adminInfo := parsed["admin_info"].(map[string]interface{})
+		require.Equal(t, float64(2), parsed["model_price"])
+		require.Equal(t, "mapped-billing-model", adminInfo["billing_model"])
 		requestDebug := adminInfo["request_debug"].(map[string]interface{})
 		inbound := requestDebug["inbound"].(map[string]interface{})
 		require.NotContains(t, inbound, "body")

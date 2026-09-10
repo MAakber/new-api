@@ -217,6 +217,9 @@ func runMidjourneyTaskUpdateOnce(ctx context.Context, report func(processed, tot
 				if err != nil {
 					logger.LogError(ctx, "fail to increase user quota: "+err.Error())
 				}
+				other := model.NewLogOther()
+				other.SetPublic("task_id", task.MjId)
+				other.SetPublic("reason", "构图失败")
 				model.RecordTaskBillingLog(model.RecordTaskBillingLogParams{
 					UserId:    task.UserId,
 					LogType:   model.LogTypeRefund,
@@ -224,10 +227,7 @@ func runMidjourneyTaskUpdateOnce(ctx context.Context, report func(processed, tot
 					ChannelId: task.ChannelId,
 					ModelName: service.CovertMjpActionToModelName(task.Action),
 					Quota:     task.Quota,
-					Other: map[string]interface{}{
-						"task_id": task.MjId,
-						"reason":  "构图失败",
-					},
+					Other:     other,
 				})
 			}
 		}

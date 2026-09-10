@@ -551,9 +551,10 @@ func TestBuildTestLogOtherInjectsTieredInfo(t *testing.T) {
 		MatchedTier: "base",
 	})
 
-	require.Equal(t, "tiered_expr", other["billing_mode"])
-	require.Equal(t, "base", other["matched_tier"])
-	require.NotEmpty(t, other["expr_b64"])
+	fields := other.Snapshot()
+	require.Equal(t, "tiered_expr", fields["billing_mode"])
+	require.Equal(t, "base", fields["matched_tier"])
+	require.NotEmpty(t, fields["expr_b64"])
 }
 
 func TestResolveChannelTestUserIDUsesRequestUser(t *testing.T) {

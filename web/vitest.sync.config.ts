@@ -25,6 +25,7 @@ export default defineConfig({
   test: {
     ...channelsConfig.test,
     include: [
+      'src/features/usage-logs/components/__tests__/reject-reason.test.tsx',
       'src/features/auth/__tests__/*.test.ts',
       'src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx',
       'src/features/profile/components/__tests__/access-token-dialog.test.tsx',
