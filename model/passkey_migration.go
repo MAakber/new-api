@@ -57,6 +57,9 @@ func MigratePasskeyCredentialIndexes() error {
 	}
 	legacyIndexNames := make([]string, 0)
 	for _, index := range indexes {
+		// Complete metadata takes precedence over the legacy name fallback. The
+		// current non-unique index deliberately reuses the old GORM name.
+		delete(legacyNames, index.Name)
 		if !index.Unique || !isSingleUserIDIndex(index.Columns) {
 			continue
 		}
@@ -64,7 +67,6 @@ func MigratePasskeyCredentialIndexes() error {
 		// It may have been named by a historical custom GORM naming strategy,
 		// so the inspected database metadata is authoritative.
 		legacyIndexNames = append(legacyIndexNames, index.Name)
-		delete(legacyNames, index.Name)
 	}
 	// Some drivers do not expose complete index metadata. Names parsed from the
 	// exact legacy GORM schema are a safe fallback and follow the configured
