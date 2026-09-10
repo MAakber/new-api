@@ -387,7 +387,7 @@ func testChannelWithOptions(ctx context.Context, channel *model.Channel, testUse
 
 	apiType, _ := common.ChannelType2APIType(channel.Type)
 	if info.RelayMode == relayconstant.RelayModeResponsesCompact &&
-		!common.IsResponsesCompactAPIType(apiType) {
+		!common.SupportsResponsesCompact(channel.Type, apiType) {
 		return testResult{
 			context:     c,
 			localErr:    fmt.Errorf("responses compaction test is not supported for api type %d", apiType),
