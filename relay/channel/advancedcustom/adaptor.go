@@ -473,7 +473,8 @@ func shouldUseGeminiStreamURL(converter string, info *relaycommon.RelayInfo) boo
 	return info != nil &&
 		info.IsStream &&
 		(converter == relayconvert.ConverterOpenAIChatToGeminiContent ||
-			converter == relayconvert.ConverterOpenAIResponsesToGemini)
+			converter == relayconvert.ConverterOpenAIResponsesToGemini ||
+			(converter == relayconvert.ConverterNone && info.RelayFormat == types.RelayFormatGemini))
 }
 
 func useGeminiStreamGenerateContentURL(parsedURL *url.URL) {
