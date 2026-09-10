@@ -35,6 +35,7 @@ const defaults: ComponentProps<typeof ChannelTestSection>['defaultValues'] = {
   'monitor_setting.channel_test_show_response_preview': false,
   'monitor_setting.auto_test_channel_enabled': false,
   'monitor_setting.auto_test_channel_minutes': 10,
+  'monitor_setting.channel_test_concurrency': 1,
   'monitor_setting.channel_test_mode': 'scheduled_all',
 }
 
@@ -83,6 +84,61 @@ function renderSettings(settings = defaults) {
 }
 
 describe('channel test settings', () => {
+  it('saves concurrency independently and restores the saved limit', async () => {
+    const user = userEvent.setup()
+    const view = renderSettings()
+    const input = screen.getByRole('spinbutton', {
+      name: 'Channel test concurrency',
+    })
+    expect(input).toHaveValue(1)
+    await user.clear(input)
+    await user.type(input, '4')
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }))
+    await waitFor(() =>
+      expect(updates).toEqual([
+        {
+          url: '/api/option/',
+          body: { key: 'monitor_setting.channel_test_concurrency', value: 4 },
+        },
+      ])
+    )
+    view.unmount()
+    renderSettings({
+      ...defaults,
+      'monitor_setting.channel_test_concurrency': 4,
+    })
+    expect(
+      screen.getByRole('spinbutton', { name: 'Channel test concurrency' })
+    ).toHaveValue(4)
+    expect(
+      screen.getByRole('textbox', { name: 'Default test message' })
+    ).toHaveValue('hi')
+    expect(
+      screen.getByRole('switch', { name: 'Use channel style' })
+    ).toHaveAttribute('aria-checked', 'true')
+  })
+
+  it.each([
+    ['0', 'Channel test concurrency must be between 1 and 32'],
+    ['33', 'Channel test concurrency must be between 1 and 32'],
+    ['1.5', 'Enter a positive integer'],
+  ])(
+    'rejects invalid concurrency %s without updating settings',
+    async (value, message) => {
+      const user = userEvent.setup()
+      renderSettings()
+      const input = screen.getByRole('spinbutton', {
+        name: 'Channel test concurrency',
+      })
+      await user.clear(input)
+      await user.type(input, value)
+      await user.click(screen.getByRole('button', { name: 'Save Changes' }))
+      expect(await screen.findByText(message)).toBeVisible()
+      expect(input).toHaveAttribute('aria-invalid', 'true')
+      expect(updates).toEqual([])
+    }
+  )
+
   it('saves and restores auto-disable-enabled scope without changing other settings', async () => {
     const user = userEvent.setup()
     const view = renderSettings()

@@ -62,26 +62,37 @@ const channelTestModes = [
   'passive_recovery',
 ] as const
 type ChannelTestMode = (typeof channelTestModes)[number]
+const MAX_CHANNEL_TEST_CONCURRENCY = 32
 
-const channelTestSchema = z.object({
-  AutomaticEnableChannelEnabled: z.boolean(),
-  monitor_setting: z.object({
-    channel_test_message: z
-      .string()
-      .max(4096, 'Test message must not exceed 4096 characters'),
-    channel_test_use_channel_style: z.boolean(),
-    channel_test_show_response_preview: z.boolean(),
-    auto_test_channel_enabled: z.boolean(),
-    auto_test_channel_minutes: z.coerce
-      .number()
-      .int()
-      .min(1, 'Interval must be at least 1 minute'),
-    channel_test_mode: z.enum(channelTestModes),
-  }),
-})
+const createChannelTestSchema = (t: (key: string) => string) =>
+  z.object({
+    AutomaticEnableChannelEnabled: z.boolean(),
+    monitor_setting: z.object({
+      channel_test_message: z
+        .string()
+        .max(4096, t('Test message must not exceed 4096 characters')),
+      channel_test_use_channel_style: z.boolean(),
+      channel_test_show_response_preview: z.boolean(),
+      auto_test_channel_enabled: z.boolean(),
+      auto_test_channel_minutes: z.coerce
+        .number()
+        .int()
+        .min(1, t('Interval must be at least 1 minute')),
+      channel_test_concurrency: z.coerce
+        .number()
+        .int(t('Enter a positive integer'))
+        .min(1, t('Channel test concurrency must be between 1 and 32'))
+        .max(
+          MAX_CHANNEL_TEST_CONCURRENCY,
+          t('Channel test concurrency must be between 1 and 32')
+        ),
+      channel_test_mode: z.enum(channelTestModes),
+    }),
+  })
 
-type ChannelTestFormInput = z.input<typeof channelTestSchema>
-type ChannelTestFormValues = z.output<typeof channelTestSchema>
+type ChannelTestSchema = ReturnType<typeof createChannelTestSchema>
+type ChannelTestFormInput = z.input<ChannelTestSchema>
+type ChannelTestFormValues = z.output<ChannelTestSchema>
 
 type ChannelTestSectionProps = {
   defaultValues: {
@@ -91,6 +102,7 @@ type ChannelTestSectionProps = {
     'monitor_setting.channel_test_show_response_preview': boolean
     'monitor_setting.auto_test_channel_enabled': boolean
     'monitor_setting.auto_test_channel_minutes': number
+    'monitor_setting.channel_test_concurrency': number
     'monitor_setting.channel_test_mode': ChannelTestMode
   }
 }
@@ -119,6 +131,8 @@ const buildFormDefaults = (
       defaults['monitor_setting.auto_test_channel_enabled'],
     auto_test_channel_minutes:
       defaults['monitor_setting.auto_test_channel_minutes'],
+    channel_test_concurrency:
+      defaults['monitor_setting.channel_test_concurrency'] ?? 1,
     channel_test_mode: normalizeChannelTestMode(
       defaults['monitor_setting.channel_test_mode']
     ),
@@ -139,6 +153,8 @@ const normalizeDefaults = (
     defaults['monitor_setting.auto_test_channel_enabled'],
   'monitor_setting.auto_test_channel_minutes':
     defaults['monitor_setting.auto_test_channel_minutes'],
+  'monitor_setting.channel_test_concurrency':
+    defaults['monitor_setting.channel_test_concurrency'] ?? 1,
   'monitor_setting.channel_test_mode': normalizeChannelTestMode(
     defaults['monitor_setting.channel_test_mode']
   ),
@@ -158,12 +174,15 @@ const normalizeFormValues = (
     values.monitor_setting.auto_test_channel_enabled,
   'monitor_setting.auto_test_channel_minutes':
     values.monitor_setting.auto_test_channel_minutes,
+  'monitor_setting.channel_test_concurrency':
+    values.monitor_setting.channel_test_concurrency,
   'monitor_setting.channel_test_mode': values.monitor_setting.channel_test_mode,
 })
 
 export function ChannelTestSection(props: ChannelTestSectionProps) {
   const { t } = useTranslation()
   const updateOption = useUpdateOption()
+  const channelTestSchema = createChannelTestSchema(t)
   const baselineRef = useRef<FlatChannelTestDefaults>(
     normalizeDefaults(props.defaultValues)
   )
@@ -424,6 +443,31 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                         : t(
                             'How frequently the system checks eligible channels'
                           )}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='monitor_setting.channel_test_concurrency'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('Channel test concurrency')}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        min={1}
+                        max={MAX_CHANNEL_TEST_CONCURRENCY}
+                        step={1}
+                        {...safeNumberFieldProps(field)}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      {t(
+                        'Maximum number of channels tested at the same time (1-32)'
+                      )}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
