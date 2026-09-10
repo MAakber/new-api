@@ -25,6 +25,7 @@ export default defineConfig({
   test: {
     ...channelsConfig.test,
     include: [
+      'src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx',
       'src/features/profile/components/__tests__/access-token-dialog.test.tsx',
       'src/features/chat/lib/__tests__/*.test.{ts,tsx}',
       'src/features/pricing/lib/__tests__/time-rule-expr.test.ts',
