@@ -63,10 +63,14 @@ describe('advanced custom management and forwarding routes', () => {
     expect(screen.queryByRole('button', { name: 'Add split' })).toBeNull()
     await user.click(screen.getByRole('button', { name: 'Expand all' }))
     await user.click(screen.getByRole('button', { name: 'Add split' }))
-    expect(screen.getByRole('tab', { name: 'Forwarding Routes 2' })).toBeVisible()
-    expect(screen.getByRole('button', {
-      name: /OpenAI Chat.*\/v1\/chat\/completions 2 Routes/,
-    })).toHaveAttribute('aria-expanded', 'true')
+    expect(
+      screen.getByRole('tab', { name: 'Forwarding Routes 2' })
+    ).toBeVisible()
+    expect(
+      screen.getByRole('button', {
+        name: /OpenAI Chat.*\/v1\/chat\/completions 2 Routes/,
+      })
+    ).toHaveAttribute('aria-expanded', 'true')
   })
 
   it('fixes fallback ordering without removing model discovery or balance routes', async () => {
