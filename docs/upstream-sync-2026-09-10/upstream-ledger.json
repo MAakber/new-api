@@ -2727,12 +2727,21 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Ported within-day AND / overnight OR generation, domain checks, adjacent range parsing and seven translations; preserved complex saved rules. Existing billing expression database values remain unchanged until explicitly reviewed and saved.",
+    "resolution_commits": [
+      "b641c8bb54a4d87cc7bf0222d78bfb3df69ee3c8",
+      "e76709e664a6d4e9cb681ab720855a5040760ce3"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B05-web-final/result.json",
+      "evidence/runs/B05-types-final/result.json",
+      "evidence/runs/B05-lint-final/result.json",
+      "evidence/runs/B05-billing-go/result.json",
+      "B05-TIME-RULE-MIGRATION.md"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

@@ -292,27 +292,36 @@
     "upstreamCommits": [
       "ac381acf4bf41204b97bb26b4c58c83275877a2e"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B05.1",
         "action": "阅读计费表达式设计；先写能复现日内 OR 缺陷的测试",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B05.2",
         "action": "适配生成与解析、边界与往返；复查存量表达式方案",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B05.3",
         "action": "在实际候选上验收金额语义并记录迁移影响",
-        "status": "pending"
+        "status": "verified"
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "阅读计费表达式设计；先写能复现日内 OR 缺陷的测试"
+    "codeCommits": [
+      "b641c8bb54a4d87cc7bf0222d78bfb3df69ee3c8",
+      "e76709e664a6d4e9cb681ab720855a5040760ce3"
+    ],
+    "evidence": [
+      "evidence/runs/B05-web-final/result.json",
+      "evidence/runs/B05-types-final/result.json",
+      "evidence/runs/B05-lint-final/result.json",
+      "evidence/runs/B05-billing-go/result.json",
+      "B05-TIME-RULE-MIGRATION.md"
+    ],
+    "nextAction": "Final candidate review and real configuration rehearsal remain in B18."
   },
   {
     "id": "B06",

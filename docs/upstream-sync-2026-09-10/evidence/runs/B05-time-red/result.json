@@ -1,0 +1,26 @@
+{
+  "id": "B05-time-red",
+  "command": [
+    "bun",
+    "run",
+    "test:sync",
+    "time-rule-expr"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "8d30d81a120d51f7f7501de5122abb59f71f5961",
+  "started_at": "2026-09-10T11:00:53.856Z",
+  "finished_at": "2026-09-10T11:00:55.733Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

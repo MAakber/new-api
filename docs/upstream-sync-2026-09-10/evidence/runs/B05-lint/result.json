@@ -1,0 +1,33 @@
+{
+  "id": "B05-lint",
+  "command": [
+    "bun",
+    "x",
+    "--no-install",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/pricing/lib/billing-expr.ts",
+    "src/features/pricing/lib/__tests__/time-rule-expr.test.ts",
+    "src/features/system-settings/models/tiered-pricing-editor.tsx",
+    "src/features/system-settings/models/__tests__/time-rule-editor.test.tsx",
+    "vitest.sync.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "b641c8bb54a4d87cc7bf0222d78bfb3df69ee3c8",
+  "started_at": "2026-09-10T11:17:30.328Z",
+  "finished_at": "2026-09-10T11:17:30.981Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

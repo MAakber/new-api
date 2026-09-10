@@ -1,0 +1,26 @@
+{
+  "id": "B05-editor-red",
+  "command": [
+    "bun",
+    "run",
+    "test:sync",
+    "time-rule-editor"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "09893a432afef2a9ae44dd7b58fe263734d0696e",
+  "started_at": "2026-09-10T11:15:10.186Z",
+  "finished_at": "2026-09-10T11:15:18.564Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

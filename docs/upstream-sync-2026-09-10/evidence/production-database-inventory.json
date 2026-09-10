@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-09-10T11:13:57.696Z",
+  "method": "User-authorized read-only ssh nep; process/listener correlation, configured local DSN target validation, SELECT VERSION(), @@version_comment, @@character_set_server, @@collation_server",
+  "ssh_alias": "nep",
+  "os": "Windows Server 2025 Datacenter 10.0.26100",
+  "application": "new-api-v20260909-403f7d9d.exe",
+  "database_engine": "MariaDB",
+  "database_version": "11.4.4-MariaDB",
+  "server_charset": "latin1",
+  "server_collation": "latin1_swedish_ci",
+  "note": "Server defaults are not evidence of application schema charset. Credentials and DSN were not printed, copied or recorded. Other MySQL 8.4.2 instances are unrelated to this app connection.",
+  "production_writes": false
+}

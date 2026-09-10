@@ -1,0 +1,379 @@
+$ vitest run --config vitest.sync.config.ts time-rule-expr
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts (32 tests | 19 failed) 17ms
+   ❯ time range expression generation (22)
+     × within-day range (start < end) builds an && condition 5ms
+     × equal bounds build an always-false && range instead of a tautology 1ms
+     × drops the rule for out-of-domain negative bounds 1ms
+     × drops the rule for out-of-domain upper bound 0ms
+     × drops the rule for non-integer bound 0ms
+     × drops a scalar rule whose value is out of domain 0ms
+     × keeps hour value 24 in domain: false 0ms
+     × keeps minute value 60 in domain: false 0ms
+     × keeps weekday value 7 in domain: false 0ms
+     × keeps month value 0 in domain: false 0ms
+     × keeps month value 13 in domain: false 0ms
+     × keeps day value 32 in domain: false 0ms
+   ❯ time range expression parsing (9)
+     × parses an && range back into a single MATCH_RANGE condition 2ms
+     × merges adjacent time bounds into MATCH_RANGE when other conditions follow 1ms
+     × parses the issue #6923 two-scalar workaround groups as single ranges 0ms
+     × rejects out-of-domain range bounds instead of parsing them 1ms
+     × rejects fractional range bounds instead of parsing them 0ms
+     × rejects out-of-domain scalar value instead of parsing them 0ms
+     × rejects out-of-domain weekday value instead of parsing them 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 19 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > within-day range (start < end) builds an && condition
+AssertionError: expected '(hour("Asia/Shanghai") >= 9 || hour("…' to be '(hour("Asia/Shanghai") >= 9 && hour("…' // Object.is equality
+
+Expected: "(hour("Asia/Shanghai") >= 9 && hour("Asia/Shanghai") < 12 ? 2 : 1)"
+Received: "(hour("Asia/Shanghai") >= 9 || hour("Asia/Shanghai") < 12 ? 2 : 1)"
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:67:63
+     65|     // Regression test for #6923: the || form is a tautology that appl…
+     66|     // multiplier 24/7.
+     67|     expect(buildRequestRuleExpr([timeRangeGroup('9', '12')])).toBe(
+       |                                                               ^
+     68|       '(hour("Asia/Shanghai") >= 9 && hour("Asia/Shanghai") < 12 ? 2 :…
+     69|     )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > equal bounds build an always-false && range instead of a tautology
+AssertionError: expected '(hour("Asia/Shanghai") >= 9 || hour("…' to be '(hour("Asia/Shanghai") >= 9 && hour("…' // Object.is equality
+
+Expected: "(hour("Asia/Shanghai") >= 9 && hour("Asia/Shanghai") < 9 ? 2 : 1)"
+Received: "(hour("Asia/Shanghai") >= 9 || hour("Asia/Shanghai") < 9 ? 2 : 1)"
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:79:62
+     77|
+     78|   test('equal bounds build an always-false && range instead of a tauto…
+     79|     expect(buildRequestRuleExpr([timeRangeGroup('9', '9')])).toBe(
+       |                                                              ^
+     80|       '(hour("Asia/Shanghai") >= 9 && hour("Asia/Shanghai") < 9 ? 2 : …
+     81|     )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > drops the rule for out-of-domain negative bounds
+AssertionError: expected '(hour("Asia/Shanghai") >= -1 || hour(…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ (hour("Asia/Shanghai") >= -1 || hour("Asia/Shanghai") < -5 ? 2 : 1)
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:89:64
+     87|     ['non-integer bound', '9.5', '12'],
+     88|   ])('drops the rule for %s', (_name, start, end) => {
+     89|     expect(buildRequestRuleExpr([timeRangeGroup(start, end)])).toBe('')
+       |                                                                ^
+     90|   })
+     91|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > drops the rule for out-of-domain upper bound
+AssertionError: expected '(hour("Asia/Shanghai") >= 9 || hour("…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ (hour("Asia/Shanghai") >= 9 || hour("Asia/Shanghai") < 24 ? 2 : 1)
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:89:64
+     87|     ['non-integer bound', '9.5', '12'],
+     88|   ])('drops the rule for %s', (_name, start, end) => {
+     89|     expect(buildRequestRuleExpr([timeRangeGroup(start, end)])).toBe('')
+       |                                                                ^
+     90|   })
+     91|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > drops the rule for non-integer bound
+AssertionError: expected '(hour("Asia/Shanghai") >= 9.5 || hour…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ (hour("Asia/Shanghai") >= 9.5 || hour("Asia/Shanghai") < 12 ? 2 : 1)
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:89:64
+     87|     ['non-integer bound', '9.5', '12'],
+     88|   ])('drops the rule for %s', (_name, start, end) => {
+     89|     expect(buildRequestRuleExpr([timeRangeGroup(start, end)])).toBe('')
+       |                                                                ^
+     90|   })
+     91|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > drops a scalar rule whose value is out of domain
+AssertionError: expected '(hour("Asia/Shanghai") >= 25 ? 2 : 1)' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ (hour("Asia/Shanghai") >= 25 ? 2 : 1)
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:93:59
+     91|
+     92|   test('drops a scalar rule whose value is out of domain', () => {
+     93|     expect(buildRequestRuleExpr([scalarTimeGroup('25')])).toBe('')
+       |                                                           ^
+     94|   })
+     95|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > keeps hour value 24 in domain: false
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > keeps minute value 60 in domain: false
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > keeps weekday value 7 in domain: false
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > keeps month value 0 in domain: false
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > keeps month value 13 in domain: false
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression generation > keeps day value 32 in domain: false
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:116:25
+    114|       scalarTimeGroup(value, timeFunc as TimeFunc),
+    115|     ])
+    116|     expect(expr !== '').toBe(inDomain)
+       |                         ^
+    117|   })
+    118| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression parsing > parses an && range back into a single MATCH_RANGE condition
+AssertionError: expected [ { source: 'time', …(6) }, …(1) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:126:36
+    124|     )
+    125|     expect(groups).toHaveLength(1)
+    126|     expect(groups?.[0].conditions).toHaveLength(1)
+       |                                    ^
+    127|     const condition = groups?.[0].conditions[0] as TimeCondition
+    128|     expect(condition.mode).toBe(MATCH_RANGE)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression parsing > merges adjacent time bounds into MATCH_RANGE when other conditions follow
+AssertionError: expected [ 'eq', 'gte', 'lt' ] to deeply equal [ 'eq', 'range' ]
+
+- Expected
++ Received
+
+  [
+    "eq",
+-   "range",
++   "gte",
++   "lt",
+  ]
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:148:55
+    146|       '(param("service_tier") == "fast" && hour("Asia/Shanghai") >= 9 …
+    147|     )
+    148|     expect(groups?.[0].conditions.map((c) => c.mode)).toEqual([
+       |                                                       ^
+    149|       MATCH_EQ,
+    150|       MATCH_RANGE,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression parsing > parses the issue #6923 two-scalar workaround groups as single ranges
+AssertionError: expected [ { source: 'time', …(6) }, …(1) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:174:32
+    172|     expect(groups).toHaveLength(2)
+    173|     for (const group of groups ?? []) {
+    174|       expect(group.conditions).toHaveLength(1)
+       |                                ^
+    175|       expect(group.conditions[0].mode).toBe(MATCH_RANGE)
+    176|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression parsing > rejects out-of-domain range bounds instead of parsing them
+AssertionError: expected [ { …(2) } ] to be null
+
+- Expected:
+null
+
++ Received:
+[
+  {
+    "conditions": [
+      {
+        "mode": "gte",
+        "rangeEnd": "",
+        "rangeStart": "",
+        "source": "time",
+        "timeFunc": "hour",
+        "timezone": "Asia/Shanghai",
+        "value": "25",
+      },
+      {
+        "mode": "lt",
+        "rangeEnd": "",
+        "rangeStart": "",
+        "source": "time",
+        "timeFunc": "hour",
+        "timezone": "Asia/Shanghai",
+        "value": "30",
+      },
+    ],
+    "multiplier": "2",
+  },
+]
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:193:43
+    191|     // Rejected rules keep the editor in raw mode; a lenient parse wou…
+    192|     // the visual editor silently drop the rule on rebuild.
+    193|     expect(tryParseRequestRuleExpr(expr)).toBeNull()
+       |                                           ^
+    194|   })
+    195| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression parsing > rejects fractional range bounds instead of parsing them
+AssertionError: expected [ { …(2) } ] to be null
+
+- Expected:
+null
+
++ Received:
+[
+  {
+    "conditions": [
+      {
+        "mode": "gte",
+        "rangeEnd": "",
+        "rangeStart": "",
+        "source": "time",
+        "timeFunc": "hour",
+        "timezone": "Asia/Shanghai",
+        "value": "1.5",
+      },
+      {
+        "mode": "lt",
+        "rangeEnd": "",
+        "rangeStart": "",
+        "source": "time",
+        "timeFunc": "hour",
+        "timezone": "Asia/Shanghai",
+        "value": "2.5",
+      },
+    ],
+    "multiplier": "2",
+  },
+]
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:193:43
+    191|     // Rejected rules keep the editor in raw mode; a lenient parse wou…
+    192|     // the visual editor silently drop the rule on rebuild.
+    193|     expect(tryParseRequestRuleExpr(expr)).toBeNull()
+       |                                           ^
+    194|   })
+    195| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression parsing > rejects out-of-domain scalar value instead of parsing them
+AssertionError: expected [ { conditions: [ { …(7) } ], …(1) } ] to be null
+
+- Expected:
+null
+
++ Received:
+[
+  {
+    "conditions": [
+      {
+        "mode": "gte",
+        "rangeEnd": "",
+        "rangeStart": "",
+        "source": "time",
+        "timeFunc": "hour",
+        "timezone": "Asia/Shanghai",
+        "value": "25",
+      },
+    ],
+    "multiplier": "2",
+  },
+]
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:193:43
+    191|     // Rejected rules keep the editor in raw mode; a lenient parse wou…
+    192|     // the visual editor silently drop the rule on rebuild.
+    193|     expect(tryParseRequestRuleExpr(expr)).toBeNull()
+       |                                           ^
+    194|   })
+    195| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/19]⎯
+
+ FAIL  src/features/pricing/lib/__tests__/time-rule-expr.test.ts > time range expression parsing > rejects out-of-domain weekday value instead of parsing them
+AssertionError: expected [ { conditions: [ { …(7) } ], …(1) } ] to be null
+
+- Expected:
+null
+
++ Received:
+[
+  {
+    "conditions": [
+      {
+        "mode": "gte",
+        "rangeEnd": "",
+        "rangeStart": "",
+        "source": "time",
+        "timeFunc": "weekday",
+        "timezone": "UTC",
+        "value": "7",
+      },
+    ],
+    "multiplier": "2",
+  },
+]
+
+ ❯ src/features/pricing/lib/__tests__/time-rule-expr.test.ts:193:43
+    191|     // Rejected rules keep the editor in raw mode; a lenient parse wou…
+    192|     // the visual editor silently drop the rule on rebuild.
+    193|     expect(tryParseRequestRuleExpr(expr)).toBeNull()
+       |                                           ^
+    194|   })
+    195| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/19]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  19 failed | 13 passed (32)
+   Start at  07:00:54
+   Duration  1.25s (environment 60%, setup 31%, transform 5%, tests 2%, import 2%)
+
+error: script "test:sync" exited with code 1

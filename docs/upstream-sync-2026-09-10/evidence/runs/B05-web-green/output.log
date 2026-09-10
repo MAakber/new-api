@@ -1,0 +1,10 @@
+$ vitest run --config vitest.sync.config.ts time-rule
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  2 passed (2)
+      Tests  34 passed (34)
+   Start at  07:17:30
+   Duration  5.28s (import 49%, environment 31%, setup 12%, transform 5%, tests 3%)
+

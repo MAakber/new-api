@@ -210,3 +210,27 @@
 - All nine upstream rows verified for this stage; final review remains pending.
 - Actual Dockerfile.dev image built: codex-new-api-sync-20260910:dev-b01, image 89b0004f0e02, source df7a7ea2f.
 - Next: prioritize B05 billing condition fix and continue B02; read-only production version inspection authorized by user.
+
+## 2026-09-10T11:00:47.480Z — B05.1 baseline regression
+
+- Before HEAD 9bb7a392f26125f33894258aa356e456fd3d2020; upstream ac381acf4bf41204b97bb26b4c58c83275877a2e.
+- Read pkg/billingexpr/expr.md. Import upstream behavior tests only and include in test:sync before source changes.
+- Preserve raw stored expression as the contract; document existing faulty OR review and explicit re-save.
+
+## 2026-09-10T11:13:57.700Z — Production database version confirmed
+
+- Read-only query confirmed new-api uses MariaDB 11.4.4; unrelated MySQL 8.4.2 instances were excluded using process/port correlation.
+- Evidence records only sanitized deployment metadata. No production changes.
+- Local migration matrix must include MariaDB 11.4.4 in addition to SQLite/MySQL/PostgreSQL compatibility.
+
+## 2026-09-10T11:15:03.799Z — B05.2 adapting time conditions
+
+- Red regression: 19 failed / 13 passed, all assertion failures reproducing time rule generation/parser defects.
+- Upstream patch expects an extracted condition parser from later log trace work; transplant that parser only and retain the downstream file.
+- Add editor regression for unsupported saved rules before applying the production fix.
+
+## 2026-09-10T11:40:49.102Z — B05 stage verified
+
+- 34 time-rule and editor regressions pass, plus typecheck, touched lint and backend billing/settlement regressions.
+- Existing configuration review / explicit save / rollback notes: B05-TIME-RULE-MIGRATION.md.
+- Continue B02 protocol support; final source and real-data acceptance remain pending.
