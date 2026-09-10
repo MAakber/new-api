@@ -84,6 +84,54 @@ func TestValidateAnnouncementsRejectsInvalidLifecycleFields(t *testing.T) {
 	}
 }
 
+func TestConsoleLengthsMatchBrowserUTF16Limits(t *testing.T) {
+	tests := []struct {
+		name        string
+		settingType string
+		field       string
+		limit       int
+		item        map[string]interface{}
+	}{
+		{"API route", "ApiInfo", "route", 100, map[string]interface{}{"url": "https://example.com", "description": "gateway", "color": "blue"}},
+		{"announcement content", "Announcements", "content", 500, map[string]interface{}{"publishDate": "2026-08-01T00:00:00Z"}},
+		{"announcement extra", "Announcements", "extra", 100, map[string]interface{}{"content": "maintenance", "publishDate": "2026-08-01T00:00:00Z"}},
+		{"FAQ question", "FAQ", "question", 200, map[string]interface{}{"answer": "gateway help"}},
+		{"uptime category", "UptimeKumaGroups", "categoryName", 50, map[string]interface{}{"url": "https://example.com", "slug": "gateway", "description": "availability"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			values := []struct {
+				name    string
+				text    string
+				invalid bool
+			}{
+				{"BMP at limit", strings.Repeat("界", tt.limit), false},
+				{"BMP over limit", strings.Repeat("界", tt.limit+1), true},
+				{"surrogate pairs at limit", strings.Repeat("😀", tt.limit/2), false},
+				{"surrogate pairs over limit", strings.Repeat("😀", tt.limit/2) + "a", true},
+			}
+			for _, value := range values {
+				t.Run(value.name, func(t *testing.T) {
+					item := make(map[string]interface{}, len(tt.item)+1)
+					for key, field := range tt.item {
+						item[key] = field
+					}
+					item[tt.field] = value.text
+					payload, err := common.Marshal([]map[string]interface{}{item})
+					require.NoError(t, err)
+					err = ValidateConsoleSettings(string(payload), tt.settingType)
+					if value.invalid {
+						require.Error(t, err)
+						assert.Contains(t, err.Error(), "长度不能超过")
+					} else {
+						require.NoError(t, err)
+					}
+				})
+			}
+		})
+	}
+}
+
 func TestGetAnnouncementsFiltersAndSortsLifecycleFields(t *testing.T) {
 	previousSetting := consoleSetting
 	t.Cleanup(func() {
