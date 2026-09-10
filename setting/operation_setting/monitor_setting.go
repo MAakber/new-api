@@ -21,6 +21,7 @@ type MonitorSetting struct {
 
 const (
 	ChannelTestModeScheduledAll    = "scheduled_all"
+	ChannelTestModeAutoBanOnly     = "auto_ban_only"
 	ChannelTestModePassiveRecovery = "passive_recovery"
 
 	DefaultChannelTestMessage  = "hi"
@@ -65,7 +66,9 @@ func GetMonitorSetting() *MonitorSetting {
 			monitorSetting.AutoTestChannelEnabled = parsed
 		}
 	}
-	if monitorSetting.ChannelTestMode != ChannelTestModePassiveRecovery {
+	switch monitorSetting.ChannelTestMode {
+	case ChannelTestModeAutoBanOnly, ChannelTestModePassiveRecovery:
+	default:
 		monitorSetting.ChannelTestMode = ChannelTestModeScheduledAll
 	}
 	message, err := NormalizeChannelTestMessage(monitorSetting.ChannelTestMessage)

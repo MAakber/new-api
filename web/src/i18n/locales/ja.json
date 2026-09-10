@@ -555,6 +555,8 @@
     "Auto Upstream Queue": "Auto Upstream Queue",
     "Auto-disable rules": "自動無効化ルール",
     "Auto-disable status codes": "自動無効化するステータスコード",
+    "Auto-disable-enabled channels only": "自動無効化が有効なチャネルのみ",
+    "Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.": "このモードでは、自動無効化が有効で、手動で無効化されていないチャネルのみを検査します。",
     "Auto-disabled channels only": "自動無効化されたチャネルのみ",
     "Auto-discover": "自動検出",
     "Auto-discovers endpoints from the provider": "プロバイダーからエンドポイントを自動検出します",

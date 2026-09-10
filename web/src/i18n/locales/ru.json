@@ -555,6 +555,8 @@
     "Auto Upstream Queue": "Auto Upstream Queue",
     "Auto-disable rules": "Правила автоотключения",
     "Auto-disable status codes": "Коды автоотключения",
+    "Auto-disable-enabled channels only": "Только каналы с автовыключением",
+    "Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.": "В этом режиме проверяются только каналы с включённым автоматическим отключением, которые не были отключены вручную.",
     "Auto-disabled channels only": "Только автоматически отключённые каналы",
     "Auto-discover": "Автообнаружение",
     "Auto-discovers endpoints from the provider": "Автоматически обнаруживает конечные точки от провайдера",

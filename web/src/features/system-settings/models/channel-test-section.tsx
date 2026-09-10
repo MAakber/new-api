@@ -56,7 +56,11 @@ import { useResetForm } from '../hooks/use-reset-form'
 import { useUpdateOption } from '../hooks/use-update-option'
 import { safeNumberFieldProps } from '../utils/numeric-field'
 
-const channelTestModes = ['scheduled_all', 'passive_recovery'] as const
+const channelTestModes = [
+  'scheduled_all',
+  'auto_ban_only',
+  'passive_recovery',
+] as const
 type ChannelTestMode = (typeof channelTestModes)[number]
 
 const channelTestSchema = z.object({
@@ -94,7 +98,10 @@ type ChannelTestSectionProps = {
 type FlatChannelTestDefaults = ChannelTestSectionProps['defaultValues']
 
 function normalizeChannelTestMode(value?: string): ChannelTestMode {
-  return value === 'passive_recovery' ? 'passive_recovery' : 'scheduled_all'
+  if (value === 'auto_ban_only' || value === 'passive_recovery') {
+    return value
+  }
+  return 'scheduled_all'
 }
 
 const buildFormDefaults = (
@@ -351,6 +358,10 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                           label: t('All eligible channels'),
                         },
                         {
+                          value: 'auto_ban_only',
+                          label: t('Auto-disable-enabled channels only'),
+                        },
+                        {
                           value: 'passive_recovery',
                           label: t('Auto-disabled channels only'),
                         },
@@ -368,6 +379,9 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                           <SelectItem value='scheduled_all'>
                             {t('All eligible channels')}
                           </SelectItem>
+                          <SelectItem value='auto_ban_only'>
+                            {t('Auto-disable-enabled channels only')}
+                          </SelectItem>
                           <SelectItem value='passive_recovery'>
                             {t('Auto-disabled channels only')}
                           </SelectItem>
@@ -375,9 +389,13 @@ export function ChannelTestSection(props: ChannelTestSectionProps) {
                       </SelectContent>
                     </Select>
                     <FormDescription>
-                      {t(
-                        'Full checks include enabled and auto-disabled channels. Recovery checks only include auto-disabled channels. Manually disabled channels are always skipped.'
-                      )}
+                      {channelTestMode === 'auto_ban_only'
+                        ? t(
+                            'Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.'
+                          )
+                        : t(
+                            'Full checks include enabled and auto-disabled channels. Recovery checks only include auto-disabled channels. Manually disabled channels are always skipped.'
+                          )}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

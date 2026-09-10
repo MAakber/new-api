@@ -555,6 +555,8 @@
     "Auto Upstream Queue": "自动上游排队",
     "Auto-disable rules": "自动禁用规则",
     "Auto-disable status codes": "自动禁用状态码",
+    "Auto-disable-enabled channels only": "仅测试已开启自动禁用的渠道",
+    "Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.": "此模式仅探测已开启自动禁用且未被手动禁用的渠道。",
     "Auto-disabled channels only": "仅自动禁用的渠道",
     "Auto-discover": "自动发现",
     "Auto-discovers endpoints from the provider": "自动从提供商发现端点",

@@ -555,6 +555,8 @@
     "Auto Upstream Queue": "Auto Upstream Queue",
     "Auto-disable rules": "Règles de désactivation automatique",
     "Auto-disable status codes": "Codes de statut de désactivation auto",
+    "Auto-disable-enabled channels only": "Canaux avec désactivation automatique uniquement",
+    "Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.": "Ce mode sonde uniquement les canaux dont la désactivation automatique est activée et qui ne sont pas désactivés manuellement.",
     "Auto-disabled channels only": "Canaux désactivés automatiquement uniquement",
     "Auto-discover": "Découverte automatique",
     "Auto-discovers endpoints from the provider": "Découvre automatiquement les points de terminaison du fournisseur",

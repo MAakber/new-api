@@ -72,17 +72,56 @@ afterEach(() => {
   api.defaults.adapter = previousAdapter
 })
 
-function renderSettings() {
+function renderSettings(settings = defaults) {
   return render(
     <QueryClientProvider client={client}>
       <SettingsPageProvider actionsContainer={actions}>
-        <ChannelTestSection defaultValues={defaults} />
+        <ChannelTestSection defaultValues={settings} />
       </SettingsPageProvider>
     </QueryClientProvider>
   )
 }
 
 describe('channel test settings', () => {
+  it('saves and restores auto-disable-enabled scope without changing other settings', async () => {
+    const user = userEvent.setup()
+    const view = renderSettings()
+    await user.click(
+      screen.getByRole('combobox', { name: 'Health check scope' })
+    )
+    await user.click(
+      screen.getByRole('option', { name: 'Auto-disable-enabled channels only' })
+    )
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }))
+    await waitFor(() =>
+      expect(updates).toEqual([
+        {
+          url: '/api/option/',
+          body: {
+            key: 'monitor_setting.channel_test_mode',
+            value: 'auto_ban_only',
+          },
+        },
+      ])
+    )
+    view.unmount()
+    updates = []
+    renderSettings({
+      ...defaults,
+      'monitor_setting.channel_test_mode': 'auto_ban_only',
+    })
+    expect(
+      screen.getByRole('combobox', { name: 'Health check scope' }).textContent
+    ).toContain('Auto-disable-enabled channels only')
+    expect(
+      screen.getByText(
+        'Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.'
+      )
+    ).toBeDefined()
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }))
+    expect(updates).toEqual([])
+  })
+
   it('explains full response previews and separates capability checks from background health checks', () => {
     renderSettings()
     expect(

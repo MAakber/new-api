@@ -555,6 +555,8 @@
     "Auto Upstream Queue": "Auto Upstream Queue",
     "Auto-disable rules": "自動停用規則",
     "Auto-disable status codes": "自動停用狀態碼",
+    "Auto-disable-enabled channels only": "僅測試已啟用自動停用的渠道",
+    "Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.": "此模式僅探測已啟用自動停用且未被手動停用的渠道。",
     "Auto-disabled channels only": "僅自動停用的渠道",
     "Auto-discover": "自動發現",
     "Auto-discovers endpoints from the provider": "自動從供應商發現端點",

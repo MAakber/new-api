@@ -555,6 +555,8 @@
     "Auto Upstream Queue": "Auto Upstream Queue",
     "Auto-disable rules": "Quy tắc tự động tắt",
     "Auto-disable status codes": "Mã trạng thái tự tắt",
+    "Auto-disable-enabled channels only": "Chỉ kênh đã bật tự động vô hiệu hóa",
+    "Auto-disable-enabled mode probes non-manually-disabled channels with auto-disable enabled.": "Chế độ này chỉ kiểm tra các kênh đã bật tự động vô hiệu hóa và không bị vô hiệu hóa thủ công.",
     "Auto-disabled channels only": "Chỉ các kênh bị tắt tự động",
     "Auto-discover": "Tự động khám phá",
     "Auto-discovers endpoints from the provider": "Tự động khám phá các điểm cuối từ nhà cung cấp",
