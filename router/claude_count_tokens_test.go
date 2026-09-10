@@ -19,6 +19,7 @@ import (
 
 func TestClaudeCodeCountTokensForwardsNativeResultAndRefundsPrecharge(t *testing.T) {
 	setupRelayRouterTestDB(t)
+	require.NoError(t, model.DB.AutoMigrate(&model.Channel{}, &model.UserSubscription{}, &model.SubscriptionPlan{}))
 	originalCache, originalBatch, originalLogs := common.MemoryCacheEnabled, common.BatchUpdateEnabled, common.LogConsumeEnabled
 	originalCount := constant.CountToken
 	originalRatios := ratio_setting.ModelRatio2JSONString()
