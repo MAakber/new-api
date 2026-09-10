@@ -19,7 +19,15 @@ For commercial licensing, please contact support@quantumnous.com
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import i18next from 'i18next'
-import { afterEach, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest'
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  vi,
+} from 'vitest'
 
 import type { Message } from '../../../types'
 import { PlaygroundMessageEditor } from '../playground-message-editor'
@@ -33,7 +41,10 @@ const userMessage: Message = {
 }
 
 beforeEach(() => {
-  vi.stubGlobal('confirm', vi.fn(() => false))
+  vi.stubGlobal(
+    'confirm',
+    vi.fn(() => false)
+  )
 })
 
 afterEach(() => {
