@@ -68,7 +68,7 @@ describe('AQBot provider import', () => {
         apiKey: 'fixture',
       })
     )
-    expect(JSON.parse(atob(resolved.searchParams.get('data')!))).toEqual({
+    expect(JSON.parse(atob(resolved.searchParams.get('data') ?? ''))).toEqual({
       id: 'new-api',
       baseUrl: 'https://gateway.example.test',
       apiKey: 'sk-fixture',
