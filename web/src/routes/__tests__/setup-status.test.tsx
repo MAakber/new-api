@@ -31,7 +31,7 @@ let client: QueryClient
 beforeAll(async () => {
   // Transform the root's application imports before timing individual route checks.
   await import('../__root')
-})
+}, 30_000)
 
 beforeEach(() => {
   vi.resetModules()
