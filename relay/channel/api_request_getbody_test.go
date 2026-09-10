@@ -417,18 +417,24 @@ func runGoAwayAfterFirstRequestServer(ln net.Listener) <-chan h2ServerResult {
 
 			if attempt == 0 {
 				err = framer.WriteGoAway(0, http2.ErrCodeNo, nil)
-				conn.Close()
-				if err != nil {
-					res.err = err
-					return
-				}
-				continue
+			} else {
+				err = writeH2TestResponse(framer, streamID)
 			}
-
-			err = writeH2TestResponse(framer, streamID)
-			conn.Close()
 			if err != nil {
+				conn.Close()
 				res.err = err
+				return
+			}
+			// Deliver the final frames before closing the read side. Closing a TCP
+			// socket with unread SETTINGS/WINDOW_UPDATE frames can send RST on
+			// Windows, which is not the graceful GOAWAY this fixture exercises.
+			if tcp, ok := conn.(*net.TCPConn); ok {
+				_ = tcp.CloseWrite()
+				_, _ = io.Copy(io.Discard, tcp)
+			}
+			conn.Close()
+			if attempt == 0 {
+				continue
 			}
 			return
 		}
