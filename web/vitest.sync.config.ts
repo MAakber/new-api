@@ -26,6 +26,7 @@ export default defineConfig({
     ...channelsConfig.test,
     include: [
       'src/features/chat/lib/__tests__/*.test.{ts,tsx}',
+      'src/features/pricing/lib/__tests__/time-rule-expr.test.ts',
       'src/features/auth/sign-in/**/__tests__/*.test.{ts,tsx}',
       'src/features/wallet/hooks/__tests__/*.test.{ts,tsx}',
       'src/features/wallet/components/__tests__/*.test.{ts,tsx}',
