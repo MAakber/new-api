@@ -11,6 +11,7 @@
     "test:channels": "vitest run --config vitest.channels.config.ts",
     "test:drawing": "vitest run --config vitest.drawing.config.ts",
     "test:playground": "vitest run --config vitest.playground.config.ts",
+    "test:preservation": "node scripts/test-preservation.mjs",
     "lint": "oxlint -c .oxlintrc.json .",
     "lint:fix": "oxlint -c .oxlintrc.json . --fix",
     "preview": "rsbuild preview",
