@@ -1,0 +1,16 @@
+$ node scripts/test-preservation.mjs login-session
+bun test v1.3.14 (0d9b296a)
+
+src\features\security\components\__tests__\login-session-utils.test.ts:
+(pass) login session presentation > labels built-in and provider OAuth login methods [0.16ms]
+(pass) login session presentation > labels iPad Safari as iOS when its user agent also mentions Mac OS X [0.05ms]
+(pass) login session presentation > labels a touch-capable current iPad session as iOS when its desktop user agent says Macintosh [0.02ms]
+(pass) login session presentation > keeps touch-capable Windows Chrome sessions identifiable
+(pass) login session presentation > keeps Android Chrome sessions identifiable when their user agent mentions Linux
+(pass) login session presentation > keeps genuine macOS Safari sessions identifiable
+(pass) login session presentation > falls back to the unknown-device label for an empty user agent [0.04ms]
+
+ 7 pass
+ 0 fail
+Ran 7 tests across 1 file. [40.00ms]
+{"files":1,"passed":1,"failed":[]}

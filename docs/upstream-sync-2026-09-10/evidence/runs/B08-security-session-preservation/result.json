@@ -1,0 +1,26 @@
+{
+  "id": "B08-security-session-preservation",
+  "command": [
+    "bun",
+    "run",
+    "test:preservation",
+    "login-session"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "37e542dd4da3f95616c824b8f8dbabb0d77d1353",
+  "started_at": "2026-09-10T23:23:12.566Z",
+  "finished_at": "2026-09-10T23:23:12.839Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

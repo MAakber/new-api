@@ -1,0 +1,28 @@
+{
+  "id": "B08-proofs-mysql57",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run=^(TestSecurityEnrollment|TestAdditionalPasskey|TestPasskeyRegisterFinish)",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "5bf3f4b30a853589c568287608d2a0d91ee12447",
+  "started_at": "2026-09-10T23:50:10.336Z",
+  "finished_at": "2026-09-10T23:52:14.570Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": true,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

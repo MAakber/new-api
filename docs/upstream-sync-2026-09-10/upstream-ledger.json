@@ -5782,12 +5782,27 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Preserved named multi-Passkey credentials, avatar APIs, mandatory IP auditing, downstream log privacy, account fields, compact date picker and channel floating windows. Added session-independent audit storage with SQLite TEXT fallback, JSON precision, role projections, token lifecycle and cancellation tests. Go packages and 76 frontend cases pass; real SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24 fresh/upgrade/split-log tests pass. B09 public-cache and B14 plugin fixtures remain tracked dependencies. ClickHouse and full startup DDL matrix remain B08 validation work.",
+    "resolution_commits": [
+      "37e542dd4da3f95616c824b8f8dbabb0d77d1353",
+      "26431b8c03c70eddbda1c4c07a4600951ec9fd3b",
+      "dd13952fa267f39227fe2afd60b05afb5d13dd1f"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-security-center-d8cb17744/resolution.json",
+      "evidence/runs/B08-security-go/result.json",
+      "evidence/runs/B08-security-ui-fixed/result.json",
+      "evidence/runs/B08-security-ui-types-fixed/result.json",
+      "evidence/runs/B08-security-lint/result.json",
+      "evidence/runs/B08-security-mobile-lint/result.json",
+      "evidence/runs/B08-security-session-preservation/result.json",
+      "evidence/runs/B08-security-mariadb-postgres/result.json",
+      "evidence/runs/B08-security-mysql57-selected/result.json",
+      "evidence/B08-security-center-conflicts.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5979,12 +5994,24 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated session/auth-version/scope/context bound single-use proofs, password and linked OAuth verification and protected enrollment. Preserved named multiple Passkeys with device-targeted deletion, server-owned registration names, proxy HTTP transports through initialization injection, structured multi-key disclosure and late-response cancellation. Preliminary affected Go packages, UI cases, types and touched-file lint pass; real database and recorded final-source checks follow.",
+    "resolution_commits": [
+      "5bf3f4b30a853589c568287608d2a0d91ee12447"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-operation-proofs-45c3fbe8a/resolution.json",
+      "evidence/runs/B08-proofs-go/result.json",
+      "evidence/runs/B08-proofs-ui/result.json",
+      "evidence/runs/B08-proofs-types/result.json",
+      "evidence/runs/B08-proofs-lint/result.json",
+      "evidence/runs/B08-proofs-i18n/result.json",
+      "evidence/runs/B08-proofs-mariadb/result.json",
+      "evidence/runs/B08-proofs-mysql57/result.json",
+      "evidence/runs/B08-proofs-postgres-url/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

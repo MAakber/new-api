@@ -1,0 +1,356 @@
+=== RUN   TestPasskeyRegisterFinishRejectsUnapprovedFlowWithoutConsumingIt
+    passkey_test.go:68: isolated database: newapi_audit_1789084213881908000 (mysql)
+    passkey_test.go:68: isolated database: newapi_audit_1789084213897923700 (mysql)
+    passkey_test.go:68: database: mysql 5.7.44
+--- PASS: TestPasskeyRegisterFinishRejectsUnapprovedFlowWithoutConsumingIt (1.80s)
+=== RUN   TestAdditionalPasskeyRegistrationRequiresExistingPasskeyProof
+    passkey_test.go:96: isolated database: newapi_audit_1789084215674997000 (mysql)
+    passkey_test.go:96: isolated database: newapi_audit_1789084215682889400 (mysql)
+    passkey_test.go:96: database: mysql 5.7.44
+--- PASS: TestAdditionalPasskeyRegistrationRequiresExistingPasskeyProof (1.54s)
+=== RUN   TestSecurityEnrollmentRejectsMissingProofBeforeCreatingCredentials
+    security_enrollment_test.go:186: isolated database: newapi_audit_1789084217210653400 (mysql)
+    security_enrollment_test.go:186: isolated database: newapi_audit_1789084217217511100 (mysql)
+    security_enrollment_test.go:186: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentRejectsMissingProofBeforeCreatingCredentials//api/user/2fa/setup
+=== RUN   TestSecurityEnrollmentRejectsMissingProofBeforeCreatingCredentials//api/user/passkey/register/begin
+--- PASS: TestSecurityEnrollmentRejectsMissingProofBeforeCreatingCredentials (1.53s)
+    --- PASS: TestSecurityEnrollmentRejectsMissingProofBeforeCreatingCredentials//api/user/2fa/setup (0.00s)
+    --- PASS: TestSecurityEnrollmentRejectsMissingProofBeforeCreatingCredentials//api/user/passkey/register/begin (0.05s)
+=== RUN   TestSecurityEnrollmentMethodPolicy
+=== RUN   TestSecurityEnrollmentMethodPolicy/first_factor_uses_password
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084218742591000 (mysql)
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084218749441900 (mysql)
+    security_enrollment_test.go:229: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentMethodPolicy/existing_passkey_takes_precedence
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084220313509900 (mysql)
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084220319709300 (mysql)
+    security_enrollment_test.go:229: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentMethodPolicy/twofa_takes_precedence_over_passkey
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084222041287900 (mysql)
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084222048536400 (mysql)
+    security_enrollment_test.go:229: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentMethodPolicy/locked_twofa_does_not_fall_back
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084223673166000 (mysql)
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084223681644300 (mysql)
+    security_enrollment_test.go:229: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentMethodPolicy/disabled_passkey_does_not_fall_back
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084225348871300 (mysql)
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084225356069600 (mysql)
+    security_enrollment_test.go:229: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentMethodPolicy/disabled_registration_does_not_request_a_password
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084227103489700 (mysql)
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084227111377900 (mysql)
+    security_enrollment_test.go:229: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentMethodPolicy/passwordless_account_without_providers_is_unavailable
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084228635051200 (mysql)
+    security_enrollment_test.go:229: isolated database: newapi_audit_1789084228641963100 (mysql)
+    security_enrollment_test.go:229: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentMethodPolicy (11.47s)
+    --- PASS: TestSecurityEnrollmentMethodPolicy/first_factor_uses_password (1.57s)
+    --- PASS: TestSecurityEnrollmentMethodPolicy/existing_passkey_takes_precedence (1.73s)
+    --- PASS: TestSecurityEnrollmentMethodPolicy/twofa_takes_precedence_over_passkey (1.63s)
+    --- PASS: TestSecurityEnrollmentMethodPolicy/locked_twofa_does_not_fall_back (1.68s)
+    --- PASS: TestSecurityEnrollmentMethodPolicy/disabled_passkey_does_not_fall_back (1.75s)
+    --- PASS: TestSecurityEnrollmentMethodPolicy/disabled_registration_does_not_request_a_password (1.53s)
+    --- PASS: TestSecurityEnrollmentMethodPolicy/passwordless_account_without_providers_is_unavailable (1.57s)
+=== RUN   TestSecurityEnrollmentPasswordProofIsBoundToSessionAndAction
+    security_enrollment_test.go:260: isolated database: newapi_audit_1789084230210125200 (mysql)
+    security_enrollment_test.go:260: isolated database: newapi_audit_1789084230216465700 (mysql)
+    security_enrollment_test.go:260: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentPasswordProofIsBoundToSessionAndAction (2.84s)
+=== RUN   TestSecurityEnrollmentProofStartsOnlyOneSetup
+    security_enrollment_test.go:289: isolated database: newapi_audit_1789084233055021800 (mysql)
+    security_enrollment_test.go:289: isolated database: newapi_audit_1789084233061478900 (mysql)
+    security_enrollment_test.go:289: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentProofStartsOnlyOneSetup (3.10s)
+=== RUN   TestSecurityEnrollmentOperationContext
+=== RUN   TestSecurityEnrollmentOperationContext/channel
+=== RUN   TestSecurityEnrollmentOperationContext/missing_channel
+=== RUN   TestSecurityEnrollmentOperationContext/null_channel
+=== RUN   TestSecurityEnrollmentOperationContext/string_channel
+=== RUN   TestSecurityEnrollmentOperationContext/fractional_channel
+=== RUN   TestSecurityEnrollmentOperationContext/zero_channel
+=== RUN   TestSecurityEnrollmentOperationContext/negative_channel
+=== RUN   TestSecurityEnrollmentOperationContext/overflow_channel
+=== RUN   TestSecurityEnrollmentOperationContext/extra_field
+=== RUN   TestSecurityEnrollmentOperationContext/null_context
+=== RUN   TestSecurityEnrollmentOperationContext/array_context
+=== RUN   TestSecurityEnrollmentOperationContext/empty_enrollment
+=== RUN   TestSecurityEnrollmentOperationContext/implicit_enrollment
+=== RUN   TestSecurityEnrollmentOperationContext/enrollment_target_injection
+=== RUN   TestSecurityEnrollmentOperationContext/unknown_scope
+--- PASS: TestSecurityEnrollmentOperationContext (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/missing_channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/null_channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/string_channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/fractional_channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/zero_channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/negative_channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/overflow_channel (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/extra_field (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/null_context (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/array_context (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/empty_enrollment (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/implicit_enrollment (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/enrollment_target_injection (0.00s)
+    --- PASS: TestSecurityEnrollmentOperationContext/unknown_scope (0.00s)
+=== RUN   TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption
+    security_enrollment_test.go:339: isolated database: newapi_audit_1789084236153139300 (mysql)
+    security_enrollment_test.go:339: isolated database: newapi_audit_1789084236159619200 (mysql)
+    security_enrollment_test.go:339: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/channel
+=== RUN   TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/scope
+=== RUN   TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/user
+=== RUN   TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/session
+=== RUN   TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/session_version
+=== RUN   TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/user_version
+--- PASS: TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption (3.21s)
+    --- PASS: TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/channel (0.00s)
+    --- PASS: TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/scope (0.00s)
+    --- PASS: TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/user (0.00s)
+    --- PASS: TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/session (0.00s)
+    --- PASS: TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/session_version (0.00s)
+    --- PASS: TestSecurityEnrollmentChannelProofRejectsMismatchesBeforeConsumption/user_version (0.00s)
+=== RUN   TestSecurityEnrollmentProofConcurrentConsumption
+    security_enrollment_test.go:379: isolated database: newapi_audit_1789084239359856600 (mysql)
+    security_enrollment_test.go:379: isolated database: newapi_audit_1789084239366115100 (mysql)
+    security_enrollment_test.go:379: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentProofConcurrentConsumption (1.96s)
+=== RUN   TestSecurityEnrollmentProofRequiresLiveRecordAndExactDeadline
+    security_enrollment_test.go:404: isolated database: newapi_audit_1789084241319156400 (mysql)
+    security_enrollment_test.go:404: isolated database: newapi_audit_1789084241325982000 (mysql)
+    security_enrollment_test.go:404: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentProofRequiresLiveRecordAndExactDeadline (2.32s)
+=== RUN   TestSecurityEnrollmentProofIsBurnedAfterBusinessFailure
+    security_enrollment_test.go:428: isolated database: newapi_audit_1789084243636277700 (mysql)
+    security_enrollment_test.go:428: isolated database: newapi_audit_1789084243642981300 (mysql)
+    security_enrollment_test.go:428: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:50:45 | SYSTEM | auth session internal error (POST /api/user/passkey/register/begin): injected creation failure 
+--- PASS: TestSecurityEnrollmentProofIsBurnedAfterBusinessFailure (2.59s)
+=== RUN   TestSecurityEnrollmentProofStorageErrorsFailClosed
+=== RUN   TestSecurityEnrollmentProofStorageErrorsFailClosed/issuance
+    security_enrollment_test.go:446: isolated database: newapi_audit_1789084246224425900 (mysql)
+    security_enrollment_test.go:446: isolated database: newapi_audit_1789084246230643200 (mysql)
+    security_enrollment_test.go:446: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:50:48 | SYSTEM | auth session internal error (POST /api/verify): private proof database failure 
+=== RUN   TestSecurityEnrollmentProofStorageErrorsFailClosed/consumption
+    security_enrollment_test.go:446: isolated database: newapi_audit_1789084248088736600 (mysql)
+    security_enrollment_test.go:446: isolated database: newapi_audit_1789084248095690500 (mysql)
+    security_enrollment_test.go:446: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentProofStorageErrorsFailClosed (4.39s)
+    --- PASS: TestSecurityEnrollmentProofStorageErrorsFailClosed/issuance (1.86s)
+    --- PASS: TestSecurityEnrollmentProofStorageErrorsFailClosed/consumption (2.53s)
+=== RUN   TestSecurityEnrollmentVerificationTransportsRejectInvalidContext
+    security_enrollment_test.go:488: isolated database: newapi_audit_1789084250615642300 (mysql)
+    security_enrollment_test.go:488: isolated database: newapi_audit_1789084250621624600 (mysql)
+    security_enrollment_test.go:488: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentVerificationTransportsRejectInvalidContext//api/verify
+=== RUN   TestSecurityEnrollmentVerificationTransportsRejectInvalidContext//api/user/passkey/verify/begin
+=== RUN   TestSecurityEnrollmentVerificationTransportsRejectInvalidContext//api/oauth/state
+--- PASS: TestSecurityEnrollmentVerificationTransportsRejectInvalidContext (1.49s)
+    --- PASS: TestSecurityEnrollmentVerificationTransportsRejectInvalidContext//api/verify (0.00s)
+    --- PASS: TestSecurityEnrollmentVerificationTransportsRejectInvalidContext//api/user/passkey/verify/begin (0.00s)
+    --- PASS: TestSecurityEnrollmentVerificationTransportsRejectInvalidContext//api/oauth/state (0.00s)
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/expired
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084252106418900 (mysql)
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084252112794500 (mysql)
+    security_enrollment_test.go:513: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/revoked
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084254463408800 (mysql)
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084254470364200 (mysql)
+    security_enrollment_test.go:513: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/session_version
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084257014056600 (mysql)
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084257020614200 (mysql)
+    security_enrollment_test.go:513: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/user_version
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084259462384700 (mysql)
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084259469855100 (mysql)
+    security_enrollment_test.go:513: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/method
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084261888159500 (mysql)
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084261894542600 (mysql)
+    security_enrollment_test.go:513: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/other_session
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084264586676400 (mysql)
+    security_enrollment_test.go:513: isolated database: newapi_audit_1789084264596819200 (mysql)
+    security_enrollment_test.go:513: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization (14.98s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/expired (2.36s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/revoked (2.55s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/session_version (2.45s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/user_version (2.43s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/method (2.70s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/other_session (2.50s)
+=== RUN   TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead
+    security_enrollment_test.go:562: isolated database: newapi_audit_1789084267087345000 (mysql)
+    security_enrollment_test.go:562: isolated database: newapi_audit_1789084267093652900 (mysql)
+    security_enrollment_test.go:562: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/login_token_only
+=== RUN   TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/access_token_as_proof
+=== RUN   TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/other_channel
+=== RUN   TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/authorized_channel
+=== RUN   TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/replay
+--- PASS: TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead (8.45s)
+    --- PASS: TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/login_token_only (0.14s)
+    --- PASS: TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/access_token_as_proof (0.14s)
+    --- PASS: TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/other_channel (0.14s)
+    --- PASS: TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/authorized_channel (0.62s)
+    --- PASS: TestSecurityEnrollmentPasskeyProofProtectsChannelKeyRead/replay (0.48s)
+=== RUN   TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice
+    security_enrollment_test.go:687: isolated database: newapi_audit_1789084275533465700 (mysql)
+    security_enrollment_test.go:687: isolated database: newapi_audit_1789084275540081100 (mysql)
+    security_enrollment_test.go:687: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice/different_device
+=== RUN   TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice/legacy_delete_all
+=== RUN   TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice/approved_device
+--- PASS: TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice (3.01s)
+    --- PASS: TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice/different_device (0.09s)
+    --- PASS: TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice/legacy_delete_all (0.14s)
+    --- PASS: TestSecurityEnrollmentPasskeyDeletionIsBoundToOneDevice/approved_device (1.21s)
+=== RUN   TestSecurityEnrollmentVerifyRequiresDedicatedFlowForInteractiveMethods
+=== RUN   TestSecurityEnrollmentVerifyRequiresDedicatedFlowForInteractiveMethods/passkey
+    security_enrollment_test.go:749: isolated database: newapi_audit_1789084278541636700 (mysql)
+    security_enrollment_test.go:749: isolated database: newapi_audit_1789084278549352700 (mysql)
+    security_enrollment_test.go:749: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentVerifyRequiresDedicatedFlowForInteractiveMethods/oauth
+    security_enrollment_test.go:749: isolated database: newapi_audit_1789084280260877200 (mysql)
+    security_enrollment_test.go:749: isolated database: newapi_audit_1789084280267038800 (mysql)
+    security_enrollment_test.go:749: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentVerifyRequiresDedicatedFlowForInteractiveMethods (3.49s)
+    --- PASS: TestSecurityEnrollmentVerifyRequiresDedicatedFlowForInteractiveMethods/passkey (1.72s)
+    --- PASS: TestSecurityEnrollmentVerifyRequiresDedicatedFlowForInteractiveMethods/oauth (1.77s)
+=== RUN   TestSecurityEnrollmentTwoFAFlowAndSessionRotation
+    security_enrollment_test.go:774: isolated database: newapi_audit_1789084282028114700 (mysql)
+    security_enrollment_test.go:774: isolated database: newapi_audit_1789084282034457100 (mysql)
+    security_enrollment_test.go:774: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentTwoFAFlowAndSessionRotation (6.41s)
+=== RUN   TestSecurityEnrollmentSetupAndEnableRollback
+    security_enrollment_test.go:835: isolated database: newapi_audit_1789084288443076800 (mysql)
+    security_enrollment_test.go:835: isolated database: newapi_audit_1789084288449915100 (mysql)
+    security_enrollment_test.go:835: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentSetupAndEnableRollback (5.43s)
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/success
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084293878034700 (mysql)
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084293884982800 (mysql)
+    security_enrollment_test.go:886: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/different_account
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084296678602700 (mysql)
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084296685233100 (mysql)
+    security_enrollment_test.go:886: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/binding_changed
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084298690769100 (mysql)
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084298697279400 (mysql)
+    security_enrollment_test.go:886: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/session_changed
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084300777251800 (mysql)
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084300785269000 (mysql)
+    security_enrollment_test.go:886: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/auth_version_changed
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084302538907400 (mysql)
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084302545543000 (mysql)
+    security_enrollment_test.go:886: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/provider_disabled
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084304528778800 (mysql)
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084304535868400 (mysql)
+    security_enrollment_test.go:886: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/cancelled
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084306361377300 (mysql)
+    security_enrollment_test.go:886: isolated database: newapi_audit_1789084306367062000 (mysql)
+    security_enrollment_test.go:886: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings (14.43s)
+    --- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/success (2.80s)
+    --- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/different_account (2.01s)
+    --- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/binding_changed (2.09s)
+    --- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/session_changed (1.76s)
+    --- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/auth_version_changed (1.99s)
+    --- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/provider_disabled (1.83s)
+    --- PASS: TestSecurityEnrollmentOAuthVerificationNeverChangesLoginOrBindings/cancelled (1.95s)
+=== RUN   TestSecurityEnrollmentEncryptedPasswordVerification
+    security_enrollment_test.go:952: isolated database: newapi_audit_1789084308311064800 (mysql)
+    security_enrollment_test.go:952: isolated database: newapi_audit_1789084308317214200 (mysql)
+    security_enrollment_test.go:952: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentEncryptedPasswordVerification (2.59s)
+=== RUN   TestSecurityEnrollmentTwoFAFailureAccountingAndStorageErrors
+    security_enrollment_test.go:980: isolated database: newapi_audit_1789084310902279000 (mysql)
+    security_enrollment_test.go:980: isolated database: newapi_audit_1789084310908765200 (mysql)
+    security_enrollment_test.go:980: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentTwoFAFailureAccountingAndStorageErrors (2.21s)
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/methods
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084313112796700 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084313119021800 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:51:54 | SYSTEM | auth session internal error (GET /api/verify/methods): database connection failed: private-db-host private_table SELECT secret_column 
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/password
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084314661375200 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084314667376200 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:51:56 | SYSTEM | auth session internal error (POST /api/verify): database connection failed: private-db-host private_table SELECT secret_column 
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/passkey
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084316275312400 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084316281823100 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:51:57 | SYSTEM | auth session internal error (POST /api/user/passkey/register/begin): database connection failed: private-db-host private_table SELECT secret_column 
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/2fa_status
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084317869263000 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084317875602200 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:51:59 | SYSTEM | auth session internal error (GET /api/user/2fa/status): database connection failed: private-db-host private_table SELECT secret_column 
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/2fa_setup
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084319479601900 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084319485680800 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:52:01 | SYSTEM | auth session internal error (POST /api/user/2fa/setup): database connection failed: private-db-host private_table SELECT secret_column 
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/2fa_flow
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084321933004700 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084321939169800 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:52:04 | SYSTEM | auth session internal error (POST /api/user/2fa/setup): database connection failed: private-db-host private_table SELECT secret_column 
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/oauth_state
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084324693026700 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084324700066400 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:52:06 | SYSTEM | auth session internal error (POST /api/oauth/state): database connection failed: private-db-host private_table SELECT secret_column 
+=== RUN   TestSecurityEnrollmentDatabaseErrorsAreNotReturned/channel_key
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084326259389100 (mysql)
+    security_enrollment_test.go:1052: isolated database: newapi_audit_1789084326265537900 (mysql)
+    security_enrollment_test.go:1052: database: mysql 5.7.44
+[ERR] 2026/09/11 - 07:52:07 | SYSTEM | auth session internal error (POST /api/channel/1/key): database connection failed: private-db-host private_table SELECT secret_column 
+--- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned (14.73s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/methods (1.55s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/password (1.61s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/passkey (1.59s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/2fa_status (1.61s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/2fa_setup (2.45s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/2fa_flow (2.76s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/oauth_state (1.57s)
+    --- PASS: TestSecurityEnrollmentDatabaseErrorsAreNotReturned/channel_key (1.58s)
+=== RUN   TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails
+=== RUN   TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/SECURITY_VERIFICATION_FAILED
+=== RUN   TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/SECURITY_VERIFICATION_LOCKED
+=== RUN   TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/OAUTH_ACCOUNT_MISMATCH
+=== RUN   TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/TWOFA_SETUP_INVALID
+--- PASS: TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails (0.00s)
+    --- PASS: TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/SECURITY_VERIFICATION_FAILED (0.00s)
+    --- PASS: TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/SECURITY_VERIFICATION_LOCKED (0.00s)
+    --- PASS: TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/OAUTH_ACCOUNT_MISMATCH (0.00s)
+    --- PASS: TestSecurityEnrollmentPublicErrorsDiscardWrappedDetails/TWOFA_SETUP_INVALID (0.00s)
+=== RUN   TestSecurityEnrollmentExpiredAndCrossSessionSetupsCannotActivate
+    security_enrollment_test.go:1106: isolated database: newapi_audit_1789084327840399800 (mysql)
+    security_enrollment_test.go:1106: isolated database: newapi_audit_1789084327847351600 (mysql)
+    security_enrollment_test.go:1106: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentExpiredAndCrossSessionSetupsCannotActivate (3.27s)
+=== RUN   TestSecurityEnrollmentOAuthQueriesReachHandlerWithoutLeakingToAccessLogs
+--- PASS: TestSecurityEnrollmentOAuthQueriesReachHandlerWithoutLeakingToAccessLogs (0.00s)
+=== RUN   TestSecurityEnrollmentCustomOAuthUsesExistingBinding
+    security_enrollment_test.go:1149: isolated database: newapi_audit_1789084331105873700 (mysql)
+    security_enrollment_test.go:1149: isolated database: newapi_audit_1789084331112372700 (mysql)
+    security_enrollment_test.go:1149: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentCustomOAuthUsesExistingBinding (3.32s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	121.308s

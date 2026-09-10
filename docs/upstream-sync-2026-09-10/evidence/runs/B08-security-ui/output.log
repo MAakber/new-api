@@ -1,0 +1,334 @@
+$ vitest run --config vitest.sync.config.ts src/features/security src/features/profile/__tests__ src/features/usage-logs/audit src/features/usage-logs/components/__tests__/log-type-filter.test.tsx src/features/users/components/__tests__/permissions.test.tsx src/hooks/__tests__/sidebar-config.test.tsx src/lib/__tests__/http-cache.test.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx > mobile access history keeps pagination visible and puts result filters in a drawer
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at onRelease (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1228:29)
+    at onPointerUp (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1520:13)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+    at dispatchEvent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:23585:11)
+
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx > mobile access history keeps pagination visible and puts result filters in a drawer
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at onRelease (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1228:29)
+    at onPointerUp (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1520:13)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+    at dispatchEvent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:23585:11)
+
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx > mobile access history keeps pagination visible and puts result filters in a drawer
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at onRelease (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1228:29)
+    at onPointerUp (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1520:13)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+    at dispatchEvent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:23585:11)
+
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/usage-logs/audit/__tests__/viewer.test.tsx (18 tests | 1 failed) 4925ms
+   × mobile access history keeps pagination visible and puts result filters in a drawer 1286ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > mobile access history keeps pagination visible and puts result filters in a drawer
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <div
+  aria-describedby="radix-_r_fa_"
+  aria-labelledby="radix-_r_f9_"
+  class="group/drawer-content bg-background text-foreground fixed z-50 flex h-auto flex-col overflow-hidden text-sm shadow-none data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-t data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:rounded-r-xl data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:rounded-l-xl data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-xl data-[vaul-drawer-direction=top]:border-b data-[vaul-drawer-direction=left]:sm:max-w-sm data-[vaul-drawer-direction=right]:sm:max-w-sm max-h-[85dvh] p-0"
+  data-slot="drawer-content"
+  data-state="closed"
+  data-vaul-animate="true"
+  data-vaul-custom-container="false"
+  data-vaul-delayed-snap-points="false"
+  data-vaul-drawer=""
+  data-vaul-drawer-direction="bottom"
+  data-vaul-snap-points="false"
+  id="radix-_r_f8_"
+  role="dialog"
+  tabindex="-1"
+>
+  <div
+    class="bg-muted mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
+  />
+  <div
+    class="mx-auto flex w-full max-w-md flex-1 flex-col overflow-hidden"
+  >
+    <div
+      class="flex flex-col gap-0.5 p-4 group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center group-data-[vaul-drawer-direction=top]/drawer-content:text-center md:gap-0.5 md:text-left border-border/70 border-b px-4 py-3 text-left"
+      data-slot="drawer-header"
+    >
+      <h2
+        class="text-foreground text-base font-medium"
+        data-slot="drawer-title"
+        id="radix-_r_f9_"
+      >
+        Filter
+      </h2>
+      <p
+        class="text-muted-foreground text-sm"
+        data-slot="drawer-description"
+        id="radix-_r_fa_"
+      >
+        Adjust filters, then search to refresh the logs.
+      </p>
+    </div>
+    <div
+      class="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-4 py-3"
+    >
+      <div
+        class="min-w-0 [&_[data-slot=select-trigger]]:w-full [&_[data-slot=select-trigger]]:text-sm [&_[data-slot=select-value]]:leading-5"
+      >
+        <button
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Result"
+          class="border-input focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 flex w-fit items-center justify-between gap-1.5 rounded-lg border bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-md *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+          data-size="default"
+          data-slot="select-trigger"
+          id="base-ui-_r_fm_"
+          role="combobox"
+          tabindex="0"
+          type="button"
+        >
+          <span … />
+          <svg … />
+        </button>
+        <div
+          class="isolate z-50"
+          data-align="center"
+          data-anchor-hidden=""
+          data-closed=""
+          data-side="bottom"
+          hidden=""
+          role="presentation"
+          style="position: absolute; --transform-origin: 0px -4px; --available-width: -10px; --available-height: -11px; --anchor-width: 0px; --anchor-height: 0px; left: 0px; top: 0px; pointer-events: none; opacity: 0;"
+        >
+          <div … />
+        </div>
+        <input
+          aria-hidden="true"
+          id="base-ui-_r_fm_-hidden-input"
+          style="clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"
+          tabindex="-1"
+          value="false"
+        />
+      </div>
+      <div
+        class="min-w-0 [&_[data-slot=select-trigger]]:w-full [&_[data-slot=select-trigger]]:text-sm [&_[data-slot=select-value]]:leading-5"
+      >
+        <button
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-label="Token scope"
+          class="border-input focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 flex w-fit items-center justify-between gap-1.5 rounded-lg border bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-md *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+          data-size="default"
+          data-slot="select-trigger"
+          id="base-ui-_r_fq_"
+          role="combobox"
+          tabindex="0"
+          type="button"
+        >
+          <span … />
+          <svg … />
+        </button>
+        <div
+          class="isolate z-50"
+          data-align="center"
+          data-anchor-hidden=""
+          data-closed=""
+          data-side="bottom"
+          hidden=""
+          role="presentation"
+          style="position: absolute; left: 0px; top: 0px; opacity: 0; pointer-events: none; transform: translate(0px, 4px); --transform-origin: 0px -4px;"
+        >
+          <div … />
+        </div>
+        <input
+          aria-hidden="true"
+          id="base-ui-_r_fq_-hidden-input"
+          style="clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"
+          tabindex="-1"
+          value="all"
+        />
+      </div>
+    </div>
+    <div
+      class="mt-auto flex-col p-4 border-border/70 grid grid-cols-2 gap-2 border-t px-4 py-3"
+      data-slot="drawer-footer"
+    >
+      <button
+        class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2"
+        data-slot="button"
+        tabindex="0"
+        type="button"
+      >
+        Reset
+      </button>
+      <button
+        class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground [a]:hover:bg-primary/80 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2"
+        data-slot="button"
+        tabindex="0"
+        type="button"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</div> instead
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mdata-scroll-locked[39m=[32m"1"[39m
+  [36m>[39m
+    [36m<span[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-aria-hidden[39m=[32m"true"[39m
+      [33mdata-radix-focus-guard[39m=[32m""[39m
+      [33mstyle[39m=[32m"opacity: 0; position: fixed; pointer-events: none; outline-color: none; outline-style: none; outline-width: initial;"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-aria-hidden[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex h-full min-h-0 flex-col"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col gap-2.5 sm:gap-3 h-auto min-h-0 flex-1"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"shrink-0 space-y-2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bg-card/50 min-w-0 rounded-lg border p-2.5"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"grid min-w-0 gap-2"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0 [&_[data-slot=select-trigger]]:w-full [&_[data-slot=select-trigger]]:text-sm [&_[data-slot=select-value]]:leading-5 sm:col-span-2"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-expanded[39m=[32m"false"[39m
+                    [33maria-haspopup[39m=[32m"dialog"[39m
+                    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center rounded-lg border bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 min-w-0 w-full justify-start gap-2 overflow-hidden px-2.5 text-sm leading-5 font-normal tabular-nums text-muted-foreground"[39m
+                    [33mdata-base-ui-click-trigger[39m=[32m""[39m
+                    [33mdata-slot[39m=[32m"popover-trigger"[39m
+                    [33mid[39m=[32m"base-ui-_r_fc_"[39m
+                    [33mtabindex[39m=[32m"0"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-calendar-days text-muted-foreground size-4 shrink-0"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"24"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"24"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M8 2v4"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 2v4"[39m
+                      [36m/>[39m
+                      [36m<rect[39m
+                        [33mheight[39m=[32m"18"[39m
+                        [33mrx[39m=[32m"2"[39m
+                        [33mwidth[39m=[32m"18"[39m
+                        [33mx[39m=[32m"3"[39m
+                        [33my[39m=[32m"4"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M3 10h18"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M8 14h.01"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 14h.01"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 14h.01"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M8 18h.01"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M12 18h.01"[39m
+                      [36m/>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M16 18h.01"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"truncate"[39m
+                    [36m>[39m
+                      [0mDate Range[0m
+                    [36m</span>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-col gap-2 mt-2"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"flex min-w-0 flex-wrap items-center justify-end gap-1.5"[39m
+                [36m>[39m
+                  [36m<button[39m
+                    [33maria-expanded[39m=[32m"true"[39m
+                    [33maria-label[39m=[32m"Collapse"[39m
+                    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 text-muted-foreground hover:text-foreground mr-auto size-7"[39m
+                    [33mdata-slot[39m=[32m"button"[39m
+                    [33mtabindex[39m=[32m"0"[39m
+                    [33mtype[39m=[32m"button"[39m
+          ...
+ ❯ src/features/usage-logs/audit/__tests__/viewer.test.tsx:551:48
+    549|     await user.click(within(drawer).getByRole('button', { name: 'Searc…
+    550|     await waitFor(() =>
+    551|       expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+       |                                                ^
+    552|     )
+    553|     expect(
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 9 passed (10)
+      Tests  1 failed | 75 passed (76)
+   Start at  07:22:20
+   Duration  20.78s (import 57%, environment 19%, tests 10%, setup 7%, transform 7%)
+
+error: script "test:sync" exited with code 1

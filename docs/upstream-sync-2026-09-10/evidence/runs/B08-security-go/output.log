@@ -1,0 +1,5 @@
+ok  	github.com/QuantumNous/new-api/controller	4.902s
+ok  	github.com/QuantumNous/new-api/model	(cached)
+ok  	github.com/QuantumNous/new-api/middleware	(cached)
+ok  	github.com/QuantumNous/new-api/service/authz	(cached)
+ok  	github.com/QuantumNous/new-api/router	(cached)

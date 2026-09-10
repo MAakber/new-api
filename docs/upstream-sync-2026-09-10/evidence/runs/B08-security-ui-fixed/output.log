@@ -1,0 +1,10 @@
+$ vitest run --config vitest.sync.config.ts src/features/security src/features/profile/__tests__ src/features/usage-logs/audit src/features/usage-logs/components/__tests__/log-type-filter.test.tsx src/features/users/components/__tests__/permissions.test.tsx src/hooks/__tests__/sidebar-config.test.tsx src/lib/__tests__/http-cache.test.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  10 passed (10)
+      Tests  76 passed (76)
+   Start at  07:25:20
+   Duration  18.23s (import 59%, environment 17%, tests 10%, transform 8%, setup 6%)
+

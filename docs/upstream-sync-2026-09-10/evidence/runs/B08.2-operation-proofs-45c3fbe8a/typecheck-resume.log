@@ -1,0 +1,7 @@
+$ tsgo -b
+src/features/auth/lib/__tests__/oauth-callback-mode.test.ts(168,43): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'null' is not assignable to parameter of type 'string | undefined'.
+src/features/auth/lib/__tests__/oauth-callback-mode.test.ts(179,12): error TS2554: Expected 4 arguments, but got 3.
+src/features/auth/lib/__tests__/oauth-callback-mode.test.ts(179,52): error TS2339: Property 'toBe' does not exist on type 'boolean'.
+error: script "typecheck" exited with code 1

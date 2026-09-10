@@ -1,0 +1,25 @@
+{
+  "id": "B08-security-ui-types-fixed",
+  "command": [
+    "bun",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "26431b8c03c70eddbda1c4c07a4600951ec9fd3b",
+  "started_at": "2026-09-10T23:26:03.857Z",
+  "finished_at": "2026-09-10T23:26:06.388Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

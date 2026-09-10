@@ -1321,3 +1321,53 @@
 - B08-logs-go passed model/service/controller/relay/middleware; log dialog UI/types/lint passed.
 - Eleven B08 upstream rows are implemented; complete-stage and final-candidate acceptance remain pending.
 - Next: security center and independent audit storage; preserve downstream multi-Passkey, avatars, historical audits and floating windows.
+
+## 2026-09-10T23:03:12.481Z — B08.2-security-center adaptation begun
+
+- Before HEAD: 1bace7e3afce5dad8f90fa14f9820df09298e323.
+- Upstream: d8cb177440ceaae422d5bfd96c258d47af4e0f1d.
+- Integrate dedicated security and audit pages, independent safe audit storage and explicit token lifecycle. Preserve downstream multiple named Passkeys, avatars, historical audit accessibility, mandatory IP recording and floating-window navigation. Exclude tests of the later B14 plugin router until its types exist.
+- Evidence: evidence/runs/B08.2-security-center-d8cb17744/intent.json.
+
+## 2026-09-10T23:04:43.407Z — B08.2 security patch retried after atomic precondition failure
+
+- Missing B12 billing fixture caused git apply to make no source/index changes. Verified that fact before one adjusted application.
+- Evidence: evidence/runs/B08.2-security-center-d8cb17744/source-patch-attempt-2.json.
+- B12/B14 fixture dependencies now have explicit pending units; resolve existing conflicts without reapplying.
+
+## 2026-09-10T23:26:55.569Z — B08.2-security-center adaptation recorded
+
+- Code: dd13952fa267f39227fe2afd60b05afb5d13dd1f.
+- Preserved named multi-Passkey credentials, avatar APIs, mandatory IP auditing, downstream log privacy, account fields, compact date picker and channel floating windows. Added session-independent audit storage with SQLite TEXT fallback, JSON precision, role projections, token lifecycle and cancellation tests. Go packages and 76 frontend cases pass; real SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24 fresh/upgrade/split-log tests pass. B09 public-cache and B14 plugin fixtures remain tracked dependencies. ClickHouse and full startup DDL matrix remain B08 validation work.
+- Evidence: evidence/runs/B08.2-security-center-d8cb17744/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T23:27:52.842Z — B08 security center locally adapted
+
+- Code: 37e542dd4da3f95616c824b8f8dbabb0d77d1353, 26431b8c03c70eddbda1c4c07a4600951ec9fd3b, dd13952fa267f39227fe2afd60b05afb5d13dd1f.
+- Preserved mandatory IP auditing, named multiple Passkeys, avatars, history, token cancellation and downstream responsive date controls.
+- Passed B08-security-go, B08-security-ui-fixed, B08-security-ui-types-fixed, B08-security-lint, B08-security-mobile-lint, B08-security-session-preservation, B08-security-mariadb-postgres, B08-security-mysql57-selected.
+- Literal i18n: 602 keys, no missing keys. Full B08, native ClickHouse and final migration gates remain pending.
+
+## 2026-09-10T23:27:53.310Z — B08.2-operation-proofs adaptation begun
+
+- Before HEAD: dd13952fa267f39227fe2afd60b05afb5d13dd1f.
+- Upstream: 45c3fbe8aeb049f03c13e14298a40b87aea5bd87.
+- Bind single-use security proofs and enrollments to exact sessions, auth versions, scopes and operation contexts; preserve named multiple Passkeys, individual deletion, existing OAuth and channel floating-window behavior. JSON decoding helper already integrated and tested in B04.
+- Evidence: evidence/runs/B08.2-operation-proofs-45c3fbe8a/intent.json.
+
+## 2026-09-10T23:49:15.383Z — B08.2-operation-proofs adaptation recorded
+
+- Code: 5bf3f4b30a853589c568287608d2a0d91ee12447.
+- Integrated session/auth-version/scope/context bound single-use proofs, password and linked OAuth verification and protected enrollment. Preserved named multiple Passkeys with device-targeted deletion, server-owned registration names, proxy HTTP transports through initialization injection, structured multi-key disclosure and late-response cancellation. Preliminary affected Go packages, UI cases, types and touched-file lint pass; real database and recorded final-source checks follow.
+- Evidence: evidence/runs/B08.2-operation-proofs-45c3fbe8a/resolution.json.
+- Verification remains pending.
+
+## 2026-09-10T23:53:17.359Z — B08 session-bound operation proofs checked
+
+- Code: 5bf3f4b30a853589c568287608d2a0d91ee12447.
+- All affected Go packages and 63 frontend tests pass; typecheck, touched-file lint and 399 literal i18n keys pass.
+- Real SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24 security enrollment cases pass, including named-device retention and target-bound deletion.
+- The first PostgreSQL invocation used an unsupported DSN format and failed the loopback guard before connecting; B08-proofs-postgres-url is the passing replacement.
+- Evidence: evidence/runs/B08-proofs-go/result.json, evidence/runs/B08-proofs-ui/result.json, evidence/runs/B08-proofs-types/result.json, evidence/runs/B08-proofs-lint/result.json, evidence/runs/B08-proofs-i18n/result.json, evidence/runs/B08-proofs-mariadb/result.json, evidence/runs/B08-proofs-mysql57/result.json, evidence/runs/B08-proofs-postgres-url/result.json.
+- B08 whole-stage verification, native ClickHouse and startup DDL checks remain pending.

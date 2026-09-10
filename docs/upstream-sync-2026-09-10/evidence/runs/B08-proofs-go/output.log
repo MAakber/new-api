@@ -1,0 +1,8 @@
+ok  	github.com/QuantumNous/new-api/controller	19.564s
+ok  	github.com/QuantumNous/new-api/model	8.901s
+ok  	github.com/QuantumNous/new-api/middleware	1.250s
+ok  	github.com/QuantumNous/new-api/service	5.909s
+ok  	github.com/QuantumNous/new-api/service/authz	1.095s
+ok  	github.com/QuantumNous/new-api/service/passkey	1.040s
+ok  	github.com/QuantumNous/new-api/router	1.836s
+ok  	github.com/QuantumNous/new-api/oauth	1.136s

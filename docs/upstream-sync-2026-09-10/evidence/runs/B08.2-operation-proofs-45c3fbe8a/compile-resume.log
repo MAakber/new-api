@@ -1,0 +1,11 @@
+FAIL	github.com/QuantumNous/new-api/controller [build failed]
+# github.com/QuantumNous/new-api/controller
+controller\oauth.go:234:48: undefined: providerName
+ok  	github.com/QuantumNous/new-api/model	(cached) [no tests to run]
+ok  	github.com/QuantumNous/new-api/middleware	0.685s [no tests to run]
+ok  	github.com/QuantumNous/new-api/service	0.680s [no tests to run]
+ok  	github.com/QuantumNous/new-api/service/authz	(cached) [no tests to run]
+ok  	github.com/QuantumNous/new-api/service/passkey	(cached) [no tests to run]
+FAIL	github.com/QuantumNous/new-api/router [build failed]
+ok  	github.com/QuantumNous/new-api/oauth	0.591s [no tests to run]
+FAIL

@@ -1,0 +1,32 @@
+{
+  "id": "B08-security-ui",
+  "command": [
+    "bun",
+    "run",
+    "test:sync",
+    "src/features/security",
+    "src/features/profile/__tests__",
+    "src/features/usage-logs/audit",
+    "src/features/usage-logs/components/__tests__/log-type-filter.test.tsx",
+    "src/features/users/components/__tests__/permissions.test.tsx",
+    "src/hooks/__tests__/sidebar-config.test.tsx",
+    "src/lib/__tests__/http-cache.test.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "37e542dd4da3f95616c824b8f8dbabb0d77d1353",
+  "started_at": "2026-09-10T23:22:19.445Z",
+  "finished_at": "2026-09-10T23:22:40.931Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

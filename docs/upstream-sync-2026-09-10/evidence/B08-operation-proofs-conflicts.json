@@ -1,0 +1,310 @@
+[
+  {
+    "file": "controller/oauth.go",
+    "index": 1,
+    "ours": "\t\"context\"\n",
+    "theirs": "\t\"encoding/json\"\n",
+    "result": "\t\"context\"\n\t\"encoding/json\"\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 1,
+    "ours": "const (\n\tsecurityProofScopeChannelKeyRead   = \"channel.key.read\"\n\tsecurityProofScopePasskeyRegister  = \"passkey.register\"\n\tsecurityProofScopePasskeyDelete    = \"passkey.delete\"\n\tpasskeyRegistrationProofContextKey = \"passkey_registration_proof_verified\"\n)\n\n",
+    "theirs": "",
+    "result": ""
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 2,
+    "ours": "\tcredentials, err := model.ListPasskeyCredentialsByUserID(user.Id)\n\tif err != nil {\n\t\tcommon.ApiError(c, err)\n",
+    "theirs": "\tcredential, err := model.GetPasskeyByUserID(user.Id)\n\tif err != nil && !errors.Is(err, model.ErrPasskeyNotFound) {\n\t\twriteSecurityOperationError(c, err)\n",
+    "result": "\tcredentials, err := model.ListPasskeyCredentialsByUserID(user.Id)\n\tif err != nil {\n\t\twriteSecurityOperationError(c, err)\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 3,
+    "ours": "\t\tuser.Id,\n\t\tidentity.SessionID,\n\t\tsecurityProofScopePasskeyRegister,\n\t\tdisplayName,\n",
+    "theirs": "\t\tpasskeysvc.FlowSecurity{AuthSessionIdentity: identity, Scope: authorization.Scope, ContextHash: authorization.ContextHash, Authorization: authorization},\n",
+    "result": "\t\tpasskeysvc.FlowSecurity{AuthSessionIdentity: identity, Scope: authorization.Scope, ContextHash: authorization.ContextHash, Authorization: authorization, DisplayName: displayName},\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 4,
+    "ours": "\tcredentials, err := model.ListPasskeyCredentialsByUserID(user.Id)\n\tif err != nil {\n\t\tcommon.ApiError(c, err)\n",
+    "theirs": "\tcredentialRecord, err := model.GetPasskeyByUserID(user.Id)\n\tif err != nil && !errors.Is(err, model.ErrPasskeyNotFound) {\n\t\twriteSecurityOperationError(c, err)\n",
+    "result": "\tcredentials, err := model.ListPasskeyCredentialsByUserID(user.Id)\n\tif err != nil {\n\t\twriteSecurityOperationError(c, err)\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 5,
+    "ours": "\tsessionData, _, displayName, err := passkeysvc.PopSessionDataFlowWithDisplayName(\n",
+    "theirs": "\tsessionData, security, err := passkeysvc.PopSessionDataFlow(\n",
+    "result": "\tsessionData, security, err := passkeysvc.PopSessionDataFlow(\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 6,
+    "ours": "\tif err := model.CreatePasskeyCredential(passkeyCredential, c.GetBool(passkeyRegistrationProofContextKey)); err != nil {\n\t\tcommon.ApiError(c, err)\n",
+    "theirs": "\tif err := model.RegisterPasskeyForSession(identity, passkeyCredential); err != nil {\n\t\twriteSecurityOperationError(c, err)\n",
+    "result": "\tif err := model.RegisterPasskeyForSession(identity, passkeyCredential); err != nil {\n\t\twriteSecurityOperationError(c, err)\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 7,
+    "ours": "\t// The singular legacy endpoint intentionally retains its historical\n\t// delete-all behavior. New clients should use DELETE /passkeys/:id.\n\tif err := model.DeleteAllPasskeyCredentialsByUserID(user.Id); err != nil {\n\t\tcommon.ApiError(c, err)\n",
+    "theirs": "\tif err := model.DeletePasskeyForSession(identity); err != nil {\n\t\twriteSecurityOperationError(c, err)\n",
+    "result": "\tif err := model.DeletePasskeyForSession(identity); err != nil {\n\t\twriteSecurityOperationError(c, err)\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 8,
+    "ours": "\tcredentials, err := model.ListPasskeyCredentialsByUserID(user.Id)\n\tif err != nil {\n\t\tcommon.ApiError(c, err)\n",
+    "theirs": "\tif _, err := model.GetPasskeyByUserID(user.Id); err != nil {\n\t\tif errors.Is(err, model.ErrPasskeyNotFound) {\n\t\t\tc.JSON(http.StatusOK, gin.H{\n\t\t\t\t\"success\": false,\n\t\t\t\t\"message\": \"该用户尚未绑定 Passkey\",\n\t\t\t})\n\t\t\treturn\n\t\t}\n\t\twriteSecurityOperationError(c, err)\n",
+    "result": "\tcredentials, err := model.ListPasskeyCredentialsByUserID(user.Id)\n\tif err != nil {\n\t\twriteSecurityOperationError(c, err)\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 9,
+    "ours": "\tif err := model.DeleteAllPasskeyCredentialsByUserID(user.Id); err != nil {\n\t\tcommon.ApiError(c, err)\n",
+    "theirs": "\tif err := model.DeletePasskeyByUserIDWithAuthVersion(user.Id); err != nil {\n\t\twriteSecurityOperationError(c, err)\n",
+    "result": "\tif err := model.DeleteAllPasskeyCredentialsByUserID(user.Id); err != nil {\n\t\twriteSecurityOperationError(c, err)\n"
+  },
+  {
+    "file": "controller/passkey.go",
+    "index": 10,
+    "ours": "\nfunc requirePasskeyRegistrationVerification(c *gin.Context, userID int) bool {\n\ttwoFA, err := model.GetTwoFAByUserId(userID)\n\tif err != nil {\n\t\tcommon.ApiError(c, err)\n\t\treturn false\n\t}\n\tif twoFA == nil || !twoFA.IsEnabled {\n\t\tcredentials, err := model.ListPasskeyCredentialsByUserID(userID)\n\t\tif err != nil {\n\t\t\tcommon.ApiError(c, err)\n\t\t\treturn false\n\t\t}\n\t\tif len(credentials) == 0 {\n\t\t\tc.Set(passkeyRegistrationProofContextKey, false)\n\t\t\treturn true\n\t\t}\n\t\tverified := middleware.RequireSecurityProof(c, securityProofScopePasskeyRegister, []string{secureVerificationMethodPasskey})\n\t\tif verified {\n\t\t\tc.Set(passkeyRegistrationProofContextKey, true)\n\t\t}\n\t\treturn verified\n\t}\n\tverified := middleware.RequireSecurityProof(c, securityProofScopePasskeyRegister, []string{secureVerificationMethod2FA})\n\tif verified {\n\t\tc.Set(passkeyRegistrationProofContextKey, true)\n\t}\n\treturn verified\n}\n\nfunc requirePasskeyDeleteVerification(c *gin.Context, userID int) bool {\n\ttwoFA, err := model.GetTwoFAByUserId(userID)\n\tif err != nil {\n\t\tcommon.ApiError(c, err)\n\t\treturn false\n\t}\n\tif twoFA != nil && twoFA.IsEnabled {\n\t\treturn middleware.RequireSecurityProof(c, securityProofScopePasskeyDelete, []string{secureVerificationMethod2FA})\n\t}\n\n\tcredentials, err := model.ListPasskeyCredentialsByUserID(userID)\n\tif err != nil {\n\t\tcommon.ApiError(c, err)\n\t\treturn false\n\t}\n\tif len(credentials) == 0 {\n\t\tc.JSON(http.StatusOK, gin.H{\n\t\t\t\"success\": false,\n\t\t\t\"message\": \"该用户尚未绑定 Passkey\",\n\t\t})\n\t\treturn false\n\t}\n\n\treturn middleware.RequireSecurityProof(c, securityProofScopePasskeyDelete, []string{secureVerificationMethodPasskey})\n}\n",
+    "theirs": "",
+    "result": ""
+  },
+  {
+    "file": "controller/passkey_test.go",
+    "index": 1,
+    "ours": "func TestPasskeyCredentialResponsesDoNotExposeCredentialMaterial(t *testing.T) {\n\titems := passkeyCredentialResponses([]model.PasskeyCredential{{\n\t\tID:           7,\n\t\tUserID:       42,\n\t\tDisplayName:  \"Work laptop\",\n\t\tCredentialID: \"credential-secret\",\n\t\tPublicKey:    \"public-key-secret\",\n\t\tAAGUID:       \"aaguid-secret\",\n\t\tTransports:   `[\"usb\"]`,\n\t\tAttachment:   \"cross-platform\",\n\t}})\n\trequire.Len(t, items, 1)\n\tencoded, err := common.Marshal(items[0])\n\trequire.NoError(t, err)\n\tassert.Contains(t, string(encoded), `\"display_name\":\"Work laptop\"`)\n\tassert.Contains(t, string(encoded), `\"transports\":[\"usb\"]`)\n\tassert.NotContains(t, string(encoded), \"credential-secret\")\n\tassert.NotContains(t, string(encoded), \"public-key-secret\")\n\tassert.NotContains(t, string(encoded), \"aaguid-secret\")\n}\n\nfunc TestPasskeyRegisterFinishRejectsMissingOrWrongProofWithoutConsumingFlow(t *testing.T) {\n\tpreviousDB := model.DB\n\tpreviousType := common.MainDatabaseType()\n\tpreviousRedis := common.RedisEnabled\n\tpreviousSecret := common.SessionSecret\n\tsettings := system_setting.GetPasskeySettings()\n\tpreviousSettings := *settings\n\tdsn := fmt.Sprintf(\"file:%s?mode=memory&cache=shared\", strings.ReplaceAll(t.Name(), \"/\", \"_\"))\n\tdb, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{})\n",
+    "theirs": "func TestPasskeyRegisterFinishRejectsUnapprovedFlowWithoutConsumingIt(t *testing.T) {\n\t_, identity := setupSecurityEnrollmentTest(t)\n\tsystem_setting.GetPasskeySettings().UserVerification = \"required\"\n\tkey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)\n",
+    "result": "func TestPasskeyCredentialResponsesDoNotExposeCredentialMaterial(t *testing.T) {\n\titems := passkeyCredentialResponses([]model.PasskeyCredential{{\n\t\tID:           7,\n\t\tUserID:       42,\n\t\tDisplayName:  \"Work laptop\",\n\t\tCredentialID: \"credential-secret\",\n\t\tPublicKey:    \"public-key-secret\",\n\t\tAAGUID:       \"aaguid-secret\",\n\t\tTransports:   `[\"usb\"]`,\n\t\tAttachment:   \"cross-platform\",\n\t}})\n\trequire.Len(t, items, 1)\n\tencoded, err := common.Marshal(items[0])\n\trequire.NoError(t, err)\n\tassert.Contains(t, string(encoded), `\"display_name\":\"Work laptop\"`)\n\tassert.Contains(t, string(encoded), `\"transports\":[\"usb\"]`)\n\tassert.NotContains(t, string(encoded), \"credential-secret\")\n\tassert.NotContains(t, string(encoded), \"public-key-secret\")\n\tassert.NotContains(t, string(encoded), \"aaguid-secret\")\n}\n\nfunc TestPasskeyRegisterFinishRejectsUnapprovedFlowWithoutConsumingIt(t *testing.T) {\n\t_, identity := setupSecurityEnrollmentTest(t)\n\tsystem_setting.GetPasskeySettings().UserVerification = \"required\"\n\tkey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)\n"
+  },
+  {
+    "file": "model/auth_flow.go",
+    "index": 1,
+    "ours": "\tAuthFlowPurposeOAuth                = \"oauth\"\n\tAuthFlowPurposeTwoFALogin           = \"2fa_login\"\n\tAuthFlowPurposePasskeyLogin         = \"passkey_login\"\n\tAuthFlowPurposePasskeyRegister      = \"passkey_register\"\n\tAuthFlowPurposePasskeyStepUp        = \"passkey_step_up\"\n\tAuthFlowPurposeRegistration         = \"registration\"\n\tAuthFlowPurposeRegistrationIdentity = \"registration_identity\"\n\tAuthFlowPurposeTelegramBind         = \"telegram_bind\"\n\tAuthFlowPurposeTelegramAssertion    = \"telegram_assertion\"\n\tAuthFlowIntentLogin                 = \"login\"\n\tAuthFlowIntentBind                  = \"bind\"\n\tAuthFlowTokenBytes                  = 32\n\tAuthFlowDefaultCleanupRetention     = 24 * time.Hour\n",
+    "theirs": "\tAuthFlowPurposeOAuth             = \"oauth\"\n\tAuthFlowPurposeTwoFALogin        = \"2fa_login\"\n\tAuthFlowPurposePasskeyLogin      = \"passkey_login\"\n\tAuthFlowPurposePasskeyRegister   = \"passkey_register\"\n\tAuthFlowPurposePasskeyStepUp     = \"passkey_step_up\"\n\tAuthFlowPurposeTelegramBind      = \"telegram_bind\"\n\tAuthFlowPurposeTelegramAssertion = \"telegram_assertion\"\n\tAuthFlowIntentLogin              = \"login\"\n\tAuthFlowIntentBind               = \"bind\"\n\tAuthFlowIntentVerify             = \"verify\"\n\tAuthFlowPurposeTwoFASetup        = \"2fa_setup\"\n\tAuthFlowPurposeSecurityProof     = \"security_proof\"\n\tAuthFlowTokenBytes               = 32\n\tAuthFlowDefaultCleanupRetention  = 24 * time.Hour\n",
+    "result": "\tAuthFlowPurposeOAuth                = \"oauth\"\n\tAuthFlowPurposeTwoFALogin           = \"2fa_login\"\n\tAuthFlowPurposePasskeyLogin         = \"passkey_login\"\n\tAuthFlowPurposePasskeyRegister      = \"passkey_register\"\n\tAuthFlowPurposePasskeyStepUp        = \"passkey_step_up\"\n\tAuthFlowPurposeRegistration         = \"registration\"\n\tAuthFlowPurposeRegistrationIdentity = \"registration_identity\"\n\tAuthFlowPurposeTelegramBind         = \"telegram_bind\"\n\tAuthFlowPurposeTelegramAssertion    = \"telegram_assertion\"\n\tAuthFlowIntentLogin                 = \"login\"\n\tAuthFlowIntentBind                  = \"bind\"\n\tAuthFlowTokenBytes                  = 32\n\tAuthFlowDefaultCleanupRetention     = 24 * time.Hour\n\tAuthFlowIntentVerify = \"verify\"\n\tAuthFlowPurposeTwoFASetup = \"2fa_setup\"\n\tAuthFlowPurposeSecurityProof = \"security_proof\"\n"
+  },
+  {
+    "file": "model/passkey.go",
+    "index": 1,
+    "ours": "\tdisplayName, err := ValidatePasskeyDisplayName(credential.DisplayName)\n\tif err != nil {\n\t\treturn err\n",
+    "theirs": "\treturn nil\n}\n\n// UpsertPasskeyCredentialWithAuthVersion is reserved for enrollment changes;\n// assertion sign-count updates must use UpdatePasskeyAssertionState.\nfunc UpsertPasskeyCredentialWithAuthVersion(credential *PasskeyCredential) error {\n\treturn upsertPasskeyCredentialWithAuthVersion(credential, nil)\n}\n\nfunc RegisterPasskeyForSession(identity AuthSessionIdentity, credential *PasskeyCredential) error {\n\treturn upsertPasskeyCredentialWithAuthVersion(credential, &identity)\n}\n\nfunc upsertPasskeyCredentialWithAuthVersion(credential *PasskeyCredential, identity *AuthSessionIdentity) error {\n\tif credential == nil || credential.UserID <= 0 {\n\t\treturn fmt.Errorf(\"Passkey 保存失败，请重试\")\n",
+    "result": "\tdisplayName, err := ValidatePasskeyDisplayName(credential.DisplayName)\n\tif err != nil {\n\t\treturn err\n"
+  },
+  {
+    "file": "model/passkey.go",
+    "index": 2,
+    "ours": "\t\t// Serialize enrollment decisions on the owning user so concurrent finish\n\t\t// requests cannot bypass either the count limit or name uniqueness rule.\n\t\tvar owner User\n\t\tif err := lockForUpdate(tx).Select(\"id\").Where(\"id = ?\", credential.UserID).First(&owner).Error; err != nil {\n\t\t\treturn err\n\t\t}\n\t\tvar existing []PasskeyCredential\n\t\tif err := tx.Select(\"display_name\").Where(\"user_id = ?\", credential.UserID).Find(&existing).Error; err != nil {\n\t\t\treturn err\n\t\t}\n\t\tif len(existing) >= MaxPasskeysPerUser {\n\t\t\treturn ErrPasskeyLimitReached\n\t\t}\n\t\tif len(existing) > 0 && !additionalEnrollmentVerified {\n\t\t\treturn ErrPasskeyProofRequired\n\t\t}\n\t\tfor i := range existing {\n\t\t\tif strings.EqualFold(existing[i].DisplayName, displayName) {\n\t\t\t\treturn ErrPasskeyNameConflict\n\t\t\t}\n\t\t}\n\t\tif err := tx.Create(credential).Error; err != nil {\n\t\t\tcommon.SysLog(fmt.Sprintf(\"CreatePasskeyCredential: failed to create credential for user %d: %v\", credential.UserID, err))\n\t\t\treturn fmt.Errorf(\"Passkey 保存失败，请重试\")\n",
+    "theirs": "\t\tif identity != nil {\n\t\t\tif identity.UserID != credential.UserID {\n\t\t\t\treturn ErrUserSessionInactive\n\t\t\t}\n\t\t\tif err := ValidateAuthSessionWithTx(tx, *identity); err != nil {\n\t\t\t\treturn err\n\t\t\t}\n",
+    "result": "\t\t// Serialize enrollment decisions on the owning user so concurrent finish\n\t\t// requests cannot bypass either the count limit or name uniqueness rule.\n\t\tvar owner User\n\t\tif err := lockForUpdate(tx).Select(\"id\").Where(\"id = ?\", credential.UserID).First(&owner).Error; err != nil {\n\t\t\treturn err\n\t\t}\n\t\tvar existing []PasskeyCredential\n\t\tif err := tx.Select(\"display_name\").Where(\"user_id = ?\", credential.UserID).Find(&existing).Error; err != nil {\n\t\t\treturn err\n\t\t}\n\t\tif len(existing) >= MaxPasskeysPerUser {\n\t\t\treturn ErrPasskeyLimitReached\n\t\t}\n\t\tif len(existing) > 0 && !additionalEnrollmentVerified {\n\t\t\treturn ErrPasskeyProofRequired\n\t\t}\n\t\tfor i := range existing {\n\t\t\tif strings.EqualFold(existing[i].DisplayName, displayName) {\n\t\t\t\treturn ErrPasskeyNameConflict\n\t\t\t}\n\t\t}\n\t\tif err := tx.Create(credential).Error; err != nil {\n\t\t\tcommon.SysLog(fmt.Sprintf(\"CreatePasskeyCredential: failed to create credential for user %d: %v\", credential.UserID, err))\n\t\t\treturn fmt.Errorf(\"Passkey 保存失败，请重试\")\n"
+  },
+  {
+    "file": "model/passkey.go",
+    "index": 3,
+    "ours": "// DeletePasskeyCredentialByIDAndUserID removes one owned credential without\n// affecting the user's other devices. The auth version changes once only when\n// a credential was actually deleted.\nfunc DeletePasskeyCredentialByIDAndUserID(id, userID int) error {\n\tif id <= 0 || userID <= 0 {\n\t\treturn fmt.Errorf(\"删除失败，请重试\")\n\t}\n\tif err := DB.Transaction(func(tx *gorm.DB) error {\n\t\tvar owner User\n\t\tif err := lockForUpdate(tx).Select(\"id\").Where(\"id = ?\", userID).First(&owner).Error; err != nil {\n\t\t\treturn err\n",
+    "theirs": "func DeletePasskeyByUserIDWithAuthVersion(userID int) error {\n\treturn deletePasskeyWithAuthVersion(userID, nil)\n}\n\nfunc DeletePasskeyForSession(identity AuthSessionIdentity) error {\n\treturn deletePasskeyWithAuthVersion(identity.UserID, &identity)\n}\n\nfunc deletePasskeyWithAuthVersion(userID int, identity *AuthSessionIdentity) error {\n\tif userID == 0 {\n\t\treturn fmt.Errorf(\"删除失败，请重试\")\n\t}\n\tif err := DB.Transaction(func(tx *gorm.DB) error {\n\t\tif identity != nil {\n\t\t\tif err := ValidateAuthSessionWithTx(tx, *identity); err != nil {\n\t\t\t\treturn err\n\t\t\t}\n",
+    "result": "// DeletePasskeyCredentialByIDAndUserID removes one owned credential without\n// affecting the user's other devices. The auth version changes once only when\n// a credential was actually deleted.\nfunc DeletePasskeyCredentialByIDAndUserID(id, userID int) error {\n\tif id <= 0 || userID <= 0 {\n\t\treturn fmt.Errorf(\"删除失败，请重试\")\n\t}\n\tif err := DB.Transaction(func(tx *gorm.DB) error {\n\t\tvar owner User\n\t\tif err := lockForUpdate(tx).Select(\"id\").Where(\"id = ?\", userID).First(&owner).Error; err != nil {\n\t\t\treturn err\n"
+  },
+  {
+    "file": "router/api-router.go",
+    "index": 1,
+    "ours": "\t\t\t\tselfRoute.GET(\"/passkey\", middleware.DisableCache(), controller.PasskeyStatus)\n\t\t\t\tselfRoute.GET(\"/passkeys\", middleware.DisableCache(), controller.PasskeyList)\n\t\t\t\tselfRoute.POST(\"/passkey/register/begin\", middleware.DisableCache(), controller.PasskeyRegisterBegin)\n\t\t\t\tselfRoute.POST(\"/passkey/register/finish\", middleware.DisableCache(), controller.PasskeyRegisterFinish)\n\t\t\t\tselfRoute.POST(\"/passkey/verify/begin\", middleware.DisableCache(), controller.PasskeyVerifyBegin)\n\t\t\t\tselfRoute.POST(\"/passkey/verify/finish\", middleware.DisableCache(), controller.PasskeyVerifyFinish)\n",
+    "theirs": "\t\t\t\tselfRoute.GET(\"/passkey\", controller.PasskeyStatus)\n\t\t\t\tselfRoute.POST(\"/passkey/register/begin\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyRegisterBegin)\n\t\t\t\tselfRoute.POST(\"/passkey/register/finish\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyRegisterFinish)\n\t\t\t\tselfRoute.POST(\"/passkey/verify/begin\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyVerifyBegin)\n\t\t\t\tselfRoute.POST(\"/passkey/verify/finish\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyVerifyFinish)\n",
+    "result": "\t\t\t\tselfRoute.GET(\"/passkey\", middleware.DisableCache(), controller.PasskeyStatus)\n\t\t\t\tselfRoute.GET(\"/passkeys\", middleware.DisableCache(), controller.PasskeyList)\n\t\t\t\tselfRoute.POST(\"/passkey/register/begin\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyRegisterBegin)\n\t\t\t\tselfRoute.POST(\"/passkey/register/finish\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyRegisterFinish)\n\t\t\t\tselfRoute.POST(\"/passkey/verify/begin\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyVerifyBegin)\n\t\t\t\tselfRoute.POST(\"/passkey/verify/finish\", middleware.UserCriticalRateLimit(\"security-verification\"), middleware.DisableCache(), controller.PasskeyVerifyFinish)\n"
+  },
+  {
+    "file": "service/passkey/session.go",
+    "index": 1,
+    "ours": "\tScope       string               `json:\"scope,omitempty\"`\n\tDisplayName string               `json:\"display_name,omitempty\"`\n}\n\nfunc CreateSessionDataFlow(purpose string, userID int, sessionID, scope string, data *webauthn.SessionData) (string, int64, error) {\n\treturn CreateSessionDataFlowWithDisplayName(purpose, userID, sessionID, scope, \"\", data)\n}\n\n// CreateSessionDataFlowWithDisplayName binds the registration device name to\n// the same one-time, user-and-session-bound flow that stores ceremony state.\n// Finish handlers must consume this payload rather than trusting their body.\nfunc CreateSessionDataFlowWithDisplayName(purpose string, userID int, sessionID, scope, displayName string, data *webauthn.SessionData) (string, int64, error) {\n\tif data == nil {\n\t\treturn \"\", 0, errors.New(\"Passkey 会话数据不能为空\")\n\t}\n\tpayload, err := common.Marshal(flowPayload{SessionData: *data, Scope: scope, DisplayName: displayName})\n",
+    "theirs": "\tSecurity    FlowSecurity         `json:\"security\"`\n}\n\ntype FlowSecurity struct {\n\tmodel.AuthSessionIdentity\n\tScope         string                       `json:\"scope\"`\n\tContextHash   string                       `json:\"context_hash\"`\n\tAuthorization *model.AuthFlowAuthorization `json:\"authorization,omitempty\"`\n}\n\nfunc CreateSessionDataFlow(purpose string, security FlowSecurity, data *webauthn.SessionData) (string, int64, error) {\n\tif data == nil {\n\t\treturn \"\", 0, errors.New(\"Passkey 会话数据不能为空\")\n\t}\n\tif purpose != model.AuthFlowPurposePasskeyLogin && (security.UserID <= 0 || security.SessionID == \"\" || security.Scope == \"\" || security.ContextHash == \"\" || security.UserAuthVersion <= 0 || security.SessionVersion <= 0) {\n\t\treturn \"\", 0, model.ErrAuthFlowInvalid\n\t}\n\tif purpose == model.AuthFlowPurposePasskeyRegister && (security.Authorization == nil || security.Authorization.ProofID <= 0 || security.Authorization.AuthSessionIdentity != security.AuthSessionIdentity) {\n\t\treturn \"\", 0, model.ErrAuthFlowInvalid\n\t}\n\tpayload, err := common.Marshal(flowPayload{SessionData: *data, Security: security})\n",
+    "result": "\tSecurity    FlowSecurity         `json:\"security\"`\n}\n\ntype FlowSecurity struct {\n\tDisplayName string `json:\"display_name,omitempty\"`\n\tmodel.AuthSessionIdentity\n\tScope         string                       `json:\"scope\"`\n\tContextHash   string                       `json:\"context_hash\"`\n\tAuthorization *model.AuthFlowAuthorization `json:\"authorization,omitempty\"`\n}\n\nfunc CreateSessionDataFlow(purpose string, security FlowSecurity, data *webauthn.SessionData) (string, int64, error) {\n\tif data == nil {\n\t\treturn \"\", 0, errors.New(\"Passkey 会话数据不能为空\")\n\t}\n\tif purpose != model.AuthFlowPurposePasskeyLogin && (security.UserID <= 0 || security.SessionID == \"\" || security.Scope == \"\" || security.ContextHash == \"\" || security.UserAuthVersion <= 0 || security.SessionVersion <= 0) {\n\t\treturn \"\", 0, model.ErrAuthFlowInvalid\n\t}\n\tif purpose == model.AuthFlowPurposePasskeyRegister && (security.Authorization == nil || security.Authorization.ProofID <= 0 || security.Authorization.AuthSessionIdentity != security.AuthSessionIdentity) {\n\t\treturn \"\", 0, model.ErrAuthFlowInvalid\n\t}\n\tpayload, err := common.Marshal(flowPayload{SessionData: *data, Security: security})\n"
+  },
+  {
+    "file": "service/passkey/session.go",
+    "index": 2,
+    "ours": "func PopSessionDataFlow(token, purpose string, userID int, sessionID string) (*webauthn.SessionData, string, error) {\n\tsessionData, scope, _, err := PopSessionDataFlowWithDisplayName(token, purpose, userID, sessionID)\n\treturn sessionData, scope, err\n}\n\n// PopSessionDataFlowWithDisplayName consumes the flow before exposing its\n// payload, preserving the existing one-time and identity-binding guarantees.\nfunc PopSessionDataFlowWithDisplayName(token, purpose string, userID int, sessionID string) (*webauthn.SessionData, string, string, error) {\n\tflow, err := model.ConsumeAuthFlow(token, model.AuthFlowMatch{\n",
+    "theirs": "func PopSessionDataFlow(token, purpose string, identity model.AuthSessionIdentity) (*webauthn.SessionData, *FlowSecurity, error) {\n\tvar payload flowPayload\n\t_, err := model.ConsumeAuthFlowWithAction(token, model.AuthFlowMatch{\n",
+    "result": "func PopSessionDataFlow(token, purpose string, identity model.AuthSessionIdentity) (*webauthn.SessionData, *FlowSecurity, error) {\n\tvar payload flowPayload\n\t_, err := model.ConsumeAuthFlowWithAction(token, model.AuthFlowMatch{\n"
+  },
+  {
+    "file": "service/passkey/session.go",
+    "index": 3,
+    "ours": "\t\tif errors.Is(err, model.ErrAuthFlowInvalid) || errors.Is(err, model.ErrAuthFlowExpired) || errors.Is(err, model.ErrAuthFlowConsumed) {\n\t\t\treturn nil, \"\", \"\", errSessionNotFound\n\t\t}\n\t\treturn nil, \"\", \"\", err\n\t}\n\tvar payload flowPayload\n\tif err := common.UnmarshalJsonStr(flow.Payload, &payload); err != nil {\n\t\treturn nil, \"\", \"\", err\n\t}\n\treturn &payload.SessionData, payload.Scope, payload.DisplayName, nil\n",
+    "theirs": "\t\treturn nil, nil, err\n\t}\n\treturn &payload.SessionData, &payload.Security, nil\n",
+    "result": "\t\treturn nil, nil, err\n\t}\n\treturn &payload.SessionData, &payload.Security, nil\n"
+  },
+  {
+    "file": "web/src/features/auth/api.ts",
+    "index": 1,
+    "ours": "    },\n    { skipAuthRefresh: intent === 'login' }\n",
+    "theirs": "      scope: operation?.scope,\n      ...(operation?.context ? { context: operation.context } : {}),\n    },\n    {\n      skipAuthRefresh: intent === 'login',\n      signal,\n      skipBusinessError: true,\n      skipErrorHandler: true,\n    }\n",
+    "result": "      scope: operation?.scope,\n      ...(operation?.context ? { context: operation.context } : {}),\n    },\n    {\n      skipAuthRefresh: intent === 'login',\n      signal,\n      skipBusinessError: true,\n      skipErrorHandler: true,\n    }\n"
+  },
+  {
+    "file": "web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts",
+    "index": 1,
+    "ours": "    assert.equal(markOAuthBindPopup(storage, 'oidc', bindState), true)\n",
+    "theirs": "    expect(markOAuthPopup(storage, 'oidc', bindState, 'bind')).toBe(true)\n",
+    "result": "    expect(markOAuthPopup(storage, 'oidc', bindState, 'bind')).toBe(true)\n"
+  },
+  {
+    "file": "web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts",
+    "index": 2,
+    "ours": "    assert.equal(markOAuthBindPopup(null, 'oidc', bindState), false)\n    assert.equal(markOAuthBindPopup(storage, 'oidc', bindState), false)\n    assert.equal(\n      markOAuthBindPopup(\n",
+    "theirs": "    expect(markOAuthPopup(null, 'oidc', bindState, 'bind')).toBe(false)\n    expect(markOAuthPopup(storage, 'oidc', bindState, 'bind')).toBe(false)\n    expect(\n      markOAuthPopup(\n",
+    "result": "    expect(markOAuthPopup(null, 'oidc', bindState, 'bind')).toBe(false)\n    expect(markOAuthPopup(storage, 'oidc', bindState, 'bind')).toBe(false)\n    expect(\n      markOAuthPopup(\n"
+  },
+  {
+    "file": "web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts",
+    "index": 3,
+    "ours": "        bindState\n      ),\n      false\n    )\n",
+    "theirs": "        bindState,\n        'bind'\n      )\n    ).toBe(false)\n",
+    "result": "        bindState,\n        'bind'\n      )\n    ).toBe(false)\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/api.ts",
+    "index": 1,
+    "ours": "export async function getPasskeys(): Promise<\n  ApiResponse<PasskeyCredentialList>\n> {\n  const res =\n    await api.get<ApiResponse<PasskeyCredentialList>>('/api/user/passkeys')\n  return res.data\n}\n\nexport async function beginPasskeyRegistration(\n  displayName: string,\n  proofToken?: string\n): Promise<ApiResponse<PasskeyOptionsPayload>> {\n  const res = await api.post<ApiResponse<PasskeyOptionsPayload>>(\n    '/api/user/passkey/register/begin',\n    { display_name: displayName },\n    { headers: proofHeaders(proofToken) }\n",
+    "theirs": "export function beginPasskeyRegistration(\n  proofToken: string,\n  signal?: AbortSignal\n): Promise<PasskeyOptionsPayload> {\n  return authResult(\n    api.post('/api/user/passkey/register/begin', undefined, {\n      ...authRequestOptions,\n      headers: proofHeaders(proofToken),\n      signal,\n    })\n",
+    "result": "(): Promise<\n  ApiResponse<PasskeyCredentialList>\n> {\n  const res =\n    await api.get<ApiResponse<PasskeyCredentialList>>('/api/user/passkeys')\n  return res.data\n}\n\nexport function beginPasskeyRegistration(\n  displayName: string,\n  proofToken: string,\n  signal?: AbortSignal\n): Promise<PasskeyOptionsPayload> {\n  return authResult(\n    api.post('/api/user/passkey/register/begin', { display_name: displayName }, {\n      ...authRequestOptions,\n      headers: proofHeaders(proofToken),\n      signal,\n    })\n  )\n}\n\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 1,
+    "ours": "  const [credentials, setCredentials] = useState<PasskeyCredentialSummary[]>([])\n",
+    "theirs": "  const [statusError, setStatusError] = useState<string | null>(null)\n",
+    "result": "  const [credentials, setCredentials] = useState<PasskeyCredentialSummary[]>([])\n  const [statusError, setStatusError] = useState<string | null>(null)\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 2,
+    "ours": "      setLoading(true)\n      const [statusResponse, listResponse] = await Promise.all([\n        getPasskeyStatus(),\n        getPasskeys(),\n      ])\n      if (statusResponse.success && listResponse.success) {\n        setStatus(statusResponse.data ?? null)\n        setCredentials(listResponse.data?.credentials ?? [])\n        onStatusChange?.(statusResponse.data ?? null)\n      } else {\n        setStatus(null)\n        setCredentials([])\n        toast.error(\n          statusResponse.message ||\n            listResponse.message ||\n            i18next.t('Failed to load Passkey status')\n",
+    "theirs": "      const response = await getPasskeyStatus()\n      if (!response.success || !response.data) {\n        throw new AuthOperationError(\n          response.message || 'Failed to load Passkey status'\n",
+    "result": "      const [response, listResponse] = await Promise.all([getPasskeyStatus(), getPasskeys()])\n      if (!response.success || !response.data || !listResponse.success || !listResponse.data) {\n        throw new AuthOperationError(\n          response.message || listResponse.message || 'Failed to load Passkey status'\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 3,
+    "ours": "      // eslint-disable-next-line no-console\n      console.error('[Passkey] Failed to fetch status', error)\n      toast.error(i18next.t('Failed to load Passkey status'))\n      setStatus(null)\n      setCredentials([])\n",
+    "theirs": "      if (mounted.current) {\n        setStatusError(AuthOperationError.from(error).message)\n      }\n",
+    "result": "      if (mounted.current) {\n        setStatusError(AuthOperationError.from(error).message)\n      }\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 4,
+    "ours": "    async (displayName: string, proofToken?: string) => {\n      if (!supported) {\n        toast.error(i18next.t('This device does not support Passkey'))\n        return false\n",
+    "theirs": "    async (proofToken: string) => {\n      if (!supported || !navigator.credentials) {\n        throw new AuthOperationError('This device does not support Passkey')\n",
+    "result": "    async (displayName: string, proofToken: string) => {\n      if (!supported || !navigator.credentials) {\n        throw new AuthOperationError('This device does not support Passkey')\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 5,
+    "ours": "        const beginResponse = await beginPasskeyRegistration(\n          displayName,\n          proofToken\n        )\n        if (!beginResponse.success) {\n          toast.error(\n            beginResponse.message ||\n              i18next.t('Failed to start Passkey registration')\n          )\n          return false\n        }\n\n        const publicKey = prepareCredentialCreationOptions(\n          beginResponse.data?.options ?? beginResponse.data\n",
+    "theirs": "        const begin = await beginPasskeyRegistration(\n          proofToken,\n          controller.signal\n",
+    "result": "        const begin = await beginPasskeyRegistration(\n          displayName,\n          proofToken,\n          controller.signal\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 6,
+    "ours": "    async (id: number, proofToken?: string) => {\n      setRemovingId(id)\n      try {\n        const res = await deletePasskeyById(id, proofToken)\n        if (!res.success) {\n          toast.error(res.message || i18next.t('Failed to remove Passkey'))\n          return false\n        }\n\n        toast.success(i18next.t('Passkey removed successfully'))\n",
+    "theirs": "    async (proofToken: string) => {\n      if (operation.current) {\n        throw new AuthOperationError(\n          'A security operation is already in progress.'\n        )\n      }\n      const controller = new AbortController()\n      operation.current = controller\n      setRemoving(true)\n      try {\n        await deletePasskey(proofToken, controller.signal)\n        controller.signal.throwIfAborted()\n",
+    "result": "    async (id: number, proofToken: string) => {\n      if (operation.current) {\n        throw new AuthOperationError(\n          'A security operation is already in progress.'\n        )\n      }\n      const controller = new AbortController()\n      operation.current = controller\n      setRemovingId(id)\n      try {\n        await deletePasskeyById(id, proofToken, controller.signal)\n        controller.signal.throwIfAborted()\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 7,
+    "ours": "        setRemovingId(null)\n",
+    "theirs": "        if (operation.current === controller) operation.current = null\n        if (mounted.current) setRemoving(false)\n",
+    "result": "        if (operation.current === controller) operation.current = null\n        if (mounted.current) setRemovingId(null)\n"
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "index": 8,
+    "ours": "    credentials,\n",
+    "theirs": "    statusError,\n",
+    "result": "    credentials,\n    statusError,\n"
+  },
+  {
+    "file": "web/src/features/channels/api.ts",
+    "index": 1,
+    "ours": "  proofToken?: string\n): Promise<{\n  success: boolean\n  message?: string\n  data?: { key: string; keys?: string[] }\n}> {\n",
+    "theirs": "  proofToken: string,\n  signal?: AbortSignal\n): Promise<{ success: boolean; message?: string; data?: { key: string } }> {\n",
+    "result": "  proofToken: string,\n  signal?: AbortSignal\n): Promise<{\n  success: boolean\n  message?: string\n  data?: { key: string; keys?: string[] }\n}> {\n"
+  },
+  {
+    "file": "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "index": 1,
+    "ours": "  getChannelKey,\n  getCustomBalanceConfig,\n",
+    "theirs": "",
+    "result": "  getCustomBalanceConfig,\n"
+  },
+  {
+    "file": "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "index": 2,
+    "ours": "                                    {...field}\n                                  />\n                                </FormControl>\n                                <FormDescription>\n                                  {currentType === CHANNEL_TYPE_CODE_BUDDY\n                                    ? t(CODE_BUDDY_BASE_URL_HELP)\n                                    : t(\n                                        'Custom API base URL. For official channels, New API has built-in addresses. Only fill this for third-party proxy sites or special endpoints. Do not add /v1 or trailing slash.'\n",
+    "theirs": "                                    keyDescription = (\n                                      <>\n                                        {t(\n                                          'Enter new key to update, or leave empty to keep current key'\n                                        )}\n                                        {isMultiKeyChannel && (\n                                          <span className='text-warning mt-1 block'>\n                                            {keyModeDescription}\n                                          </span>\n                                        )}\n                                      </>\n                                    )\n                                  } else if (isBatchMode) {\n                                    keyDescription = t(\n                                      'Enter one API key per line for batch creation'\n                                    )\n                                  }\n                                  return (\n                                    <FormItem>\n                                      <FormLabel>{t('API Key *')}</FormLabel>\n                                      <FormControl>\n                                        <Textarea\n                                          placeholder={keyPlaceholder}\n                                          rows={isBatchMode ? 8 : 4}\n                                          {...field}\n                                        />\n                                      </FormControl>\n                                      <FormDescription>\n                                        <div className='flex flex-col gap-2'>\n                                          <span>{keyDescription}</span>\n                                          {isBatchMode && (\n                                            <Button\n                                              type='button'\n                                              variant='outline'\n                                              size='sm'\n                                              onClick={handleDeduplicateKeys}\n                                              className='w-fit'\n                                            >\n                                              <Trash2 className='mr-2 h-4 w-4' />\n                                              {t('Remove Duplicates')}\n                                            </Button>\n                                          )}\n                                        </div>\n                                      </FormDescription>\n                                      {isEditing && canRevealChannelKey && (\n                                        <div className='border-border/60 mt-4 flex flex-col gap-3 border-y border-dashed py-4'>\n                                          <div className='flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>\n                                            <div>\n                                              <p className='text-sm font-medium'>\n                                                {t('Current key')}\n                                              </p>\n                                              <p className='text-muted-foreground text-xs'>\n                                                {t(\n                                                  'Verification required to reveal the saved key.'\n                                                )}\n                                              </p>\n                                            </div>\n                                            <div className='flex items-center gap-2'>\n                                              <Button\n                                                type='button'\n                                                variant='outline'\n                                                size='sm'\n                                                onClick={handleRevealKey}\n                                                disabled={\n                                                  isChannelKeyLoading ||\n                                                  verification.isActive\n                                                }\n                                              >\n                                                {isChannelKeyLoading ||\n                                                verification.isActive ? (\n                                                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />\n                                                ) : (\n                                                  <Eye className='mr-2 h-4 w-4' />\n                                                )}\n                                                {t('Reveal key')}\n                                              </Button>\n                                              <Button\n                                                type='button'\n                                                variant='ghost'\n                                                size='sm'\n                                                onClick={async () => {\n                                                  if (channelKey) {\n                                                    await copyToClipboard(\n                                                      channelKey\n                                                    )\n                                                  }\n                                                }}\n                                                disabled={!channelKey}\n                                              >\n                                                <Copy className='mr-2 h-4 w-4' />\n                                                {t('Copy')}\n                                              </Button>\n                                            </div>\n                                          </div>\n                                          <Input\n                                            readOnly\n                                            value={channelKey ?? ''}\n                                            placeholder={t(\n                                              'Hidden — verify to reveal'\n                                            )}\n                                            className='font-mono'\n                                          />\n                                        </div>\n",
+    "result": "                                    {...field}\n                                  />\n                                </FormControl>\n                                <FormDescription>\n                                  {currentType === CHANNEL_TYPE_CODE_BUDDY\n                                    ? t(CODE_BUDDY_BASE_URL_HELP)\n                                    : t(\n                                        'Custom API base URL. For official channels, New API has built-in addresses. Only fill this for third-party proxy sites or special endpoints. Do not add /v1 or trailing slash.'\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 1,
+    "ours": "import { KeyRound, Loader2, Plus, ShieldAlert, Trash2 } from 'lucide-react'\nimport { useCallback, useMemo, useState } from 'react'\n",
+    "theirs": "import { AlertTriangle, KeyRound, Loader2, ShieldAlert } from 'lucide-react'\nimport { useCallback, useState } from 'react'\n",
+    "result": "import { KeyRound, Loader2, Plus, ShieldAlert, Trash2 } from 'lucide-react'\nimport { useCallback, useMemo, useState } from 'react'\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 2,
+    "ours": "  const [nameDialogOpen, setNameDialogOpen] = useState(false)\n  const [displayName, setDisplayName] = useState('')\n  const [nameError, setNameError] = useState<PasskeyNameValidationError>(null)\n  const [deleteTarget, setDeleteTarget] =\n    useState<PasskeyCredentialSummary | null>(null)\n  const [restrictedMethod, setRestrictedMethod] =\n    useState<VerificationMethod | null>(null)\n\n  const {\n    credentials,\n",
+    "theirs": "  const [confirmOpen, setConfirmOpen] = useState(false)\n  const {\n    status,\n    statusError,\n    fetchStatus,\n",
+    "result": "  const [nameDialogOpen, setNameDialogOpen] = useState(false)\n  const [displayName, setDisplayName] = useState('')\n  const [nameError, setNameError] = useState<PasskeyNameValidationError>(null)\n  const [deleteTarget, setDeleteTarget] =\n    useState<PasskeyCredentialSummary | null>(null)\n\n  const {\n    credentials,\n    statusError,\n    fetchStatus,\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 3,
+    "ours": "  const {\n    open: verificationOpen,\n    setOpen: setVerificationOpen,\n    methods: verificationMethods,\n    state: verificationState,\n    startVerification,\n    executeVerification,\n    cancel: cancelVerification,\n    setCode,\n    switchMethod,\n    fetchVerificationMethods,\n  } = useSecureVerification({\n    onSuccess: () => setRestrictedMethod(null),\n  })\n\n  const dialogMethods = useMemo<VerificationMethods>(() => {\n    if (!restrictedMethod) return verificationMethods\n    return {\n      ...verificationMethods,\n      has2FA: restrictedMethod === '2fa' && verificationMethods.has2FA,\n      hasPasskey:\n        restrictedMethod === 'passkey' && verificationMethods.hasPasskey,\n    }\n  }, [restrictedMethod, verificationMethods])\n",
+    "theirs": "  const verification = useSecureVerification()\n",
+    "result": "  const verification = useSecureVerification()\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 4,
+    "ours": "    if (!supported) {\n      toast.info(t('This device does not support Passkey'))\n      return\n    }\n    if (credentials.length >= MAX_PASSKEYS_PER_USER) {\n      toast.info(\n        t('You can register up to {{count}} Passkeys.', {\n          count: MAX_PASSKEYS_PER_USER,\n        })\n      )\n      return\n    }\n    const validationError = validatePasskeyName(displayName, credentials)\n    setNameError(validationError)\n    if (validationError) return\n\n    const name = displayName.trim()\n    const methods = await fetchVerificationMethods()\n    if (credentials.length === 0 && !methods.has2FA) {\n      await performRegistration(name)\n      return\n    }\n\n    const requiredMethod: VerificationMethod = methods.has2FA\n      ? '2fa'\n      : 'passkey'\n    if (requiredMethod === 'passkey' && !methods.passkeySupported) {\n      toast.info(t('This device does not support Passkey'))\n      return\n    }\n\n    setNameDialogOpen(false)\n    setRestrictedMethod(requiredMethod)\n    await startVerification(\n      (proofToken) => performRegistration(name, proofToken),\n      {\n        scope: 'passkey.register',\n        preferredMethod: requiredMethod,\n        title: t('Security verification'),\n        description: t(\n          'Confirm your identity before adding a Passkey to your account.'\n        ),\n      }\n    )\n  }, [\n    credentials,\n    displayName,\n    fetchVerificationMethods,\n    performRegistration,\n    startVerification,\n    supported,\n    t,\n  ])\n\n  const handleRemove = useCallback(async () => {\n    if (!deleteTarget) return\n    const target = deleteTarget\n    const methods = await fetchVerificationMethods()\n    let requiredMethod: VerificationMethod | null = null\n    if (methods.has2FA) {\n      requiredMethod = '2fa'\n    } else if (methods.hasPasskey) {\n      requiredMethod = 'passkey'\n    }\n    if (!requiredMethod) {\n      toast.error(\n        t(\n          'Please enable Two-factor Authentication or Passkey before proceeding'\n        )\n      )\n      return\n    }\n    if (requiredMethod === 'passkey' && !methods.passkeySupported) {\n      toast.info(t('This device does not support Passkey'))\n      return\n",
+    "theirs": "    if (registering || removing || verification.isActive) return\n    const proof = await verification.requestVerification({\n      scope: 'passkey.register',\n    })\n    if (!proof) return\n    try {\n      await register(proof.proof_token)\n      toast.success(t('Passkey registered successfully'))\n    } catch (error) {\n      const failure = AuthOperationError.from(error)\n      if (failure.code !== 'AUTH_CANCELLED') toast.error(t(failure.message))\n",
+    "result": "    if (registering || removingId !== null || verification.isActive) return\n    if (!supported) {\n      toast.info(t('This device does not support Passkey'))\n      return\n    }\n    if (credentials.length >= MAX_PASSKEYS_PER_USER) {\n      toast.info(t('You can register up to {{count}} Passkeys.', { count: MAX_PASSKEYS_PER_USER }))\n      return\n    }\n    const validationError = validatePasskeyName(displayName, credentials)\n    setNameError(validationError)\n    if (validationError) return\n    const name = displayName.trim()\n    setNameDialogOpen(false)\n    const proof = await verification.requestVerification({ scope: 'passkey.register' })\n    if (!proof) return\n    try {\n      await register(name, proof.proof_token)\n      setDisplayName('')\n      setNameError(null)\n      toast.success(t('Passkey registered successfully'))\n    } catch (error) {\n      const failure = AuthOperationError.from(error)\n      if (failure.code !== 'AUTH_CANCELLED') toast.error(t(failure.message))\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 5,
+    "ours": "    setDeleteTarget(null)\n    setRestrictedMethod(requiredMethod)\n    await startVerification(\n      async (proofToken) => {\n        const removed = await remove(target.id, proofToken)\n        if (removed) setDeleteTarget(null)\n        return removed\n      },\n      {\n        scope: 'passkey.delete',\n        preferredMethod: requiredMethod,\n        title: t('Security verification'),\n        description: t(\n          'Confirm your identity before removing this Passkey from your account.'\n        ),\n      }\n    )\n  }, [deleteTarget, fetchVerificationMethods, remove, startVerification, t])\n\n  const handleVerificationCancel = useCallback(() => {\n    setRestrictedMethod(null)\n    cancelVerification()\n  }, [cancelVerification])\n\n  const handleDialogVerify = useCallback(\n    async (method: VerificationMethod, code?: string) => {\n      try {\n        await executeVerification(method, code)\n      } catch {\n        // Errors are surfaced by useSecureVerification.\n      }\n    },\n    [executeVerification]\n  )\n",
+    "theirs": "  const handleRemove = useCallback(async () => {\n    if (registering || removing || verification.isActive) return\n    setConfirmOpen(false)\n    const proof = await verification.requestVerification({\n      scope: 'passkey.delete',\n    })\n    if (!proof) return\n    try {\n      await remove(proof.proof_token)\n      toast.success(t('Passkey removed successfully'))\n    } catch (error) {\n      const failure = AuthOperationError.from(error)\n      if (failure.code !== 'AUTH_CANCELLED') toast.error(t(failure.message))\n    }\n  }, [registering, remove, removing, t, verification])\n",
+    "result": "  const handleRemove = useCallback(async () => {\n    if (!deleteTarget || registering || removingId !== null || verification.isActive) return\n    const target = deleteTarget\n    setDeleteTarget(null)\n    const proof = await verification.requestVerification({\n      scope: 'passkey.delete', context: { credential_id: target.id },\n    })\n    if (!proof) return\n    try {\n      await remove(target.id, proof.proof_token)\n      toast.success(t('Passkey removed successfully'))\n    } catch (error) {\n      const failure = AuthOperationError.from(error)\n      if (failure.code !== 'AUTH_CANCELLED') toast.error(t(failure.message))\n    }\n  }, [deleteTarget, registering, remove, removingId, t, verification])\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 6,
+    "ours": "  const formattedLastUsed = formatRelativeDate(lastUsed, t('Not used yet'))\n  const atLimit = credentials.length >= MAX_PASSKEYS_PER_USER\n",
+    "theirs": "  if (statusError) {\n    return (\n      <Card>\n        <CardHeader>\n          <CardTitle>{t('Passkey Login')}</CardTitle>\n        </CardHeader>\n        <CardContent className='space-y-3'>\n          <p role='alert'>{t(statusError)}</p>\n          <Button onClick={() => void fetchStatus()}>{t('Retry')}</Button>\n        </CardContent>\n      </Card>\n    )\n  }\n\n  const formattedLastUsed =\n    lastUsed && !Number.isNaN(Date.parse(lastUsed))\n      ? dayjs(lastUsed).fromNow()\n      : t('Not used yet')\n\n  const showUnsupportedNotice = !supported && !enabled\n  let backupStatus: {\n    label: string\n    variant: 'success' | 'warning' | 'neutral'\n  } | null = null\n\n  if (status?.backup_eligible !== undefined) {\n    backupStatus = {\n      label: t('No backup'),\n      variant: 'neutral',\n    }\n\n    if (status.backup_eligible) {\n      backupStatus = {\n        label: status.backup_state ? t('Backed up') : t('Not backed up'),\n        variant: status.backup_state ? 'success' : 'warning',\n      }\n    }\n  }\n",
+    "result": "  if (statusError) {\n    return (\n      <Card>\n        <CardHeader>\n          <CardTitle>{t('Passkey Login')}</CardTitle>\n        </CardHeader>\n        <CardContent className='space-y-3'>\n          <p role='alert'>{t(statusError)}</p>\n          <Button onClick={() => void fetchStatus()}>{t('Retry')}</Button>\n        </CardContent>\n      </Card>\n    )\n  }\n\n  const formattedLastUsed = formatRelativeDate(lastUsed, t('Not used yet'))\n  const atLimit = credentials.length >= MAX_PASSKEYS_PER_USER\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 7,
+    "ours": "              <p className='text-muted-foreground text-sm'>\n                {t('{{count}} of {{maximum}} registered', {\n                  count: credentials.length,\n                  maximum: MAX_PASSKEYS_PER_USER,\n                })}\n                {' · '}\n                {t('Last used:')} {formattedLastUsed}\n              </p>\n",
+    "theirs": "\n              {!enabled && (\n                <Button\n                  className='w-full sm:w-auto xl:w-full 2xl:w-auto'\n                  onClick={handleRegister}\n                  disabled={!supported || registering || verification.isActive}\n                >\n                  {registering && (\n                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />\n                  )}\n                  {t('Enable Passkey')}\n                </Button>\n              )}\n",
+    "result": "              <p className='text-muted-foreground text-sm'>\n                {t('{{count}} of {{maximum}} registered', {\n                  count: credentials.length,\n                  maximum: MAX_PASSKEYS_PER_USER,\n                })}\n                {' · '}\n                {t('Last used:')} {formattedLastUsed}\n              </p>\n"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "index": 8,
+    "ours": "      <Dialog\n        open={nameDialogOpen}\n        onOpenChange={(next) => {\n          setNameDialogOpen(next)\n          if (!next) setNameError(null)\n        }}\n        title={t('Name this Passkey')}\n        description={t(\n          'Use a recognizable name such as “Work laptop” or “Phone”.'\n        )}\n        contentClassName='sm:max-w-md'\n        footer={\n          <>\n            <Button\n              type='button'\n              variant='outline'\n              onClick={() => setNameDialogOpen(false)}\n            >\n              {t('Cancel')}\n            </Button>\n            <Button\n              type='button'\n              disabled={registering}\n              onClick={handleRegister}\n            >\n              {registering && <Loader2 className='h-4 w-4 animate-spin' />}\n              {t('Add Passkey')}\n            </Button>\n          </>\n        }\n      >\n        <div className='space-y-2'>\n          <Label htmlFor='passkey-display-name'>{t('Passkey name')}</Label>\n          <Input\n            id='passkey-display-name'\n            value={displayName}\n            maxLength={MAX_PASSKEY_NAME_LENGTH}\n            placeholder={t('Work laptop')}\n            aria-invalid={Boolean(validationMessage)}\n            aria-describedby={\n              validationMessage ? 'passkey-name-error' : undefined\n            }\n            onChange={(event) => {\n              setDisplayName(event.target.value)\n              if (nameError) setNameError(null)\n            }}\n            onKeyDown={(event) => {\n              if (event.key === 'Enter' && !registering) {\n                event.preventDefault()\n                void handleRegister()\n              }\n            }}\n          />\n          {validationMessage && (\n            <p id='passkey-name-error' className='text-destructive text-sm'>\n              {validationMessage}\n            </p>\n          )}\n        </div>\n      </Dialog>\n\n      <AlertDialog\n        open={deleteTarget !== null}\n        onOpenChange={(next) => !next && setDeleteTarget(null)}\n      >\n        <AlertDialogContent>\n          <AlertDialogHeader>\n            <AlertDialogTitle>\n              {t('Remove {{name}}?', {\n                name: deleteTarget?.display_name ?? '',\n              })}\n            </AlertDialogTitle>\n            <AlertDialogDescription>\n              {t(\n                'Remove this Passkey from your account. Your other Passkeys will continue to work.'\n              )}\n            </AlertDialogDescription>\n          </AlertDialogHeader>\n          <AlertDialogFooter>\n            <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>\n            <AlertDialogAction\n              variant='destructive'\n              onClick={(event) => {\n                event.preventDefault()\n                void handleRemove()\n              }}\n            >\n              {t('Remove')}\n            </AlertDialogAction>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n\n      <SecureVerificationDialog\n        open={verificationOpen}\n        onOpenChange={(next) => {\n          if (!next) setRestrictedMethod(null)\n          setVerificationOpen(next)\n        }}\n        methods={dialogMethods}\n        state={verificationState}\n        onVerify={handleDialogVerify}\n        onCancel={handleVerificationCancel}\n        onCodeChange={setCode}\n        onMethodChange={switchMethod}\n      />\n",
+    "theirs": "      <SecureVerificationDialog {...verification.dialogProps} />\n",
+    "result": "      <Dialog\n        open={nameDialogOpen}\n        onOpenChange={(next) => {\n          setNameDialogOpen(next)\n          if (!next) setNameError(null)\n        }}\n        title={t('Name this Passkey')}\n        description={t(\n          'Use a recognizable name such as “Work laptop” or “Phone”.'\n        )}\n        contentClassName='sm:max-w-md'\n        footer={\n          <>\n            <Button\n              type='button'\n              variant='outline'\n              onClick={() => setNameDialogOpen(false)}\n            >\n              {t('Cancel')}\n            </Button>\n            <Button\n              type='button'\n              disabled={registering}\n              onClick={handleRegister}\n            >\n              {registering && <Loader2 className='h-4 w-4 animate-spin' />}\n              {t('Add Passkey')}\n            </Button>\n          </>\n        }\n      >\n        <div className='space-y-2'>\n          <Label htmlFor='passkey-display-name'>{t('Passkey name')}</Label>\n          <Input\n            id='passkey-display-name'\n            value={displayName}\n            maxLength={MAX_PASSKEY_NAME_LENGTH}\n            placeholder={t('Work laptop')}\n            aria-invalid={Boolean(validationMessage)}\n            aria-describedby={\n              validationMessage ? 'passkey-name-error' : undefined\n            }\n            onChange={(event) => {\n              setDisplayName(event.target.value)\n              if (nameError) setNameError(null)\n            }}\n            onKeyDown={(event) => {\n              if (event.key === 'Enter' && !registering) {\n                event.preventDefault()\n                void handleRegister()\n              }\n            }}\n          />\n          {validationMessage && (\n            <p id='passkey-name-error' className='text-destructive text-sm'>\n              {validationMessage}\n            </p>\n          )}\n        </div>\n      </Dialog>\n\n      <ConfirmDialog\n        open={deleteTarget !== null}\n        onOpenChange={(next) => !next && setDeleteTarget(null)}\n        title={t('Remove {{name}}?', { name: deleteTarget?.display_name ?? '' })}\n        desc={t('Remove this Passkey from your account. Your other Passkeys will continue to work.')}\n        confirmText={t('Remove')}\n        destructive\n        handleConfirm={() => void handleRemove()}\n      />\n      <SecureVerificationDialog {...verification.dialogProps} />\n"
+  }
+]

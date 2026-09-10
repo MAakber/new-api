@@ -1,0 +1,81 @@
+=== RUN   TestAuditDatabaseMatrix
+=== RUN   TestAuditDatabaseMatrix/mysql
+=== RUN   TestAuditDatabaseMatrix/mysql/upgrade=false
+    access_token_audit_test.go:675: isolated database: newapi_audit_1789082724463577000 (mysql)
+    access_token_audit_test.go:691: database version: 5.7.44
+[SYS] 2026/09/11 - 07:25:24 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:24 | database migration started 
+
+2026/09/11 07:25:25 [32mD:/10178/Projects/new-api-upstream-sync/model/main.go:285 [33mSLOW SQL >= 200ms
+[0m[31;1m[236.543ms] [33m[rows:0][35m CREATE TABLE `passkey_credentials` (`id` bigint AUTO_INCREMENT,`user_id` bigint NOT NULL,`credential_id` varchar(512) NOT NULL,`display_name` varchar(64) NOT NULL DEFAULT '',`public_key` text NOT NULL,`attestation_type` varchar(255),`aa_guid` varchar(512),`sign_count` int unsigned DEFAULT 0,`clone_warning` boolean,`user_present` boolean,`user_verified` boolean,`backup_eligible` boolean,`backup_state` boolean,`transports` text,`attachment` varchar(32),`last_used_at` datetime(3) NULL,`created_at` datetime(3) NULL,`updated_at` datetime(3) NULL,`deleted_at` datetime(3) NULL,PRIMARY KEY (`id`),INDEX `idx_passkey_credentials_user_id` (`user_id`),UNIQUE INDEX `idx_passkey_credentials_credential_id` (`credential_id`),INDEX `idx_passkey_credentials_deleted_at` (`deleted_at`))[0m
+
+2026/09/11 07:25:25 [32mD:/10178/Projects/new-api-upstream-sync/model/main.go:285 [33mSLOW SQL >= 200ms
+[0m[31;1m[417.300ms] [33m[rows:0][35m CREATE TABLE `redemptions` (`id` bigint AUTO_INCREMENT,`user_id` bigint,`key` char(32),`status` bigint DEFAULT 1,`name` varchar(191),`quota` bigint DEFAULT 100,`reward_type` varchar(32) NOT NULL DEFAULT 'quota',`code_type` varchar(32) NOT NULL DEFAULT 'redemption',`plan_id` bigint DEFAULT 0,`created_time` bigint,`redeemed_time` bigint,`redeemed_subscription_id` bigint DEFAULT 0,`used_user_id` bigint,`deleted_at` datetime(3) NULL,`expired_time` bigint,`max_uses` bigint DEFAULT 1,`used_count` bigint DEFAULT 0,PRIMARY KEY (`id`),INDEX `idx_redemptions_reward_type` (`reward_type`),INDEX `idx_redemptions_code_type` (`code_type`),INDEX `idx_redemptions_plan_id` (`plan_id`),INDEX `idx_redemptions_redeemed_subscription_id` (`redeemed_subscription_id`),INDEX `idx_redemptions_deleted_at` (`deleted_at`),UNIQUE INDEX `idx_redemptions_key` (`key`),INDEX `idx_redemptions_name` (`name`))[0m
+
+2026/09/11 07:25:26 [32mD:/10178/Projects/new-api-upstream-sync/model/main.go:285 [33mSLOW SQL >= 200ms
+[0m[31;1m[222.382ms] [33m[rows:0][35m CREATE TABLE `registration_code_uses` (`id` bigint AUTO_INCREMENT,`redemption_id` bigint,`user_id` bigint,`created_time` bigint,PRIMARY KEY (`id`),INDEX `idx_registration_code_uses_redemption_id` (`redemption_id`),INDEX `idx_registration_code_uses_user_id` (`user_id`))[0m
+
+2026/09/11 07:25:26 [32mD:/10178/Projects/new-api-upstream-sync/model/main.go:285 [33mSLOW SQL >= 200ms
+[0m[31;1m[316.653ms] [33m[rows:0][35m CREATE TABLE `abilities` (`group` varchar(64),`model` varchar(255),`channel_id` bigint,`enabled` boolean,`priority` bigint DEFAULT 0,`weight` bigint unsigned DEFAULT 0,`tag` varchar(191),PRIMARY KEY (`group`,`model`,`channel_id`),INDEX `idx_abilities_channel_id` (`channel_id`),INDEX `idx_abilities_priority` (`priority`),INDEX `idx_abilities_weight` (`weight`),INDEX `idx_abilities_tag` (`tag`))[0m
+
+2026/09/11 07:25:27 [32mD:/10178/Projects/new-api-upstream-sync/model/main.go:285 [33mSLOW SQL >= 200ms
+[0m[31;1m[680.325ms] [33m[rows:0][35m CREATE TABLE `logs` (`id` bigint AUTO_INCREMENT,`user_id` bigint,`created_at` bigint,`type` bigint,`content` longtext,`username` varchar(191) DEFAULT '',`token_name` varchar(191) DEFAULT '',`model_name` varchar(191) DEFAULT '',`quota` bigint DEFAULT 0,`prompt_tokens` bigint DEFAULT 0,`completion_tokens` bigint DEFAULT 0,`use_time` bigint DEFAULT 0,`is_stream` boolean,`channel_id` bigint,`channel_name` longtext,`token_id` bigint DEFAULT 0,`group` varchar(191),`ip` varchar(191) DEFAULT '',`request_id` varchar(64) DEFAULT '',`upstream_request_id` varchar(128) DEFAULT '',`other` text,PRIMARY KEY (`id`),INDEX `idx_logs_token_id` (`token_id`),INDEX `idx_logs_ip` (`ip`),INDEX `idx_logs_upstream_request_id` (`upstream_request_id`),INDEX `idx_created_at_id` (`created_at`,`id`),INDEX `idx_logs_user_id` (`user_id`),INDEX `idx_created_at_type` (`created_at`,`type`),INDEX `index_username_model_name` (`model_name`,`username`),INDEX `idx_logs_channel_id` (`channel_id`),INDEX `idx_logs_group` (`group`),INDEX `idx_logs_request_id` (`request_id`),INDEX `idx_user_id_id` (`user_id`,`id`),INDEX `idx_logs_username` (`username`),INDEX `idx_logs_token_name` (`token_name`),INDEX `idx_logs_model_name` (`model_name`))[0m
+
+2026/09/11 07:25:27 [32mD:/10178/Projects/new-api-upstream-sync/model/main.go:285 [33mSLOW SQL >= 200ms
+[0m[31;1m[358.462ms] [33m[rows:0][35m CREATE TABLE `midjourneys` (`id` bigint AUTO_INCREMENT,`code` bigint,`user_id` bigint,`action` varchar(40),`mj_id` varchar(191),`prompt` longtext,`prompt_en` longtext,`description` longtext,`state` longtext,`submit_time` bigint,`start_time` bigint,`finish_time` bigint,`image_url` longtext,`video_url` longtext,`video_urls` longtext,`status` varchar(20),`progress` varchar(30),`fail_reason` longtext,`channel_id` bigint,`quota` bigint,`buttons` longtext,`properties` longtext,PRIMARY KEY (`id`),INDEX `idx_midjourneys_status` (`status`),INDEX `idx_midjourneys_progress` (`progress`),INDEX `idx_midjourneys_user_id` (`user_id`),INDEX `idx_midjourneys_action` (`action`),INDEX `idx_midjourneys_mj_id` (`mj_id`),INDEX `idx_midjourneys_submit_time` (`submit_time`),INDEX `idx_midjourneys_start_time` (`start_time`),INDEX `idx_midjourneys_finish_time` (`finish_time`))[0m
+
+2026/09/11 07:25:27 [32mD:/10178/Projects/new-api-upstream-sync/model/main.go:285 [33mSLOW SQL >= 200ms
+[0m[31;1m[289.473ms] [33m[rows:0][35m CREATE TABLE `top_ups` (`id` bigint AUTO_INCREMENT,`user_id` bigint,`amount` bigint,`money` double,`trade_no` varchar(255),`payment_method` varchar(50),`payment_provider` varchar(50) DEFAULT '',`create_time` bigint,`complete_time` bigint,`status` longtext,PRIMARY KEY (`id`),INDEX `idx_top_ups_user_id` (`user_id`),INDEX `idx_top_ups_trade_no` (`trade_no`),CONSTRAINT `uni_top_ups_trade_no` UNIQUE (`trade_no`))[0m
+[SYS] 2026/09/11 - 07:25:29 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:29 | database migration started 
+
+2026/09/11 07:25:30 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:725 [35;1mError 1062 (23000): Duplicate entry 'matrix-token' for key 'idx_users_access_token'
+[0m[33m[55.184ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ('duplicate','placeholder','',1,1,'','','','','','','matrix-token',NULL,0,0,0,NULL,'default','duplicate-aff',0,0,0,0,NULL,'','','','',1789082729,0,1,0,'',0,403,'','')
+[ERR] 2026/09/11 - 07:25:30 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 07:25:30 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+=== RUN   TestAuditDatabaseMatrix/mysql/upgrade=true
+    access_token_audit_test.go:675: isolated database: newapi_audit_1789082731743060900 (mysql)
+    access_token_audit_test.go:691: database version: 5.7.44
+[SYS] 2026/09/11 - 07:25:32 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:32 | database migration started 
+[SYS] 2026/09/11 - 07:25:34 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:34 | database migration started 
+
+2026/09/11 07:25:35 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:725 [35;1mError 1062 (23000): Duplicate entry 'matrix-token' for key 'idx_users_access_token'
+[0m[33m[91.754ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ('duplicate','placeholder','',1,1,'','','','','','','matrix-token',NULL,0,0,0,NULL,'default','duplicate-aff',0,0,0,0,NULL,'','','','',1789082735,0,1,0,'',0,403,'','')
+[ERR] 2026/09/11 - 07:25:35 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 07:25:35 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+--- PASS: TestAuditDatabaseMatrix (12.66s)
+    --- PASS: TestAuditDatabaseMatrix/mysql (12.66s)
+        --- PASS: TestAuditDatabaseMatrix/mysql/upgrade=false (7.28s)
+        --- PASS: TestAuditDatabaseMatrix/mysql/upgrade=true (5.38s)
+=== RUN   TestIndependentAuditLogStores
+=== RUN   TestIndependentAuditLogStores/mysql/upgrade=false
+    access_token_audit_test.go:791: isolated database: newapi_audit_1789082737133157300 (mysql)
+[SYS] 2026/09/11 - 07:25:37 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:37 | database migration started 
+[SYS] 2026/09/11 - 07:25:37 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:37 | database migration started 
+[ERR] 2026/09/11 - 07:25:37 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 07:25:37 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 07:25:37 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:37 | database migration started 
+[SYS] 2026/09/11 - 07:25:37 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:37 | database migration started 
+=== RUN   TestIndependentAuditLogStores/mysql/upgrade=true
+    access_token_audit_test.go:791: isolated database: newapi_audit_1789082737898487100 (mysql)
+[SYS] 2026/09/11 - 07:25:38 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:38 | database migration started 
+[SYS] 2026/09/11 - 07:25:38 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:38 | database migration started 
+[ERR] 2026/09/11 - 07:25:38 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 07:25:38 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 07:25:38 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:38 | database migration started 
+[SYS] 2026/09/11 - 07:25:38 | using MySQL as database 
+[SYS] 2026/09/11 - 07:25:38 | database migration started 
+--- PASS: TestIndependentAuditLogStores (1.77s)
+    --- PASS: TestIndependentAuditLogStores/mysql/upgrade=false (0.77s)
+    --- PASS: TestIndependentAuditLogStores/mysql/upgrade=true (1.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	15.262s

@@ -975,6 +975,22 @@
         "upstreamCommits": [
           "9f506dd7f905c288b4a119a8197cd64b77eb4a3f"
         ]
+      },
+      {
+        "id": "B08.2-security-center",
+        "action": "feat(security): add access token management and audit logs",
+        "status": "verifying",
+        "upstreamCommits": [
+          "d8cb177440ceaae422d5bfd96c258d47af4e0f1d"
+        ]
+      },
+      {
+        "id": "B08.2-operation-proofs",
+        "action": "fix(security): bind verification proofs to sessions and actions",
+        "status": "verifying",
+        "upstreamCommits": [
+          "45c3fbe8aeb049f03c13e14298a40b87aea5bd87"
+        ]
       }
     ],
     "codeCommits": [
@@ -988,9 +1004,32 @@
       "4a4adcee738e78421fbe4eb55a730be19f612c4e",
       "42728d59e95b85d8f22794569d492748cbb97766",
       "c466cbc7bb9a5dcb22cc6744f18ff0da37f647e4",
-      "a783eaa720d5efb6cd5d7dbbccab3f3895f63593"
+      "a783eaa720d5efb6cd5d7dbbccab3f3895f63593",
+      "dd13952fa267f39227fe2afd60b05afb5d13dd1f",
+      "37e542dd4da3f95616c824b8f8dbabb0d77d1353",
+      "26431b8c03c70eddbda1c4c07a4600951ec9fd3b",
+      "5bf3f4b30a853589c568287608d2a0d91ee12447"
     ],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-security-center-d8cb17744/resolution.json",
+      "evidence/runs/B08-security-go/result.json",
+      "evidence/runs/B08-security-ui-fixed/result.json",
+      "evidence/runs/B08-security-ui-types-fixed/result.json",
+      "evidence/runs/B08-security-lint/result.json",
+      "evidence/runs/B08-security-mobile-lint/result.json",
+      "evidence/runs/B08-security-session-preservation/result.json",
+      "evidence/runs/B08-security-mariadb-postgres/result.json",
+      "evidence/runs/B08-security-mysql57-selected/result.json",
+      "evidence/B08-security-center-conflicts.json",
+      "evidence/runs/B08-proofs-go/result.json",
+      "evidence/runs/B08-proofs-ui/result.json",
+      "evidence/runs/B08-proofs-types/result.json",
+      "evidence/runs/B08-proofs-lint/result.json",
+      "evidence/runs/B08-proofs-i18n/result.json",
+      "evidence/runs/B08-proofs-mariadb/result.json",
+      "evidence/runs/B08-proofs-mysql57/result.json",
+      "evidence/runs/B08-proofs-postgres-url/result.json"
+    ],
     "nextAction": "按会话、验证、审计、日志投影与配置依赖拆分"
   },
   {
@@ -1023,6 +1062,11 @@
       {
         "id": "B09.3",
         "action": "验证账号切换、主题/公告失效及榜单权限",
+        "status": "pending"
+      },
+      {
+        "id": "B09.1-public-cache-audit-test",
+        "action": "Restore public notice ETag regression from d8cb177 after 219c9e063 adds public caching; saved in B08 security-center evidence/deferred-public-notice-test.txt.",
         "status": "pending"
       }
     ],
@@ -1170,6 +1214,11 @@
         "status": "pending",
         "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
         "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
+      },
+      {
+        "id": "B12.1-audit-fixture",
+        "status": "pending",
+        "action": "When adding controller/billing_option_test.go from pricing management, migrate AuditLog in its test fixture as required by d8cb177440ceaae422d5bfd96c258d47af4e0f1d."
       }
     ],
     "codeCommits": [],
@@ -1277,6 +1326,11 @@
         "status": "pending",
         "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
         "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
+      },
+      {
+        "id": "B14.1-token-audit-fixtures",
+        "status": "pending",
+        "action": "Integrate d8cb177440ceaae422d5bfd96c258d47af4e0f1d changes to controller/channel_task_plugin_bind_test.go and router/plugin_router_test.go: migrate AuditLog and verify plugin credential paths do not leak into audit rows."
       }
     ],
     "codeCommits": [],
