@@ -41,7 +41,7 @@ func TestPasswordLoginEncryptionPreservesAuthentication(t *testing.T) {
 	require.NoError(t, err)
 	sqlDB.SetMaxOpenConns(1)
 	t.Cleanup(func() { _ = sqlDB.Close() })
-	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserAvatar{}, &model.UserSession{}, &model.TwoFA{}, &model.AuthFlow{}, &model.Log{}, &model.LoginEncryptionKey{}))
+	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserAvatar{}, &model.UserSession{}, &model.TwoFA{}, &model.AuthFlow{}, &model.Log{}, &model.AuditLog{}, &model.LoginEncryptionKey{}))
 	model.DB, model.LOG_DB = db, db
 	common.SetDatabaseTypes(common.DatabaseTypeSQLite, common.DatabaseTypeSQLite)
 	common.RedisEnabled, common.PasswordLoginEnabled = false, true
@@ -119,7 +119,7 @@ func TestPasswordLoginEncryptionPreservesAuthentication(t *testing.T) {
 	}
 	var sessions, audits int64
 	require.NoError(t, db.Model(&model.UserSession{}).Count(&sessions).Error)
-	require.NoError(t, db.Model(&model.Log{}).Where("type = ?", model.LogTypeLogin).Count(&audits).Error)
+	require.NoError(t, db.Model(&model.AuditLog{}).Where("category = ?", model.AuditCategoryLogin).Count(&audits).Error)
 	assert.EqualValues(t, 2, sessions)
 	assert.EqualValues(t, 2, audits)
 

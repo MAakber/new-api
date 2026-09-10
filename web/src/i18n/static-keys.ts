@@ -810,6 +810,11 @@ export const STATIC_I18N_KEYS = [
   // Custom balance and check-in
   'Ignore balance-limit auto-ban',
   'Keep this channel enabled when the upstream reports a temporary balance or quota limit.',
+  // Channel status audit events
+  "View other accounts' audit logs",
+  'View audit records from user and admin roles. Root records are always excluded.',
+  'Updated channel status (ID: {{id}})',
+  'Batch updated channel status ({{count}}/{{total}} changed)',
 
   // Misc
   'A gateway error occurred (502). Please try again later.',
