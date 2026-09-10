@@ -1,0 +1,18 @@
+{
+  "upstream": "4442bb302898fef9763c91dab8c638ae2b27fbe7",
+  "unit": "B02.1-claude-tools",
+  "before_head": "fdda273f33c1fc5d4667fab0ebed8ad0a5ef83a3",
+  "after_head": "27cf2a6bc005a65fe0c8e6fc9c5c851288b45467",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "4442bb302898fef9763c91dab8c638ae2b27fbe7"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relaykit/relayconvert/claude_default_max_tokens_test.go",
+    "relaykit/relayconvert/internal/oai_chat/to_claude_messages_req.go"
+  ]
+}

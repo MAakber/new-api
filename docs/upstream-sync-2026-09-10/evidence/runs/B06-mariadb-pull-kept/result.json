@@ -1,0 +1,31 @@
+{
+  "id": "B06-mariadb-pull-kept",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu-SF3D",
+    "-u",
+    "root",
+    "--",
+    "docker",
+    "pull",
+    "mariadb:11.4.4"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "cc4c51af1c7736cb0783e6dd3f36d5e8995f4533",
+  "started_at": "2026-09-10T11:59:44.175Z",
+  "finished_at": "2026-09-10T12:00:02.995Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1,0 +1,8 @@
+Auto-merging model/channel.go
+Auto-merging model/main.go
+Auto-merging model/task.go
+[codex/upstream-sync-2026-09-10 97b04db76] fix(model): return string from JSON column Valuers for pg simple protocol
+ Author: CaIon <i@caion.me>
+ Date: Sun Aug 30 21:13:21 2026 +0800
+ 5 files changed, 133 insertions(+), 8 deletions(-)
+ create mode 100644 model/json_column_test.go

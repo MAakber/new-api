@@ -1,0 +1,17 @@
+{
+  "upstream": "9724ef1b248a436ea47270bb5b394a0fdb013a6c",
+  "unit": "B02.1-responses",
+  "before_head": "6932421964eeae282de48da34b1dcf687966a40e",
+  "after_head": "720cb213871ed14e531822a749b94d94998d3458",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "9724ef1b248a436ea47270bb5b394a0fdb013a6c"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/deepseek/adaptor.go"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "upstream": "74158715cde6d7b767ead23d9a2af64b7b58a588",
+  "unit": "B06.2-drivers",
+  "before_head": "97b04db766cb5527a2394bfba425439e5f9e096f",
+  "after_head": "a1d6925f27ae47919b40ad4e26ce4e6239a67752",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "74158715cde6d7b767ead23d9a2af64b7b58a588"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "go.mod",
+    "go.sum"
+  ]
+}

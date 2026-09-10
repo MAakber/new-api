@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 97259ebc0] feat: support zstd request decompression (#6545)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Fri Jul 31 11:17:55 2026 +0800
+ 2 files changed, 24 insertions(+), 3 deletions(-)

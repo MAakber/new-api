@@ -1,0 +1,20 @@
+{
+  "upstream": "3dda1d50c6d4a35edf1c74200fcb02d46d0fd075",
+  "unit": "B02.1-claude-tools",
+  "before_head": "27cf2a6bc005a65fe0c8e6fc9c5c851288b45467",
+  "after_head": "eff560e7ac74828eb41aba8d5872833e7f20267d",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "3dda1d50c6d4a35edf1c74200fcb02d46d0fd075"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relaykit/relayconvert/internal/oai_chat/to_claude_messages_req.go",
+    "relaykit/relayconvert/internal/oai_chat/to_claude_messages_req_test.go",
+    "relaykit/relayconvert/internal/oai_responses/to_claude_messages_req.go",
+    "relaykit/relayconvert/internal/shared/claude/schema.go"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "upstream": "3d5dc36f1d85ccae8d5cb2864764011795b559b5",
+  "unit": "B02.1-models",
+  "before_head": "97259ebc0bd1029da3523066e1afedc63f3ddda4",
+  "after_head": "a84a0bd9c64e283c182088c60d3d0721d5c82978",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "3d5dc36f1d85ccae8d5cb2864764011795b559b5"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "middleware/auth.go",
+    "router/relay-router.go",
+    "router/relay_router_test.go"
+  ]
+}

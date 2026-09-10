@@ -1,0 +1,20 @@
+{
+  "upstream": "8ad159a3bbc2da9f7432848a58c99bc2dafee227",
+  "unit": "B02.1-ollama",
+  "before_head": "2fd36c1832d259097a0c2de08859cec0546c5bf0",
+  "after_head": "03125a2a2d0a2c30937fc8fcd40ca8e3c9023e27",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "8ad159a3bbc2da9f7432848a58c99bc2dafee227"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/ollama/dto.go",
+    "relay/channel/ollama/relay-ollama.go",
+    "relay/channel/ollama/stream.go",
+    "relay/channel/ollama/stream_test.go"
+  ]
+}

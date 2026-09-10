@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 fdda273f3] fix(ali): honor image response format (#5513) (#7048)
+ Author: PuppetKL <154485567+PuppetKL@users.noreply.github.com>
+ Date: Sun Aug 30 20:33:15 2026 +0800
+ 2 files changed, 91 insertions(+), 1 deletion(-)

@@ -234,3 +234,234 @@
 - 34 time-rule and editor regressions pass, plus typecheck, touched lint and backend billing/settlement regressions.
 - Existing configuration review / explicit save / rollback notes: B05-TIME-RULE-MIGRATION.md.
 - Continue B02 protocol support; final source and real-data acceptance remain pending.
+
+## 2026-09-10T11:40:52.658Z — B02.1-context applying 85feb7a34
+
+- Before HEAD: 6e05a8f8e0784d96b1ad5786b1fc321b6a99de68.
+- Upstream: 85feb7a345d2d94d3ed4df89eb67ac504e0c1560 — feat(relay): expose user and group context to parameter overrides (#6534).
+- Reviewed paths: relay/common/override.go, relay/common/override_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:40:52.917Z — B02.1-context implemented
+
+- Result: exit 0; HEAD 6932421964eeae282de48da34b1dcf687966a40e.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-context-85feb7a34/result.json.
+- Next: B02.1-context: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:40:56.273Z — B02.1-responses applying 9724ef1b2
+
+- Before HEAD: 6932421964eeae282de48da34b1dcf687966a40e.
+- Upstream: 9724ef1b248a436ea47270bb5b394a0fdb013a6c — feat: deepseek responses api (#6562).
+- Reviewed paths: relay/channel/deepseek/adaptor.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:40:56.548Z — B02.1-responses implemented
+
+- Result: exit 0; HEAD 720cb213871ed14e531822a749b94d94998d3458.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-responses-9724ef1b2/result.json.
+- Next: B02.1-responses: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:40:59.774Z — B02.1-responses applying cae3676ec
+
+- Before HEAD: 720cb213871ed14e531822a749b94d94998d3458.
+- Upstream: cae3676ec6f46ee5ef596443256f78c4e9b34ceb — feat: glm chanel /v1/responses (#7050).
+- Reviewed paths: relay/channel/zhipu_4v/adaptor.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:41:00.021Z — B02.1-responses implemented
+
+- Result: exit 0; HEAD 2fd36c1832d259097a0c2de08859cec0546c5bf0.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-responses-cae3676ec/result.json.
+- Next: B02.1-responses: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:42:12.071Z — B02.1-ollama applying 8ad159a3b
+
+- Before HEAD: 2fd36c1832d259097a0c2de08859cec0546c5bf0.
+- Upstream: 8ad159a3bbc2da9f7432848a58c99bc2dafee227 — fix(ollama): preserve reasoning and tool-call context (#6605).
+- Reviewed paths: relay/channel/ollama/dto.go, relay/channel/ollama/relay-ollama.go, relay/channel/ollama/stream.go, relay/channel/ollama/stream_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:42:12.324Z — B02.1-ollama implemented
+
+- Result: exit 0; HEAD 03125a2a2d0a2c30937fc8fcd40ca8e3c9023e27.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-ollama-8ad159a3b/result.json.
+- Next: B02.1-ollama: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:42:15.820Z — B02.1-ollama applying ba2e9287b
+
+- Before HEAD: 03125a2a2d0a2c30937fc8fcd40ca8e3c9023e27.
+- Upstream: ba2e9287bb7a8002116c03daa4c457a330054871 — feat(ollama): passthrough Claude Messages and OpenAI Responses (#7051).
+- Reviewed paths: relay/channel/ollama/adaptor.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:42:16.102Z — B02.1-ollama implemented
+
+- Result: exit 0; HEAD f6d7b8c8328e9bc3971c1e55e77f425a65359b88.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-ollama-ba2e9287b/result.json.
+- Next: B02.1-ollama: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:42:19.576Z — B02.1-request applying 0f2a2075a
+
+- Before HEAD: f6d7b8c8328e9bc3971c1e55e77f425a65359b88.
+- Upstream: 0f2a2075ab072ea7e20ffa5dd5d58dbf1b6b5b22 — fix(relay): 请求参数校验错误返回 HTTP 400 (#6774).
+- Reviewed paths: controller/relay.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:42:19.824Z — B02.1-request implemented
+
+- Result: exit 0; HEAD 77a37244385ad6425887e9773bba1c464283e3ad.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-request-0f2a2075a/result.json.
+- Next: B02.1-request: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:43:24.942Z — B02.1-request applying 0f9f668c6
+
+- Before HEAD: 77a37244385ad6425887e9773bba1c464283e3ad.
+- Upstream: 0f9f668c6076214680f87e89a88a426cb08228ad — feat: support zstd request decompression (#6545).
+- Reviewed paths: go.mod, middleware/gzip.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:43:25.180Z — B02.1-request implemented
+
+- Result: exit 0; HEAD 97259ebc0bd1029da3523066e1afedc63f3ddda4.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-request-0f9f668c6/result.json.
+- Next: B02.1-request: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:43:28.761Z — B02.1-models applying 3d5dc36f1
+
+- Before HEAD: 97259ebc0bd1029da3523066e1afedc63f3ddda4.
+- Upstream: 3d5dc36f1d85ccae8d5cb2864764011795b559b5 — fix: 修复 Gemini 风格 /v1/models 列表请求 (#6199).
+- Reviewed paths: middleware/auth.go, router/relay-router.go, router/relay_router_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:43:29.041Z — B02.1-models implemented
+
+- Result: exit 0; HEAD a84a0bd9c64e283c182088c60d3d0721d5c82978.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-models-3d5dc36f1/result.json.
+- Next: B02.1-models: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:43:32.214Z — B02.1-ali-images applying 93d2df85f
+
+- Before HEAD: a84a0bd9c64e283c182088c60d3d0721d5c82978.
+- Upstream: 93d2df85f824e4343a114e1f18dde4f795e2d55b — fix(ali): 修复阿里图片模型映射后仍使用原始模型名判断协议的问题 (#6772).
+- Reviewed paths: relay/channel/ali/adaptor.go, relay/channel/ali/adaptor_test.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:43:32.452Z — B02.1-ali-images implemented
+
+- Result: exit 0; HEAD 91f9bebd62896e7c3942dea75b3a548c45bcbc58.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-ali-images-93d2df85f/result.json.
+- Next: B02.1-ali-images: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:43:35.583Z — B02.1-ali-images applying 0bee5d441
+
+- Before HEAD: 91f9bebd62896e7c3942dea75b3a548c45bcbc58.
+- Upstream: 0bee5d4410296e972bf0076414ade786c2c799c8 — fix(ali): honor image response format (#5513) (#7048).
+- Reviewed paths: relay/channel/ali/adaptor_test.go, relay/channel/ali/image.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:43:35.823Z — B02.1-ali-images implemented
+
+- Result: exit 0; HEAD fdda273f33c1fc5d4667fab0ebed8ad0a5ef83a3.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-ali-images-0bee5d441/result.json.
+- Next: B02.1-ali-images: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:44:37.567Z — B02.1-claude-tools applying 4442bb302
+
+- Before HEAD: fdda273f33c1fc5d4667fab0ebed8ad0a5ef83a3.
+- Upstream: 4442bb302898fef9763c91dab8c638ae2b27fbe7 — fix(relay): stop injecting empty tools into Claude requests.
+- Reviewed paths: relaykit/relayconvert/claude_default_max_tokens_test.go, relaykit/relayconvert/internal/oai_chat/to_claude_messages_req.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:44:37.809Z — B02.1-claude-tools implemented
+
+- Result: exit 0; HEAD 27cf2a6bc005a65fe0c8e6fc9c5c851288b45467.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-claude-tools-4442bb302/result.json.
+- Next: B02.1-claude-tools: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:44:41.067Z — B02.1-claude-tools applying 3dda1d50c
+
+- Before HEAD: 27cf2a6bc005a65fe0c8e6fc9c5c851288b45467.
+- Upstream: 3dda1d50c6d4a35edf1c74200fcb02d46d0fd075 — fix(relaykit): preserve parameterless tools in Claude conversion (#6862).
+- Reviewed paths: relaykit/relayconvert/internal/oai_chat/to_claude_messages_req.go, relaykit/relayconvert/internal/oai_chat/to_claude_messages_req_test.go, relaykit/relayconvert/internal/oai_responses/to_claude_messages_req.go, relaykit/relayconvert/internal/shared/claude/schema.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:44:41.316Z — B02.1-claude-tools implemented
+
+- Result: exit 0; HEAD eff560e7ac74828eb41aba8d5872833e7f20267d.
+- Conflicts: none.
+- Evidence: evidence/runs/B02.1-claude-tools-3dda1d50c/result.json.
+- Next: B02.1-claude-tools: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T11:56:49.059Z — B02 local stage verified
+
+- Twelve patches applied. Provider/controller/middleware/router tests and independent relaykit build/test pass.
+- Added native Responses explicit-zero/context, DeepSeek suffix, Ollama tool context, and identity/gzip/br/zstd 400/413 contracts.
+- Two controller DB migration tests skipped for absent DSNs; these are not database acceptance and remain required in B06/B18.
+- Authorized live provider acceptance is still pending in B18, never inferred from local tests.
+
+## 2026-09-10T11:59:55.765Z — B06.2-drivers applying 66031a09d
+
+- Before HEAD: cc4c51af1c7736cb0783e6dd3f36d5e8995f4533.
+- Upstream: 66031a09d99f2ac4e0b94e2c41f04ed691a79304 — fix(model): disable PostgreSQL prepared statements for pooler compatibility.
+- Reviewed paths: go.mod, go.sum, model/gorm_logger.go, model/gorm_logger_test.go, model/main.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T11:59:56.102Z — B06.2-drivers implemented
+
+- Result: exit 0; HEAD 6be86f0a01348e000a91b22deb4b54db89d4d7f0.
+- Conflicts: none.
+- Evidence: evidence/runs/B06.2-drivers-66031a09d/result.json.
+- Next: B06.2-drivers: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T12:00:00.067Z — B06.2-drivers applying 1751f43ee
+
+- Before HEAD: 6be86f0a01348e000a91b22deb4b54db89d4d7f0.
+- Upstream: 1751f43ee07edc9eb0c56fd9b23586861b43df46 — fix(sqlite): enable WAL + working busy timeout + _txlock=immediate to stop concurrent write lockouts (#7030).
+- Reviewed paths: common/database.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T12:00:00.333Z — B06.2-drivers implemented
+
+- Result: exit 0; HEAD e741f0ce8bbc9e9bc2438c0368424af3ddf9937d.
+- Conflicts: none.
+- Evidence: evidence/runs/B06.2-drivers-1751f43ee/result.json.
+- Next: B06.2-drivers: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T12:00:03.676Z — B06.2-json applying 6eb6f35ed
+
+- Before HEAD: e741f0ce8bbc9e9bc2438c0368424af3ddf9937d.
+- Upstream: 6eb6f35ed211b7459cae3b9f13286b9c93fc1bd6 — fix(model): return string from JSON column Valuers for pg simple protocol.
+- Reviewed paths: model/channel.go, model/json_column_test.go, model/main.go, model/prefill_group.go, model/task.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T12:00:03.958Z — B06.2-json implemented
+
+- Result: exit 0; HEAD 97b04db766cb5527a2394bfba425439e5f9e096f.
+- Conflicts: none.
+- Evidence: evidence/runs/B06.2-json-6eb6f35ed/result.json.
+- Next: B06.2-json: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T12:00:07.202Z — B06.2-drivers applying 74158715c
+
+- Before HEAD: 97b04db766cb5527a2394bfba425439e5f9e096f.
+- Upstream: 74158715cde6d7b767ead23d9a2af64b7b58a588 — fix initialize database.
+- Reviewed paths: go.mod, go.sum.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T12:00:07.473Z — B06.2-drivers implemented
+
+- Result: exit 0; HEAD a1d6925f27ae47919b40ad4e26ce4e6239a67752.
+- Conflicts: none.
+- Evidence: evidence/runs/B06.2-drivers-74158715c/result.json.
+- Next: B06.2-drivers: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.

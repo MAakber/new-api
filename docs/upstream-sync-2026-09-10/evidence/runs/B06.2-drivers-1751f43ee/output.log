@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 e741f0ce8] fix(sqlite): enable WAL + working busy timeout + _txlock=immediate to stop concurrent write lockouts (#7030)
+ Author: Xayinn <129403670+LinineTy@users.noreply.github.com>
+ Date: Sun Aug 30 20:46:56 2026 +0800
+ 1 file changed, 21 insertions(+), 1 deletion(-)

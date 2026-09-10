@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T11:40:49.090Z",
+  "updatedAt": "2026-09-10T12:00:07.465Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B02",
-  "current_unit": "B02.1",
+  "current_batch": "B06",
+  "current_unit": "B06.2-drivers",
   "active_operation": null,
-  "last_observed_head": "e76709e664a6d4e9cb681ab720855a5040760ce3",
-  "last_verified_code_commit": "e76709e664a6d4e9cb681ab720855a5040760ce3",
+  "last_observed_head": "a1d6925f27ae47919b40ad4e26ce4e6239a67752",
+  "last_verified_code_commit": "cc4c51af1c7736cb0783e6dd3f36d5e8995f4533",
   "last_checkpoint_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Apply inspected context, DeepSeek Responses and GLM Responses changes as separate recorded commits; validate provider conversion contracts.",
+  "next_action": "B06.2-drivers: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.",
   "blockers": [
     {
       "id": "production_snapshot",

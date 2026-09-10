@@ -21,12 +21,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "97259ebc0bd1029da3523066e1afedc63f3ddda4"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-request-0f9f668c6/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -193,12 +201,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "720cb213871ed14e531822a749b94d94998d3458"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-responses-9724ef1b2/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -993,12 +1009,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "6932421964eeae282de48da34b1dcf687966a40e"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-context-85feb7a34/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1028,12 +1052,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "03125a2a2d0a2c30937fc8fcd40ca8e3c9023e27"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-ollama-8ad159a3b/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1351,12 +1383,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "a84a0bd9c64e283c182088c60d3d0721d5c82978"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-models-3d5dc36f1/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1596,12 +1636,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "91f9bebd62896e7c3942dea75b3a548c45bcbc58"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-ali-images-93d2df85f/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1985,12 +2033,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "27cf2a6bc005a65fe0c8e6fc9c5c851288b45467"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-claude-tools-4442bb302/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2152,12 +2208,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "eff560e7ac74828eb41aba8d5872833e7f20267d"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-claude-tools-3dda1d50c/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2578,12 +2642,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "2fd36c1832d259097a0c2de08859cec0546c5bf0"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-responses-cae3676ec/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2610,12 +2682,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "f6d7b8c8328e9bc3971c1e55e77f425a65359b88"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-ollama-ba2e9287b/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3204,12 +3284,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "77a37244385ad6425887e9773bba1c464283e3ad"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-request-0f2a2075a/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3478,12 +3566,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "6be86f0a01348e000a91b22deb4b54db89d4d7f0"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-drivers-66031a09d/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3513,12 +3605,20 @@
       "empty": false,
       "in21CommitTrial": true
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending. Local stage regression passed; final candidate review and authorized live interoperability remain required at B18.",
+    "resolution_commits": [
+      "fdda273f33c1fc5d4667fab0ebed8ad0a5ef83a3"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B02.1-ali-images-0bee5d441/result.json",
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3649,12 +3749,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "e741f0ce8bbc9e9bc2438c0368424af3ddf9937d"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-drivers-1751f43ee/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3685,12 +3789,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "97b04db766cb5527a2394bfba425439e5f9e096f"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-json-6eb6f35ed/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3757,12 +3865,16 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "a1d6925f27ae47919b40ad4e26ce4e6239a67752"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B06.2-drivers-74158715c/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

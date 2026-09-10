@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 f6d7b8c83] feat(ollama): passthrough Claude Messages and OpenAI Responses (#7051)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Thu Aug 27 21:51:07 2026 +0800
+ 1 file changed, 50 insertions(+), 27 deletions(-)

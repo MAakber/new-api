@@ -168,27 +168,112 @@
       "4442bb302898fef9763c91dab8c638ae2b27fbe7",
       "3dda1d50c6d4a35edf1c74200fcb02d46d0fd075"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B02.1",
         "action": "按供应商分单元，阿里两项与 Claude 两项按依赖引入",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B02.2",
         "action": "验证压缩边界、400/413、鉴权、工具与多协议转换",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B02.3",
-        "action": "联调授权渠道；未具备的运行条件明确记账",
-        "status": "pending"
+        "action": "核对可用联调环境并明确登记未具备条件；真实授权供应商联调仍由 B18 provider_interop 门槛验收",
+        "status": "verified",
+        "deferred_acceptance": {
+          "gate": "provider_interop",
+          "batch": "B18",
+          "status": "pending_environment",
+          "reason": "No dedicated provider test credentials or authorized paid requests; local protocol simulations do not count as live interop."
+        }
+      },
+      {
+        "id": "B02.1-context",
+        "action": "feat(relay): expose user and group context to parameter overrides (#6534)",
+        "status": "verified",
+        "upstreamCommits": [
+          "85feb7a345d2d94d3ed4df89eb67ac504e0c1560"
+        ]
+      },
+      {
+        "id": "B02.1-responses",
+        "action": "feat: deepseek responses api (#6562)",
+        "status": "verified",
+        "upstreamCommits": [
+          "9724ef1b248a436ea47270bb5b394a0fdb013a6c",
+          "cae3676ec6f46ee5ef596443256f78c4e9b34ceb"
+        ]
+      },
+      {
+        "id": "B02.1-ollama",
+        "action": "fix(ollama): preserve reasoning and tool-call context (#6605)",
+        "status": "verified",
+        "upstreamCommits": [
+          "8ad159a3bbc2da9f7432848a58c99bc2dafee227",
+          "ba2e9287bb7a8002116c03daa4c457a330054871"
+        ]
+      },
+      {
+        "id": "B02.1-request",
+        "action": "fix(relay): 请求参数校验错误返回 HTTP 400 (#6774)",
+        "status": "verified",
+        "upstreamCommits": [
+          "0f2a2075ab072ea7e20ffa5dd5d58dbf1b6b5b22",
+          "0f9f668c6076214680f87e89a88a426cb08228ad"
+        ]
+      },
+      {
+        "id": "B02.1-models",
+        "action": "fix: 修复 Gemini 风格 /v1/models 列表请求 (#6199)",
+        "status": "verified",
+        "upstreamCommits": [
+          "3d5dc36f1d85ccae8d5cb2864764011795b559b5"
+        ]
+      },
+      {
+        "id": "B02.1-ali-images",
+        "action": "fix(ali): 修复阿里图片模型映射后仍使用原始模型名判断协议的问题 (#6772)",
+        "status": "verified",
+        "upstreamCommits": [
+          "93d2df85f824e4343a114e1f18dde4f795e2d55b",
+          "0bee5d4410296e972bf0076414ade786c2c799c8"
+        ]
+      },
+      {
+        "id": "B02.1-claude-tools",
+        "action": "fix(relay): stop injecting empty tools into Claude requests",
+        "status": "verified",
+        "upstreamCommits": [
+          "4442bb302898fef9763c91dab8c638ae2b27fbe7",
+          "3dda1d50c6d4a35edf1c74200fcb02d46d0fd075"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "按供应商分单元，阿里两项与 Claude 两项按依赖引入",
+    "codeCommits": [
+      "6932421964eeae282de48da34b1dcf687966a40e",
+      "720cb213871ed14e531822a749b94d94998d3458",
+      "2fd36c1832d259097a0c2de08859cec0546c5bf0",
+      "03125a2a2d0a2c30937fc8fcd40ca8e3c9023e27",
+      "f6d7b8c8328e9bc3971c1e55e77f425a65359b88",
+      "77a37244385ad6425887e9773bba1c464283e3ad",
+      "97259ebc0bd1029da3523066e1afedc63f3ddda4",
+      "a84a0bd9c64e283c182088c60d3d0721d5c82978",
+      "91f9bebd62896e7c3942dea75b3a548c45bcbc58",
+      "fdda273f33c1fc5d4667fab0ebed8ad0a5ef83a3",
+      "27cf2a6bc005a65fe0c8e6fc9c5c851288b45467",
+      "eff560e7ac74828eb41aba8d5872833e7f20267d"
+    ],
+    "evidence": [
+      "evidence/runs/B02-go-first/result.json",
+      "evidence/runs/B02-relaykit-test/result.json",
+      "evidence/runs/B02-relaykit-build/result.json",
+      "evidence/runs/B02-contracts/result.json"
+    ],
+    "nextAction": "Local stage complete; B18 requires authorized live interoperability and final candidate tests.",
     "orderEvidence": "evidence/baseline-review/batch-simulations.json"
   },
   {
@@ -345,7 +430,7 @@
       "9a8674425c5a43435a259b58bb928a55d26be990",
       "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
     ],
-    "status": "pending",
+    "status": "in_progress",
     "units": [
       {
         "id": "B06.1",
@@ -361,9 +446,32 @@
         "id": "B06.3",
         "action": "对撤回与空补丁逐项建立替代/无变化证据",
         "status": "pending"
+      },
+      {
+        "id": "B06.2-drivers",
+        "action": "fix(model): disable PostgreSQL prepared statements for pooler compatibility",
+        "status": "verifying",
+        "upstreamCommits": [
+          "66031a09d99f2ac4e0b94e2c41f04ed691a79304",
+          "1751f43ee07edc9eb0c56fd9b23586861b43df46",
+          "74158715cde6d7b767ead23d9a2af64b7b58a588"
+        ]
+      },
+      {
+        "id": "B06.2-json",
+        "action": "fix(model): return string from JSON column Valuers for pg simple protocol",
+        "status": "verifying",
+        "upstreamCommits": [
+          "6eb6f35ed211b7459cae3b9f13286b9c93fc1bd6"
+        ]
       }
     ],
-    "codeCommits": [],
+    "codeCommits": [
+      "6be86f0a01348e000a91b22deb4b54db89d4d7f0",
+      "e741f0ce8bbc9e9bc2438c0368424af3ddf9937d",
+      "97b04db766cb5527a2394bfba425439e5f9e096f",
+      "a1d6925f27ae47919b40ad4e26ce4e6239a67752"
+    ],
     "evidence": [],
     "nextAction": "确认真实数据库版本和隔离数据库夹具，不能假定 SQLite 代表三库"
   },

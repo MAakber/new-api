@@ -1,0 +1,30 @@
+11.4.4: Pulling from library/mariadb
+10600a863445: Pulling fs layer
+5a7813e071bf: Pulling fs layer
+6ff059441da4: Pulling fs layer
+e1430b8a9653: Pulling fs layer
+11d39260861a: Pulling fs layer
+ede3df667853: Pulling fs layer
+433fed2b4e3f: Pulling fs layer
+513dedbd03fe: Pulling fs layer
+10600a863445: Download complete
+513dedbd03fe: Download complete
+6ff059441da4: Download complete
+11d39260861a: Download complete
+433fed2b4e3f: Download complete
+55229c8b34ec: Download complete
+80c5044f9283: Download complete
+e1430b8a9653: Download complete
+5a7813e071bf: Download complete
+513dedbd03fe: Pull complete
+5a7813e071bf: Pull complete
+10600a863445: Pull complete
+11d39260861a: Pull complete
+e1430b8a9653: Pull complete
+ede3df667853: Download complete
+6ff059441da4: Pull complete
+433fed2b4e3f: Pull complete
+ede3df667853: Pull complete
+Digest: sha256:d21c7a73ce3b907ce41f9aefc4f6689de36ac477d3ed12b9c552ef39f8caeac0
+Status: Downloaded newer image for mirror.gcr.io/library/mariadb:11.4.4
+mirror.gcr.io/library/mariadb:11.4.4

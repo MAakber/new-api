@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 27cf2a6bc] fix(relay): stop injecting empty tools into Claude requests
+ Author: zcxads666 <1316510990@qq.com>
+ Date: Sat Aug 15 13:55:18 2026 +0800
+ 2 files changed, 80 insertions(+), 1 deletion(-)

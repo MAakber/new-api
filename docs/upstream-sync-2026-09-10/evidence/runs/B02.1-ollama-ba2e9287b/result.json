@@ -1,0 +1,17 @@
+{
+  "upstream": "ba2e9287bb7a8002116c03daa4c457a330054871",
+  "unit": "B02.1-ollama",
+  "before_head": "03125a2a2d0a2c30937fc8fcd40ca8e3c9023e27",
+  "after_head": "f6d7b8c8328e9bc3971c1e55e77f425a65359b88",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "ba2e9287bb7a8002116c03daa4c457a330054871"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/ollama/adaptor.go"
+  ]
+}

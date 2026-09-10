@@ -1,0 +1,18 @@
+{
+  "upstream": "93d2df85f824e4343a114e1f18dde4f795e2d55b",
+  "unit": "B02.1-ali-images",
+  "before_head": "a84a0bd9c64e283c182088c60d3d0721d5c82978",
+  "after_head": "91f9bebd62896e7c3942dea75b3a548c45bcbc58",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "93d2df85f824e4343a114e1f18dde4f795e2d55b"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/ali/adaptor.go",
+    "relay/channel/ali/adaptor_test.go"
+  ]
+}

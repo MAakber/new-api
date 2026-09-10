@@ -1,0 +1,18 @@
+{
+  "upstream": "0f9f668c6076214680f87e89a88a426cb08228ad",
+  "unit": "B02.1-request",
+  "before_head": "77a37244385ad6425887e9773bba1c464283e3ad",
+  "after_head": "97259ebc0bd1029da3523066e1afedc63f3ddda4",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "0f9f668c6076214680f87e89a88a426cb08228ad"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "go.mod",
+    "middleware/gzip.go"
+  ]
+}

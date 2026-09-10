@@ -28,3 +28,7 @@ The user has production only. All migration and accounting tests will use new is
 ## 2026-09-10T10:59:41.213Z — A14 read-only production inventory
 
 User explicitly authorized ssh nep to inspect database type/version. Scope is read-only deployment metadata and database version/schema inspection as needed; no production write, migration, deployment or account operation. Continue migration experiments only on isolated local databases.
+
+## 2026-09-10T11:56:49.059Z — A15 stage versus final interoperability
+
+B02.3 explicitly permits documenting unavailable runtime conditions. Its environment inventory is complete; real provider interoperability remains a required, pending B18 gate. Local protocol tests and stage verification do not satisfy that gate. This permits independent integration work to proceed without claiming provider acceptance or requesting production provider access.

@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 03125a2a2] fix(ollama): preserve reasoning and tool-call context (#6605)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Mon Aug 10 12:49:26 2026 +0800
+ 4 files changed, 118 insertions(+), 56 deletions(-)

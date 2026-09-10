@@ -1,0 +1,7 @@
+Auto-merging go.mod
+Auto-merging go.sum
+Auto-merging model/main.go
+[codex/upstream-sync-2026-09-10 6be86f0a0] fix(model): disable PostgreSQL prepared statements for pooler compatibility
+ Author: CaIon <i@caion.me>
+ Date: Sun Aug 30 20:06:32 2026 +0800
+ 5 files changed, 18 insertions(+), 3 deletions(-)

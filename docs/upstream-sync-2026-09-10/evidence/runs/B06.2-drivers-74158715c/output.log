@@ -1,0 +1,6 @@
+Auto-merging go.mod
+Auto-merging go.sum
+[codex/upstream-sync-2026-09-10 a1d6925f2] fix initialize database
+ Author: CaIon <i@caion.me>
+ Date: Sun Aug 30 22:29:33 2026 +0800
+ 2 files changed, 8 insertions(+), 12 deletions(-)

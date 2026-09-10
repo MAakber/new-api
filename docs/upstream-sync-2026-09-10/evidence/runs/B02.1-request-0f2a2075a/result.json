@@ -1,0 +1,17 @@
+{
+  "upstream": "0f2a2075ab072ea7e20ffa5dd5d58dbf1b6b5b22",
+  "unit": "B02.1-request",
+  "before_head": "f6d7b8c8328e9bc3971c1e55e77f425a65359b88",
+  "after_head": "77a37244385ad6425887e9773bba1c464283e3ad",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "0f2a2075ab072ea7e20ffa5dd5d58dbf1b6b5b22"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "controller/relay.go"
+  ]
+}

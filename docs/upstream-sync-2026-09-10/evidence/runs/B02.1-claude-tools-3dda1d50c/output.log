@@ -1,0 +1,6 @@
+[codex/upstream-sync-2026-09-10 eff560e7a] fix(relaykit): preserve parameterless tools in Claude conversion (#6862)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Tue Aug 18 17:30:59 2026 +0800
+ 4 files changed, 105 insertions(+), 39 deletions(-)
+ create mode 100644 relaykit/relayconvert/internal/oai_chat/to_claude_messages_req_test.go
+ create mode 100644 relaykit/relayconvert/internal/shared/claude/schema.go

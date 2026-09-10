@@ -1,0 +1,7 @@
+Auto-merging middleware/auth.go
+Auto-merging router/relay-router.go
+[codex/upstream-sync-2026-09-10 a84a0bd9c] fix: 修复 Gemini 风格 /v1/models 列表请求 (#6199)
+ Author: zhibisora <73344387+zhibisora@users.noreply.github.com>
+ Date: Tue Aug 11 14:49:20 2026 +0800
+ 3 files changed, 129 insertions(+), 2 deletions(-)
+ create mode 100644 router/relay_router_test.go

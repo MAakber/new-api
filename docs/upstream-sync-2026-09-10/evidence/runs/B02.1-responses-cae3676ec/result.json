@@ -1,0 +1,17 @@
+{
+  "upstream": "cae3676ec6f46ee5ef596443256f78c4e9b34ceb",
+  "unit": "B02.1-responses",
+  "before_head": "720cb213871ed14e531822a749b94d94998d3458",
+  "after_head": "2fd36c1832d259097a0c2de08859cec0546c5bf0",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "cae3676ec6f46ee5ef596443256f78c4e9b34ceb"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "relay/channel/zhipu_4v/adaptor.go"
+  ]
+}

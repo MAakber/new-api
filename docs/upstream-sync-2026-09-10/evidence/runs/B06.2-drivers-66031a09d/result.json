@@ -1,0 +1,21 @@
+{
+  "upstream": "66031a09d99f2ac4e0b94e2c41f04ed691a79304",
+  "unit": "B06.2-drivers",
+  "before_head": "cc4c51af1c7736cb0783e6dd3f36d5e8995f4533",
+  "after_head": "6be86f0a01348e000a91b22deb4b54db89d4d7f0",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "66031a09d99f2ac4e0b94e2c41f04ed691a79304"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "go.mod",
+    "go.sum",
+    "model/gorm_logger.go",
+    "model/gorm_logger_test.go",
+    "model/main.go"
+  ]
+}

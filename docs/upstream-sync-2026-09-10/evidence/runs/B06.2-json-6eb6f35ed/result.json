@@ -1,0 +1,21 @@
+{
+  "upstream": "6eb6f35ed211b7459cae3b9f13286b9c93fc1bd6",
+  "unit": "B06.2-json",
+  "before_head": "e741f0ce8bbc9e9bc2438c0368424af3ddf9937d",
+  "after_head": "97b04db766cb5527a2394bfba425439e5f9e096f",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "6eb6f35ed211b7459cae3b9f13286b9c93fc1bd6"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "model/channel.go",
+    "model/json_column_test.go",
+    "model/main.go",
+    "model/prefill_group.go",
+    "model/task.go"
+  ]
+}

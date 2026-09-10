@@ -1,0 +1,31 @@
+{
+  "id": "B02-contracts",
+  "command": [
+    "go",
+    "test",
+    "./relay",
+    "./relay/channel/ollama",
+    "./controller",
+    "-run",
+    "TestNativeResponses|TestDeepSeekResponses|TestOllamaChatPreserves|TestRelayReturnsClientErrors",
+    "-count=1",
+    "-json"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "cc4c51af1c7736cb0783e6dd3f36d5e8995f4533",
+  "started_at": "2026-09-10T11:49:58.877Z",
+  "finished_at": "2026-09-10T11:50:05.142Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

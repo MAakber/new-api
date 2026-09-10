@@ -1,0 +1,31 @@
+{
+  "id": "B06-mariadb-mirror",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu-SF3D",
+    "-u",
+    "root",
+    "--",
+    "docker",
+    "pull",
+    "mirror.gcr.io/library/mariadb:11.4.4"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "a1d6925f27ae47919b40ad4e26ce4e6239a67752",
+  "started_at": "2026-09-10T12:09:46.633Z",
+  "finished_at": "2026-09-10T12:10:11.301Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}
