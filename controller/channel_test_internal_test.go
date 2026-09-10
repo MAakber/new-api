@@ -358,7 +358,6 @@ func TestNewAPIChannelRegistration(t *testing.T) {
 	assert.Empty(t, constant.ChannelBaseURLs[constant.ChannelTypeNewAPI])
 }
 
-<<<<<<< ours
 func TestVercelChannelRegistration(t *testing.T) {
 	apiType, ok := common.ChannelType2APIType(constant.ChannelTypeVercel)
 
@@ -374,10 +373,7 @@ func TestVercelChannelRegistration(t *testing.T) {
 	assert.Equal(t, "https://ai-gateway.vercel.sh", constant.ChannelBaseURLs[constant.ChannelTypeVercel])
 }
 
-func TestResponsesCompactAPITypeSupport(t *testing.T) {
-=======
 func TestResponsesCompactChannelSupport(t *testing.T) {
->>>>>>> theirs
 	tests := []struct {
 		name        string
 		channelType int
