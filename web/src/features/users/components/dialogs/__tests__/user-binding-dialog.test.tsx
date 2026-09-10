@@ -16,82 +16,82 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { render, screen, waitFor, within } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { afterAll, afterEach, beforeAll, describe, expect, test } from 'vitest'
+import { render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
 
-import { api } from '@/lib/api'
+import { api } from "@/lib/api";
 
-import { UserBindingDialog } from '../user-binding-dialog'
+import { UserBindingDialog } from "../user-binding-dialog";
 
-type ApiMethod = (url: string) => Promise<{ data: unknown }>
+type ApiMethod = (url: string) => Promise<{ data: unknown }>;
 type MockableApi = {
-  get: ApiMethod
-  delete: ApiMethod
-}
+  get: ApiMethod;
+  delete: ApiMethod;
+};
 
-const apiClient = api as unknown as MockableApi
-const originalGet = apiClient.get
-const originalDelete = apiClient.delete
+const apiClient = api as unknown as MockableApi;
+const originalGet = apiClient.get;
+const originalDelete = apiClient.delete;
 const originalGetAnimations = Object.getOwnPropertyDescriptor(
   HTMLElement.prototype,
-  'getAnimations'
-)
+  "getAnimations",
+);
 
 const user = {
   id: 7,
-  username: 'bound-user',
-  email: 'user@example.com',
-  github_id: 'github-user',
-  discord_id: 'discord-user',
-  wechat_id: 'wechat-user',
-  oidc_id: 'oidc-user',
-  telegram_id: 'telegram-user',
-  linux_do_id: 'linuxdo-user',
-}
+  username: "bound-user",
+  email: "user@example.com",
+  github_id: "github-user",
+  discord_id: "discord-user",
+  wechat_id: "wechat-user",
+  oidc_id: "oidc-user",
+  telegram_id: "telegram-user",
+  linux_do_id: "linuxdo-user",
+};
 
 function findUnbindButton(provider: string): HTMLButtonElement {
-  return within(screen.getByRole('group', { name: provider })).getByRole(
-    'button',
-    { name: 'Unbind' }
-  )
+  return within(screen.getByRole("group", { name: provider })).getByRole(
+    "button",
+    { name: "Unbind" },
+  );
 }
 
 beforeAll(() => {
-  Object.defineProperty(HTMLElement.prototype, 'getAnimations', {
+  Object.defineProperty(HTMLElement.prototype, "getAnimations", {
     configurable: true,
     value: () => [],
-  })
-})
+  });
+});
 
 afterAll(() => {
   if (originalGetAnimations) {
     Object.defineProperty(
       HTMLElement.prototype,
-      'getAnimations',
-      originalGetAnimations
-    )
-    return
+      "getAnimations",
+      originalGetAnimations,
+    );
+    return;
   }
-  Reflect.deleteProperty(HTMLElement.prototype, 'getAnimations')
-})
+  Reflect.deleteProperty(HTMLElement.prototype, "getAnimations");
+});
 
 afterEach(() => {
-  apiClient.get = originalGet
-  apiClient.delete = originalDelete
-})
+  apiClient.get = originalGet;
+  apiClient.delete = originalDelete;
+});
 
-describe('UserBindingDialog built-in bindings', () => {
-  test('submits every built-in provider type accepted by the backend', async () => {
-    const interaction = userEvent.setup()
-    const deletedUrls: string[] = []
+describe("UserBindingDialog built-in bindings", () => {
+  test("submits every built-in provider type accepted by the backend", async () => {
+    const interaction = userEvent.setup();
+    const deletedUrls: string[] = [];
     apiClient.get = async (url) => {
       switch (url) {
-        case '/api/user/7':
-          return { data: { success: true, data: user } }
-        case '/api/user/7/oauth/bindings':
-          return { data: { success: true, data: [] } }
-        case '/api/status':
+        case "/api/user/7":
+          return { data: { success: true, data: user } };
+        case "/api/user/7/oauth/bindings":
+          return { data: { success: true, data: [] } };
+        case "/api/status":
           return {
             data: {
               success: true,
@@ -104,101 +104,106 @@ describe('UserBindingDialog built-in bindings', () => {
                 linuxdo_oauth: true,
               },
             },
-          }
+          };
         default:
-          throw new Error(`Unexpected GET ${url}`)
+          throw new Error(`Unexpected GET ${url}`);
       }
-    }
+    };
     apiClient.delete = async (url) => {
-      deletedUrls.push(url)
-      return { data: { success: true, message: 'success' } }
-    }
+      deletedUrls.push(url);
+      return { data: { success: true, message: "success" } };
+    };
 
-    render(<UserBindingDialog open userId={7} onOpenChange={() => undefined} />)
+    render(
+      <UserBindingDialog open userId={7} onOpenChange={() => undefined} />,
+    );
 
     const expectedBindings = [
-      ['Email', 'email'],
-      ['GitHub', 'github'],
-      ['Discord', 'discord'],
-      ['WeChat', 'wechat'],
-      ['OIDC', 'oidc'],
-      ['Telegram', 'telegram'],
-      ['LinuxDO', 'linuxdo'],
-    ] as const
+      ["Email", "email"],
+      ["GitHub", "github"],
+      ["Discord", "discord"],
+      ["WeChat", "wechat"],
+      ["OIDC", "oidc"],
+      ["Telegram", "telegram"],
+      ["LinuxDO", "linuxdo"],
+    ] as const;
 
-    await screen.findByText('bound-user (ID: 7)')
+    await screen.findByText("bound-user (ID: 7)");
     for (const [provider, bindingType] of expectedBindings) {
-      await interaction.click(findUnbindButton(provider))
+      await interaction.click(findUnbindButton(provider));
       await interaction.click(
-        screen.getByRole('button', { name: 'Confirm Unbind' })
-      )
+        screen.getByRole("button", { name: "Confirm Unbind" }),
+      );
       await waitFor(() => {
-        expect(deletedUrls.at(-1)).toBe(`/api/user/7/bindings/${bindingType}`)
-      })
+        expect(deletedUrls.at(-1)).toBe(`/api/user/7/bindings/${bindingType}`);
+      });
       await waitFor(() => {
         expect(
-          screen.queryByRole('button', { name: 'Confirm Unbind' })
-        ).not.toBeInTheDocument()
-      })
+          screen.queryByRole("button", { name: "Confirm Unbind" }),
+        ).not.toBeInTheDocument();
+      });
     }
 
-    expect(deletedUrls).toHaveLength(expectedBindings.length)
-  })
+    expect(deletedUrls).toHaveLength(expectedBindings.length);
+  });
 
   test.each([true, false])(
-    'displays custom provider_user_id and unbinds numeric provider_id when provider enabled is %s',
+    "displays custom provider_user_id and unbinds numeric provider_id when provider enabled is %s",
     async (enabled) => {
-      const interaction = userEvent.setup()
-      const deletedUrls: string[] = []
+      const interaction = userEvent.setup();
+      const deletedUrls: string[] = [];
       apiClient.get = async (url) => {
-        if (url === '/api/user/7')
-          return { data: { success: true, data: user } }
-        if (url === '/api/user/7/oauth/bindings')
+        if (url === "/api/user/7") {
+          return { data: { success: true, data: user } };
+        }
+        if (url === "/api/user/7/oauth/bindings") {
           return {
             data: {
               success: true,
               data: [
                 {
                   provider_id: 12,
-                  provider_name: 'Company SSO',
-                  provider_slug: 'company',
-                  provider_icon: '',
-                  provider_user_id: 'employee-42',
+                  provider_name: "Company SSO",
+                  provider_slug: "company",
+                  provider_icon: "",
+                  provider_user_id: "employee-42",
                 },
               ],
             },
-          }
-        if (url === '/api/status')
+          };
+        }
+        if (url === "/api/status") {
           return {
             data: {
               success: true,
               data: {
                 custom_oauth_providers: enabled
-                  ? [{ id: 12, name: 'Company SSO' }]
+                  ? [{ id: 12, name: "Company SSO" }]
                   : [],
               },
             },
-          }
-        throw new Error(`Unexpected GET ${url}`)
-      }
+          };
+        }
+        throw new Error(`Unexpected GET ${url}`);
+      };
       apiClient.delete = async (url) => {
-        deletedUrls.push(url)
-        return { data: { success: true } }
-      }
+        deletedUrls.push(url);
+        return { data: { success: true } };
+      };
       render(
-        <UserBindingDialog open userId={7} onOpenChange={() => undefined} />
-      )
-      const group = await screen.findByRole('group', { name: 'Company SSO' })
-      expect(within(group).getByText('employee-42')).toBeVisible()
+        <UserBindingDialog open userId={7} onOpenChange={() => undefined} />,
+      );
+      const group = await screen.findByRole("group", { name: "Company SSO" });
+      expect(within(group).getByText("employee-42")).toBeVisible();
       await interaction.click(
-        within(group).getByRole('button', { name: 'Unbind' })
-      )
+        within(group).getByRole("button", { name: "Unbind" }),
+      );
       await interaction.click(
-        screen.getByRole('button', { name: 'Confirm Unbind' })
-      )
+        screen.getByRole("button", { name: "Confirm Unbind" }),
+      );
       await waitFor(() =>
-        expect(deletedUrls).toEqual(['/api/user/7/oauth/bindings/12'])
-      )
-    }
-  )
-})
+        expect(deletedUrls).toEqual(["/api/user/7/oauth/bindings/12"]),
+      );
+    },
+  );
+});
