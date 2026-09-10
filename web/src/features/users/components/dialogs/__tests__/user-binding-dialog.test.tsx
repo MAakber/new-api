@@ -51,7 +51,10 @@ const user = {
 }
 
 function findUnbindButton(provider: string): HTMLButtonElement {
-  return within(screen.getByRole('group', { name: provider })).getByRole('button', { name: 'Unbind' })
+  return within(screen.getByRole('group', { name: provider })).getByRole(
+    'button',
+    { name: 'Unbind' }
+  )
 }
 
 beforeAll(() => {
@@ -126,7 +129,9 @@ describe('UserBindingDialog built-in bindings', () => {
     await screen.findByText('bound-user (ID: 7)')
     for (const [provider, bindingType] of expectedBindings) {
       await interaction.click(findUnbindButton(provider))
-      await interaction.click(screen.getByRole('button', { name: 'Confirm Unbind' }))
+      await interaction.click(
+        screen.getByRole('button', { name: 'Confirm Unbind' })
+      )
       await waitFor(() => {
         expect(deletedUrls.at(-1)).toBe(`/api/user/7/bindings/${bindingType}`)
       })
@@ -140,29 +145,60 @@ describe('UserBindingDialog built-in bindings', () => {
     expect(deletedUrls).toHaveLength(expectedBindings.length)
   })
 
-  test.each([true, false])('displays custom provider_user_id and unbinds numeric provider_id when provider enabled is %s', async (enabled) => {
-    const interaction = userEvent.setup()
-    const deletedUrls: string[] = []
-    apiClient.get = async (url) => {
-      if (url === '/api/user/7') return { data: { success: true, data: user } }
-      if (url === '/api/user/7/oauth/bindings') return { data: { success: true, data: [{
-        provider_id: 12, provider_name: 'Company SSO', provider_slug: 'company',
-        provider_icon: '', provider_user_id: 'employee-42',
-      }] } }
-      if (url === '/api/status') return { data: { success: true, data: {
-        custom_oauth_providers: enabled ? [{ id: 12, name: 'Company SSO' }] : [],
-      } } }
-      throw new Error(`Unexpected GET ${url}`)
+  test.each([true, false])(
+    'displays custom provider_user_id and unbinds numeric provider_id when provider enabled is %s',
+    async (enabled) => {
+      const interaction = userEvent.setup()
+      const deletedUrls: string[] = []
+      apiClient.get = async (url) => {
+        if (url === '/api/user/7')
+          return { data: { success: true, data: user } }
+        if (url === '/api/user/7/oauth/bindings')
+          return {
+            data: {
+              success: true,
+              data: [
+                {
+                  provider_id: 12,
+                  provider_name: 'Company SSO',
+                  provider_slug: 'company',
+                  provider_icon: '',
+                  provider_user_id: 'employee-42',
+                },
+              ],
+            },
+          }
+        if (url === '/api/status')
+          return {
+            data: {
+              success: true,
+              data: {
+                custom_oauth_providers: enabled
+                  ? [{ id: 12, name: 'Company SSO' }]
+                  : [],
+              },
+            },
+          }
+        throw new Error(`Unexpected GET ${url}`)
+      }
+      apiClient.delete = async (url) => {
+        deletedUrls.push(url)
+        return { data: { success: true } }
+      }
+      render(
+        <UserBindingDialog open userId={7} onOpenChange={() => undefined} />
+      )
+      const group = await screen.findByRole('group', { name: 'Company SSO' })
+      expect(within(group).getByText('employee-42')).toBeVisible()
+      await interaction.click(
+        within(group).getByRole('button', { name: 'Unbind' })
+      )
+      await interaction.click(
+        screen.getByRole('button', { name: 'Confirm Unbind' })
+      )
+      await waitFor(() =>
+        expect(deletedUrls).toEqual(['/api/user/7/oauth/bindings/12'])
+      )
     }
-    apiClient.delete = async (url) => {
-      deletedUrls.push(url)
-      return { data: { success: true } }
-    }
-    render(<UserBindingDialog open userId={7} onOpenChange={() => undefined} />)
-    const group = await screen.findByRole('group', { name: 'Company SSO' })
-    expect(within(group).getByText('employee-42')).toBeVisible()
-    await interaction.click(within(group).getByRole('button', { name: 'Unbind' }))
-    await interaction.click(screen.getByRole('button', { name: 'Confirm Unbind' }))
-    await waitFor(() => expect(deletedUrls).toEqual(['/api/user/7/oauth/bindings/12']))
-  })
+  )
 })
