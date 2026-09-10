@@ -169,12 +169,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03.2-aa7d0d39a/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -826,12 +831,18 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "equivalent",
+    "resolution_rationale": "Downstream unified model classifier uses an anchored OpenAI tts family and Alibaba namespace/Qwen family. Qwen TTS and OpenAI TTS boundary regressions pass; do not restore the replaced legacy categorizer.",
+    "resolution_commits": [
+      "c0ee46798f3182a8658bea57133596e4f13b14f1",
+      "c0d381e302c9f90b754b029ce1e95bb6d0d7ab2c"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03-model-categories/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1094,12 +1105,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retained downstream lifecycle checks and common JSON wrapper; resolved only the utf16 import overlap. Banner model remains unchanged.",
+    "resolution_commits": [
+      "4fbd538b34976183b38e2012140f4b8edba67018"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03.2-d49160f0e/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1307,12 +1323,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "235d5b724ba435aeaeaee732b2738531fdd74d2a"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03.2-4eaeefbdf/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1709,12 +1730,18 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "c3698be0209f48fa6325a56ebdd17e594ef15427",
+      "2fd8bc336535694ba375c95958b28ecfb8cee80c"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03.1-f250f3b58/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2404,12 +2431,20 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Production changes applied fully. Kept earlier extracted regression tests and their explicit browser fixture in add/add resolution. Preserved downstream markdown length guard and existing styles.",
+    "resolution_commits": [
+      "211374fa795d951aad6cbe6dc79401f044df48c1",
+      "c0d381e302c9f90b754b029ce1e95bb6d0d7ab2c",
+      "36bd3b22a0e6f8fe584d749556ae9c4fe81d2b59"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03.2-137d1171f/result.json",
+      "evidence/runs/B03-editor-setup-red-corrected/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3343,12 +3378,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "ee1910e29df23382fcb36159d3b1ad563f1b9825"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03.2-98d50d538/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -6184,12 +6224,18 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "applied",
+    "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
+    "resolution_commits": [
+      "7d65b44651c2c3da9e8e349bac4a9eeb5c67efef",
+      "211374fa795d951aad6cbe6dc79401f044df48c1"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B03.2-521cebf58/result.json",
+      "evidence/B03-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

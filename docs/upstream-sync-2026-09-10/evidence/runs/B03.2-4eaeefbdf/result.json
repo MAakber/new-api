@@ -1,0 +1,20 @@
+{
+  "upstream": "4eaeefbdf5b979fb777884df24090740bd2a3ef3",
+  "unit": "B03.2",
+  "before_head": "4fbd538b34976183b38e2012140f4b8edba67018",
+  "after_head": "235d5b724ba435aeaeaee732b2738531fdd74d2a",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "4eaeefbdf5b979fb777884df24090740bd2a3ef3"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/src/components/layout/components/chat-presets-item.tsx",
+    "web/src/components/layout/components/nav-group.tsx",
+    "web/src/components/layout/components/sidebar-view-header.tsx",
+    "web/src/components/ui/sidebar.tsx"
+  ]
+}

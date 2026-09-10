@@ -1,0 +1,13 @@
+$ vitest run --config vitest.playground.config.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  20 passed (20)
+      Tests  83 passed (83)
+   Start at  03:38:53
+   Duration  19.53s (import 46%, environment 32%, setup 16%, tests 5%, transform 1%)
+
+    Isolate  20 workers spawned · ~3.07s startup each (spawn + environment, per file)
+             at least ~1.02s faster with isolate: false — reuses workers across files instead of one per file
+

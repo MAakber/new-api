@@ -1,0 +1,1739 @@
+$ vitest run --config vitest.sync.config.ts src/components/ai-elements/__tests__/code-block-editor.test.tsx src/features/playground/components/message/__tests__/playground-message-editor.test.tsx src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx src/routes/__tests__/setup-status.test.tsx src/components/layout/components/__tests__/mobile-navigation.test.tsx
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/components/ai-elements/__tests__/code-block-editor.test.tsx (1 test | 1 failed) 57ms
+   ❯ CodeBlockEditor (1)
+     × keeps the same editor instance when value and onKeyDown change on rerender 56ms
+ ❯ src/features/playground/components/message/__tests__/playground-message-editor.test.tsx (5 tests | 3 failed) 218ms
+   ❯ PlaygroundMessageEditor leave warning (3)
+     × leaves the editor after confirming unsaved changes 60ms
+     × keeps the editor open after staying with unsaved changes 50ms
+   ❯ PlaygroundMessageEditor beforeunload guard (2)
+     × blocks page unload while the edit has unsaved changes 6ms
+stderr | src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+[root.beforeLoad] setup status check failed Error: Network unavailable
+    at D:/10178/Projects/new-api-upstream-sync/web/src/routes/__tests__/setup-status.test.tsx:71:52
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:1628:35
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:2783:26
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3319:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3314:10)
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3299:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3257:10)
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3876:64
+
+ ❯ src/routes/__tests__/setup-status.test.tsx (3 tests | 2 failed) 3718ms
+   ❯ setup status routing (3)
+     × rechecks the current server despite a completed status saved by an earlier page 3705ms
+     × retries on the next navigation after a failed setup request 8ms
+ ❯ src/components/layout/components/__tests__/mobile-navigation.test.tsx (2 tests | 1 failed) 329ms
+   ❯ sidebar navigation (2)
+     × opens a mobile link on the first tap without running a preload and closes the drawer 256ms
+stderr | src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx (6 tests | 4 failed) 4307ms
+   ❯ overview setup guide (6)
+     × shows usage first and only a header entry when setup is complete 1083ms
+     × toggles the completed guide with the keyboard and restores focus after hiding it 1017ms
+     × restores the completed guide preference after remounting 1020ms
+     × removes the collapsed progress banner when the remaining setup step completes 1039ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx > setup status routing > rechecks the current server despite a completed status saved by an earlier page
+AssertionError: expected "Mock" to be called 1 times, but got 0 times
+ ❯ src/routes/__tests__/setup-status.test.tsx:66:21
+     64|     const { router, request } = await setupRouter([false])
+     65|
+     66|     expect(request).toHaveBeenCalledTimes(1)
+       |                     ^
+     67|     expect(router.state.location.pathname).toBe('/setup')
+     68|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+AssertionError: expected "Mock" to be called 2 times, but got 1 times
+ ❯ src/routes/__tests__/setup-status.test.tsx:74:21
+     72|     await router.navigate({ to: '/pricing' })
+     73|
+     74|     expect(request).toHaveBeenCalledTimes(2)
+       |                     ^
+     75|     expect(router.state.location.pathname).toBe('/setup')
+     76|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  src/components/ai-elements/__tests__/code-block-editor.test.tsx > CodeBlockEditor > keeps the same editor instance when value and onKeyDown change on rerender
+AssertionError: expected <div spellcheck="false" …(10)>…(1)</div> to be <div spellcheck="false" …(10)>…(1)</div> // Object.is equality
+
+- Expected
++ Received
+
+@@ -12,8 +12,8 @@
+    writingsuggestions="false"
+  >
+    <div
+      class="cm-line"
+    >
+-     h
++     hi
+    </div>
+  </div>
+
+ ❯ src/components/ai-elements/__tests__/code-block-editor.test.tsx:55:26
+     53|     // replaced and the cursor would reset to the document start, maki…
+     54|     // characters pile up at the beginning (text appears right-to-left…
+     55|     expect(contentAfter).toBe(contentBefore)
+       |                          ^
+     56|     expect(contentAfter?.textContent).toContain('hi')
+     57|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  src/components/layout/components/__tests__/mobile-navigation.test.tsx > sidebar navigation > opens a mobile link on the first tap without running a preload and closes the drawer
+AssertionError: expected [ true, false ] to deeply equal [ false ]
+
+- Expected
++ Received
+
+  [
++   true,
+    false,
+  ]
+
+ ❯ src/components/layout/components/__tests__/mobile-navigation.test.tsx:76:22
+     74|
+     75|     expect(await screen.findByRole('heading', { name: 'Model pricing' …
+     76|     expect(requests).toEqual([false])
+       |                      ^
+     77|     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeI…
+     78|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx > overview setup guide > shows usage first and only a header entry when setup is complete
+TestingLibraryElementError: Unable to find role="button" and name "Setup guide"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx:113:33
+    111|     await renderOverview()
+    112|
+    113|     const toggle = await screen.findByRole('button', { name: 'Setup gu…
+       |                                 ^
+    114|     expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    115|     expect(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx > overview setup guide > toggles the completed guide with the keyboard and restores focus after hiding it
+TestingLibraryElementError: Unable to find role="button" and name "Setup guide"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx:133:33
+    131|     const user = userEvent.setup()
+    132|     await renderOverview()
+    133|     const toggle = await screen.findByRole('button', { name: 'Setup gu…
+       |                                 ^
+    134|
+    135|     await user.tab()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx > overview setup guide > restores the completed guide preference after remounting
+TestingLibraryElementError: Unable to find role="button" and name "Setup guide"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx:163:35
+    161|     const user = userEvent.setup()
+    162|     const first = await renderOverview()
+    163|     await user.click(await screen.findByRole('button', { name: 'Setup …
+       |                                   ^
+    164|     first.unmount()
+    165|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx > overview setup guide > removes the collapsed progress banner when the remaining setup step completes
+TestingLibraryElementError: Unable to find role="button" and name "Setup guide"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"flex flex-col gap-4"[39m
+    [36m>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"bg-card overflow-hidden rounded-2xl border shadow-xs"[39m
+          [33mstyle[39m=[32m"opacity: 1; transform: none;"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative overflow-hidden px-4 py-3 sm:px-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_48%_120%_at_78%_0%,color-mix(in_oklch,var(--overview-accent-1)_14%,transparent)_0%,transparent_62%),linear-gradient(112deg,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-2)_6%)_0%,color-mix(in_oklch,var(--card)_94%,var(--overview-accent-3)_6%)_48%,color-mix(in_oklch,var(--background)_90%,var(--overview-accent-1)_10%)_100%)] dark:opacity-60 [mask-image:linear-gradient(90deg,black_0%,black_48%,transparent_74%)] opacity-55"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"text-foreground/5 dark:text-foreground/8 pointer-events-none absolute inset-y-0 right-0 hidden overflow-hidden font-mono sm:block w-1/2 opacity-45"[39m
+            [36m>[39m
+              [36m<pre[39m
+                [33mclass[39m=[32m"absolute right-3 [mask-image:linear-gradient(90deg,transparent_0%,black_30%,black_82%,transparent_100%)] text-right tracking-[0.38em] whitespace-pre -top-6 text-[9px] leading-4"[39m
+              [36m>[39m
+                [0mconst request = await client.responses.create({
+  model: 'gpt-4.1-mini',
+  input: 'Start routing traffic',
+})
+
+if (request.output_text) {
+  console.log(request.output_text)
+}[0m
+              [36m</pre>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"from-background/35 to-background/70 dark:from-background/20 dark:to-background/80 pointer-events-none absolute inset-0 bg-linear-to-b via-transparent"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"relative flex flex-wrap items-center justify-between gap-3"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex min-w-0 items-center gap-3"[39m
+              [36m>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"bg-background/70 flex size-9 shrink-0 items-center justify-center rounded-xl border shadow-xs"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-check text-success size-4"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</span>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"min-w-0"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex items-center gap-2"[39m
+                  [36m>[39m
+                    [36m<h3[39m
+                      [33mclass[39m=[32m"truncate text-sm font-semibold"[39m
+                    [36m>[39m
+                      [0mSetup guide complete[0m
+                    [36m</h3>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-muted-foreground bg-background/60 rounded-md border px-2 py-0.5 text-xs"[39m
+                    [36m>[39m
+                      [0mSetup progress: 3/3[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<p[39m
+                    [33mclass[39m=[32m"text-muted-foreground line-clamp-1 text-xs"[39m
+                  [36m>[39m
+                    [0mYour setup guide is collapsed so usage stays in focus.[0m
+                  [36m</p>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+              [36m>[39m
+                [36m<a[39m
+                  [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 rounded-md text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 bg-background/70 h-8 min-w-24 gap-1.5 px-2.5"[39m
+                  [33mdata-slot[39m=[32m"button"[39m
+                  [33mhref[39m=[32m"/keys"[39m
+                  [33mrole[39m=[32m"button"[39m
+                  [33mtabindex[39m=[32m"0"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-key-round"[39m
+                    [33mdata-icon[39m=[32m"inline-start"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"24"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"24"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+     ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx:225:20
+    223|     })
+    224|     expect(
+    225|       await screen.findByRole('button', { name: 'Setup guide' })
+       |                    ^
+    226|     ).toHaveAttribute('aria-expanded', 'false')
+    227|     expect(screen.queryByText(/Setup progress:/)).not.toBeInTheDocumen…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  src/features/playground/components/message/__tests__/playground-message-editor.test.tsx > PlaygroundMessageEditor leave warning > leaves the editor after confirming unsaved changes
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Leave"
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Save & Submit":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Save & Submit"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground [a]:hover:bg-primary/80 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Save":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Save"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Reset":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Reset"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Cancel":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Cancel"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Edit":
+  [36m<div[39m
+    [33maria-label[39m=[32m"Edit"[39m
+    [33maria-readonly[39m=[32m"false"[39m
+    [33mclass[39m=[32m"min-h-(--code-editor-min-height)"[39m
+    [33mrole[39m=[32m"textbox"[39m
+    [33mstyle[39m=[32m"--code-editor-min-height: 14rem;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33maria-multiline[39m=[32m"true"[39m
+    [33mautocapitalize[39m=[32m"off"[39m
+    [33mautocorrect[39m=[32m"off"[39m
+    [33mclass[39m=[32m"cm-content"[39m
+    [33mcontenteditable[39m=[32m"true"[39m
+    [33mdata-language[39m=[32m"markdown"[39m
+    [33mrole[39m=[32m"textbox"[39m
+    [33mspellcheck[39m=[32m"false"[39m
+    [33mstyle[39m=[32m"tab-size: 2;"[39m
+    [33mtranslate[39m=[32m"no"[39m
+    [33mwritingsuggestions[39m=[32m"false"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"group/code-block bg-muted/20 text-foreground w-full max-w-full overflow-hidden rounded-lg border shadow-xs my-0 group-[.is-assistant]:w-full group-[.is-assistant]:max-w-[78ch] group-[.is-user]:max-w-[85%] sm:group-[.is-user]:max-w-[62ch] md:group-[.is-user]:max-w-[68ch] lg:group-[.is-user]:max-w-[72ch]"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bg-muted/35 border-border/70 flex min-h-10 items-center gap-2 border-b px-2 py-1.5"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-w-0 flex-1"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"text-muted-foreground truncate font-mono text-[11px] font-medium tracking-wide uppercase"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"inline-flex items-center gap-2"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mEdit[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"text-muted-foreground/80 normal-case"[39m
+              [36m>[39m
+                [0mUnsaved changes[0m
+              [36m</span>[39m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex shrink-0 items-center gap-1"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Save & Submit"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground [a]:hover:bg-primary/80 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-send size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Save"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-check size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Reset"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-rotate-ccw size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M3 3v5h5"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Cancel"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-x size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M18 6 6 18"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m6 6 12 12"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"relative min-w-0"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"code-block-scroll max-w-full overflow-auto transition-[max-height] duration-200 ease-out p-0"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"Edit"[39m
+            [33maria-readonly[39m=[32m"false"[39m
+            [33mclass[39m=[32m"min-h-(--code-editor-min-height)"[39m
+            [33mrole[39m=[32m"textbox"[39m
+            [33mstyle[39m=[32m"--code-editor-min-height: 14rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"cm-editor ͼ1 ͼ2 ͼo"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-live[39m=[32m"polite"[39m
+                [33mclass[39m=[32m"cm-announced"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"cm-scroller"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"cm-gutters cm-gutters-before"[39m
+                  [33mstyle[39m=[32m"min-height: 14px; position: sticky;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"cm-gutter cm-lineNumbers"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"cm-gutterElement"[39m
+                      [33mstyle[39m=[32m"height: 0px; visibility: hidden; pointer-events: none;"[39m
+                    [36m>[39m
+                      [0m9[0m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"cm-gutterElement"[39m
+                      [33mstyle[39m=[32m"height: 14px;"[39m
+                    [36m>[39m
+                      [0m1[0m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33maria-multiline[39m=[32m"true"[39m
+                  [33mautocapitalize[39m=[32m"off"[39m
+                  [33mautocorrect[39m=[32m"off"[39m
+                  [33mclass[39m=[32m"cm-content"[39m
+                  [33mcontenteditable[39m=[32m"true"[39m
+                  [33mdata-language[39m=[32m"markdown"[39m
+                  [33mrole[39m=[32m"textbox"[39m
+                  [33mspellcheck[39m=[32m"false"[39m
+                  [33mstyle[39m=[32m"tab-size: 2;"[39m
+                  [33mtranslate[39m=[32m"no"[39m
+                  [33mwritingsuggestions[39m=[32m"false"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"cm-line"[39m
+                  [36m>[39m
+                    [0mchanged[0m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/playground/components/message/__tests__/playground-message-editor.test.tsx:87:29
+     85|
+     86|     await user.click(screen.getByRole('button', { name: 'Cancel' }))
+     87|     await user.click(screen.getByRole('button', { name: 'Leave' }))
+       |                             ^
+     88|
+     89|     expect(onCancelEdit).toHaveBeenCalledWith(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  src/features/playground/components/message/__tests__/playground-message-editor.test.tsx > PlaygroundMessageEditor leave warning > keeps the editor open after staying with unsaved changes
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Stay"
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Save & Submit":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Save & Submit"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground [a]:hover:bg-primary/80 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Save":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Save"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Reset":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Reset"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  Name "Cancel":
+  [36m<button[39m
+    [33maria-label[39m=[32m"Cancel"[39m
+    [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+    [33mdata-slot[39m=[32m"button"[39m
+    [33mtabindex[39m=[32m"0"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+  textbox:
+
+  Name "Edit":
+  [36m<div[39m
+    [33maria-label[39m=[32m"Edit"[39m
+    [33maria-readonly[39m=[32m"false"[39m
+    [33mclass[39m=[32m"min-h-(--code-editor-min-height)"[39m
+    [33mrole[39m=[32m"textbox"[39m
+    [33mstyle[39m=[32m"--code-editor-min-height: 14rem;"[39m
+  [36m/>[39m
+
+  Name "":
+  [36m<div[39m
+    [33maria-multiline[39m=[32m"true"[39m
+    [33mautocapitalize[39m=[32m"off"[39m
+    [33mautocorrect[39m=[32m"off"[39m
+    [33mclass[39m=[32m"cm-content"[39m
+    [33mcontenteditable[39m=[32m"true"[39m
+    [33mdata-language[39m=[32m"markdown"[39m
+    [33mrole[39m=[32m"textbox"[39m
+    [33mspellcheck[39m=[32m"false"[39m
+    [33mstyle[39m=[32m"tab-size: 2;"[39m
+    [33mtranslate[39m=[32m"no"[39m
+    [33mwritingsuggestions[39m=[32m"false"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"group/code-block bg-muted/20 text-foreground w-full max-w-full overflow-hidden rounded-lg border shadow-xs my-0 group-[.is-assistant]:w-full group-[.is-assistant]:max-w-[78ch] group-[.is-user]:max-w-[85%] sm:group-[.is-user]:max-w-[62ch] md:group-[.is-user]:max-w-[68ch] lg:group-[.is-user]:max-w-[72ch]"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bg-muted/35 border-border/70 flex min-h-10 items-center gap-2 border-b px-2 py-1.5"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-w-0 flex-1"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"text-muted-foreground truncate font-mono text-[11px] font-medium tracking-wide uppercase"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"inline-flex items-center gap-2"[39m
+            [36m>[39m
+              [36m<span>[39m
+                [0mEdit[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"text-muted-foreground/80 normal-case"[39m
+              [36m>[39m
+                [0mUnsaved changes[0m
+              [36m</span>[39m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex shrink-0 items-center gap-1"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Save & Submit"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground [a]:hover:bg-primary/80 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-send size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21.854 2.147-10.94 10.939"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Save"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-check size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M20 6 9 17l-5-5"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Reset"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-rotate-ccw size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M3 3v5h5"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+          [36m<button[39m
+            [33maria-label[39m=[32m"Cancel"[39m
+            [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-7 rounded-md in-data-[slot=button-group]:rounded-lg"[39m
+            [33mdata-slot[39m=[32m"button"[39m
+            [33mtabindex[39m=[32m"0"[39m
+            [33mtype[39m=[32m"button"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-x size-4"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M18 6 6 18"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m6 6 12 12"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</button>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"relative min-w-0"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"code-block-scroll max-w-full overflow-auto transition-[max-height] duration-200 ease-out p-0"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33maria-label[39m=[32m"Edit"[39m
+            [33maria-readonly[39m=[32m"false"[39m
+            [33mclass[39m=[32m"min-h-(--code-editor-min-height)"[39m
+            [33mrole[39m=[32m"textbox"[39m
+            [33mstyle[39m=[32m"--code-editor-min-height: 14rem;"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"cm-editor ͼ1 ͼ2 ͼo"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-live[39m=[32m"polite"[39m
+                [33mclass[39m=[32m"cm-announced"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"cm-scroller"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"cm-gutters cm-gutters-before"[39m
+                  [33mstyle[39m=[32m"min-height: 14px; position: sticky;"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"cm-gutter cm-lineNumbers"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"cm-gutterElement"[39m
+                      [33mstyle[39m=[32m"height: 0px; visibility: hidden; pointer-events: none;"[39m
+                    [36m>[39m
+                      [0m9[0m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"cm-gutterElement"[39m
+                      [33mstyle[39m=[32m"height: 14px;"[39m
+                    [36m>[39m
+                      [0m1[0m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33maria-multiline[39m=[32m"true"[39m
+                  [33mautocapitalize[39m=[32m"off"[39m
+                  [33mautocorrect[39m=[32m"off"[39m
+                  [33mclass[39m=[32m"cm-content"[39m
+                  [33mcontenteditable[39m=[32m"true"[39m
+                  [33mdata-language[39m=[32m"markdown"[39m
+                  [33mrole[39m=[32m"textbox"[39m
+                  [33mspellcheck[39m=[32m"false"[39m
+                  [33mstyle[39m=[32m"tab-size: 2;"[39m
+                  [33mtranslate[39m=[32m"no"[39m
+                  [33mwritingsuggestions[39m=[32m"false"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"cm-line"[39m
+                  [36m>[39m
+                    [0mchanged[0m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/playground/components/message/__tests__/playground-message-editor.test.tsx:99:29
+     97|
+     98|     await user.click(screen.getByRole('button', { name: 'Cancel' }))
+     99|     await user.click(screen.getByRole('button', { name: 'Stay' }))
+       |                             ^
+    100|
+    101|     expect(onCancelEdit).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+ FAIL  src/features/playground/components/message/__tests__/playground-message-editor.test.tsx > PlaygroundMessageEditor beforeunload guard > blocks page unload while the edit has unsaved changes
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/features/playground/components/message/__tests__/playground-message-editor.test.tsx:113:36
+    111|     window.dispatchEvent(event)
+    112|
+    113|     expect(event.defaultPrevented).toBe(true)
+       |                                    ^
+    114|   })
+    115|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  11 failed | 6 passed (17)
+   Start at  03:17:19
+   Duration  11.07s (import 40%, tests 31%, environment 15%, setup 11%, transform 3%)
+
+error: script "test:sync" exited with code 1

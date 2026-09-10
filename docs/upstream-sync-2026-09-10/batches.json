@@ -294,27 +294,56 @@
       "98d50d5383a33432ff6c30b129461b170e5cbffc",
       "521cebf585efc2e782dd9fb93d0f66752c8d3c32"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B03.1",
         "action": "用 Bun 更新 DOMPurify 和锁文件，检查实际版本",
-        "status": "pending"
+        "status": "verified",
+        "upstreamCommits": [
+          "f250f3b589c836764954f646448084e93873798b"
+        ]
       },
       {
         "id": "B03.2",
         "action": "逐项适配移动界面、首页、分类和输入规则",
-        "status": "pending"
+        "status": "verified",
+        "upstreamCommits": [
+          "aa7d0d39a4a783fe1a9358fee4fed8d093cd1e02",
+          "d49160f0e5433a2b87e1431c0b7bf01d8e429e75",
+          "4eaeefbdf5b979fb777884df24090740bd2a3ef3",
+          "137d1171f2b4b24cd7fb14bcef212de303fa963e",
+          "98d50d5383a33432ff6c30b129461b170e5cbffc",
+          "521cebf585efc2e782dd9fb93d0f66752c8d3c32"
+        ]
       },
       {
         "id": "B03.3",
         "action": "按行为补齐测试和七语翻译检查",
-        "status": "pending"
+        "status": "verified"
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "用 Bun 更新 DOMPurify 和锁文件，检查实际版本"
+    "codeCommits": [
+      "bf305aee5d65aef1ab63a9ef58d2a459b04d72b4",
+      "21750265043a9d6035d84acfc5862b2e0a0b9254",
+      "a8b7faac7af02873513ebbef24a895849e5e05bb",
+      "27be8ca0ac4e7b8a213caba19843b0b2c3ee40ec",
+      "7d65b44651c2c3da9e8e349bac4a9eeb5c67efef",
+      "ee1910e29df23382fcb36159d3b1ad563f1b9825",
+      "36bd3b22a0e6f8fe584d749556ae9c4fe81d2b59",
+      "235d5b724ba435aeaeaee732b2738531fdd74d2a",
+      "4fbd538b34976183b38e2012140f4b8edba67018",
+      "bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b",
+      "426724227915beee9a7834f9d7a03caa57473814",
+      "c0d381e302c9f90b754b029ce1e95bb6d0d7ab2c",
+      "211374fa795d951aad6cbe6dc79401f044df48c1",
+      "2fd8bc336535694ba375c95958b28ecfb8cee80c",
+      "c3698be0209f48fa6325a56ebdd17e594ef15427"
+    ],
+    "evidence": [
+      "evidence/B03-acceptance.json"
+    ],
+    "nextAction": "Stage locally verified; final browser/full regression remains B18."
   },
   {
     "id": "B04",

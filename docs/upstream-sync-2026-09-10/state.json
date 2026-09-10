@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T18:58:08.005Z",
+  "updatedAt": "2026-09-10T19:46:30.519Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B03",
-  "current_unit": "B03.1",
+  "current_batch": "B04",
+  "current_unit": "B04.1",
   "active_operation": null,
-  "last_observed_head": "d164a919158fa712045aa33859d6649b3b7744af",
-  "last_verified_code_commit": "d164a919158fa712045aa33859d6649b3b7744af",
+  "last_observed_head": "bf305aee5d65aef1ab63a9ef58d2a459b04d72b4",
+  "last_verified_code_commit": "bf305aee5d65aef1ab63a9ef58d2a459b04d72b4",
   "last_checkpoint_commit": "0353ebeb59dd4947cf465b455f52e105cf3f7370",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B03: pin DOMPurify with Bun, then integrate mobile navigation, editor/setup fixes and boundary regressions while preserving floating windows.",
+  "next_action": "B04.1: integrate inspected request cancellation/replay patches; preserve downstream count_tokens path during replay metadata migration.",
   "blockers": [
     {
       "id": "production_snapshot",

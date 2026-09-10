@@ -1,0 +1,5 @@
+Auto-merging web/src/components/ui/sidebar.tsx
+[codex/upstream-sync-2026-09-10 235d5b724] fix: mobile sidebar (#6760)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Tue Aug 11 13:50:39 2026 +0800
+ 4 files changed, 30 insertions(+), 19 deletions(-)

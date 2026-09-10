@@ -1,0 +1,5 @@
+Auto-merging web/src/features/dashboard/index.tsx
+[codex/upstream-sync-2026-09-10 7d65b4465] fix(dashboard): simplify completed setup guide
+ Author: CaIon <i@caion.me>
+ Date: Sun Sep 6 18:34:23 2026 +0800
+ 2 files changed, 220 insertions(+), 181 deletions(-)

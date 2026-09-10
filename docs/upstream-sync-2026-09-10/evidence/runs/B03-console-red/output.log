@@ -1,0 +1,63 @@
+--- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits (0.00s)
+    --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/API_route (0.00s)
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/API_route/BMP_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个API信息的线路描述长度不能超过100字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/API_route/BMP_at_limit
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/API_route/surrogate_pairs_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个API信息的线路描述长度不能超过100字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/API_route/surrogate_pairs_at_limit
+    --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/announcement_content (0.00s)
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/announcement_content/BMP_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个公告的内容长度不能超过500字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/announcement_content/BMP_at_limit
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/announcement_content/surrogate_pairs_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个公告的内容长度不能超过500字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/announcement_content/surrogate_pairs_at_limit
+    --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/announcement_extra (0.00s)
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/announcement_extra/BMP_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个公告的说明长度不能超过200字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/announcement_extra/BMP_at_limit
+    --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/FAQ_question (0.00s)
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/FAQ_question/BMP_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个FAQ的问题长度不能超过200字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/FAQ_question/BMP_at_limit
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/FAQ_question/surrogate_pairs_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个FAQ的问题长度不能超过200字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/FAQ_question/surrogate_pairs_at_limit
+    --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/uptime_category (0.00s)
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/uptime_category/BMP_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个分组的分类名称长度不能超过50字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/uptime_category/BMP_at_limit
+        --- FAIL: TestConsoleLengthsMatchBrowserUTF16Limits/uptime_category/surrogate_pairs_at_limit (0.00s)
+            validation_test.go:127: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/setting/console_setting/validation_test.go:127
+                	Error:      	Received unexpected error:
+                	            	第1个分组的分类名称长度不能超过50字符
+                	Test:       	TestConsoleLengthsMatchBrowserUTF16Limits/uptime_category/surrogate_pairs_at_limit
+FAIL
+FAIL	github.com/QuantumNous/new-api/setting/console_setting	0.344s
+FAIL

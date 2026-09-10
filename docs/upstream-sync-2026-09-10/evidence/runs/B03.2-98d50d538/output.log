@@ -1,0 +1,4 @@
+[codex/upstream-sync-2026-09-10 ee1910e29] fix(web): recheck setup status after page reload (#6968)
+ Author: Seefs <40468931+seefs001@users.noreply.github.com>
+ Date: Sat Aug 29 19:24:14 2026 +0800
+ 1 file changed, 7 insertions(+), 35 deletions(-)

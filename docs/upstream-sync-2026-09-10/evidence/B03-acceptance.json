@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "commit": "bf305aee5d65aef1ab63a9ef58d2a459b04d72b4",
+  "checked_at": "2026-09-10T19:46:30.433Z",
+  "checks": [
+    "evidence/runs/B03-sync-verified/result.json",
+    "evidence/runs/B03-preservation/result.json",
+    "evidence/runs/B03-playground/result.json",
+    "evidence/runs/B03-build-check/result.json",
+    "evidence/runs/B03-types-final/result.json",
+    "evidence/runs/B03-lint-final/result.json",
+    "evidence/runs/B03-console-green/result.json",
+    "evidence/runs/B03-model-categories/result.json",
+    "evidence/runs/B03-bun-lock/result.json",
+    "evidence/runs/B03-dom-matchers/result.json",
+    "evidence/B03-ui-copy.json"
+  ],
+  "frontend_sync": {
+    "files": 13,
+    "tests": 78
+  },
+  "playground": {
+    "files": 20,
+    "tests": 83
+  },
+  "downstream_node": {
+    "files": 71,
+    "tests": 236
+  },
+  "build_source_unchanged_since": "a8b7faac7af02873513ebbef24a895849e5e05bb",
+  "notes": [
+    "Root setup regressions run the real router lifecycle and mock only API/fetch boundaries. Application compilation has a separate 30-second fixture allowance; route assertions retain default deadlines.",
+    "Earlier red failures and test-fixture failures are retained and are not acceptance evidence.",
+    "Independent Banner lifecycle and downstream custom classifier are preserved.",
+    "Browser acceptance remains B18."
+  ]
+}

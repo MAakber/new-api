@@ -1,0 +1,30 @@
+{
+  "id": "B03-editor-setup-red-corrected",
+  "command": [
+    "bun",
+    "run",
+    "test:sync",
+    "src/components/ai-elements/__tests__/code-block-editor.test.tsx",
+    "src/features/playground/components/message/__tests__/playground-message-editor.test.tsx",
+    "src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx",
+    "src/routes/__tests__/setup-status.test.tsx",
+    "src/components/layout/components/__tests__/mobile-navigation.test.tsx"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "c0d381e302c9f90b754b029ce1e95bb6d0d7ab2c",
+  "started_at": "2026-09-10T19:17:19.080Z",
+  "finished_at": "2026-09-10T19:17:30.602Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

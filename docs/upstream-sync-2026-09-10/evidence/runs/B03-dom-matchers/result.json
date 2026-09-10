@@ -1,0 +1,26 @@
+{
+  "id": "B03-dom-matchers",
+  "command": [
+    "bun",
+    "add",
+    "-d",
+    "@testing-library/jest-dom@^7.0.0"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "211374fa795d951aad6cbe6dc79401f044df48c1",
+  "started_at": "2026-09-10T19:10:39.191Z",
+  "finished_at": "2026-09-10T19:10:41.515Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

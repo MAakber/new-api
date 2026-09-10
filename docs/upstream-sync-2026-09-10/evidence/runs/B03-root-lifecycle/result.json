@@ -1,0 +1,26 @@
+{
+  "id": "B03-root-lifecycle",
+  "command": [
+    "bun",
+    "run",
+    "test:sync",
+    "src/routes/__tests__/setup-status.test.tsx"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "7d65b44651c2c3da9e8e349bac4a9eeb5c67efef",
+  "started_at": "2026-09-10T19:31:02.190Z",
+  "finished_at": "2026-09-10T19:31:06.229Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

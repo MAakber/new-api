@@ -1,0 +1,17 @@
+{
+  "upstream": "aa7d0d39a4a783fe1a9358fee4fed8d093cd1e02",
+  "unit": "B03.2",
+  "before_head": "426724227915beee9a7834f9d7a03caa57473814",
+  "after_head": "bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "aa7d0d39a4a783fe1a9358fee4fed8d093cd1e02"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/src/components/layout/components/public-header.tsx"
+  ]
+}

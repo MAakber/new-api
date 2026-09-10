@@ -1,0 +1,25 @@
+{
+  "id": "B03-sync-final",
+  "command": [
+    "bun",
+    "run",
+    "test:sync"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "a8b7faac7af02873513ebbef24a895849e5e05bb",
+  "started_at": "2026-09-10T19:34:44.320Z",
+  "finished_at": "2026-09-10T19:35:03.960Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

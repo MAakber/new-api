@@ -1,0 +1,19 @@
+{
+  "upstream": "d49160f0e5433a2b87e1431c0b7bf01d8e429e75",
+  "unit": "B03.2",
+  "before_head": "bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b",
+  "after_head": "bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "d49160f0e5433a2b87e1431c0b7bf01d8e429e75"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "setting/console_setting/validation.go"
+  ],
+  "files": [
+    "setting/console_setting/validation.go"
+  ]
+}

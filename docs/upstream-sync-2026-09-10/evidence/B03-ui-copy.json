@@ -1,0 +1,61 @@
+{
+  "commit": "bf305aee5d65aef1ab63a9ef58d2a459b04d72b4",
+  "checked_at": "2026-09-10T19:44:42.403Z",
+  "status": "passed",
+  "sources": [
+    "web/src/features/playground/components/message/playground-message-editor.tsx",
+    "web/src/features/dashboard/components/overview/overview-dashboard.tsx"
+  ],
+  "translations": {
+    "en": {
+      "Leave": "Leave",
+      "Stay": "Stay",
+      "Unsaved changes": "Unsaved changes",
+      "Setup guide": "Setup guide",
+      "You have unsaved changes. Are you sure you want to leave?": "You have unsaved changes. Are you sure you want to leave?"
+    },
+    "zh": {
+      "Leave": "离开",
+      "Stay": "留下来",
+      "Unsaved changes": "未保存的更改",
+      "Setup guide": "设置引导",
+      "You have unsaved changes. Are you sure you want to leave?": "您有未保存的更改。确定要离开吗？"
+    },
+    "zh-TW": {
+      "Leave": "離開",
+      "Stay": "留下來",
+      "Unsaved changes": "未儲存的變更",
+      "Setup guide": "設定引導",
+      "You have unsaved changes. Are you sure you want to leave?": "您有未儲存的變更。確定要離開嗎？"
+    },
+    "fr": {
+      "Leave": "Quitter",
+      "Stay": "Rester",
+      "Unsaved changes": "Modifications non enregistrées",
+      "Setup guide": "Guide de configuration",
+      "You have unsaved changes. Are you sure you want to leave?": "Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir quitter ?"
+    },
+    "ja": {
+      "Leave": "退出",
+      "Stay": "残る",
+      "Unsaved changes": "未保存の変更",
+      "Setup guide": "セットアップガイド",
+      "You have unsaved changes. Are you sure you want to leave?": "未保存の変更があります。離れてもよろしいですか？"
+    },
+    "ru": {
+      "Leave": "Выйти",
+      "Stay": "Остаться",
+      "Unsaved changes": "Несохранённые изменения",
+      "Setup guide": "Руководство по настройке",
+      "You have unsaved changes. Are you sure you want to leave?": "У вас есть несохранённые изменения. Вы уверены, что хотите уйти?"
+    },
+    "vi": {
+      "Leave": "Rời khỏi",
+      "Stay": "Ở lại",
+      "Unsaved changes": "Thay đổi chưa được lưu",
+      "Setup guide": "Hướng dẫn thiết lập",
+      "You have unsaved changes. Are you sure you want to leave?": "Bạn có thay đổi chưa được lưu. Bạn có chắc chắn muốn rời đi không?"
+    }
+  },
+  "note": "All introduced literal UI keys already have reviewed translations in seven locales; no locale edits required."
+}

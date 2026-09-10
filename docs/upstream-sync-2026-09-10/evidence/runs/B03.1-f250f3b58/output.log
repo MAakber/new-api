@@ -1,0 +1,5 @@
+Auto-merging web/package.json
+[codex/upstream-sync-2026-09-10 c3698be02] chore(deps): bump dompurify from 3.4.11 to 3.4.13 in /web (#6735)
+ Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+ Date: Fri Aug 14 16:58:37 2026 +0800
+ 1 file changed, 2 insertions(+), 2 deletions(-)

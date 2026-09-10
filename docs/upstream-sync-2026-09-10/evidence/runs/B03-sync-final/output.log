@@ -1,0 +1,69 @@
+$ vitest run --config vitest.sync.config.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+stderr | src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+[root.beforeLoad] setup status check failed Error: Network unavailable
+    at D:/10178/Projects/new-api-upstream-sync/web/src/routes/__tests__/setup-status.test.tsx:104:7
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:1628:35
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:2783:26
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3319:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3314:10)
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3299:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3257:10)
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3876:64
+
+stderr | src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+[root.beforeLoad] setup status check failed Error: Unexpected extra setup request
+    at Function.<anonymous> (D:/10178/Projects/new-api-upstream-sync/web/src/routes/__tests__/setup-status.test.tsx:58:37)
+    at Function.Mock [as get] (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/spy.DPLvp2J7.js:320:40)
+    at getSetupStatus (D:/10178/Projects/new-api-upstream-sync/web/src/features/setup/api.ts:24:25)
+    at Object.beforeLoad (D:/10178/Projects/new-api-upstream-sync/web/src/routes/__root.tsx:131:9)
+    at executeBeforeLoad (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/router-core/dist/esm/load-matches.js:274:37)
+    at execute (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/router-core/dist/esm/load-matches.js:297:24)
+    at queueExecution (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/router-core/dist/esm/load-matches.js:301:53)
+    at serverSsr (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/router-core/dist/esm/load-matches.js:295:10)
+    at handleBeforeLoad (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/router-core/dist/esm/load-matches.js:303:9)
+    at loadMatches (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/router-core/dist/esm/load-matches.js:513:23)
+
+ ❯ src/routes/__tests__/setup-status.test.tsx (3 tests | 2 failed) 6138ms
+   ❯ setup status routing (3)
+     × rechecks the current server despite a completed status saved by an earlier page 5005ms
+     × retries on the next navigation after a failed setup request 1067ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx > setup status routing > rechecks the current server despite a completed status saved by an earlier page
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/routes/__tests__/setup-status.test.tsx:94:3
+     92|
+     93| describe('setup status routing', () => {
+     94|   it('rechecks the current server despite a completed status saved by …
+       |   ^
+     95|     localStorage.setItem('setup_status_checked', 'true')
+     96|     const { router, request } = await setupRouter([false])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+AssertionError: expected "Mock" to be called 2 times, but got 3 times
+ ❯ src/routes/__tests__/setup-status.test.tsx:109:21
+    107|     await act(() => router.navigate({ to: '/pricing' }))
+    108|
+    109|     expect(request).toHaveBeenCalledTimes(2)
+       |                     ^
+    110|     expect(router.state.location.pathname).toBe('/setup')
+    111|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 12 passed (13)
+      Tests  2 failed | 76 passed (78)
+   Start at  03:34:44
+   Duration  18.98s (import 45%, environment 31%, setup 11%, tests 9%, transform 4%)
+
+error: script "test:sync" exited with code 1

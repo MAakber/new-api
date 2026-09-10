@@ -1,0 +1,26 @@
+{
+  "id": "B03-console-red",
+  "command": [
+    "go",
+    "test",
+    "./setting/console_setting",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "426724227915beee9a7834f9d7a03caa57473814",
+  "started_at": "2026-09-10T19:19:51.122Z",
+  "finished_at": "2026-09-10T19:19:52.759Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

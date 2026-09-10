@@ -1,0 +1,10 @@
+$ vitest run --config vitest.channels.config.ts src/lib/__tests__/model-classification.test.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  1 passed (1)
+      Tests  51 passed (51)
+   Start at  03:17:46
+   Duration  1.04s (environment 62%, setup 31%, transform 4%, import 2%, tests 1%)
+

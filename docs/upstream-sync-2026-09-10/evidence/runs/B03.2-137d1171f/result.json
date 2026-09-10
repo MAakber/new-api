@@ -1,0 +1,31 @@
+{
+  "upstream": "137d1171f2b4b24cd7fb14bcef212de303fa963e",
+  "unit": "B03.2",
+  "before_head": "235d5b724ba435aeaeaee732b2738531fdd74d2a",
+  "after_head": "235d5b724ba435aeaeaee732b2738531fdd74d2a",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "137d1171f2b4b24cd7fb14bcef212de303fa963e"
+  ],
+  "exit_code": 1,
+  "conflicts": [
+    "web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx"
+  ],
+  "files": [
+    "web/src/components/ai-elements/__tests__/code-block-editor.test.tsx",
+    "web/src/components/ai-elements/__tests__/response-fade-render.test.tsx",
+    "web/src/components/ai-elements/__tests__/response-fade.test.ts",
+    "web/src/components/ai-elements/code-block.tsx",
+    "web/src/components/ai-elements/reasoning.tsx",
+    "web/src/components/ai-elements/response-fade.ts",
+    "web/src/components/ai-elements/response-renderer-inline.tsx",
+    "web/src/components/ai-elements/response-renderer.tsx",
+    "web/src/components/ai-elements/response-types.ts",
+    "web/src/components/ai-elements/response.tsx",
+    "web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx",
+    "web/src/features/playground/components/message/playground-message-editor.tsx",
+    "web/src/styles/index.css"
+  ]
+}

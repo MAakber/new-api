@@ -1,0 +1,17 @@
+{
+  "upstream": "98d50d5383a33432ff6c30b129461b170e5cbffc",
+  "unit": "B03.2",
+  "before_head": "36bd3b22a0e6f8fe584d749556ae9c4fe81d2b59",
+  "after_head": "ee1910e29df23382fcb36159d3b1ad563f1b9825",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "98d50d5383a33432ff6c30b129461b170e5cbffc"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/src/routes/__root.tsx"
+  ]
+}

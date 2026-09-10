@@ -542,3 +542,126 @@
 - Root backend regression: 1904 passed test events; 0 skipped (see matrix evidence, not counted as acceptance).
 - Evidence: evidence/B06-database-matrix.json.
 - Next: B03: pin DOMPurify with Bun, then integrate mobile navigation, editor/setup fixes and boundary regressions while preserving floating windows.
+
+## 2026-09-10T18:58:56.209Z — B03.1 applying f250f3b58
+
+- Before HEAD: 424fe4f39c7bcd15eeb659717975f59914ecb9d3.
+- Upstream: f250f3b589c836764954f646448084e93873798b — chore(deps): bump dompurify from 3.4.11 to 3.4.13 in /web (#6735).
+- Reviewed paths: web/package.json.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T18:58:56.449Z — B03.1 implemented
+
+- Result: exit 0; HEAD c3698be0209f48fa6325a56ebdd17e594ef15427.
+- Conflicts: none.
+- Evidence: evidence/runs/B03.1-f250f3b58/result.json.
+- Next: B03.1: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T19:21:58.555Z — B03.2 applying aa7d0d39a
+
+- Before HEAD: 426724227915beee9a7834f9d7a03caa57473814.
+- Upstream: aa7d0d39a4a783fe1a9358fee4fed8d093cd1e02 — style: use text-sm for public header nav links to match other nav components (#6557).
+- Reviewed paths: web/src/components/layout/components/public-header.tsx.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:21:58.838Z — B03.2 implemented
+
+- Result: exit 0; HEAD bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b.
+- Conflicts: none.
+- Evidence: evidence/runs/B03.2-aa7d0d39a/result.json.
+- Next: B03.2: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T19:22:01.406Z — B03.2 applying d49160f0e
+
+- Before HEAD: bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b.
+- Upstream: d49160f0e5433a2b87e1431c0b7bf01d8e429e75 — fix: backend length validation (#5548).
+- Reviewed paths: setting/console_setting/validation.go.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:22:01.624Z — B03.2 conflicts
+
+- Result: exit 1; HEAD bc75d152e8842aaa83ae2d1b9b4bd94fbf7bf64b.
+- Conflicts: setting/console_setting/validation.go.
+- Evidence: evidence/runs/B03.2-d49160f0e/result.json.
+- Next: B03.2: reconcile failed cherry-pick using evidence/runs/B03.2-d49160f0e; do not restart or abort automatically.
+
+## 2026-09-10T19:24:34.505Z — B03.2 console length conflict resolved
+
+- Code: 4fbd538b34976183b38e2012140f4b8edba67018.
+- Retained downstream lifecycle checks and common JSON wrapper; resolved only the utf16 import overlap. Banner model remains unchanged.
+- Unicode and lifecycle regression verification pending.
+
+## 2026-09-10T19:24:38.555Z — B03.2 applying 4eaeefbdf
+
+- Before HEAD: 4fbd538b34976183b38e2012140f4b8edba67018.
+- Upstream: 4eaeefbdf5b979fb777884df24090740bd2a3ef3 — fix: mobile sidebar (#6760).
+- Reviewed paths: web/src/components/layout/components/chat-presets-item.tsx, web/src/components/layout/components/nav-group.tsx, web/src/components/layout/components/sidebar-view-header.tsx, web/src/components/ui/sidebar.tsx.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:24:38.859Z — B03.2 implemented
+
+- Result: exit 0; HEAD 235d5b724ba435aeaeaee732b2738531fdd74d2a.
+- Conflicts: none.
+- Evidence: evidence/runs/B03.2-4eaeefbdf/result.json.
+- Next: B03.2: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T19:24:41.983Z — B03.2 applying 137d1171f
+
+- Before HEAD: 235d5b724ba435aeaeaee732b2738531fdd74d2a.
+- Upstream: 137d1171f2b4b24cd7fb14bcef212de303fa963e — feat(web): fade in streamed response words and harden playground editor (#6895).
+- Reviewed paths: web/src/components/ai-elements/__tests__/code-block-editor.test.tsx, web/src/components/ai-elements/__tests__/response-fade-render.test.tsx, web/src/components/ai-elements/__tests__/response-fade.test.ts, web/src/components/ai-elements/code-block.tsx, web/src/components/ai-elements/reasoning.tsx, web/src/components/ai-elements/response-fade.ts, web/src/components/ai-elements/response-renderer-inline.tsx, web/src/components/ai-elements/response-renderer.tsx, web/src/components/ai-elements/response-types.ts, web/src/components/ai-elements/response.tsx, web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx, web/src/features/playground/components/message/playground-message-editor.tsx, web/src/styles/index.css.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:24:42.296Z — B03.2 conflicts
+
+- Result: exit 1; HEAD 235d5b724ba435aeaeaee732b2738531fdd74d2a.
+- Conflicts: web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx.
+- Evidence: evidence/runs/B03.2-137d1171f/result.json.
+- Next: B03.2: reconcile failed cherry-pick using evidence/runs/B03.2-137d1171f; do not restart or abort automatically.
+
+## 2026-09-10T19:25:53.564Z — B03.2 editor test overlap resolved
+
+- Code: 36bd3b22a0e6f8fe584d749556ae9c4fe81d2b59.
+- Production changes applied fully. Kept earlier extracted regression tests and their explicit browser fixture in add/add resolution. Preserved downstream markdown length guard and existing styles.
+- Verification pending.
+
+## 2026-09-10T19:25:56.380Z — B03.2 applying 98d50d538
+
+- Before HEAD: 36bd3b22a0e6f8fe584d749556ae9c4fe81d2b59.
+- Upstream: 98d50d5383a33432ff6c30b129461b170e5cbffc — fix(web): recheck setup status after page reload (#6968).
+- Reviewed paths: web/src/routes/__root.tsx.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:25:56.641Z — B03.2 implemented
+
+- Result: exit 0; HEAD ee1910e29df23382fcb36159d3b1ad563f1b9825.
+- Conflicts: none.
+- Evidence: evidence/runs/B03.2-98d50d538/result.json.
+- Next: B03.2: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T19:25:59.339Z — B03.2 applying 521cebf58
+
+- Before HEAD: ee1910e29df23382fcb36159d3b1ad563f1b9825.
+- Upstream: 521cebf585efc2e782dd9fb93d0f66752c8d3c32 — fix(dashboard): simplify completed setup guide.
+- Reviewed paths: web/src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx, web/src/features/dashboard/components/overview/overview-dashboard.tsx, web/src/features/dashboard/index.tsx.
+- Next: cherry-pick -x, inspect result, run affected regressions before acceptance.
+
+## 2026-09-10T19:25:59.590Z — B03.2 implemented
+
+- Result: exit 0; HEAD 7d65b44651c2c3da9e8e349bac4a9eeb5c67efef.
+- Conflicts: none.
+- Evidence: evidence/runs/B03.2-521cebf58/result.json.
+- Next: B03.2: validate the applied patch and downstream contracts; do not mark verified until recorded checks pass.
+
+## 2026-09-10T19:44:42.456Z — B03.3 preservation and UI copy verified
+
+- Seventy-one downstream node:test files passed, including floating-window/auth/layout behavior; frontend build and typecheck passed. Playground 20 files / 83 tests passed.
+- All five introduced UI keys exist in all seven locales; B03-ui-copy.json.
+- Root route tests mount real RouterProvider. Allow application import compilation in beforeAll; test assertions retain their default deadline. Full sync run is pending. Earlier failed setup runs remain recorded, not accepted.
+
+## 2026-09-10T19:46:30.528Z — B03 stage verified
+
+- Code: bf305aee5d65aef1ab63a9ef58d2a459b04d72b4.
+- Sync: 13 files / 78 tests; playground: 20 files / 83 tests; downstream preservation: 71 files / 236 tests. Build, typecheck, touched lint, console Unicode/lifecycle regressions and seven-language copy checks passed.
+- Evidence: evidence/B03-acceptance.json.
+- Next: B04.1: integrate inspected request cancellation/replay patches; preserve downstream count_tokens path during replay metadata migration.

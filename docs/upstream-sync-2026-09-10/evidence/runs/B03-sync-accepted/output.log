@@ -1,0 +1,28 @@
+$ vitest run --config vitest.sync.config.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/routes/__tests__/setup-status.test.tsx (3 tests | 3 skipped) 10242ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx [ src/routes/__tests__/setup-status.test.tsx ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ src/routes/__tests__/setup-status.test.tsx:31:1
+     29| let client: QueryClient
+     30|
+     31| beforeAll(async () => {
+       | ^
+     32|   // Transform the root's application imports before timing individual…
+     33|   await import('../__root')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 12 passed (13)
+      Tests  75 passed | 3 skipped (78)
+   Start at  03:38:53
+   Duration  23.74s (import 48%, environment 27%, setup 13%, tests 9%, transform 3%)
+
+error: script "test:sync" exited with code 1

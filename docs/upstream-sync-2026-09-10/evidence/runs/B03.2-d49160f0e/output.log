@@ -1,0 +1,10 @@
+Auto-merging setting/console_setting/validation.go
+CONFLICT (content): Merge conflict in setting/console_setting/validation.go
+error: could not apply d49160f0e... fix: backend length validation (#5548)
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config advice.mergeConflict false"

@@ -1,0 +1,28 @@
+{
+  "id": "B03-editor-setup-red",
+  "command": [
+    "bun",
+    "run",
+    "test:sync",
+    "code-block-editor",
+    "playground-message-editor",
+    "setup-guide"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "211374fa795d951aad6cbe6dc79401f044df48c1",
+  "started_at": "2026-09-10T19:00:09.809Z",
+  "finished_at": "2026-09-10T19:00:24.145Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1,0 +1,5 @@
+Auto-merging web/src/components/layout/components/public-header.tsx
+[codex/upstream-sync-2026-09-10 bc75d152e] style: use text-sm for public header nav links to match other nav components (#6557)
+ Author: feitianbubu <feitianbubu@qq.com>
+ Date: Fri Jul 31 14:54:23 2026 +0800
+ 1 file changed, 2 insertions(+), 2 deletions(-)

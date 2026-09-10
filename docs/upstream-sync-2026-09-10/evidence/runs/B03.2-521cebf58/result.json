@@ -1,0 +1,19 @@
+{
+  "upstream": "521cebf585efc2e782dd9fb93d0f66752c8d3c32",
+  "unit": "B03.2",
+  "before_head": "ee1910e29df23382fcb36159d3b1ad563f1b9825",
+  "after_head": "7d65b44651c2c3da9e8e349bac4a9eeb5c67efef",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "521cebf585efc2e782dd9fb93d0f66752c8d3c32"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/src/features/dashboard/components/overview/__tests__/setup-guide.test.tsx",
+    "web/src/features/dashboard/components/overview/overview-dashboard.tsx",
+    "web/src/features/dashboard/index.tsx"
+  ]
+}

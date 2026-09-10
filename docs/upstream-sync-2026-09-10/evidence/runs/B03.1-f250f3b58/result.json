@@ -1,0 +1,17 @@
+{
+  "upstream": "f250f3b589c836764954f646448084e93873798b",
+  "unit": "B03.1",
+  "before_head": "424fe4f39c7bcd15eeb659717975f59914ecb9d3",
+  "after_head": "c3698be0209f48fa6325a56ebdd17e594ef15427",
+  "command": [
+    "git",
+    "cherry-pick",
+    "-x",
+    "f250f3b589c836764954f646448084e93873798b"
+  ],
+  "exit_code": 0,
+  "conflicts": [],
+  "files": [
+    "web/package.json"
+  ]
+}
