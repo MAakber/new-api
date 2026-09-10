@@ -16,8 +16,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { QueryClient } from '@tanstack/react-query'
-import { createMemoryHistory, createRoute, createRouter } from '@tanstack/react-router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+  createMemoryHistory,
+  createRoute,
+  createRouter,
+  RouterProvider,
+} from '@tanstack/react-router'
+import { act, cleanup, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 let client: QueryClient
@@ -29,13 +35,22 @@ beforeEach(() => {
 })
 
 afterEach(() => {
+  cleanup()
   client.clear()
+  vi.unstubAllGlobals()
 })
 
 async function setupRouter(responses: (boolean | Error)[]) {
   const { api } = await import('@/lib/api')
   const { useAuthStore } = await import('@/stores/auth-store')
   useAuthStore.getState().auth.setBootstrapState('complete')
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (input) => {
+      expect(input).toBe('/api/status')
+      return new Response(JSON.stringify({ success: true, data: {} }))
+    })
+  )
   const request = vi.spyOn(api, 'get').mockImplementation(async (url) => {
     expect(url).toBe('/api/setup')
     const status = responses.shift()
@@ -45,16 +60,33 @@ async function setupRouter(responses: (boolean | Error)[]) {
   })
   const { Route } = await import('../__root')
   const routeTree = Route.addChildren([
-    createRoute({ getParentRoute: () => Route, path: '/' }),
-    createRoute({ getParentRoute: () => Route, path: '/pricing' }),
-    createRoute({ getParentRoute: () => Route, path: '/setup' }),
+    createRoute({
+      getParentRoute: () => Route,
+      path: '/',
+      component: () => <h1>Fixture home</h1>,
+    }),
+    createRoute({
+      getParentRoute: () => Route,
+      path: '/pricing',
+      component: () => <h1>Fixture pricing</h1>,
+    }),
+    createRoute({
+      getParentRoute: () => Route,
+      path: '/setup',
+      component: () => <h1>Fixture setup</h1>,
+    }),
   ])
   const router = createRouter({
     routeTree,
     history: createMemoryHistory({ initialEntries: ['/'] }),
     context: { queryClient: client },
   })
-  await router.load()
+  render(
+    <QueryClientProvider client={client}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  )
+  await screen.findByRole('heading', { name: /^Fixture (home|setup)$/ })
   return { router, request }
 }
 
@@ -68,8 +100,11 @@ describe('setup status routing', () => {
   })
 
   it('retries on the next navigation after a failed setup request', async () => {
-    const { router, request } = await setupRouter([new Error('Network unavailable'), false])
-    await router.navigate({ to: '/pricing' })
+    const { router, request } = await setupRouter([
+      new Error('Network unavailable'),
+      false,
+    ])
+    await act(() => router.navigate({ to: '/pricing' }))
 
     expect(request).toHaveBeenCalledTimes(2)
     expect(router.state.location.pathname).toBe('/setup')
@@ -77,7 +112,7 @@ describe('setup status routing', () => {
 
   it('reuses a successful check during navigation in the same page', async () => {
     const { router, request } = await setupRouter([true])
-    await router.navigate({ to: '/pricing' })
+    await act(() => router.navigate({ to: '/pricing' }))
 
     expect(request).toHaveBeenCalledTimes(1)
     expect(router.state.location.pathname).toBe('/pricing')

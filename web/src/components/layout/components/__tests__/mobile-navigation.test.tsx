@@ -16,12 +16,23 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { createMemoryHistory, createRootRoute, createRoute, createRouter, Outlet, RouterProvider } from '@tanstack/react-router'
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRoute,
+  createRouter,
+  Outlet,
+  RouterProvider,
+} from '@tanstack/react-router'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { Sidebar, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import {
+  Sidebar,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 
 import { NavGroup } from '../nav-group'
 
@@ -30,7 +41,10 @@ function NavigationFrame() {
     <SidebarProvider>
       <SidebarTrigger />
       <Sidebar>
-        <NavGroup title='Gateway' items={[{ title: 'Pricing', url: '/pricing' }]} />
+        <NavGroup
+          title='Gateway'
+          items={[{ title: 'Pricing', url: '/pricing' }]}
+        />
       </Sidebar>
       <Outlet />
     </SidebarProvider>
@@ -51,7 +65,9 @@ async function renderNavigation(width: number) {
       createRoute({
         getParentRoute: () => root,
         path: '/pricing',
-        loader: ({ preload }) => { requests.push(preload) },
+        loader: ({ preload }) => {
+          requests.push(preload)
+        },
         component: () => <h1>Model pricing</h1>,
       }),
     ]),
@@ -72,9 +88,13 @@ describe('sidebar navigation', () => {
     fireEvent.touchStart(link)
     await user.click(link)
 
-    expect(await screen.findByRole('heading', { name: 'Model pricing' })).toBeVisible()
+    expect(
+      await screen.findByRole('heading', { name: 'Model pricing' })
+    ).toBeVisible()
     expect(requests).toEqual([false])
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    )
   })
 
   it('retains intent preloading for desktop navigation', async () => {
