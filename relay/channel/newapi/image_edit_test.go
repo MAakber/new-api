@@ -77,8 +77,10 @@ func TestNewAPIImageEditsPreserveMultipartAndPlaygroundRouting(t *testing.T) {
 
 func TestNewAPIImageGenerationKeepsExplicitZeroFields(t *testing.T) {
 	context, _ := gin.CreateTestContext(httptest.NewRecorder())
-	request := dto.ImageRequest{Model: "gpt-image-1", Prompt: "Draw a cup", PartialImages: common.GetPointer(0)}
+	request := dto.ImageRequest{Model: "gpt-image-1", Prompt: "Draw a cup", PartialImages: []byte("0"), Stream: common.GetPointer(false)}
 	converted, err := (&Adaptor{}).ConvertImageRequest(context, &relaycommon.RelayInfo{RelayMode: relayconstant.RelayModeImagesGenerations}, request)
 	require.NoError(t, err)
-	assert.Equal(t, request, converted)
+	encoded, err := common.Marshal(converted)
+	require.NoError(t, err)
+	assert.JSONEq(t, `{"model":"gpt-image-1","prompt":"Draw a cup","partial_images":0,"stream":false}`, string(encoded))
 }
