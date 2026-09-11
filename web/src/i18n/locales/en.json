@@ -1150,6 +1150,7 @@
     "Configuration required": "Configuration required",
     "Configure": "Configure",
     "Configure a Creem product for user recharge options.": "Configure a Creem product for user recharge options.",
+    "Configure a custom ratio for \"{{userGroup}}\" users when using a specific token group.": "Configure a custom ratio for \"{{userGroup}}\" users when using a specific token group.",
     "Configure a custom ratio for when users use a specific token group.": "Configure a custom ratio for when users use a specific token group.",
     "Configure a group that users can select when creating API keys.": "Configure a group that users can select when creating API keys.",
     "Configure a new custom OAuth provider for user authentication.": "Configure a new custom OAuth provider for user authentication.",

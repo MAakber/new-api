@@ -1150,6 +1150,7 @@
     "Configuration required": "Требуется настройка",
     "Configure": "Настройка",
     "Configure a Creem product for user recharge options.": "Настройте продукт Creem для опций пополнения пользователя.",
+    "Configure a custom ratio for \"{{userGroup}}\" users when using a specific token group.": "Задайте особый коэффициент для пользователей «{{userGroup}}» при использовании определённой группы токенов.",
     "Configure a custom ratio for when users use a specific token group.": "Настроить пользовательский коэффициент при использовании определённой группы токенов.",
     "Configure a group that users can select when creating API keys.": "Настройте группу, которую пользователи могут выбрать при создании ключей API.",
     "Configure a new custom OAuth provider for user authentication.": "Настройка нового пользовательского OAuth-провайдера для аутентификации пользователей.",

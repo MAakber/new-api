@@ -1150,6 +1150,7 @@
     "Configuration required": "Configuration requise",
     "Configure": "Configurer",
     "Configure a Creem product for user recharge options.": "Configurez un produit Creem pour les options de recharge utilisateur.",
+    "Configure a custom ratio for \"{{userGroup}}\" users when using a specific token group.": "Définissez un ratio personnalisé pour les utilisateurs « {{userGroup}} » utilisant un groupe de jetons spécifique.",
     "Configure a custom ratio for when users use a specific token group.": "Configurer un ratio personnalisé lorsque les utilisateurs utilisent un groupe de jetons spécifique.",
     "Configure a group that users can select when creating API keys.": "Configurer un groupe que les utilisateurs peuvent sélectionner lors de la création de clés API.",
     "Configure a new custom OAuth provider for user authentication.": "Configurer un nouveau fournisseur OAuth personnalisé pour l'authentification des utilisateurs.",

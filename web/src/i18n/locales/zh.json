@@ -1150,6 +1150,7 @@
     "Configuration required": "需要配置",
     "Configure": "配置",
     "Configure a Creem product for user recharge options.": "为用户充值选项配置 Creem 产品。",
+    "Configure a custom ratio for \"{{userGroup}}\" users when using a specific token group.": "为“{{userGroup}}”用户使用指定令牌分组时配置自定义倍率。",
     "Configure a custom ratio for when users use a specific token group.": "配置用户使用特定令牌分组时的自定义倍率。",
     "Configure a group that users can select when creating API keys.": "配置用户在创建 API 密钥时可以选择的分组。",
     "Configure a new custom OAuth provider for user authentication.": "配置新的自定义OAuth提供商用于用户认证。",

@@ -1150,6 +1150,7 @@
     "Configuration required": "Cần cấu hình",
     "Configure": "Cấu hình",
     "Configure a Creem product for user recharge options.": "Cấu hình một sản phẩm Creem cho các tùy chọn nạp tiền người dùng.",
+    "Configure a custom ratio for \"{{userGroup}}\" users when using a specific token group.": "Đặt hệ số tùy chỉnh cho người dùng “{{userGroup}}” khi sử dụng một nhóm token cụ thể.",
     "Configure a custom ratio for when users use a specific token group.": "Cấu hình tỷ lệ tùy chỉnh khi người dùng sử dụng nhóm token cụ thể.",
     "Configure a group that users can select when creating API keys.": "Cấu hình một nhóm mà người dùng có thể chọn khi tạo khóa API.",
     "Configure a new custom OAuth provider for user authentication.": "Cấu hình nhà cung cấp OAuth tùy chỉnh mới để xác thực người dùng.",
