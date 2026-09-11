@@ -491,6 +491,12 @@ func CreateUserSubscriptionFromPlanTx(tx *gorm.DB, userId int, plan *Subscriptio
 	if userId <= 0 {
 		return nil, errors.New("invalid user id")
 	}
+	// Every grant path, including subscription redemption codes, serializes
+	// the per-user purchase limit check within its surrounding transaction.
+	var userRow User
+	if err := lockForUpdate(tx).Select("id").Where("id = ?", userId).First(&userRow).Error; err != nil {
+		return nil, err
+	}
 	if plan.MaxPurchasePerUser > 0 {
 		var count int64
 		if err := tx.Model(&UserSubscription{}).
@@ -737,9 +743,8 @@ func calcSubscriptionBalanceQuota(priceAmount float64) (int, error) {
 	}
 	quota := decimal.NewFromFloat(priceAmount).
 		Mul(decimal.NewFromFloat(common.QuotaPerUnit)).
-		Ceil().
-		IntPart()
-	return int(quota), nil
+		Ceil()
+	return common.QuotaFromDecimalStrict(quota)
 }
 
 // PurchaseSubscriptionWithBalance creates a subscription by deducting the user's wallet quota.

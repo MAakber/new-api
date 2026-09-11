@@ -355,11 +355,21 @@ func (channel *Channel) Save() error {
 	return DB.Save(channel).Error
 }
 
-func (channel *Channel) SaveWithoutKey() error {
+// saveStatusState persists only the fields owned by the channel status flow.
+// Keeping this allowlist here prevents a stale channel snapshot from
+// overwriting credentials, accounting counters, or channel configuration.
+func (channel *Channel) saveStatusState(tx *gorm.DB) error {
 	if channel.Id == 0 {
 		return errors.New("channel ID is 0")
 	}
-	return DB.Omit("key").Save(channel).Error
+	updates := map[string]any{
+		"status":     channel.Status,
+		"other_info": channel.OtherInfo,
+	}
+	if channel.ChannelInfo.IsMultiKey {
+		updates["channel_info"] = channel.ChannelInfo
+	}
+	return tx.Model(&Channel{}).Where("id = ?", channel.Id).Updates(updates).Error
 }
 
 func GetAllChannels(startIdx int, num int, selectAll bool, idSort bool, sortOptions ...ChannelSortOptions) ([]*Channel, error) {
@@ -754,22 +764,24 @@ func hasEnabledMultiKey(keys []string, statusList map[int]int) bool {
 }
 
 func UpdateChannelStatus(channelId int, usingKey string, status int, reason string) bool {
+	pollingLock := GetChannelPollingLock(channelId)
+	pollingLock.Lock()
+	defer pollingLock.Unlock()
 	var updated *Channel
 	changed := false
 	err := DB.Transaction(func(tx *gorm.DB) error {
 		channel := &Channel{}
-		if err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).First(channel, "id = ?", channelId).Error; err != nil {
+		if err := lockForUpdate(tx).First(channel, "id = ?", channelId).Error; err != nil {
 			return err
 		}
 		before := channel.Status
 		if channel.ChannelInfo.IsMultiKey {
-			lock := GetChannelPollingLock(channelId)
-			lock.Lock()
-			handlerMultiKeyUpdate(channel, usingKey, status, reason)
-			lock.Unlock()
-			if err := tx.Model(&Channel{}).Where("id = ?", channelId).Updates(map[string]any{"channel_info": channel.ChannelInfo, "status": channel.Status, "other_info": channel.OtherInfo}).Error; err != nil {
-				return err
+			if common.MemoryCacheEnabled {
+				if cached, err := CacheGetChannelInfo(channelId); err == nil {
+					channel.ChannelInfo.MultiKeyPollingIndex = cached.MultiKeyPollingIndex
+				}
 			}
+			handlerMultiKeyUpdate(channel, usingKey, status, reason)
 		} else {
 			if before == status {
 				return nil
@@ -779,9 +791,9 @@ func UpdateChannelStatus(channelId int, usingKey string, status int, reason stri
 			info["status_time"] = common.GetTimestamp()
 			channel.SetOtherInfo(info)
 			channel.Status = status
-			if err := tx.Model(&Channel{}).Where("id = ?", channelId).Updates(map[string]any{"status": channel.Status, "other_info": channel.OtherInfo}).Error; err != nil {
-				return err
-			}
+		}
+		if err := channel.saveStatusState(tx); err != nil {
+			return err
 		}
 		changed = before != channel.Status
 		if changed {
