@@ -122,8 +122,8 @@ func seedDatabaseUpgradeFixture(t *testing.T) {
 	require.NoError(t, DB.Create(&PrefillGroup{Id: 9101, Name: "保留预填", Type: "model", Items: JSONValue(`["legacy-model"]`)}).Error)
 	require.NoError(t, DB.Create(&Option{Key: "ModelPrice", Value: `{"legacy-model":0.02345}`}).Error)
 	// Seed historical identities directly; current metadata APIs allocate IDs.
-	require.NoError(t, DB.Create(&Vendor{Id: 9101, Name: "legacy-vendor", Description: "保留供应商"}).Error)
-	require.NoError(t, DB.Create(&Model{Id: 9101, ModelName: "legacy-model", VendorID: 9101, Description: "保留模型"}).Error)
+	require.NoError(t, DB.Create(&Vendor{Id: 9101, Name: "legacy-vendor", ActiveName: common.GetPointer("legacy-vendor"), Description: "保留供应商"}).Error)
+	require.NoError(t, DB.Create(&Model{Id: 9101, ModelName: "legacy-model", ActiveName: common.GetPointer("legacy-model"), VendorID: 9101, Description: "保留模型"}).Error)
 	require.NoError(t, LOG_DB.Create(&Log{Id: 9101, UserId: user.Id, Type: 2, CreatedAt: 1789000000, ModelName: "legacy-model", Quota: 500, RequestId: "fixture-request", Other: `{"admin_info":{"quota_saturation":{"reason":"fixture"}}}`}).Error)
 }
 
