@@ -92,6 +92,15 @@ const pointerCapture = Object.getOwnPropertyDescriptor(
 )
 
 beforeEach(() => {
+  const getComputedStyle = window.getComputedStyle.bind(window)
+  vi.spyOn(window, 'getComputedStyle').mockImplementation((element) => {
+    const style = getComputedStyle(element)
+    Object.defineProperties(style, {
+      transform: { configurable: true, value: style.transform || 'none' },
+      animationName: { configurable: true, value: 'none' },
+    })
+    return style
+  })
   Object.defineProperty(HTMLElement.prototype, 'setPointerCapture', {
     configurable: true,
     value: () => undefined,
