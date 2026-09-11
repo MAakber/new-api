@@ -367,14 +367,12 @@ func writeRedemptionsCSV(output io.Writer, redemptions []*model.Redemption) erro
 }
 
 func validateRedemptionReward(redemption *model.Redemption) (*model.SubscriptionPlan, error) {
+	redemption.CodeType = model.RedemptionCodeTypeRedemption
 	redemption.RewardType = model.NormalizeRedemptionRewardType(redemption.RewardType)
 	switch redemption.RewardType {
 	case model.RedemptionRewardTypeQuota:
 		redemption.PlanId = 0
-		if redemption.Quota < 0 {
-			return nil, errors.New("兑换额度不能为负数")
-		}
-		return nil, nil
+		return nil, redemption.ValidateQuotaReward()
 	case model.RedemptionRewardTypeSubscription:
 		redemption.Quota = 0
 		if redemption.PlanId <= 0 {

@@ -136,7 +136,7 @@ export interface LogOtherData {
     // Header values have already been redacted by the backend.
     request_debug?: RequestDebug
     // Quota saturation marker: set when a quota conversion clamped at the
-    // int32 bound (overflow/underflow) or hit a NaN fallback while computing
+    // supported single-request bound (overflow/underflow) or hit a NaN fallback while computing
     // this request's charge. Admin-only (nested under admin_info).
     quota_saturation?: {
       op: string

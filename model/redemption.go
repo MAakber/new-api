@@ -330,7 +330,7 @@ func Redeem(key string, userId int) (result *RedeemResult, err error) {
 			return errors.New("该兑换码已被使用")
 		}
 		if redemption.RewardType == RedemptionRewardTypeQuota {
-			return tx.Model(&User{}).Where("id = ?", userId).Update("quota", gorm.Expr("quota + ?", redemption.Quota)).Error
+			return creditTopUpQuota(tx, userId, redemption.Quota, nil)
 		}
 		return nil
 	})
@@ -404,6 +404,9 @@ func ConsumeRegistrationCodeWithTx(tx *gorm.DB, key string, userID int) error {
 func (redemption *Redemption) Insert() error {
 	redemption.RewardType = NormalizeRedemptionRewardType(redemption.RewardType)
 	redemption.CodeType = NormalizeRedemptionCodeType(redemption.CodeType)
+	if err := redemption.ValidateQuotaReward(); err != nil {
+		return err
+	}
 	var err error
 	err = DB.Create(redemption).Error
 	return err
@@ -416,9 +419,24 @@ func (redemption *Redemption) SelectUpdate() error {
 
 // Update Make sure your token's fields is completed, because this will update non-zero values
 func (redemption *Redemption) Update() error {
+	if err := redemption.ValidateQuotaReward(); err != nil {
+		return err
+	}
 	var err error
 	err = DB.Model(redemption).Select("name", "status", "quota", "reward_type", "plan_id", "redeemed_time", "expired_time", "max_uses").Updates(redemption).Error
 	return err
+}
+
+// Registration and subscription codes do not carry a wallet credit.
+func (redemption *Redemption) ValidateQuotaReward() error {
+	if NormalizeRedemptionCodeType(redemption.CodeType) != RedemptionCodeTypeRedemption ||
+		NormalizeRedemptionRewardType(redemption.RewardType) != RedemptionRewardTypeQuota {
+		return nil
+	}
+	if redemption.Quota <= 0 {
+		return errors.New("redemption quota must be positive")
+	}
+	return common.ValidateWalletQuota(redemption.Quota)
 }
 
 // UpdateRegistrationCode prevents an administrator's stale edit from

@@ -116,7 +116,7 @@ func TestAccountingDatabaseContracts(t *testing.T) {
 	})
 
 	t.Run("competing_topups_at_wallet_limit", func(t *testing.T) {
-		user := createAccountingFixtureUser(t, "acct-capacity", common.MaxQuota-151)
+		user := createAccountingFixtureUser(t, "acct-capacity", common.MaxWalletQuota-150)
 		orders := []TopUp{
 			{UserId: user.Id, TradeNo: "accounting-capacity-a", Amount: 1, Money: 1, PaymentProvider: PaymentProviderEpay, PaymentMethod: "alipay", Status: common.TopUpStatusPending},
 			{UserId: user.Id, TradeNo: "accounting-capacity-b", Amount: 1, Money: 1, PaymentProvider: PaymentProviderEpay, PaymentMethod: "alipay", Status: common.TopUpStatusPending},
@@ -142,7 +142,7 @@ func TestAccountingDatabaseContracts(t *testing.T) {
 		require.NoError(t, db.Where("user_id = ?", user.Id).Order("id").Find(&orders).Error)
 		require.Len(t, orders, 2)
 		assert.ElementsMatch(t, []string{common.TopUpStatusPending, common.TopUpStatusSuccess}, []string{orders[0].Status, orders[1].Status})
-		assert.Equal(t, common.MaxQuota-51, user.Quota)
+		assert.Equal(t, common.MaxWalletQuota-50, user.Quota)
 		require.NotNil(t, user.RequestsPerMinute)
 		assert.Equal(t, 37, *user.RequestsPerMinute)
 		assert.EqualValues(t, 7, user.AuthVersion)
