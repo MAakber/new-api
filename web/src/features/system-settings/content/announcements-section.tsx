@@ -16,7 +16,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { TFunction } from 'i18next'
 import { Plus, Save, Trash2 } from 'lucide-react'

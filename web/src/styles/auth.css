@@ -16,7 +16,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-
 /* Keep the moving square grid atmospheric, not luminous. */
 .auth-login-shell {
   --auth-grid-line: color-mix(in oklch, var(--foreground) 6%, transparent);
