@@ -40,6 +40,7 @@ export default defineConfig({
       'src/features/users/components/__tests__/permissions.test.tsx',
       'src/hooks/__tests__/sidebar-config.test.tsx',
       'src/lib/__tests__/http-cache.test.ts',
+      'src/lib/__tests__/session-hint.test.ts',
       'src/features/chat/lib/__tests__/*.test.{ts,tsx}',
       'src/features/pricing/lib/__tests__/time-rule-expr.test.ts',
       'src/features/system-settings/models/__tests__/time-rule-editor.test.tsx',

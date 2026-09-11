@@ -19,13 +19,26 @@ For commercial licensing, please contact support@quantumnous.com
 import { AxiosError, type AxiosAdapter } from 'axios'
 import { afterEach, expect, it, vi } from 'vitest'
 
-import { api } from '../api'
+import { api, getNotice } from '../api'
 
 const originalAdapter = api.defaults.adapter
 
 afterEach(() => {
   api.defaults.adapter = originalAdapter
   vi.restoreAllMocks()
+})
+
+it('public notices keep their existing ETag revalidation policy', async () => {
+  const adapter = vi.fn<AxiosAdapter>(async (config) => ({
+    data: { success: true, data: 'Public notice' },
+    status: 200,
+    statusText: 'OK',
+    headers: {},
+    config,
+  }))
+  api.defaults.adapter = adapter
+  await getNotice()
+  expect(adapter.mock.calls[0][0].headers.get('Cache-Control')).toBeNull()
 })
 
 it('a retry after 404 revalidates HTTP caches instead of accepting a stored error', async () => {
