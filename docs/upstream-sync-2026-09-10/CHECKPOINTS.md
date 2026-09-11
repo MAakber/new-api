@@ -1482,3 +1482,39 @@
 - Full fresh/old-baseline-upgrade/repeat startup and persistent encryption keys passed on all supported relational databases.
 - Evidence: evidence/B08-acceptance.json, evidence/B08-database-matrix.json.
 - Final gates remain pending; next B09.1 public caching.
+
+## 2026-09-11T00:55:25.577Z — B09.1-public-cache adaptation begun
+
+- Before HEAD: 97a5ba6f13442dcd522840350902ef8ec3bc08b3.
+- Upstream: 219c9e06341f1b100e2c572a5f97c45f151fd280.
+- Add public-content revalidation and anonymous boot session hints while preserving all existing session lifetimes, private response cache controls, downstream banners/theme settings and protected-route recovery for hintless sessions.
+- Evidence: evidence/runs/B09.1-public-cache-219c9e063/intent.json.
+
+## 2026-09-11T00:56:43.144Z — B09.1-public-cache adaptation recorded
+
+- Code: 44dd63fae4f638dab5bfb3bbb5fb97e2077c0823.
+- Clean source adaptation preserves session, banners and private-cache behavior. Public cache and boot-path tests are grouped with dependent 36dbbf0f ETag correction before B09 acceptance.
+- Evidence: evidence/runs/B09.1-public-cache-219c9e063/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T00:56:43.586Z — B09.1-stable-etags adaptation begun
+
+- Before HEAD: 44dd63fae4f638dab5bfb3bbb5fb97e2077c0823.
+- Upstream: 36dbbf0f77e710455e745048f4a32e8120ad3fd2.
+- Make public validators independent of JSON object ordering and encoding; retain existing HTTP envelopes and downstream private caching, and restore the deferred public-notice regression.
+- Evidence: evidence/runs/B09.1-stable-etags-36dbbf0f7/intent.json.
+
+## 2026-09-11T01:04:32.787Z — B09.1-stable-etags adaptation recorded
+
+- Code: 3ec9f5484f43d15786e1c4bc47b66cca542455aa.
+- Stable public ETags across JSON and gzip encodings; preserve response envelopes, private no-store caching and hintless legacy-session recovery. Added public-notice and cookie/auth boundary regressions; preliminary checks passed.
+- Evidence: evidence/runs/B09.1-stable-etags-36dbbf0f7/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T01:07:20.366Z — B09 public caching and session hints verified
+
+- Code: 3ec9f5484f43d15786e1c4bc47b66cca542455aa.
+- Go common/controller/service/middleware/router and 5 frontend cases, types and touched lint passed.
+- Restored deferred public-notice regression. Old hintless sessions recover; forged hints grant no authority; private requests retain no-cache/no-store.
+- Evidence: evidence/runs/B09-cache-go/result.json, evidence/runs/B09-cache-ui/result.json, evidence/runs/B09-cache-types/result.json, evidence/runs/B09-cache-lint/result.json.
+- Continue hourly health and shared status query.

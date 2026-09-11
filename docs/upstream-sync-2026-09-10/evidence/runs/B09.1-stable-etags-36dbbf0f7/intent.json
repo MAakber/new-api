@@ -1,0 +1,11 @@
+{
+  "upstream": "36dbbf0f77e710455e745048f4a32e8120ad3fd2",
+  "unit": "B09.1-stable-etags",
+  "before_head": "44dd63fae4f638dab5bfb3bbb5fb97e2077c0823",
+  "rationale": "Make public validators independent of JSON object ordering and encoding; retain existing HTTP envelopes and downstream private caching, and restore the deferred public-notice regression.",
+  "files": [
+    "common/etag.go",
+    "controller/misc.go",
+    "controller/revalidated_response.go"
+  ]
+}

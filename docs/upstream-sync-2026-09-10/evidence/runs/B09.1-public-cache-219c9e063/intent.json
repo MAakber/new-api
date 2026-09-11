@@ -1,0 +1,20 @@
+{
+  "upstream": "219c9e06341f1b100e2c572a5f97c45f151fd280",
+  "unit": "B09.1-public-cache",
+  "before_head": "97a5ba6f13442dcd522840350902ef8ec3bc08b3",
+  "rationale": "Add public-content revalidation and anonymous boot session hints while preserving all existing session lifetimes, private response cache controls, downstream banners/theme settings and protected-route recovery for hintless sessions.",
+  "files": [
+    "controller/misc.go",
+    "controller/revalidated_response.go",
+    "docs/authentication.md",
+    "service/auth_session.go",
+    "web/src/features/about/api.ts",
+    "web/src/features/home/api.ts",
+    "web/src/features/legal/api.ts",
+    "web/src/lib/api.ts",
+    "web/src/lib/auth-session.ts",
+    "web/src/lib/session-hint.ts",
+    "web/src/routes/(auth)/sign-in.tsx",
+    "web/src/routes/_authenticated/route.tsx"
+  ]
+}

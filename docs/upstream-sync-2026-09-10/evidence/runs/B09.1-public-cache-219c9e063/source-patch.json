@@ -1,0 +1,6 @@
+{
+  "upstream": "219c9e06341f1b100e2c572a5f97c45f151fd280",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'controller/misc.go' cleanly.\nFalling back to direct application...\nApplied patch to 'docs/authentication.md' cleanly.\nApplied patch to 'service/auth_session.go' cleanly.\nApplied patch to 'web/src/features/about/api.ts' cleanly.\nApplied patch to 'web/src/features/home/api.ts' cleanly.\nApplied patch to 'web/src/features/legal/api.ts' cleanly.\nApplied patch to 'web/src/lib/api.ts' cleanly.\nApplied patch to 'web/src/lib/auth-session.ts' cleanly.\nFalling back to direct application...\nApplied patch to 'web/src/routes/(auth)/sign-in.tsx' cleanly.\nApplied patch to 'web/src/routes/_authenticated/route.tsx' cleanly.\n"
+}

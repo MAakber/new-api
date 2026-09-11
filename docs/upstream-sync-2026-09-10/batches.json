@@ -1145,7 +1145,7 @@
       "5c7cca015525212a7ac2741da7f3b51fa2e30db0",
       "c79b74b68358180c68440057596bdc34a99cc649"
     ],
-    "status": "pending",
+    "status": "in_progress",
     "units": [
       {
         "id": "B09.1",
@@ -1165,11 +1165,53 @@
       {
         "id": "B09.1-public-cache-audit-test",
         "action": "Restore public notice ETag regression from d8cb177 after 219c9e063 adds public caching; saved in B08 security-center evidence/deferred-public-notice-test.txt.",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/runs/B09-cache-go/result.json",
+          "evidence/runs/B09-cache-ui/result.json",
+          "evidence/runs/B09-cache-types/result.json",
+          "evidence/runs/B09-cache-lint/result.json"
+        ]
+      },
+      {
+        "id": "B09.1-public-cache",
+        "action": "优化匿名冷启动与公开内容接口的重复回源请求 (#7166)",
+        "status": "verified",
+        "upstreamCommits": [
+          "219c9e06341f1b100e2c572a5f97c45f151fd280"
+        ],
+        "evidence": [
+          "evidence/runs/B09-cache-go/result.json",
+          "evidence/runs/B09-cache-ui/result.json",
+          "evidence/runs/B09-cache-types/result.json",
+          "evidence/runs/B09-cache-lint/result.json"
+        ]
+      },
+      {
+        "id": "B09.1-stable-etags",
+        "action": "fix: keep ETag valid across different JSON packages",
+        "status": "verified",
+        "upstreamCommits": [
+          "36dbbf0f77e710455e745048f4a32e8120ad3fd2"
+        ],
+        "evidence": [
+          "evidence/runs/B09-cache-go/result.json",
+          "evidence/runs/B09-cache-ui/result.json",
+          "evidence/runs/B09-cache-types/result.json",
+          "evidence/runs/B09-cache-lint/result.json"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
+    "codeCommits": [
+      "44dd63fae4f638dab5bfb3bbb5fb97e2077c0823",
+      "3ec9f5484f43d15786e1c4bc47b66cca542455aa"
+    ],
+    "evidence": [
+      "evidence/runs/B09-cache-go/result.json",
+      "evidence/runs/B09-cache-ui/result.json",
+      "evidence/runs/B09-cache-types/result.json",
+      "evidence/runs/B09-cache-lint/result.json"
+    ],
     "nextAction": "按已知缓存提交依赖适配 use-system-config 与绑定"
   },
   {

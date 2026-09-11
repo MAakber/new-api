@@ -1,0 +1,20 @@
+{
+  "upstream": "219c9e06341f1b100e2c572a5f97c45f151fd280",
+  "before_head": "97a5ba6f13442dcd522840350902ef8ec3bc08b3",
+  "after_head": "44dd63fae4f638dab5bfb3bbb5fb97e2077c0823",
+  "files": [
+    "controller/misc.go",
+    "controller/revalidated_response.go",
+    "docs/authentication.md",
+    "service/auth_session.go",
+    "web/src/features/about/api.ts",
+    "web/src/features/home/api.ts",
+    "web/src/features/legal/api.ts",
+    "web/src/lib/api.ts",
+    "web/src/lib/auth-session.ts",
+    "web/src/lib/session-hint.ts",
+    "web/src/routes/(auth)/sign-in.tsx",
+    "web/src/routes/_authenticated/route.tsx"
+  ],
+  "rationale": "Clean source adaptation preserves session, banners and private-cache behavior. Public cache and boot-path tests are grouped with dependent 36dbbf0f ETag correction before B09 acceptance."
+}

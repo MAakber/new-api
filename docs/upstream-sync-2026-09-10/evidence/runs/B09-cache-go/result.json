@@ -1,0 +1,30 @@
+{
+  "id": "B09-cache-go",
+  "command": [
+    "go",
+    "test",
+    "./common",
+    "./controller",
+    "./service",
+    "./middleware",
+    "./router",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "3ec9f5484f43d15786e1c4bc47b66cca542455aa",
+  "started_at": "2026-09-11T01:04:52.540Z",
+  "finished_at": "2026-09-11T01:06:38.879Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

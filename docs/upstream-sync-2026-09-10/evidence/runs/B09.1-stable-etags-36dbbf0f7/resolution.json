@@ -1,0 +1,17 @@
+{
+  "upstream": "36dbbf0f77e710455e745048f4a32e8120ad3fd2",
+  "before_head": "44dd63fae4f638dab5bfb3bbb5fb97e2077c0823",
+  "after_head": "3ec9f5484f43d15786e1c4bc47b66cca542455aa",
+  "files": [
+    "common/etag.go",
+    "controller/misc.go",
+    "controller/public_cache_test.go",
+    "controller/revalidated_response.go",
+    "service/auth_session_cookie_test.go",
+    "web/src/lib/__tests__/http-cache.test.ts",
+    "web/src/lib/__tests__/session-hint.test.ts",
+    "web/src/lib/session-hint.ts",
+    "web/vitest.sync.config.ts"
+  ],
+  "rationale": "Stable public ETags across JSON and gzip encodings; preserve response envelopes, private no-store caching and hintless legacy-session recovery. Added public-notice and cookie/auth boundary regressions; preliminary checks passed."
+}

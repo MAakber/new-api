@@ -1,0 +1,38 @@
+{
+  "id": "B09-cache-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/lib/session-hint.ts",
+    "src/lib/auth-session.ts",
+    "src/lib/api.ts",
+    "src/lib/__tests__/http-cache.test.ts",
+    "src/lib/__tests__/session-hint.test.ts",
+    "src/features/about/api.ts",
+    "src/features/home/api.ts",
+    "src/features/legal/api.ts",
+    "src/routes/(auth)/sign-in.tsx",
+    "src/routes/_authenticated/route.tsx",
+    "vitest.sync.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "3ec9f5484f43d15786e1c4bc47b66cca542455aa",
+  "started_at": "2026-09-11T01:04:58.548Z",
+  "finished_at": "2026-09-11T01:04:59.054Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

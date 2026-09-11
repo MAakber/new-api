@@ -1,0 +1,6 @@
+{
+  "upstream": "36dbbf0f77e710455e745048f4a32e8120ad3fd2",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Falling back to direct application...\nApplied patch to 'controller/misc.go' cleanly.\nApplied patch to 'controller/revalidated_response.go' cleanly.\n"
+}

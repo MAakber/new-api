@@ -4969,12 +4969,20 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Clean source adaptation preserves session, banners and private-cache behavior. Public cache and boot-path tests are grouped with dependent 36dbbf0f ETag correction before B09 acceptance.",
+    "resolution_commits": [
+      "44dd63fae4f638dab5bfb3bbb5fb97e2077c0823"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B09.1-public-cache-219c9e063/resolution.json",
+      "evidence/runs/B09-cache-go/result.json",
+      "evidence/runs/B09-cache-ui/result.json",
+      "evidence/runs/B09-cache-types/result.json",
+      "evidence/runs/B09-cache-lint/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5159,12 +5167,20 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Stable public ETags across JSON and gzip encodings; preserve response envelopes, private no-store caching and hintless legacy-session recovery. Added public-notice and cookie/auth boundary regressions; preliminary checks passed.",
+    "resolution_commits": [
+      "3ec9f5484f43d15786e1c4bc47b66cca542455aa"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B09.1-stable-etags-36dbbf0f7/resolution.json",
+      "evidence/runs/B09-cache-go/result.json",
+      "evidence/runs/B09-cache-ui/result.json",
+      "evidence/runs/B09-cache-types/result.json",
+      "evidence/runs/B09-cache-lint/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
