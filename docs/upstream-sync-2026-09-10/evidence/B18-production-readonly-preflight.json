@@ -1,0 +1,106 @@
+{
+  "status": "metadata_preflight_passed",
+  "deployment_ready": false,
+  "checked_at": "2026-09-11T15:17:11.3241356Z",
+  "context": "User is preparing deployment; authorized read-only ssh nep inspection under A14. No production deployment or mutation performed.",
+  "method": {
+    "transport": "SSH with short PowerShell stdin bootstrap",
+    "transaction": "READ ONLY",
+    "statement_timeout_seconds": 5,
+    "query_scope": [
+      "Database version",
+      "Four wallet column definitions",
+      "Options key uniqueness and invalid/duplicate counts",
+      "Telegram enabled aggregate",
+      "Information-schema row estimates"
+    ],
+    "script_sha256": "e405086ec25d3b18416b3ec4149fee7fbbbec0a373efdc47d94b92906fefcc7e",
+    "local_script": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B19-main-preintegration-20260911T144952Z/production-readonly-preflight.ps1"
+  },
+  "database_version": "11.4.4-MariaDB",
+  "database_listener_verified": true,
+  "observed_application": "new-api-v20260909-403f7d9d.exe",
+  "wallet_columns": [
+    {
+      "name": "aff_history",
+      "column_type": "bigint(20)",
+      "signed": true,
+      "nullable": true,
+      "default": "0"
+    },
+    {
+      "name": "aff_quota",
+      "column_type": "bigint(20)",
+      "signed": true,
+      "nullable": true,
+      "default": "0"
+    },
+    {
+      "name": "quota",
+      "column_type": "bigint(20)",
+      "signed": true,
+      "nullable": true,
+      "default": "0"
+    },
+    {
+      "name": "used_quota",
+      "column_type": "bigint(20)",
+      "signed": true,
+      "nullable": true,
+      "default": "0"
+    }
+  ],
+  "wallet_alter_required_for_observed_columns": false,
+  "options": {
+    "full_unique_key_indexes": 1,
+    "invalid_rows": 0,
+    "duplicate_key_groups": 0
+  },
+  "telegram_enabled": false,
+  "env_file_flags": {
+    "session_secret_present": true,
+    "separate_log_dsn_present": false,
+    "redis_configured": false,
+    "password_algorithm_configured": false
+  },
+  "environment_limit": "Read .env only. Service-manager or inherited process environment overrides were not inspected.",
+  "table_estimates": [
+    {
+      "table": "channels",
+      "engine": "InnoDB",
+      "rows": 99
+    },
+    {
+      "table": "options",
+      "engine": "InnoDB",
+      "rows": 105
+    },
+    {
+      "table": "tasks",
+      "engine": "InnoDB",
+      "rows": 0
+    },
+    {
+      "table": "users",
+      "engine": "InnoDB",
+      "rows": 34
+    }
+  ],
+  "estimate_limit": "Information-schema estimates, not exact production counts or accounting reconciliation.",
+  "deployment_notes": [
+    "No extra wallet ALTER is needed for these observed signed BIGINT columns. Other startup migrations still apply.",
+    "Current .env omits ACCOUNT_PASSWORD_HASH_ALGORITHM. Final code defaults to Argon2id; temporary explicit bcrypt preserves the existing write format and its 72-byte new-password limit.",
+    "Do not change SESSION_SECRET or use the wallet skip flag to bypass schema checks.",
+    "Database/application/configuration backups and candidate-copy migration/rollback checks remain required. No backup restore has been verified against production data."
+  ],
+  "unresolved_gates": [
+    "production_snapshot",
+    "provider_interop"
+  ],
+  "production_writes": false,
+  "production_restart": false,
+  "production_snapshot_exported": false,
+  "real_provider_calls": false,
+  "credentials_exported": false,
+  "invocation_note": "The initial long encoded command exceeded the Windows command-line limit before querying. The successful short-bootstrap/stdin invocation produced the metadata above."
+}

@@ -2637,3 +2637,7 @@ Original main remains 403f7d9dffc6a99728ede5d8f72770efc61f7b83 with no tracked c
 ## 2026-09-11T14:58:03.102Z — B19 local main received complete code; external acceptance remains open
 
 Original main fast-forwarded from 403f7d9dffc6a99728ede5d8f72770efc61f7b83 to f44698d0391830d6e6d53aa7e2468b9ad8939041; validated code is 33398851f677845f450b9cf6f7af546d5a218e0c, actual upstream merge d46dec4abad83d575d7a7d74558508c898b0193b. Both fixed ancestors remain, output is preserved, and main has no tracked modifications. All 153/120/26 local reviews and final code checks are recorded. Status is code_complete, current external unit B18.2. B18/B19 full verification is blocked only on sanitized production-copy rehearsal and authorized real-provider interoperability. Commit these final ledger records and fast-forward main once more for documentation only; no implementation suites need repeating.
+
+## 2026-09-11T15:23:22.670Z — Production read-only metadata preflight recorded
+
+User is preparing deployment. At 2026-09-11T15:17:11.3241356Z, authorized read-only inspection confirmed signed BIGINT for quota/used_quota/aff_quota/aff_history, existing full options unique key, zero invalid/duplicate option keys, and disabled Telegram login. The candidate needs no extra wallet ALTER for this observed schema. .env lacks a password algorithm setting; record default Argon2id and optional staged bcrypt boundary. No snapshot export, production write/restart or provider calls. Full B18 external gates remain open; do not rerun unchanged local suites.

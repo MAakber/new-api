@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T14:58:02.997Z",
+  "updatedAt": "2026-09-11T15:23:22.529Z",
   "status": "code_complete",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -21,12 +21,12 @@
   "current_batch": "B18",
   "current_unit": "B18.2",
   "active_operation": null,
-  "last_observed_head": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
+  "last_observed_head": "f67a3ad037fd8bbf5aede078fcee47506b9e1087",
   "last_verified_code_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
-  "last_checkpoint_commit": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
+  "last_checkpoint_commit": "f67a3ad037fd8bbf5aede078fcee47506b9e1087",
   "final_merge_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
   "final_downstream_commit": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
-  "next_action": "Local main already contains the full fixed-upstream merge and verified code. Complete sanitized production-copy migration/rollback and authorized real-provider interoperability; retain code_complete until both have actual evidence. No push/deployment or repeated unchanged suites.",
+  "next_action": "Before production deployment, obtain a restorable backup and rehearse candidate startup/migration/rollback on its isolated copy; wallet columns already satisfy BIGINT. Confirm password write-format rollout, then authorize minimal real-provider checks. Full plan remains code_complete; no deployment by the agent.",
   "blockers": [
     {
       "id": "production_snapshot",
@@ -36,7 +36,7 @@
         "B18"
       ],
       "status": "pending_environment",
-      "detail": "MariaDB 11.4.4 confirmed read-only; matching isolated engine and released fixtures passed. Sanitized production snapshot migration, pricing review and final rollback/transaction reconciliation remain pending. No production writes authorized."
+      "detail": "Production read-only metadata verified: MariaDB 11.4.4, all four wallet columns signed BIGINT, options full unique key and no invalid/duplicate keys. No extra wallet ALTER needed for the observed columns. Restorable production backup, sanitized-copy startup/rollback, actual pricing and transaction reconciliation remain pending."
     },
     {
       "id": "provider_interop",
@@ -221,7 +221,10 @@
   "production_inventory": {
     "evidence": "evidence/production-database-inventory.json",
     "database_engine": "MariaDB",
-    "database_version": "11.4.4-MariaDB"
+    "database_version": "11.4.4-MariaDB",
+    "readonly_preflight": "evidence/B18-production-readonly-preflight.json",
+    "wallet_columns_already_signed_bigint": true,
+    "options_unique_and_valid": true
   },
   "manual_adaptation": null,
   "candidate_code_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
