@@ -344,6 +344,7 @@ func Redeem(key string, userId int) (result *RedeemResult, err error) {
 	if result.RewardType == RedemptionRewardTypeSubscription {
 		RecordLog(userId, LogTypeTopup, fmt.Sprintf("通过兑换码激活订阅套餐 %s，兑换码ID %d，订阅ID %d", result.PlanTitle, redemption.Id, result.SubscriptionId))
 	} else {
+		syncCreditUserQuotaCache(userId, redemption.Quota, "redemption")
 		RecordLog(userId, LogTypeTopup, fmt.Sprintf("通过兑换码充值 %s，兑换码ID %d", logger.LogQuota(redemption.Quota), redemption.Id))
 	}
 	return result, nil
