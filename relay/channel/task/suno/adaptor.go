@@ -92,7 +92,7 @@ func (a *TaskAdaptor) DoRequest(c *gin.Context, info *relaycommon.RelayInfo, req
 	return channel.DoTaskApiRequest(a, c, info, requestBody)
 }
 
-func (a *TaskAdaptor) DoResponse(c *gin.Context, resp *http.Response, info *relaycommon.RelayInfo) (taskID string, taskData []byte, taskErr *dto.TaskError) {
+func (a *TaskAdaptor) ParseResponse(c *gin.Context, resp *http.Response, info *relaycommon.RelayInfo) (parsed *channel.TaskSubmitResponse, taskErr *dto.TaskError) {
 	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		taskErr = service.TaskErrorWrapper(err, "read_response_body_failed", http.StatusInternalServerError)
@@ -115,9 +115,8 @@ func (a *TaskAdaptor) DoResponse(c *gin.Context, resp *http.Response, info *rela
 		Message: sunoResponse.Message,
 		Data:    info.PublicTaskID,
 	}
-	c.JSON(http.StatusOK, publicResponse)
 
-	return sunoResponse.Data, nil, nil
+	return &channel.TaskSubmitResponse{UpstreamTaskID: sunoResponse.Data, TaskData: nil, ClientResponse: publicResponse}, nil
 }
 
 func (a *TaskAdaptor) GetModelList() []string {
@@ -147,6 +146,30 @@ func (a *TaskAdaptor) FetchTask(baseUrl, key string, body map[string]any, proxy 
 		return nil, fmt.Errorf("new proxy http client failed: %w", err)
 	}
 	return client.Do(req)
+}
+
+func (a *TaskAdaptor) FetchMode() string { return "batch" }
+
+func (a *TaskAdaptor) FetchBatchTasks(baseURL, key string, taskIDs []string, proxy string) (*http.Response, error) {
+	return a.FetchTask(baseURL, key, map[string]any{"ids": taskIDs}, proxy)
+}
+
+func (a *TaskAdaptor) ParseBatchResult(body []byte) (map[string]*service.BatchTaskResult, error) {
+	var response dto.TaskResponse[[]dto.SunoDataResponse]
+	if err := common.Unmarshal(body, &response); err != nil {
+		return nil, err
+	}
+	if !response.IsSuccess() {
+		return nil, fmt.Errorf("suno task query failed: %s", response.Message)
+	}
+	results := make(map[string]*service.BatchTaskResult, len(response.Data))
+	for _, item := range response.Data {
+		results[item.TaskID] = &service.BatchTaskResult{
+			TaskInfo: relaycommon.TaskInfo{Status: item.Status, Reason: item.FailReason},
+			Action:   item.Action, SubmitTime: item.SubmitTime, StartTime: item.StartTime, FinishTime: item.FinishTime, Data: item.Data,
+		}
+	}
+	return results, nil
 }
 
 func actionValidate(c *gin.Context, sunoRequest *dto.SunoSubmitReq, action string) (err error) {

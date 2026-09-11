@@ -6,6 +6,7 @@ import (
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
+	"github.com/QuantumNous/new-api/dto"
 	"github.com/QuantumNous/new-api/setting/model_setting"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -47,17 +48,17 @@ func TestModelModifierChannelSelection(t *testing.T) {
 					InitChannelCache()
 				}
 				for _, retry := range []int{0, 4} {
-					channel, err := GetRandomSatisfiedChannel("g", tc.request, retry, "/v1/responses")
+					channel, err := GetRandomSatisfiedChannel("g", tc.request, retry, []dto.ChannelFilter{{Kind: dto.FilterRequestPath, RequestPath: "/v1/responses"}})
 					require.NoError(t, err)
 					require.NotNil(t, channel)
 					assert.Equal(t, 1, channel.Id)
-					channel, err = GetRandomSatisfiedChannelExcluding("g", tc.request, retry, "/v1/responses", nil)
+					channel, err = GetRandomSatisfiedChannelExcluding("g", tc.request, retry, []dto.ChannelFilter{{Kind: dto.FilterRequestPath, RequestPath: "/v1/responses"}}, nil)
 					require.NoError(t, err)
 					require.NotNil(t, channel)
 					assert.Equal(t, 1, channel.Id)
 				}
 				assert.True(t, IsChannelEnabledForGroupModel("g", tc.request, 1))
-				channel, err := GetRandomSatisfiedChannelExcluding("g", tc.request, 0, "/v1/responses", map[int]struct{}{1: {}})
+				channel, err := GetRandomSatisfiedChannelExcluding("g", tc.request, 0, []dto.ChannelFilter{{Kind: dto.FilterRequestPath, RequestPath: "/v1/responses"}}, map[int]struct{}{1: {}})
 				require.NoError(t, err)
 				assert.Nil(t, channel, "excluding the exact candidate must not switch to a differently configured model")
 			})

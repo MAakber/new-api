@@ -7,8 +7,7 @@ import (
 	"sync"
 
 	"github.com/QuantumNous/new-api/common"
-	"github.com/QuantumNous/new-api/constant"
-	"github.com/QuantumNous/new-api/relaykit/dto"
+	"github.com/QuantumNous/new-api/dto"
 	"github.com/QuantumNous/new-api/setting/ratio_setting"
 
 	"github.com/samber/lo"
@@ -106,8 +105,8 @@ func getChannelQuery(group string, model string, retry int) (*gorm.DB, error) {
 	return channelQuery, nil
 }
 
-func GetChannel(group string, model string, retry int, requestPath string) (*Channel, error) {
-	abilities, err := matchingChannelAbilities(group, model, requestPath)
+func GetChannel(group string, model string, retry int, filters []dto.ChannelFilter) (*Channel, error) {
+	abilities, err := matchingChannelAbilities(group, model, filters)
 	if err != nil {
 		return nil, err
 	}
@@ -168,8 +167,8 @@ func GetChannel(group string, model string, retry int, requestPath string) (*Cha
 
 // GetChannelExcluding mirrors DB selection for request-local exclusions without
 // changing legacy GetChannel retry semantics used by non-request callers.
-func GetChannelExcluding(group, model string, retry int, requestPath string, excluded map[int]struct{}) (*Channel, error) {
-	abilities, err := matchingChannelAbilities(group, model, requestPath)
+func GetChannelExcluding(group, model string, retry int, filters []dto.ChannelFilter, excluded map[int]struct{}) (*Channel, error) {
+	abilities, err := matchingChannelAbilities(group, model, filters)
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +232,7 @@ func GetChannelExcluding(group, model string, retry int, requestPath string, exc
 	return nil, nil
 }
 
-func matchingChannelAbilities(group, model, requestPath string) ([]Ability, error) {
+func matchingChannelAbilities(group, model string, filters []dto.ChannelFilter) ([]Ability, error) {
 	groupColumn := commonGroupCol
 	if groupColumn == "" {
 		groupColumn = `"group"`
@@ -243,7 +242,7 @@ func matchingChannelAbilities(group, model, requestPath string) ([]Ability, erro
 		if err := DB.Where(groupColumn+" = ? and model = ? and enabled = ?", group, name, true).Order("priority DESC, weight DESC").Find(&abilities).Error; err != nil {
 			return nil, err
 		}
-		abilities = filterAbilitiesByRequestPathAndModel(abilities, requestPath, model)
+		abilities = filterAbilitiesByConstraints(abilities, model, filters)
 		if len(abilities) > 0 {
 			return abilities, nil
 		}
@@ -251,14 +250,12 @@ func matchingChannelAbilities(group, model, requestPath string) ([]Ability, erro
 	return nil, nil
 }
 
-// filterAbilitiesByRequestPathAndModel restricts candidates by request path and
-// model for the DB (non-memory-cache) selection path. Only Advanced Custom
-// (type 58) channels are path-checked: kept only when one of their routes matches
-// requestPath and model; all other channel types always pass. When requestPath is
-// empty, filtering is skipped.
-func filterAbilitiesByRequestPathAndModel(abilities []Ability, requestPath string, model string) []Ability {
-	if requestPath == "" || len(abilities) == 0 {
-		return abilities
+// filterAbilitiesByConstraints applies the same ChannelSatisfiesFilters
+// predicate used by the memory-cache path. A failed channel lookup fails
+// closed when a task-plugin identity is required and fails open otherwise.
+func filterAbilitiesByConstraints(abilities []Ability, modelName string, filters []dto.ChannelFilter) []Ability {
+	if len(abilities) == 0 {
+		return nil
 	}
 
 	channelIds := make([]int, 0, len(abilities))
@@ -273,29 +270,34 @@ func filterAbilitiesByRequestPathAndModel(abilities []Ability, requestPath strin
 
 	var channels []*Channel
 	if err := DB.Where("id IN ?", channelIds).Find(&channels).Error; err != nil {
-		// On error, fall back to unfiltered candidates to avoid blocking selection
+		if identityFilterRequiresKey(filters) {
+			return nil
+		}
 		return abilities
 	}
 
-	advancedConfigs := make(map[int]*dto.AdvancedCustomConfig)
+	channelsByID := make(map[int]*Channel, len(channels))
 	for _, channel := range channels {
-		if channel.Type == constant.ChannelTypeAdvancedCustom {
-			advancedConfigs[channel.Id] = channel.GetOtherSettings().AdvancedCustom
-		}
+		channelsByID[channel.Id] = channel
 	}
 
 	filtered := make([]Ability, 0, len(abilities))
 	for _, ability := range abilities {
-		config, isAdvancedCustom := advancedConfigs[ability.ChannelId]
-		if !isAdvancedCustom {
-			filtered = append(filtered, ability)
-			continue
-		}
-		if config != nil && config.SupportsPathForModel(requestPath, model) {
+		channel := channelsByID[ability.ChannelId]
+		if ok, _ := ChannelSatisfiesFilters(channel, modelName, filters); ok {
 			filtered = append(filtered, ability)
 		}
 	}
 	return filtered
+}
+
+func identityFilterRequiresKey(filters []dto.ChannelFilter) bool {
+	for _, filter := range filters {
+		if filter.Kind == dto.FilterTaskPluginIdentity && filter.TaskPluginKey != "" {
+			return true
+		}
+	}
+	return false
 }
 
 func (channel *Channel) AddAbilities(tx *gorm.DB) error {

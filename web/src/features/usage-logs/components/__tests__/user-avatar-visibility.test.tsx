@@ -57,10 +57,8 @@ const { createRoot } = await import('react-dom/client')
 const { createInstance } = await import('i18next')
 const { I18nextProvider, initReactI18next } = await import('react-i18next')
 const { useAuthStore } = await import('@/stores/auth-store')
-const {
-  UsageLogsProvider,
-  useUsageLogsContext,
-} = await import('../usage-logs-provider')
+const { UsageLogsProvider, useUsageLogsContext } =
+  await import('../usage-logs-provider')
 const { useCommonLogsColumns } = await import('../columns/common-logs-columns')
 const { useTaskLogsColumns } = await import('../columns/task-logs-columns')
 const { UsageLogsMobileList } = await import('../usage-logs-mobile-card')
@@ -124,6 +122,8 @@ const taskLog: TaskLog = {
   platform: 'suno',
   task_id: 'task-1',
   action: 'MUSIC',
+  group: 'default',
+  quota: 0,
   channel_id: 1,
   submit_time: 1,
   status: 'SUCCESS',
@@ -161,7 +161,7 @@ function CommonUserProbe({ log, label }: { log: UsageLog; label: string }) {
 }
 
 function TaskUserProbe({ log, label }: { log: TaskLog; label: string }) {
-  const columns = useTaskLogsColumns(true)
+  const columns = useTaskLogsColumns(true, false)
   const userColumn = columns.find((column) => column.id === 'user')
   if (!userColumn) throw new Error('Task user column is missing')
 
@@ -199,10 +199,7 @@ function makeMobileTable(log: UsageLog): Table<UsageLog> {
 function MobileUserProbe({ log, label }: { log: UsageLog; label: string }) {
   return (
     <div data-avatar-case={label}>
-      <UsageLogsMobileList
-        table={makeMobileTable(log)}
-        logCategory='common'
-      />
+      <UsageLogsMobileList table={makeMobileTable(log)} logCategory='common' />
     </div>
   )
 }
@@ -310,8 +307,9 @@ describe('usage log user avatar visibility', () => {
         '/api/user/103/avatar',
       ])
       assert.equal(
-        rendered.container.querySelector('[data-avatar-case="invalid"] [data-slot="avatar-fallback"]')
-          ?.textContent,
+        rendered.container.querySelector(
+          '[data-avatar-case="invalid"] [data-slot="avatar-fallback"]'
+        )?.textContent,
         'I'
       )
       for (const [label, fallback] of [

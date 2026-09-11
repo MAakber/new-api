@@ -22,7 +22,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { createInstance } from 'i18next'
 import { I18nextProvider } from 'react-i18next'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
@@ -268,5 +268,26 @@ test.each(['missing schema', 'unsupported expression', 'unknown tier'])(
       matched_tier: scenario === 'unknown tier' ? 'old' : 'music',
     })
     expect(preview.textContent).toBe('Dynamic Pricing · No matching results')
+  }
+)
+
+test.each([true, false])(
+  'plugin information in the opened dialog respects admin=%s',
+  async (isAdmin) => {
+    const preview = renderPreview(
+      { model_price: 0.25, admin_info: { task_plugin: plugin } },
+      isAdmin
+    )
+    expect(preview.textContent).toBe('Per-call · $0.25')
+    fireEvent.click(preview)
+    const dialog = within(await screen.findByRole('dialog'))
+    if (isAdmin) {
+      expect(dialog.getByText('Incho')).toBeVisible()
+      expect(dialog.getByText('1.0.1')).toBeVisible()
+      expect(dialog.getByText('Plugin maintainer')).toBeVisible()
+    } else {
+      expect(dialog.queryByText('Incho')).not.toBeInTheDocument()
+      expect(dialog.queryByText('Plugin maintainer')).not.toBeInTheDocument()
+    }
   }
 )

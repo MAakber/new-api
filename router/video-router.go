@@ -8,15 +8,21 @@ import (
 )
 
 func SetVideoRouter(router *gin.Engine) {
-	// Video proxy: accepts either session auth (dashboard) or token auth (API clients)
-	videoProxyRouter := router.Group("/v1")
-	videoProxyRouter.Use(middleware.RouteTag("relay"))
-	videoProxyRouter.Use(middleware.TokenOrUserAuth())
-	videoProxyRouter.Use(middleware.RelayAutoBanClientMetrics())
-	videoProxyRouter.Use(middleware.RelayUserAgentBlacklist())
-	{
-		videoProxyRouter.GET("/videos/:task_id/content", controller.VideoProxy)
-	}
+	videoSharedRouter := router.Group("/v1")
+	videoSharedRouter.Use(middleware.RouteTag("relay"))
+	videoSharedRouter.Use(middleware.TokenAuth(), middleware.RelayAutoBanClientMetrics(), middleware.RelayUserAgentBlacklist(), middleware.UserRequestRateLimit())
+	videoSharedRouter.Use(middleware.SystemPerformanceCheck())
+	videoSharedRouter.POST(
+		"/video/generations",
+		middleware.TaskPluginEndpointCandidates(),
+		middleware.Distribute(),
+		middleware.PinTaskPluginEndpoint(),
+		middleware.TaskPluginEndpointOnly(middleware.ModelRequestRateLimit()),
+		middleware.PrepareTaskPluginEndpoint(),
+		func(c *gin.Context) {
+			controller.RelayTaskPluginEndpoint(c, controller.RelayTask)
+		},
+	)
 
 	videoV1Router := router.Group("/v1")
 	videoV1Router.Use(middleware.RouteTag("relay"))
@@ -24,20 +30,11 @@ func SetVideoRouter(router *gin.Engine) {
 	{
 		submitRouter := videoV1Router.Group("")
 		submitRouter.Use(middleware.UserRequestRateLimit(), middleware.Distribute())
-		submitRouter.POST("/video/generations", controller.RelayTask)
 		submitRouter.POST("/videos/:video_id/remix", controller.RelayTask)
 
 		fetchRouter := videoV1Router.Group("")
 		fetchRouter.Use(middleware.Distribute())
 		fetchRouter.GET("/video/generations/:task_id", controller.RelayTaskFetch)
-		fetchRouter.GET("/videos/:task_id", controller.RelayTaskFetch)
-	}
-	// openai compatible API video routes
-	// docs: https://platform.openai.com/docs/api-reference/videos/create
-	{
-		submitRouter := videoV1Router.Group("")
-		submitRouter.Use(middleware.UserRequestRateLimit(), middleware.Distribute())
-		submitRouter.POST("/videos", controller.RelayTask)
 	}
 
 	klingV1Router := router.Group("/kling/v1")

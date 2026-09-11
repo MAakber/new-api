@@ -16,6 +16,9 @@
     "test:pricing": "vitest run --config vitest.pricing.config.ts",
     "lint": "oxlint -c .oxlintrc.json .",
     "lint:fix": "oxlint -c .oxlintrc.json . --fix",
+    "lint:plugins": "cd ../plugins && oxlint -c .oxlintrc.json .",
+    "format:plugins": "cd ../plugins && oxfmt -c .oxfmtrc.json --write .",
+    "format:plugins:check": "cd ../plugins && oxfmt -c .oxfmtrc.json --check .",
     "preview": "rsbuild preview",
     "format:check": "node scripts/format-with-protected-headers.mjs --check",
     "format": "node scripts/format-with-protected-headers.mjs --write",
@@ -26,6 +29,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
+    "@codemirror/lang-javascript": "^6.2.5",
     "@codemirror/lang-markdown": "^6.5.0",
     "@codemirror/language": "^6.12.4",
     "@codemirror/state": "^6.7.0",

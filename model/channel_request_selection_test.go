@@ -35,7 +35,7 @@ func TestGetChannelExcludingClampsRetryToLowestPriority(t *testing.T) {
 		{Group: "g", Model: "m", ChannelId: 2, Enabled: true, Priority: &low, Weight: 1},
 	}).Error)
 
-	channel, err := GetChannelExcluding("g", "m", 99, "", nil)
+	channel, err := GetChannelExcluding("g", "m", 99, nil, nil)
 	require.NoError(t, err)
 	require.NotNil(t, channel)
 	require.Equal(t, 2, channel.Id)
@@ -47,7 +47,7 @@ func TestGetChannelExcludingKeepsSinglePriorityOnRetry(t *testing.T) {
 	require.NoError(t, db.Create(&Channel{Id: 1, Status: common.ChannelStatusEnabled}).Error)
 	require.NoError(t, db.Create(&Ability{Group: "g", Model: "m", ChannelId: 1, Enabled: true, Priority: &priority, Weight: 1}).Error)
 
-	channel, err := GetChannelExcluding("g", "m", 3, "", nil)
+	channel, err := GetChannelExcluding("g", "m", 3, nil, nil)
 	require.NoError(t, err)
 	require.NotNil(t, channel)
 	require.Equal(t, 1, channel.Id)
@@ -68,7 +68,7 @@ func TestCachedChannelExcludingClampsRetryToLowestPriority(t *testing.T) {
 	common.MemoryCacheEnabled = true
 	InitChannelCache()
 
-	channel, err := GetRandomSatisfiedChannelExcluding("g", "m", 99, "", nil)
+	channel, err := GetRandomSatisfiedChannelExcluding("g", "m", 99, nil, nil)
 	require.NoError(t, err)
 	require.NotNil(t, channel)
 	require.Equal(t, 2, channel.Id)

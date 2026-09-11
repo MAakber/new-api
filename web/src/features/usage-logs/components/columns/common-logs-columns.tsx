@@ -695,6 +695,7 @@ export function useCommonLogsColumns(isAdmin: boolean): ColumnDef<UsageLog>[] {
         return (
           <StreamTpsCell
             isStream={log.is_stream}
+            isTask={other?.is_task === true}
             tokensPerSecond={tokensPerSecond}
             streamStatus={other?.stream_status}
           />

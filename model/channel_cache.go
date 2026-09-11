@@ -11,8 +11,9 @@ import (
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
+	"github.com/QuantumNous/new-api/dto"
 	"github.com/QuantumNous/new-api/logger"
-	"github.com/QuantumNous/new-api/relaykit/dto"
+	kitdto "github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/setting/ratio_setting"
 )
 
@@ -20,7 +21,7 @@ var group2model2channels map[string]map[string][]int // enabled channel
 var channelsIDM map[int]*Channel                     // all channels include disabled
 // channel2advancedCustomConfig caches parsed Advanced Custom (type 58) configs so
 // path-aware selection avoids re-parsing JSON per request. Refreshed on full sync.
-var channel2advancedCustomConfig map[int]*dto.AdvancedCustomConfig
+var channel2advancedCustomConfig map[int]*kitdto.AdvancedCustomConfig
 var channelSyncLock sync.RWMutex
 
 func InitChannelCache() {
@@ -29,7 +30,7 @@ func InitChannelCache() {
 		return
 	}
 	newChannelId2channel := make(map[int]*Channel)
-	newChannel2advancedCustomConfig := make(map[int]*dto.AdvancedCustomConfig)
+	newChannel2advancedCustomConfig := make(map[int]*kitdto.AdvancedCustomConfig)
 	var channels []*Channel
 	DB.Find(&channels)
 	for _, channel := range channels {
@@ -111,10 +112,15 @@ func SyncChannelCache(frequency int) {
 	}
 }
 
-func GetRandomSatisfiedChannel(group string, model string, retry int, requestPath string) (*Channel, error) {
+func GetRandomSatisfiedChannel(
+	group string,
+	model string,
+	retry int,
+	filters []dto.ChannelFilter,
+) (*Channel, error) {
 	// if memory cache is disabled, get channel directly from database
 	if !common.MemoryCacheEnabled {
-		return GetChannel(group, model, retry, requestPath)
+		return GetChannel(group, model, retry, filters)
 	}
 
 	channelSyncLock.RLock()
@@ -122,7 +128,7 @@ func GetRandomSatisfiedChannel(group string, model string, retry int, requestPat
 
 	var channels []int
 	for _, name := range ratio_setting.RoutingModelNames(model) {
-		channels = filterChannelsByRequestPathAndModel(group2model2channels[group][name], requestPath, model)
+		channels, _ = filterCandidateIDs(group2model2channels[group][name], model, filters)
 		if len(channels) > 0 {
 			break
 		}
@@ -153,7 +159,9 @@ func GetRandomSatisfiedChannel(group string, model string, retry int, requestPat
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(sortedUniquePriorities)))
 
-	if retry >= len(uniquePriorities) {
+	if retry < 0 {
+		retry = 0
+	} else if retry >= len(uniquePriorities) {
 		retry = len(uniquePriorities) - 1
 	}
 	targetPriority := int64(sortedUniquePriorities[retry])
@@ -210,15 +218,15 @@ func GetRandomSatisfiedChannel(group string, model string, retry int, requestPat
 // GetRandomSatisfiedChannelExcluding is request-scoped selection. It never
 // mutates shared cache slices and may fall through lower priorities when every
 // candidate at the starting priority is excluded.
-func GetRandomSatisfiedChannelExcluding(group, model string, retry int, requestPath string, excluded map[int]struct{}) (*Channel, error) {
+func GetRandomSatisfiedChannelExcluding(group, model string, retry int, filters []dto.ChannelFilter, excluded map[int]struct{}) (*Channel, error) {
 	if !common.MemoryCacheEnabled {
-		return GetChannelExcluding(group, model, retry, requestPath, excluded)
+		return GetChannelExcluding(group, model, retry, filters, excluded)
 	}
 	channelSyncLock.RLock()
 	defer channelSyncLock.RUnlock()
 	var channels []int
 	for _, name := range ratio_setting.RoutingModelNames(model) {
-		channels = filterChannelsByRequestPathAndModel(group2model2channels[group][name], requestPath, model)
+		channels, _ = filterCandidateIDs(group2model2channels[group][name], model, filters)
 		if len(channels) > 0 {
 			break
 		}
@@ -388,7 +396,7 @@ func CacheUpdateChannel(channel *Channel) {
 	}
 	channelsIDM[channel.Id] = channel
 	if channel2advancedCustomConfig == nil {
-		channel2advancedCustomConfig = make(map[int]*dto.AdvancedCustomConfig)
+		channel2advancedCustomConfig = make(map[int]*kitdto.AdvancedCustomConfig)
 	}
 	delete(channel2advancedCustomConfig, channel.Id)
 	if channel.Type == constant.ChannelTypeAdvancedCustom {

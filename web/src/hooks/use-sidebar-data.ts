@@ -28,6 +28,7 @@ import {
   LayoutDashboard,
   ListTodo,
   MessageSquare,
+  PlugZap,
   Radio,
   ServerCog,
   Settings,
@@ -168,6 +169,12 @@ export function useSidebarData(): SidebarData {
             title: t('System Info'),
             url: '/system-info',
             icon: ServerCog,
+            requiredRole: ROLE.SUPER_ADMIN,
+          },
+          {
+            title: t('Task Plugins'),
+            url: '/task-plugins',
+            icon: PlugZap,
             requiredRole: ROLE.SUPER_ADMIN,
           },
           {

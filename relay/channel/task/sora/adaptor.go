@@ -88,7 +88,7 @@ func validateRemixRequest(c *gin.Context) *dto.TaskError {
 }
 
 func (a *TaskAdaptor) ValidateRequestAndSetAction(c *gin.Context, info *relaycommon.RelayInfo) (taskErr *dto.TaskError) {
-	if info.Action == constant.TaskActionRemix {
+	if info.Action == constant.TaskActionLegacyRemix {
 		return validateRemixRequest(c)
 	}
 	return relaycommon.ValidateMultipartDirect(c, info)
@@ -97,7 +97,7 @@ func (a *TaskAdaptor) ValidateRequestAndSetAction(c *gin.Context, info *relaycom
 // EstimateBilling 根据用户请求的 seconds 和 size 计算 OtherRatios。
 func (a *TaskAdaptor) EstimateBilling(c *gin.Context, info *relaycommon.RelayInfo) map[string]float64 {
 	// remix 路径的 OtherRatios 已在 ResolveOriginTask 中设置
-	if info.Action == constant.TaskActionRemix {
+	if info.Action == constant.TaskActionLegacyRemix {
 		return nil
 	}
 
@@ -130,7 +130,7 @@ func (a *TaskAdaptor) EstimateBilling(c *gin.Context, info *relaycommon.RelayInf
 }
 
 func (a *TaskAdaptor) BuildRequestURL(info *relaycommon.RelayInfo) (string, error) {
-	if info.Action == constant.TaskActionRemix {
+	if info.Action == constant.TaskActionLegacyRemix {
 		return fmt.Sprintf("%s/v1/videos/%s/remix", a.baseURL, info.OriginTaskID), nil
 	}
 	return fmt.Sprintf("%s/v1/videos", a.baseURL), nil
@@ -225,7 +225,7 @@ func (a *TaskAdaptor) DoRequest(c *gin.Context, info *relaycommon.RelayInfo, req
 }
 
 // DoResponse handles upstream response, returns taskID etc.
-func (a *TaskAdaptor) DoResponse(c *gin.Context, resp *http.Response, info *relaycommon.RelayInfo) (taskID string, taskData []byte, taskErr *dto.TaskError) {
+func (a *TaskAdaptor) ParseResponse(c *gin.Context, resp *http.Response, info *relaycommon.RelayInfo) (parsed *channel.TaskSubmitResponse, taskErr *dto.TaskError) {
 	responseBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		taskErr = service.TaskErrorWrapper(err, "read_response_body_failed", http.StatusInternalServerError)
@@ -252,8 +252,7 @@ func (a *TaskAdaptor) DoResponse(c *gin.Context, resp *http.Response, info *rela
 	// 使用公开 task_xxxx ID 返回给客户端
 	dResp.ID = info.PublicTaskID
 	dResp.TaskID = info.PublicTaskID
-	c.JSON(http.StatusOK, dResp)
-	return upstreamID, responseBody, nil
+	return &channel.TaskSubmitResponse{UpstreamTaskID: upstreamID, TaskData: responseBody, ClientResponse: dResp}, nil
 }
 
 // FetchTask fetch task status

@@ -463,7 +463,7 @@ func updateChannelBalance(channel *model.Channel) (channelBalanceResult, error) 
 }
 
 func updateStandardChannelBalance(channel *model.Channel) (float64, error) {
-	baseURL := constant.ChannelBaseURLs[channel.Type]
+	baseURL := constant.GetChannelBaseURL(channel.Type)
 	if channel.GetBaseURL() == "" {
 		channel.BaseURL = &baseURL
 	}
@@ -562,6 +562,10 @@ func UpdateChannelBalance(c *gin.Context) {
 			"balance_status":       view.LastBalanceStatus,
 			"balance_updated_time": view.BalanceUpdatedTime,
 		})
+		return
+	}
+	if channel.Type == constant.ChannelTypeTaskPlugin {
+		c.JSON(http.StatusOK, gin.H{"success": false, "message": "Task Plugin channels do not support balance queries"})
 		return
 	}
 	if channel.ChannelInfo.IsMultiKey {

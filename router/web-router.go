@@ -19,10 +19,11 @@ type WebAssets struct {
 	IndexPage []byte
 }
 
-func SetWebRouter(router *gin.Engine, assets WebAssets) {
+func SetWebRouter(router *gin.Engine, assets WebAssets, pluginDispatcher gin.HandlerFunc) {
 	frontendFS := common.EmbedFolder(assets.BuildFS, "web/dist")
 
 	router.NoRoute(
+		pluginDispatcher,
 		middleware.RouteTag("web"),
 		gzip.Gzip(gzip.DefaultCompression),
 		middleware.AccessTokenAudit(),
