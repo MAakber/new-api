@@ -2783,7 +2783,7 @@
     ],
     "dependencyStatus": "A33: B19.1/B19.2 may follow verified B18.1 for reversible local main integration. Whole B19 still depends on every B18 gate; no push/deployment.",
     "upstreamCommits": [],
-    "status": "in_progress",
+    "status": "blocked",
     "units": [
       {
         "id": "B19.1",
@@ -2797,23 +2797,37 @@
       {
         "id": "B19.2",
         "action": "向下游 main 保留历史合并；PR 使用模板且不伪填人工确认",
-        "status": "applying",
+        "status": "verified",
         "evidence": [
-          "evidence/B19-main-intent.json"
+          "evidence/B19-local-main-integration.json",
+          "evidence/runs/B19-local-main-ff/result.json"
         ]
       },
       {
         "id": "B19.3",
         "action": "记录本地 SHA、证据与迁移/回退边界；外部门槛通过后才能确认完整交付",
-        "status": "pending"
+        "status": "blocked",
+        "local_delivery": "verified",
+        "blockers": [
+          "production_snapshot",
+          "provider_interop"
+        ],
+        "evidence": [
+          "HANDOFF.md",
+          "evidence/B19-local-main-integration.json"
+        ],
+        "detail": "Local main, code SHA, evidence and rollback boundaries recorded. Complete delivery still requires external B18 acceptance."
       }
     ],
-    "codeCommits": [],
+    "codeCommits": [
+      "f44698d0391830d6e6d53aa7e2468b9ad8939041"
+    ],
     "evidence": [
       "evidence/B19-main-backup.json",
-      "evidence/B19-main-intent.json"
+      "evidence/B19-local-main-integration.json",
+      "HANDOFF.md"
     ],
-    "nextAction": "Commit local acceptance records, then fast-forward unchanged original local main to the integration result. No push or deployment.",
+    "nextAction": "Local main integration is complete. Final delivery confirmation waits for B18 production-snapshot and real-provider acceptance; no repeated merge needed.",
     "unitPrerequisites": {
       "B19.1": [
         "B18.1"

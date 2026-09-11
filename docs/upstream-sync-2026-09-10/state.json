@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T14:51:37.357Z",
-  "status": "in_progress",
+  "updatedAt": "2026-09-11T14:58:02.997Z",
+  "status": "code_complete",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
     "downstream": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B19",
-  "current_unit": "B19.2",
+  "current_batch": "B18",
+  "current_unit": "B18.2",
   "active_operation": null,
-  "last_observed_head": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "last_observed_head": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
   "last_verified_code_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
-  "last_checkpoint_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "last_checkpoint_commit": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
   "final_merge_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
-  "final_downstream_commit": null,
-  "next_action": "Commit local acceptance records, then fast-forward unchanged original local main to the integration result. No push or deployment.",
+  "final_downstream_commit": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
+  "next_action": "Local main already contains the full fixed-upstream merge and verified code. Complete sanitized production-copy migration/rollback and authorized real-provider interoperability; retain code_complete until both have actual evidence. No push/deployment or repeated unchanged suites.",
   "blockers": [
     {
       "id": "production_snapshot",
@@ -207,9 +207,12 @@
     },
     {
       "id": "downstream_main_merge",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B19-local-main-integration.json"
+      ],
+      "scope": "Local main fast-forward only; includes real two-parent upstream merge and baseline downstream ancestry."
     }
   ],
   "evidencePolicy": "Record command, working directory, tested commit, environment, exit code, summary and log. Skipped or interrupted checks are not passed.",
@@ -228,10 +231,12 @@
     "evidence": "evidence/B18-local-acceptance.json"
   },
   "local_main_operation": {
-    "status": "prepared",
+    "status": "completed",
     "main_before": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
     "target_branch": "codex/upstream-sync-2026-09-10",
     "code_candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
-    "backup": "evidence/B19-main-backup.json"
+    "backup": "evidence/B19-main-backup.json",
+    "main_after": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
+    "evidence": "evidence/B19-local-main-integration.json"
   }
 }

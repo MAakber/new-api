@@ -1,0 +1,16 @@
+{
+  "status": "verified",
+  "scope": "Reversible local main integration only; external final gates remain open",
+  "recorded_at": "2026-09-11T14:54:47.864Z",
+  "main_before": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "main_after": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
+  "validated_code": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "actual_upstream_merge": "d46dec4abad83d575d7a7d74558508c898b0193b",
+  "method": "fast-forward",
+  "evidence": "evidence/runs/B19-local-main-ff/result.json",
+  "backup": "evidence/B19-main-backup.json",
+  "output_preserved": true,
+  "tracked_main_changes": 0,
+  "push_or_publish": false,
+  "production_operations": false
+}

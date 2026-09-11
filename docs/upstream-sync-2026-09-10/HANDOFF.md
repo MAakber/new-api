@@ -1,12 +1,13 @@
 # 本地合并交付与剩余验收
 
-固定上游的 153 个提交已全部整合，含钱包和任务插件；120 个下游提交、26 类保护功能已完成最终候选的本地代码及契约复核。实际 main 接入 SHA 以 `state.json.final_downstream_commit` 和 B19 证据为准。完整计划仍须等待两项外部验收，不能据本页部署生产。
+固定上游的 153 个提交已全部整合，含钱包和任务插件；120 个下游提交、26 类保护功能已完成最终候选的本地代码及契约复核。本地 main 已快进接收 `f44698d0391830d6e6d53aa7e2468b9ad8939041`，之后可追加仅含台账的提交。总状态为 `code_complete`；完整计划仍须等待两项外部验收，不能据本页部署生产。
 
 | 内容 | 结果 |
 | --- | --- |
 | 固定上游 | `bdef117505247769268b209665fb3ad7554c3da7` |
 | 原始下游 | `403f7d9dffc6a99728ede5d8f72770efc61f7b83` |
 | 真实双亲合并 | `d46dec4abad83d575d7a7d74558508c898b0193b` |
+| 本地 main 接入检查点 | `f44698d0391830d6e6d53aa7e2468b9ad8939041` |
 | 最终本地验证代码 | `33398851f677845f450b9cf6f7af546d5a218e0c` |
 | 候选与合并提交的业务代码差异 | 无；只修正两个 controller 测试夹具 |
 | 集成分支 | `codex/upstream-sync-2026-09-10` |
@@ -46,3 +47,5 @@
 ## 恢复
 
 从 [RESUME.md](RESUME.md) 开始，运行 `node docs/upstream-sync-2026-09-10/verify-plan.mjs` 及 `--validate`。先核对 `state.json.blockers`、最新 HEAD 和未提交文件，再补外部验收；不要重做已完成的合并和未变化的测试。原 main 的计划副本在 B19 前另行校验备份，`output/` 保留原位；不得用 reset/clean 清理用户工作区。
+
+原 main 的 25 个计划文件已逐文件 SHA256 核对，复制并移存在 `D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B19-main-preintegration-20260911T144952Z/`；清单见 [B19-original-plan-manifest.json](evidence/B19-original-plan-manifest.json)。`output/` 保持原位；主工作区没有未提交的跟踪文件。本轮只接入源码，原工作区的前端依赖未重复安装；需要在原工作区开发时，按新锁文件执行 Bun 的 frozen-lockfile 安装。
