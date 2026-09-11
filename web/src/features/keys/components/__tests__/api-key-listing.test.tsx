@@ -516,7 +516,7 @@ it('keeps mobile quota readable and opens complete model and IP restrictions by 
     'font-normal'
   )
   expect(within(quota).getByText('4,490.16')).toHaveClass(
-    'font-mono',
+    'tabular-nums',
     'text-sm',
     'font-normal',
     'text-right'

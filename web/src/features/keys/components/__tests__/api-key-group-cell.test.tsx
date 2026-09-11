@@ -128,7 +128,7 @@ describe('API key group table cell', () => {
         color,
         border,
         'rounded-full',
-        'font-mono',
+        'tabular-nums',
         'h-5',
         'min-w-12'
       )
