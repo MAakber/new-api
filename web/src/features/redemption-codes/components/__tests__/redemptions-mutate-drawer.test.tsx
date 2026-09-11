@@ -99,6 +99,12 @@ async function ready() {
   )
 }
 
+function submitRedemptionForm() {
+  const form = screen.getByRole('textbox', { name: 'Name' }).closest('form')
+  if (!form) throw new Error('Expected redemption form')
+  fireEvent.submit(form)
+}
+
 test('shows the CNY amount without floating point noise', async () => {
   useSystemConfigStore.getState().setConfig({
     currency: {
@@ -173,9 +179,7 @@ test.each([
       target: { value: 'renamed' },
     })
     // Happy DOM's exact-remainder step check incorrectly rejects decimals.
-    fireEvent.submit(
-      screen.getByRole('textbox', { name: 'Name' }).closest('form')!
-    )
+    submitRedemptionForm()
     await waitFor(() =>
       expect(api.put).toHaveBeenCalledWith(
         '/api/redemption/',
@@ -199,9 +203,7 @@ test('recalculates quota only when the amount is edited', async () => {
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Quota (USD)' }), {
     target: { value: '2' },
   })
-  fireEvent.submit(
-    screen.getByRole('textbox', { name: 'Name' }).closest('form')!
-  )
+  submitRedemptionForm()
   await waitFor(() =>
     expect(api.put).toHaveBeenCalledWith(
       '/api/redemption/',
@@ -241,9 +243,7 @@ test('ignores the older request when switching records', async () => {
     await first
   })
   expect(screen.getByRole('textbox', { name: 'Name' })).toHaveValue('code-2')
-  fireEvent.submit(
-    screen.getByRole('textbox', { name: 'Name' }).closest('form')!
-  )
+  submitRedemptionForm()
   await waitFor(() =>
     expect(api.put).toHaveBeenCalledWith(
       '/api/redemption/',

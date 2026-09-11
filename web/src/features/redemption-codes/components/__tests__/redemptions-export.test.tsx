@@ -222,7 +222,9 @@ test('successful batch creation opens export with returned codes and the configu
   })
   // Happy DOM checks decimal input steps with an exact remainder; submit the
   // form event so React Hook Form validates the real decimal amount instead.
-  fireEvent.submit(within(createDialog).getByLabelText('Name').closest('form')!)
+  const form = within(createDialog).getByLabelText('Name').closest('form')
+  if (!form) throw new Error('Expected redemption form')
+  fireEvent.submit(form)
   const exportDialog = await screen.findByRole('dialog', {
     name: 'Redemption codes created',
   })

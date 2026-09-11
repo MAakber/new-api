@@ -42,6 +42,7 @@ export default defineConfig({
       'src/features/users/components/__tests__/quota-display.test.tsx',
       'src/components/data-table/core/__tests__/pagination.test.tsx',
       'src/components/ui/__tests__/combobox.test.tsx',
+      'src/components/ui/__tests__/portal-container.test.tsx',
     ],
   },
 })
