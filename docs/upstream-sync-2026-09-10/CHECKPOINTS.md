@@ -1371,3 +1371,25 @@
 - The first PostgreSQL invocation used an unsupported DSN format and failed the loopback guard before connecting; B08-proofs-postgres-url is the passing replacement.
 - Evidence: evidence/runs/B08-proofs-go/result.json, evidence/runs/B08-proofs-ui/result.json, evidence/runs/B08-proofs-types/result.json, evidence/runs/B08-proofs-lint/result.json, evidence/runs/B08-proofs-i18n/result.json, evidence/runs/B08-proofs-mariadb/result.json, evidence/runs/B08-proofs-mysql57/result.json, evidence/runs/B08-proofs-postgres-url/result.json.
 - B08 whole-stage verification, native ClickHouse and startup DDL checks remain pending.
+
+## 2026-09-10T23:53:20.637Z — B08.2-telegram-oauth adaptation begun
+
+- Before HEAD: d658b73113417668d74ecc4e29b5b8896a5c1743.
+- Upstream: 3e84ec0ab8239cf2277f8a10d45566630a9c10fa.
+- Integrate PKCE and verified ID-token Telegram OAuth, keep existing Telegram identities and downstream registration/avatar constraints, retain restricted first-enrollment WeChat policy and adapt the Telegram network client to the configured login proxy. Record new Telegram client configuration as a production migration prerequisite; no production settings are changed.
+- Evidence: evidence/runs/B08.2-telegram-oauth-3e84ec0ab/intent.json.
+
+## 2026-09-10T23:58:19.056Z — B08.2-telegram-oauth adaptation recorded
+
+- Code: c3b677317535754423a9ae05803e461490c8f322.
+- Integrated PKCE, ID-token verification, provider name conflicts and strict session-bound Telegram binding. Existing identity IDs are retained and unknown Telegram accounts do not create new users. Kept downstream registration-code/avatar contracts, proxy transport for token and cached JWKS calls, named multiple Passkeys and logout coordination. Administrator Telegram OAuth configuration is a deployment prerequisite when Telegram login is enabled.
+- Evidence: evidence/runs/B08.2-telegram-oauth-3e84ec0ab/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T00:10:06.783Z — B08 Telegram OAuth checked; ClickHouse startup regression found
+
+- Code: c3b677317535754423a9ae05803e461490c8f322.
+- Telegram Go, 76 UI tests, types, touched-file lint and i18n passed; real MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24 security cases passed.
+- Earlier database failures came from WSL shutdown; keepalive required for local container fixtures. Failed runs remain retained.
+- Evidence: evidence/runs/B08-telegram-go/result.json, evidence/runs/B08-telegram-ui/result.json, evidence/runs/B08-telegram-types/result.json, evidence/runs/B08-telegram-lint/result.json, evidence/runs/B08-telegram-i18n/result.json, evidence/runs/B08-telegram-mariadb-live/result.json, evidence/runs/B08-telegram-mysql57-live/result.json, evidence/runs/B08-telegram-postgres-live/result.json.
+- B08-clickhouse-audit fails fresh and upgrade startup on ClickHouse 24.8.14.39: experimental JSON column is disabled by default. Fix this supported-version regression before continuing B08. Full stage acceptance pending.

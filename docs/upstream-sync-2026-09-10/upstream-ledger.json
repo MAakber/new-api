@@ -6115,12 +6115,25 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated PKCE, ID-token verification, provider name conflicts and strict session-bound Telegram binding. Existing identity IDs are retained and unknown Telegram accounts do not create new users. Kept downstream registration-code/avatar contracts, proxy transport for token and cached JWKS calls, named multiple Passkeys and logout coordination. Administrator Telegram OAuth configuration is a deployment prerequisite when Telegram login is enabled.",
+    "resolution_commits": [
+      "c3b677317535754423a9ae05803e461490c8f322"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-telegram-oauth-3e84ec0ab/resolution.json",
+      "evidence/runs/B08-telegram-go/result.json",
+      "evidence/runs/B08-telegram-ui/result.json",
+      "evidence/runs/B08-telegram-types/result.json",
+      "evidence/runs/B08-telegram-lint/result.json",
+      "evidence/runs/B08-telegram-i18n/result.json",
+      "evidence/runs/B08-telegram-mariadb-live/result.json",
+      "evidence/runs/B08-telegram-mysql57-live/result.json",
+      "evidence/runs/B08-telegram-postgres-live/result.json",
+      "evidence/B08-telegram-conflicts.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

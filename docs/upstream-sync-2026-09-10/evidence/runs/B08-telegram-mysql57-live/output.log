@@ -1,0 +1,183 @@
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/2fa.setup
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085064038190400 (mysql)
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085064048140400 (mysql)
+    security_enrollment_test.go:1263: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/passkey.register
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085069592034000 (mysql)
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085069597041400 (mysql)
+    security_enrollment_test.go:1263: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/2fa.setup
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085074807211700 (mysql)
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085074820193100 (mysql)
+    security_enrollment_test.go:1274: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/passkey.register
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085081055373300 (mysql)
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085081061418000 (mysql)
+    security_enrollment_test.go:1274: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor (20.84s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/2fa.setup (5.56s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/passkey.register (5.22s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/2fa.setup (6.25s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/passkey.register (3.82s)
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/password
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085084870669200 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085084877623400 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/passkey
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085086933836200 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085086939791600 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/locked_2fa
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085088983829100 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085088989472600 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/telegram
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085090959877600 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085090965146300 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/github
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085092930145000 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085092935759600 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/disabled_custom_binding
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085094925686100 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085094931719700 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/no_binding
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085097044380300 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085097049956400 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/binding_storage_failure
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085099034998800 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085099041308800 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/revoked_session
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085101027640500 (mysql)
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085101033407500 (mysql)
+    security_enrollment_test.go:1304: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow (18.50s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/password (2.06s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/passkey (2.05s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/locked_2fa (1.98s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/telegram (1.97s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/github (2.00s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/disabled_custom_binding (2.12s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/no_binding (1.99s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/binding_storage_failure (1.99s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/revoked_session (2.34s)
+=== RUN   TestSecurityEnrollmentMissingTargetsAreBusinessErrors
+    security_enrollment_test.go:1351: isolated database: newapi_audit_1789085103367371800 (mysql)
+    security_enrollment_test.go:1351: isolated database: newapi_audit_1789085103373554600 (mysql)
+    security_enrollment_test.go:1351: database: mysql 5.7.44
+[ERR] 2026/09/11 - 08:05:04 | SYSTEM | auth session internal error (POST /api/channel/999/key): private database failure 
+[ERR] 2026/09/11 - 08:05:04 | SYSTEM | auth session internal error (POST /api/user/999/2fa): private database failure 
+--- PASS: TestSecurityEnrollmentMissingTargetsAreBusinessErrors (1.70s)
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/proof
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085105069244500 (mysql)
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085105075035700 (mysql)
+    security_enrollment_test.go:1401: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/setup
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085108153311400 (mysql)
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085108159689800 (mysql)
+    security_enrollment_test.go:1401: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/proof
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085112887070600 (mysql)
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085112892956900 (mysql)
+    security_enrollment_test.go:1401: database: mysql 5.7.44
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/setup
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085115633721500 (mysql)
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085115640161800 (mysql)
+    security_enrollment_test.go:1401: database: mysql 5.7.44
+--- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy (15.02s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/proof (3.08s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/setup (4.73s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/proof (2.75s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/setup (4.45s)
+=== RUN   TestTelegramOAuthPreservesExistingAccountAndBinding
+    telegram_test.go:200: isolated database: newapi_audit_1789085120087528300 (mysql)
+    telegram_test.go:200: isolated database: newapi_audit_1789085120093368300 (mysql)
+    telegram_test.go:200: database: mysql 5.7.44
+--- PASS: TestTelegramOAuthPreservesExistingAccountAndBinding (3.33s)
+=== RUN   TestTelegramOAuthRejectsInvalidTokens
+    telegram_test.go:251: isolated database: newapi_audit_1789085123420516800 (mysql)
+    telegram_test.go:251: isolated database: newapi_audit_1789085123426682300 (mysql)
+    telegram_test.go:251: database: mysql 5.7.44
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/issuer
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/audience
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/expired
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/missing_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/negative_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/fractional_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/overflow_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/missing_subject
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/signature
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/PKCE
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/token_unavailable
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/jwks_unavailable
+--- PASS: TestTelegramOAuthRejectsInvalidTokens (2.92s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/issuer (0.05s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/audience (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/expired (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/missing_id (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/negative_id (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/fractional_id (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/overflow_id (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/missing_subject (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/signature (0.13s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/PKCE (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/token_unavailable (0.10s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/jwks_unavailable (0.10s)
+=== RUN   TestTelegramOAuthBindingIsAtomicAndSessionBound
+    telegram_test.go:308: isolated database: newapi_audit_1789085126335617000 (mysql)
+    telegram_test.go:308: isolated database: newapi_audit_1789085126341941100 (mysql)
+    telegram_test.go:308: database: mysql 5.7.44
+[ERR] 2026/09/11 - 08:05:29 | SYSTEM | auth session internal error (GET /api/oauth/telegram): private Telegram bind storage failure 
+--- PASS: TestTelegramOAuthBindingIsAtomicAndSessionBound (3.53s)
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/revoked
+    telegram_test.go:347: isolated database: newapi_audit_1789085129866768500 (mysql)
+    telegram_test.go:347: isolated database: newapi_audit_1789085129872052800 (mysql)
+    telegram_test.go:347: database: mysql 5.7.44
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/disabled
+    telegram_test.go:347: isolated database: newapi_audit_1789085132048535300 (mysql)
+    telegram_test.go:347: isolated database: newapi_audit_1789085132053759400 (mysql)
+    telegram_test.go:347: database: mysql 5.7.44
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/deleted
+    telegram_test.go:347: isolated database: newapi_audit_1789085134068592200 (mysql)
+    telegram_test.go:347: isolated database: newapi_audit_1789085134074437700 (mysql)
+    telegram_test.go:347: database: mysql 5.7.44
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/already_bound
+    telegram_test.go:347: isolated database: newapi_audit_1789085136158576900 (mysql)
+    telegram_test.go:347: isolated database: newapi_audit_1789085136163866600 (mysql)
+    telegram_test.go:347: database: mysql 5.7.44
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/owned_by_another_user
+    telegram_test.go:347: isolated database: newapi_audit_1789085138684264700 (mysql)
+    telegram_test.go:347: isolated database: newapi_audit_1789085138690228200 (mysql)
+    telegram_test.go:347: database: mysql 5.7.44
+--- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership (11.44s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/revoked (2.18s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/disabled (2.02s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/deleted (2.09s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/already_bound (2.53s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/owned_by_another_user (2.62s)
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints
+    telegram_test.go:375: isolated database: newapi_audit_1789085141302202900 (mysql)
+    telegram_test.go:375: isolated database: newapi_audit_1789085141308253500 (mysql)
+    telegram_test.go:375: database: mysql 5.7.44
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints/missing_secret
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints/disabled
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints/conflict
+--- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints (5.14s)
+    --- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints/missing_secret (0.86s)
+    --- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints/disabled (0.91s)
+    --- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints/conflict (0.92s)
+=== RUN   TestTelegramOAuthConcurrentBindingHasSingleOwner
+    telegram_test.go:447: isolated database: newapi_audit_1789085146443719800 (mysql)
+    telegram_test.go:447: isolated database: newapi_audit_1789085146450121500 (mysql)
+    telegram_test.go:447: database: mysql 5.7.44
+--- PASS: TestTelegramOAuthConcurrentBindingHasSingleOwner (2.92s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	86.173s

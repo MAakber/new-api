@@ -1,0 +1,351 @@
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/2fa.setup
+
+2026/09/11 08:04:24 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[546.107ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085064038190400[0m
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085064038190400 (postgres)
+
+2026/09/11 08:04:25 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[467.997ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085064654812700[0m
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085064654812700 (postgres)
+    security_enrollment_test.go:1263: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/passkey.register
+
+2026/09/11 08:04:26 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[477.602ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085065722420100[0m
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085065722420100 (postgres)
+
+2026/09/11 08:04:26 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[379.189ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085066208088900[0m
+    security_enrollment_test.go:1263: isolated database: newapi_audit_1789085066208088900 (postgres)
+    security_enrollment_test.go:1263: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/2fa.setup
+
+2026/09/11 08:04:27 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[373.609ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085066994223300[0m
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085066994223300 (postgres)
+
+2026/09/11 08:04:27 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[376.426ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085067376638700[0m
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085067376638700 (postgres)
+    security_enrollment_test.go:1274: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/passkey.register
+
+2026/09/11 08:04:28 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[381.527ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085068240479400[0m
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085068240479400 (postgres)
+
+2026/09/11 08:04:29 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[381.684ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085068631718700[0m
+    security_enrollment_test.go:1274: isolated database: newapi_audit_1789085068631718700 (postgres)
+    security_enrollment_test.go:1274: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor (5.31s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/2fa.setup (1.69s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/passkey.register (1.27s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/2fa.setup (1.25s)
+    --- PASS: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/passkey.register (1.11s)
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/password
+
+2026/09/11 08:04:29 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[417.991ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085069348400300[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085069348400300 (postgres)
+
+2026/09/11 08:04:30 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[436.524ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085069775324200[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085069775324200 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/passkey
+
+2026/09/11 08:04:30 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[402.027ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085070538482800[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085070538482800 (postgres)
+
+2026/09/11 08:04:31 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[412.128ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085070951401200[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085070951401200 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/locked_2fa
+
+2026/09/11 08:04:32 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[377.178ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085071662420700[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085071662420700 (postgres)
+
+2026/09/11 08:04:32 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[380.111ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085072049192700[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085072049192700 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/telegram
+
+2026/09/11 08:04:33 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[376.573ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085072724018900[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085072724018900 (postgres)
+
+2026/09/11 08:04:33 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[378.202ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085073109726600[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085073109726600 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/github
+
+2026/09/11 08:04:37 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[3040.589ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085074198293200[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085074198293200 (postgres)
+
+2026/09/11 08:04:37 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[436.858ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085077247977200[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085077247977200 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/disabled_custom_binding
+
+2026/09/11 08:04:38 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[381.295ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085077995965800[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085077995965800 (postgres)
+
+2026/09/11 08:04:38 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[384.415ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085078387101200[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085078387101200 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/no_binding
+
+2026/09/11 08:04:39 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[380.840ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085079080377600[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085079080377600 (postgres)
+
+2026/09/11 08:04:39 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[379.375ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085079470567900[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085079470567900 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/binding_storage_failure
+
+2026/09/11 08:04:40 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[377.214ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085080148354200[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085080148354200 (postgres)
+
+2026/09/11 08:04:40 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[383.230ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085080533824300[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085080533824300 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/revoked_session
+
+2026/09/11 08:04:41 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[415.816ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085081222849000[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085081222849000 (postgres)
+
+2026/09/11 08:04:42 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[441.295ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085081646617500[0m
+    security_enrollment_test.go:1304: isolated database: newapi_audit_1789085081646617500 (postgres)
+    security_enrollment_test.go:1304: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow (13.06s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/password (1.19s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/passkey (1.12s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/locked_2fa (1.06s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/telegram (1.47s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/github (3.80s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/disabled_custom_binding (1.08s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/no_binding (1.07s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/binding_storage_failure (1.07s)
+    --- PASS: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/revoked_session (1.18s)
+=== RUN   TestSecurityEnrollmentMissingTargetsAreBusinessErrors
+
+2026/09/11 08:04:42 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[375.249ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085082404862400[0m
+    security_enrollment_test.go:1351: isolated database: newapi_audit_1789085082404862400 (postgres)
+
+2026/09/11 08:04:43 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[378.271ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085082789909000[0m
+    security_enrollment_test.go:1351: isolated database: newapi_audit_1789085082789909000 (postgres)
+    security_enrollment_test.go:1351: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[ERR] 2026/09/11 - 08:04:43 | SYSTEM | auth session internal error (POST /api/channel/999/key): private database failure 
+[ERR] 2026/09/11 - 08:04:43 | SYSTEM | auth session internal error (POST /api/user/999/2fa): private database failure 
+--- PASS: TestSecurityEnrollmentMissingTargetsAreBusinessErrors (1.07s)
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/proof
+
+2026/09/11 08:04:43 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[395.450ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085083471856500[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085083471856500 (postgres)
+
+2026/09/11 08:04:44 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[382.211ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085083877958500[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085083877958500 (postgres)
+    security_enrollment_test.go:1401: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/setup
+
+2026/09/11 08:04:45 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[551.491ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085084624754700[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085084624754700 (postgres)
+
+2026/09/11 08:04:45 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[441.531ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085085186077100[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085085186077100 (postgres)
+    security_enrollment_test.go:1401: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/proof
+
+2026/09/11 08:04:46 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[380.938ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085086202769100[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085086202769100 (postgres)
+
+2026/09/11 08:04:46 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[388.662ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085086592923000[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085086592923000 (postgres)
+    security_enrollment_test.go:1401: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/setup
+
+2026/09/11 08:04:47 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[426.974ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085087369752100[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085087369752100 (postgres)
+
+2026/09/11 08:04:48 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[390.644ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085087805858300[0m
+    security_enrollment_test.go:1401: isolated database: newapi_audit_1789085087805858300 (postgres)
+    security_enrollment_test.go:1401: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy (5.26s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/proof (1.15s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/setup (1.58s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/proof (1.17s)
+    --- PASS: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/setup (1.36s)
+=== RUN   TestTelegramOAuthPreservesExistingAccountAndBinding
+
+2026/09/11 08:04:49 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[391.879ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085088729355600[0m
+    telegram_test.go:200: isolated database: newapi_audit_1789085088729355600 (postgres)
+
+2026/09/11 08:04:49 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[420.323ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085089129453700[0m
+    telegram_test.go:200: isolated database: newapi_audit_1789085089129453700 (postgres)
+    telegram_test.go:200: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestTelegramOAuthPreservesExistingAccountAndBinding (1.26s)
+=== RUN   TestTelegramOAuthRejectsInvalidTokens
+
+2026/09/11 08:04:50 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[382.686ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085089985389300[0m
+    telegram_test.go:251: isolated database: newapi_audit_1789085089985389300 (postgres)
+
+2026/09/11 08:04:50 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[396.416ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085090376423900[0m
+    telegram_test.go:251: isolated database: newapi_audit_1789085090376423900 (postgres)
+    telegram_test.go:251: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/issuer
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/audience
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/expired
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/missing_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/negative_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/fractional_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/overflow_id
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/missing_subject
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/signature
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/PKCE
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/token_unavailable
+=== RUN   TestTelegramOAuthRejectsInvalidTokens/jwks_unavailable
+--- PASS: TestTelegramOAuthRejectsInvalidTokens (1.24s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/issuer (0.01s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/audience (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/expired (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/missing_id (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/negative_id (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/fractional_id (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/overflow_id (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/missing_subject (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/signature (0.03s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/PKCE (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/token_unavailable (0.00s)
+    --- PASS: TestTelegramOAuthRejectsInvalidTokens/jwks_unavailable (0.00s)
+=== RUN   TestTelegramOAuthBindingIsAtomicAndSessionBound
+
+2026/09/11 08:04:51 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[422.823ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085091226281700[0m
+    telegram_test.go:308: isolated database: newapi_audit_1789085091226281700 (postgres)
+
+2026/09/11 08:04:52 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[415.607ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085091657350300[0m
+    telegram_test.go:308: isolated database: newapi_audit_1789085091657350300 (postgres)
+    telegram_test.go:308: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[ERR] 2026/09/11 - 08:04:52 | SYSTEM | auth session internal error (GET /api/oauth/telegram): private Telegram bind storage failure 
+--- PASS: TestTelegramOAuthBindingIsAtomicAndSessionBound (1.21s)
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/revoked
+
+2026/09/11 08:04:52 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[401.439ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085092437745500[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085092437745500 (postgres)
+
+2026/09/11 08:04:53 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[441.599ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085092848727600[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085092848727600 (postgres)
+    telegram_test.go:347: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/disabled
+
+2026/09/11 08:04:54 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[414.582ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085093652412500[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085093652412500 (postgres)
+
+2026/09/11 08:04:54 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[375.819ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085094075675800[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085094075675800 (postgres)
+    telegram_test.go:347: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/deleted
+
+2026/09/11 08:04:55 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[439.384ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085094855494100[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085094855494100 (postgres)
+
+2026/09/11 08:04:55 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[407.250ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085095302681100[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085095302681100 (postgres)
+    telegram_test.go:347: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/already_bound
+
+2026/09/11 08:04:56 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[379.642ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085096105929000[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085096105929000 (postgres)
+
+2026/09/11 08:04:56 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[404.084ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085096494570300[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085096494570300 (postgres)
+    telegram_test.go:347: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/owned_by_another_user
+
+2026/09/11 08:04:57 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[506.541ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085097275842200[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085097275842200 (postgres)
+
+2026/09/11 08:04:58 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[393.249ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085097791206800[0m
+    telegram_test.go:347: isolated database: newapi_audit_1789085097791206800 (postgres)
+    telegram_test.go:347: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership (6.13s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/revoked (1.21s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/disabled (1.20s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/deleted (1.25s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/already_bound (1.17s)
+    --- PASS: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/owned_by_another_user (1.29s)
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints
+
+2026/09/11 08:04:58 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[388.151ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085098568029800[0m
+    telegram_test.go:375: isolated database: newapi_audit_1789085098568029800 (postgres)
+
+2026/09/11 08:04:59 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[443.096ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085098965408500[0m
+    telegram_test.go:375: isolated database: newapi_audit_1789085098965408500 (postgres)
+    telegram_test.go:375: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints/missing_secret
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints/disabled
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints/conflict
+--- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints (1.22s)
+    --- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints/missing_secret (0.01s)
+    --- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints/disabled (0.01s)
+    --- PASS: TestTelegramOAuthConfigurationAndLegacyEndpoints/conflict (0.01s)
+=== RUN   TestTelegramOAuthConcurrentBindingHasSingleOwner
+
+2026/09/11 08:05:00 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[410.767ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085099787370800[0m
+    telegram_test.go:447: isolated database: newapi_audit_1789085099787370800 (postgres)
+
+2026/09/11 08:05:00 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[406.502ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085100207048100[0m
+    telegram_test.go:447: isolated database: newapi_audit_1789085100207048100 (postgres)
+    telegram_test.go:447: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestTelegramOAuthConcurrentBindingHasSingleOwner (1.19s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	37.789s

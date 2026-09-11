@@ -1,0 +1,14 @@
+[
+  {
+    "file": "go.mod",
+    "ours": "",
+    "theirs": "\tgithub.com/go-jose/go-jose/v4 v4.1.4 // indirect\r\n\tgithub.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect\r\n\tgithub.com/google/pprof v0.0.0-20250317173921-a4b03ec1a45e // indirect\r\n",
+    "rationale": "Add go-jose required by Telegram ID-token verification; retain the previously cleaned dependency graph."
+  },
+  {
+    "file": "web/src/features/auth/api.test.ts",
+    "ours": "import assert from 'node:assert/strict'\nimport { describe, test } from 'node:test'\n",
+    "theirs": "import { act, renderHook } from '@testing-library/react'\nimport { toast } from 'sonner'\nimport { afterEach, describe, expect, test, vi } from 'vitest'\n",
+    "rationale": "Use Vitest and retain logout coordination assertions; add Telegram login behavior to the sync test configuration."
+  }
+]

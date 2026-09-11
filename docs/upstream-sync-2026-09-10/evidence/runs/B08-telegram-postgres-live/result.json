@@ -1,0 +1,28 @@
+{
+  "id": "B08-telegram-postgres-live",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run=^(TestTelegram|TestSecurityEnrollment(Telegram|WeChat|MissingTargets|RejectsChangedFirstFactor))",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "c3b677317535754423a9ae05803e461490c8f322",
+  "started_at": "2026-09-11T00:04:18.497Z",
+  "finished_at": "2026-09-11T00:05:01.112Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": true
+  },
+  "log": "output.log"
+}

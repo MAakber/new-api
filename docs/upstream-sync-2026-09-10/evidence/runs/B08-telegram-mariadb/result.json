@@ -1,0 +1,28 @@
+{
+  "id": "B08-telegram-mariadb",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run=^(TestTelegram|TestSecurityEnrollment(Telegram|WeChat|MissingTargets|RejectsChangedFirstFactor))",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "c3b677317535754423a9ae05803e461490c8f322",
+  "started_at": "2026-09-10T23:59:00.976Z",
+  "finished_at": "2026-09-10T23:59:15.917Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": true,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

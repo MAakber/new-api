@@ -1,0 +1,363 @@
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/2fa.setup
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1263: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1263
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/2fa.setup
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/passkey.register
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1263: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1263
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/passkey.register
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/2fa.setup
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1274: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1274
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/2fa.setup
+=== RUN   TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/passkey.register
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1274: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1274
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/passkey.register
+--- FAIL: TestSecurityEnrollmentTelegramAndWeChatFirstFactor (0.05s)
+    --- FAIL: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/2fa.setup (0.05s)
+    --- FAIL: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/telegram/passkey.register (0.00s)
+    --- FAIL: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/2fa.setup (0.00s)
+    --- FAIL: TestSecurityEnrollmentTelegramAndWeChatFirstFactor/wechat/passkey.register (0.00s)
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/password
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/password
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/passkey
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/passkey
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/locked_2fa
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/locked_2fa
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/telegram
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/telegram
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/github
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/github
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/disabled_custom_binding
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/disabled_custom_binding
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/no_binding
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/no_binding
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/binding_storage_failure
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/binding_storage_failure
+=== RUN   TestSecurityEnrollmentWeChatExceptionRemainsNarrow/revoked_session
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1304: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1304
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentWeChatExceptionRemainsNarrow/revoked_session
+--- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/password (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/passkey (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/locked_2fa (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/telegram (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/github (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/disabled_custom_binding (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/no_binding (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/binding_storage_failure (0.00s)
+    --- FAIL: TestSecurityEnrollmentWeChatExceptionRemainsNarrow/revoked_session (0.00s)
+=== RUN   TestSecurityEnrollmentMissingTargetsAreBusinessErrors
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1351: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1351
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentMissingTargetsAreBusinessErrors
+--- FAIL: TestSecurityEnrollmentMissingTargetsAreBusinessErrors (0.00s)
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/proof
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1401: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1401
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/proof
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/setup
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1401: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1401
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/setup
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/proof
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1401: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1401
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/proof
+=== RUN   TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/setup
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    security_enrollment_test.go:1401: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:1401
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/setup
+--- FAIL: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy (0.00s)
+    --- FAIL: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/proof (0.00s)
+    --- FAIL: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/telegram/setup (0.00s)
+    --- FAIL: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/proof (0.00s)
+    --- FAIL: TestSecurityEnrollmentRejectsChangedFirstFactorPolicy/wechat/setup (0.00s)
+=== RUN   TestTelegramOAuthPreservesExistingAccountAndBinding
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:200: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:200
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthPreservesExistingAccountAndBinding
+--- FAIL: TestTelegramOAuthPreservesExistingAccountAndBinding (0.00s)
+=== RUN   TestTelegramOAuthRejectsInvalidTokens
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:251: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:251
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthRejectsInvalidTokens
+--- FAIL: TestTelegramOAuthRejectsInvalidTokens (0.00s)
+=== RUN   TestTelegramOAuthBindingIsAtomicAndSessionBound
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:308: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:308
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthBindingIsAtomicAndSessionBound
+--- FAIL: TestTelegramOAuthBindingIsAtomicAndSessionBound (0.00s)
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/revoked
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:347: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:347
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/revoked
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/disabled
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:347: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:347
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/disabled
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/deleted
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:347: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:347
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/deleted
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/already_bound
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:347: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:347
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/already_bound
+=== RUN   TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/owned_by_another_user
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:347: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:347
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/owned_by_another_user
+--- FAIL: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership (0.00s)
+    --- FAIL: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/revoked (0.00s)
+    --- FAIL: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/disabled (0.00s)
+    --- FAIL: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/deleted (0.00s)
+    --- FAIL: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/already_bound (0.00s)
+    --- FAIL: TestTelegramOAuthBindingRejectsChangedAccountsAndDuplicateOwnership/owned_by_another_user (0.00s)
+=== RUN   TestTelegramOAuthConfigurationAndLegacyEndpoints
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:375: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:375
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthConfigurationAndLegacyEndpoints
+--- FAIL: TestTelegramOAuthConfigurationAndLegacyEndpoints (0.00s)
+=== RUN   TestTelegramOAuthConcurrentBindingHasSingleOwner
+
+2026/09/11 08:02:24 [35mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:481
+[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+    telegram_test.go:447: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:482
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/security_enrollment_test.go:56
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:61
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/telegram_test.go:447
+        	Error:      	Received unexpected error:
+        	            	dial tcp 127.0.0.1:43306: connectex: No connection could be made because the target machine actively refused it.
+        	Test:       	TestTelegramOAuthConcurrentBindingHasSingleOwner
+--- FAIL: TestTelegramOAuthConcurrentBindingHasSingleOwner (0.00s)
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	0.894s
+FAIL

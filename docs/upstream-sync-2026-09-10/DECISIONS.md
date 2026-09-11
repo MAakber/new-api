@@ -44,3 +44,11 @@ Full startup tests exposed downstream Passkey index churn on all databases, mode
 ## 2026-09-10T22:27:56.643Z — A06 B07 downstream preservation
 
 The upstream channel improvements are adapted into the existing classifier, session-safe model picker, dedicated test settings and custom balance path. All eight units passed local stage checks; D01-D10 and final browser/provider acceptance remain subject to the final candidate gates. See evidence/B07-acceptance.json.
+
+## 2026-09-11T00:10:06.783Z — A18 Telegram deployment configuration
+
+Upstream 3e84ec0ab8239cf2277f8a10d45566630a9c10fa replaces legacy Telegram widget authentication with PKCE and verified OpenID Connect ID tokens. Existing Telegram user IDs and linked accounts are retained. A deployment with Telegram login enabled must configure its OAuth Client ID and Client Secret and redirect URI before rollout; add this prerequisite to final release acceptance. No production configuration was changed. Local transport and existing-identity tests passed.
+
+## 2026-09-11T00:10:06.783Z — A19 ClickHouse audit compatibility
+
+The documented docker-compose.yml uses ClickHouse 24.8. Native JSON in new audit table creation fails on this default version, as B08-clickhouse-audit shows. Store validated JSON text in String, matching the existing usage-log storage, while retaining typed AuditOther and exact numeric metadata in APIs. Do not require experimental server settings or silently raise the supported log-database version. Verify fresh/upgrade startup, repeat initialization, historical usage rows, cleanup/TTL independence and role projections against 24.8.14.39. This integration has not been deployed; there is no released native-JSON audit schema to migrate.

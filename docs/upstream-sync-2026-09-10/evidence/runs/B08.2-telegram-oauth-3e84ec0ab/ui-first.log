@@ -1,0 +1,56 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+stderr | src/features/security/__tests__/enrollment.test.tsx > blocks passkey enrollment and explains missing Telegram configuration
+TypeError: Cannot read properties of undefined (reading 'length')
+    at PasskeyCard (D:/10178/Projects/new-api-upstream-sync/web/src/features/security/components/passkey-card.tsx:201:31)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25904:20)
+    at renderWithHooks (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:7662:22)
+    at updateFunctionComponent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:10166:19)
+    at beginWork (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at performUnitOfWork (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:17641:22)
+    at workLoopSync (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:17469:41)
+    at renderRootSync (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:17450:11)
+    at performWorkOnRoot (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:16583:35)
+An error occurred in the <PasskeyCard> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+
+ ❯ src/features/security/__tests__/enrollment.test.tsx (10 tests | 1 failed) 5648ms
+   × blocks passkey enrollment and explains missing Telegram configuration 1021ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/security/__tests__/enrollment.test.tsx > blocks passkey enrollment and explains missing Telegram configuration
+TestingLibraryElementError: Unable to find role="button" and name "Enable Passkey"
+
+Ignored nodes: comments, script, style
+<body>
+  <div />
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div />
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/features/security/__tests__/enrollment.test.tsx:106:33
+    104|       )
+    105|     )
+    106|     const enable = await screen.findByRole('button', {
+       |                                 ^
+    107|       name: factor === '2fa' ? 'Enable' : 'Enable Passkey',
+    108|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 10 passed (11)
+      Tests  1 failed | 75 passed (76)
+   Start at  07:56:22
+   Duration  19.38s (import 49%, environment 26%, tests 12%, setup 8%, transform 5%)
+

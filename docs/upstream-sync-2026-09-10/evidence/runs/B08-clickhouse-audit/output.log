@@ -1,0 +1,45 @@
+=== RUN   TestIndependentAuditLogStores
+=== RUN   TestIndependentAuditLogStores/clickhouse/upgrade=false
+    access_token_audit_test.go:791: isolated database: newapi_audit_1789085064038190400 (clickhouse)
+[SYS] 2026/09/11 - 08:04:24 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:04:24 | database migration started 
+
+2026/09/11 08:04:24 [31;1mD:/10178/Projects/new-api-upstream-sync/model/audit_log.go:247 [35;1mclickhouse error 44
+[0m[33m[13.478ms] [34;1m[rows:0][0m CREATE TABLE IF NOT EXISTS audit_logs (
+		id Int64 DEFAULT 0, event_id String, user_id Int64, username String, actor_role Int32,
+		created_at Int64, category String, action String, token_ref String,
+		auth_method String, ip String, user_agent String, method String, route String,
+		status Int32, success UInt8, request_id String, content String, other JSON
+	) ENGINE = MergeTree()
+	PARTITION BY toYYYYMM(toDateTime(created_at))
+	ORDER BY (created_at, event_id)
+    access_token_audit_test.go:802: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:802
+        	Error:      	Received unexpected error:
+        	            	code: 44, message: Cannot create column with type 'JSON' because experimental JSON type is not allowed. Set setting allow_experimental_json_type = 1 in order to allow it
+        	Test:       	TestIndependentAuditLogStores/clickhouse/upgrade=false
+=== RUN   TestIndependentAuditLogStores/clickhouse/upgrade=true
+    access_token_audit_test.go:791: isolated database: newapi_audit_1789085064241592300 (clickhouse)
+[SYS] 2026/09/11 - 08:04:24 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:04:24 | database migration started 
+
+2026/09/11 08:04:24 [31;1mD:/10178/Projects/new-api-upstream-sync/model/audit_log.go:247 [35;1mclickhouse error 44
+[0m[33m[2.090ms] [34;1m[rows:0][0m CREATE TABLE IF NOT EXISTS audit_logs (
+		id Int64 DEFAULT 0, event_id String, user_id Int64, username String, actor_role Int32,
+		created_at Int64, category String, action String, token_ref String,
+		auth_method String, ip String, user_agent String, method String, route String,
+		status Int32, success UInt8, request_id String, content String, other JSON
+	) ENGINE = MergeTree()
+	PARTITION BY toYYYYMM(toDateTime(created_at))
+	ORDER BY (created_at, event_id)
+    access_token_audit_test.go:802: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:802
+        	Error:      	Received unexpected error:
+        	            	code: 44, message: Cannot create column with type 'JSON' because experimental JSON type is not allowed. Set setting allow_experimental_json_type = 1 in order to allow it
+        	Test:       	TestIndependentAuditLogStores/clickhouse/upgrade=true
+--- FAIL: TestIndependentAuditLogStores (0.37s)
+    --- FAIL: TestIndependentAuditLogStores/clickhouse/upgrade=false (0.20s)
+    --- FAIL: TestIndependentAuditLogStores/clickhouse/upgrade=true (0.16s)
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	1.215s
+FAIL

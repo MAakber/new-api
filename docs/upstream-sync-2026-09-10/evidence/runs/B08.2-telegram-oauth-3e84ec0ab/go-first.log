@@ -1,0 +1,9 @@
+go: downloading github.com/coreos/go-oidc/v3 v3.21.0
+go: downloading github.com/go-jose/go-jose/v4 v4.1.4
+ok  	github.com/QuantumNous/new-api/controller	26.730s
+ok  	github.com/QuantumNous/new-api/oauth	0.650s
+ok  	github.com/QuantumNous/new-api/service	5.009s
+ok  	github.com/QuantumNous/new-api/service/authz	0.658s
+ok  	github.com/QuantumNous/new-api/service/passkey	0.601s
+ok  	github.com/QuantumNous/new-api/model	14.231s
+ok  	github.com/QuantumNous/new-api/router	1.258s

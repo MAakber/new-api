@@ -1,0 +1,28 @@
+{
+  "id": "B08-clickhouse-audit",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run=^TestIndependentAuditLogStores$/^clickhouse$",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "c3b677317535754423a9ae05803e461490c8f322",
+  "started_at": "2026-09-11T00:04:18.501Z",
+  "finished_at": "2026-09-11T00:04:24.551Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

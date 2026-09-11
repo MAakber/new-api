@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-10T23:53:17.314Z",
+  "updatedAt": "2026-09-11T00:10:06.695Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -19,14 +19,14 @@
     "created": true
   },
   "current_batch": "B08",
-  "current_unit": "B08.2-operation-proofs",
+  "current_unit": "B08.3-clickhouse-compatibility",
   "active_operation": null,
-  "last_observed_head": "5bf3f4b30a853589c568287608d2a0d91ee12447",
+  "last_observed_head": "c3b677317535754423a9ae05803e461490c8f322",
   "last_verified_code_commit": "54c948f715414eada868462b3c60882ce745a57f",
-  "last_checkpoint_commit": "1bace7e3afce5dad8f90fa14f9820df09298e323",
+  "last_checkpoint_commit": "d658b73113417668d74ecc4e29b5b8896a5c1743",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Integrate Telegram unified OAuth with existing identity bindings, registration constraints and configured login proxy; then complete the remaining B08 hardening and full database/startup gates.",
+  "next_action": "Fix audit storage for documented ClickHouse 24.8 before completing remaining B08 security integrations; native JSON CREATE fails on the fresh/upgrade fixture.",
   "blockers": [
     {
       "id": "production_snapshot",
