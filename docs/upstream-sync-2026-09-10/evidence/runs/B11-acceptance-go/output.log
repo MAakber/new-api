@@ -1,0 +1,818 @@
+?   	github.com/QuantumNous/new-api	[no test files]
+ok  	github.com/QuantumNous/new-api/common	1.538s
+?   	github.com/QuantumNous/new-api/common/limiter	[no test files]
+?   	github.com/QuantumNous/new-api/constant	[no test files]
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /api/user/token/status    --> github.com/QuantumNous/new-api/controller.GetAccessTokenStatus (4 handlers)
+[GIN-debug] GET    /api/user/token           --> github.com/QuantumNous/new-api/controller.GenerateAccessToken (4 handlers)
+[GIN-debug] POST   /api/user/token           --> github.com/QuantumNous/new-api/controller.GenerateAccessToken (4 handlers)
+[GIN-debug] DELETE /api/user/token           --> github.com/QuantumNous/new-api/controller.RevokeAccessToken (4 handlers)
+[GIN-debug] POST   /rotate-in-flight         --> github.com/QuantumNous/new-api/controller.TestAccessTokenLifecycleAndLateRequests.func1 (4 handlers)
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/audit_log.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `created_at`,`ip` FROM `audit_logs` WHERE (user_id = 1 AND token_ref = "d827ade22cf0220a56d2da89a7180799bf443d4978dc0bbc8176200b46ece834" AND category = "access_token") AND actor_role IN (1,10) ORDER BY created_at DESC,event_id DESC LIMIT 1
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/audit_log.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `created_at`,`ip` FROM `audit_logs` WHERE (user_id = 1 AND token_ref = "d827ade22cf0220a56d2da89a7180799bf443d4978dc0bbc8176200b46ece834" AND category = "access_token") AND actor_role IN (1,10) ORDER BY created_at DESC,event_id DESC LIMIT 1
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/audit_log.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `created_at`,`ip` FROM `audit_logs` WHERE (user_id = 1 AND token_ref = "348e9df2a42bd6e3c6356ca9c95c5f1fe9a6b3e5cd25f4ae58df0f09049c3209" AND category = "access_token") AND actor_role IN (1,10) ORDER BY created_at DESC,event_id DESC LIMIT 1
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "legacy-opaque-token" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "legacy-opaque-token" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "new-token" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "new-token" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /public                   --> github.com/QuantumNous/new-api/controller.TestAccessTokenAuditsResultsAndExcludesBrowserSessions.func2 (3 handlers)
+[GIN-debug] GET    /rate-limited             --> github.com/QuantumNous/new-api/controller.TestAccessTokenAuditsResultsAndExcludesBrowserSessions.UserAuth.func10 (4 handlers)
+[GIN-debug] GET    /read/:id                 --> github.com/QuantumNous/new-api/controller.TestAccessTokenAuditsResultsAndExcludesBrowserSessions.func4 (4 handlers)
+[GIN-debug] POST   /write                    --> github.com/QuantumNous/new-api/controller.TestAccessTokenAuditsResultsAndExcludesBrowserSessions.func5 (4 handlers)
+[GIN-debug] POST   /business-failure         --> github.com/QuantumNous/new-api/controller.TestAccessTokenAuditsResultsAndExcludesBrowserSessions.func6 (4 handlers)
+[GIN-debug] GET    /forbidden                --> github.com/QuantumNous/new-api/controller.TestAccessTokenAuditsResultsAndExcludesBrowserSessions.func7 (4 handlers)
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.590ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "unknown-token" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "unknown-token" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /api/audit/self           --> github.com/QuantumNous/new-api/controller.GetAuditLogs (4 handlers)
+[GIN-debug] GET    /api/audit                --> github.com/QuantumNous/new-api/controller.GetAuditLogs (5 handlers)
+
+2026/09/11 11:54:41 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:226
+[0m[35m[warn] [0mremoving callback `audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:226
+
+2026/09/11 11:54:41 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:231
+[0m[35m[warn] [0mremoving callback `audit:write-fail` from D:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:231
+[ERR] 2026/09/11 - 11:54:41 | SYSTEM | audit actor role unavailable (request_id=role-0, actor_role=0) 
+[ERR] 2026/09/11 - 11:54:41 | SYSTEM | audit actor role unavailable (request_id=role--1, actor_role=-1) 
+[ERR] 2026/09/11 - 11:54:41 | SYSTEM | audit actor role unavailable (request_id=role-99, actor_role=99) 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /api/audit                --> github.com/QuantumNous/new-api/controller.GetAuditLogs (5 handlers)
+[GIN-debug] GET    /api/audit/self           --> github.com/QuantumNous/new-api/controller.GetAuditLogs (4 handlers)
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /change-role              --> github.com/QuantumNous/new-api/controller.TestAuditRoleSnapshotSurvivesActorChanges.func1 (4 handlers)
+
+2026/09/11 11:54:41 [31;1mD:/10178/Projects/new-api-upstream-sync/model/audit_log.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `created_at`,`ip` FROM `audit_logs` WHERE (user_id = 1 AND token_ref = "d827ade22cf0220a56d2da89a7180799bf443d4978dc0bbc8176200b46ece834" AND category = "access_token") AND actor_role IN (1,10) ORDER BY created_at DESC,event_id DESC LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 11:54:41 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:54:41 | database migration started 
+
+2026/09/11 11:54:43 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[4.024ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 11:54:43 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+[SYS] 2026/09/11 - 11:54:43 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:54:43 | database migration started 
+
+2026/09/11 11:54:43 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.536ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 11:54:43 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 11:54:43 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:723 [35;1mconstraint failed: UNIQUE constraint failed: users.access_token (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ("duplicate","placeholder","",1,1,"","","","","","","matrix-token",NULL,0,0,0,NULL,"default","duplicate-aff",0,0,0,0,NULL,"","","","",1789098883,0,1,0,"",0,403,"","") RETURNING `id`
+[ERR] 2026/09/11 - 11:54:43 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 11:54:43 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 11:54:44 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:54:44 | database migration started 
+
+2026/09/11 11:54:45 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.515ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 11:54:45 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+[SYS] 2026/09/11 - 11:54:45 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:54:45 | database migration started 
+
+2026/09/11 11:54:45 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 11:54:45 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 11:54:45 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:723 [35;1mconstraint failed: UNIQUE constraint failed: users.access_token (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ("duplicate","placeholder","",1,1,"","","","","","","matrix-token",NULL,0,0,0,NULL,"default","duplicate-aff",0,0,0,0,NULL,"","","","",1789098885,0,1,0,"",0,403,"","") RETURNING `id`
+[ERR] 2026/09/11 - 11:54:45 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 11:54:45 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[ERR] 2026/09/11 - 11:54:52 | SYSTEM | auth session internal error (POST /api/user/login/passkey/finish): private session creation failure 
+[ERR] 2026/09/11 - 11:54:59 | SYSTEM | auth session internal error (GET /api/oauth/auth-flow-test): exchange failed 
+[ERR] 2026/09/11 - 11:54:59 | SYSTEM | auth session internal error (GET /api/oauth/auth-flow-test): user info failed 
+[ERR] 2026/09/11 - 11:54:59 | SYSTEM | auth session internal error (GET /api/oauth/auth-flow-test): invalid character 'i' looking for beginning of object key string 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:137 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:137 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[1.504ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:152 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_price_sync" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:164 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_price_sync" AND status IN ("succeeded","failed") ORDER BY id DESC,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:152 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_model_metadata_sync" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:164 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_model_metadata_sync" AND status IN ("succeeded","failed") ORDER BY id DESC,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:152 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_model_metadata_sync" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:164 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_model_metadata_sync" AND status IN ("succeeded","failed") ORDER BY id DESC,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:102 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_price_guards` WHERE id = 987654 ORDER BY `channel_auto_price_guards`.`id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:60 [35;1mSQL logic error: no such table: channel_auto_price_guards (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `channel_auto_price_guards` SET `state`="used",`updated_at`=1789098900 WHERE id = 1 AND channel_id = 1 AND state = "pending"
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:102 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_price_guards` WHERE id = 987654 ORDER BY `channel_auto_price_guards`.`id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:60 [35;1mSQL logic error: no such table: channel_auto_price_guards (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `channel_auto_price_guards` SET `state`="used",`updated_at`=1789098900 WHERE id = 1 AND channel_id = 1 AND state = "pending"
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:102 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_price_guards` WHERE id = 987654 ORDER BY `channel_auto_price_guards`.`id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:60 [35;1mSQL logic error: no such table: channel_auto_price_guards (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `channel_auto_price_guards` SET `state`="used",`updated_at`=1789098900 WHERE id = 1 AND channel_id = 1 AND state = "pending"
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:102 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_price_guards` WHERE id = 987654 ORDER BY `channel_auto_price_guards`.`id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:60 [35;1mSQL logic error: no such table: channel_auto_price_guards (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `channel_auto_price_guards` SET `state`="used",`updated_at`=1789098900 WHERE id = 1 AND channel_id = 1 AND state = "pending"
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/named_lease.go:28 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `named_leases` WHERE name = "upstream_queue:101" ORDER BY `named_leases`.`name` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "channel_queue_warmup" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/named_lease.go:28 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `named_leases` WHERE name = "upstream_queue:101" ORDER BY `named_leases`.`name` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/named_lease.go:28 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `named_leases` WHERE name = "upstream_queue:103" ORDER BY `named_leases`.`name` LIMIT 1
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "channel_queue_warmup" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 11:55:00 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/channel_queue_warmer_test.go:82
+[0m[35m[warn] [0mremoving callback `test:channel_queue_warmer_omits_key` from D:/10178/Projects/new-api-upstream-sync/controller/channel_queue_warmer_test.go:82
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9102 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9101, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3312102+08:00, FirstResponse: 2026-09-11T11:54:59.3312102+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9102, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46122", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9101, params={"channel_id":9102,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9102 completed 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | failed to validate cloned channel: invalid channel proxy: proxy URL must not include a path 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:00 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel.go:437 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `channels`.`id`,`channels`.`type`,`channels`.`open_ai_organization`,`channels`.`test_model`,`channels`.`status`,`channels`.`name`,`channels`.`weight`,`channels`.`created_time`,`channels`.`test_time`,`channels`.`response_time`,`channels`.`base_url`,`channels`.`other`,`channels`.`balance`,`channels`.`balance_updated_time`,`channels`.`models`,`channels`.`group`,`channels`.`used_quota`,`channels`.`model_mapping`,`channels`.`status_code_mapping`,`channels`.`priority`,`channels`.`auto_ban`,`channels`.`other_info`,`channels`.`tag`,`channels`.`setting`,`channels`.`param_override`,`channels`.`header_override`,`channels`.`remark`,`channels`.`channel_info`,`channels`.`settings`,`channels`.`auto_price_guard_id`,`channels`.`config_revision` FROM `channels` WHERE id = 999999 AND `channels`.`id` = 999999 ORDER BY `channels`.`id` LIMIT 1
+[ERR] 2026/09/11 - 11:55:00 | SYSTEM | audit actor role unavailable (request_id=202609110355003420269008268d9d6CZNnsj8W, actor_role=0) 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[ERR] 2026/09/11 - 11:55:00 | SYSTEM | audit actor role unavailable (request_id=202609110355003446025008268d9d6LwKVqP80, actor_role=0) 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3521374+08:00, FirstResponse: 2026-09-11T11:54:59.3521374+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46124", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3533834+08:00, FirstResponse: 2026-09-11T11:54:59.3533834+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46126", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3544234+08:00, FirstResponse: 2026-09-11T11:54:59.3544234+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46128", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3554284+08:00, FirstResponse: 2026-09-11T11:54:59.3554284+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46130", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.357002+08:00, FirstResponse: 2026-09-11T11:54:59.357002+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46132", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.358044+08:00, FirstResponse: 2026-09-11T11:54:59.358044+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46134", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3590786+08:00, FirstResponse: 2026-09-11T11:54:59.3590786+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46136", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.360114+08:00, FirstResponse: 2026-09-11T11:54:59.360114+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46138", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3616577+08:00, FirstResponse: 2026-09-11T11:54:59.3616577+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46140", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3627554+08:00, FirstResponse: 2026-09-11T11:54:59.3627554+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46142", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3643052+08:00, FirstResponse: 2026-09-11T11:54:59.3643052+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46144", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3653368+08:00, FirstResponse: 2026-09-11T11:54:59.3653368+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46146", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.366881+08:00, FirstResponse: 2026-09-11T11:54:59.366881+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46148", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3679621+08:00, FirstResponse: 2026-09-11T11:54:59.3679621+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46150", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3691537+08:00, FirstResponse: 2026-09-11T11:54:59.3691537+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46152", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3707147+08:00, FirstResponse: 2026-09-11T11:54:59.3707147+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46154", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3717416+08:00, FirstResponse: 2026-09-11T11:54:59.3717416+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46156", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3727682+08:00, FirstResponse: 2026-09-11T11:54:59.3727682+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46158", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3738418+08:00, FirstResponse: 2026-09-11T11:54:59.3738418+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46160", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3754216+08:00, FirstResponse: 2026-09-11T11:54:59.3754216+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46162", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.376464+08:00, FirstResponse: 2026-09-11T11:54:59.376464+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46164", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, ResponsesTools{ function: calls=0 }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3780572+08:00, FirstResponse: 2026-09-11T11:54:59.3780572+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46166", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, ResponsesTools{ function: calls=0 }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3790993+08:00, FirstResponse: 2026-09-11T11:54:59.3790993+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46168", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, ResponsesTools{ function: calls=0 }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: openai_responses, RelayMode: 33, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/responses", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3807034+08:00, FirstResponse: 2026-09-11T11:54:59.3807034+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46170", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, ResponsesTools{ function: calls=0 }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Responses"],"request_path":"/v1/responses","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.382139+08:00, FirstResponse: 2026-09-11T11:54:59.382139+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 14, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46172", ApiType: 1, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3832004+08:00, FirstResponse: 2026-09-11T11:54:59.3832004+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46174", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3842375+08:00, FirstResponse: 2026-09-11T11:54:59.3842375+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 14, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46176", ApiType: 1, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3852698+08:00, FirstResponse: 2026-09-11T11:54:59.3852698+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46178", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3869772+08:00, FirstResponse: 2026-09-11T11:54:59.3869772+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 14, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46180", ApiType: 1, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3885495+08:00, FirstResponse: 2026-09-11T11:54:59.3885495+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46182", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3895845+08:00, FirstResponse: 2026-09-11T11:54:59.3895845+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 14, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46184", ApiType: 1, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3911396+08:00, FirstResponse: 2026-09-11T11:54:59.3911396+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46186", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3926639+08:00, FirstResponse: 2026-09-11T11:54:59.3926639+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 14, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46188", ApiType: 1, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3936999+08:00, FirstResponse: 2026-09-11T11:54:59.3936999+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46190", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3952695+08:00, FirstResponse: 2026-09-11T11:54:59.3952695+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 14, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46192", ApiType: 1, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: claude, RelayMode: 0, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/messages", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.396822+08:00, FirstResponse: 2026-09-11T11:54:59.396822+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46194", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"claude":true,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Claude Messages"],"request_path":"/v1/messages","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: false, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:generateContent", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.398387+08:00, FirstResponse: 2026-09-11T11:54:59.398387+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 24, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46196", ApiType: 9, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:generateContent","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: false, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:generateContent", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.3994367+08:00, FirstResponse: 2026-09-11T11:54:59.3994367+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46198", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:generateContent","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: true, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:streamGenerateContent?alt=sse", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4004784+08:00, FirstResponse: 2026-09-11T11:54:59.4004784+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 24, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46200", ApiType: 9, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:streamGenerateContent","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: true, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:streamGenerateContent?alt=sse", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4015347+08:00, FirstResponse: 2026-09-11T11:54:59.4015347+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46202", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:streamGenerateContent","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: false, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:generateContent", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4030974+08:00, FirstResponse: 2026-09-11T11:54:59.4030974+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 24, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46204", ApiType: 9, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:generateContent","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: false, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:generateContent", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4046758+08:00, FirstResponse: 2026-09-11T11:54:59.4046758+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46206", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:generateContent","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: true, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:streamGenerateContent?alt=sse", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4057195+08:00, FirstResponse: 2026-09-11T11:54:59.4057195+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 24, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46208", ApiType: 9, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:streamGenerateContent","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: true, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:streamGenerateContent?alt=sse", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4067786+08:00, FirstResponse: 2026-09-11T11:54:59.4067786+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46210", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":18,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:streamGenerateContent","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: false, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:generateContent", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4078114+08:00, FirstResponse: 2026-09-11T11:54:59.4078114+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 24, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46212", ApiType: 9, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:generateContent","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: false, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:generateContent", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4088739+08:00, FirstResponse: 2026-09-11T11:54:59.4088739+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46214", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:generateContent","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: true, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:streamGenerateContent?alt=sse", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4104345+08:00, FirstResponse: 2026-09-11T11:54:59.4104345+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 24, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46216", ApiType: 9, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:streamGenerateContent","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9112 with model gpt-4o , info RelayInfo{ RelayFormat: gemini, RelayMode: 35, IsStream: true, IsPlayground: false, RequestURLPath: "/v1beta/models/gpt-4o:streamGenerateContent?alt=sse", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9111, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4114714+08:00, FirstResponse: 2026-09-11T11:54:59.4114714+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 58, Id: 9112, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46218", ApiType: 35, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9111, params={"channel_id":9112,"prompt_tokens":10,"completion_tokens":8,"model_name":"gpt-4o","token_name":"模型测试","quota":42,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["Google Gemini"],"request_path":"/v1beta/models/gpt-4o:streamGenerateContent","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9112 completed 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9122 with model gpt-image-2 , info RelayInfo{ RelayFormat: openai_image, RelayMode: 5, IsStream: false, IsPlayground: false, RequestURLPath: "/v1/images/generations", OriginModelName: "gpt-image-2", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9121, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4159899+08:00, FirstResponse: 2026-09-11T11:54:59.4159899+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9122, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46220", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-image-2", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9121, params={"channel_id":9122,"prompt_tokens":0,"completion_tokens":0,"model_name":"gpt-image-2","token_name":"模型测试","quota":1,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":2,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["openai_image"],"request_path":"/v1/images/generations","user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9122 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9122 with model gpt-image-2 , info RelayInfo{ RelayFormat: openai_image, RelayMode: 5, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/images/generations", OriginModelName: "gpt-image-2", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9121, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.417005+08:00, FirstResponse: 2026-09-11T11:54:59.417005+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9122, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46222", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-image-2", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9121, params={"channel_id":9122,"prompt_tokens":0,"completion_tokens":0,"model_name":"gpt-image-2","token_name":"模型测试","quota":1,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":2,"frt":0,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["openai_image"],"request_path":"/v1/images/generations","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9122 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9122 with model gpt-image-2 , info RelayInfo{ RelayFormat: openai_image, RelayMode: 5, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/images/generations", OriginModelName: "gpt-image-2", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9121, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4186454+08:00, FirstResponse: 2026-09-11T11:54:59.4186454+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9122, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46224", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-image-2", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9121, params={"channel_id":9122,"prompt_tokens":0,"completion_tokens":0,"model_name":"gpt-image-2","token_name":"模型测试","quota":1,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":2,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["openai_image"],"request_path":"/v1/images/generations","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9122 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9122 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9121, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4196877+08:00, FirstResponse: 2026-09-11T11:54:59.4196877+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9122, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46226", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9121, params={"channel_id":9122,"prompt_tokens":0,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":8,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"local_count_tokens":true,"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"eof","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9122 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9122 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9121, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4207309+08:00, FirstResponse: 2026-09-11T11:54:59.4207309+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9122, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46228", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=done 
+[ERR] 2026/09/11 - 11:55:00 | SYSTEM | error handling last response: unexpected end of JSON input, lastStreamData: [] 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9121, params={"channel_id":9122,"prompt_tokens":0,"completion_tokens":0,"model_name":"gpt-4o","token_name":"模型测试","quota":1,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"local_count_tokens":true,"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":-1000,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"done","status":"ok"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9122 completed 
+[SYS] 2026/09/11 - 11:55:00 | testing channel 9122 with model gpt-4o , info RelayInfo{ RelayFormat: openai, RelayMode: 1, IsStream: true, IsPlayground: false, RequestURLPath: "/v1/chat/completions", OriginModelName: "gpt-4o", EstimatePromptTokens: 0, ShouldIncludeUsage: false, DisablePing: false, SendResponseCount: 0, FinalPreConsumedQuota: 0, User{ Id: 9121, Email: "***masked***", Group: "default", UsingGroup: "default", Quota: 1000000 }, Token{ Id: 0, Unlimited: false, Key: ***masked*** }, Timing{ Start: 2026-09-11T11:55:00.4217692+08:00, FirstResponse: 2026-09-11T11:54:59.4217692+08:00, LatencyMs: -1000 }, ChannelMeta{ Type: 1, Id: 9122, IsMultiKey: false, MultiKeyIndex: 0, BaseURL: "http://127.0.0.1:46230", ApiType: 0, ApiVersion: "", Organization: "", CreateTime: 0, UpstreamModelName: "gpt-4o", IsModelMapped: false, SupportStreamOptions: true, ApiKey: ***masked*** }, }  
+[ERR] 2026/09/11 - 11:55:00 | SYSTEM | error processing stream token data: invalid character 'b' looking for beginning of value 
+[ERR] 2026/09/11 - 11:55:00 | SYSTEM | stream ended: reason=eof soft_errors=1, received=2 
+[ERR] 2026/09/11 - 11:55:00 | SYSTEM | error handling last response: invalid character 'b' looking for beginning of value, lastStreamData: [broken-json] 
+[INFO] 2026/09/11 - 11:55:00 | SYSTEM | record consume log: userId=9121, params={"channel_id":9122,"prompt_tokens":0,"completion_tokens":2,"model_name":"gpt-4o","token_name":"模型测试","quota":8,"content":"模型测试","token_id":0,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"local_count_tokens":true,"use_channel":null},"cache_ratio":1,"cache_tokens":0,"completion_ratio":4,"frt":1,"group_ratio":1,"model_price":-1,"model_ratio":1,"request_conversion":["OpenAI Compatible"],"request_path":"/v1/chat/completions","stream_status":{"end_reason":"eof","error_count":1,"errors":["invalid character 'b' looking for beginning of value"],"status":"error"},"user_group_ratio":-1}} 
+[SYS] 2026/09/11 - 11:55:00 | testing channel #9122 completed 
+[WARN] 2026/09/11 - 11:55:00 | SYSTEM | conversion diagnostic: code="model_modifier_overrode_request" severity="warning" from="openai" to="" path="model.@thinking" message="model thinking modifier overrides structured request reasoning fields" 
+[WARN] 2026/09/11 - 11:55:00 | SYSTEM | conversion diagnostic: code="mapped_model_modifier_override" severity="warning" from="openai" to="" path="model.@thinking" message="mapped-model thinking modifier overrides the origin-model modifier" 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:00 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | channels synced from database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:01 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 21 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 21 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 21 ORDER BY `user_avatars`.`id` LIMIT 1
+--- FAIL: TestImportOAuthAvatarNormalizesAndStoresImage (0.02s)
+    testing.go:1369: TempDir RemoveAll cleanup: unlinkat C:\Users\10178\AppData\Local\Temp\TestImportOAuthAvatarNormalizesAndStoresImage2604661742\001\21: The directory is not empty.
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 22 ORDER BY `user_avatars`.`id` LIMIT 1
+[WARN] 2026/09/11 - 11:55:01 | SYSTEM | [OAuth] failed to import avatar for user 22: avatar endpoint returned status 502 
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 22 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 23 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:429 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` ORDER BY `users`.`id` DESC LIMIT 1
+
+2026/09/11 11:55:01 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:325 [35;1mrecord not found
+[0m[33m[1.005ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE username = "pending-avatar-user" ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/password_crypto.go:27 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `login_encryption_keys` WHERE slot = "active" ORDER BY `login_encryption_keys`.`id` LIMIT 1
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:325 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE username = "with-code" ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:325 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE username = "with-code" ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/redemption.go:367 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `redemptions` WHERE `key` = "invalid" AND `redemptions`.`deleted_at` IS NULL ORDER BY `redemptions`.`id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:02 | 为新用户 with-code (角色: 1) 初始化边栏配置 
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:325 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE username = "unicode-code" ORDER BY `users`.`id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:02 | 为新用户 unicode-code (角色: 1) 初始化边栏配置 
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:429 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` ORDER BY `users`.`id` DESC LIMIT 1
+
+2026/09/11 11:55:02 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:325 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE username = "new-oauth-user" ORDER BY `users`.`id` LIMIT 1
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | channel error (channel #101, status code: 502): upstream failed 
+[INFO] 2026/09/11 - 11:55:02 | SYSTEM | record error log: userId=7, channelId=101, modelName=gpt-test, tokenName=test-token, content=status_code=502, upstream failed 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: unexpected end of JSON input 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: request body exceeds 1 MB: request body too large 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: unexpected end of JSON input 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: request body exceeds 1 MB: request body too large 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: unexpected end of JSON input 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: request body exceeds 1 MB: request body too large 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: unexpected end of JSON input 
+[ERR] 2026/09/11 - 11:55:02 | SYSTEM | relay error: request body exceeds 1 MB: request body too large 
+[ERR] 2026/09/11 - 11:55:07 | SYSTEM | auth session internal error (DELETE /api/user/self): injected deletion failure 
+[ERR] 2026/09/11 - 11:55:22 | SYSTEM | auth session internal error (POST /api/user/token): private database failure 
+[ERR] 2026/09/11 - 11:55:22 | SYSTEM | auth session internal error (DELETE /api/user/token): private database failure 
+[ERR] 2026/09/11 - 11:55:26 | SYSTEM | auth session internal error (POST /api/user/passkey/register/begin): injected creation failure 
+[ERR] 2026/09/11 - 11:55:26 | SYSTEM | auth session internal error (POST /api/verify): private proof database failure 
+[ERR] 2026/09/11 - 11:55:33 | SYSTEM | auth session internal error (GET /api/verify/methods): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:33 | SYSTEM | auth session internal error (POST /api/verify): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:33 | SYSTEM | auth session internal error (POST /api/user/passkey/register/begin): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:34 | SYSTEM | auth session internal error (GET /api/user/2fa/status): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:34 | SYSTEM | auth session internal error (POST /api/user/2fa/setup): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:34 | SYSTEM | auth session internal error (POST /api/user/2fa/setup): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:35 | SYSTEM | auth session internal error (POST /api/oauth/state): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:35 | SYSTEM | auth session internal error (POST /api/channel/1/key): database connection failed: private-db-host private_table SELECT secret_column 
+[ERR] 2026/09/11 - 11:55:40 | SYSTEM | auth session internal error (POST /api/channel/999/key): private database failure 
+[ERR] 2026/09/11 - 11:55:40 | SYSTEM | auth session internal error (POST /api/user/999/2fa): private database failure 
+[ERR] 2026/09/11 - 11:55:42 | SYSTEM | auth session internal error (GET /api/oauth/telegram): private Telegram bind storage failure 
+
+2026/09/11 11:55:44 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 1 and user_id = 2) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 1 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:44 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+
+2026/09/11 11:55:44 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+
+2026/09/11 11:55:44 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 23 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 23 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.507ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 33 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 33 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 41 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 41 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.519ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "Bearer" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "Bearer" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[ERR] 2026/09/11 - 11:55:45 | 202609110355452110946008268d9d6FcDP7ysX | audit log write failed (request_id=202609110355452110946008268d9d6FcDP7ysX): audit unavailable 
+
+2026/09/11 11:55:45 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+[0m[35m[warn] [0mremoving callback `token-audit:log-fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+
+2026/09/11 11:55:45 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+
+2026/09/11 11:55:45 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 23 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 23 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 33 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 33 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 41 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 41 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "Bearer" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = "Bearer" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[ERR] 2026/09/11 - 11:55:45 | 202609110355457495102008268d9d6UiU9gYgK | audit log write failed (request_id=202609110355457495102008268d9d6UiU9gYgK): audit unavailable 
+
+2026/09/11 11:55:45 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+[0m[35m[warn] [0mremoving callback `token-audit:log-fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+[SYS] 2026/09/11 - 11:55:45 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199255e+15, clamped=9007199254740991 
+[SYS] 2026/09/11 - 11:55:45 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199255e+15, clamped=9007199254740991 
+[SYS] 2026/09/11 - 11:55:45 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199254740992e+15, clamped=9007199254740991 
+[SYS] 2026/09/11 - 11:55:45 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199254740991e+21, clamped=9007199254740991 
+[SYS] 2026/09/11 - 11:55:45 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:45 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:45 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:45 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 7 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 7 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 9 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.504ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 9 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 10 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:546 [35;1mrecord not found
+[0m[33m[1.005ms] [34;1m[rows:0][0m SELECT `users`.`id`,`users`.`username`,`users`.`display_name`,`users`.`role`,`users`.`status`,`users`.`email`,`users`.`github_id`,`users`.`discord_id`,`users`.`oidc_id`,`users`.`wechat_id`,`users`.`telegram_id`,`users`.`access_token_created_at`,`users`.`quota`,`users`.`used_quota`,`users`.`request_count`,`users`.`requests_per_minute`,`users`.`group`,`users`.`aff_code`,`users`.`aff_count`,`users`.`aff_quota`,`users`.`aff_history`,`users`.`inviter_id`,`users`.`deleted_at`,`users`.`linux_do_id`,`users`.`setting`,`users`.`remark`,`users`.`stripe_customer`,`users`.`created_at`,`users`.`last_login_at`,`users`.`auth_version`,`users`.`auto_ban_until`,`users`.`auto_ban_rule`,`users`.`auto_ban_record_id`,`users`.`auto_ban_response_status`,`users`.`auto_ban_response_code`,`users`.`auto_ban_response_message` FROM `users` WHERE id = 9999 AND `users`.`deleted_at` IS NULL AND `users`.`id` = 9999 ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:45 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 11 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 11:55:46 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+[SYS] 2026/09/11 - 11:55:49 | failed to record log: quota log unavailable 
+[ERR] 2026/09/11 - 11:55:49 | SYSTEM | audit log write failed (request_id=quota-test-request): quota log unavailable 
+
+2026/09/11 11:55:50 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 12345 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:50 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[0.519ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:55:51 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+[0m[35m[warn] [0mremoving callback `test:quota_read_error` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+[SYS] 2026/09/11 - 11:55:51 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199254740992e+15, clamped=9007199254740991 
+[SYS] 2026/09/11 - 11:55:51 | quota conversion (WalletQuotaFromDecimal) underflow: original=-9.007199254740992e+15, clamped=-9007199254740991 
+
+2026/09/11 11:55:52 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:63 [35;1mdatabase is locked (5) (SQLITE_BUSY)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `users` SET `quota`=1010 WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 11:55:52 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+[0m[35m[warn] [0mremoving callback `test:concurrent_quota_start` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+
+2026/09/11 11:55:53 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:63 [35;1mquota rollback
+[0m[33m[1.004ms] [34;1m[rows:1][0m UPDATE `users` SET `quota`=500 WHERE id = 10000 AND `users`.`deleted_at` IS NULL
+[SYS] 2026/09/11 - 11:55:53 | failed to sync manual quota adjustment for user 10000: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:55:53 | failed to synchronously populate user cache: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:55:53 | failed to synchronously populate user cache: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:55:54 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:54 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 11:55:54 | SQL_DSN not set, using SQLite as database 
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	74.372s
+ok  	github.com/QuantumNous/new-api/dto	0.626s
+?   	github.com/QuantumNous/new-api/i18n	[no test files]
+?   	github.com/QuantumNous/new-api/logger	[no test files]
+ok  	github.com/QuantumNous/new-api/middleware	1.525s
+ok  	github.com/QuantumNous/new-api/model	19.259s
+ok  	github.com/QuantumNous/new-api/oauth	0.873s
+ok  	github.com/QuantumNous/new-api/pkg/billingexpr	0.871s
+ok  	github.com/QuantumNous/new-api/pkg/bingsearch	0.535s
+?   	github.com/QuantumNous/new-api/pkg/cachex	[no test files]
+?   	github.com/QuantumNous/new-api/pkg/ionet	[no test files]
+ok  	github.com/QuantumNous/new-api/pkg/perf_metrics	1.035s
+ok  	github.com/QuantumNous/new-api/relay	1.741s
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+--- FAIL: TestUpstreamGetBody_HTTP2CannotRetryWithoutGetBody (0.00s)
+    api_request_getbody_test.go:592: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/relay/channel/api_request_getbody_test.go:592
+        	Error:      	Error "Post \"http://upstream.test/v1/chat/completions\": read tcp 127.0.0.1:28354->127.0.0.1:28353: wsarecv: An existing connection was forcibly closed by the remote host." does not contain "cannot retry err"
+        	Test:       	TestUpstreamGetBody_HTTP2CannotRetryWithoutGetBody
+FAIL
+FAIL	github.com/QuantumNous/new-api/relay/channel	0.950s
+ok  	github.com/QuantumNous/new-api/relay/channel/advancedcustom	1.536s
+?   	github.com/QuantumNous/new-api/relay/channel/ai360	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/ali	1.050s
+ok  	github.com/QuantumNous/new-api/relay/channel/aws	1.030s
+?   	github.com/QuantumNous/new-api/relay/channel/baidu	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/baidu_v2	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/claude	0.941s
+?   	github.com/QuantumNous/new-api/relay/channel/cloudflare	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/codex	0.956s
+?   	github.com/QuantumNous/new-api/relay/channel/cohere	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/coze	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/deepseek	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/dify	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/gemini	0.942s
+?   	github.com/QuantumNous/new-api/relay/channel/jimeng	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/jina	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/lingyiwanwu	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/minimax	1.158s
+?   	github.com/QuantumNous/new-api/relay/channel/mistral	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/mokaai	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/moonshot	0.967s
+ok  	github.com/QuantumNous/new-api/relay/channel/newapi	0.905s
+ok  	github.com/QuantumNous/new-api/relay/channel/ollama	0.918s
+ok  	github.com/QuantumNous/new-api/relay/channel/openai	1.147s
+?   	github.com/QuantumNous/new-api/relay/channel/openrouter	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/palm	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/perplexity	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/replicate	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/siliconflow	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/sub2api	0.870s
+?   	github.com/QuantumNous/new-api/relay/channel/submodel	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/task/ali	0.751s
+?   	github.com/QuantumNous/new-api/relay/channel/task/doubao	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/gemini	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/hailuo	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/jimeng	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/kling	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/task/sora	0.767s
+?   	github.com/QuantumNous/new-api/relay/channel/task/suno	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/taskcommon	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/vertex	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/vidu	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/tencent	1.025s
+ok  	github.com/QuantumNous/new-api/relay/channel/vercel	0.904s
+?   	github.com/QuantumNous/new-api/relay/channel/vertex	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/volcengine	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/xai	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/xinference	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/xunfei	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/zhipu	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/zhipu_4v	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/common	0.770s
+?   	github.com/QuantumNous/new-api/relay/common_handler	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/constant	0.338s
+ok  	github.com/QuantumNous/new-api/relay/helper	3.702s
+ok  	github.com/QuantumNous/new-api/router	1.055s
+ok  	github.com/QuantumNous/new-api/service	5.608s
+ok  	github.com/QuantumNous/new-api/service/authz	1.212s
+ok  	github.com/QuantumNous/new-api/service/passkey	1.196s
+ok  	github.com/QuantumNous/new-api/setting	0.671s
+?   	github.com/QuantumNous/new-api/setting/billing_setting	[no test files]
+ok  	github.com/QuantumNous/new-api/setting/config	0.670s
+ok  	github.com/QuantumNous/new-api/setting/console_setting	0.686s
+ok  	github.com/QuantumNous/new-api/setting/model_setting	0.773s
+ok  	github.com/QuantumNous/new-api/setting/operation_setting	0.775s
+?   	github.com/QuantumNous/new-api/setting/perf_metrics_setting	[no test files]
+?   	github.com/QuantumNous/new-api/setting/performance_setting	[no test files]
+ok  	github.com/QuantumNous/new-api/setting/ratio_setting	0.659s
+ok  	github.com/QuantumNous/new-api/setting/reasoning	0.494s
+ok  	github.com/QuantumNous/new-api/setting/system_setting	0.457s
+?   	github.com/QuantumNous/new-api/types	[no test files]
+FAIL

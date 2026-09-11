@@ -1,0 +1,25 @@
+{
+  "id": "B11-audit-postgres-separate",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-controller-audit.test.exe",
+    "-test.run=^TestManageUserQuota",
+    "-test.v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "3fa6037c1c0dadb7f2465fde35452d05b0a96023",
+  "started_at": "2026-09-11T03:33:43.818Z",
+  "finished_at": "2026-09-11T03:34:26.980Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": true
+  },
+  "log": "output.log"
+}

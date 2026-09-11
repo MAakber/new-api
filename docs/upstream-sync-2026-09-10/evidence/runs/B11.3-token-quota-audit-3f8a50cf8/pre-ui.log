@@ -1,0 +1,89 @@
+$ vitest run --config vitest.sync.config.ts "--maxWorkers=4" src/features/usage-logs/
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx (5 tests | 5 failed) 310ms
+   ❯ quota adjustment log localization (5)
+     × user.quota_add switches language in the preview and details 165ms
+     × user.quota_add switches language in the preview and details 57ms
+     × user.quota_subtract switches language in the preview and details 41ms
+     × user.quota_override switches language in the preview and details 42ms
+     × preserves legacy formatted quota parameters and unknown-action fallback 3ms
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/usage-logs/audit/__tests__/viewer.test.tsx (31 tests | 2 failed) 5516ms
+   × keeps the ID outside long-name truncation and shows complete details (mobile=false) 31ms
+   × keeps the ID outside long-name truncation and shows complete details (mobile=true) 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > keeps the ID outside long-name truncation and shows complete details (mobile=false)
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > keeps the ID outside long-name truncation and shows complete details (mobile=false)
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > keeps the ID outside long-name truncation and shows complete details (mobile=false)
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > keeps the ID outside long-name truncation and shows complete details (mobile=true)
+TypeError: media.addEventListener is not a function
+ ❯ src/hooks/use-media-query.ts:35:13
+     33|
+     34|       const media = window.matchMedia(query)
+     35|       media.addEventListener('change', onStoreChange)
+       |             ^
+     36|       return () => media.removeEventListener('change', onStoreChange)
+     37|     },
+ ❯ subscribeToStore node_modules/react-dom/cjs/react-dom-client.development.js:8244:14
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13336:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15484:13
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15718:11
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > keeps the ID outside long-name truncation and shows complete details (mobile=false)
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > keeps the ID outside long-name truncation and shows complete details (mobile=true)
+TypeError: media.addEventListener is not a function
+ ❯ src/hooks/use-media-query.ts:35:13
+     33|
+     34|       const media = window.matchMedia(query)
+     35|       media.addEventListener('change', onStoreChange)
+       |             ^
+     36|       return () => media.removeEventListener('change', onStoreChange)
+     37|     },
+ ❯ subscribeToStore node_modules/react-dom/cjs/react-dom-client.development.js:8244:14
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13336:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15484:13
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15476:11
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx > quota adjustment log localization > user.quota_add switches language in the preview and details
+ FAIL  src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx > quota adjustment log localization > user.quota_add switches language in the preview and details
+ FAIL  src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx > quota adjustment log localization > user.quota_subtract switches language in the preview and details
+ FAIL  src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx > quota adjustment log localization > user.quota_override switches language in the preview and details
+ FAIL  src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx > quota adjustment log localization > preserves legacy formatted quota parameters and unknown-action fallback
+TypeError: localStorage.clear is not a function
+ ❯ src/features/channels/__tests__/channel-test-setup.ts:34:16
+     32| afterEach(() => {
+     33|   cleanup()
+     34|   localStorage.clear()
+       |                ^
+     35| })
+     36|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+
+ Test Files  2 failed | 3 passed (5)
+      Tests  7 failed | 74 passed (81)
+   Start at  11:21:47
+   Duration  22.07s (import 62%, tests 15%, environment 10%, transform 8%, setup 5%)
+
+error: script "test:sync" exited with code 1

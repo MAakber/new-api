@@ -8,10 +8,12 @@
     "note": "Exact git archive of released downstream commit plus the same integration test fixture."
   },
   "current": {
-    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B10-model-current.test.exe",
-    "source_commit": "fb8bf8ea020f18b813bedb34f3dfa140ac8d6c0c",
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-current.test.exe",
+    "source_commit": "4478985195a38c2463863c8caaf6264ba8e1ec8e",
     "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
-    "build_evidence": "evidence/runs/B10-build-current-fixture/result.json",
-    "sha256": "4673c118f16137b44bac30fb0667dad7e9d6a22e8f108fccdc435efcf847aefd"
+    "build_evidence": "evidence/runs/B11-build-current-fixture/result.json",
+    "sha256": "a6dbcbd9057e4d60ff48530ecc4c188c976c1d5ead00f58c09b769a16f20a1cd",
+    "wallet_fixture_sha256": "d5cde26bb8c90afdbc3aab844a4c724b8ec6341745d8556276169275baf91c27",
+    "rollback_fixture_sha256": "7c46d4d1852ba911302efd32650ff7f2757c5b1a98f36f6c88296b8a021d0dfd"
   }
 }

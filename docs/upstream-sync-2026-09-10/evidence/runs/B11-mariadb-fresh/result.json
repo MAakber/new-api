@@ -1,0 +1,35 @@
+{
+  "id": "B11-mariadb-fresh",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-current.test.exe",
+    "-test.run=^TestDatabaseUpgradePreservesDownstreamData$",
+    "-test.v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "4478985195a38c2463863c8caaf6264ba8e1ec8e",
+  "started_at": "2026-09-11T03:50:15.483Z",
+  "finished_at": "2026-09-11T03:50:28.202Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log",
+  "runner_commit": "4478985195a38c2463863c8caaf6264ba8e1ec8e",
+  "fixture": {
+    "flavor": "mariadb",
+    "phase": "fresh",
+    "database": "codex_sync_b11_fresh",
+    "log_database": "codex_sync_b11_fresh_log",
+    "artifact_sha256": "a6dbcbd9057e4d60ff48530ecc4c188c976c1d5ead00f58c09b769a16f20a1cd",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B11-build-current-fixture/result.json"
+  }
+}

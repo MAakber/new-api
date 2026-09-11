@@ -1,0 +1,17 @@
+=== RUN   TestWalletSchemaMigrationContracts
+[SYS] 2026/09/11 - 11:45:49 | SQL_DSN not set, using SQLite as database 
+    wallet_migration_test.go:24: TEST_WALLET_DSN: 3.50.4
+=== RUN   TestWalletSchemaMigrationContracts/downstream_records_and_constraints
+=== RUN   TestWalletSchemaMigrationContracts/downstream_records_and_constraints/task_state_noop_keeps_only_a_valid_lease
+
+2026/09/11 11:45:50 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state:result` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+
+2026/09/11 11:45:50 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+=== NAME  TestWalletSchemaMigrationContracts
+    wallet_migration_test.go:126: fresh schema, legacy startup rejection, partial/repeated migration, signed large balances, exact totals and downstream data verified
+--- PASS: TestWalletSchemaMigrationContracts (0.42s)
+    --- PASS: TestWalletSchemaMigrationContracts/downstream_records_and_constraints (0.01s)
+        --- PASS: TestWalletSchemaMigrationContracts/downstream_records_and_constraints/task_state_noop_keeps_only_a_valid_lease (0.01s)
+PASS

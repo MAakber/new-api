@@ -1,0 +1,10 @@
+=== RUN   TestWalletMigrateReleasedSchema
+[SYS] 2026/09/11 - 11:54:10 | using MySQL as database 
+    wallet_migration_test.go:133: TEST_WALLET_RELEASED_DSN: 11.4.4-MariaDB-ubu2404
+    wallet_migration_test.go:145: released users.quota: bigint (bigint(20))
+    wallet_migration_test.go:145: released users.used_quota: bigint (bigint(20))
+    wallet_migration_test.go:145: released users.aff_quota: bigint (bigint(20))
+    wallet_migration_test.go:145: released users.aff_history: bigint (bigint(20))
+    wallet_migration_test.go:157: released schema already has signed BIGINT wallet columns; no ALTER is necessary
+--- PASS: TestWalletMigrateReleasedSchema (0.11s)
+PASS

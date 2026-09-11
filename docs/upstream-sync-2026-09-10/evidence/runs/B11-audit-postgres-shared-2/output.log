@@ -1,0 +1,515 @@
+=== RUN   TestAPITokenAuditDatabaseMatrix
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false
+
+2026/09/11 11:33:17 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[554.168ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097597096400300[0m
+    token_test.go:614: isolated database: newapi_audit_1789097597096400300 (postgres)
+    token_test.go:631: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/token/               --> github.com/QuantumNous/new-api/controller.AddToken (5 handlers)
+[GIN-debug] PUT    /api/token/               --> github.com/QuantumNous/new-api/controller.UpdateToken (5 handlers)
+[GIN-debug] DELETE /api/token/:id            --> github.com/QuantumNous/new-api/controller.DeleteToken (5 handlers)
+[GIN-debug] POST   /api/token/batch          --> github.com/QuantumNous/new-api/controller.DeleteTokenBatch (5 handlers)
+[GIN-debug] POST   /api/token/batch/keys     --> github.com/QuantumNous/new-api/controller.GetTokenKeysBatch (5 handlers)
+[GIN-debug] POST   /api/token/:id/key        --> github.com/QuantumNous/new-api/controller.GetTokenKey (6 handlers)
+[GIN-debug] GET    /api/token/               --> github.com/QuantumNous/new-api/controller.GetAllTokens (5 handlers)
+[GIN-debug] GET    /api/token/:id            --> github.com/QuantumNous/new-api/controller.GetToken (5 handlers)
+[GIN-debug] GET    /api/token/search         --> github.com/QuantumNous/new-api/controller.SearchTokens (5 handlers)
+[GIN-debug] GET    /api/audit/self           --> github.com/QuantumNous/new-api/controller.GetAuditLogs (4 handlers)
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/create
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/invalid_create
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/malformed_body
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/validation_error_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/create_storage_failure
+
+2026/09/11 11:33:17 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/normalized_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/configuration_values_stay_private
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/unchanged_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/successful_response_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/update_storage_failure
+
+2026/09/11 11:33:18 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/foreign_update
+
+2026/09/11 11:33:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.518ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 23 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 23 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/disable
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/expired_enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/foreign_delete
+
+2026/09/11 11:33:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 33 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 33 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/missing_delete
+
+2026/09/11 11:33:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.554ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 999999 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 999999 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/PAT_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/foreign_key_view
+
+2026/09/11 11:33:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 41 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 41 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/rate_limited_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/batch_delete_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/empty_batch_delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/batch_keys_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/batch_keys_no_matches
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/empty_batch_keys
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/bounded_batch_metadata
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/reads_and_unauthenticated_writes_add_no_operation_audit
+
+2026/09/11 11:33:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 999999 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 999999 ORDER BY "tokens"."id" LIMIT 1
+
+2026/09/11 11:33:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[1.097ms] [34;1m[rows:0][0m SELECT * FROM "users" WHERE access_token = 'Bearer' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/09/11 11:33:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.505ms] [34;1m[rows:0][0m SELECT * FROM "users" WHERE access_token = 'Bearer' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/self_audit_excludes_other_owners
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/audit_storage_failure_preserves_operation_result
+[ERR] 2026/09/11 - 11:33:18 | 202609110333182784205008268d9d6EADIsdxe | audit log write failed (request_id=202609110333182784205008268d9d6EADIsdxe): audit unavailable 
+
+2026/09/11 11:33:18 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+[0m[35m[warn] [0mremoving callback `token-audit:log-fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true
+
+2026/09/11 11:33:18 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[410.325ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097598284848200[0m
+    token_test.go:614: isolated database: newapi_audit_1789097598284848200 (postgres)
+
+2026/09/11 11:33:19 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[431.958ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097598873448900[0m
+    token_test.go:621: isolated database: newapi_audit_1789097598873448900 (postgres)
+    token_test.go:631: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/token/               --> github.com/QuantumNous/new-api/controller.AddToken (5 handlers)
+[GIN-debug] PUT    /api/token/               --> github.com/QuantumNous/new-api/controller.UpdateToken (5 handlers)
+[GIN-debug] DELETE /api/token/:id            --> github.com/QuantumNous/new-api/controller.DeleteToken (5 handlers)
+[GIN-debug] POST   /api/token/batch          --> github.com/QuantumNous/new-api/controller.DeleteTokenBatch (5 handlers)
+[GIN-debug] POST   /api/token/batch/keys     --> github.com/QuantumNous/new-api/controller.GetTokenKeysBatch (5 handlers)
+[GIN-debug] POST   /api/token/:id/key        --> github.com/QuantumNous/new-api/controller.GetTokenKey (6 handlers)
+[GIN-debug] GET    /api/token/               --> github.com/QuantumNous/new-api/controller.GetAllTokens (5 handlers)
+[GIN-debug] GET    /api/token/:id            --> github.com/QuantumNous/new-api/controller.GetToken (5 handlers)
+[GIN-debug] GET    /api/token/search         --> github.com/QuantumNous/new-api/controller.SearchTokens (5 handlers)
+[GIN-debug] GET    /api/audit/self           --> github.com/QuantumNous/new-api/controller.GetAuditLogs (4 handlers)
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/create
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/invalid_create
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/malformed_body
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/validation_error_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/create_storage_failure
+
+2026/09/11 11:33:19 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/normalized_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/configuration_values_stay_private
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/unchanged_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/successful_response_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/update_storage_failure
+
+2026/09/11 11:33:19 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/foreign_update
+
+2026/09/11 11:33:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.519ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 23 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 23 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/disable
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/expired_enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/foreign_delete
+
+2026/09/11 11:33:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.526ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 33 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 33 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/missing_delete
+
+2026/09/11 11:33:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.524ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 999999 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 999999 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/PAT_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/foreign_key_view
+
+2026/09/11 11:33:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.531ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 41 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 41 ORDER BY "tokens"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/rate_limited_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/batch_delete_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/empty_batch_delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/batch_keys_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/batch_keys_no_matches
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/empty_batch_keys
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/bounded_batch_metadata
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/reads_and_unauthenticated_writes_add_no_operation_audit
+
+2026/09/11 11:33:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[0.520ms] [34;1m[rows:0][0m SELECT * FROM "tokens" WHERE (id = 999999 and user_id = 1) AND "tokens"."deleted_at" IS NULL AND "tokens"."id" = 999999 ORDER BY "tokens"."id" LIMIT 1
+
+2026/09/11 11:33:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[0.526ms] [34;1m[rows:0][0m SELECT * FROM "users" WHERE access_token = 'Bearer' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+
+2026/09/11 11:33:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[1.064ms] [34;1m[rows:0][0m SELECT * FROM "users" WHERE access_token = 'Bearer' AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/self_audit_excludes_other_owners
+=== RUN   TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/audit_storage_failure_preserves_operation_result
+[ERR] 2026/09/11 - 11:33:19 | 202609110333197189327008268d9d6ubHVZg4v | audit log write failed (request_id=202609110333197189327008268d9d6ubHVZg4v): audit unavailable 
+
+2026/09/11 11:33:19 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+[0m[35m[warn] [0mremoving callback `token-audit:log-fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+--- PASS: TestAPITokenAuditDatabaseMatrix (2.63s)
+    --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false (1.19s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/create (0.02s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/invalid_create (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/malformed_body (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/validation_error_exceeds_audit_buffer (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/create_storage_failure (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/normalized_update (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/configuration_values_stay_private (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/unchanged_update (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/successful_response_exceeds_audit_buffer (0.06s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/update_storage_failure (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/foreign_update (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/disable (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/enable (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/expired_enable (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/foreign_delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/missing_delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/PAT_key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/foreign_key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/rate_limited_key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/batch_delete_partial_and_duplicate (0.02s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/empty_batch_delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/batch_keys_partial_and_duplicate (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/batch_keys_no_matches (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/empty_batch_keys (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/bounded_batch_metadata (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/reads_and_unauthenticated_writes_add_no_operation_audit (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/self_audit_excludes_other_owners (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=false/audit_storage_failure_preserves_operation_result (0.01s)
+    --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true (1.44s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/create (0.02s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/invalid_create (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/malformed_body (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/validation_error_exceeds_audit_buffer (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/create_storage_failure (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/normalized_update (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/configuration_values_stay_private (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/unchanged_update (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/successful_response_exceeds_audit_buffer (0.06s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/update_storage_failure (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/foreign_update (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/disable (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/enable (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/expired_enable (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/foreign_delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/missing_delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/PAT_key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/foreign_key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/rate_limited_key_view (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/batch_delete_partial_and_duplicate (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/empty_batch_delete (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/batch_keys_partial_and_duplicate (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/batch_keys_no_matches (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/empty_batch_keys (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/bounded_batch_metadata (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/reads_and_unauthenticated_writes_add_no_operation_audit (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/self_audit_excludes_other_owners (0.01s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/postgres/separate_log=true/audit_storage_failure_preserves_operation_result (0.01s)
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/add
+
+2026/09/11 11:33:20 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[413.387ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097599728958300[0m
+    user_manage_test.go:219: isolated database: newapi_audit_1789097599728958300 (postgres)
+    user_manage_test.go:219: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/subtract
+
+2026/09/11 11:33:20 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[406.506ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097600407851700[0m
+    user_manage_test.go:219: isolated database: newapi_audit_1789097600407851700 (postgres)
+    user_manage_test.go:219: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_up
+
+2026/09/11 11:33:21 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.041ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097601081283600[0m
+    user_manage_test.go:219: isolated database: newapi_audit_1789097601081283600 (postgres)
+    user_manage_test.go:219: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_down
+
+2026/09/11 11:33:22 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[399.796ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097601746332100[0m
+    user_manage_test.go:219: isolated database: newapi_audit_1789097601746332100 (postgres)
+    user_manage_test.go:219: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_unchanged
+
+2026/09/11 11:33:22 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[399.496ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097602411711000[0m
+    user_manage_test.go:219: isolated database: newapi_audit_1789097602411711000 (postgres)
+    user_manage_test.go:219: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_zero
+
+2026/09/11 11:33:23 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[399.996ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097603069316400[0m
+    user_manage_test.go:219: isolated database: newapi_audit_1789097603069316400 (postgres)
+    user_manage_test.go:219: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_negative
+
+2026/09/11 11:33:24 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[402.649ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097603725930200[0m
+    user_manage_test.go:219: isolated database: newapi_audit_1789097603725930200 (postgres)
+    user_manage_test.go:219: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+--- PASS: TestManageUserQuotaRecordsTopupAndAudit (4.66s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/add (0.68s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/subtract (0.67s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_up (0.66s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_down (0.67s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_unchanged (0.66s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_zero (0.66s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_negative (0.66s)
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/zero_add
+
+2026/09/11 11:33:24 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[397.059ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097604383674100[0m
+    user_manage_test.go:296: isolated database: newapi_audit_1789097604383674100 (postgres)
+    user_manage_test.go:296: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/negative_subtract
+
+2026/09/11 11:33:25 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[398.701ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097605027110800[0m
+    user_manage_test.go:296: isolated database: newapi_audit_1789097605027110800 (postgres)
+    user_manage_test.go:296: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/invalid_mode
+
+2026/09/11 11:33:26 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[400.647ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097605674484600[0m
+    user_manage_test.go:296: isolated database: newapi_audit_1789097605674484600 (postgres)
+    user_manage_test.go:296: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/add_update_error
+
+2026/09/11 11:33:26 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[398.046ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097606324346400[0m
+    user_manage_test.go:296: isolated database: newapi_audit_1789097606324346400 (postgres)
+    user_manage_test.go:296: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/subtract_update_error
+
+2026/09/11 11:33:27 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.773ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097606972600900[0m
+    user_manage_test.go:296: isolated database: newapi_audit_1789097606972600900 (postgres)
+    user_manage_test.go:296: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/override_update_error
+
+2026/09/11 11:33:28 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.608ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097607620136700[0m
+    user_manage_test.go:296: isolated database: newapi_audit_1789097607620136700 (postgres)
+    user_manage_test.go:296: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+--- PASS: TestManageUserQuotaFailuresDoNotRecordTopup (3.88s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/zero_add (0.64s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/negative_subtract (0.65s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/invalid_mode (0.65s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/add_update_error (0.65s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/subtract_update_error (0.65s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/override_update_error (0.65s)
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/logs
+
+2026/09/11 11:33:28 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[396.995ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097608267825800[0m
+    user_manage_test.go:338: isolated database: newapi_audit_1789097608267825800 (postgres)
+    user_manage_test.go:338: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+[SYS] 2026/09/11 - 11:33:28 | failed to record log: quota log unavailable 
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/audit_logs
+
+2026/09/11 11:33:29 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[409.164ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097608915269500[0m
+    user_manage_test.go:338: isolated database: newapi_audit_1789097608915269500 (postgres)
+    user_manage_test.go:338: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+[ERR] 2026/09/11 - 11:33:29 | SYSTEM | audit log write failed (request_id=quota-test-request): quota log unavailable 
+--- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment (1.35s)
+    --- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/logs (0.65s)
+    --- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/audit_logs (0.70s)
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/zero_id
+
+2026/09/11 11:33:30 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[424.747ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097609618081400[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097609618081400 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/negative_id
+
+2026/09/11 11:33:30 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.336ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097610299490600[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097610299490600 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/missing
+
+2026/09/11 11:33:31 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.094ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097610955977100[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097610955977100 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+
+2026/09/11 11:33:31 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[1.628ms] [34;1m[rows:0][0m SELECT * FROM "users" WHERE "users"."id" = 12345 AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1 FOR UPDATE
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/deleted
+
+2026/09/11 11:33:32 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.893ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097611609155100[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097611609155100 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+
+2026/09/11 11:33:32 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[1.360ms] [34;1m[rows:0][0m SELECT * FROM "users" WHERE "users"."id" = 1 AND "users"."deleted_at" IS NULL ORDER BY "users"."id" LIMIT 1 FOR UPDATE
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/peer_admin
+
+2026/09/11 11:33:32 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.578ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097612263665800[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097612263665800 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/higher_role
+
+2026/09/11 11:33:33 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[398.429ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097612917221200[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097612917221200 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/read_error
+
+2026/09/11 11:33:33 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[408.083ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097613561386800[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097613561386800 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+
+2026/09/11 11:33:34 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+[0m[35m[warn] [0mremoving callback `test:quota_read_error` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/add_overflow
+
+2026/09/11 11:33:34 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[398.685ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097614214062900[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097614214062900 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+[SYS] 2026/09/11 - 11:33:34 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199254740992e+15, clamped=9007199254740991 
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/subtract_underflow
+
+2026/09/11 11:33:35 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[401.213ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097614864269400[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097614864269400 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+[SYS] 2026/09/11 - 11:33:35 | quota conversion (WalletQuotaFromDecimal) underflow: original=-9.007199254740992e+15, clamped=-9007199254740991 
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_add
+
+2026/09/11 11:33:35 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[398.836ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097615518378700[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097615518378700 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_subtract
+
+2026/09/11 11:33:36 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[402.111ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097616165272700[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097616165272700 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_override
+
+2026/09/11 11:33:37 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[405.748ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097616815473900[0m
+    user_manage_test.go:385: isolated database: newapi_audit_1789097616815473900 (postgres)
+    user_manage_test.go:385: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+--- PASS: TestManageUserQuotaTargetsAndWalletBounds (7.85s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/zero_id (0.68s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/negative_id (0.66s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/missing (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/deleted (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/peer_admin (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/higher_role (0.64s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/read_error (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/add_overflow (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/subtract_underflow (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_add (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_subtract (0.65s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_override (0.65s)
+=== RUN   TestManageUserQuotaMiddlewareKeepsOneOperationPerRequest
+
+2026/09/11 11:33:37 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[396.128ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097617468364200[0m
+    user_manage_test.go:433: isolated database: newapi_audit_1789097617468364200 (postgres)
+    user_manage_test.go:433: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+--- PASS: TestManageUserQuotaMiddlewareKeepsOneOperationPerRequest (0.68s)
+=== RUN   TestManageUserQuotaConcurrentSnapshots
+
+2026/09/11 11:33:38 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[397.664ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097618149218100[0m
+    user_manage_test.go:489: isolated database: newapi_audit_1789097618149218100 (postgres)
+    user_manage_test.go:489: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+
+2026/09/11 11:33:38 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+[0m[35m[warn] [0mremoving callback `test:concurrent_quota_start` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+--- PASS: TestManageUserQuotaConcurrentSnapshots (0.67s)
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations
+
+2026/09/11 11:33:39 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[419.142ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097618818168100[0m
+    user_manage_test.go:555: isolated database: newapi_audit_1789097618818168100 (postgres)
+    user_manage_test.go:555: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations
+
+2026/09/11 11:33:39 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[412.631ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097619516640500[0m
+    user_manage_test.go:555: isolated database: newapi_audit_1789097619516640500 (postgres)
+    user_manage_test.go:555: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations
+
+2026/09/11 11:33:40 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[415.892ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097620193047200[0m
+    user_manage_test.go:555: isolated database: newapi_audit_1789097620193047200 (postgres)
+    user_manage_test.go:555: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference
+
+2026/09/11 11:33:41 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[448.351ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097620874154800[0m
+    user_manage_test.go:555: isolated database: newapi_audit_1789097620874154800 (postgres)
+    user_manage_test.go:555: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache
+
+2026/09/11 11:33:42 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[431.644ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097621585817800[0m
+    user_manage_test.go:555: isolated database: newapi_audit_1789097621585817800 (postgres)
+    user_manage_test.go:555: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+
+2026/09/11 11:33:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:63 [35;1mquota rollback
+[0m[33m[0.506ms] [34;1m[rows:1][0m UPDATE "users" SET "quota"=500 WHERE id = 1 AND "users"."deleted_at" IS NULL
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change
+
+2026/09/11 11:33:42 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[415.135ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097622287112700[0m
+    user_manage_test.go:555: isolated database: newapi_audit_1789097622287112700 (postgres)
+    user_manage_test.go:555: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+[SYS] 2026/09/11 - 11:33:43 | failed to sync manual quota adjustment for user 1: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:33:43 | failed to synchronously populate user cache: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:33:43 | failed to synchronously populate user cache: ERR quota cache unavailable 
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created
+
+2026/09/11 11:33:43 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[411.538ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789097623014012300[0m
+    user_manage_test.go:555: isolated database: newapi_audit_1789097623014012300 (postgres)
+    user_manage_test.go:555: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit, separate log database: false
+--- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference (4.89s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations (0.70s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations (0.68s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations (0.68s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference (0.71s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache (0.70s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change (0.73s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created (0.69s)
+PASS

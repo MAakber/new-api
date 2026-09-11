@@ -1,0 +1,17 @@
+{
+  "flavor": "mariadb",
+  "candidate": "4478985195a38c2463863c8caaf6264ba8e1ec8e",
+  "rollback": "a335f0dd55f00ac0bc89a830f62617247551accc",
+  "status": "passed",
+  "checked_at": "2026-09-11T03:54:24.984Z",
+  "checks": [
+    "evidence/runs/B11-accounting-mariadb/result.json",
+    "evidence/runs/B11-mariadb-fresh/result.json",
+    "evidence/runs/B11-mariadb-seed/result.json",
+    "evidence/runs/B11-mariadb-explicit-upgrade-2/result.json",
+    "evidence/runs/B11-mariadb-verify/result.json",
+    "evidence/runs/B11-mariadb-rollback-seed/result.json",
+    "evidence/runs/B11-mariadb-rollback-rollback/result.json",
+    "evidence/runs/B11-mariadb-rollback-verify/result.json"
+  ]
+}

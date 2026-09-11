@@ -2744,12 +2744,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated wallet bounds, credit guards and overflow-safe rate limits. Preserved subscription/registration redemption and the B10 refund/purchase fixes, retained int32 request clamps and audited conversions. User wallet tags explicitly use signed BIGINT so AutoMigrate cannot shrink migrated columns. Relevant backend regressions pass; explicit four-engine migration, precision and rollback acceptance remains pending.",
+    "resolution_commits": [
+      "a335f0dd55f00ac0bc89a830f62617247551accc"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B11.1-wallet-domain-a073f74b3/resolution.json",
+      "evidence/B11-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -6519,12 +6524,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Transactional signed wallet adjustment preserves pending reservations and exact Redis integer differences; correlated topup/audit logs and allowlisted token metadata compose downstream diagnostics. Kept avatar/session fixture coverage, adapted UI tests to project hooks and real browser fixture methods, and enrolled quota tests. Targeted backend and 81 UI tests plus TypeScript pass; schema and multi-engine acceptance pending.",
+    "resolution_commits": [
+      "3fa6037c1c0dadb7f2465fde35452d05b0a96023"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B11.3-token-quota-audit-3f8a50cf8/resolution.json",
+      "evidence/B11-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

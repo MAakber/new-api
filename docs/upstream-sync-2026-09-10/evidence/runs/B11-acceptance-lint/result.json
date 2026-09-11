@@ -1,0 +1,41 @@
+{
+  "id": "B11-acceptance-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/usage-logs/audit/__tests__/details.test.tsx",
+    "src/features/usage-logs/audit/__tests__/viewer.test.tsx",
+    "src/features/usage-logs/audit/components/audit-detail-fields.tsx",
+    "src/features/usage-logs/audit/components/audit-log-columns.tsx",
+    "src/features/usage-logs/audit/components/audit-log-details-dialog.tsx",
+    "src/features/usage-logs/audit/lib/audit-details.ts",
+    "src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx",
+    "src/features/usage-logs/components/columns/common-logs-columns.tsx",
+    "src/features/usage-logs/components/dialogs/details-dialog.tsx",
+    "src/features/usage-logs/lib/format.ts",
+    "src/features/usage-logs/lib/quota-audit-operation.ts",
+    "src/features/usage-logs/types.ts",
+    "src/i18n/static-keys.ts",
+    "vitest.sync.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
+  "started_at": "2026-09-11T03:55:14.063Z",
+  "finished_at": "2026-09-11T03:55:15.133Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

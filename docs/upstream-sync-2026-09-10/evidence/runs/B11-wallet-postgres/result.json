@@ -1,0 +1,25 @@
+{
+  "id": "B11-wallet-postgres",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-current.test.exe",
+    "-test.run=^TestWalletSchemaMigrationContracts$",
+    "-test.v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "4478985195a38c2463863c8caaf6264ba8e1ec8e",
+  "started_at": "2026-09-11T03:45:49.069Z",
+  "finished_at": "2026-09-11T03:45:55.267Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

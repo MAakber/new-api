@@ -1,0 +1,26 @@
+{
+  "id": "B11-acceptance-go",
+  "command": [
+    "go",
+    "test",
+    "./...",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
+  "started_at": "2026-09-11T03:54:09.483Z",
+  "finished_at": "2026-09-11T03:55:54.631Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

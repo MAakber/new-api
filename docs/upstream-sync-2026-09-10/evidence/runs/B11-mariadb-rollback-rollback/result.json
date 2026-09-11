@@ -1,0 +1,31 @@
+{
+  "id": "B11-mariadb-rollback-rollback",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-compatible.test.exe",
+    "-test.run=^TestWalletCompatibleRollback$",
+    "-test.v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "a335f0dd55f00ac0bc89a830f62617247551accc",
+  "started_at": "2026-09-11T03:54:18.681Z",
+  "finished_at": "2026-09-11T03:54:21.995Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log",
+  "runner_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
+  "fixture": {
+    "flavor": "mariadb",
+    "artifact_sha256": "ab108a35d3b510364692828bd00f70880d1e8c24ca2c343b8c3ad1b4d9756300",
+    "build_evidence": "evidence/runs/B11-build-rollback-fixture/result.json"
+  }
+}

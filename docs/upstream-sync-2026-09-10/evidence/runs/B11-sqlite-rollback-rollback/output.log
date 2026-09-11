@@ -1,0 +1,5 @@
+=== RUN   TestWalletCompatibleRollback
+[SYS] 2026/09/11 - 11:50:14 | SQL_DSN not set, using SQLite as database 
+    wallet_rollback_test.go:54: TEST_WALLET_ROLLBACK_DSN: 3.50.4
+--- PASS: TestWalletCompatibleRollback (0.10s)
+PASS

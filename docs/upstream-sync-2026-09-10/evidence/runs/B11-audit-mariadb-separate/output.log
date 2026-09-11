@@ -1,0 +1,213 @@
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/add
+    user_manage_test.go:219: isolated database: newapi_audit_1789097670496647300 (mysql)
+    user_manage_test.go:219: isolated database: newapi_audit_1789097670502841900 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/subtract
+    user_manage_test.go:219: isolated database: newapi_audit_1789097672022231300 (mysql)
+    user_manage_test.go:219: isolated database: newapi_audit_1789097672027814600 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_up
+    user_manage_test.go:219: isolated database: newapi_audit_1789097673536937100 (mysql)
+    user_manage_test.go:219: isolated database: newapi_audit_1789097673541953100 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_down
+    user_manage_test.go:219: isolated database: newapi_audit_1789097675059269000 (mysql)
+    user_manage_test.go:219: isolated database: newapi_audit_1789097675064798700 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_unchanged
+    user_manage_test.go:219: isolated database: newapi_audit_1789097676590825800 (mysql)
+    user_manage_test.go:219: isolated database: newapi_audit_1789097676596825200 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_zero
+    user_manage_test.go:219: isolated database: newapi_audit_1789097678026761300 (mysql)
+    user_manage_test.go:219: isolated database: newapi_audit_1789097678032547200 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_negative
+    user_manage_test.go:219: isolated database: newapi_audit_1789097679553844300 (mysql)
+    user_manage_test.go:219: isolated database: newapi_audit_1789097679559707800 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+--- PASS: TestManageUserQuotaRecordsTopupAndAudit (10.58s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/add (1.53s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/subtract (1.51s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_up (1.52s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_down (1.53s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_unchanged (1.44s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_zero (1.53s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_negative (1.52s)
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/zero_add
+    user_manage_test.go:296: isolated database: newapi_audit_1789097681072168600 (mysql)
+    user_manage_test.go:296: isolated database: newapi_audit_1789097681078389400 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/negative_subtract
+    user_manage_test.go:296: isolated database: newapi_audit_1789097682159803600 (mysql)
+    user_manage_test.go:296: isolated database: newapi_audit_1789097682165314100 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/invalid_mode
+    user_manage_test.go:296: isolated database: newapi_audit_1789097683222128300 (mysql)
+    user_manage_test.go:296: isolated database: newapi_audit_1789097683228877900 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/add_update_error
+    user_manage_test.go:296: isolated database: newapi_audit_1789097684379484700 (mysql)
+    user_manage_test.go:296: isolated database: newapi_audit_1789097684384886300 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/subtract_update_error
+    user_manage_test.go:296: isolated database: newapi_audit_1789097685496721400 (mysql)
+    user_manage_test.go:296: isolated database: newapi_audit_1789097685503046300 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/override_update_error
+    user_manage_test.go:296: isolated database: newapi_audit_1789097686648426900 (mysql)
+    user_manage_test.go:296: isolated database: newapi_audit_1789097686655219600 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+--- PASS: TestManageUserQuotaFailuresDoNotRecordTopup (6.70s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/zero_add (1.09s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/negative_subtract (1.06s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/invalid_mode (1.16s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/add_update_error (1.12s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/subtract_update_error (1.15s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/override_update_error (1.12s)
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/logs
+    user_manage_test.go:338: isolated database: newapi_audit_1789097687770457900 (mysql)
+    user_manage_test.go:338: isolated database: newapi_audit_1789097687776205300 (mysql)
+    user_manage_test.go:338: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+[SYS] 2026/09/11 - 11:34:48 | failed to record log: quota log unavailable 
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/audit_logs
+    user_manage_test.go:338: isolated database: newapi_audit_1789097688991090800 (mysql)
+    user_manage_test.go:338: isolated database: newapi_audit_1789097688996480300 (mysql)
+    user_manage_test.go:338: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+[ERR] 2026/09/11 - 11:34:50 | SYSTEM | audit log write failed (request_id=quota-test-request): quota log unavailable 
+--- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment (2.42s)
+    --- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/logs (1.22s)
+    --- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/audit_logs (1.20s)
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/zero_id
+    user_manage_test.go:385: isolated database: newapi_audit_1789097690193936100 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097690199409400 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/negative_id
+    user_manage_test.go:385: isolated database: newapi_audit_1789097691256970300 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097691262256500 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/missing
+    user_manage_test.go:385: isolated database: newapi_audit_1789097692310926900 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097692316551700 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+
+2026/09/11 11:34:53 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[1.036ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 12345 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1 FOR UPDATE
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/deleted
+    user_manage_test.go:385: isolated database: newapi_audit_1789097693450811700 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097693456149800 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+
+2026/09/11 11:34:54 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[1.540ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1 FOR UPDATE
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/peer_admin
+    user_manage_test.go:385: isolated database: newapi_audit_1789097694620334900 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097694626313700 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/higher_role
+    user_manage_test.go:385: isolated database: newapi_audit_1789097695737555300 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097695743437800 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/read_error
+    user_manage_test.go:385: isolated database: newapi_audit_1789097696903323800 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097696908792400 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+
+2026/09/11 11:34:57 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+[0m[35m[warn] [0mremoving callback `test:quota_read_error` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/add_overflow
+    user_manage_test.go:385: isolated database: newapi_audit_1789097697962539200 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097697968355400 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+[SYS] 2026/09/11 - 11:34:58 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199254740992e+15, clamped=9007199254740991 
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/subtract_underflow
+    user_manage_test.go:385: isolated database: newapi_audit_1789097699095771800 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097699102288100 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+[SYS] 2026/09/11 - 11:35:00 | quota conversion (WalletQuotaFromDecimal) underflow: original=-9.007199254740992e+15, clamped=-9007199254740991 
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_add
+    user_manage_test.go:385: isolated database: newapi_audit_1789097700197989100 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097700204264800 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_subtract
+    user_manage_test.go:385: isolated database: newapi_audit_1789097701296608600 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097701303276700 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_override
+    user_manage_test.go:385: isolated database: newapi_audit_1789097702339614000 (mysql)
+    user_manage_test.go:385: isolated database: newapi_audit_1789097702345434500 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+--- PASS: TestManageUserQuotaTargetsAndWalletBounds (13.20s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/zero_id (1.06s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/negative_id (1.05s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/missing (1.14s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/deleted (1.17s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/peer_admin (1.12s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/higher_role (1.17s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/read_error (1.06s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/add_overflow (1.13s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/subtract_underflow (1.10s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_add (1.10s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_subtract (1.04s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_override (1.06s)
+=== RUN   TestManageUserQuotaMiddlewareKeepsOneOperationPerRequest
+    user_manage_test.go:433: isolated database: newapi_audit_1789097703395411700 (mysql)
+    user_manage_test.go:433: isolated database: newapi_audit_1789097703401122400 (mysql)
+    user_manage_test.go:433: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+--- PASS: TestManageUserQuotaMiddlewareKeepsOneOperationPerRequest (2.29s)
+=== RUN   TestManageUserQuotaConcurrentSnapshots
+    user_manage_test.go:489: isolated database: newapi_audit_1789097705689380400 (mysql)
+    user_manage_test.go:489: isolated database: newapi_audit_1789097705695099900 (mysql)
+    user_manage_test.go:489: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+
+2026/09/11 11:35:06 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+[0m[35m[warn] [0mremoving callback `test:concurrent_quota_start` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+--- PASS: TestManageUserQuotaConcurrentSnapshots (1.14s)
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations
+    user_manage_test.go:555: isolated database: newapi_audit_1789097706828558400 (mysql)
+    user_manage_test.go:555: isolated database: newapi_audit_1789097706834898000 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations
+    user_manage_test.go:555: isolated database: newapi_audit_1789097708164887700 (mysql)
+    user_manage_test.go:555: isolated database: newapi_audit_1789097708170919200 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations
+    user_manage_test.go:555: isolated database: newapi_audit_1789097709474171100 (mysql)
+    user_manage_test.go:555: isolated database: newapi_audit_1789097709479189100 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference
+    user_manage_test.go:555: isolated database: newapi_audit_1789097710848643500 (mysql)
+    user_manage_test.go:555: isolated database: newapi_audit_1789097710854628300 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache
+    user_manage_test.go:555: isolated database: newapi_audit_1789097712156386600 (mysql)
+    user_manage_test.go:555: isolated database: newapi_audit_1789097712162040300 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+
+2026/09/11 11:35:13 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:63 [35;1mquota rollback
+[0m[33m[47.410ms] [34;1m[rows:1][0m UPDATE `users` SET `quota`=500 WHERE id = 10000 AND `users`.`deleted_at` IS NULL
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change
+    user_manage_test.go:555: isolated database: newapi_audit_1789097713426871800 (mysql)
+    user_manage_test.go:555: isolated database: newapi_audit_1789097713445442100 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+[SYS] 2026/09/11 - 11:35:14 | failed to sync manual quota adjustment for user 10000: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:35:14 | failed to synchronously populate user cache: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:35:14 | failed to synchronously populate user cache: ERR quota cache unavailable 
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created
+    user_manage_test.go:555: isolated database: newapi_audit_1789097714766806200 (mysql)
+    user_manage_test.go:555: isolated database: newapi_audit_1789097714772803400 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: true
+--- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference (9.25s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations (1.34s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations (1.31s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations (1.37s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference (1.31s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache (1.27s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change (1.34s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created (1.31s)
+PASS

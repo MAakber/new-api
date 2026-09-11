@@ -1,0 +1,5 @@
+=== RUN   TestWalletCompatibleRollback
+[SYS] 2026/09/11 - 11:54:19 | using MySQL as database 
+    wallet_rollback_test.go:54: TEST_WALLET_ROLLBACK_DSN: 5.7.44
+--- PASS: TestWalletCompatibleRollback (0.26s)
+PASS

@@ -1,0 +1,8 @@
+FAIL	github.com/QuantumNous/new-api/model [build failed]
+# github.com/QuantumNous/new-api/model [github.com/QuantumNous/new-api/model.test]
+model\wallet_migration_test.go:32:135: unknown field UserRpmLimit in struct literal of type User
+model\wallet_migration_test.go:33:130: unknown field UserRpmLimit in struct literal of type User
+model\wallet_rollback_test.go:50:213: unknown field UserRpmLimit in struct literal of type User
+model\wallet_rollback_test.go:51:97: unknown field UserRpmLimit in struct literal of type User
+model\wallet_rollback_test.go:75:29: user.UserRpmLimit undefined (type User has no field or method UserRpmLimit)
+FAIL

@@ -1,0 +1,22 @@
+=== RUN   TestWalletSchemaMigrationContracts
+[SYS] 2026/09/11 - 11:45:49 | using MySQL as database 
+    wallet_migration_test.go:24: TEST_WALLET_DSN: 11.4.4-MariaDB-ubu2404
+[SYS] 2026/09/11 - 11:45:53 | using MySQL as database 
+[SYS] 2026/09/11 - 11:45:53 | using MySQL as database 
+=== RUN   TestWalletSchemaMigrationContracts/downstream_records_and_constraints
+=== RUN   TestWalletSchemaMigrationContracts/downstream_records_and_constraints/task_state_noop_keeps_only_a_valid_lease
+
+2026/09/11 11:45:53 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state:result` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+
+2026/09/11 11:45:53 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+
+2026/09/11 11:45:58 [32mD:/10178/Projects/new-api-upstream-sync/model/migration_dialector.go:79 [33mSLOW SQL >= 200ms
+[0m[31;1m[364.685ms] [33m[rows:-][35m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = ? AND table_name = ? AND constraint_name = ?[0m
+=== NAME  TestWalletSchemaMigrationContracts
+    wallet_migration_test.go:126: fresh schema, legacy startup rejection, partial/repeated migration, signed large balances, exact totals and downstream data verified
+--- PASS: TestWalletSchemaMigrationContracts (10.63s)
+    --- PASS: TestWalletSchemaMigrationContracts/downstream_records_and_constraints (0.54s)
+        --- PASS: TestWalletSchemaMigrationContracts/downstream_records_and_constraints/task_state_noop_keeps_only_a_valid_lease (0.38s)
+PASS

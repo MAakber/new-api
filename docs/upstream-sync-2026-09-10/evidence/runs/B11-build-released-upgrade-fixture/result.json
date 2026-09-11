@@ -1,0 +1,28 @@
+{
+  "id": "B11-build-released-upgrade-fixture",
+  "command": [
+    "go",
+    "test",
+    "-c",
+    "-o",
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-migration-current.test.exe",
+    "./model"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
+  "started_at": "2026-09-11T03:53:21.428Z",
+  "finished_at": "2026-09-11T03:53:25.508Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

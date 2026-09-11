@@ -1,0 +1,17 @@
+{
+  "flavor": "sqlite",
+  "candidate": "4478985195a38c2463863c8caaf6264ba8e1ec8e",
+  "rollback": "a335f0dd55f00ac0bc89a830f62617247551accc",
+  "status": "passed",
+  "checked_at": "2026-09-11T03:54:10.536Z",
+  "checks": [
+    "evidence/runs/B11-accounting-sqlite/result.json",
+    "evidence/runs/B11-sqlite-fresh/result.json",
+    "evidence/runs/B11-sqlite-seed/result.json",
+    "evidence/runs/B11-sqlite-explicit-upgrade-2/result.json",
+    "evidence/runs/B11-sqlite-verify/result.json",
+    "evidence/runs/B11-sqlite-rollback-seed/result.json",
+    "evidence/runs/B11-sqlite-rollback-rollback/result.json",
+    "evidence/runs/B11-sqlite-rollback-verify/result.json"
+  ]
+}

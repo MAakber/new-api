@@ -68,3 +68,7 @@ Pending upstream 3f8a50cf8877683669cd812240a0beaf7b171c32 introduces AdjustUserQ
 ## 2026-09-11T02:49:41.155Z — A23 subscription transaction preservation
 
 Real B10 PostgreSQL testing reproduced a refund balance update committed outside its idempotency-record transaction. MySQL 5.7 testing also reproduced a downstream subscription redemption reading a stale plan snapshot and granting beyond the per-user cap. Refund quota and record now share one transaction; purchase-cap inspection uses a locking current read after the user lock. Four-engine regressions pass; evidence/B10-database-matrix.json retains pre-fix failures.
+
+## 2026-09-11T03:54:06.635Z — A24 wallet schema is measured, not inferred
+
+The original released binary creates signed BIGINT wallet columns on all three local external engines even though its Go tags say type:int. Earlier assumptions that those tags alone imply a 32-bit database or an automatic shrink were not established. Actual column metadata is authoritative. Keep explicit BIGINT tags to state the intended contract, and separately test genuine legacy INT schemas, partial migration and unsigned/missing columns. Already-compatible released databases need no ALTER. The original baseline is still not the selected rollback because it lacks the new wallet validation and authentication-format support; a335f0dd is built and rehearsed as the B11 compatible version. Production snapshot acceptance remains pending.

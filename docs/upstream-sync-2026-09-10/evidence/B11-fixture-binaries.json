@@ -1,0 +1,41 @@
+{
+  "baseline": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-baseline-2.test.exe",
+    "sha256": "605ef7dc1a75c026ae16d99e9542ba5c045697e31c767a10fec004e6b359b56f",
+    "source_commit": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B06-build-baseline-fixture-2/result.json",
+    "note": "Exact git archive of released downstream commit plus the same integration test fixture."
+  },
+  "current": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-current.test.exe",
+    "source_commit": "4478985195a38c2463863c8caaf6264ba8e1ec8e",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B11-build-current-fixture/result.json",
+    "sha256": "a6dbcbd9057e4d60ff48530ecc4c188c976c1d5ead00f58c09b769a16f20a1cd",
+    "wallet_fixture_sha256": "d5cde26bb8c90afdbc3aab844a4c724b8ec6341745d8556276169275baf91c27",
+    "rollback_fixture_sha256": "7c46d4d1852ba911302efd32650ff7f2757c5b1a98f36f6c88296b8a021d0dfd"
+  },
+  "rollback": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-compatible.test.exe",
+    "source_commit": "a335f0dd55f00ac0bc89a830f62617247551accc",
+    "sha256": "ab108a35d3b510364692828bd00f70880d1e8c24ca2c343b8c3ad1b4d9756300",
+    "fixture_sha256": "7c46d4d1852ba911302efd32650ff7f2757c5b1a98f36f6c88296b8a021d0dfd",
+    "build_evidence": "evidence/runs/B11-build-rollback-fixture/result.json",
+    "source_archive": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-compatible-src.tar",
+    "source_archive_sha256": "ff343f7eab6579e13ae7e6408a82e61030b641e9032bf48a42f9a55dc42da6e7"
+  },
+  "rollback_program": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-wallet-compatible.exe",
+    "sha256": "335eeadacf00a34e3a04ca7a3e2a9dd196f91f479c60d81b4552ab0997d96dae",
+    "source_commit": "a335f0dd55f00ac0bc89a830f62617247551accc",
+    "build_evidence": "evidence/runs/B11-build-rollback-program/result.json",
+    "frontend_build_evidence": "evidence/runs/B11-build-rollback-web/result.json"
+  },
+  "released_upgrade": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B11-model-migration-current.test.exe",
+    "sha256": "372c5d72585c8b9222bb0fc4c92e7cc472018f1ecd03c12c1859b5f2396dd6a8",
+    "source_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
+    "build_evidence": "evidence/runs/B11-build-released-upgrade-fixture/result.json"
+  }
+}

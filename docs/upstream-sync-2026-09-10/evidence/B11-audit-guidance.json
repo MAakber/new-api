@@ -1,0 +1,23 @@
+{
+  "reviewed_at": "2026-09-11T03:35:19.004Z",
+  "asvs_version": "5.0.0",
+  "scope": "Token operation audit and quota operation correlation; not a whole-application compliance certification",
+  "references": [
+    "https://owasp.org/www-project-application-security-verification-standard/",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html"
+  ],
+  "controls": [
+    "Record actor, target, time, action, request correlation and explicit outcome",
+    "Exclude credentials, usable session/API tokens and raw request/response bodies from persisted audit metadata",
+    "Retain server-side ownership/role checks and record forbidden, rate-limited and malformed attempts"
+  ],
+  "validation": [
+    "TestAPITokenAuditDatabaseMatrix",
+    "TestManageUserQuotaRecordsTopupAndAudit",
+    "TestManageUserQuotaFailuresDoNotRecordTopup",
+    "TestManageUserQuotaMiddlewareKeepsOneOperationPerRequest"
+  ],
+  "environment_gates": "Production deployment and provider interoperability remain unverified"
+}

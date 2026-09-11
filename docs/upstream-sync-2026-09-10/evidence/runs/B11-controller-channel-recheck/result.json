@@ -1,0 +1,27 @@
+{
+  "id": "B11-controller-channel-recheck",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "./relay/channel",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
+  "started_at": "2026-09-11T03:58:13.575Z",
+  "finished_at": "2026-09-11T03:59:22.043Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

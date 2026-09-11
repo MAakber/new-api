@@ -1712,3 +1712,45 @@
 - Evidence: evidence/B10-acceptance.json and evidence/B10-database-matrix.json.
 - Four engines pass accounting and fresh/upgrade/restart contracts; broad failed checks retained and resolved by package/full-UI rechecks.
 - Next: B11 wallet-schema and quota-audit integration; downstream final reviews and final candidate gates remain pending.
+
+## 2026-09-11T02:51:11.090Z — B11.1-wallet-domain adaptation begun
+
+- Before HEAD: c6a46ebd4e1821d7bed4a294dbc6fcf0a1b01cf2.
+- Upstream: a073f74b38a33bb154821089c097658cbdcc0fbe.
+- Integrate JavaScript-safe 64-bit wallet bounds while retaining int32 per-request clamps, audited saturation, downstream subscription/registration codes and RPM. Verify explicit schema upgrade and compatible rollback on isolated databases; never bypass startup validation.
+- Evidence: evidence/runs/B11.1-wallet-domain-a073f74b3/intent.json.
+
+## 2026-09-11T02:57:02.480Z — B11.1-wallet-domain adaptation recorded
+
+- Code: a335f0dd55f00ac0bc89a830f62617247551accc.
+- Integrated wallet bounds, credit guards and overflow-safe rate limits. Preserved subscription/registration redemption and the B10 refund/purchase fixes, retained int32 request clamps and audited conversions. User wallet tags explicitly use signed BIGINT so AutoMigrate cannot shrink migrated columns. Relevant backend regressions pass; explicit four-engine migration, precision and rollback acceptance remains pending.
+- Evidence: evidence/runs/B11.1-wallet-domain-a073f74b3/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T02:58:42.202Z — B11.3-token-quota-audit adaptation begun
+
+- Before HEAD: a335f0dd55f00ac0bc89a830f62617247551accc.
+- Upstream: 3f8a50cf8877683669cd812240a0beaf7b171c32.
+- Add transactional quota adjustments and safe token operation audit records with correlated topup logs. Compose existing log detail components, keep named Passkeys/scoped proofs/request diagnostics, and preserve pending quota reservations and downstream CSV/registration behavior.
+- Evidence: evidence/runs/B11.3-token-quota-audit-3f8a50cf8/intent.json.
+
+## 2026-09-11T03:25:29.438Z — B11.3-token-quota-audit adaptation recorded
+
+- Code: 3fa6037c1c0dadb7f2465fde35452d05b0a96023.
+- Transactional signed wallet adjustment preserves pending reservations and exact Redis integer differences; correlated topup/audit logs and allowlisted token metadata compose downstream diagnostics. Kept avatar/session fixture coverage, adapted UI tests to project hooks and real browser fixture methods, and enrolled quota tests. Targeted backend and 81 UI tests plus TypeScript pass; schema and multi-engine acceptance pending.
+- Evidence: evidence/runs/B11.3-token-quota-audit-3f8a50cf8/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T03:35:19.004Z — B11 wallet migration rehearsal
+
+- Added explicit signed-BIGINT SQL and WALLET-MIGRATION.md; startup validation is never bypassed.
+- Added migration and compatible-rollback fixtures; rollback source a335f0dd retains wallet, subscription and authentication compatibility.
+- SQLite passes after correcting a fixture transaction lifetime; initial failed log retained.
+- Next: real engines, released-schema upgrade, immutable binary rollback and stage acceptance.
+
+## 2026-09-11T04:21:45.029Z — B11 local acceptance complete
+
+- Verified source 567c837c3bcbf3881a69171320930144f93fbdeb; 99/153 upstream rows now have stage evidence.
+- Four-engine explicit wallet migration, released-schema startup, accounting and compatible rollback passed. 323 UI tests, full-root package coverage (two unchanged failed packages passed on recheck), root build, independent relaykit build/tests, typecheck, i18n and lint are recorded.
+- All failed logs retained; final environment gates remain pending.
+- Next: B12 built-in and model/pricing management, preserving downstream canonical option CAS.

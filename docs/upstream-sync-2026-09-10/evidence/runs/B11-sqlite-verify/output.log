@@ -1,0 +1,15 @@
+=== RUN   TestDatabaseUpgradePreservesDownstreamData
+[SYS] 2026/09/11 - 11:50:13 | SQL_DSN not set, using SQLite as database 
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: 3.50.4
+[SYS] 2026/09/11 - 11:50:13 | SQL_DSN not set, using SQLite as database 
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 3.50.4
+=== RUN   TestDatabaseUpgradePreservesDownstreamData/task_state_noop_keeps_only_a_valid_lease
+
+2026/09/11 11:50:13 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state:result` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+
+2026/09/11 11:50:13 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+--- PASS: TestDatabaseUpgradePreservesDownstreamData (0.15s)
+    --- PASS: TestDatabaseUpgradePreservesDownstreamData/task_state_noop_keeps_only_a_valid_lease (0.01s)
+PASS

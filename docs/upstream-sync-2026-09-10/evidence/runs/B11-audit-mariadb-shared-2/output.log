@@ -1,0 +1,401 @@
+=== RUN   TestAPITokenAuditDatabaseMatrix
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false
+    token_test.go:614: isolated database: newapi_audit_1789097597116108800 (mysql)
+    token_test.go:631: database version: 11.4.4-MariaDB-ubu2404
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/token/               --> github.com/QuantumNous/new-api/controller.AddToken (5 handlers)
+[GIN-debug] PUT    /api/token/               --> github.com/QuantumNous/new-api/controller.UpdateToken (5 handlers)
+[GIN-debug] DELETE /api/token/:id            --> github.com/QuantumNous/new-api/controller.DeleteToken (5 handlers)
+[GIN-debug] POST   /api/token/batch          --> github.com/QuantumNous/new-api/controller.DeleteTokenBatch (5 handlers)
+[GIN-debug] POST   /api/token/batch/keys     --> github.com/QuantumNous/new-api/controller.GetTokenKeysBatch (5 handlers)
+[GIN-debug] POST   /api/token/:id/key        --> github.com/QuantumNous/new-api/controller.GetTokenKey (6 handlers)
+[GIN-debug] GET    /api/token/               --> github.com/QuantumNous/new-api/controller.GetAllTokens (5 handlers)
+[GIN-debug] GET    /api/token/:id            --> github.com/QuantumNous/new-api/controller.GetToken (5 handlers)
+[GIN-debug] GET    /api/token/search         --> github.com/QuantumNous/new-api/controller.SearchTokens (5 handlers)
+[GIN-debug] GET    /api/audit/self           --> github.com/QuantumNous/new-api/controller.GetAuditLogs (4 handlers)
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/create
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/invalid_create
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/malformed_body
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/validation_error_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/create_storage_failure
+
+2026/09/11 11:33:19 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/normalized_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/configuration_values_stay_private
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/unchanged_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/successful_response_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/update_storage_failure
+
+2026/09/11 11:33:21 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/foreign_update
+
+2026/09/11 11:33:21 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[47.520ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 23 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 23 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/disable
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/expired_enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/foreign_delete
+
+2026/09/11 11:33:23 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[52.124ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 33 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 33 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/missing_delete
+
+2026/09/11 11:33:23 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[47.996ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/PAT_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/foreign_key_view
+
+2026/09/11 11:33:25 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[47.582ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 41 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 41 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/rate_limited_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/batch_delete_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/empty_batch_delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/batch_keys_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/batch_keys_no_matches
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/empty_batch_keys
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/bounded_batch_metadata
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/reads_and_unauthenticated_writes_add_no_operation_audit
+
+2026/09/11 11:33:28 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[47.508ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:33:28 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[48.028ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = 'Bearer' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:33:28 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[47.820ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = 'Bearer' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/self_audit_excludes_other_owners
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/audit_storage_failure_preserves_operation_result
+[ERR] 2026/09/11 - 11:33:28 | 202609110333286190210008268d9d6IOm8ydEN | audit log write failed (request_id=202609110333286190210008268d9d6IOm8ydEN): audit unavailable 
+
+2026/09/11 11:33:28 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+[0m[35m[warn] [0mremoving callback `token-audit:log-fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true
+    token_test.go:614: isolated database: newapi_audit_1789097608861507200 (mysql)
+    token_test.go:621: isolated database: newapi_audit_1789097609440531200 (mysql)
+    token_test.go:631: database version: 11.4.4-MariaDB-ubu2404
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/token/               --> github.com/QuantumNous/new-api/controller.AddToken (5 handlers)
+[GIN-debug] PUT    /api/token/               --> github.com/QuantumNous/new-api/controller.UpdateToken (5 handlers)
+[GIN-debug] DELETE /api/token/:id            --> github.com/QuantumNous/new-api/controller.DeleteToken (5 handlers)
+[GIN-debug] POST   /api/token/batch          --> github.com/QuantumNous/new-api/controller.DeleteTokenBatch (5 handlers)
+[GIN-debug] POST   /api/token/batch/keys     --> github.com/QuantumNous/new-api/controller.GetTokenKeysBatch (5 handlers)
+[GIN-debug] POST   /api/token/:id/key        --> github.com/QuantumNous/new-api/controller.GetTokenKey (6 handlers)
+[GIN-debug] GET    /api/token/               --> github.com/QuantumNous/new-api/controller.GetAllTokens (5 handlers)
+[GIN-debug] GET    /api/token/:id            --> github.com/QuantumNous/new-api/controller.GetToken (5 handlers)
+[GIN-debug] GET    /api/token/search         --> github.com/QuantumNous/new-api/controller.SearchTokens (5 handlers)
+[GIN-debug] GET    /api/audit/self           --> github.com/QuantumNous/new-api/controller.GetAuditLogs (4 handlers)
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/create
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/invalid_create
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/malformed_body
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/validation_error_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/create_storage_failure
+
+2026/09/11 11:33:31 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:729
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/normalized_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/configuration_values_stay_private
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/unchanged_update
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/successful_response_exceeds_audit_buffer
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/update_storage_failure
+
+2026/09/11 11:33:32 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+[0m[35m[warn] [0mremoving callback `token-audit:fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:732
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/foreign_update
+
+2026/09/11 11:33:32 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[47.579ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 23 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 23 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/disable
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/expired_enable
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/foreign_delete
+
+2026/09/11 11:33:34 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[52.391ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 33 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 33 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/missing_delete
+
+2026/09/11 11:33:34 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[51.682ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/PAT_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/foreign_key_view
+
+2026/09/11 11:33:35 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[47.186ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 41 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 41 ORDER BY `tokens`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/rate_limited_key_view
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/batch_delete_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/empty_batch_delete
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/batch_keys_partial_and_duplicate
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/batch_keys_no_matches
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/empty_batch_keys
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/bounded_batch_metadata
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/reads_and_unauthenticated_writes_add_no_operation_audit
+
+2026/09/11 11:33:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/token.go:266 [35;1mrecord not found
+[0m[33m[47.980ms] [34;1m[rows:0][0m SELECT * FROM `tokens` WHERE (id = 999999 and user_id = 1) AND `tokens`.`deleted_at` IS NULL AND `tokens`.`id` = 999999 ORDER BY `tokens`.`id` LIMIT 1
+
+2026/09/11 11:33:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[46.778ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = 'Bearer' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2026/09/11 11:33:38 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1297 [35;1mrecord not found
+[0m[33m[48.012ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE access_token = 'Bearer' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/self_audit_excludes_other_owners
+=== RUN   TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/audit_storage_failure_preserves_operation_result
+[ERR] 2026/09/11 - 11:33:38 | 202609110333381972259008268d9d6a28ZcSDB | audit log write failed (request_id=202609110333381972259008268d9d6a28ZcSDB): audit unavailable 
+
+2026/09/11 11:33:38 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+[0m[35m[warn] [0mremoving callback `token-audit:log-fail` from D:/10178/Projects/new-api-upstream-sync/controller/token_test.go:883
+--- PASS: TestAPITokenAuditDatabaseMatrix (21.32s)
+    --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false (11.75s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/create (0.39s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/invalid_create (0.30s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/malformed_body (0.30s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/validation_error_exceeds_audit_buffer (0.30s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/create_storage_failure (0.39s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/normalized_update (0.36s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/configuration_values_stay_private (0.39s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/unchanged_update (0.39s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/successful_response_exceeds_audit_buffer (0.41s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/update_storage_failure (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/foreign_update (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/disable (0.39s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/enable (0.38s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/expired_enable (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/delete (0.40s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/foreign_delete (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/missing_delete (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/key_view (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/PAT_key_view (0.43s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/foreign_key_view (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/rate_limited_key_view (0.30s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/batch_delete_partial_and_duplicate (0.39s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/empty_batch_delete (0.29s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/batch_keys_partial_and_duplicate (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/batch_keys_no_matches (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/empty_batch_keys (0.29s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/bounded_batch_metadata (0.49s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/reads_and_unauthenticated_writes_add_no_operation_audit (0.81s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/self_audit_excludes_other_owners (0.24s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=false/audit_storage_failure_preserves_operation_result (0.24s)
+    --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true (9.58s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/create (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/invalid_create (0.25s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/malformed_body (0.20s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/validation_error_exceeds_audit_buffer (0.20s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/create_storage_failure (0.30s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/normalized_update (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/configuration_values_stay_private (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/unchanged_update (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/successful_response_exceeds_audit_buffer (0.36s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/update_storage_failure (0.30s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/foreign_update (0.25s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/disable (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/enable (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/expired_enable (0.24s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/delete (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/foreign_delete (0.25s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/missing_delete (0.25s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/key_view (0.26s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/PAT_key_view (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/foreign_key_view (0.24s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/rate_limited_key_view (0.20s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/batch_delete_partial_and_duplicate (0.35s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/empty_batch_delete (0.20s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/batch_keys_partial_and_duplicate (0.25s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/batch_keys_no_matches (0.25s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/empty_batch_keys (0.20s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/bounded_batch_metadata (0.34s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/reads_and_unauthenticated_writes_add_no_operation_audit (0.59s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/self_audit_excludes_other_owners (0.19s)
+        --- PASS: TestAPITokenAuditDatabaseMatrix/mysql/separate_log=true/audit_storage_failure_preserves_operation_result (0.19s)
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/add
+    user_manage_test.go:219: isolated database: newapi_audit_1789097618439489200 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/subtract
+    user_manage_test.go:219: isolated database: newapi_audit_1789097620142941100 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_up
+    user_manage_test.go:219: isolated database: newapi_audit_1789097621910269000 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_down
+    user_manage_test.go:219: isolated database: newapi_audit_1789097623646669800 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_unchanged
+    user_manage_test.go:219: isolated database: newapi_audit_1789097625335656500 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_zero
+    user_manage_test.go:219: isolated database: newapi_audit_1789097626989546100 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaRecordsTopupAndAudit/override_negative
+    user_manage_test.go:219: isolated database: newapi_audit_1789097628730526600 (mysql)
+    user_manage_test.go:219: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+--- PASS: TestManageUserQuotaRecordsTopupAndAudit (12.00s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/add (1.71s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/subtract (1.77s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_up (1.74s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_down (1.69s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_unchanged (1.65s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_zero (1.74s)
+    --- PASS: TestManageUserQuotaRecordsTopupAndAudit/override_negative (1.71s)
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/zero_add
+    user_manage_test.go:296: isolated database: newapi_audit_1789097630436023200 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/negative_subtract
+    user_manage_test.go:296: isolated database: newapi_audit_1789097631681577400 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/invalid_mode
+    user_manage_test.go:296: isolated database: newapi_audit_1789097632921154300 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/add_update_error
+    user_manage_test.go:296: isolated database: newapi_audit_1789097634160876900 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/subtract_update_error
+    user_manage_test.go:296: isolated database: newapi_audit_1789097635439020800 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaFailuresDoNotRecordTopup/override_update_error
+    user_manage_test.go:296: isolated database: newapi_audit_1789097636738930700 (mysql)
+    user_manage_test.go:296: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+--- PASS: TestManageUserQuotaFailuresDoNotRecordTopup (7.58s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/zero_add (1.25s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/negative_subtract (1.24s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/invalid_mode (1.24s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/add_update_error (1.28s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/subtract_update_error (1.30s)
+    --- PASS: TestManageUserQuotaFailuresDoNotRecordTopup/override_update_error (1.28s)
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/logs
+    user_manage_test.go:338: isolated database: newapi_audit_1789097638017830200 (mysql)
+    user_manage_test.go:338: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+[SYS] 2026/09/11 - 11:33:59 | failed to record log: quota log unavailable 
+=== RUN   TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/audit_logs
+    user_manage_test.go:338: isolated database: newapi_audit_1789097639500689300 (mysql)
+    user_manage_test.go:338: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+[ERR] 2026/09/11 - 11:34:00 | SYSTEM | audit log write failed (request_id=quota-test-request): quota log unavailable 
+--- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment (2.85s)
+    --- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/logs (1.48s)
+    --- PASS: TestManageUserQuotaLogFailureKeepsSuccessfulAdjustment/audit_logs (1.37s)
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/zero_id
+    user_manage_test.go:385: isolated database: newapi_audit_1789097640871097300 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/negative_id
+    user_manage_test.go:385: isolated database: newapi_audit_1789097642092991100 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/missing
+    user_manage_test.go:385: isolated database: newapi_audit_1789097643366644500 (mysql)
+
+2026/09/11 11:34:04 [32mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:70 [33mSLOW SQL >= 200ms
+[0m[31;1m[525.525ms] [33m[rows:0][35m CREATE TABLE `logs` (`id` bigint AUTO_INCREMENT,`user_id` bigint,`created_at` bigint,`type` bigint,`content` longtext,`username` varchar(191) DEFAULT '',`token_name` varchar(191) DEFAULT '',`model_name` varchar(191) DEFAULT '',`quota` bigint DEFAULT 0,`prompt_tokens` bigint DEFAULT 0,`completion_tokens` bigint DEFAULT 0,`use_time` bigint DEFAULT 0,`is_stream` boolean,`channel_id` bigint,`channel_name` longtext,`token_id` bigint DEFAULT 0,`group` varchar(191),`ip` varchar(191) DEFAULT '',`request_id` varchar(64) DEFAULT '',`upstream_request_id` varchar(128) DEFAULT '',`other` text,PRIMARY KEY (`id`),INDEX `idx_user_id_id` (`user_id`,`id`),INDEX `idx_created_at_type` (`created_at`,`type`),INDEX `idx_logs_username` (`username`),INDEX `idx_logs_ip` (`ip`),INDEX `idx_logs_request_id` (`request_id`),INDEX `idx_logs_upstream_request_id` (`upstream_request_id`),INDEX `idx_created_at_id` (`created_at`,`id`),INDEX `idx_logs_user_id` (`user_id`),INDEX `index_username_model_name` (`model_name`,`username`),INDEX `idx_logs_token_name` (`token_name`),INDEX `idx_logs_model_name` (`model_name`),INDEX `idx_logs_channel_id` (`channel_id`),INDEX `idx_logs_token_id` (`token_id`),INDEX `idx_logs_group` (`group`))[0m
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+
+2026/09/11 11:34:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[1.589ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 12345 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1 FOR UPDATE
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/deleted
+    user_manage_test.go:385: isolated database: newapi_audit_1789097645081591700 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+
+2026/09/11 11:34:06 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:40 [35;1mrecord not found
+[0m[33m[0.627ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1 FOR UPDATE
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/peer_admin
+    user_manage_test.go:385: isolated database: newapi_audit_1789097646456470600 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/higher_role
+    user_manage_test.go:385: isolated database: newapi_audit_1789097647734716200 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/read_error
+    user_manage_test.go:385: isolated database: newapi_audit_1789097649096129700 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+
+2026/09/11 11:34:10 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+[0m[35m[warn] [0mremoving callback `test:quota_read_error` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:411
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/add_overflow
+    user_manage_test.go:385: isolated database: newapi_audit_1789097650339794600 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+[SYS] 2026/09/11 - 11:34:11 | quota conversion (WalletQuotaFromDecimal) overflow: original=9.007199254740992e+15, clamped=9007199254740991 
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/subtract_underflow
+    user_manage_test.go:385: isolated database: newapi_audit_1789097651640786300 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+[SYS] 2026/09/11 - 11:34:12 | quota conversion (WalletQuotaFromDecimal) underflow: original=-9.007199254740992e+15, clamped=-9007199254740991 
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_add
+    user_manage_test.go:385: isolated database: newapi_audit_1789097652923577000 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_subtract
+    user_manage_test.go:385: isolated database: newapi_audit_1789097654149183200 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaTargetsAndWalletBounds/oversized_override
+    user_manage_test.go:385: isolated database: newapi_audit_1789097655397291200 (mysql)
+    user_manage_test.go:385: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+--- PASS: TestManageUserQuotaTargetsAndWalletBounds (15.75s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/zero_id (1.22s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/negative_id (1.27s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/missing (1.71s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/deleted (1.37s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/peer_admin (1.28s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/higher_role (1.36s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/read_error (1.24s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/add_overflow (1.30s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/subtract_underflow (1.28s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_add (1.23s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_subtract (1.25s)
+    --- PASS: TestManageUserQuotaTargetsAndWalletBounds/oversized_override (1.22s)
+=== RUN   TestManageUserQuotaMiddlewareKeepsOneOperationPerRequest
+    user_manage_test.go:433: isolated database: newapi_audit_1789097656619103500 (mysql)
+    user_manage_test.go:433: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+--- PASS: TestManageUserQuotaMiddlewareKeepsOneOperationPerRequest (2.86s)
+=== RUN   TestManageUserQuotaConcurrentSnapshots
+    user_manage_test.go:489: isolated database: newapi_audit_1789097659477197600 (mysql)
+    user_manage_test.go:489: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+
+2026/09/11 11:34:20 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+[0m[35m[warn] [0mremoving callback `test:concurrent_quota_start` from D:/10178/Projects/new-api-upstream-sync/controller/user_manage_test.go:528
+--- PASS: TestManageUserQuotaConcurrentSnapshots (1.13s)
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations
+    user_manage_test.go:555: isolated database: newapi_audit_1789097660608754600 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations
+    user_manage_test.go:555: isolated database: newapi_audit_1789097662043490700 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations
+    user_manage_test.go:555: isolated database: newapi_audit_1789097663509669600 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference
+    user_manage_test.go:555: isolated database: newapi_audit_1789097664933284500 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache
+    user_manage_test.go:555: isolated database: newapi_audit_1789097666273970900 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+
+2026/09/11 11:34:27 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:63 [35;1mquota rollback
+[0m[33m[47.341ms] [34;1m[rows:1][0m UPDATE `users` SET `quota`=500 WHERE id = 10000 AND `users`.`deleted_at` IS NULL
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change
+    user_manage_test.go:555: isolated database: newapi_audit_1789097667587651500 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+[SYS] 2026/09/11 - 11:34:28 | failed to sync manual quota adjustment for user 10000: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:34:28 | failed to synchronously populate user cache: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 11:34:28 | failed to synchronously populate user cache: ERR quota cache unavailable 
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created
+    user_manage_test.go:555: isolated database: newapi_audit_1789097669017762000 (mysql)
+    user_manage_test.go:555: database: mysql 11.4.4-MariaDB-ubu2404, separate log database: false
+--- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference (9.75s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations (1.43s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations (1.47s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations (1.42s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference (1.34s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache (1.31s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change (1.43s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created (1.34s)
+PASS

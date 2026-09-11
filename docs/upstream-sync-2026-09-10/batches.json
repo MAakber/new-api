@@ -1500,38 +1500,127 @@
       "a073f74b38a33bb154821089c097658cbdcc0fbe",
       "3f8a50cf8877683669cd812240a0beaf7b171c32"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B11.1",
         "action": "建立列类型/余额/账单基线及兼容新 schema 的回退方案",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B11-acceptance.json"
+        ]
       },
       {
         "id": "B11.2",
         "action": "在隔离副本迁移、启动检查与重复启动",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B11-acceptance.json"
+        ]
       },
       {
         "id": "B11.3",
         "action": "验证大余额、精度、单请求 int32 上限与迁移后写入恢复",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B11-acceptance.json"
+        ]
       },
       {
         "id": "B11.3-token-quota-audit",
         "action": "Integrate 3f8a50cf token/quota audit only after a073f74b wallet bounds and B10 quota cache/automatic groups; preserve signed balances, int32 per-request safety and correlated usage/audit records.",
-        "status": "pending",
+        "status": "verified",
         "upstreamCommits": [
           "3f8a50cf8877683669cd812240a0beaf7b171c32"
         ],
         "afterUpstream": [
           "a073f74b38a33bb154821089c097658cbdcc0fbe"
+        ],
+        "evidence": [
+          "evidence/B11-acceptance.json"
+        ]
+      },
+      {
+        "id": "B11.1-wallet-domain",
+        "action": "refactor: deprecate int32 (#7025)",
+        "status": "verified",
+        "upstreamCommits": [
+          "a073f74b38a33bb154821089c097658cbdcc0fbe"
+        ],
+        "evidence": [
+          "evidence/B11-acceptance.json"
         ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "建立列类型/余额/账单基线及兼容新 schema 的回退方案"
+    "codeCommits": [
+      "a335f0dd55f00ac0bc89a830f62617247551accc",
+      "3fa6037c1c0dadb7f2465fde35452d05b0a96023",
+      "4478985195a38c2463863c8caaf6264ba8e1ec8e",
+      "567c837c3bcbf3881a69171320930144f93fbdeb"
+    ],
+    "evidence": [
+      "evidence/B11-acceptance.json",
+      "evidence/B11-database-matrix.json",
+      "evidence/runs/B11-controller-channel-recheck/result.json",
+      "evidence/runs/B11-acceptance-ui/result.json",
+      "evidence/runs/B11-acceptance-types/result.json",
+      "evidence/runs/B11-acceptance-i18n/result.json",
+      "evidence/runs/B11-acceptance-lint/result.json",
+      "evidence/runs/B11-relaykit-build/result.json",
+      "evidence/runs/B11-relaykit-tests/result.json",
+      "evidence/runs/B11-frontend-build/result.json",
+      "evidence/runs/B11-backend-build/result.json",
+      "evidence/runs/B11-build-audit-fixture/result.json",
+      "evidence/runs/B11-build-current-fixture/result.json",
+      "evidence/runs/B11-build-released-upgrade-fixture/result.json",
+      "evidence/runs/B11-build-rollback-fixture/result.json",
+      "evidence/runs/B11-build-rollback-web/result.json",
+      "evidence/runs/B11-build-rollback-program/result.json",
+      "evidence/runs/B11-wallet-sqlite/result.json",
+      "evidence/runs/B11-accounting-sqlite/result.json",
+      "evidence/runs/B11-sqlite-fresh/result.json",
+      "evidence/runs/B11-sqlite-seed/result.json",
+      "evidence/runs/B11-sqlite-explicit-upgrade-2/result.json",
+      "evidence/runs/B11-sqlite-verify/result.json",
+      "evidence/runs/B11-sqlite-rollback-seed/result.json",
+      "evidence/runs/B11-sqlite-rollback-rollback/result.json",
+      "evidence/runs/B11-sqlite-rollback-verify/result.json",
+      "evidence/runs/B11-wallet-mariadb/result.json",
+      "evidence/runs/B11-accounting-mariadb/result.json",
+      "evidence/runs/B11-mariadb-fresh/result.json",
+      "evidence/runs/B11-mariadb-seed/result.json",
+      "evidence/runs/B11-mariadb-explicit-upgrade-2/result.json",
+      "evidence/runs/B11-mariadb-verify/result.json",
+      "evidence/runs/B11-mariadb-rollback-seed/result.json",
+      "evidence/runs/B11-mariadb-rollback-rollback/result.json",
+      "evidence/runs/B11-mariadb-rollback-verify/result.json",
+      "evidence/runs/B11-audit-mariadb-shared-2/result.json",
+      "evidence/runs/B11-audit-mariadb-separate/result.json",
+      "evidence/runs/B11-wallet-mysql/result.json",
+      "evidence/runs/B11-accounting-mysql/result.json",
+      "evidence/runs/B11-mysql-fresh/result.json",
+      "evidence/runs/B11-mysql-seed/result.json",
+      "evidence/runs/B11-mysql-explicit-upgrade-2/result.json",
+      "evidence/runs/B11-mysql-verify/result.json",
+      "evidence/runs/B11-mysql-rollback-seed/result.json",
+      "evidence/runs/B11-mysql-rollback-rollback/result.json",
+      "evidence/runs/B11-mysql-rollback-verify/result.json",
+      "evidence/runs/B11-audit-mysql-shared-2/result.json",
+      "evidence/runs/B11-audit-mysql-separate/result.json",
+      "evidence/runs/B11-wallet-postgres/result.json",
+      "evidence/runs/B11-accounting-postgres/result.json",
+      "evidence/runs/B11-postgres-fresh/result.json",
+      "evidence/runs/B11-postgres-seed/result.json",
+      "evidence/runs/B11-postgres-explicit-upgrade-2/result.json",
+      "evidence/runs/B11-postgres-verify/result.json",
+      "evidence/runs/B11-postgres-rollback-seed/result.json",
+      "evidence/runs/B11-postgres-rollback-rollback/result.json",
+      "evidence/runs/B11-postgres-rollback-verify/result.json",
+      "evidence/runs/B11-audit-postgres-shared-2/result.json",
+      "evidence/runs/B11-audit-postgres-separate/result.json",
+      "evidence/runs/B11-acceptance-go/result.json"
+    ],
+    "nextAction": "Local B11 acceptance complete. Continue B12; final production-snapshot gate remains pending."
   },
   {
     "id": "B12",
@@ -1760,6 +1849,15 @@
         "status": "pending",
         "evidence": [
           "evidence/runs/B00-web-format/output.log"
+        ]
+      },
+      {
+        "id": "B15.3-windows-fixture-stability",
+        "status": "pending",
+        "action": "Review recurring Windows avatar TempDir cleanup and HTTP/2 no-GetBody reset fixture. Preserve behavior assertions; reset fixture currently closes with unread TCP frames while the GOAWAY fixture already drains the connection.",
+        "evidence": [
+          "evidence/runs/B11-acceptance-go/result.json",
+          "evidence/runs/B11-controller-channel-recheck/result.json"
         ]
       }
     ],
