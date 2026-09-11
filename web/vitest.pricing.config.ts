@@ -30,6 +30,8 @@ export default defineConfig({
       'src/features/models/__tests__/*.test.{ts,tsx}',
       'src/features/pricing/__tests__/*.test.{ts,tsx}',
       'src/features/system-settings/__tests__/pricing-sync.test.tsx',
+      'src/features/system-settings/models/__tests__/task-pricing-copy.test.tsx',
+      'src/features/usage-logs/components/__tests__/detail-preview.test.tsx',
       'src/lib/__tests__/localized-text.test.ts',
     ],
   },

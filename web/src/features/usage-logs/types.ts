@@ -146,6 +146,7 @@ export interface LogOtherData {
     }
     // Reject / intercept reason (admin only)
     reject_reason?: string
+    task_plugin?: TaskPluginInfo
   }
   // Language-independent operation descriptor (audit/login logs).
   // Frontend renders localized content from action + params via i18n templates.
@@ -244,6 +245,13 @@ export interface LogOtherData {
   subscription_consumed?: number
   subscription_remain?: number
   subscription_total?: number
+}
+
+export interface TaskPluginInfo {
+  key: string
+  name: string
+  version?: string
+  author?: { name: string; url?: string }
 }
 
 /**

@@ -36,6 +36,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { usePricingData } from '@/features/pricing/hooks/use-pricing-data'
+import {
+  normalizeTierLabel,
+  parseTaskTiersFromExpr,
+} from '@/features/pricing/lib/billing-expr'
+import {
+  formatTaskUsageUnitPrice,
+  getTaskUsagePriceUnitLabelKey,
+} from '@/features/pricing/lib/dynamic-price'
+import type { BillingUsageSchema } from '@/features/pricing/types'
 import { getUserAvatarFallback, getUserAvatarStyle } from '@/lib/avatar'
 import { formatBillingCurrencyFromUSD } from '@/lib/currency'
 import { formatLogQuota, formatTimestampToDate } from '@/lib/format'
@@ -47,6 +57,7 @@ import { LOG_TYPE_ALL_VALUE } from '../../constants'
 import type { UsageLog } from '../../data/schema'
 import {
   formatModelName,
+  decodeBillingExprB64,
   getTieredBillingSummary,
   hasAnyCacheTokens,
   parseLogOther,
@@ -101,9 +112,10 @@ function buildDetailSegments(
   log: UsageLog,
   other: LogOtherData | null,
   t: (key: string, opts?: Record<string, unknown>) => string,
-  isAdmin: boolean
+  isAdmin: boolean,
+  usageSchema?: BillingUsageSchema
 ): DetailSegment[] {
-  const segments = buildTypeDetailSegments(log, other, t)
+  const segments = buildTypeDetailSegments(log, other, t, usageSchema)
   // Quota saturation is a rare, admin-only anomaly marker; surface it first
   // and in danger styling so it stands out on the related billing log. The
   // backend already strips admin_info for non-admins; gate on isAdmin too as
@@ -117,7 +129,8 @@ function buildDetailSegments(
 function buildTypeDetailSegments(
   log: UsageLog,
   other: LogOtherData | null,
-  t: (key: string, opts?: Record<string, unknown>) => string
+  t: (key: string, opts?: Record<string, unknown>) => string,
+  usageSchema?: BillingUsageSchema
 ): DetailSegment[] {
   // Top-up, audit, and login logs can carry a localized operation descriptor.
   if (log.type === 1 || log.type === 3 || log.type === 7) {
@@ -163,7 +176,39 @@ function buildTypeDetailSegments(
   }
   const isTieredExpr = other.billing_mode === 'tiered_expr'
   const tieredSummary = getTieredBillingSummary(other)
-  if (isTieredExpr) {
+  if (isTieredExpr && other.is_task) {
+    const tiers = parseTaskTiersFromExpr(
+      decodeBillingExprB64(other.expr_b64),
+      usageSchema,
+      true
+    )
+    const tier = tiers.find(
+      (entry) =>
+        Boolean(other.matched_tier) &&
+        normalizeTierLabel(entry.label) ===
+          normalizeTierLabel(other.matched_tier)
+    )
+    if (tier) {
+      const prices = Object.entries(tier.unitPrices).map(([field, price]) => {
+        const unit = usageSchema?.[field]?.unit
+        const unitKey = getTaskUsagePriceUnitLabelKey(unit)
+        return `${field} ${formatTaskUsageUnitPrice(price, { tokenUnit: 'M' })}/${t(unitKey)}`
+      })
+      if (tier.constant > 0) {
+        prices.push(
+          `${t('Additional charge')} ${formatTaskUsageUnitPrice(tier.constant, { tokenUnit: 'M' })}/${t('request')}`
+        )
+      }
+      segments.push({
+        text: `${tier.label || t('Default')} · ${prices.join(' · ')}`,
+      })
+    } else {
+      segments.push({
+        text: `${t('Dynamic Pricing')} · ${t('No matching results')}`,
+        muted: true,
+      })
+    }
+  } else if (isTieredExpr) {
     if (tieredSummary) {
       const baseEntries = tieredSummary.priceEntries
         .filter((entry) => ['inputPrice', 'outputPrice'].includes(entry.field))
@@ -743,7 +788,21 @@ export function useCommonLogsColumns(isAdmin: boolean): ColumnDef<UsageLog>[] {
         const log = row.original
         const other = parseLogOther(log.other)
 
-        const segments = buildDetailSegments(log, other, t, isAdmin)
+        const pricingData = usePricingData(
+          log.type === 2 &&
+            other?.is_task === true &&
+            other.billing_mode === 'tiered_expr'
+        )
+        const usageSchema = pricingData.models.find(
+          (model) => model.model_name === log.model_name
+        )?.billing_usage_schema
+        const segments = buildDetailSegments(
+          log,
+          other,
+          t,
+          isAdmin,
+          usageSchema
+        )
         const primary = segments[0]
         const hasMore = segments.length > 1
         let primaryTextClass = 'text-foreground'

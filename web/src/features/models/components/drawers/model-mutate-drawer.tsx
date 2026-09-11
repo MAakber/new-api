@@ -82,14 +82,19 @@ export function ModelMutateDrawer(props: {
   open: boolean
   onOpenChange: (open: boolean) => void
   currentRow?: Model | null
+  initialSection?: 'metadata' | 'pricing'
 }) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const currentRow = props.currentRow
   const isEditing = Boolean(currentRow?.id)
-  const [section, setSection] = useState('metadata')
+  const [section, setSection] = useState<string>(
+    props.initialSection ?? 'metadata'
+  )
   const [pricingName, setPricingName] = useState('')
-  const [pricingVisited, setPricingVisited] = useState(false)
+  const [pricingVisited, setPricingVisited] = useState(
+    props.initialSection === 'pricing'
+  )
   const [pricingDirty, setPricingDirty] = useState(false)
   const [pendingPricingName, setPendingPricingName] = useState<string | null>(
     null
@@ -129,6 +134,16 @@ export function ModelMutateDrawer(props: {
   const savedModel = modelQuery.data ?? currentRow
 
   useEffect(() => {
+    if (!props.open) return
+    setSection(props.initialSection ?? 'metadata')
+    setPricingVisited(props.initialSection === 'pricing')
+    setPricingName('')
+    setPricingDirty(false)
+    setPendingPricingName(null)
+    setCloseConfirm(false)
+  }, [props.open, props.initialSection, currentRow?.id])
+
+  useEffect(() => {
     if (!props.open) {
       loadedKey.current = ''
       return
@@ -148,10 +163,6 @@ export function ModelMutateDrawer(props: {
       )
     )
     loadedKey.current = key
-    setSection('metadata')
-    setPricingName('')
-    setPricingVisited(false)
-    setPricingDirty(false)
   }, [props.open, currentRow, isEditing, modelQuery.data, form])
 
   const save = useMutation({
@@ -219,7 +230,9 @@ export function ModelMutateDrawer(props: {
   return (
     <>
       <Sheet open={props.open} onOpenChange={close}>
-        <SheetContent className={sideDrawerContentClassName('sm:max-w-3xl')}>
+        <SheetContent
+          className={sideDrawerContentClassName('sm:max-w-[1280px]')}
+        >
           <SheetHeader className={sideDrawerHeaderClassName()}>
             <SheetTitle className='pr-6 break-all'>
               {isEditing ? currentRow?.model_name : t('Create Model')}
@@ -238,12 +251,25 @@ export function ModelMutateDrawer(props: {
             }}
             className='shrink-0 px-4'
           >
-            <TabsList className='w-full'>
-              <TabsTrigger value='metadata'>{t('Model metadata')}</TabsTrigger>
-              <TabsTrigger value='pricing' disabled={!isEditing}>
+            <TabsList className='grid w-full grid-cols-3 group-data-horizontal/tabs:h-auto'>
+              <TabsTrigger
+                value='metadata'
+                className='h-auto min-w-0 whitespace-normal'
+              >
+                {t('Model metadata')}
+              </TabsTrigger>
+              <TabsTrigger
+                value='pricing'
+                disabled={!isEditing}
+                className='h-auto min-w-0 whitespace-normal'
+              >
                 {t('Pricing')}
               </TabsTrigger>
-              <TabsTrigger value='connections' disabled={!isEditing}>
+              <TabsTrigger
+                value='connections'
+                disabled={!isEditing}
+                className='h-auto min-w-0 whitespace-normal'
+              >
                 {t('Channels and groups')}
               </TabsTrigger>
             </TabsList>
