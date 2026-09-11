@@ -1,0 +1,332 @@
+[
+  {
+    "file": "web/src/features/keys/components/__tests__/api-key-group-cell.test.tsx",
+    "source": "integrated",
+    "reason": "Keep accurate Auto versus enabled cross-group retry labels and existing reduced-motion coverage."
+  },
+  {
+    "file": "web/src/features/keys/components/__tests__/api-key-listing.test.tsx",
+    "source": "integrated",
+    "reason": "Keep responsive listing regressions with a complete MediaQueryList fixture; object spreading drops prototype methods."
+  },
+  {
+    "file": "web/src/features/keys/components/api-key-group-cell.tsx",
+    "source": "integrated",
+    "reason": "Keep Cross-group label conditional on actual retry flag; default Auto is not cross-group retry."
+  },
+  {
+    "file": "web/src/features/keys/components/api-keys-mutate-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep bounded normalized number inputs with upstream automatic-group and wallet changes."
+  },
+  {
+    "file": "web/src/features/keys/components/auto-group-order-editor.tsx",
+    "source": "integrated",
+    "reason": "Keep upstream Auto ordering behavior using project EmptyState wrapper."
+  },
+  {
+    "file": "web/src/features/models/__tests__/model-listing.test.tsx",
+    "source": "integrated",
+    "reason": "Keep model listing scenarios and prototype-preserving responsive fixture."
+  },
+  {
+    "file": "web/src/features/models/api.ts",
+    "source": "integrated",
+    "reason": "Keep automatic model metadata sync endpoints alongside upstream versioned model management."
+  },
+  {
+    "file": "web/src/features/models/components/dialogs/create-deployment-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep validated numeric controls and equivalent explicit name availability message branches."
+  },
+  {
+    "file": "web/src/features/models/components/dialogs/extend-deployment-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep blank/invalid duration disabled, normalize valid duration before pricing request."
+  },
+  {
+    "file": "web/src/features/models/index.tsx",
+    "source": "integrated",
+    "reason": "Keep ModelAutoSyncControl on metadata tab alongside upstream pricing page."
+  },
+  {
+    "file": "web/src/features/performance-metrics/types.ts",
+    "source": "integrated",
+    "reason": "Keep old recent_success_rates optional contract in addition to upstream timestamped series."
+  },
+  {
+    "file": "web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx",
+    "source": "integrated",
+    "reason": "Keep deterministic confirmation boundary setup/cleanup with upstream message editor behaviors."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-perf-badge.tsx",
+    "source": "integrated",
+    "reason": "Keep timestamp-anchored sparse series and gray missing slots, legacy sample fallback and downstream compact metrics. Covered by dedicated model-perf-badge tests."
+  },
+  {
+    "file": "web/src/features/rankings/hooks/use-rankings.ts",
+    "source": "integrated",
+    "reason": "Keep ranking availability/security data and automatic-ban sorting."
+  },
+  {
+    "file": "web/src/features/redemption-codes/api.ts",
+    "source": "integrated",
+    "reason": "Keep existing filtered server CSV export alongside upstream created-code export."
+  },
+  {
+    "file": "web/src/features/redemption-codes/components/__tests__/bulk-delete.test.tsx",
+    "source": "integrated",
+    "reason": "Keep upstream bulk-delete scenarios with actual extended redemption schema and export filter props."
+  },
+  {
+    "file": "web/src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx",
+    "source": "integrated",
+    "reason": "Keep created-code export scenarios plus actual registration/subscription rewards, complete QueryClient setup and decimal fixture compatibility."
+  },
+  {
+    "file": "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+    "source": "integrated",
+    "reason": "Keep rewritten exact-quota, failed-load, stale-record and currency regressions with downstream registration/subscription fields and initialized query fixtures; upstream behaviors are represented."
+  },
+  {
+    "file": "web/src/features/redemption-codes/components/data-table-bulk-actions.tsx",
+    "source": "integrated",
+    "reason": "Keep selected-code export filters together with upstream bulk-delete actions."
+  },
+  {
+    "file": "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+    "source": "integrated",
+    "reason": "Keep registration and subscription reward display with existing quota columns."
+  },
+  {
+    "file": "web/src/features/redemption-codes/components/redemptions-export-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep optional quota versus actual reward export, avoiding hidden quota values for registration/subscription codes."
+  },
+  {
+    "file": "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep exact stored quota and guarded record loading; retain registration uses, subscription plan selection and reward-aware export."
+  },
+  {
+    "file": "web/src/features/redemption-codes/lib/redemption-form.ts",
+    "source": "integrated",
+    "reason": "Keep quota round-trip fix and downstream code_type/reward_type/plan_id/max_uses fields."
+  },
+  {
+    "file": "web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep normalized integer/decimal inputs with upstream subscription editing."
+  },
+  {
+    "file": "web/src/features/system-info/components/system-tasks-panel.tsx",
+    "source": "integrated",
+    "reason": "Keep equivalent explicit state renderer retaining active/history queue panels, loading, retry and error states."
+  },
+  {
+    "file": "web/src/features/system-settings/__tests__/pricing-sync.test.tsx",
+    "source": "integrated",
+    "reason": "Keep exact expression pricing/copy scenarios with complete responsive MediaQueryList."
+  },
+  {
+    "file": "web/src/features/system-settings/auth/custom-oauth/components/preset-selector.tsx",
+    "source": "integrated",
+    "reason": "Keep equivalent formatted searchable OAuth preset selector and accessible label."
+  },
+  {
+    "file": "web/src/features/system-settings/content/announcements-section.tsx",
+    "source": "integrated",
+    "reason": "Keep downstream stable row IDs, announcement ordering/editing and 200-character multiline extras; upstream style-only commit must not remove announcement data capability."
+  },
+  {
+    "file": "web/src/features/system-settings/general/channel-affinity/index.tsx",
+    "source": "integrated",
+    "reason": "Keep integer input normalization with upstream affinity settings."
+  },
+  {
+    "file": "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+    "source": "integrated",
+    "reason": "Keep integer retention input normalization and downstream auditing settings."
+  },
+  {
+    "file": "web/src/features/system-settings/models/group-ratio-visual-editor.tsx",
+    "source": "integrated",
+    "reason": "Keep formatted searchable group selector, identical selection behavior."
+  },
+  {
+    "file": "web/src/features/system-settings/models/group-special-usable-editor.tsx",
+    "source": "integrated",
+    "reason": "Keep formatted searchable allowed-group selector, identical selection behavior."
+  },
+  {
+    "file": "web/src/features/system-settings/models/routing-reliability-section.tsx",
+    "source": "integrated",
+    "reason": "Upstream scheduled/auto-ban/passive modes and concurrency already live in downstream channel-test-section.tsx with tests. Keep routing section focused; do not introduce a second editor for the same values."
+  },
+  {
+    "file": "web/src/features/system-settings/models/section-registry.tsx",
+    "source": "integrated",
+    "reason": "Keep health-check fields routed to dedicated ChannelTestSection; all modes/concurrency remain exposed there."
+  },
+  {
+    "file": "web/src/features/system-settings/models/tiered-pricing-editor.tsx",
+    "source": "integrated",
+    "reason": "Keep reviewed B12 expression editor with scoped input-identity key comments; only formatting/comment wording differs."
+  },
+  {
+    "file": "web/src/features/system-settings/models/upstream-price-cells.tsx",
+    "source": "integrated",
+    "reason": "Keep equivalent expression display and scoped index-key rationale for immutable ordered preview tiers."
+  },
+  {
+    "file": "web/src/features/system-settings/models/upstream-ratio-sync-helpers.ts",
+    "source": "integrated",
+    "reason": "Keep malformed/negative/overflow expression rejection, equivalent replaceAll and explicit nullable tier-field narrowing."
+  },
+  {
+    "file": "web/src/features/system-settings/models/upstream-ratio-sync.tsx",
+    "source": "integrated",
+    "reason": "Keep downstream AutoPriceSyncControl alongside upstream canonical pricing import."
+  },
+  {
+    "file": "web/src/features/system-settings/types.ts",
+    "source": "integrated",
+    "reason": "Keep downstream diagnostic message/style/preview options in addition to upstream scheduler fields."
+  },
+  {
+    "file": "web/src/features/usage-logs/audit/__tests__/viewer.test.tsx",
+    "source": "integrated",
+    "reason": "Keep audit/role/filters tests adapted to shared date/time picker and real drawer portal containment with DOM fixture normalization."
+  },
+  {
+    "file": "web/src/features/usage-logs/audit/components/audit-log-filter-bar.tsx",
+    "source": "integrated",
+    "reason": "Keep equivalent searchable audit filter controls with accepted import ordering."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/__tests__/detail-preview.test.tsx",
+    "source": "integrated",
+    "reason": "Keep single plugin admin-only details test, actual column signature and shared localStorage fixture; omit duplicate incoming test."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/__tests__/group-filter.test.tsx",
+    "source": "integrated",
+    "reason": "Keep actual desktop/mobile group filters with complete MediaQueryList and closing-animation defaults."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/__tests__/mobile-card.test.tsx",
+    "source": "integrated",
+    "reason": "Keep mobile card checks against actual internally derived root-role column API."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/__tests__/mobile-filter.test.tsx",
+    "source": "integrated",
+    "reason": "Keep filter URL/time semantics adapted to shared calendar/time controls with drawer defaults and MediaQueryList methods."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx",
+    "source": "integrated",
+    "reason": "Keep quota log regressions with shared storage fixture and actual one-argument column API."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/__tests__/reject-reason.test.tsx",
+    "source": "integrated",
+    "reason": "Keep reject reason restrictions plus owner-visible stream outcome and administrator-only raw transport details."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+    "source": "integrated",
+    "reason": "Keep root role derived from auth store and existing downstream debug/saturation segments together with plugin/quota details."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/columns/task-logs-columns.tsx",
+    "source": "integrated",
+    "reason": "Keep authenticated user avatars guarded by sensitiveVisible with plugin task columns."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/common-log-mobile-card.tsx",
+    "source": "integrated",
+    "reason": "Keep scoped authenticated avatars in upstream mobile log layout."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx",
+    "source": "integrated",
+    "reason": "Keep shared accessible calendar/time field and bounded mobile layout instead of native datetime-local replacement."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep downstream request-debug panels and owner-visible stream status; raw private transport diagnostics remain admin-only alongside upstream expression/plugin details."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/model-badge.tsx",
+    "source": "integrated",
+    "reason": "Keep shared provider classifier; incoming local classifier duplicates and narrows established model recognition."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/timing-metrics-cell.tsx",
+    "source": "integrated",
+    "reason": "Equivalent Async label conditional; keep accepted formatting."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/usage-logs-table.tsx",
+    "source": "integrated",
+    "reason": "Keep equivalent all-log filter normalization with early return and upstream mobile table."
+  },
+  {
+    "file": "web/src/features/usage-logs/types.ts",
+    "source": "integrated",
+    "reason": "Keep RequestDebug/UsageLog data contracts with wallet/plugin/expression log additions."
+  },
+  {
+    "file": "web/src/features/users/components/__tests__/quota-display.test.tsx",
+    "source": "integrated",
+    "reason": "Keep quota/currency display assertions with full responsive MediaQueryList fixture."
+  },
+  {
+    "file": "web/src/features/users/components/data-table-row-actions.tsx",
+    "source": "integrated",
+    "reason": "Keep auth role-based action visibility."
+  },
+  {
+    "file": "web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+    "source": "integrated",
+    "reason": "Keep built-in binding tests plus disabled custom-provider numeric ID unbinding and stale-account response protection."
+  },
+  {
+    "file": "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep request-generation guard to prevent late previous-account response or error from replacing selected account."
+  },
+  {
+    "file": "web/src/features/users/components/user-quota-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep explicit blank amount handling and validation rather than silently converting invalid input to zero."
+  },
+  {
+    "file": "web/src/features/users/components/users-columns.tsx",
+    "source": "integrated",
+    "reason": "Keep authenticated avatars and compact names with upstream quota column behavior."
+  },
+  {
+    "file": "web/src/features/users/components/users-mutate-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep per-user request-rate limit modes and normalized numeric values alongside upstream account editor."
+  },
+  {
+    "file": "web/src/features/wallet/hooks/use-redemption.ts",
+    "source": "integrated",
+    "reason": "Keep distinct quota/subscription redemption outcomes and correct success message, retaining upstream error handling."
+  },
+  {
+    "file": "web/src/hooks/use-notifications.ts",
+    "source": "integrated",
+    "reason": "Keep downstream announcement identity/persistence; conflict is blank-line placement."
+  },
+  {
+    "file": "web/src/i18n/static-keys.ts",
+    "source": "integrated",
+    "reason": "Keep all downstream dynamic translation keys for diagnostics, automatic bans, client identities, balance and canvas features with upstream plugin/security/pricing keys."
+  }
+]

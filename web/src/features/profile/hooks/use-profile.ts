@@ -97,6 +97,8 @@ export function useProfile() {
           }
           setProfile(nextProfile)
           syncAuthUser(nextProfile)
+        } else if (!silent) {
+          handleServerError(response, t('Failed to load profile'))
         }
       } catch (error) {
         if (!silent) {

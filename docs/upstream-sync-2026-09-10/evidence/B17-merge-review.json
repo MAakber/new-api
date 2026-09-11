@@ -1,0 +1,21 @@
+{
+  "before": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
+  "upstream": "bdef117505247769268b209665fb3ad7554c3da7",
+  "reviewed": 326,
+  "conflicts": 303,
+  "automatic": 23,
+  "remaining": 0,
+  "code_delta": "M\tgo.mod\nM\tweb/src/features/pricing/__tests__/model-cards.test.tsx\nA\tweb/src/features/profile/hooks/__tests__/profile-loading.test.tsx\nM\tweb/src/features/profile/hooks/use-profile.ts\nM\tweb/src/i18n/locales/_reports/_sync-report.json\nM\tweb/src/i18n/locales/_reports/ja.untranslated.json\nM\tweb/src/i18n/locales/_reports/ru.untranslated.json\nM\tweb/src/i18n/locales/_reports/zh.untranslated.json\nM\tweb/src/i18n/locales/fr.json\nM\tweb/src/i18n/locales/ja.json\nM\tweb/src/i18n/locales/ru.json\nM\tweb/src/i18n/locales/vi.json\nM\tweb/src/i18n/locales/zh-TW.json\nM\tweb/src/i18n/locales/zh.json",
+  "additional_files": [
+    "web/src/features/profile/hooks/__tests__/profile-loading.test.tsx",
+    "web/src/i18n/locales/_reports/ja.untranslated.json",
+    "web/src/i18n/locales/_reports/ru.untranslated.json",
+    "web/src/i18n/locales/_reports/zh.untranslated.json"
+  ],
+  "profile_regression": {
+    "before": "evidence/runs/B17-profile-error-before/result.json",
+    "after": "evidence/runs/B17-profile-error-fixed/result.json",
+    "scope": "In-progress merge tree development probe; final committed B18 suite still required"
+  },
+  "final_acceptance": "pending"
+}

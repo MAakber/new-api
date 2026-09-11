@@ -1,0 +1,2082 @@
+* Unmerged path .github/PULL_REQUEST_TEMPLATE.md
+* Unmerged path .github/PULL_REQUEST_TEMPLATE/en.md
+* Unmerged path .github/workflows/release.yml
+* Unmerged path common/crypto.go
+* Unmerged path constant/channel.go
+* Unmerged path constant/context_key.go
+* Unmerged path constant/task.go
+* Unmerged path controller/access_token_audit_test.go
+* Unmerged path controller/audit.go
+* Unmerged path controller/auth_flow_test.go
+* Unmerged path controller/billing_option_test.go
+* Unmerged path controller/channel-billing.go
+* Unmerged path controller/channel-test.go
+* Unmerged path controller/channel.go
+* Unmerged path controller/channel_pin_retry_test.go
+* Unmerged path controller/channel_task_plugin_bind_test.go
+* Unmerged path controller/channel_test_internal_test.go
+* Unmerged path controller/channel_upstream_update.go
+* Unmerged path controller/login_verification.go
+* Unmerged path controller/model_list_test.go
+* Unmerged path controller/model_management_test.go
+* Unmerged path controller/model_pricing_config.go
+* Unmerged path controller/model_sync.go
+* Unmerged path controller/oauth.go
+* Unmerged path controller/option.go
+* Unmerged path controller/passkey.go
+* Unmerged path controller/passkey_test.go
+* Unmerged path controller/redemption.go
+* Unmerged path controller/redemption_batch_test.go
+* Unmerged path controller/relay.go
+diff --git a/controller/relay_count_tokens_test.go b/controller/relay_count_tokens_test.go
+new file mode 100644
+index 000000000..2889bb76a
+--- /dev/null
++++ b/controller/relay_count_tokens_test.go
+@@ -0,0 +1,73 @@
++package controller
++
++import (
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"testing"
++
++	"github.com/QuantumNous/new-api/common"
++	"github.com/QuantumNous/new-api/constant"
++	"github.com/gin-gonic/gin"
++	"github.com/stretchr/testify/assert"
++	"github.com/stretchr/testify/require"
++)
++
++func TestCountClaudeTokensReturnsInputTokensWhenRelayCountingDisabled(t *testing.T) {
++	gin.SetMode(gin.TestMode)
++	originalCountToken := constant.CountToken
++	constant.CountToken = false
++	t.Cleanup(func() {
++		constant.CountToken = originalCountToken
++	})
++
++	recorder := httptest.NewRecorder()
++	ctx, _ := gin.CreateTestContext(recorder)
++	ctx.Request = httptest.NewRequest(
++		http.MethodPost,
++		"/v1/messages/count_tokens?beta=true",
++		strings.NewReader(`{
++			"model":"gemini-3.6-flash",
++			"messages":[{"role":"user","content":"count this prompt"}],
++			"tools":[{"name":"lookup","description":"Look up a value","input_schema":{"type":"object","properties":{"query":{"type":"string"}}}}]
++		}`),
++	)
++	ctx.Request.Header.Set("Content-Type", "application/json")
++	common.SetContextKey(ctx, constant.ContextKeyOriginalModel, "gemini-3.6-flash")
++
++	CountClaudeTokens(ctx)
++
++	require.Equal(t, http.StatusOK, recorder.Code)
++	var response struct {
++		InputTokens int `json:"input_tokens"`
++	}
++	require.NoError(t, common.Unmarshal(recorder.Body.Bytes(), &response))
++	assert.Positive(t, response.InputTokens)
++}
++
++func TestCountClaudeTokensRejectsMissingMessages(t *testing.T) {
++	gin.SetMode(gin.TestMode)
++	recorder := httptest.NewRecorder()
++	ctx, _ := gin.CreateTestContext(recorder)
++	ctx.Request = httptest.NewRequest(
++		http.MethodPost,
++		"/v1/messages/count_tokens",
++		strings.NewReader(`{"model":"gemini-3.6-flash"}`),
++	)
++	ctx.Request.Header.Set("Content-Type", "application/json")
++
++	CountClaudeTokens(ctx)
++
++	require.Equal(t, http.StatusBadRequest, recorder.Code)
++	var response struct {
++		Type  string `json:"type"`
++		Error struct {
++			Type    string `json:"type"`
++			Message string `json:"message"`
++		} `json:"error"`
++	}
++	require.NoError(t, common.Unmarshal(recorder.Body.Bytes(), &response))
++	assert.Equal(t, "error", response.Type)
++	assert.Equal(t, "invalid_request_error", response.Error.Type)
++	assert.Contains(t, response.Error.Message, "messages")
++}
+* Unmerged path controller/secure_verification.go
+* Unmerged path controller/security_account_test.go
+* Unmerged path controller/security_enrollment_test.go
+* Unmerged path controller/task.go
+* Unmerged path controller/telegram_test.go
+* Unmerged path controller/user.go
+* Unmerged path controller/user_manage_test.go
+* Unmerged path controller/video_proxy.go
+* Unmerged path controller/video_proxy_gemini.go
+* Unmerged path controller/wechat.go
+* Unmerged path dto/channel_constraints.go
+* Unmerged path e2e/doc_parse_test.go
+* Unmerged path go.mod
+* Unmerged path i18n/locales/en.yaml
+* Unmerged path i18n/locales/zh-CN.yaml
+* Unmerged path i18n/locales/zh-TW.yaml
+* Unmerged path middleware/distributor.go
+* Unmerged path middleware/distributor_test.go
+diff --git a/middleware/jimeng_adapter.go b/middleware/jimeng_adapter.go
+deleted file mode 100644
+index 3e3dd7ae5..000000000
+--- a/middleware/jimeng_adapter.go
++++ /dev/null
+@@ -1,67 +0,0 @@
+-package middleware
+-
+-import (
+-	"bytes"
+-	"encoding/json"
+-	"io"
+-	"net/http"
+-
+-	"github.com/QuantumNous/new-api/common"
+-	"github.com/QuantumNous/new-api/constant"
+-	relayconstant "github.com/QuantumNous/new-api/relay/constant"
+-	"github.com/gin-gonic/gin"
+-)
+-
+-func JimengRequestConvert() func(c *gin.Context) {
+-	return func(c *gin.Context) {
+-		action := c.Query("Action")
+-		if action == "" {
+-			abortWithOpenAiMessage(c, http.StatusBadRequest, "Action query parameter is required")
+-			return
+-		}
+-
+-		// Handle Jimeng official API request
+-		var originalReq map[string]interface{}
+-		if err := common.UnmarshalBodyReusable(c, &originalReq); err != nil {
+-			abortWithOpenAiMessage(c, http.StatusBadRequest, "Invalid request body")
+-			return
+-		}
+-		model, _ := originalReq["req_key"].(string)
+-		prompt, _ := originalReq["prompt"].(string)
+-
+-		unifiedReq := map[string]interface{}{
+-			"model":    model,
+-			"prompt":   prompt,
+-			"metadata": originalReq,
+-		}
+-
+-		jsonData, err := json.Marshal(unifiedReq)
+-		if err != nil {
+-			abortWithOpenAiMessage(c, http.StatusInternalServerError, "Failed to marshal request body")
+-			return
+-		}
+-
+-		// Update request body
+-		c.Request.Body = io.NopCloser(bytes.NewBuffer(jsonData))
+-		c.Set(common.KeyRequestBody, jsonData)
+-
+-		if image, ok := originalReq["image"]; !ok || image == "" {
+-			c.Set("action", constant.TaskActionTextGenerate)
+-		}
+-
+-		c.Request.URL.Path = "/v1/video/generations"
+-
+-		if action == "CVSync2AsyncGetResult" {
+-			taskId, ok := originalReq["task_id"].(string)
+-			if !ok || taskId == "" {
+-				abortWithOpenAiMessage(c, http.StatusBadRequest, "task_id is required for CVSync2AsyncGetResult")
+-				return
+-			}
+-			c.Request.URL.Path = "/v1/video/generations/" + taskId
+-			c.Request.Method = http.MethodGet
+-			c.Set("task_id", taskId)
+-			c.Set("relay_mode", relayconstant.RelayModeVideoFetchByID)
+-		}
+-		c.Next()
+-	}
+-}
+diff --git a/middleware/kling_adapter.go b/middleware/kling_adapter.go
+deleted file mode 100644
+index e200379c0..000000000
+--- a/middleware/kling_adapter.go
++++ /dev/null
+@@ -1,52 +0,0 @@
+-package middleware
+-
+-import (
+-	"bytes"
+-	"encoding/json"
+-	"io"
+-
+-	"github.com/QuantumNous/new-api/common"
+-	"github.com/QuantumNous/new-api/constant"
+-
+-	"github.com/gin-gonic/gin"
+-)
+-
+-func KlingRequestConvert() func(c *gin.Context) {
+-	return func(c *gin.Context) {
+-		var originalReq map[string]interface{}
+-		if err := common.UnmarshalBodyReusable(c, &originalReq); err != nil {
+-			c.Next()
+-			return
+-		}
+-
+-		// Support both model_name and model fields
+-		model, _ := originalReq["model_name"].(string)
+-		if model == "" {
+-			model, _ = originalReq["model"].(string)
+-		}
+-		prompt, _ := originalReq["prompt"].(string)
+-
+-		unifiedReq := map[string]interface{}{
+-			"model":    model,
+-			"prompt":   prompt,
+-			"metadata": originalReq,
+-		}
+-
+-		jsonData, err := json.Marshal(unifiedReq)
+-		if err != nil {
+-			c.Next()
+-			return
+-		}
+-
+-		// Rewrite request body and path
+-		c.Request.Body = io.NopCloser(bytes.NewBuffer(jsonData))
+-		c.Request.URL.Path = "/v1/video/generations"
+-		if image, ok := originalReq["image"]; !ok || image == "" {
+-			c.Set("action", constant.TaskActionTextGenerate)
+-		}
+-
+-		// We have to reset the request body for the next handlers
+-		c.Set(common.KeyRequestBody, jsonData)
+-		c.Next()
+-	}
+-}
+* Unmerged path middleware/task_plugin.go
+* Unmerged path model/ability.go
+* Unmerged path model/audit_log.go
+* Unmerged path model/audit_other.go
+* Unmerged path model/auth_flow.go
+* Unmerged path model/channel.go
+* Unmerged path model/channel_cache.go
+* Unmerged path model/channel_constraint.go
+* Unmerged path model/channel_satisfy.go
+* Unmerged path model/channel_status_test.go
+* Unmerged path model/log.go
+* Unmerged path model/log_format_test.go
+* Unmerged path model/log_other.go
+* Unmerged path model/login_verification.go
+* Unmerged path model/main.go
+* Unmerged path model/migration_dialector.go
+* Unmerged path model/migration_dialector_test.go
+* Unmerged path model/model_meta.go
+* Unmerged path model/model_metadata_sync.go
+* Unmerged path model/model_pricing_config.go
+* Unmerged path model/option.go
+* Unmerged path model/option_primary_key_migration.go
+* Unmerged path model/passkey.go
+* Unmerged path model/redemption.go
+* Unmerged path model/redemption_test.go
+* Unmerged path model/subscription.go
+* Unmerged path model/task_plugin_test.go
+* Unmerged path model/user.go
+* Unmerged path model/vendor_management.go
+* Unmerged path model/vendor_meta.go
+* Unmerged path oauth/telegram.go
+* Unmerged path pkg/perf_metrics/metrics.go
+* Unmerged path pkg/perf_metrics/types.go
+* Unmerged path plugins/tasks/vidu/plugin.js
+* Unmerged path plugins/vidu_responses_test.go
+* Unmerged path relay/channel/api_request.go
+* Unmerged path relay/channel/api_request_getbody_test.go
+* Unmerged path relay/channel/api_request_test.go
+* Unmerged path relay/channel/codex/adaptor_test.go
+diff --git a/relay/channel/codex/constants.go b/relay/channel/codex/constants.go
+index 8e6597cd5..a6bd61a96 100644
+--- a/relay/channel/codex/constants.go
++++ b/relay/channel/codex/constants.go
+@@ -1,12 +1,6 @@
+ package codex
+ 
+-import (
+-	"slices"
+-
+-	"github.com/QuantumNous/new-api/setting/ratio_setting"
+-)
+-
+-var baseModelList = []string{
++var ModelList = []string{
+ 	"gpt-5.6-sol",
+ 	"gpt-5.6-terra",
+ 	"gpt-5.6-luna",
+@@ -17,11 +11,4 @@ var baseModelList = []string{
+ 	"codex-auto-review",
+ }
+ 
+-var ModelList = slices.DeleteFunc(
+-	ratio_setting.WithCompactModelVariants(baseModelList),
+-	func(modelName string) bool {
+-		return modelName == ratio_setting.WithCompactModelSuffix("codex-auto-review")
+-	},
+-)
+-
+ const ChannelName = "codex"
+* Unmerged path relay/channel/openai/adaptor.go
+* Unmerged path relay/channel/openai/helper.go
+* Unmerged path relay/channel/task/ali/adaptor.go
+diff --git a/relay/channel/task/ali/adaptor_test.go b/relay/channel/task/ali/adaptor_test.go
+deleted file mode 100644
+index a7c414bfa..000000000
+--- a/relay/channel/task/ali/adaptor_test.go
++++ /dev/null
+@@ -1,172 +0,0 @@
+-package ali
+-
+-import (
+-	"strings"
+-	"testing"
+-
+-	"github.com/QuantumNous/new-api/common"
+-	relaycommon "github.com/QuantumNous/new-api/relay/common"
+-	"github.com/stretchr/testify/require"
+-)
+-
+-func testRelayInfo() *relaycommon.RelayInfo {
+-	return &relaycommon.RelayInfo{
+-		ChannelMeta: &relaycommon.ChannelMeta{},
+-	}
+-}
+-
+-func TestConvertToAliRequestWan27I2VBuildsMediaFromImage(t *testing.T) {
+-	adaptor := &TaskAdaptor{}
+-	req := relaycommon.TaskSubmitReq{
+-		Model:    "wan2.7-i2v",
+-		Prompt:   "animate the first frame",
+-		Image:    "https://example.com/first.png",
+-		Size:     "720p",
+-		Duration: 10,
+-	}
+-
+-	aliReq, err := adaptor.convertToAliRequest(testRelayInfo(), req)
+-
+-	require.NoError(t, err)
+-	require.Equal(t, "wan2.7-i2v", aliReq.Model)
+-	require.Equal(t, "720P", aliReq.Parameters.Resolution)
+-	require.Equal(t, 10, aliReq.Parameters.Duration)
+-	require.Equal(t, []AliVideoMedia{
+-		{Type: "first_frame", URL: "https://example.com/first.png"},
+-	}, aliReq.Input.Media)
+-	require.Empty(t, aliReq.Input.ImgURL)
+-
+-	body, err := common.Marshal(aliReq)
+-	require.NoError(t, err)
+-	require.Contains(t, string(body), `"media"`)
+-	require.NotContains(t, string(body), `"img_url"`)
+-}
+-
+-func TestConvertToAliRequestWan27I2VBuildsFirstAndLastFrameFromImages(t *testing.T) {
+-	adaptor := &TaskAdaptor{}
+-	req := relaycommon.TaskSubmitReq{
+-		Model:  "wan2.7-i2v",
+-		Prompt: "interpolate between frames",
+-		Images: []string{
+-			"https://example.com/first.png",
+-			"https://example.com/last.png",
+-		},
+-	}
+-
+-	aliReq, err := adaptor.convertToAliRequest(testRelayInfo(), req)
+-
+-	require.NoError(t, err)
+-	require.Equal(t, []AliVideoMedia{
+-		{Type: "first_frame", URL: "https://example.com/first.png"},
+-		{Type: "last_frame", URL: "https://example.com/last.png"},
+-	}, aliReq.Input.Media)
+-}
+-
+-func TestConvertToAliRequestWan27I2VPrefersImageBeforeImagesAndInputReference(t *testing.T) {
+-	adaptor := &TaskAdaptor{}
+-	req := relaycommon.TaskSubmitReq{
+-		Model:          "wan2.7-i2v",
+-		Prompt:         "use the direct image",
+-		Image:          " https://example.com/direct.png ",
+-		Images:         []string{"https://example.com/images-first.png", " https://example.com/images-last.png "},
+-		InputReference: "https://example.com/input-reference.png",
+-	}
+-
+-	aliReq, err := adaptor.convertToAliRequest(testRelayInfo(), req)
+-
+-	require.NoError(t, err)
+-	require.Equal(t, []AliVideoMedia{
+-		{Type: "first_frame", URL: "https://example.com/direct.png"},
+-		{Type: "last_frame", URL: "https://example.com/images-last.png"},
+-	}, aliReq.Input.Media)
+-}
+-
+-func TestConvertToAliRequestWan27I2VFallsBackToFirstNonEmptyImage(t *testing.T) {
+-	adaptor := &TaskAdaptor{}
+-	req := relaycommon.TaskSubmitReq{
+-		Model:  "wan2.7-i2v",
+-		Prompt: "skip blank images",
+-		Image:  " ",
+-		Images: []string{
+-			" ",
+-			" https://example.com/first.png ",
+-			" https://example.com/last.png ",
+-		},
+-		InputReference: "https://example.com/input-reference.png",
+-	}
+-
+-	aliReq, err := adaptor.convertToAliRequest(testRelayInfo(), req)
+-
+-	require.NoError(t, err)
+-	require.Equal(t, []AliVideoMedia{
+-		{Type: "first_frame", URL: "https://example.com/first.png"},
+-		{Type: "last_frame", URL: "https://example.com/last.png"},
+-	}, aliReq.Input.Media)
+-}
+-
+-func TestConvertToAliRequestWan27I2VKeepsExplicitMetadataMedia(t *testing.T) {
+-	adaptor := &TaskAdaptor{}
+-	req := relaycommon.TaskSubmitReq{
+-		Model:          "wan2.7-i2v",
+-		Prompt:         "continue the clip",
+-		Image:          "https://example.com/direct.png",
+-		Images:         []string{"https://example.com/images-first.png", "https://example.com/images-last.png"},
+-		InputReference: "https://example.com/input-reference.png",
+-		Metadata: map[string]interface{}{
+-			"input": map[string]interface{}{
+-				"media": []interface{}{
+-					map[string]interface{}{
+-						"type": "first_clip",
+-						"url":  "https://example.com/input.mp4",
+-					},
+-				},
+-			},
+-		},
+-	}
+-
+-	aliReq, err := adaptor.convertToAliRequest(testRelayInfo(), req)
+-
+-	require.NoError(t, err)
+-	require.Equal(t, []AliVideoMedia{
+-		{Type: "first_clip", URL: "https://example.com/input.mp4"},
+-	}, aliReq.Input.Media)
+-	require.Empty(t, aliReq.Input.ImgURL)
+-
+-	body, err := common.Marshal(aliReq)
+-	require.NoError(t, err)
+-	require.Contains(t, string(body), `"media"`)
+-	require.NotContains(t, string(body), `"img_url"`)
+-}
+-
+-func TestConvertToAliRequestWan27I2VRequiresMedia(t *testing.T) {
+-	adaptor := &TaskAdaptor{}
+-	req := relaycommon.TaskSubmitReq{
+-		Model:  "wan2.7-i2v",
+-		Prompt: "animate without a frame",
+-	}
+-
+-	_, err := adaptor.convertToAliRequest(testRelayInfo(), req)
+-
+-	require.Error(t, err)
+-	require.True(t, strings.Contains(err.Error(), "requires image"))
+-}
+-
+-func TestConvertToAliRequestWan25I2VKeepsLegacyImgURL(t *testing.T) {
+-	adaptor := &TaskAdaptor{}
+-	req := relaycommon.TaskSubmitReq{
+-		Model:  "wan2.5-i2v-preview",
+-		Prompt: "animate the first frame",
+-		Image:  "https://example.com/first.png",
+-	}
+-
+-	aliReq, err := adaptor.convertToAliRequest(testRelayInfo(), req)
+-
+-	require.NoError(t, err)
+-	require.Equal(t, "https://example.com/first.png", aliReq.Input.ImgURL)
+-	require.Empty(t, aliReq.Input.Media)
+-
+-	body, err := common.Marshal(aliReq)
+-	require.NoError(t, err)
+-	require.Contains(t, string(body), `"img_url"`)
+-	require.NotContains(t, string(body), `"media"`)
+-}
+diff --git a/relay/channel/task/ali/constants.go b/relay/channel/task/ali/constants.go
+deleted file mode 100644
+index 349f65605..000000000
+--- a/relay/channel/task/ali/constants.go
++++ /dev/null
+@@ -1,13 +0,0 @@
+-package ali
+-
+-var ModelList = []string{
+-	"wan2.7-i2v",         // 万相2.7图生视频（新input.media协议）
+-	"wan2.7-t2v",         // 万相2.7文生视频
+-	"wan2.5-i2v-preview", // 万相2.5 preview（有声视频）推荐
+-	"wan2.2-i2v-flash",   // 万相2.2极速版（无声视频）
+-	"wan2.2-i2v-plus",    // 万相2.2专业版（无声视频）
+-	"wanx2.1-i2v-plus",   // 万相2.1专业版（无声视频）
+-	"wanx2.1-i2v-turbo",  // 万相2.1极速版（无声视频）
+-}
+-
+-var ChannelName = "ali"
+* Unmerged path relay/channel/task/doubao/adaptor.go
+diff --git a/relay/channel/task/doubao/constants.go b/relay/channel/task/doubao/constants.go
+deleted file mode 100644
+index a2035fe25..000000000
+--- a/relay/channel/task/doubao/constants.go
++++ /dev/null
+@@ -1,56 +0,0 @@
+-package doubao
+-
+-import "strings"
+-
+-var ModelList = []string{
+-	"doubao-seedance-1-0-pro-250528",
+-	"doubao-seedance-1-0-lite-t2v",
+-	"doubao-seedance-1-0-lite-i2v",
+-	"doubao-seedance-1-5-pro-251215",
+-	"doubao-seedance-2-0-260128",
+-	"doubao-seedance-2-0-fast-260128",
+-}
+-
+-var ChannelName = "doubao-video"
+-
+-// videoPriceKey 价格表的键：输出分辨率档（is1080p/is4k 均为 false 即 480p/720p 基准档）、输入是否含视频。
+-type videoPriceKey struct {
+-	is1080p  bool
+-	is4k     bool
+-	hasVideo bool
+-}
+-
+-// videoPriceTable 各模型在不同 (输出分辨率档, 是否含视频输入) 下的单价（元/百万 token）。
+-// 其中零值键 {480p/720p, 不含视频} 为基准价，等于管理员应配置的 ModelRatio；
+-// 计费时取 实际单价/基准价 作为 OtherRatio。
+-var videoPriceTable = map[string]map[videoPriceKey]float64{
+-	"doubao-seedance-2-0-260128": {
+-		{hasVideo: false}:                46.0,
+-		{hasVideo: true}:                 28.0,
+-		{is1080p: true, hasVideo: false}: 51.0,
+-		{is1080p: true, hasVideo: true}:  31.0,
+-		{is4k: true, hasVideo: false}:    26.0,
+-		{is4k: true, hasVideo: true}:     16.0,
+-	},
+-	"doubao-seedance-2-0-fast-260128": {
+-		{hasVideo: false}: 37.0,
+-		{hasVideo: true}:  22.0,
+-	},
+-}
+-
+-// GetVideoInputRatio 返回指定模型在给定输出分辨率/是否含视频输入下，相对基准价的计费倍率。
+-// 第二个返回值表示该模型是否配置了价格表；倍率为 1.0 时调用方可忽略该 OtherRatio。
+-func GetVideoInputRatio(modelName, resolution string, hasVideo bool) (float64, bool) {
+-	prices, ok := videoPriceTable[modelName]
+-	base := prices[videoPriceKey{}] // 零值键 = {480p/720p, 不含视频} 基准价
+-	if !ok || base <= 0 {
+-		return 0, false
+-	}
+-	res := strings.ToLower(strings.TrimSpace(resolution))
+-	price, ok := prices[videoPriceKey{is1080p: res == "1080p", is4k: res == "4k", hasVideo: hasVideo}]
+-	if !ok {
+-		// 未配置的组合（如 fast 无 1080p/4k，上游会自行报错）按基准价计费即可。
+-		return 1.0, true
+-	}
+-	return price / base, true
+-}
+* Unmerged path relay/channel/task/gemini/adaptor.go
+diff --git a/relay/channel/task/gemini/billing.go b/relay/channel/task/gemini/billing.go
+deleted file mode 100644
+index d3b981b90..000000000
+--- a/relay/channel/task/gemini/billing.go
++++ /dev/null
+@@ -1,142 +0,0 @@
+-package gemini
+-
+-import (
+-	"strconv"
+-	"strings"
+-
+-	relaycommon "github.com/QuantumNous/new-api/relay/common"
+-)
+-
+-// ParseVeoDurationSeconds extracts durationSeconds from metadata.
+-// Returns 8 (Veo default) when not specified or invalid.
+-func ParseVeoDurationSeconds(metadata map[string]any) int {
+-	if metadata == nil {
+-		return 8
+-	}
+-	v, ok := metadata["durationSeconds"]
+-	if !ok {
+-		return 8
+-	}
+-	switch n := v.(type) {
+-	case float64:
+-		if int(n) > 0 {
+-			return int(n)
+-		}
+-	case int:
+-		if n > 0 {
+-			return n
+-		}
+-	}
+-	return 8
+-}
+-
+-// ParseVeoResolution extracts resolution from metadata.
+-// Returns "720p" when not specified.
+-func ParseVeoResolution(metadata map[string]any) string {
+-	if metadata == nil {
+-		return "720p"
+-	}
+-	v, ok := metadata["resolution"]
+-	if !ok {
+-		return "720p"
+-	}
+-	if s, ok := v.(string); ok && s != "" {
+-		return strings.ToLower(s)
+-	}
+-	return "720p"
+-}
+-
+-// ResolveVeoDuration returns the effective duration in seconds.
+-// Priority: metadata["durationSeconds"] > stdDuration > stdSeconds > default (8).
+-// The result is capped because it is used as a billing multiplier and the
+-// metadata path bypasses standard request validation.
+-func ResolveVeoDuration(metadata map[string]any, stdDuration int, stdSeconds string) int {
+-	if metadata != nil {
+-		if _, exists := metadata["durationSeconds"]; exists {
+-			if d := ParseVeoDurationSeconds(metadata); d > 0 {
+-				return min(d, relaycommon.MaxTaskDurationSeconds)
+-			}
+-		}
+-	}
+-	if stdDuration > 0 {
+-		return min(stdDuration, relaycommon.MaxTaskDurationSeconds)
+-	}
+-	if s, err := strconv.Atoi(stdSeconds); err == nil && s > 0 {
+-		return min(s, relaycommon.MaxTaskDurationSeconds)
+-	}
+-	return 8
+-}
+-
+-// ResolveVeoResolution returns the effective resolution string (lowercase).
+-// Priority: metadata["resolution"] > SizeToVeoResolution(stdSize) > default ("720p").
+-func ResolveVeoResolution(metadata map[string]any, stdSize string) string {
+-	if metadata != nil {
+-		if _, exists := metadata["resolution"]; exists {
+-			if r := ParseVeoResolution(metadata); r != "" {
+-				return r
+-			}
+-		}
+-	}
+-	if stdSize != "" {
+-		return SizeToVeoResolution(stdSize)
+-	}
+-	return "720p"
+-}
+-
+-// SizeToVeoResolution converts a "WxH" size string to a Veo resolution label.
+-func SizeToVeoResolution(size string) string {
+-	parts := strings.SplitN(strings.ToLower(size), "x", 2)
+-	if len(parts) != 2 {
+-		return "720p"
+-	}
+-	w, _ := strconv.Atoi(parts[0])
+-	h, _ := strconv.Atoi(parts[1])
+-	maxDim := w
+-	if h > maxDim {
+-		maxDim = h
+-	}
+-	if maxDim >= 3840 {
+-		return "4k"
+-	}
+-	if maxDim >= 1920 {
+-		return "1080p"
+-	}
+-	return "720p"
+-}
+-
+-// SizeToVeoAspectRatio converts a "WxH" size string to a Veo aspect ratio.
+-func SizeToVeoAspectRatio(size string) string {
+-	parts := strings.SplitN(strings.ToLower(size), "x", 2)
+-	if len(parts) != 2 {
+-		return "16:9"
+-	}
+-	w, _ := strconv.Atoi(parts[0])
+-	h, _ := strconv.Atoi(parts[1])
+-	if w <= 0 || h <= 0 {
+-		return "16:9"
+-	}
+-	if h > w {
+-		return "9:16"
+-	}
+-	return "16:9"
+-}
+-
+-// VeoResolutionRatio returns the pricing multiplier for the given resolution.
+-// Standard resolutions (720p, 1080p) return 1.0.
+-// 4K returns a model-specific multiplier based on Google's official pricing.
+-func VeoResolutionRatio(modelName, resolution string) float64 {
+-	if resolution != "4k" {
+-		return 1.0
+-	}
+-	// 4K multipliers derived from Vertex AI official pricing (video+audio base):
+-	//   veo-3.1-generate:      $0.60 / $0.40 = 1.5
+-	//   veo-3.1-fast-generate: $0.35 / $0.15 ≈ 2.333
+-	// Veo 3.0 models do not support 4K; return 1.0 as fallback.
+-	if strings.Contains(modelName, "3.1-fast-generate") {
+-		return 2.333333
+-	}
+-	if strings.Contains(modelName, "3.1-generate") || strings.Contains(modelName, "3.1") {
+-		return 1.5
+-	}
+-	return 1.0
+-}
+diff --git a/relay/channel/task/gemini/dto.go b/relay/channel/task/gemini/dto.go
+deleted file mode 100644
+index 70a13feec..000000000
+--- a/relay/channel/task/gemini/dto.go
++++ /dev/null
+@@ -1,71 +0,0 @@
+-package gemini
+-
+-// VeoImageInput represents an image input for Veo image-to-video.
+-// Used by both Gemini and Vertex adaptors.
+-type VeoImageInput struct {
+-	BytesBase64Encoded string `json:"bytesBase64Encoded"`
+-	MimeType           string `json:"mimeType"`
+-}
+-
+-// VeoInstance represents a single instance in the Veo predictLongRunning request.
+-type VeoInstance struct {
+-	Prompt string         `json:"prompt"`
+-	Image  *VeoImageInput `json:"image,omitempty"`
+-	// TODO: support referenceImages (style/asset references, up to 3 images)
+-	// TODO: support lastFrame (first+last frame interpolation, Veo 3.1)
+-}
+-
+-// VeoParameters represents the parameters block for Veo predictLongRunning.
+-type VeoParameters struct {
+-	SampleCount        int    `json:"sampleCount"`
+-	DurationSeconds    int    `json:"durationSeconds,omitempty"`
+-	AspectRatio        string `json:"aspectRatio,omitempty"`
+-	Resolution         string `json:"resolution,omitempty"`
+-	NegativePrompt     string `json:"negativePrompt,omitempty"`
+-	PersonGeneration   string `json:"personGeneration,omitempty"`
+-	StorageUri         string `json:"storageUri,omitempty"`
+-	CompressionQuality string `json:"compressionQuality,omitempty"`
+-	ResizeMode         string `json:"resizeMode,omitempty"`
+-	Seed               *int   `json:"seed,omitempty"`
+-	GenerateAudio      *bool  `json:"generateAudio,omitempty"`
+-}
+-
+-// VeoRequestPayload is the top-level request body for the Veo
+-// predictLongRunning endpoint (used by both Gemini and Vertex).
+-type VeoRequestPayload struct {
+-	Instances  []VeoInstance  `json:"instances"`
+-	Parameters *VeoParameters `json:"parameters,omitempty"`
+-}
+-
+-type submitResponse struct {
+-	Name string `json:"name"`
+-}
+-
+-type operationVideo struct {
+-	MimeType           string `json:"mimeType"`
+-	BytesBase64Encoded string `json:"bytesBase64Encoded"`
+-	Encoding           string `json:"encoding"`
+-}
+-
+-type operationResponse struct {
+-	Name     string `json:"name"`
+-	Done     bool   `json:"done"`
+-	Response struct {
+-		Type                  string           `json:"@type"`
+-		RaiMediaFilteredCount int              `json:"raiMediaFilteredCount"`
+-		Videos                []operationVideo `json:"videos"`
+-		BytesBase64Encoded    string           `json:"bytesBase64Encoded"`
+-		Encoding              string           `json:"encoding"`
+-		Video                 string           `json:"video"`
+-		GenerateVideoResponse struct {
+-			GeneratedVideos []struct {
+-				Video struct {
+-					URI string `json:"uri"`
+-				} `json:"video"`
+-			} `json:"generatedVideos"`
+-		} `json:"generateVideoResponse"`
+-	} `json:"response"`
+-	Error struct {
+-		Message string `json:"message"`
+-	} `json:"error"`
+-}
+diff --git a/relay/channel/task/gemini/image.go b/relay/channel/task/gemini/image.go
+deleted file mode 100644
+index da11b4721..000000000
+--- a/relay/channel/task/gemini/image.go
++++ /dev/null
+@@ -1,100 +0,0 @@
+-package gemini
+-
+-import (
+-	"encoding/base64"
+-	"io"
+-	"net/http"
+-	"strings"
+-
+-	"github.com/QuantumNous/new-api/constant"
+-	relaycommon "github.com/QuantumNous/new-api/relay/common"
+-	"github.com/gin-gonic/gin"
+-)
+-
+-const maxVeoImageSize = 20 * 1024 * 1024 // 20 MB
+-
+-// ExtractMultipartImage reads the first `input_reference` file from a multipart
+-// form upload and returns a VeoImageInput. Returns nil if no file is present.
+-func ExtractMultipartImage(c *gin.Context, info *relaycommon.RelayInfo) *VeoImageInput {
+-	mf, err := c.MultipartForm()
+-	if err != nil {
+-		return nil
+-	}
+-	files, exists := mf.File["input_reference"]
+-	if !exists || len(files) == 0 {
+-		return nil
+-	}
+-	fh := files[0]
+-	if fh.Size > maxVeoImageSize {
+-		return nil
+-	}
+-	file, err := fh.Open()
+-	if err != nil {
+-		return nil
+-	}
+-	defer file.Close()
+-
+-	fileBytes, err := io.ReadAll(file)
+-	if err != nil {
+-		return nil
+-	}
+-
+-	mimeType := fh.Header.Get("Content-Type")
+-	if mimeType == "" || mimeType == "application/octet-stream" {
+-		mimeType = http.DetectContentType(fileBytes)
+-	}
+-
+-	info.Action = constant.TaskActionGenerate
+-	return &VeoImageInput{
+-		BytesBase64Encoded: base64.StdEncoding.EncodeToString(fileBytes),
+-		MimeType:           mimeType,
+-	}
+-}
+-
+-// ParseImageInput parses an image string (data URI or raw base64) into a
+-// VeoImageInput. Returns nil if the input is empty or invalid.
+-// TODO: support downloading HTTP URL images and converting to base64
+-func ParseImageInput(imageStr string) *VeoImageInput {
+-	imageStr = strings.TrimSpace(imageStr)
+-	if imageStr == "" {
+-		return nil
+-	}
+-
+-	if strings.HasPrefix(imageStr, "data:") {
+-		return parseDataURI(imageStr)
+-	}
+-
+-	raw, err := base64.StdEncoding.DecodeString(imageStr)
+-	if err != nil {
+-		return nil
+-	}
+-	return &VeoImageInput{
+-		BytesBase64Encoded: imageStr,
+-		MimeType:           http.DetectContentType(raw),
+-	}
+-}
+-
+-func parseDataURI(uri string) *VeoImageInput {
+-	// data:image/png;base64,iVBOR...
+-	rest := uri[len("data:"):]
+-	idx := strings.Index(rest, ",")
+-	if idx < 0 {
+-		return nil
+-	}
+-	meta := rest[:idx]
+-	b64 := rest[idx+1:]
+-	if b64 == "" {
+-		return nil
+-	}
+-
+-	mimeType := "application/octet-stream"
+-	parts := strings.SplitN(meta, ";", 2)
+-	if len(parts) >= 1 && parts[0] != "" {
+-		mimeType = parts[0]
+-	}
+-
+-	return &VeoImageInput{
+-		BytesBase64Encoded: b64,
+-		MimeType:           mimeType,
+-	}
+-}
+* Unmerged path relay/channel/task/hailuo/adaptor.go
+diff --git a/relay/channel/task/hailuo/constants.go b/relay/channel/task/hailuo/constants.go
+deleted file mode 100644
+index 5e5408637..000000000
+--- a/relay/channel/task/hailuo/constants.go
++++ /dev/null
+@@ -1,52 +0,0 @@
+-package hailuo
+-
+-const (
+-	ChannelName = "hailuo-video"
+-)
+-
+-var ModelList = []string{
+-	"MiniMax-Hailuo-2.3",
+-	"MiniMax-Hailuo-2.3-Fast",
+-	"MiniMax-Hailuo-02",
+-	"T2V-01-Director",
+-	"T2V-01",
+-	"I2V-01-Director",
+-	"I2V-01-live",
+-	"I2V-01",
+-	"S2V-01",
+-}
+-
+-const (
+-	TextToVideoEndpoint = "/v1/video_generation"
+-	QueryTaskEndpoint   = "/v1/query/video_generation"
+-)
+-
+-const (
+-	StatusSuccess    = 0
+-	StatusRateLimit  = 1002
+-	StatusAuthFailed = 1004
+-	StatusNoBalance  = 1008
+-	StatusSensitive  = 1026
+-	StatusParamError = 2013
+-	StatusInvalidKey = 2049
+-)
+-
+-const (
+-	TaskStatusPreparing  = "Preparing"
+-	TaskStatusQueueing   = "Queueing"
+-	TaskStatusProcessing = "Processing"
+-	TaskStatusSuccess    = "Success"
+-	TaskStatusFailed     = "Fail"
+-)
+-
+-const (
+-	Resolution512P  = "512P"
+-	Resolution720P  = "720P"
+-	Resolution768P  = "768P"
+-	Resolution1080P = "1080P"
+-)
+-
+-const (
+-	DefaultDuration   = 6
+-	DefaultResolution = Resolution720P
+-)
+diff --git a/relay/channel/task/hailuo/models.go b/relay/channel/task/hailuo/models.go
+deleted file mode 100644
+index 09a97766f..000000000
+--- a/relay/channel/task/hailuo/models.go
++++ /dev/null
+@@ -1,170 +0,0 @@
+-package hailuo
+-
+-type SubjectReference struct {
+-	Type  string   `json:"type"`  // Subject type, currently only supports "character"
+-	Image []string `json:"image"` // Array of subject reference images (currently only supports single image)
+-}
+-
+-type VideoRequest struct {
+-	Model            string             `json:"model"`
+-	Prompt           string             `json:"prompt,omitempty"`
+-	PromptOptimizer  *bool              `json:"prompt_optimizer,omitempty"`
+-	FastPretreatment *bool              `json:"fast_pretreatment,omitempty"`
+-	Duration         *int               `json:"duration,omitempty"`
+-	Resolution       string             `json:"resolution,omitempty"`
+-	CallbackURL      string             `json:"callback_url,omitempty"`
+-	AigcWatermark    *bool              `json:"aigc_watermark,omitempty"`
+-	FirstFrameImage  string             `json:"first_frame_image,omitempty"` // For image-to-video and start-end-to-video
+-	LastFrameImage   string             `json:"last_frame_image,omitempty"`  // For start-end-to-video
+-	SubjectReference []SubjectReference `json:"subject_reference,omitempty"` // For subject-reference-to-video
+-}
+-
+-type VideoResponse struct {
+-	TaskID   string   `json:"task_id"`
+-	BaseResp BaseResp `json:"base_resp"`
+-}
+-
+-type BaseResp struct {
+-	StatusCode int    `json:"status_code"`
+-	StatusMsg  string `json:"status_msg"`
+-}
+-
+-type QueryTaskRequest struct {
+-	TaskID string `json:"task_id"`
+-}
+-
+-type QueryTaskResponse struct {
+-	TaskID      string   `json:"task_id"`
+-	Status      string   `json:"status"`
+-	FileID      string   `json:"file_id,omitempty"`
+-	VideoWidth  int      `json:"video_width,omitempty"`
+-	VideoHeight int      `json:"video_height,omitempty"`
+-	BaseResp    BaseResp `json:"base_resp"`
+-}
+-
+-type ErrorInfo struct {
+-	StatusCode int    `json:"status_code"`
+-	StatusMsg  string `json:"status_msg"`
+-}
+-
+-type TaskStatusInfo struct {
+-	TaskID    string `json:"task_id"`
+-	Status    string `json:"status"`
+-	FileID    string `json:"file_id,omitempty"`
+-	VideoURL  string `json:"video_url,omitempty"`
+-	ErrorCode int    `json:"error_code,omitempty"`
+-	ErrorMsg  string `json:"error_msg,omitempty"`
+-}
+-
+-type ModelConfig struct {
+-	Name                 string
+-	DefaultResolution    string
+-	SupportedDurations   []int
+-	SupportedResolutions []string
+-	HasPromptOptimizer   bool
+-	HasFastPretreatment  bool
+-}
+-
+-type RetrieveFileResponse struct {
+-	File     FileObject `json:"file"`
+-	BaseResp BaseResp   `json:"base_resp"`
+-}
+-
+-type FileObject struct {
+-	FileID      int64  `json:"file_id"`
+-	Bytes       int64  `json:"bytes"`
+-	CreatedAt   int64  `json:"created_at"`
+-	Filename    string `json:"filename"`
+-	Purpose     string `json:"purpose"`
+-	DownloadURL string `json:"download_url"`
+-}
+-
+-func GetModelConfig(model string) ModelConfig {
+-	configs := map[string]ModelConfig{
+-		"MiniMax-Hailuo-2.3": {
+-			Name:                 "MiniMax-Hailuo-2.3",
+-			DefaultResolution:    Resolution768P,
+-			SupportedDurations:   []int{6, 10},
+-			SupportedResolutions: []string{Resolution768P, Resolution1080P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  true,
+-		},
+-		"MiniMax-Hailuo-2.3-Fast": {
+-			Name:                 "MiniMax-Hailuo-2.3-Fast",
+-			DefaultResolution:    Resolution768P,
+-			SupportedDurations:   []int{6, 10},
+-			SupportedResolutions: []string{Resolution768P, Resolution1080P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  true,
+-		},
+-		"MiniMax-Hailuo-02": {
+-			Name:                 "MiniMax-Hailuo-02",
+-			DefaultResolution:    Resolution768P,
+-			SupportedDurations:   []int{6, 10},
+-			SupportedResolutions: []string{Resolution512P, Resolution768P, Resolution1080P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  true,
+-		},
+-		"T2V-01-Director": {
+-			Name:                 "T2V-01-Director",
+-			DefaultResolution:    Resolution768P,
+-			SupportedDurations:   []int{6},
+-			SupportedResolutions: []string{Resolution768P, Resolution1080P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  false,
+-		},
+-		"T2V-01": {
+-			Name:                 "T2V-01",
+-			DefaultResolution:    Resolution720P,
+-			SupportedDurations:   []int{6},
+-			SupportedResolutions: []string{Resolution720P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  false,
+-		},
+-		"I2V-01-Director": {
+-			Name:                 "I2V-01-Director",
+-			DefaultResolution:    Resolution720P,
+-			SupportedDurations:   []int{6},
+-			SupportedResolutions: []string{Resolution720P, Resolution1080P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  false,
+-		},
+-		"I2V-01-live": {
+-			Name:                 "I2V-01-live",
+-			DefaultResolution:    Resolution720P,
+-			SupportedDurations:   []int{6},
+-			SupportedResolutions: []string{Resolution720P, Resolution1080P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  false,
+-		},
+-		"I2V-01": {
+-			Name:                 "I2V-01",
+-			DefaultResolution:    Resolution720P,
+-			SupportedDurations:   []int{6},
+-			SupportedResolutions: []string{Resolution720P, Resolution1080P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  false,
+-		},
+-		"S2V-01": {
+-			Name:                 "S2V-01",
+-			DefaultResolution:    Resolution720P,
+-			SupportedDurations:   []int{6},
+-			SupportedResolutions: []string{Resolution720P},
+-			HasPromptOptimizer:   true,
+-			HasFastPretreatment:  false,
+-		},
+-	}
+-
+-	if config, exists := configs[model]; exists {
+-		return config
+-	}
+-
+-	return ModelConfig{
+-		Name:                 model,
+-		DefaultResolution:    DefaultResolution,
+-		SupportedDurations:   []int{6},
+-		SupportedResolutions: []string{DefaultResolution},
+-		HasPromptOptimizer:   true,
+-		HasFastPretreatment:  false,
+-	}
+-}
+* Unmerged path relay/channel/task/jimeng/adaptor.go
+* Unmerged path relay/channel/task/jsplugin/adaptor.go
+* Unmerged path relay/channel/task/jsplugin/adaptor_test.go
+* Unmerged path relay/channel/task/kling/adaptor.go
+* Unmerged path relay/channel/task/sora/adaptor.go
+diff --git a/relay/channel/task/sora/constants.go b/relay/channel/task/sora/constants.go
+deleted file mode 100644
+index e2f6536ea..000000000
+--- a/relay/channel/task/sora/constants.go
++++ /dev/null
+@@ -1,8 +0,0 @@
+-package sora
+-
+-var ModelList = []string{
+-	"sora-2",
+-	"sora-2-pro",
+-}
+-
+-var ChannelName = "sora"
+* Unmerged path relay/channel/task/suno/adaptor.go
+diff --git a/relay/channel/task/suno/models.go b/relay/channel/task/suno/models.go
+deleted file mode 100644
+index 967cf1b1d..000000000
+--- a/relay/channel/task/suno/models.go
++++ /dev/null
+@@ -1,7 +0,0 @@
+-package suno
+-
+-var ModelList = []string{
+-	"suno_music", "suno_lyrics",
+-}
+-
+-var ChannelName = "suno"
+* Unmerged path relay/channel/task/vertex/adaptor.go
+* Unmerged path relay/channel/task/vidu/adaptor.go
+* Unmerged path relay/claude_handler.go
+* Unmerged path relay/common/override.go
+* Unmerged path relay/common/relay_info.go
+* Unmerged path relay/common/relay_info_test.go
+* Unmerged path relay/compatible_handler.go
+* Unmerged path relay/helper/model_mapped.go
+* Unmerged path relay/helper/price.go
+* Unmerged path relay/helper/price_test.go
+* Unmerged path relay/helper/reasoning_suffix.go
+* Unmerged path relay/relay_adaptor.go
+* Unmerged path relay/relay_adaptor_jsplugin_test.go
+* Unmerged path relay/relay_task.go
+* Unmerged path relaykit/dto/channel_settings_test.go
+* Unmerged path relaykit/dto/usage_merge.go
+* Unmerged path relaykit/dto/usage_merge_test.go
+* Unmerged path relaykit/relayconvert/golden_test.go
+* Unmerged path relaykit/relayconvert/testdata/golden/request/claude_to_gemini.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/request/claude_to_openai.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/request/claude_to_openai_responses.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/request/gemini_to_claude.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/request/gemini_to_openai.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/request/gemini_to_openai_responses.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/request/openai_responses_to_gemini.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/request/openai_to_gemini.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/response/claude_to_gemini.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/response/openai_responses_to_gemini.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/response/openai_to_claude.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/response/openai_to_gemini.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/stream/claude_to_gemini.golden.json
+* Unmerged path relaykit/relayconvert/testdata/golden/stream/gemini_to_claude.golden.json
+* Unmerged path router/api-router.go
+* Unmerged path router/plugin-router.go
+* Unmerged path router/plugin_router_test.go
+* Unmerged path router/relay-router.go
+* Unmerged path router/relay_router_test.go
+diff --git a/router/retired_frontend_routes_test.go b/router/retired_frontend_routes_test.go
+deleted file mode 100644
+index 89514a644..000000000
+--- a/router/retired_frontend_routes_test.go
++++ /dev/null
+@@ -1,26 +0,0 @@
+-package router
+-
+-import (
+-	"net/http"
+-	"testing"
+-
+-	"github.com/gin-gonic/gin"
+-	"github.com/stretchr/testify/assert"
+-)
+-
+-func TestRetiredFrontendAPIRoutes(t *testing.T) {
+-	gin.SetMode(gin.TestMode)
+-	engine := gin.New()
+-	SetApiRouter(engine)
+-
+-	routes := make(map[string]struct{}, len(engine.Routes()))
+-	for _, route := range engine.Routes() {
+-		routes[route.Method+" "+route.Path] = struct{}{}
+-	}
+-	_, hasAsyncCleanup := routes[http.MethodPost+" /api/system-task/log-cleanup"]
+-	_, hasDirectDelete := routes[http.MethodDelete+" /api/log/"]
+-	_, hasConsoleMigration := routes[http.MethodPost+" /api/option/migrate_console_setting"]
+-	assert.True(t, hasAsyncCleanup)
+-	assert.False(t, hasDirectDelete)
+-	assert.False(t, hasConsoleMigration)
+-}
+* Unmerged path router/task-plugin-protocol-router.go
+* Unmerged path router/task-router.go
+* Unmerged path router/video-router.go
+* Unmerged path service/authz/authz_test.go
+* Unmerged path service/channel_select.go
+diff --git a/service/codex_channel_models.go b/service/codex_channel_models.go
+index 8e060993f..e15a2b1fb 100644
+--- a/service/codex_channel_models.go
++++ b/service/codex_channel_models.go
+@@ -9,7 +9,6 @@ import (
+ 
+ 	"github.com/QuantumNous/new-api/constant"
+ 	"github.com/QuantumNous/new-api/model"
+-	"github.com/QuantumNous/new-api/setting/ratio_setting"
+ )
+ 
+ func FetchCodexChannelModels(channel *model.Channel) ([]string, error) {
+@@ -89,13 +88,5 @@ func fetchCodexChannelModels(
+ 	if statusCode < http.StatusOK || statusCode >= http.StatusMultipleChoices {
+ 		return nil, fmt.Errorf("upstream status: %d", statusCode)
+ 	}
+-	modelVariants := make([]string, 0, len(models)*2)
+-	modelVariants = append(modelVariants, models...)
+-	for _, modelName := range models {
+-		if modelName == "codex-auto-review" {
+-			continue
+-		}
+-		modelVariants = append(modelVariants, ratio_setting.WithCompactModelSuffix(modelName))
+-	}
+-	return modelVariants, nil
++	return models, nil
+ }
+* Unmerged path service/http_client.go
+* Unmerged path service/login_verification.go
+* Unmerged path service/midjourney.go
+* Unmerged path service/passkey/session.go
+* Unmerged path service/security_verification.go
+* Unmerged path service/task_billing.go
+* Unmerged path service/task_billing_test.go
+* Unmerged path service/task_polling.go
+* Unmerged path service/text_quota_test.go
+* Unmerged path service/tiered_settle.go
+* Unmerged path setting/billing_setting/builtin_billing_test.go
+* Unmerged path setting/operation_setting/monitor_setting.go
+* Unmerged path setting/rate_limit.go
+diff --git a/setting/ratio_setting/compact_suffix.go b/setting/ratio_setting/compact_suffix.go
+deleted file mode 100644
+index b1fb6465f..000000000
+--- a/setting/ratio_setting/compact_suffix.go
++++ /dev/null
+@@ -1,34 +0,0 @@
+-package ratio_setting
+-
+-import "strings"
+-
+-const CompactModelSuffix = "-openai-compact"
+-const CompactWildcardModelKey = "*" + CompactModelSuffix
+-
+-func WithCompactModelSuffix(modelName string) string {
+-	if strings.HasSuffix(modelName, CompactModelSuffix) {
+-		return modelName
+-	}
+-	return modelName + CompactModelSuffix
+-}
+-
+-func WithCompactModelVariants(models []string) []string {
+-	variants := make([]string, 0, len(models)*2)
+-	seen := make(map[string]struct{}, len(models)*2)
+-	for _, model := range models {
+-		if _, ok := seen[model]; ok {
+-			continue
+-		}
+-		seen[model] = struct{}{}
+-		variants = append(variants, model)
+-	}
+-	for _, model := range models {
+-		compactModel := WithCompactModelSuffix(model)
+-		if _, ok := seen[compactModel]; ok {
+-			continue
+-		}
+-		seen[compactModel] = struct{}{}
+-		variants = append(variants, compactModel)
+-	}
+-	return variants
+-}
+* Unmerged path setting/ratio_setting/model_ratio.go
+* Unmerged path web/bun.lock
+* Unmerged path web/package.json
+* Unmerged path web/src/components/ai-elements/__tests__/response-fade-render.test.tsx
+* Unmerged path web/src/components/ai-elements/__tests__/response-fade.test.ts
+* Unmerged path web/src/components/ai-elements/response-fade.ts
+* Unmerged path web/src/components/ai-elements/response-renderer-inline.tsx
+* Unmerged path web/src/components/data-table/toolbar/bulk-actions.tsx
+* Unmerged path web/src/components/layout/components/mobile-drawer.tsx
+* Unmerged path web/src/components/ui/__tests__/portal-container.test.tsx
+* Unmerged path web/src/components/ui/combobox.tsx
+* Unmerged path web/src/features/auth/hooks/use-auth-redirect.ts
+* Unmerged path web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts
+* Unmerged path web/src/features/auth/lib/oauth-callback-mode.ts
+* Unmerged path web/src/features/auth/otp/__tests__/login-verification.test.tsx
+* Unmerged path web/src/features/auth/passkey/api.ts
+* Unmerged path web/src/features/auth/passkey/hooks/use-passkey-management.ts
+* Unmerged path web/src/features/auth/secure-verification/types.ts
+* Unmerged path web/src/features/auth/sign-up/components/sign-up-form.tsx
+* Unmerged path web/src/features/auth/types.ts
+* Unmerged path web/src/features/channels/api.ts
+diff --git a/web/src/features/channels/components/channel-type-badge.test.tsx b/web/src/features/channels/components/channel-type-badge.test.tsx
+new file mode 100644
+index 000000000..7e69e8349
+--- /dev/null
++++ b/web/src/features/channels/components/channel-type-badge.test.tsx
+@@ -0,0 +1,101 @@
++/*
++Copyright (C) 2023-2026 QuantumNous
++
++This program is free software: you can redistribute it and/or modify
++it under the terms of the GNU Affero General Public License as
++published by the Free Software Foundation, either version 3 of the
++License, or (at your option) any later version.
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++GNU Affero General Public License for more details.
++
++You should have received a copy of the GNU Affero General Public License
++along with this program. If not, see <https://www.gnu.org/licenses/>.
++
++For commercial licensing, please contact support@quantumnous.com
++*/
++import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
++import { cleanup, render, screen } from '@testing-library/react'
++import { afterEach, beforeEach, expect, test, vi } from 'vitest'
++
++import { ROLE } from '@/lib/roles'
++import { useAuthStore } from '@/stores/auth-store'
++
++import { getTaskPluginOptions } from '../api'
++import { CHANNEL_TYPE_TASK_PLUGIN } from '../constants'
++import { ChannelTypeLogo, TaskPluginChannelBadge } from './channel-type-badge'
++
++vi.mock('../api', () => ({ getTaskPluginOptions: vi.fn() }))
++vi.mock('@/lib/lobe-icon', () => ({
++  getLobeIcon: (name: string) => <svg data-testid={name} />,
++}))
++vi.mock('react-i18next', () => ({
++  useTranslation: () => ({ t: (key: string) => key }),
++}))
++
++const originalAuth = useAuthStore.getState().auth
++let client: QueryClient
++beforeEach(() => {
++  client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
++  useAuthStore.setState({
++    auth: {
++      ...originalAuth,
++      user: { id: 1, username: 'root', role: ROLE.SUPER_ADMIN },
++    },
++  })
++  vi.mocked(getTaskPluginOptions).mockReset()
++})
++afterEach(() => {
++  cleanup()
++  client.clear()
++  useAuthStore.setState({ auth: originalAuth })
++})
++
++function ChannelTypeHarness(props: { pluginKey?: string }) {
++  return (
++    <QueryClientProvider client={client}>
++      <TaskPluginChannelBadge pluginKey={props.pluginKey} />
++    </QueryClientProvider>
++  )
++}
++
++test('identifies a bound plugin by its metadata and retains the task-plugin type', async () => {
++  vi.mocked(getTaskPluginOptions).mockResolvedValue([
++    { key: 'incho', name: 'Incho AI', icon: 'text:IA', models: [] },
++  ])
++  render(<ChannelTypeHarness pluginKey='incho' />)
++  expect(await screen.findByText('Incho AI')).toBeInTheDocument()
++  expect(screen.getByText('IA')).toBeInTheDocument()
++  expect(screen.getByText('Task Plugin')).toBeInTheDocument()
++  expect(screen.queryByTestId('OpenAI.Color')).not.toBeInTheDocument()
++})
++
++test('keeps the binding key when the plugin is unavailable', async () => {
++  vi.mocked(getTaskPluginOptions).mockResolvedValue([])
++  render(<ChannelTypeHarness pluginKey='removed-plugin' />)
++  expect(await screen.findByText('removed-plugin')).toBeInTheDocument()
++  expect(screen.queryByTestId('OpenAI.Color')).not.toBeInTheDocument()
++})
++
++test('does not request plugin metadata without bind permission', () => {
++  useAuthStore.setState({
++    auth: {
++      ...originalAuth,
++      user: { id: 2, username: 'admin', role: ROLE.ADMIN },
++    },
++  })
++  render(<ChannelTypeHarness pluginKey='incho' />)
++  expect(screen.getByText('incho')).toBeInTheDocument()
++  expect(getTaskPluginOptions).not.toHaveBeenCalled()
++})
++
++test('unbound task channels use a neutral icon while regular providers keep their logo', () => {
++  const { rerender } = render(
++    <ChannelTypeLogo type={CHANNEL_TYPE_TASK_PLUGIN} />
++  )
++  expect(screen.queryByTestId('OpenAI.Color')).not.toBeInTheDocument()
++  rerender(<ChannelTypeLogo type={1} />)
++  expect(screen.getByTestId('OpenAI.Color')).toBeInTheDocument()
++})
+* Unmerged path web/src/features/channels/components/channels-columns.tsx
+* Unmerged path web/src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx
+* Unmerged path web/src/features/channels/components/dialogs/balance-query-dialog.tsx
+* Unmerged path web/src/features/channels/components/dialogs/channel-test-dialog.tsx
+* Unmerged path web/src/features/channels/components/dialogs/fetch-models-dialog.tsx
+* Unmerged path web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx
+* Unmerged path web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx
+* Unmerged path web/src/features/channels/components/drawers/channel-mutate-drawer.tsx
+* Unmerged path web/src/features/channels/constants.ts
+* Unmerged path web/src/features/channels/hooks/__tests__/channel-key-disclosure.test.tsx
+* Unmerged path web/src/features/channels/hooks/use-channel-key-disclosure.ts
+* Unmerged path web/src/features/channels/lib/channel-actions.ts
+* Unmerged path web/src/features/channels/lib/channel-form.ts
+diff --git a/web/src/features/channels/lib/index.ts b/web/src/features/channels/lib/index.ts
+index 63ce3487c..f4f7a04c7 100644
+--- a/web/src/features/channels/lib/index.ts
++++ b/web/src/features/channels/lib/index.ts
+@@ -27,3 +27,4 @@ export * from './channel-utils'
+ export * from './custom-balance'
+ export * from './multi-key-utils'
+ export * from './model-mapping-validation'
++export * from './model-categories'
+diff --git a/web/src/features/channels/lib/model-categories.ts b/web/src/features/channels/lib/model-categories.ts
+new file mode 100644
+index 000000000..5db0dd738
+--- /dev/null
++++ b/web/src/features/channels/lib/model-categories.ts
+@@ -0,0 +1,174 @@
++/*
++Copyright (C) 2023-2026 QuantumNous
++
++This program is free software: you can redistribute it and/or modify
++it under the terms of the GNU Affero General Public License as
++published by the Free Software Foundation, either version 3 of the
++License, or (at your option) any later version.
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++GNU Affero General Public License for more details.
++
++You should have received a copy of the GNU Affero General Public License
++along with this program. If not, see <https://www.gnu.org/licenses/>.
++
++For commercial licensing, please contact support@quantumnous.com
++*/
++
++type ModelCategoryRule = {
++  name: string
++  keywords?: readonly string[]
++  pattern?: RegExp
++}
++
++// Rules are ordered so platform-specific IDs such as Perplexity's Sonar and
++// NVIDIA's Nemotron take precedence over the base Llama/Mixtral family name.
++const MODEL_CATEGORY_RULES: readonly ModelCategoryRule[] = [
++  { name: 'Perplexity', keywords: ['perplexity', 'sonar-'] },
++  { name: 'NVIDIA', keywords: ['nvidia/', 'nvidia.', 'nemotron'] },
++  {
++    name: 'OpenAI',
++    keywords: [
++      'openai/',
++      'openai.',
++      'gpt-',
++      'chatgpt-',
++      'codex-',
++      'dall-e-',
++      'whisper-',
++      'omni-moderation-',
++      'text-moderation-',
++      'text-embedding-ada-',
++      'text-embedding-3-',
++      'text-ada-',
++      'text-babbage-',
++      'text-curie-',
++      'davinci-',
++      'babbage-',
++      'computer-use-preview',
++      'sora',
++    ],
++    pattern: /(?:^|[/.:])(?:o(?:1|3|4)(?=$|[-.:])|tts-)/,
++  },
++  { name: 'Anthropic', keywords: ['anthropic', 'claude'] },
++  {
++    name: 'Gemini',
++    keywords: [
++      'gemini',
++      'gemma',
++      'learnlm',
++      'imagen',
++      'veo',
++      'nano-banana',
++      'palm-',
++    ],
++    pattern: /(?:^|[/.:])aqa$/,
++  },
++  { name: 'xAI', keywords: ['x-ai/', 'xai/', 'xai-', 'grok'] },
++  { name: 'DeepSeek', keywords: ['deepseek'] },
++  {
++    name: 'Qwen',
++    keywords: ['qwen', 'qwq-', 'qvq-', 'tongyi', 'gte-'],
++    pattern: /(?:^|[/.:])(?:text-embedding-v\d+|gui-plus|z-image)(?:$|[-_.:])/,
++  },
++  { name: 'Wan', pattern: /(?:^|[/.:])wan(?:x?\d|[-_])/ },
++  { name: 'Moonshot', keywords: ['moonshot', 'kimi-'] },
++  {
++    name: 'MiniMax',
++    keywords: ['minimax', 'abab', 'hailuo'],
++    pattern: /^(?:t2v|i2v|s2v)-01(?:-|$)/,
++  },
++  {
++    name: 'Doubao',
++    keywords: ['doubao', 'volcengine', 'seedance', 'seedream', 'seed-1-'],
++  },
++  {
++    name: 'Zhipu',
++    keywords: ['zhipu', 'zai-org', 'thudm', 'chatglm', 'cogview', 'cogvideo'],
++    pattern: /(?:^|[/._-])glm(?=$|[-._])/,
++  },
++  { name: 'Baidu', keywords: ['baidu', 'wenxin', 'ernie'] },
++  { name: 'Yi', keywords: ['01-ai/'], pattern: /(?:^|[/.:])yi(?=$|[-_])/ },
++  { name: 'iFlytek', keywords: ['iflytek', 'sparkdesk'] },
++  {
++    name: 'Tencent',
++    keywords: ['tencent', 'hunyuan'],
++    pattern: /(?:^|[/.:])hy\d*(?=$|[-_.:])/,
++  },
++  { name: 'Baichuan', keywords: ['baichuan'] },
++  { name: 'InternLM', keywords: ['internlm'] },
++  { name: 'StepFun', keywords: ['stepfun', 'step-'] },
++  { name: 'MiMo', keywords: ['xiaomi', 'mimo-'] },
++  {
++    name: 'Mistral',
++    keywords: [
++      'mistral',
++      'mixtral',
++      'codestral',
++      'ministral',
++      'pixtral',
++      'magistral',
++    ],
++  },
++  { name: 'Meta', keywords: ['meta-llama', 'llama-', 'llama2', 'llama3'] },
++  {
++    name: 'Cohere',
++    keywords: ['cohere', 'command-', 'c4ai-aya', 'aya-'],
++    pattern: /(?:^|[/.:])command$/,
++  },
++  { name: 'Jina', keywords: ['jinaai', 'jina-'] },
++  { name: 'BAAI', keywords: ['baai/', 'bge-'] },
++  { name: 'Black Forest Labs', keywords: ['black-forest-labs', 'flux.'] },
++  {
++    name: 'Microsoft',
++    keywords: ['microsoft/'],
++    pattern: /(?:^|[/.:])phi(?=$|[-._])/,
++  },
++  {
++    name: 'Amazon',
++    keywords: ['amazon/', 'amazon.', 'nova-', 'titan-'],
++  },
++  { name: 'AI21 Labs', keywords: ['ai21', 'jamba'] },
++  {
++    name: 'Stability AI',
++    keywords: ['stabilityai', 'stable-diffusion', 'stable-image', 'sdxl-'],
++  },
++  { name: 'Nous Research', keywords: ['nousresearch', 'hermes-'] },
++  { name: '360 AI', keywords: ['360gpt', '360zhinao'] },
++  { name: 'Midjourney', keywords: ['midjourney', 'mj_', 'mj-', 'swap_face'] },
++  { name: 'Kling', keywords: ['kling'] },
++  { name: 'Vidu', keywords: ['vidu'] },
++  { name: 'Suno', keywords: ['suno'] },
++  { name: 'Jimeng', keywords: ['jimeng'] },
++]
++
++export function getModelCategory(modelName: string): string {
++  const normalizedName = modelName.trim().toLowerCase()
++
++  for (const rule of MODEL_CATEGORY_RULES) {
++    if (
++      rule.keywords?.some((keyword) => normalizedName.includes(keyword)) ||
++      rule.pattern?.test(normalizedName)
++    ) {
++      return rule.name
++    }
++  }
++
++  return 'Other'
++}
++
++export function categorizeModels(
++  models: readonly string[]
++): Record<string, string[]> {
++  const categories: Record<string, string[]> = {}
++
++  for (const model of models) {
++    const category = getModelCategory(model)
++    categories[category] ??= []
++    categories[category].push(model)
++  }
++
++  return categories
++}
+* Unmerged path web/src/features/channels/types.ts
+* Unmerged path web/src/features/keys/components/__tests__/api-key-group-cell.test.tsx
+* Unmerged path web/src/features/keys/components/__tests__/api-key-listing.test.tsx
+* Unmerged path web/src/features/keys/components/api-key-group-cell.tsx
+* Unmerged path web/src/features/keys/components/api-keys-mutate-drawer.tsx
+* Unmerged path web/src/features/keys/components/auto-group-order-editor.tsx
+* Unmerged path web/src/features/models/__tests__/model-listing.test.tsx
+* Unmerged path web/src/features/models/api.ts
+* Unmerged path web/src/features/models/components/dialogs/create-deployment-drawer.tsx
+* Unmerged path web/src/features/models/components/dialogs/extend-deployment-dialog.tsx
+* Unmerged path web/src/features/models/index.tsx
+* Unmerged path web/src/features/performance-metrics/types.ts
+* Unmerged path web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx
+* Unmerged path web/src/features/pricing/__tests__/model-cards.test.tsx
+* Unmerged path web/src/features/pricing/__tests__/task-expr.test.ts
+* Unmerged path web/src/features/pricing/__tests__/task-matrix-display.test.ts
+* Unmerged path web/src/features/pricing/__tests__/task-matrix.test.ts
+* Unmerged path web/src/features/pricing/components/model-perf-badge.tsx
+* Unmerged path web/src/features/profile/__tests__/settings.test.tsx
+* Unmerged path web/src/features/profile/api.ts
+diff --git a/web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx b/web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx
+deleted file mode 100644
+index a7b33bb50..000000000
+--- a/web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx
++++ /dev/null
+@@ -1,215 +0,0 @@
+-/*
+-Copyright (C) 2023-2026 QuantumNous
+-
+-This program is free software: you can redistribute it and/or modify
+-it under the terms of the GNU Affero General Public License as
+-published by the Free Software Foundation, either version 3 of the
+-License, or (at your option) any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+-GNU Affero General Public License for more details.
+-
+-You should have received a copy of the GNU Affero General Public License
+-along with this program. If not, see <https://www.gnu.org/licenses/>.
+-
+-For commercial licensing, please contact support@quantumnous.com
+-*/
+-import assert from 'node:assert/strict'
+-
+-import { Window } from 'happy-dom'
+-import { afterAll as after, describe, test } from 'vitest'
+-
+-const domWindow = new Window()
+-const domGlobals = [
+-  'window',
+-  'document',
+-  'navigator',
+-  'HTMLElement',
+-  'HTMLInputElement',
+-  'Node',
+-  'Element',
+-  'Event',
+-  'requestAnimationFrame',
+-  'cancelAnimationFrame',
+-  'getComputedStyle',
+-] as const
+-
+-for (const key of domGlobals) {
+-  Object.defineProperty(globalThis, key, {
+-    configurable: true,
+-    value: domWindow[key],
+-  })
+-}
+-
+-const { act } = await import('react')
+-const { createRoot } = await import('react-dom/client')
+-const { createInstance } = await import('i18next')
+-const { I18nextProvider, initReactI18next } = await import('react-i18next')
+-const { ProfileAvatarControl } = await import('../profile-avatar-control')
+-const reactTestGlobals = globalThis as typeof globalThis & {
+-  IS_REACT_ACT_ENVIRONMENT?: boolean
+-}
+-reactTestGlobals.IS_REACT_ACT_ENVIRONMENT = true
+-
+-const i18n = createInstance()
+-await i18n.use(initReactI18next).init({
+-  lng: 'en',
+-  resources: {
+-    en: {
+-      translation: {
+-        'Upload avatar': 'Upload avatar',
+-        'Choose an avatar image': 'Choose an avatar image',
+-        'Profile avatar': 'Profile avatar',
+-        'Remove avatar': 'Remove avatar',
+-        'Remove profile avatar?': 'Remove profile avatar?',
+-        'Your initials will be shown until you upload a new avatar.':
+-          'Your initials will be shown until you upload a new avatar.',
+-        Cancel: 'Cancel',
+-      },
+-    },
+-  },
+-})
+-
+-describe('ProfileAvatarControl', () => {
+-  after(() => {
+-    domWindow.close()
+-  })
+-
+-  test('keeps the empty avatar action hidden until hover or keyboard focus', async () => {
+-    const container = document.createElement('div')
+-    document.body.append(container)
+-    const root = createRoot(container)
+-
+-    await act(async () => {
+-      root.render(
+-        <I18nextProvider i18n={i18n}>
+-          <ProfileAvatarControl
+-            name='Ada Lovelace'
+-            avatarUrl=''
+-            updating={false}
+-            onUpload={async () => true}
+-            onRemove={async () => true}
+-          />
+-        </I18nextProvider>
+-      )
+-    })
+-
+-    const uploadButton = container.querySelector<HTMLButtonElement>(
+-      'button[aria-label="Upload avatar"]'
+-    )
+-    const actions = container.querySelector('[data-avatar-actions]')
+-    const fileInput = container.querySelector('input[type="file"]')
+-    assert.ok(uploadButton)
+-    assert.ok(actions)
+-    assert.equal(
+-      container.querySelector('button[aria-label="Remove avatar"]'),
+-      null
+-    )
+-    assert.equal(actions.classList.contains('opacity-0'), true)
+-    assert.equal(actions.classList.contains('pointer-events-none'), true)
+-    assert.equal(
+-      actions.classList.contains('group-hover/avatar-control:opacity-100'),
+-      true
+-    )
+-    assert.equal(
+-      actions.classList.contains(
+-        'group-focus-within/avatar-control:opacity-100'
+-      ),
+-      true
+-    )
+-    assert.ok(fileInput)
+-    assert.equal(fileInput.getAttribute('aria-label'), 'Choose an avatar image')
+-    assert.equal(
+-      fileInput.getAttribute('accept'),
+-      'image/jpeg,image/png,image/webp'
+-    )
+-
+-    await act(async () => {
+-      uploadButton.focus()
+-    })
+-    assert.equal(document.activeElement, uploadButton)
+-
+-    await act(async () => root.unmount())
+-    container.remove()
+-  })
+-
+-  test('reveals replace and remove actions for an existing avatar', async () => {
+-    const container = document.createElement('div')
+-    document.body.append(container)
+-    const root = createRoot(container)
+-
+-    await act(async () => {
+-      root.render(
+-        <I18nextProvider i18n={i18n}>
+-          <ProfileAvatarControl
+-            name='Ada Lovelace'
+-            avatarUrl='/api/user/self/avatar'
+-            updating={false}
+-            onUpload={async () => true}
+-            onRemove={async () => true}
+-          />
+-        </I18nextProvider>
+-      )
+-    })
+-
+-    const actions = container.querySelector('[data-avatar-actions]')
+-    const replaceButton = container.querySelector<HTMLButtonElement>(
+-      'button[aria-label="Replace avatar"]'
+-    )
+-    const removeButton = container.querySelector<HTMLButtonElement>(
+-      'button[aria-label="Remove avatar"]'
+-    )
+-
+-    assert.ok(actions)
+-    assert.ok(replaceButton)
+-    assert.ok(removeButton)
+-    assert.equal(actions.classList.contains('opacity-0'), true)
+-    assert.equal(
+-      actions.classList.contains('group-hover/avatar-control:opacity-100'),
+-      true
+-    )
+-    assert.equal(
+-      actions.classList.contains(
+-        'group-focus-within/avatar-control:opacity-100'
+-      ),
+-      true
+-    )
+-    assert.equal(
+-      actions.classList.contains('[@media(hover:none)]:opacity-100'),
+-      true
+-    )
+-    assert.equal(actions.classList.contains('-right-1'), true)
+-    assert.equal(actions.classList.contains('-bottom-1'), true)
+-    assert.equal(actions.classList.contains('gap-0.5'), true)
+-    assert.equal(actions.classList.contains('rounded-lg'), true)
+-    assert.equal(actions.classList.contains('p-0.5'), true)
+-    assert.equal(replaceButton.classList.contains('size-6'), true)
+-    assert.equal(removeButton.classList.contains('size-6'), true)
+-    assert.equal(
+-      replaceButton.querySelector('svg')?.classList.contains('size-3.5'),
+-      true
+-    )
+-    assert.equal(
+-      removeButton.querySelector('svg')?.classList.contains('size-3.5'),
+-      true
+-    )
+-
+-    await act(async () => {
+-      removeButton.focus()
+-    })
+-    assert.equal(document.activeElement, removeButton)
+-
+-    await act(async () => {
+-      removeButton.click()
+-    })
+-    assert.equal(
+-      document.body.textContent?.includes('Remove profile avatar?'),
+-      true
+-    )
+-
+-    await act(async () => root.unmount())
+-    container.remove()
+-  })
+-})
+* Unmerged path web/src/features/profile/components/tabs/notification-tab.tsx
+* Unmerged path web/src/features/profile/hooks/use-profile.ts
+* Unmerged path web/src/features/profile/lib/user-settings.ts
+* Unmerged path web/src/features/rankings/hooks/use-rankings.ts
+* Unmerged path web/src/features/redemption-codes/api.ts
+* Unmerged path web/src/features/redemption-codes/components/__tests__/bulk-delete.test.tsx
+* Unmerged path web/src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx
+* Unmerged path web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx
+* Unmerged path web/src/features/redemption-codes/components/data-table-bulk-actions.tsx
+* Unmerged path web/src/features/redemption-codes/components/redemptions-columns.tsx
+* Unmerged path web/src/features/redemption-codes/components/redemptions-export-dialog.tsx
+* Unmerged path web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx
+* Unmerged path web/src/features/redemption-codes/lib/redemption-form.ts
+* Unmerged path web/src/features/security/__tests__/enrollment.test.tsx
+* Unmerged path web/src/features/security/__tests__/page.test.tsx
+* Unmerged path web/src/features/security/components/__tests__/access-token-card.test.tsx
+* Unmerged path web/src/features/security/components/__tests__/login-session-utils.test.ts
+* Unmerged path web/src/features/security/components/__tests__/privacy-card.test.tsx
+* Unmerged path web/src/features/security/components/__tests__/profile-avatar-control.test.tsx
+* Unmerged path web/src/features/security/components/passkey-card.tsx
+* Unmerged path web/src/features/security/components/privacy-card.tsx
+* Unmerged path web/src/features/security/index.tsx
+* Unmerged path web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx
+* Unmerged path web/src/features/system-info/components/system-tasks-panel.tsx
+* Unmerged path web/src/features/system-settings/__tests__/pricing-sync.test.tsx
+* Unmerged path web/src/features/system-settings/__tests__/task-public-address.test.ts
+* Unmerged path web/src/features/system-settings/auth/custom-oauth/components/preset-selector.tsx
+* Unmerged path web/src/features/system-settings/content/announcements-section.tsx
+* Unmerged path web/src/features/system-settings/general/channel-affinity/index.tsx
+* Unmerged path web/src/features/system-settings/maintenance/log-settings-section.tsx
+* Unmerged path web/src/features/system-settings/models/group-ratio-visual-editor.tsx
+* Unmerged path web/src/features/system-settings/models/group-special-usable-editor.tsx
+* Unmerged path web/src/features/system-settings/models/model-ratio-table-columns.tsx
+* Unmerged path web/src/features/system-settings/models/routing-reliability-section.tsx
+* Unmerged path web/src/features/system-settings/models/section-registry.tsx
+* Unmerged path web/src/features/system-settings/models/tiered-pricing-editor.tsx
+* Unmerged path web/src/features/system-settings/models/upstream-price-cells.tsx
+* Unmerged path web/src/features/system-settings/models/upstream-ratio-sync-helpers.ts
+* Unmerged path web/src/features/system-settings/models/upstream-ratio-sync-table.tsx
+* Unmerged path web/src/features/system-settings/models/upstream-ratio-sync.tsx
+* Unmerged path web/src/features/system-settings/types.ts
+* Unmerged path web/src/features/task-plugins/__tests__/enabled-option.test.ts
+* Unmerged path web/src/features/task-plugins/__tests__/plugin-icon-image.test.tsx
+* Unmerged path web/src/features/task-plugins/__tests__/plugin-url.test.ts
+* Unmerged path web/src/features/task-plugins/components/javascript-viewer.tsx
+* Unmerged path web/src/features/task-plugins/components/plugin-detail-sheet.tsx
+* Unmerged path web/src/features/task-plugins/lib/host-protocols.ts
+* Unmerged path web/src/features/usage-logs/__tests__/access.test.ts
+* Unmerged path web/src/features/usage-logs/__tests__/artifacts.test.ts
+* Unmerged path web/src/features/usage-logs/__tests__/mobile-layout.test.ts
+* Unmerged path web/src/features/usage-logs/__tests__/task-details.test.ts
+* Unmerged path web/src/features/usage-logs/audit/__tests__/viewer.test.tsx
+* Unmerged path web/src/features/usage-logs/audit/components/audit-log-filter-bar.tsx
+* Unmerged path web/src/features/usage-logs/components/__tests__/detail-preview.test.tsx
+* Unmerged path web/src/features/usage-logs/components/__tests__/group-filter.test.tsx
+* Unmerged path web/src/features/usage-logs/components/__tests__/mobile-card.test.tsx
+* Unmerged path web/src/features/usage-logs/components/__tests__/mobile-filter.test.tsx
+* Unmerged path web/src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx
+* Unmerged path web/src/features/usage-logs/components/__tests__/reject-reason.test.tsx
+* Unmerged path web/src/features/usage-logs/components/columns/common-logs-columns.tsx
+* Unmerged path web/src/features/usage-logs/components/columns/task-logs-columns.tsx
+* Unmerged path web/src/features/usage-logs/components/common-log-mobile-card.tsx
+* Unmerged path web/src/features/usage-logs/components/compact-date-time-range-picker.tsx
+* Unmerged path web/src/features/usage-logs/components/dialogs/details-dialog.tsx
+* Unmerged path web/src/features/usage-logs/components/model-badge.tsx
+* Unmerged path web/src/features/usage-logs/components/timing-metrics-cell.tsx
+* Unmerged path web/src/features/usage-logs/components/usage-logs-table.tsx
+diff --git a/web/src/features/usage-logs/lib/columns.ts b/web/src/features/usage-logs/lib/columns.ts
+index e54ad526e..43817fd34 100644
+--- a/web/src/features/usage-logs/lib/columns.ts
++++ b/web/src/features/usage-logs/lib/columns.ts
+@@ -36,7 +36,7 @@ export function useColumnsByCategory(
+   isRoot: boolean
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+ ): ColumnDef<any>[] {
+-  const commonColumns = useCommonLogsColumns(isAdmin)
++  const commonColumns = useCommonLogsColumns(isAdmin, isRoot)
+   const drawingColumns = useDrawingLogsColumns(isAdmin)
+   const taskColumns = useTaskLogsColumns(isAdmin, isRoot)
+ 
+* Unmerged path web/src/features/usage-logs/types.ts
+* Unmerged path web/src/features/users/components/__tests__/quota-display.test.tsx
+* Unmerged path web/src/features/users/components/data-table-row-actions.tsx
+* Unmerged path web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx
+* Unmerged path web/src/features/users/components/dialogs/user-binding-dialog.tsx
+* Unmerged path web/src/features/users/components/user-quota-dialog.tsx
+* Unmerged path web/src/features/users/components/users-columns.tsx
+* Unmerged path web/src/features/users/components/users-mutate-drawer.tsx
+* Unmerged path web/src/features/wallet/hooks/use-redemption.ts
+* Unmerged path web/src/hooks/use-notifications.ts
+* Unmerged path web/src/i18n/locales/_reports/_sync-report.json
+* Unmerged path web/src/i18n/locales/en.json
+* Unmerged path web/src/i18n/locales/fr.json
+* Unmerged path web/src/i18n/locales/ja.json
+* Unmerged path web/src/i18n/locales/ru.json
+* Unmerged path web/src/i18n/locales/vi.json
+* Unmerged path web/src/i18n/locales/zh-TW.json
+* Unmerged path web/src/i18n/locales/zh.json
+* Unmerged path web/src/i18n/static-keys.ts
+* Unmerged path web/src/lib/__tests__/http-cache.test.ts
+* Unmerged path web/src/lib/__tests__/status-query.test.tsx
+* Unmerged path web/src/lib/localized-text.ts
+diff --git a/web/src/lib/oauth.ts b/web/src/lib/oauth.ts
+index 2cb4732ba..e21490c87 100644
+--- a/web/src/lib/oauth.ts
++++ b/web/src/lib/oauth.ts
+@@ -138,3 +138,54 @@ export function buildOAuthAuthorizationUrl(
+   }
+   throw new Error('No linked OAuth provider is available.')
+ }
++
++export function buildOAuthAuthorizationUrl(
++  provider: string,
++  state: string,
++  status: SystemStatus
++): string {
++  switch (provider) {
++    case 'github':
++      if (status.github_client_id) {
++        return buildGitHubOAuthUrl(status.github_client_id, state)
++      }
++      break
++    case 'discord':
++      if (status.discord_client_id) {
++        return buildDiscordOAuthUrl(status.discord_client_id, state)
++      }
++      break
++    case 'oidc':
++      if (status.oidc_authorization_endpoint && status.oidc_client_id) {
++        return buildOIDCOAuthUrl(
++          status.oidc_authorization_endpoint,
++          status.oidc_client_id,
++          state
++        )
++      }
++      break
++    case 'linuxdo':
++      if (status.linuxdo_client_id) {
++        return buildLinuxDOOAuthUrl(status.linuxdo_client_id, state)
++      }
++      break
++    default: {
++      const custom = status.custom_oauth_providers?.find(
++        (candidate) => candidate.slug === provider
++      )
++      if (custom) {
++        const url = new URL(custom.authorization_endpoint)
++        url.searchParams.set('client_id', custom.client_id)
++        url.searchParams.set(
++          'redirect_uri',
++          `${window.location.origin}/oauth/${provider}`
++        )
++        url.searchParams.set('response_type', 'code')
++        url.searchParams.set('state', state)
++        if (custom.scopes) url.searchParams.set('scope', custom.scopes)
++        return url.toString()
++      }
++    }
++  }
++  throw new Error('No linked OAuth provider is available.')
++}
+* Unmerged path web/src/lib/session-hint.ts
+* Unmerged path web/src/lib/status-query.ts
+* Unmerged path web/src/routes/(auth)/oauth.tsx
+* Unmerged path web/src/stores/auth-store.ts
+* Unmerged path web/src/test-setup.ts
+* Unmerged path web/vitest.config.ts

@@ -1,0 +1,117 @@
+[
+  {
+    "file": "controller/access_token_audit_test.go",
+    "source": "integrated",
+    "reason": "Keep database connection cleanup and actual SQLite/MariaDB/ClickHouse dialect type assertions; audit behavior assertions remain."
+  },
+  {
+    "file": "controller/channel_pin_retry_test.go",
+    "source": "integrated",
+    "reason": "Conflict is import grouping only; keep the tested grouped relaykit/service imports."
+  },
+  {
+    "file": "controller/channel_task_plugin_bind_test.go",
+    "source": "integrated",
+    "reason": "Use TaskPlugin constant 65, required options fixture and sparse-patch/default-endpoint authorization regressions."
+  },
+  {
+    "file": "controller/channel_test_internal_test.go",
+    "source": "integrated",
+    "reason": "Keep Vercel type registration, downstream probe shape, concurrency/cancellation fixture cleanup and standard assertions."
+  },
+  {
+    "file": "controller/passkey_test.go",
+    "source": "integrated",
+    "reason": "Keep credential-material privacy test and proof requirement for adding another named device."
+  },
+  {
+    "file": "controller/security_account_test.go",
+    "source": "integrated",
+    "reason": "Keep avatar object/row lifecycle assertions during account deletion, alongside security account contracts."
+  },
+  {
+    "file": "controller/security_enrollment_test.go",
+    "source": "integrated",
+    "reason": "Keep avatar fixtures, immutable enrollment display name, per-device proof binding and auth-version/session rotation tests."
+  },
+  {
+    "file": "controller/telegram_test.go",
+    "source": "integrated",
+    "reason": "Keep actual token/JWKS requests through login-proxy factory and cached-key proxy failure regression."
+  },
+  {
+    "file": "controller/user_manage_test.go",
+    "source": "integrated",
+    "reason": "Keep avatar table in management/disable/delete fixtures so real downstream lifecycle is exercised."
+  },
+  {
+    "file": "e2e/doc_parse_test.go",
+    "source": "integrated",
+    "reason": "Import grouping only; upstream plugin document parsing behavior retained."
+  },
+  {
+    "file": "middleware/distributor_test.go",
+    "source": "integrated",
+    "reason": "Model permission tests already exist in model_modifier_limit_test.go; do not duplicate names. Keep binding guidance assertion consistent with shared-channel routing."
+  },
+  {
+    "file": "model/task_plugin_test.go",
+    "source": "integrated",
+    "reason": "Keep actual four-engine fixture, icon retention, enabled=false persistence and unique plugin key/version checks."
+  },
+  {
+    "file": "plugins/vidu_responses_test.go",
+    "source": "integrated",
+    "reason": "Keep explicit false bgm and zero seed regression for actual builtin plugin engine in addition to Responses contracts."
+  },
+  {
+    "file": "relay/channel/codex/adaptor_test.go",
+    "source": "integrated",
+    "reason": "Keep downstream legacy identity, system prompt and compact request shaping regressions with upstream Codex changes."
+  },
+  {
+    "file": "relay/relay_adaptor_jsplugin_test.go",
+    "source": "integrated",
+    "reason": "Factory plugins remain available via explicit bindings while native stored platform IDs retain native adapters; test the accepted B14 coexistence contract."
+  },
+  {
+    "file": "relaykit/dto/channel_settings_test.go",
+    "source": "integrated",
+    "reason": "Keep all downstream client identity profile/header/version and channel-type validation contracts alongside upstream DTO changes."
+  },
+  {
+    "file": "relaykit/dto/usage_merge_test.go",
+    "source": "integrated",
+    "reason": "Keep correct cumulative snapshot replacement expectations and duplicate-within-frame case; upstream cross-frame summation is the B04 double-counting regression."
+  },
+  {
+    "file": "relaykit/relayconvert/golden_test.go",
+    "source": "integrated",
+    "reason": "Preserve complete Claude/Gemini/OpenAI conversion matrix instead of removing fixtures; accepted outputs include billing sidecars."
+  },
+  {
+    "file": "router/plugin_router_test.go",
+    "source": "integrated",
+    "reason": "Replace only authentication fixture while retaining every downstream/host middleware, not a hard-coded truncated chain."
+  },
+  {
+    "file": "router/relay_router_test.go",
+    "source": "integrated",
+    "reason": "Keep native count_tokens route registration regression alongside new relay routes."
+  },
+  {
+    "file": "service/authz/authz_test.go",
+    "source": "integrated",
+    "reason": "Conflict is map-entry order only; audit and plugin-bind authorization expectations unchanged."
+  },
+  {
+    "file": "service/text_quota_test.go",
+    "source": "integrated",
+    "reason": "Keep deterministic cache/log state, loopback-only empty external fixtures, and fatal nil checks before precise billing assertions."
+  },
+  {
+    "file": "setting/billing_setting/builtin_billing_test.go",
+    "source": "integrated",
+    "reason": "Raw canonical options must not include display-only builtin defaults; effective billing getters still expose defaults without persisting them."
+  }
+]

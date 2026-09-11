@@ -1,0 +1,486 @@
+{
+  "before": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
+  "upstream": "bdef117505247769268b209665fb3ad7554c3da7",
+  "locales": [
+    {
+      "locale": "en",
+      "count": 6950,
+      "changed": [],
+      "excluded_unused": [
+        {
+          "key": "Actively check all channels",
+          "references": []
+        },
+        {
+          "key": "Actively check auto-disable-enabled channels",
+          "references": []
+        },
+        {
+          "key": "Check channels awaiting recovery only",
+          "references": []
+        },
+        {
+          "key": "Does not check healthy channels. It only rechecks auto-disabled channels and restores them after they recover.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks all channels except manually disabled ones to detect failures and recover channels automatically.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks only channels with auto-disable enabled, excluding manually disabled channels.",
+          "references": []
+        },
+        {
+          "key": "Recover auto-disabled channels only",
+          "references": []
+        }
+      ]
+    },
+    {
+      "locale": "zh",
+      "count": 6950,
+      "changed": [
+        {
+          "key": "Background",
+          "accepted": "背景",
+          "incoming": "后台执行",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Client ID",
+          "accepted": "客户端 ID",
+          "incoming": "Client ID",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Client Secret",
+          "accepted": "客户端密钥",
+          "incoming": "Client Secret",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Method",
+          "accepted": "方法",
+          "incoming": "请求方法",
+          "resolution": "incoming"
+        },
+        {
+          "key": "Recent success-rate samples; gray bars indicate missing data.",
+          "accepted": "最近的成功率样本；灰色条表示暂无数据。",
+          "incoming": "近期成功率采样；灰色条表示暂无数据。",
+          "resolution": "accepted"
+        }
+      ],
+      "excluded_unused": [
+        {
+          "key": "Actively check all channels",
+          "references": []
+        },
+        {
+          "key": "Actively check auto-disable-enabled channels",
+          "references": []
+        },
+        {
+          "key": "Check channels awaiting recovery only",
+          "references": []
+        },
+        {
+          "key": "Does not check healthy channels. It only rechecks auto-disabled channels and restores them after they recover.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks all channels except manually disabled ones to detect failures and recover channels automatically.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks only channels with auto-disable enabled, excluding manually disabled channels.",
+          "references": []
+        },
+        {
+          "key": "Recover auto-disabled channels only",
+          "references": []
+        }
+      ]
+    },
+    {
+      "locale": "zh-TW",
+      "count": 6950,
+      "changed": [
+        {
+          "key": "All results",
+          "accepted": "全部結果",
+          "incoming": "所有結果",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Async",
+          "accepted": "非同步",
+          "incoming": "異步",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Background",
+          "accepted": "背景",
+          "incoming": "背景執行",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Client ID",
+          "accepted": "客戶端 ID",
+          "incoming": "Client ID",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Client Secret",
+          "accepted": "客戶端密鑰",
+          "incoming": "Client Secret",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Generate",
+          "accepted": "生成",
+          "incoming": "產生",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Method",
+          "accepted": "Method",
+          "incoming": "請求方法",
+          "resolution": "incoming"
+        },
+        {
+          "key": "Not available",
+          "accepted": "無資料",
+          "incoming": "不可用",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Recent success-rate samples; gray bars indicate missing data.",
+          "accepted": "最近的成功率樣本；灰色長條表示尚無資料。",
+          "incoming": "近期成功率取樣；灰色條表示暫無資料。",
+          "resolution": "accepted"
+        }
+      ],
+      "excluded_unused": [
+        {
+          "key": "Actively check all channels",
+          "references": []
+        },
+        {
+          "key": "Actively check auto-disable-enabled channels",
+          "references": []
+        },
+        {
+          "key": "Check channels awaiting recovery only",
+          "references": []
+        },
+        {
+          "key": "Does not check healthy channels. It only rechecks auto-disabled channels and restores them after they recover.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks all channels except manually disabled ones to detect failures and recover channels automatically.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks only channels with auto-disable enabled, excluding manually disabled channels.",
+          "references": []
+        },
+        {
+          "key": "Recover auto-disabled channels only",
+          "references": []
+        }
+      ]
+    },
+    {
+      "locale": "fr",
+      "count": 6950,
+      "changed": [
+        {
+          "key": "Background",
+          "accepted": "Arrière-plan",
+          "incoming": "En arrière-plan",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Check in now",
+          "accepted": "Pointer maintenant",
+          "incoming": "Se connecter maintenant",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Count",
+          "accepted": "Nombre",
+          "incoming": "Quantité",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Enter a positive integer",
+          "accepted": "Entrez un entier positif",
+          "incoming": "Saisissez un entier positif",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Method",
+          "accepted": "Method",
+          "incoming": "Méthode",
+          "resolution": "incoming"
+        },
+        {
+          "key": "Not available",
+          "accepted": "Indisponible",
+          "incoming": "Non disponible",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Recent success-rate samples; gray bars indicate missing data.",
+          "accepted": "Taux de réussite récents ; les barres grises indiquent des données manquantes.",
+          "incoming": "Échantillons récents du taux de réussite ; les barres grises indiquent des données manquantes.",
+          "resolution": "accepted"
+        }
+      ],
+      "excluded_unused": [
+        {
+          "key": "Actively check all channels",
+          "references": []
+        },
+        {
+          "key": "Actively check auto-disable-enabled channels",
+          "references": []
+        },
+        {
+          "key": "Check channels awaiting recovery only",
+          "references": []
+        },
+        {
+          "key": "Does not check healthy channels. It only rechecks auto-disabled channels and restores them after they recover.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks all channels except manually disabled ones to detect failures and recover channels automatically.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks only channels with auto-disable enabled, excluding manually disabled channels.",
+          "references": []
+        },
+        {
+          "key": "Recover auto-disabled channels only",
+          "references": []
+        }
+      ]
+    },
+    {
+      "locale": "ja",
+      "count": 6950,
+      "changed": [
+        {
+          "key": "Background",
+          "accepted": "背景",
+          "incoming": "バックグラウンド",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Count",
+          "accepted": "件数",
+          "incoming": "回数",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Method",
+          "accepted": "Method",
+          "incoming": "メソッド",
+          "resolution": "incoming"
+        },
+        {
+          "key": "Recent success-rate samples; gray bars indicate missing data.",
+          "accepted": "最近の成功率。灰色のバーはデータがないことを示します。",
+          "incoming": "直近の成功率のサンプルです。灰色のバーはデータがないことを示します。",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Start again",
+          "accepted": "最初からやり直す",
+          "incoming": "やり直す",
+          "resolution": "accepted"
+        }
+      ],
+      "excluded_unused": [
+        {
+          "key": "Actively check all channels",
+          "references": []
+        },
+        {
+          "key": "Actively check auto-disable-enabled channels",
+          "references": []
+        },
+        {
+          "key": "Check channels awaiting recovery only",
+          "references": []
+        },
+        {
+          "key": "Does not check healthy channels. It only rechecks auto-disabled channels and restores them after they recover.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks all channels except manually disabled ones to detect failures and recover channels automatically.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks only channels with auto-disable enabled, excluding manually disabled channels.",
+          "references": []
+        },
+        {
+          "key": "Recover auto-disabled channels only",
+          "references": []
+        }
+      ]
+    },
+    {
+      "locale": "ru",
+      "count": 6950,
+      "changed": [
+        {
+          "key": "Added {{count}} models from \"{{name}}\"",
+          "accepted": "Добавлено моделей из «{{name}}»: {{count}}",
+          "incoming": "Добавлено {{count}} моделей из «{{name}}»",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Async",
+          "accepted": "Асинхронно",
+          "incoming": "Асинхронный",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Background",
+          "accepted": "Фон",
+          "incoming": "В фоновом режиме",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Check in now",
+          "accepted": "Выполнить отметку сейчас",
+          "incoming": "Войдите сейчас",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Claude",
+          "accepted": "Claude",
+          "incoming": "Клод",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Method",
+          "accepted": "Method",
+          "incoming": "Метод",
+          "resolution": "incoming"
+        },
+        {
+          "key": "Recent success-rate samples; gray bars indicate missing data.",
+          "accepted": "Последние показатели успешности; серые столбцы означают отсутствие данных.",
+          "incoming": "Последние замеры успешности запросов; серые полоски означают отсутствие данных.",
+          "resolution": "accepted"
+        }
+      ],
+      "excluded_unused": [
+        {
+          "key": "Actively check all channels",
+          "references": []
+        },
+        {
+          "key": "Actively check auto-disable-enabled channels",
+          "references": []
+        },
+        {
+          "key": "Check channels awaiting recovery only",
+          "references": []
+        },
+        {
+          "key": "Does not check healthy channels. It only rechecks auto-disabled channels and restores them after they recover.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks all channels except manually disabled ones to detect failures and recover channels automatically.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks only channels with auto-disable enabled, excluding manually disabled channels.",
+          "references": []
+        },
+        {
+          "key": "Recover auto-disabled channels only",
+          "references": []
+        }
+      ]
+    },
+    {
+      "locale": "vi",
+      "count": 6950,
+      "changed": [
+        {
+          "key": "Added {{count}} models from \"{{name}}\"",
+          "accepted": "Đã thêm {{count}} mô hình từ \"{{name}}\"",
+          "incoming": "Đã thêm {{count}} mô hình từ “{{name}}”",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Background",
+          "accepted": "Nền",
+          "incoming": "Chạy nền",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Enter a positive integer",
+          "accepted": "Nhập số nguyên dương",
+          "incoming": "Nhập một số nguyên dương",
+          "resolution": "accepted"
+        },
+        {
+          "key": "Method",
+          "accepted": "Method",
+          "incoming": "Phương thức",
+          "resolution": "incoming"
+        },
+        {
+          "key": "Recent success-rate samples; gray bars indicate missing data.",
+          "accepted": "Các mẫu tỷ lệ thành công gần đây; thanh màu xám biểu thị dữ liệu còn thiếu.",
+          "incoming": "Các mẫu tỷ lệ thành công gần đây; vạch xám biểu thị dữ liệu chưa có.",
+          "resolution": "accepted"
+        }
+      ],
+      "excluded_unused": [
+        {
+          "key": "Actively check all channels",
+          "references": []
+        },
+        {
+          "key": "Actively check auto-disable-enabled channels",
+          "references": []
+        },
+        {
+          "key": "Check channels awaiting recovery only",
+          "references": []
+        },
+        {
+          "key": "Does not check healthy channels. It only rechecks auto-disabled channels and restores them after they recover.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks all channels except manually disabled ones to detect failures and recover channels automatically.",
+          "references": []
+        },
+        {
+          "key": "Periodically checks only channels with auto-disable enabled, excluding manually disabled channels.",
+          "references": []
+        },
+        {
+          "key": "Recover auto-disabled channels only",
+          "references": []
+        }
+      ]
+    }
+  ],
+  "policy": "Retain all accepted downstream translations, adopt upstream HTTP Method translations. Seven incoming scheduler labels have no remaining call sites; equivalent controls use accepted dedicated channel-test-section copy. Keep color Background, check-in meaning, brand names and other accepted wording."
+}

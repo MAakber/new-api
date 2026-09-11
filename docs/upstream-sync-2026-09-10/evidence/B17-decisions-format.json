@@ -1,0 +1,122 @@
+[
+  {
+    "file": "web/src/components/ai-elements/__tests__/response-fade-render.test.tsx",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (f8d531fa94a677f765e46057196c3fe4e09772deacfcb7cd80c6f73a57fcdc79); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/components/ai-elements/__tests__/response-fade.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (9ee9150ee1e42a828b0c031715df01d5531faedc249af959ecdf0864b25cef12); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/components/ai-elements/response-fade.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (325c8c1465698719491ac2ad741fb116f1ab14ae91b9d803f6633b3631b9f401); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/components/ai-elements/response-renderer-inline.tsx",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (8898de2dbe3c3b46d63f59f9cf59929bddb84c4f8f7c2d4ac3e83955fa158a9e); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/auth/lib/oauth-callback-mode.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (d7fdd2783f0aadef2439fd9c72e7a72250238d430eb55422e8d1491891a7acb4); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/pricing/__tests__/task-expr.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (d1752bae6df893ca9ee6d44f68979e689733226e08f1c114f56a1bf42dd6badb); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/pricing/__tests__/task-matrix-display.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (3ce6011292afa7741c709a2539f6c4be14f3b8f4b70aa7f2525f34577e03161f); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/pricing/__tests__/task-matrix.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (43ddb0fd61992f6b21f746830ad1e359faeb90475580cfae22d1a2e0b65e3fe0); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/security/components/__tests__/login-session-utils.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (b2d913b13b89ec212803e0da175c60a48c63497a08a19c7c62ae12bafebf3913); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/system-settings/__tests__/task-public-address.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (52344c9f13a9024d4d1b1b4e238126f5932a6a07c41cfd363a3345de7a6fae90); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/system-settings/models/model-ratio-table-columns.tsx",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (1b60e3d7f0da24ae69ecb660f4bd3fa98f359389ed5cd6e81a1cbda6d2f4b4f8); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/system-settings/models/upstream-ratio-sync-table.tsx",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (0b60ff771d2667c31c5a3e2d16654cbfad2b8aed1b40cedf610c4903b995b63c); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/task-plugins/__tests__/enabled-option.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (d3d5c07b9a6247deaaf20806499083e948e0d82e751364a273f3ad9dd766de4a); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/task-plugins/__tests__/plugin-icon-image.test.tsx",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (93148170e21f8bbcabddb60d3f388b8cb982188b275c01c8953268fb7edd9766); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/task-plugins/__tests__/plugin-url.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (2fcad879a8c08ee5ca23361f6e30d552b0bd060cd7f8b3c8bf2d97d8a9f1b8a7); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/task-plugins/components/javascript-viewer.tsx",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (2927e4a33252c8f2a34db8d1df15ca6727ef85f026c6f609d6a01c34a2efc248); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/task-plugins/components/plugin-detail-sheet.tsx",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (6b41a03b7ebe2ed6adc4eef874e2a89ae008a8811cc2927d1b328781ced1470f); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/task-plugins/lib/host-protocols.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (e4ddcdc05c33091dcf0b84c3d89a5f1bc260b6cbf0034e8073beff69429346e8); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/usage-logs/__tests__/access.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (a502977cbd5fadeed35abb56ebf3ecd2cf3a513585546c130bc989a9f254325d); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/usage-logs/__tests__/artifacts.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (96d47dad88ee4b1ac781e8b5e13fd393b8b56d4fff58996e4e85c2b443779864); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/usage-logs/__tests__/mobile-layout.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (ef9364f0c2b9889cba9209437117736e2f5e9cb82b6d0076219a909f4cd3c1d0); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/features/usage-logs/__tests__/task-details.test.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (78277bdf8b6bdb52187a8f4366b638ee93ed83df0f3ab041975ddeb29a4d9149); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/lib/localized-text.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (16727bb9f5813c39a1b2fc321fae1a47c4af54246877435511352a1a12b93a26); preserve accepted formatting and protected headers. No business node differs."
+  },
+  {
+    "file": "web/src/lib/session-hint.ts",
+    "source": "integrated",
+    "reason": "Committed ASTs match after comments/quote/format normalization (526e1dc6811a6ed5cf073f6afff0694442add3b056212de1eab254a26de7cdf0); preserve accepted formatting and protected headers. No business node differs."
+  }
+]

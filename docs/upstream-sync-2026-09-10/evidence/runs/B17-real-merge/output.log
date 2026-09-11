@@ -1,0 +1,685 @@
+Auto-merging .github/PULL_REQUEST_TEMPLATE.md
+CONFLICT (content): Merge conflict in .github/PULL_REQUEST_TEMPLATE.md
+Auto-merging .github/PULL_REQUEST_TEMPLATE/en.md
+CONFLICT (add/add): Merge conflict in .github/PULL_REQUEST_TEMPLATE/en.md
+Auto-merging .github/workflows/electron-build.yml
+Auto-merging .github/workflows/release.yml
+CONFLICT (content): Merge conflict in .github/workflows/release.yml
+Auto-merging .gitignore
+Auto-merging README.en.md
+Auto-merging README.fr.md
+Auto-merging README.ja.md
+Auto-merging README.md
+Auto-merging README.zh_CN.md
+Auto-merging README.zh_TW.md
+Auto-merging common/api_type.go
+Auto-merging common/constants.go
+Auto-merging common/crypto.go
+CONFLICT (content): Merge conflict in common/crypto.go
+Auto-merging common/init.go
+Auto-merging constant/channel.go
+CONFLICT (content): Merge conflict in constant/channel.go
+Auto-merging constant/context_key.go
+CONFLICT (content): Merge conflict in constant/context_key.go
+Auto-merging constant/task.go
+CONFLICT (content): Merge conflict in constant/task.go
+Auto-merging controller/access_token_audit_test.go
+CONFLICT (add/add): Merge conflict in controller/access_token_audit_test.go
+Auto-merging controller/audit.go
+CONFLICT (content): Merge conflict in controller/audit.go
+Auto-merging controller/auth_flow_test.go
+CONFLICT (content): Merge conflict in controller/auth_flow_test.go
+Auto-merging controller/auth_session_test.go
+Auto-merging controller/billing_option_test.go
+CONFLICT (add/add): Merge conflict in controller/billing_option_test.go
+Auto-merging controller/channel-billing.go
+CONFLICT (content): Merge conflict in controller/channel-billing.go
+Auto-merging controller/channel-test.go
+CONFLICT (content): Merge conflict in controller/channel-test.go
+Auto-merging controller/channel.go
+CONFLICT (content): Merge conflict in controller/channel.go
+Auto-merging controller/channel_pin_retry_test.go
+CONFLICT (add/add): Merge conflict in controller/channel_pin_retry_test.go
+Auto-merging controller/channel_task_plugin_bind_test.go
+CONFLICT (add/add): Merge conflict in controller/channel_task_plugin_bind_test.go
+Auto-merging controller/channel_test_internal_test.go
+CONFLICT (content): Merge conflict in controller/channel_test_internal_test.go
+Auto-merging controller/channel_upstream_update.go
+CONFLICT (content): Merge conflict in controller/channel_upstream_update.go
+Auto-merging controller/channel_upstream_update_test.go
+Auto-merging controller/custom_oauth.go
+Auto-merging controller/log.go
+Auto-merging controller/login_verification.go
+CONFLICT (add/add): Merge conflict in controller/login_verification.go
+Auto-merging controller/misc.go
+Auto-merging controller/model_list_test.go
+CONFLICT (content): Merge conflict in controller/model_list_test.go
+Auto-merging controller/model_management_test.go
+CONFLICT (add/add): Merge conflict in controller/model_management_test.go
+Auto-merging controller/model_pricing_config.go
+CONFLICT (add/add): Merge conflict in controller/model_pricing_config.go
+Auto-merging controller/model_sync.go
+CONFLICT (content): Merge conflict in controller/model_sync.go
+Auto-merging controller/oauth.go
+CONFLICT (content): Merge conflict in controller/oauth.go
+Auto-merging controller/option.go
+CONFLICT (content): Merge conflict in controller/option.go
+Auto-merging controller/passkey.go
+CONFLICT (content): Merge conflict in controller/passkey.go
+Auto-merging controller/passkey_test.go
+CONFLICT (content): Merge conflict in controller/passkey_test.go
+Auto-merging controller/pricing.go
+Auto-merging controller/ratio_sync.go
+Auto-merging controller/redemption.go
+CONFLICT (content): Merge conflict in controller/redemption.go
+Auto-merging controller/redemption_batch_test.go
+CONFLICT (add/add): Merge conflict in controller/redemption_batch_test.go
+Auto-merging controller/relay.go
+CONFLICT (content): Merge conflict in controller/relay.go
+Auto-merging controller/secure_verification.go
+CONFLICT (content): Merge conflict in controller/secure_verification.go
+Auto-merging controller/security_account_test.go
+CONFLICT (add/add): Merge conflict in controller/security_account_test.go
+Auto-merging controller/security_enrollment_test.go
+CONFLICT (add/add): Merge conflict in controller/security_enrollment_test.go
+Auto-merging controller/task.go
+CONFLICT (content): Merge conflict in controller/task.go
+Auto-merging controller/telegram_test.go
+CONFLICT (content): Merge conflict in controller/telegram_test.go
+Auto-merging controller/user.go
+CONFLICT (content): Merge conflict in controller/user.go
+Auto-merging controller/user_manage_test.go
+CONFLICT (content): Merge conflict in controller/user_manage_test.go
+Auto-merging controller/video_proxy.go
+CONFLICT (content): Merge conflict in controller/video_proxy.go
+CONFLICT (modify/delete): controller/video_proxy_gemini.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of controller/video_proxy_gemini.go left in tree.
+Auto-merging controller/wechat.go
+CONFLICT (content): Merge conflict in controller/wechat.go
+Auto-merging dto/channel_constraints.go
+CONFLICT (add/add): Merge conflict in dto/channel_constraints.go
+Auto-merging e2e/doc_parse_test.go
+CONFLICT (add/add): Merge conflict in e2e/doc_parse_test.go
+Auto-merging go.mod
+CONFLICT (content): Merge conflict in go.mod
+Auto-merging i18n/keys.go
+Auto-merging i18n/locales/en.yaml
+CONFLICT (content): Merge conflict in i18n/locales/en.yaml
+Auto-merging i18n/locales/zh-CN.yaml
+CONFLICT (content): Merge conflict in i18n/locales/zh-CN.yaml
+Auto-merging i18n/locales/zh-TW.yaml
+CONFLICT (content): Merge conflict in i18n/locales/zh-TW.yaml
+Auto-merging main.go
+Auto-merging middleware/audit.go
+Auto-merging middleware/auth.go
+Auto-merging middleware/auth_test.go
+Auto-merging middleware/distributor.go
+CONFLICT (content): Merge conflict in middleware/distributor.go
+Auto-merging middleware/distributor_test.go
+CONFLICT (add/add): Merge conflict in middleware/distributor_test.go
+Auto-merging middleware/rate-limit.go
+Auto-merging middleware/task_plugin.go
+CONFLICT (add/add): Merge conflict in middleware/task_plugin.go
+Auto-merging model/ability.go
+CONFLICT (content): Merge conflict in model/ability.go
+Auto-merging model/audit_log.go
+CONFLICT (add/add): Merge conflict in model/audit_log.go
+Auto-merging model/audit_other.go
+CONFLICT (add/add): Merge conflict in model/audit_other.go
+Auto-merging model/auth_flow.go
+CONFLICT (content): Merge conflict in model/auth_flow.go
+Auto-merging model/channel.go
+CONFLICT (content): Merge conflict in model/channel.go
+Auto-merging model/channel_cache.go
+CONFLICT (content): Merge conflict in model/channel_cache.go
+Auto-merging model/channel_constraint.go
+CONFLICT (add/add): Merge conflict in model/channel_constraint.go
+Auto-merging model/channel_satisfy.go
+CONFLICT (content): Merge conflict in model/channel_satisfy.go
+Auto-merging model/channel_status_test.go
+CONFLICT (add/add): Merge conflict in model/channel_status_test.go
+Auto-merging model/checkin.go
+Auto-merging model/log.go
+CONFLICT (content): Merge conflict in model/log.go
+Auto-merging model/log_format_test.go
+CONFLICT (content): Merge conflict in model/log_format_test.go
+Auto-merging model/log_other.go
+CONFLICT (add/add): Merge conflict in model/log_other.go
+Auto-merging model/login_verification.go
+CONFLICT (add/add): Merge conflict in model/login_verification.go
+Auto-merging model/main.go
+CONFLICT (content): Merge conflict in model/main.go
+Auto-merging model/migration_dialector.go
+CONFLICT (add/add): Merge conflict in model/migration_dialector.go
+Auto-merging model/migration_dialector_test.go
+CONFLICT (add/add): Merge conflict in model/migration_dialector_test.go
+Auto-merging model/model_meta.go
+CONFLICT (content): Merge conflict in model/model_meta.go
+Auto-merging model/model_metadata_sync.go
+CONFLICT (add/add): Merge conflict in model/model_metadata_sync.go
+Auto-merging model/model_pricing_config.go
+CONFLICT (add/add): Merge conflict in model/model_pricing_config.go
+Auto-merging model/option.go
+CONFLICT (content): Merge conflict in model/option.go
+Auto-merging model/option_primary_key_migration.go
+CONFLICT (add/add): Merge conflict in model/option_primary_key_migration.go
+Auto-merging model/passkey.go
+CONFLICT (content): Merge conflict in model/passkey.go
+Auto-merging model/redemption.go
+CONFLICT (content): Merge conflict in model/redemption.go
+Auto-merging model/redemption_test.go
+CONFLICT (content): Merge conflict in model/redemption_test.go
+Auto-merging model/subscription.go
+CONFLICT (content): Merge conflict in model/subscription.go
+Auto-merging model/system_task.go
+Auto-merging model/task_cas_test.go
+Auto-merging model/task_plugin_test.go
+CONFLICT (add/add): Merge conflict in model/task_plugin_test.go
+Auto-merging model/user.go
+CONFLICT (content): Merge conflict in model/user.go
+Auto-merging model/user_auth_cache.go
+Auto-merging model/user_authentication_test.go
+Auto-merging model/user_cache.go
+Auto-merging model/vendor_management.go
+CONFLICT (add/add): Merge conflict in model/vendor_management.go
+Auto-merging model/vendor_meta.go
+CONFLICT (content): Merge conflict in model/vendor_meta.go
+Auto-merging oauth/discord.go
+Auto-merging oauth/generic.go
+Auto-merging oauth/github.go
+Auto-merging oauth/linuxdo.go
+Auto-merging oauth/oidc.go
+Auto-merging oauth/telegram.go
+CONFLICT (add/add): Merge conflict in oauth/telegram.go
+Auto-merging oauth/types.go
+Auto-merging pkg/perf_metrics/metrics.go
+CONFLICT (content): Merge conflict in pkg/perf_metrics/metrics.go
+Auto-merging pkg/perf_metrics/types.go
+CONFLICT (content): Merge conflict in pkg/perf_metrics/types.go
+Auto-merging plugins/tasks/vidu/plugin.js
+CONFLICT (add/add): Merge conflict in plugins/tasks/vidu/plugin.js
+Auto-merging plugins/vidu_responses_test.go
+CONFLICT (add/add): Merge conflict in plugins/vidu_responses_test.go
+Auto-merging relay/channel/advancedcustom/adaptor.go
+Auto-merging relay/channel/api_request.go
+CONFLICT (content): Merge conflict in relay/channel/api_request.go
+Auto-merging relay/channel/api_request_getbody_test.go
+CONFLICT (add/add): Merge conflict in relay/channel/api_request_getbody_test.go
+Auto-merging relay/channel/api_request_test.go
+CONFLICT (content): Merge conflict in relay/channel/api_request_test.go
+Auto-merging relay/channel/claude/adaptor.go
+Auto-merging relay/channel/claude/relay-claude.go
+Auto-merging relay/channel/codex/adaptor.go
+Auto-merging relay/channel/codex/adaptor_test.go
+CONFLICT (content): Merge conflict in relay/channel/codex/adaptor_test.go
+Auto-merging relay/channel/openai/adaptor.go
+CONFLICT (content): Merge conflict in relay/channel/openai/adaptor.go
+Auto-merging relay/channel/openai/chat_via_responses.go
+Auto-merging relay/channel/openai/chat_via_responses_test.go
+Auto-merging relay/channel/openai/helper.go
+CONFLICT (content): Merge conflict in relay/channel/openai/helper.go
+Auto-merging relay/channel/openai/relay_responses.go
+Auto-merging relay/channel/openai/responses_via_chat.go
+CONFLICT (modify/delete): relay/channel/task/ali/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/ali/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/doubao/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/doubao/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/gemini/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/gemini/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/hailuo/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/hailuo/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/jimeng/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/jimeng/adaptor.go left in tree.
+Auto-merging relay/channel/task/jsplugin/adaptor.go
+CONFLICT (add/add): Merge conflict in relay/channel/task/jsplugin/adaptor.go
+Auto-merging relay/channel/task/jsplugin/adaptor_test.go
+CONFLICT (add/add): Merge conflict in relay/channel/task/jsplugin/adaptor_test.go
+CONFLICT (modify/delete): relay/channel/task/kling/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/kling/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/sora/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/sora/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/suno/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/suno/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/vertex/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/vertex/adaptor.go left in tree.
+CONFLICT (modify/delete): relay/channel/task/vidu/adaptor.go deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relay/channel/task/vidu/adaptor.go left in tree.
+Auto-merging relay/chat_completions_via_responses.go
+Auto-merging relay/chat_completions_via_responses_test.go
+Auto-merging relay/claude_handler.go
+CONFLICT (content): Merge conflict in relay/claude_handler.go
+Auto-merging relay/common/override.go
+CONFLICT (content): Merge conflict in relay/common/override.go
+Auto-merging relay/common/override_test.go
+Auto-merging relay/common/relay_info.go
+CONFLICT (content): Merge conflict in relay/common/relay_info.go
+Auto-merging relay/common/relay_info_test.go
+CONFLICT (content): Merge conflict in relay/common/relay_info_test.go
+Auto-merging relay/compatible_handler.go
+CONFLICT (content): Merge conflict in relay/compatible_handler.go
+Auto-merging relay/constant/relay_mode.go
+Auto-merging relay/gemini_handler.go
+Auto-merging relay/helper/common.go
+Auto-merging relay/helper/model_mapped.go
+CONFLICT (content): Merge conflict in relay/helper/model_mapped.go
+Auto-merging relay/helper/price.go
+CONFLICT (content): Merge conflict in relay/helper/price.go
+Auto-merging relay/helper/price_test.go
+CONFLICT (content): Merge conflict in relay/helper/price_test.go
+Auto-merging relay/helper/reasoning_suffix.go
+CONFLICT (add/add): Merge conflict in relay/helper/reasoning_suffix.go
+Auto-merging relay/image_handler.go
+Auto-merging relay/mjproxy_handler.go
+Auto-merging relay/relay_adaptor.go
+CONFLICT (content): Merge conflict in relay/relay_adaptor.go
+Auto-merging relay/relay_adaptor_jsplugin_test.go
+CONFLICT (add/add): Merge conflict in relay/relay_adaptor_jsplugin_test.go
+Auto-merging relay/relay_task.go
+CONFLICT (content): Merge conflict in relay/relay_task.go
+Auto-merging relay/responses_handler.go
+Auto-merging relaykit/dto/channel_settings.go
+Auto-merging relaykit/dto/channel_settings_test.go
+CONFLICT (content): Merge conflict in relaykit/dto/channel_settings_test.go
+Auto-merging relaykit/dto/usage_merge.go
+CONFLICT (add/add): Merge conflict in relaykit/dto/usage_merge.go
+Auto-merging relaykit/dto/usage_merge_test.go
+CONFLICT (add/add): Merge conflict in relaykit/dto/usage_merge_test.go
+Auto-merging relaykit/relayconvert/golden_test.go
+CONFLICT (content): Merge conflict in relaykit/relayconvert/golden_test.go
+Auto-merging relaykit/relayconvert/internal/oai_responses/to_oai_chat_req.go
+Auto-merging relaykit/relayconvert/internal/oai_responses/to_oai_chat_req_test.go
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/claude_to_gemini.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/claude_to_gemini.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/claude_to_openai.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/claude_to_openai.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/claude_to_openai_responses.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/claude_to_openai_responses.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/gemini_to_claude.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/gemini_to_claude.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/gemini_to_openai.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/gemini_to_openai.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/gemini_to_openai_responses.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/gemini_to_openai_responses.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/openai_responses_to_gemini.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/openai_responses_to_gemini.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/request/openai_to_gemini.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/request/openai_to_gemini.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/response/claude_to_gemini.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/response/claude_to_gemini.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/response/openai_responses_to_gemini.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/response/openai_responses_to_gemini.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/response/openai_to_claude.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/response/openai_to_claude.golden.json left in tree.
+CONFLICT (modify/delete): relaykit/relayconvert/testdata/golden/response/openai_to_gemini.golden.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of relaykit/relayconvert/testdata/golden/response/openai_to_gemini.golden.json left in tree.
+Auto-merging relaykit/relayconvert/testdata/golden/stream/claude_to_gemini.golden.json
+CONFLICT (content): Merge conflict in relaykit/relayconvert/testdata/golden/stream/claude_to_gemini.golden.json
+Auto-merging relaykit/relayconvert/testdata/golden/stream/gemini_to_claude.golden.json
+CONFLICT (content): Merge conflict in relaykit/relayconvert/testdata/golden/stream/gemini_to_claude.golden.json
+Auto-merging router/api-router.go
+CONFLICT (content): Merge conflict in router/api-router.go
+Auto-merging router/plugin-router.go
+CONFLICT (add/add): Merge conflict in router/plugin-router.go
+Auto-merging router/plugin_router_test.go
+CONFLICT (add/add): Merge conflict in router/plugin_router_test.go
+Auto-merging router/relay-router.go
+CONFLICT (content): Merge conflict in router/relay-router.go
+Auto-merging router/relay_router_test.go
+CONFLICT (add/add): Merge conflict in router/relay_router_test.go
+Auto-merging router/task-plugin-protocol-router.go
+CONFLICT (add/add): Merge conflict in router/task-plugin-protocol-router.go
+Auto-merging router/task-router.go
+CONFLICT (add/add): Merge conflict in router/task-router.go
+Auto-merging router/video-router.go
+CONFLICT (content): Merge conflict in router/video-router.go
+Auto-merging service/auth_session.go
+Auto-merging service/auth_session_test.go
+Auto-merging service/authz/authz_test.go
+CONFLICT (content): Merge conflict in service/authz/authz_test.go
+Auto-merging service/channel_select.go
+CONFLICT (content): Merge conflict in service/channel_select.go
+Auto-merging service/codex_channel_models.go
+Auto-merging service/http_client.go
+CONFLICT (content): Merge conflict in service/http_client.go
+Auto-merging service/login_verification.go
+CONFLICT (add/add): Merge conflict in service/login_verification.go
+Auto-merging service/midjourney.go
+CONFLICT (content): Merge conflict in service/midjourney.go
+Auto-merging service/passkey/session.go
+CONFLICT (content): Merge conflict in service/passkey/session.go
+Auto-merging service/rankings.go
+Auto-merging service/security_verification.go
+CONFLICT (add/add): Merge conflict in service/security_verification.go
+Auto-merging service/task_billing.go
+CONFLICT (content): Merge conflict in service/task_billing.go
+Auto-merging service/task_billing_test.go
+CONFLICT (content): Merge conflict in service/task_billing_test.go
+Auto-merging service/task_polling.go
+CONFLICT (content): Merge conflict in service/task_polling.go
+Auto-merging service/text_quota.go
+Auto-merging service/text_quota_test.go
+CONFLICT (content): Merge conflict in service/text_quota_test.go
+Auto-merging service/tiered_settle.go
+CONFLICT (content): Merge conflict in service/tiered_settle.go
+Auto-merging setting/billing_setting/builtin_billing_test.go
+CONFLICT (add/add): Merge conflict in setting/billing_setting/builtin_billing_test.go
+Auto-merging setting/config/config.go
+Auto-merging setting/console_setting/validation.go
+Auto-merging setting/operation_setting/monitor_setting.go
+CONFLICT (content): Merge conflict in setting/operation_setting/monitor_setting.go
+Auto-merging setting/operation_setting/monitor_setting_test.go
+Auto-merging setting/rate_limit.go
+CONFLICT (content): Merge conflict in setting/rate_limit.go
+Auto-merging setting/ratio_setting/model_ratio.go
+CONFLICT (content): Merge conflict in setting/ratio_setting/model_ratio.go
+Auto-merging web/bun.lock
+CONFLICT (content): Merge conflict in web/bun.lock
+Auto-merging web/package.json
+CONFLICT (content): Merge conflict in web/package.json
+Auto-merging web/rsbuild.config.ts
+Auto-merging web/scripts/sync-i18n.mjs
+Auto-merging web/src/components/ai-elements/__tests__/response-fade-render.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/components/ai-elements/__tests__/response-fade-render.test.tsx
+Auto-merging web/src/components/ai-elements/__tests__/response-fade.test.ts
+CONFLICT (add/add): Merge conflict in web/src/components/ai-elements/__tests__/response-fade.test.ts
+Auto-merging web/src/components/ai-elements/response-fade.ts
+CONFLICT (add/add): Merge conflict in web/src/components/ai-elements/response-fade.ts
+Auto-merging web/src/components/ai-elements/response-renderer-inline.tsx
+CONFLICT (content): Merge conflict in web/src/components/ai-elements/response-renderer-inline.tsx
+Auto-merging web/src/components/data-table/toolbar/bulk-actions.tsx
+CONFLICT (content): Merge conflict in web/src/components/data-table/toolbar/bulk-actions.tsx
+Auto-merging web/src/components/layout/components/mobile-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/components/layout/components/mobile-drawer.tsx
+Auto-merging web/src/components/layout/components/public-header.tsx
+Auto-merging web/src/components/profile-dropdown.tsx
+Auto-merging web/src/components/ui/__tests__/portal-container.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/components/ui/__tests__/portal-container.test.tsx
+Auto-merging web/src/components/ui/combobox.tsx
+CONFLICT (content): Merge conflict in web/src/components/ui/combobox.tsx
+Auto-merging web/src/components/ui/sidebar.tsx
+Auto-merging web/src/features/auth/api.ts
+Auto-merging web/src/features/auth/constants.ts
+Auto-merging web/src/features/auth/forgot-password/components/forgot-password-form.tsx
+Auto-merging web/src/features/auth/hooks/use-auth-redirect.ts
+CONFLICT (content): Merge conflict in web/src/features/auth/hooks/use-auth-redirect.ts
+Auto-merging web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts
+Auto-merging web/src/features/auth/lib/oauth-callback-mode.ts
+CONFLICT (add/add): Merge conflict in web/src/features/auth/lib/oauth-callback-mode.ts
+Auto-merging web/src/features/auth/otp/__tests__/login-verification.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/auth/otp/__tests__/login-verification.test.tsx
+Auto-merging web/src/features/auth/passkey/api.ts
+CONFLICT (content): Merge conflict in web/src/features/auth/passkey/api.ts
+Auto-merging web/src/features/auth/passkey/hooks/use-passkey-management.ts
+CONFLICT (content): Merge conflict in web/src/features/auth/passkey/hooks/use-passkey-management.ts
+Auto-merging web/src/features/auth/secure-verification/types.ts
+CONFLICT (content): Merge conflict in web/src/features/auth/secure-verification/types.ts
+Auto-merging web/src/features/auth/sign-up/components/sign-up-form.tsx
+CONFLICT (content): Merge conflict in web/src/features/auth/sign-up/components/sign-up-form.tsx
+Auto-merging web/src/features/auth/types.ts
+CONFLICT (content): Merge conflict in web/src/features/auth/types.ts
+Auto-merging web/src/features/channels/api.ts
+CONFLICT (content): Merge conflict in web/src/features/channels/api.ts
+Auto-merging web/src/features/channels/components/channels-columns.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/channels-columns.tsx
+Auto-merging web/src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx
+Auto-merging web/src/features/channels/components/dialogs/balance-query-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/dialogs/balance-query-dialog.tsx
+Auto-merging web/src/features/channels/components/dialogs/channel-test-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/dialogs/channel-test-dialog.tsx
+Auto-merging web/src/features/channels/components/dialogs/fetch-models-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/dialogs/fetch-models-dialog.tsx
+Auto-merging web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx
+Auto-merging web/src/features/channels/components/dialogs/ollama-models-dialog.tsx
+Auto-merging web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx
+Auto-merging web/src/features/channels/components/drawers/channel-mutate-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/channels/components/drawers/channel-mutate-drawer.tsx
+Auto-merging web/src/features/channels/constants.ts
+CONFLICT (content): Merge conflict in web/src/features/channels/constants.ts
+Auto-merging web/src/features/channels/hooks/__tests__/channel-key-disclosure.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/channels/hooks/__tests__/channel-key-disclosure.test.tsx
+Auto-merging web/src/features/channels/hooks/use-channel-key-disclosure.ts
+CONFLICT (add/add): Merge conflict in web/src/features/channels/hooks/use-channel-key-disclosure.ts
+Auto-merging web/src/features/channels/hooks/use-channel-mutate-form.ts
+Auto-merging web/src/features/channels/lib/channel-actions.ts
+CONFLICT (content): Merge conflict in web/src/features/channels/lib/channel-actions.ts
+Auto-merging web/src/features/channels/lib/channel-form.ts
+CONFLICT (content): Merge conflict in web/src/features/channels/lib/channel-form.ts
+Auto-merging web/src/features/channels/lib/index.ts
+Auto-merging web/src/features/channels/types.ts
+CONFLICT (content): Merge conflict in web/src/features/channels/types.ts
+Auto-merging web/src/features/dashboard/components/users/user-charts.tsx
+Auto-merging web/src/features/dashboard/index.tsx
+Auto-merging web/src/features/keys/components/__tests__/api-key-group-cell.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/keys/components/__tests__/api-key-group-cell.test.tsx
+Auto-merging web/src/features/keys/components/__tests__/api-key-listing.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/keys/components/__tests__/api-key-listing.test.tsx
+Auto-merging web/src/features/keys/components/api-key-group-cell.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/keys/components/api-key-group-cell.tsx
+Auto-merging web/src/features/keys/components/api-keys-mutate-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/keys/components/api-keys-mutate-drawer.tsx
+Auto-merging web/src/features/keys/components/auto-group-order-editor.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/keys/components/auto-group-order-editor.tsx
+Auto-merging web/src/features/models/__tests__/model-listing.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/models/__tests__/model-listing.test.tsx
+Auto-merging web/src/features/models/api.ts
+CONFLICT (content): Merge conflict in web/src/features/models/api.ts
+Auto-merging web/src/features/models/components/dialogs/create-deployment-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/models/components/dialogs/create-deployment-drawer.tsx
+Auto-merging web/src/features/models/components/dialogs/extend-deployment-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/models/components/dialogs/extend-deployment-dialog.tsx
+Auto-merging web/src/features/models/index.tsx
+CONFLICT (content): Merge conflict in web/src/features/models/index.tsx
+Auto-merging web/src/features/performance-metrics/types.ts
+CONFLICT (content): Merge conflict in web/src/features/performance-metrics/types.ts
+Auto-merging web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx
+Auto-merging web/src/features/playground/hooks/use-chat-handler.ts
+Auto-merging web/src/features/playground/hooks/use-stream-request.test.ts
+Auto-merging web/src/features/pricing/__tests__/model-cards.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/pricing/__tests__/model-cards.test.tsx
+Auto-merging web/src/features/pricing/__tests__/task-expr.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/pricing/__tests__/task-expr.test.ts
+Auto-merging web/src/features/pricing/__tests__/task-matrix-display.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/pricing/__tests__/task-matrix-display.test.ts
+Auto-merging web/src/features/pricing/__tests__/task-matrix.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/pricing/__tests__/task-matrix.test.ts
+Auto-merging web/src/features/pricing/components/model-perf-badge.tsx
+CONFLICT (content): Merge conflict in web/src/features/pricing/components/model-perf-badge.tsx
+Auto-merging web/src/features/pricing/constants.ts
+Auto-merging web/src/features/pricing/lib/billing-expr.ts
+Auto-merging web/src/features/pricing/lib/filters.ts
+Auto-merging web/src/features/profile/__tests__/settings.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/profile/__tests__/settings.test.tsx
+Auto-merging web/src/features/profile/api.ts
+CONFLICT (content): Merge conflict in web/src/features/profile/api.ts
+Auto-merging web/src/features/profile/components/tabs/notification-tab.tsx
+CONFLICT (content): Merge conflict in web/src/features/profile/components/tabs/notification-tab.tsx
+Auto-merging web/src/features/profile/hooks/use-profile.ts
+CONFLICT (content): Merge conflict in web/src/features/profile/hooks/use-profile.ts
+Auto-merging web/src/features/profile/index.tsx
+Auto-merging web/src/features/profile/lib/user-settings.ts
+CONFLICT (add/add): Merge conflict in web/src/features/profile/lib/user-settings.ts
+Auto-merging web/src/features/profile/types.ts
+Auto-merging web/src/features/rankings/hooks/use-rankings.ts
+CONFLICT (content): Merge conflict in web/src/features/rankings/hooks/use-rankings.ts
+Auto-merging web/src/features/redemption-codes/api.ts
+CONFLICT (content): Merge conflict in web/src/features/redemption-codes/api.ts
+Auto-merging web/src/features/redemption-codes/components/__tests__/bulk-delete.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/redemption-codes/components/__tests__/bulk-delete.test.tsx
+Auto-merging web/src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx
+Auto-merging web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx
+Auto-merging web/src/features/redemption-codes/components/data-table-bulk-actions.tsx
+CONFLICT (content): Merge conflict in web/src/features/redemption-codes/components/data-table-bulk-actions.tsx
+Auto-merging web/src/features/redemption-codes/components/redemptions-columns.tsx
+CONFLICT (content): Merge conflict in web/src/features/redemption-codes/components/redemptions-columns.tsx
+Auto-merging web/src/features/redemption-codes/components/redemptions-export-dialog.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/redemption-codes/components/redemptions-export-dialog.tsx
+Auto-merging web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx
+Auto-merging web/src/features/redemption-codes/components/redemptions-table.tsx
+Auto-merging web/src/features/redemption-codes/lib/redemption-form.ts
+CONFLICT (content): Merge conflict in web/src/features/redemption-codes/lib/redemption-form.ts
+Auto-merging web/src/features/security/__tests__/enrollment.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/security/__tests__/enrollment.test.tsx
+Auto-merging web/src/features/security/__tests__/page.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/security/__tests__/page.test.tsx
+Auto-merging web/src/features/security/components/__tests__/access-token-card.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/security/components/__tests__/access-token-card.test.tsx
+Auto-merging web/src/features/security/components/__tests__/login-session-utils.test.ts
+CONFLICT (content): Merge conflict in web/src/features/security/components/__tests__/login-session-utils.test.ts
+Auto-merging web/src/features/security/components/__tests__/privacy-card.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/security/components/__tests__/privacy-card.test.tsx
+CONFLICT (file location): web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx added in HEAD inside a directory that was renamed in bdef117505247769268b209665fb3ad7554c3da7, suggesting it should perhaps be moved to web/src/features/security/components/__tests__/profile-avatar-control.test.tsx.
+CONFLICT (rename/delete): web/src/features/profile/components/passkey-card.tsx renamed to web/src/features/security/components/passkey-card.tsx in bdef117505247769268b209665fb3ad7554c3da7, but deleted in HEAD.
+Auto-merging web/src/features/security/components/passkey-card.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/security/components/passkey-card.tsx
+Auto-merging web/src/features/security/components/privacy-card.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/security/components/privacy-card.tsx
+Auto-merging web/src/features/security/index.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/security/index.tsx
+Auto-merging web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx
+Auto-merging web/src/features/system-info/components/system-tasks-panel.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-info/components/system-tasks-panel.tsx
+Auto-merging web/src/features/system-settings/__tests__/pricing-sync.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/system-settings/__tests__/pricing-sync.test.tsx
+Auto-merging web/src/features/system-settings/__tests__/task-public-address.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/system-settings/__tests__/task-public-address.test.ts
+Auto-merging web/src/features/system-settings/auth/custom-oauth/components/preset-selector.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/auth/custom-oauth/components/preset-selector.tsx
+Auto-merging web/src/features/system-settings/auth/index.tsx
+Auto-merging web/src/features/system-settings/auth/section-registry.tsx
+Auto-merging web/src/features/system-settings/billing/index.tsx
+Auto-merging web/src/features/system-settings/billing/section-registry.tsx
+Auto-merging web/src/features/system-settings/content/announcements-section.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/content/announcements-section.tsx
+Auto-merging web/src/features/system-settings/general/channel-affinity/index.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/general/channel-affinity/index.tsx
+Auto-merging web/src/features/system-settings/hooks/use-update-option.ts
+Auto-merging web/src/features/system-settings/maintenance/log-settings-section.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/maintenance/log-settings-section.tsx
+Auto-merging web/src/features/system-settings/models/group-ratio-visual-editor.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/group-ratio-visual-editor.tsx
+Auto-merging web/src/features/system-settings/models/group-special-usable-editor.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/group-special-usable-editor.tsx
+Auto-merging web/src/features/system-settings/models/index.tsx
+Auto-merging web/src/features/system-settings/models/model-ratio-table-columns.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/model-ratio-table-columns.tsx
+Auto-merging web/src/features/system-settings/models/routing-reliability-section.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/routing-reliability-section.tsx
+Auto-merging web/src/features/system-settings/models/section-registry.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/section-registry.tsx
+Auto-merging web/src/features/system-settings/models/tiered-pricing-editor.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/tiered-pricing-editor.tsx
+Auto-merging web/src/features/system-settings/models/upstream-price-cells.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/system-settings/models/upstream-price-cells.tsx
+Auto-merging web/src/features/system-settings/models/upstream-ratio-sync-helpers.ts
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/upstream-ratio-sync-helpers.ts
+Auto-merging web/src/features/system-settings/models/upstream-ratio-sync-table.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/upstream-ratio-sync-table.tsx
+Auto-merging web/src/features/system-settings/models/upstream-ratio-sync.tsx
+CONFLICT (content): Merge conflict in web/src/features/system-settings/models/upstream-ratio-sync.tsx
+Auto-merging web/src/features/system-settings/types.ts
+CONFLICT (content): Merge conflict in web/src/features/system-settings/types.ts
+Auto-merging web/src/features/system-settings/utils/numeric-field.ts
+Auto-merging web/src/features/task-plugins/__tests__/enabled-option.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/task-plugins/__tests__/enabled-option.test.ts
+Auto-merging web/src/features/task-plugins/__tests__/plugin-icon-image.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/task-plugins/__tests__/plugin-icon-image.test.tsx
+Auto-merging web/src/features/task-plugins/__tests__/plugin-url.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/task-plugins/__tests__/plugin-url.test.ts
+Auto-merging web/src/features/task-plugins/components/javascript-viewer.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/task-plugins/components/javascript-viewer.tsx
+Auto-merging web/src/features/task-plugins/components/plugin-detail-sheet.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/task-plugins/components/plugin-detail-sheet.tsx
+Auto-merging web/src/features/task-plugins/lib/host-protocols.ts
+CONFLICT (add/add): Merge conflict in web/src/features/task-plugins/lib/host-protocols.ts
+Auto-merging web/src/features/usage-logs/__tests__/access.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/__tests__/access.test.ts
+Auto-merging web/src/features/usage-logs/__tests__/artifacts.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/__tests__/artifacts.test.ts
+Auto-merging web/src/features/usage-logs/__tests__/mobile-layout.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/__tests__/mobile-layout.test.ts
+Auto-merging web/src/features/usage-logs/__tests__/task-details.test.ts
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/__tests__/task-details.test.ts
+Auto-merging web/src/features/usage-logs/audit/__tests__/viewer.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/audit/__tests__/viewer.test.tsx
+Auto-merging web/src/features/usage-logs/audit/components/audit-log-filter-bar.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/audit/components/audit-log-filter-bar.tsx
+Auto-merging web/src/features/usage-logs/components/__tests__/detail-preview.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/components/__tests__/detail-preview.test.tsx
+Auto-merging web/src/features/usage-logs/components/__tests__/group-filter.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/components/__tests__/group-filter.test.tsx
+Auto-merging web/src/features/usage-logs/components/__tests__/mobile-card.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/components/__tests__/mobile-card.test.tsx
+Auto-merging web/src/features/usage-logs/components/__tests__/mobile-filter.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/components/__tests__/mobile-filter.test.tsx
+Auto-merging web/src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx
+Auto-merging web/src/features/usage-logs/components/__tests__/reject-reason.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/components/__tests__/reject-reason.test.tsx
+Auto-merging web/src/features/usage-logs/components/columns/common-logs-columns.tsx
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/components/columns/common-logs-columns.tsx
+Auto-merging web/src/features/usage-logs/components/columns/task-logs-columns.tsx
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/components/columns/task-logs-columns.tsx
+Auto-merging web/src/features/usage-logs/components/common-log-mobile-card.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/usage-logs/components/common-log-mobile-card.tsx
+Auto-merging web/src/features/usage-logs/components/compact-date-time-range-picker.tsx
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/components/compact-date-time-range-picker.tsx
+Auto-merging web/src/features/usage-logs/components/dialogs/details-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/components/dialogs/details-dialog.tsx
+Auto-merging web/src/features/usage-logs/components/logs-filter-toolbar.tsx
+Auto-merging web/src/features/usage-logs/components/model-badge.tsx
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/components/model-badge.tsx
+Auto-merging web/src/features/usage-logs/components/timing-metrics-cell.tsx
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/components/timing-metrics-cell.tsx
+Auto-merging web/src/features/usage-logs/components/usage-logs-table.tsx
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/components/usage-logs-table.tsx
+Auto-merging web/src/features/usage-logs/lib/columns.ts
+Auto-merging web/src/features/usage-logs/types.ts
+CONFLICT (content): Merge conflict in web/src/features/usage-logs/types.ts
+Auto-merging web/src/features/users/components/__tests__/quota-display.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/users/components/__tests__/quota-display.test.tsx
+Auto-merging web/src/features/users/components/data-table-row-actions.tsx
+CONFLICT (content): Merge conflict in web/src/features/users/components/data-table-row-actions.tsx
+Auto-merging web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx
+Auto-merging web/src/features/users/components/dialogs/user-binding-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/users/components/dialogs/user-binding-dialog.tsx
+Auto-merging web/src/features/users/components/user-quota-dialog.tsx
+CONFLICT (content): Merge conflict in web/src/features/users/components/user-quota-dialog.tsx
+Auto-merging web/src/features/users/components/users-columns.tsx
+CONFLICT (content): Merge conflict in web/src/features/users/components/users-columns.tsx
+Auto-merging web/src/features/users/components/users-mutate-drawer.tsx
+CONFLICT (content): Merge conflict in web/src/features/users/components/users-mutate-drawer.tsx
+Auto-merging web/src/features/wallet/components/subscription-plans-card.tsx
+Auto-merging web/src/features/wallet/hooks/use-redemption.ts
+CONFLICT (content): Merge conflict in web/src/features/wallet/hooks/use-redemption.ts
+Auto-merging web/src/hooks/use-notifications.ts
+CONFLICT (content): Merge conflict in web/src/hooks/use-notifications.ts
+Auto-merging web/src/hooks/use-sidebar-config.ts
+Auto-merging web/src/hooks/use-sidebar-data.ts
+CONFLICT (modify/delete): web/src/i18n/locales/_reports/_sync-report.json deleted in bdef117505247769268b209665fb3ad7554c3da7 and modified in HEAD.  Version HEAD of web/src/i18n/locales/_reports/_sync-report.json left in tree.
+Auto-merging web/src/i18n/locales/en.json
+CONFLICT (content): Merge conflict in web/src/i18n/locales/en.json
+Auto-merging web/src/i18n/locales/fr.json
+CONFLICT (content): Merge conflict in web/src/i18n/locales/fr.json
+Auto-merging web/src/i18n/locales/ja.json
+CONFLICT (content): Merge conflict in web/src/i18n/locales/ja.json
+Auto-merging web/src/i18n/locales/ru.json
+CONFLICT (content): Merge conflict in web/src/i18n/locales/ru.json
+Auto-merging web/src/i18n/locales/vi.json
+CONFLICT (content): Merge conflict in web/src/i18n/locales/vi.json
+Auto-merging web/src/i18n/locales/zh-TW.json
+CONFLICT (content): Merge conflict in web/src/i18n/locales/zh-TW.json
+Auto-merging web/src/i18n/locales/zh.json
+CONFLICT (content): Merge conflict in web/src/i18n/locales/zh.json
+Auto-merging web/src/i18n/static-keys.ts
+CONFLICT (content): Merge conflict in web/src/i18n/static-keys.ts
+Auto-merging web/src/lib/__tests__/http-cache.test.ts
+CONFLICT (add/add): Merge conflict in web/src/lib/__tests__/http-cache.test.ts
+Auto-merging web/src/lib/__tests__/status-query.test.tsx
+CONFLICT (add/add): Merge conflict in web/src/lib/__tests__/status-query.test.tsx
+Auto-merging web/src/lib/lobe-icon.tsx
+Auto-merging web/src/lib/localized-text.ts
+CONFLICT (add/add): Merge conflict in web/src/lib/localized-text.ts
+Auto-merging web/src/lib/oauth.ts
+Auto-merging web/src/lib/server-error-message.ts
+Auto-merging web/src/lib/session-hint.ts
+CONFLICT (add/add): Merge conflict in web/src/lib/session-hint.ts
+Auto-merging web/src/lib/status-query.ts
+CONFLICT (add/add): Merge conflict in web/src/lib/status-query.ts
+Auto-merging web/src/routeTree.gen.ts
+Auto-merging web/src/routes/(auth)/oauth.tsx
+CONFLICT (content): Merge conflict in web/src/routes/(auth)/oauth.tsx
+Auto-merging web/src/stores/auth-store.ts
+CONFLICT (content): Merge conflict in web/src/stores/auth-store.ts
+Auto-merging web/src/styles/index.css
+Auto-merging web/src/test-setup.ts
+CONFLICT (add/add): Merge conflict in web/src/test-setup.ts
+Auto-merging web/vitest.config.ts
+CONFLICT (add/add): Merge conflict in web/vitest.config.ts
+Automatic merge failed; fix conflicts and then commit the result.

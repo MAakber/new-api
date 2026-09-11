@@ -1,7 +1,6 @@
 {
   "-1 means permanent ban": "-1 means permanent ban",
   "0 = unlimited squeeze attempts per round.": "0 = unlimited squeeze attempts per round.",
-  "1M token": "1M token",
   "Active ban": "Active ban",
   "Add rule": "Add rule",
   "Anthropic Messages": "Anthropic Messages",
@@ -48,7 +47,6 @@
   "Counts distinct model names requested by the same account within the configured window.": "Counts distinct model names requested by the same account within the configured window.",
   "Counts requests matched by the existing User-Agent regular-expression blacklist.": "Counts requests matched by the existing User-Agent regular-expression blacklist.",
   "Counts requests rejected by the existing sensitive-word detector.": "Counts requests rejected by the existing sensitive-word detector.",
-  "credit": "credit",
   "Delete rule": "Delete rule",
   "Enable automatic account bans": "Enable automatic account bans",
   "Enable Circuit Breaker": "Enable Circuit Breaker",
@@ -102,7 +100,6 @@
   "Match type": "Match type",
   "Max Consecutive Failures": "Max Consecutive Failures",
   "Max Queue Attempts": "Max Queue Attempts",
-  "Method": "Method",
   "Model name to keep queued": "Model name to keep queued",
   "No automatic ban records found": "No automatic ban records found",
   "No enabled subscription plans are available.": "No enabled subscription plans are available.",

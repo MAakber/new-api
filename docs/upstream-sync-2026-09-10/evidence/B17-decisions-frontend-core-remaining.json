@@ -1,0 +1,78 @@
+[
+  {
+    "file": "web/src/features/security/components/__tests__/profile-avatar-control.test.tsx",
+    "source": "remove-duplicate-rename",
+    "reason": "Git inferred a duplicate test relocation into security, whose component does not exist. Stage-2 blob a7b33bb exactly equals retained profile/__tests__ fixture. Both parents omit this security path; preserve the complete test at its actual component location.",
+    "retained_file": "web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx"
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "source": "integrated",
+    "reason": "Keep named credential management, per-credential proofs, limits/validation and cancellation using shared dialogs; incoming single-key card would regress multiple Passkeys."
+  },
+  {
+    "file": "web/src/features/security/components/privacy-card.tsx",
+    "source": "integrated",
+    "reason": "Keep truthful enabled-only IP audit display instead of offering an ineffective setting."
+  },
+  {
+    "file": "web/src/features/security/index.tsx",
+    "source": "integrated",
+    "reason": "Keep privacy card composition matching mandatory auditing while retaining upstream security page structure."
+  },
+  {
+    "file": "web/package.json",
+    "source": "integrated",
+    "reason": "Keep B15 accepted Vitest 5/testing-library versions, Happy DOM and IndexedDB fixture dependencies; incoming versions predate tested integration."
+  },
+  {
+    "file": "web/bun.lock",
+    "source": "integrated",
+    "reason": "Keep B16 frozen-install verified lock paired with accepted package manifest and Bun 1.4; no dependency re-resolution needed."
+  },
+  {
+    "file": "web/vitest.config.ts",
+    "source": "integrated",
+    "reason": "Keep unified project discovery covering downstream isolated DOM, responsive and playground suites; upstream jsdom-only setup loses required fixture environments."
+  },
+  {
+    "file": "web/src/test-setup.ts",
+    "source": "integrated",
+    "reason": "Keep one existing Range geometry shim; incoming duplicate provides no additional tested behavior."
+  },
+  {
+    "file": "web/src/components/data-table/toolbar/bulk-actions.tsx",
+    "source": "integrated",
+    "reason": "Keep caller className composition for responsive downstream toolbars."
+  },
+  {
+    "file": "web/src/components/layout/components/mobile-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep unique href/title key for links sharing destinations."
+  },
+  {
+    "file": "web/src/components/ui/__tests__/portal-container.test.tsx",
+    "source": "integrated",
+    "reason": "Keep actual portal assertions with jsdom computed-style normalization from B15."
+  },
+  {
+    "file": "web/src/components/ui/combobox.tsx",
+    "source": "integrated",
+    "reason": "Keep A26 explicit openOnFocus behavior and popup focus-return guard so selected values remain visible; upstream default reopening reproduced a regression."
+  },
+  {
+    "file": "web/src/lib/__tests__/http-cache.test.ts",
+    "source": "integrated",
+    "reason": "Keep single notice ETag test with valid API payload; incoming duplicate is same contract."
+  },
+  {
+    "file": "web/src/lib/__tests__/status-query.test.tsx",
+    "source": "integrated",
+    "reason": "Keep shared status tests plus downstream theme/custom-currency refresh regression."
+  },
+  {
+    "file": "web/src/lib/status-query.ts",
+    "source": "integrated",
+    "reason": "Keep default theme normalization in shared status publication."
+  }
+]

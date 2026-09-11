@@ -1,0 +1,27 @@
+{
+  "id": "B17-real-merge",
+  "command": [
+    "git",
+    "merge",
+    "--no-ff",
+    "--no-commit",
+    "bdef117505247769268b209665fb3ad7554c3da7"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
+  "started_at": "2026-09-11T11:42:09.277Z",
+  "finished_at": "2026-09-11T11:42:11.978Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

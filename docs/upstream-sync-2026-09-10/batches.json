@@ -2678,17 +2678,26 @@
       {
         "id": "B17.1",
         "action": "建立合并前检查点，执行固定目标真实 merge --no-ff --no-commit",
-        "status": "applying"
+        "status": "verified",
+        "evidence": [
+          "evidence/runs/B17-real-merge/result.json",
+          "evidence/B17-file-review.json"
+        ]
       },
       {
         "id": "B17.2",
         "action": "按 ledger 复核冲突和自动合并结果、保留策略及完整行为差异",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B17-file-review.json",
+          "evidence/B17-merge-review.json",
+          "evidence/B17-locale-review.json"
+        ]
       },
       {
         "id": "B17.3",
         "action": "创建双亲合并提交并核对上下游祖先关系",
-        "status": "pending"
+        "status": "applying"
       }
     ],
     "codeCommits": [],

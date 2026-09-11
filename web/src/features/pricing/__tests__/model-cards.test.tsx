@@ -420,6 +420,24 @@ describe('model cards', () => {
     expect(onModelClick).toHaveBeenCalledWith('example-model')
   })
 
+  it('switches the card grid to three columns at the xl breakpoint instead of 2xl', () => {
+    queryClient.setQueryData(['perf-metrics-summary', 24], {
+      success: true,
+      data: { models: [] },
+    })
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ModelCardGrid models={[pricingModel()]} onModelClick={vi.fn()} />
+      </QueryClientProvider>
+    )
+    const grid = screen
+      .getByRole('heading', { name: 'example-model' })
+      .closest('.grid')
+    expect(grid).toHaveClass('xl:grid-cols-3')
+    expect(grid).not.toHaveClass('2xl:grid-cols-3')
+    expect(grid).not.toHaveClass('min-[1440px]:grid-cols-3')
+  })
+
   it('paginates the model cards and disables navigation at both boundaries', async () => {
     queryClient.setQueryData(['perf-metrics-summary', 24], {
       success: true,

@@ -1,0 +1,317 @@
+[
+  {
+    "file": "controller/audit.go",
+    "source": "integrated",
+    "reason": "Preserve banner/passkey/option audit actions and redemption reward-type/export descriptions alongside upstream audit coverage; avoid duplicate map keys."
+  },
+  {
+    "file": "controller/auth_flow_test.go",
+    "source": "integrated",
+    "reason": "Keep downstream avatar table in the shared auth-flow fixture while retaining upstream one-use flow tests."
+  },
+  {
+    "file": "controller/login_verification.go",
+    "source": "integrated",
+    "reason": "Use every named Passkey credential for login verification while preserving required user verification and session binding."
+  },
+  {
+    "file": "controller/oauth.go",
+    "source": "integrated",
+    "reason": "Keep downstream registration/avatar result contract and transaction-safe identity claims; do not reinstate direct provider-ID updates outside that mechanism."
+  },
+  {
+    "file": "controller/option.go",
+    "source": "integrated",
+    "reason": "Retain downstream normalization and CAS-backed task expression schema checks; plugin alias validation already runs through the shared pricing writer."
+  },
+  {
+    "file": "controller/passkey.go",
+    "source": "integrated",
+    "reason": "Preserve named multi-credential enrollment/list/delete, count/name checks, banned-account checks and scoped proof binding; upstream UV/security flows remain."
+  },
+  {
+    "file": "controller/secure_verification.go",
+    "source": "integrated",
+    "reason": "Preserve custom auto-ban error code/status/message in new security verification APIs."
+  },
+  {
+    "file": "controller/user.go",
+    "source": "integrated",
+    "reason": "Keep bans, login method override, RPM validation and profile/avatar projections/cleanup together with upstream deletion/session security."
+  },
+  {
+    "file": "controller/wechat.go",
+    "source": "integrated",
+    "reason": "Retain i18n dependency for downstream registration-code handoff in the new WeChat auth flow."
+  },
+  {
+    "file": "model/audit_log.go",
+    "source": "integrated",
+    "reason": "Keep verified ClickHouse 24.8 String storage for typed JSON audit metadata instead of requiring experimental native JSON."
+  },
+  {
+    "file": "model/audit_other.go",
+    "source": "integrated",
+    "reason": "Preserve SQLite TEXT and ClickHouse String dialect fallback with validated typed JSON."
+  },
+  {
+    "file": "model/auth_flow.go",
+    "source": "integrated",
+    "reason": "Keep registration and registration-identity purposes in addition to upstream unified login/security flow types."
+  },
+  {
+    "file": "model/log_format_test.go",
+    "source": "integrated",
+    "reason": "Retain owner-safe stream projection and private transport detail tests; upstream admin/public log format contracts still covered."
+  },
+  {
+    "file": "model/log_other.go",
+    "source": "integrated",
+    "reason": "Expose only allowlisted stream outcome fields to owners; raw transport errors and unknown diagnostic values remain admin-only."
+  },
+  {
+    "file": "model/log.go",
+    "source": "integrated",
+    "reason": "Retain mandatory downstream IP auditing and merged bounded raw-request diagnostics instead of reinstating opt-out logging."
+  },
+  {
+    "file": "model/login_verification.go",
+    "source": "integrated",
+    "reason": "Keep ban fields and ActiveAutoBan on login verification state so new second-factor paths cannot bypass bans."
+  },
+  {
+    "file": "model/passkey.go",
+    "source": "integrated",
+    "reason": "Keep serialized multi-Passkey creation and single-owned-credential deletion with auth-version updates; no upstream upsert that overwrites a user's other devices."
+  },
+  {
+    "file": "oauth/telegram.go",
+    "source": "integrated",
+    "reason": "Keep PKCE/JWKS OIDC implementation using downstream login proxy transport for the default client."
+  },
+  {
+    "file": "service/login_verification.go",
+    "source": "integrated",
+    "reason": "Retain ban checks at challenge creation/validation/completion."
+  },
+  {
+    "file": "service/passkey/session.go",
+    "source": "integrated",
+    "reason": "Preserve display-name data in the existing one-use, session-bound enrollment flow."
+  },
+  {
+    "file": "service/security_verification.go",
+    "source": "integrated",
+    "reason": "Keep credential-specific deletion context/proof and legacy all-credentials endpoint semantics, with upstream one-use authorization."
+  },
+  {
+    "file": "controller/task.go",
+    "source": "integrated",
+    "reason": "Select adapter from persisted task/plugin identity and resolve legacy authenticated content descriptors; upstream plugin retrieval retained."
+  },
+  {
+    "file": "controller/video_proxy_gemini.go",
+    "source": "integrated",
+    "reason": "Retain Gemini/Vertex legacy media resolver required by persisted native tasks; upstream deletion is incompatible with B14 coexistence."
+  },
+  {
+    "file": "controller/video_proxy.go",
+    "source": "integrated",
+    "reason": "Retain old provider credential/URL resolution plus channel request authorization while preserving upstream plugin descriptor and loop protection."
+  },
+  {
+    "file": "middleware/task_plugin.go",
+    "source": "integrated",
+    "reason": "Keep channel selection before plugin decoding, pinned generation, binding key filtering and origin-task pin redistribution so shared endpoints preserve native channels."
+  },
+  {
+    "file": "plugins/tasks/vidu/plugin.js",
+    "source": "integrated",
+    "reason": "Preserve explicit bgm=false by deleting only null/absent values, consistent with optional scalar semantics."
+  },
+  {
+    "file": "relay/channel/task/ali/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain legacy Ali adapter and its B14 durable response changes; plugin adapter is added alongside it."
+  },
+  {
+    "file": "relay/channel/task/doubao/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain legacy Doubao adapter, token bounds and stored-task settlement; plugin integration is additive."
+  },
+  {
+    "file": "relay/channel/task/gemini/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain native Gemini adapter and stored operation polling/content semantics alongside task plugins."
+  },
+  {
+    "file": "relay/channel/task/hailuo/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain legacy Hailuo adapter and existing task lifecycle."
+  },
+  {
+    "file": "relay/channel/task/jimeng/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain legacy Jimeng adapter and existing signed native request lifecycle."
+  },
+  {
+    "file": "relay/channel/task/kling/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain legacy Kling adapter and bounded vendor deduction settlement."
+  },
+  {
+    "file": "relay/channel/task/sora/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain legacy Sora adapter with replay/body lifecycle corrections and durable task response ordering."
+  },
+  {
+    "file": "relay/channel/task/suno/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain legacy Suno task routes/actions and polling contract."
+  },
+  {
+    "file": "relay/channel/task/vertex/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain native Vertex video credentials and persisted operation handling."
+  },
+  {
+    "file": "relay/channel/task/vidu/adaptor.go",
+    "source": "integrated",
+    "reason": "Retain native Vidu task behavior while new Vidu plugin serves explicitly bound channels."
+  },
+  {
+    "file": "relay/channel/task/jsplugin/adaptor.go",
+    "source": "integrated",
+    "reason": "Keep canonical and declared quantity limits together, reject user-input overflow, and capture per-task checked saturation markers from completion usage."
+  },
+  {
+    "file": "relay/channel/task/jsplugin/adaptor_test.go",
+    "source": "integrated",
+    "reason": "Retain oversized declared token/max-output metadata and per-task non-leaking saturation regressions alongside upstream plugin contracts."
+  },
+  {
+    "file": "relay/relay_adaptor.go",
+    "source": "integrated",
+    "reason": "Keep persisted legacy platform adapter selection; choose plugins only for actual plugin tasks/bindings."
+  },
+  {
+    "file": "relay/relay_task.go",
+    "source": "integrated",
+    "reason": "Keep legacy action/mapping order while applying pre-validation mapping to plugins; fixed pricing remains rejected for task-usage expressions."
+  },
+  {
+    "file": "router/plugin-router.go",
+    "source": "integrated",
+    "reason": "Keep original native route ownership and downstream ban/UA/RPM checks on dynamically registered plugin routes."
+  },
+  {
+    "file": "router/task-plugin-protocol-router.go",
+    "source": "integrated",
+    "reason": "Keep channel-aware binding before JS decode, downstream request guards and correct retrieval/content authorization."
+  },
+  {
+    "file": "router/task-router.go",
+    "source": "integrated",
+    "reason": "Keep downstream system/RPM/ban/UA guards for task submissions and appropriate read guards."
+  },
+  {
+    "file": "router/video-router.go",
+    "source": "integrated",
+    "reason": "Keep old Kling/Jimeng/remix/query endpoints and per-user RPM while adding channel-aware plugin shared routes."
+  },
+  {
+    "file": "service/midjourney.go",
+    "source": "integrated",
+    "reason": "Keep common JSON wrappers rather than unused direct encoding/json import."
+  },
+  {
+    "file": "service/task_polling.go",
+    "source": "integrated",
+    "reason": "Choose poller by task identity, retain old MJ handling, and carry completion clamp to every settlement path including token and custom recalculation."
+  },
+  {
+    "file": ".github/PULL_REQUEST_TEMPLATE.md",
+    "source": "integrated",
+    "reason": "Retain reconciled owner exception matching the later upstream owner-template convention and user-provided project governance."
+  },
+  {
+    "file": ".github/PULL_REQUEST_TEMPLATE/en.md",
+    "source": "integrated",
+    "reason": "Retain same owner-template reconciliation in English."
+  },
+  {
+    "file": ".github/workflows/release.yml",
+    "source": "integrated",
+    "reason": "Use verified shared version script for exact triggering tags and downstream UTC date/revision versions; platform workflow remains otherwise preserved."
+  },
+  {
+    "file": "controller/channel-test.go",
+    "source": "integrated",
+    "reason": "Retain full diagnostics/probe previews, queue warmup nonbilling options, custom test messages, compact endpoint selection and upstream concurrency controls."
+  },
+  {
+    "file": "controller/channel.go",
+    "source": "integrated",
+    "reason": "Retain atomic validated key append and sanitized updated result, change-aware cache refresh and request guards; plugin permission checks remain in canonical mutation path."
+  },
+  {
+    "file": "controller/relay.go",
+    "source": "integrated",
+    "reason": "Retain interception-aware channel failure handling so downstream policy rejection does not incorrectly disable channels."
+  },
+  {
+    "file": "i18n/locales/en.yaml",
+    "source": "integrated",
+    "reason": "Keep no-channel message describing explicit matching plugin binding; other ordinary channels remain valid under the B14 shared-endpoint design."
+  },
+  {
+    "file": "i18n/locales/zh-CN.yaml",
+    "source": "integrated",
+    "reason": "Keep equivalent Chinese binding-specific no-channel guidance consistent with actual B14 routing."
+  },
+  {
+    "file": "i18n/locales/zh-TW.yaml",
+    "source": "integrated",
+    "reason": "Keep equivalent Traditional Chinese binding-specific no-channel guidance."
+  },
+  {
+    "file": "middleware/distributor.go",
+    "source": "integrated",
+    "reason": "Preserve ban/probing/request guard and preselected plugin identity filter; retain informative binding failure message without global model monopolization."
+  },
+  {
+    "file": "relaykit/dto/usage_merge.go",
+    "source": "integrated",
+    "reason": "Keep cumulative Gemini modality snapshot replacement; summing across frames double-counts usage, while duplicates within a frame are still summed."
+  },
+  {
+    "file": "router/api-router.go",
+    "source": "integrated",
+    "reason": "Keep downstream avatars, plural Passkeys, canonical pricing patch and automatic sync routes under existing permissions."
+  },
+  {
+    "file": "router/relay-router.go",
+    "source": "integrated",
+    "reason": "Keep native count_tokens and old Suno routes plus downstream guards alongside plugin host protocols."
+  },
+  {
+    "file": "service/channel_select.go",
+    "source": "integrated",
+    "reason": "Retain request exclusions, path filters and authorized fallback; explicitly bound plugin retries cannot escape onto an ordinary channel."
+  },
+  {
+    "file": "service/http_client.go",
+    "source": "integrated",
+    "reason": "Keep explicit zero ResponseHeaderTimeout on the disabled-timeout client so inherited default transport timeout cannot silently remain active."
+  },
+  {
+    "file": "setting/operation_setting/monitor_setting.go",
+    "source": "integrated",
+    "reason": "Keep test message/style/preview settings with upstream bounded concurrency and normalized defaults."
+  },
+  {
+    "file": "setting/ratio_setting/model_ratio.go",
+    "source": "integrated",
+    "reason": "Keep compact and old model aliases in RoutingModelNames before canonical modifier lookup."
+  }
+]

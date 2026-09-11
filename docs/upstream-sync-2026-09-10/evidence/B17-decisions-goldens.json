@@ -1,0 +1,72 @@
+[
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/claude_to_gemini.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/claude_to_gemini.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/claude_to_openai_responses.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/claude_to_openai_responses.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/claude_to_openai.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/claude_to_openai.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/gemini_to_claude.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/gemini_to_claude.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/gemini_to_openai_responses.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/gemini_to_openai_responses.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/gemini_to_openai.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/gemini_to_openai.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/openai_responses_to_gemini.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/openai_responses_to_gemini.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/request/openai_to_gemini.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture request/openai_to_gemini.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/response/claude_to_gemini.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture response/claude_to_gemini.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/response/openai_responses_to_gemini.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture response/openai_responses_to_gemini.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/response/openai_to_claude.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture response/openai_to_claude.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/response/openai_to_gemini.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture response/openai_to_gemini.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/stream/claude_to_gemini.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture stream/claude_to_gemini.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  },
+  {
+    "file": "relaykit/relayconvert/testdata/golden/stream/gemini_to_claude.golden.json",
+    "source": "integrated",
+    "reason": "Preserve the reviewed B04 conversion matrix fixture stream/gemini_to_claude.golden.json, including actual billing usage sidecars. Upstream fixture deletion/omission does not supersede downstream cross-format coverage; independent relaykit suite passed with these exact outputs."
+  }
+]

@@ -1,0 +1,29 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ |web| src/features/profile/hooks/__tests__/profile-loading.test.tsx (2 tests | 1 failed) 171ms
+   × reports a rejected profile response instead of silently showing an empty profile 93ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |web| src/features/profile/hooks/__tests__/profile-loading.test.tsx > reports a rejected profile response instead of silently showing an empty profile
+AssertionError: expected "Mock" to be called with arguments: [ 'Profile temporarily unavailable' ]
+
+Number of calls: 0
+
+ ❯ src/features/profile/hooks/__tests__/profile-loading.test.tsx:35:17
+     33|   await waitFor(() => expect(result.current.loading).toBe(false))
+     34|   expect(result.current.profile).toBeNull()
+     35|   expect(error).toHaveBeenCalledWith('Profile temporarily unavailable')
+       |                 ^
+     36| })
+     37|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  20:34:48
+   Duration  7.36s (environment 73%, setup 14%, import 8%, tests 2%, transform 2%)
+

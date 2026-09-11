@@ -1,0 +1,28 @@
+{
+  "id": "B17-profile-error-before",
+  "command": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "--project",
+    "web",
+    "src/features/profile/hooks/__tests__/profile-loading.test.tsx"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
+  "started_at": "2026-09-11T12:34:46.256Z",
+  "finished_at": "2026-09-11T12:34:55.771Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

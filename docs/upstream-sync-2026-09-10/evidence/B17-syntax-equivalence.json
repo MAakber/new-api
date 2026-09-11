@@ -1,0 +1,219 @@
+{
+  "before": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
+  "upstream": "bdef117505247769268b209665fb3ad7554c3da7",
+  "method": "Installed Babel TypeScript/JSX parser; removes source coordinates, comments and raw lexical metadata only. No semantic AST nodes, values or identifiers ignored.",
+  "equivalent": [
+    {
+      "file": "web/src/components/ai-elements/__tests__/response-fade-render.test.tsx",
+      "syntax_sha256": "f8d531fa94a677f765e46057196c3fe4e09772deacfcb7cd80c6f73a57fcdc79"
+    },
+    {
+      "file": "web/src/components/ai-elements/__tests__/response-fade.test.ts",
+      "syntax_sha256": "9ee9150ee1e42a828b0c031715df01d5531faedc249af959ecdf0864b25cef12"
+    },
+    {
+      "file": "web/src/components/ai-elements/response-fade.ts",
+      "syntax_sha256": "325c8c1465698719491ac2ad741fb116f1ab14ae91b9d803f6633b3631b9f401"
+    },
+    {
+      "file": "web/src/components/ai-elements/response-renderer-inline.tsx",
+      "syntax_sha256": "8898de2dbe3c3b46d63f59f9cf59929bddb84c4f8f7c2d4ac3e83955fa158a9e"
+    },
+    {
+      "file": "web/src/features/auth/lib/oauth-callback-mode.ts",
+      "syntax_sha256": "d7fdd2783f0aadef2439fd9c72e7a72250238d430eb55422e8d1491891a7acb4"
+    },
+    {
+      "file": "web/src/features/pricing/__tests__/task-expr.test.ts",
+      "syntax_sha256": "d1752bae6df893ca9ee6d44f68979e689733226e08f1c114f56a1bf42dd6badb"
+    },
+    {
+      "file": "web/src/features/pricing/__tests__/task-matrix-display.test.ts",
+      "syntax_sha256": "3ce6011292afa7741c709a2539f6c4be14f3b8f4b70aa7f2525f34577e03161f"
+    },
+    {
+      "file": "web/src/features/pricing/__tests__/task-matrix.test.ts",
+      "syntax_sha256": "43ddb0fd61992f6b21f746830ad1e359faeb90475580cfae22d1a2e0b65e3fe0"
+    },
+    {
+      "file": "web/src/features/security/components/__tests__/login-session-utils.test.ts",
+      "syntax_sha256": "b2d913b13b89ec212803e0da175c60a48c63497a08a19c7c62ae12bafebf3913"
+    },
+    {
+      "file": "web/src/features/system-settings/__tests__/task-public-address.test.ts",
+      "syntax_sha256": "52344c9f13a9024d4d1b1b4e238126f5932a6a07c41cfd363a3345de7a6fae90"
+    },
+    {
+      "file": "web/src/features/system-settings/models/model-ratio-table-columns.tsx",
+      "syntax_sha256": "1b60e3d7f0da24ae69ecb660f4bd3fa98f359389ed5cd6e81a1cbda6d2f4b4f8"
+    },
+    {
+      "file": "web/src/features/system-settings/models/upstream-ratio-sync-table.tsx",
+      "syntax_sha256": "0b60ff771d2667c31c5a3e2d16654cbfad2b8aed1b40cedf610c4903b995b63c"
+    },
+    {
+      "file": "web/src/features/task-plugins/__tests__/enabled-option.test.ts",
+      "syntax_sha256": "d3d5c07b9a6247deaaf20806499083e948e0d82e751364a273f3ad9dd766de4a"
+    },
+    {
+      "file": "web/src/features/task-plugins/__tests__/plugin-icon-image.test.tsx",
+      "syntax_sha256": "93148170e21f8bbcabddb60d3f388b8cb982188b275c01c8953268fb7edd9766"
+    },
+    {
+      "file": "web/src/features/task-plugins/__tests__/plugin-url.test.ts",
+      "syntax_sha256": "2fcad879a8c08ee5ca23361f6e30d552b0bd060cd7f8b3c8bf2d97d8a9f1b8a7"
+    },
+    {
+      "file": "web/src/features/task-plugins/components/javascript-viewer.tsx",
+      "syntax_sha256": "2927e4a33252c8f2a34db8d1df15ca6727ef85f026c6f609d6a01c34a2efc248"
+    },
+    {
+      "file": "web/src/features/task-plugins/components/plugin-detail-sheet.tsx",
+      "syntax_sha256": "6b41a03b7ebe2ed6adc4eef874e2a89ae008a8811cc2927d1b328781ced1470f"
+    },
+    {
+      "file": "web/src/features/task-plugins/lib/host-protocols.ts",
+      "syntax_sha256": "e4ddcdc05c33091dcf0b84c3d89a5f1bc260b6cbf0034e8073beff69429346e8"
+    },
+    {
+      "file": "web/src/features/usage-logs/__tests__/access.test.ts",
+      "syntax_sha256": "a502977cbd5fadeed35abb56ebf3ecd2cf3a513585546c130bc989a9f254325d"
+    },
+    {
+      "file": "web/src/features/usage-logs/__tests__/artifacts.test.ts",
+      "syntax_sha256": "96d47dad88ee4b1ac781e8b5e13fd393b8b56d4fff58996e4e85c2b443779864"
+    },
+    {
+      "file": "web/src/features/usage-logs/__tests__/mobile-layout.test.ts",
+      "syntax_sha256": "ef9364f0c2b9889cba9209437117736e2f5e9cb82b6d0076219a909f4cd3c1d0"
+    },
+    {
+      "file": "web/src/features/usage-logs/__tests__/task-details.test.ts",
+      "syntax_sha256": "78277bdf8b6bdb52187a8f4366b638ee93ed83df0f3ab041975ddeb29a4d9149"
+    },
+    {
+      "file": "web/src/lib/localized-text.ts",
+      "syntax_sha256": "16727bb9f5813c39a1b2fc321fae1a47c4af54246877435511352a1a12b93a26"
+    },
+    {
+      "file": "web/src/lib/session-hint.ts",
+      "syntax_sha256": "526e1dc6811a6ed5cf073f6afff0694442add3b056212de1eab254a26de7cdf0"
+    }
+  ],
+  "different": [
+    "web/src/components/data-table/toolbar/bulk-actions.tsx",
+    "web/src/components/layout/components/mobile-drawer.tsx",
+    "web/src/components/ui/__tests__/portal-container.test.tsx",
+    "web/src/components/ui/combobox.tsx",
+    "web/src/features/auth/hooks/use-auth-redirect.ts",
+    "web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts",
+    "web/src/features/auth/otp/__tests__/login-verification.test.tsx",
+    "web/src/features/auth/passkey/api.ts",
+    "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "web/src/features/auth/secure-verification/types.ts",
+    "web/src/features/auth/sign-up/components/sign-up-form.tsx",
+    "web/src/features/auth/types.ts",
+    "web/src/features/channels/api.ts",
+    "web/src/features/channels/components/channels-columns.tsx",
+    "web/src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx",
+    "web/src/features/channels/components/dialogs/balance-query-dialog.tsx",
+    "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+    "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+    "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+    "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "web/src/features/channels/constants.ts",
+    "web/src/features/channels/hooks/__tests__/channel-key-disclosure.test.tsx",
+    "web/src/features/channels/hooks/use-channel-key-disclosure.ts",
+    "web/src/features/channels/lib/channel-actions.ts",
+    "web/src/features/channels/lib/channel-form.ts",
+    "web/src/features/channels/types.ts",
+    "web/src/features/keys/components/__tests__/api-key-group-cell.test.tsx",
+    "web/src/features/keys/components/__tests__/api-key-listing.test.tsx",
+    "web/src/features/keys/components/api-key-group-cell.tsx",
+    "web/src/features/keys/components/api-keys-mutate-drawer.tsx",
+    "web/src/features/keys/components/auto-group-order-editor.tsx",
+    "web/src/features/models/__tests__/model-listing.test.tsx",
+    "web/src/features/models/api.ts",
+    "web/src/features/models/components/dialogs/create-deployment-drawer.tsx",
+    "web/src/features/models/components/dialogs/extend-deployment-dialog.tsx",
+    "web/src/features/models/index.tsx",
+    "web/src/features/performance-metrics/types.ts",
+    "web/src/features/playground/components/message/__tests__/playground-message-editor.test.tsx",
+    "web/src/features/pricing/__tests__/model-cards.test.tsx",
+    "web/src/features/pricing/components/model-perf-badge.tsx",
+    "web/src/features/profile/__tests__/settings.test.tsx",
+    "web/src/features/profile/api.ts",
+    "web/src/features/profile/components/tabs/notification-tab.tsx",
+    "web/src/features/profile/hooks/use-profile.ts",
+    "web/src/features/profile/lib/user-settings.ts",
+    "web/src/features/rankings/hooks/use-rankings.ts",
+    "web/src/features/redemption-codes/api.ts",
+    "web/src/features/redemption-codes/components/__tests__/bulk-delete.test.tsx",
+    "web/src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx",
+    "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+    "web/src/features/redemption-codes/components/data-table-bulk-actions.tsx",
+    "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+    "web/src/features/redemption-codes/components/redemptions-export-dialog.tsx",
+    "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+    "web/src/features/redemption-codes/lib/redemption-form.ts",
+    "web/src/features/security/__tests__/enrollment.test.tsx",
+    "web/src/features/security/__tests__/page.test.tsx",
+    "web/src/features/security/components/__tests__/access-token-card.test.tsx",
+    "web/src/features/security/components/__tests__/privacy-card.test.tsx",
+    "web/src/features/security/components/__tests__/profile-avatar-control.test.tsx",
+    "web/src/features/security/components/passkey-card.tsx",
+    "web/src/features/security/components/privacy-card.tsx",
+    "web/src/features/security/index.tsx",
+    "web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx",
+    "web/src/features/system-info/components/system-tasks-panel.tsx",
+    "web/src/features/system-settings/__tests__/pricing-sync.test.tsx",
+    "web/src/features/system-settings/auth/custom-oauth/components/preset-selector.tsx",
+    "web/src/features/system-settings/content/announcements-section.tsx",
+    "web/src/features/system-settings/general/channel-affinity/index.tsx",
+    "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+    "web/src/features/system-settings/models/group-ratio-visual-editor.tsx",
+    "web/src/features/system-settings/models/group-special-usable-editor.tsx",
+    "web/src/features/system-settings/models/routing-reliability-section.tsx",
+    "web/src/features/system-settings/models/section-registry.tsx",
+    "web/src/features/system-settings/models/tiered-pricing-editor.tsx",
+    "web/src/features/system-settings/models/upstream-price-cells.tsx",
+    "web/src/features/system-settings/models/upstream-ratio-sync-helpers.ts",
+    "web/src/features/system-settings/models/upstream-ratio-sync.tsx",
+    "web/src/features/system-settings/types.ts",
+    "web/src/features/usage-logs/audit/__tests__/viewer.test.tsx",
+    "web/src/features/usage-logs/audit/components/audit-log-filter-bar.tsx",
+    "web/src/features/usage-logs/components/__tests__/detail-preview.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/group-filter.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/mobile-card.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/mobile-filter.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/reject-reason.test.tsx",
+    "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+    "web/src/features/usage-logs/components/columns/task-logs-columns.tsx",
+    "web/src/features/usage-logs/components/common-log-mobile-card.tsx",
+    "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx",
+    "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+    "web/src/features/usage-logs/components/model-badge.tsx",
+    "web/src/features/usage-logs/components/timing-metrics-cell.tsx",
+    "web/src/features/usage-logs/components/usage-logs-table.tsx",
+    "web/src/features/usage-logs/types.ts",
+    "web/src/features/users/components/__tests__/quota-display.test.tsx",
+    "web/src/features/users/components/data-table-row-actions.tsx",
+    "web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+    "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+    "web/src/features/users/components/user-quota-dialog.tsx",
+    "web/src/features/users/components/users-columns.tsx",
+    "web/src/features/users/components/users-mutate-drawer.tsx",
+    "web/src/features/wallet/hooks/use-redemption.ts",
+    "web/src/hooks/use-notifications.ts",
+    "web/src/i18n/static-keys.ts",
+    "web/src/lib/__tests__/http-cache.test.ts",
+    "web/src/lib/__tests__/status-query.test.tsx",
+    "web/src/lib/status-query.ts",
+    "web/src/routes/(auth)/oauth.tsx",
+    "web/src/stores/auth-store.ts",
+    "web/src/test-setup.ts",
+    "web/vitest.config.ts"
+  ]
+}

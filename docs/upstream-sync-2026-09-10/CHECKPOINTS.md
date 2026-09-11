@@ -2601,3 +2601,11 @@ Code 3363f4e6febf1d91174cc8cfeed7035996c08850. Windows NSIS and portable artifac
 ## 2026-09-11T11:42:08.754Z — B17.1 fixed upstream merge intent
 
 All B00-B16 accepted; clean integration worktree at f006b9ffa0d352100b9ac6d6039dca6e7795773f. Merge target bdef117505247769268b209665fb3ad7554c3da7. Use normal merge strategy, inspect both automatic edits and conflicts, retain all downstream identities, adapters, accounting invariants and UI state.
+
+## 2026-09-11T11:45:50.304Z — B17.2 actual merge inventory
+
+303 conflicted files and 23 automatically changed files. Original index and working merge patches saved. Merge exit 1 is the expected unresolved-conflict stop, not a passed test. Review per-file adaptations before resolution.
+
+## 2026-09-11T12:40:09.859Z — B17.2 complete; B17.3 merge commit ready
+
+All 326 initial entries reviewed and staged; zero unresolved paths. Retained downstream UI/auth/diagnostic/accounting behavior. Exact-blob duplicate avatar-test relocation removed while preserving its actual profile fixture. Added missing upstream profile business-failure handling after focused reproduction, retained grid breakpoint regression and HTTP Method translations. Other executable backend code equals accepted B16 source; go.mod differs only in ordering. Final B18 acceptance remains pending.

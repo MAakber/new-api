@@ -1,0 +1,17 @@
+[
+  {
+    "file": "web/src/features/profile/hooks/use-profile.ts",
+    "source": "merged",
+    "reason": "Retain downstream avatar/auth synchronization and silent refresh; add missing upstream non-silent business-failure handling. Focused failure reproduced before fix and passed after; full candidate suite follows."
+  },
+  {
+    "file": "web/src/features/pricing/__tests__/model-cards.test.tsx",
+    "source": "merged",
+    "reason": "Retain compact-metric, pagination, unit and group pricing tests; also keep incoming xl three-column regression. Sparse/missing/out-of-window/legacy series scenarios remain in dedicated components/__tests__/model-perf-badge.test.tsx without duplication."
+  },
+  {
+    "file": "web/src/i18n/locales/_reports/_sync-report.json",
+    "source": "merged",
+    "reason": "Regenerate report using sanctioned locale script followed by Bun i18n:sync. All seven locales have matching 6950 keys and zero missing/extras; pre-existing untranslated strings remain measured."
+  }
+]

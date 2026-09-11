@@ -76,11 +76,11 @@ require (
 	github.com/go-faster/city v1.0.1 // indirect
 	github.com/go-faster/errors v0.7.1 // indirect
 	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
+	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
+	github.com/google/pprof v0.0.0-20250317173921-a4b03ec1a45e // indirect
 	github.com/hashicorp/go-version v1.8.0 // indirect
 	github.com/paulmach/orb v0.12.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.25 // indirect
-	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
-	github.com/google/pprof v0.0.0-20250317173921-a4b03ec1a45e // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	github.com/segmentio/asm v1.2.1 // indirect
 	github.com/yuin/gopher-lua v1.1.1 // indirect

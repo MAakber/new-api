@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T11:42:08.686Z",
+  "updatedAt": "2026-09-11T12:40:09.853Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -19,18 +19,21 @@
     "created": true
   },
   "current_batch": "B17",
-  "current_unit": "B17.1",
+  "current_unit": "B17.3",
   "active_operation": {
     "type": "merge",
     "target": "bdef117505247769268b209665fb3ad7554c3da7",
-    "pre_checkpoint_head": "f006b9ffa0d352100b9ac6d6039dca6e7795773f"
+    "pre_checkpoint_head": "f006b9ffa0d352100b9ac6d6039dca6e7795773f",
+    "pre_merge_head": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
+    "conflicts": 303,
+    "remaining_conflicts": 0
   },
-  "last_observed_head": "f006b9ffa0d352100b9ac6d6039dca6e7795773f",
+  "last_observed_head": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
   "last_verified_code_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
   "last_checkpoint_commit": "f006b9ffa0d352100b9ac6d6039dca6e7795773f",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Execute git merge --no-ff --no-commit for the fixed upstream; review every conflict and automatic change against all accepted adaptations.",
+  "next_action": "Create reviewed actual two-parent merge commit and begin final candidate B18 acceptance.",
   "blockers": [
     {
       "id": "production_snapshot",

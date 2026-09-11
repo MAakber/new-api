@@ -1,0 +1,242 @@
+[
+  {
+    "file": "web/src/features/channels/api.ts",
+    "source": "integrated",
+    "reason": "Keep B08 structured multi-key response, including keys array, required by disclosure UI and backend."
+  },
+  {
+    "file": "web/src/features/channels/components/channels-columns.tsx",
+    "source": "integrated",
+    "reason": "Keep B07 captured channel plus raw response so opening a balance dialog cannot act on a subsequently selected row."
+  },
+  {
+    "file": "web/src/features/channels/components/dialogs/advanced-custom-editor-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep reviewed B07/B12 searchable route selectors, translated dynamic titles, accessible template label and single collapse/expand controls."
+  },
+  {
+    "file": "web/src/features/channels/components/dialogs/balance-query-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep explicit channel and keyed session; upstream balance-query capability is already adapted without shared-row races."
+  },
+  {
+    "file": "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep downstream diagnostic POST matrix and floating-window composition; B15 notification behavior is already adapted in channel actions. Do not replace with incompatible upstream single Sheet."
+  },
+  {
+    "file": "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep B07 session-safe useFetchModels composition, shared classification, redirected models and selection; upstream categorization and notification changes already adapted."
+  },
+  {
+    "file": "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep stable callback dependencies, role constants, hiding all disclosed keys and bounded scrolling from B08/B15."
+  },
+  {
+    "file": "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+    "source": "integrated",
+    "reason": "Keep downstream grouped quick presets with explicit replace/append/reset semantics; retain adapted searchable operation and condition controls."
+  },
+  {
+    "file": "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep independently keyed floating editors, per-form IDs, client identity, custom balance and queue controls. Plugin selector and scoped settings permissions already adapted in B14; upstream Sheet replacement would remove downstream capabilities."
+  },
+  {
+    "file": "web/src/features/channels/constants.ts",
+    "source": "integrated",
+    "reason": "Keep TaskPlugin=65 and existing Codex/Claude Code/Code Buddy/Vercel IDs 61-64 per A30."
+  },
+  {
+    "file": "web/src/features/channels/hooks/__tests__/channel-key-disclosure.test.tsx",
+    "source": "integrated",
+    "reason": "Keep upstream verification/stale-channel checks plus explicit structured multi-key disclosure and hide-all regression."
+  },
+  {
+    "file": "web/src/features/channels/hooks/use-channel-key-disclosure.ts",
+    "source": "integrated",
+    "reason": "Keep channel-bound disclosure, structured keys and stable hideKey; upstream single-use verification remains."
+  },
+  {
+    "file": "web/src/features/channels/lib/channel-actions.ts",
+    "source": "integrated",
+    "reason": "Keep detailed POST diagnostic request/result/error preview contract alongside upstream per-target test notifications."
+  },
+  {
+    "file": "web/src/features/channels/lib/channel-form.ts",
+    "source": "integrated",
+    "reason": "Keep existing identity channel validations and B14 TaskPlugin requirements; upstream-only enum subset would bypass local rules."
+  },
+  {
+    "file": "web/src/features/channels/types.ts",
+    "source": "integrated",
+    "reason": "Keep custom balance API/settings, client identity and queue contracts together with B14 plugin types."
+  },
+  {
+    "file": "web/src/features/auth/hooks/use-auth-redirect.ts",
+    "source": "integrated",
+    "reason": "Keep pending registration-code challenge separate from upstream unified second-factor login flow."
+  },
+  {
+    "file": "web/src/features/auth/lib/__tests__/oauth-callback-mode.test.ts",
+    "source": "integrated",
+    "reason": "Null assertion spelling differs only; keep accepted formatting and all OAuth storage behavior."
+  },
+  {
+    "file": "web/src/features/auth/otp/__tests__/login-verification.test.tsx",
+    "source": "integrated",
+    "reason": "Keep unified login regressions plus registration-code handoff without issuing session or extra second-factor challenge."
+  },
+  {
+    "file": "web/src/features/auth/passkey/api.ts",
+    "source": "integrated",
+    "reason": "Keep named multi-credential list/register/delete APIs with upstream scoped one-use proof and auth rotation."
+  },
+  {
+    "file": "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+    "source": "integrated",
+    "reason": "Keep credential list, per-ID removal state and names while retaining upstream cancellation, verification and error behavior."
+  },
+  {
+    "file": "web/src/features/auth/secure-verification/types.ts",
+    "source": "integrated",
+    "reason": "Keep passkey.delete credential_id context so proof cannot authorize deletion of another credential."
+  },
+  {
+    "file": "web/src/features/auth/sign-up/components/sign-up-form.tsx",
+    "source": "integrated",
+    "reason": "Keep downstream registration-code token handoff alongside upstream password envelopes and unified login result."
+  },
+  {
+    "file": "web/src/features/auth/types.ts",
+    "source": "integrated",
+    "reason": "Keep PendingRegistrationChallenge in response union, required by existing registration workflow."
+  },
+  {
+    "file": "web/src/features/profile/__tests__/settings.test.tsx",
+    "source": "integrated",
+    "reason": "Keep complete-settings merge tests adapted to mandatory IP auditing; do not reintroduce unsupported user IP toggle."
+  },
+  {
+    "file": "web/src/features/profile/api.ts",
+    "source": "integrated",
+    "reason": "Keep avatar multipart upload/delete APIs along with upstream account settings/security changes."
+  },
+  {
+    "file": "web/src/features/profile/components/tabs/notification-tab.tsx",
+    "source": "integrated",
+    "reason": "Keep normalized number input and validated notification method choice from B15."
+  },
+  {
+    "file": "web/src/features/profile/lib/user-settings.ts",
+    "source": "integrated",
+    "reason": "Keep mandatory IP audit policy; obsolete user record_ip_log field is deliberately excluded."
+  },
+  {
+    "file": "web/src/routes/(auth)/oauth.tsx",
+    "source": "integrated",
+    "reason": "Keep auth store used by registration-code OAuth continuation."
+  },
+  {
+    "file": "web/src/stores/auth-store.ts",
+    "source": "integrated",
+    "reason": "Keep pending registration flow lifecycle and reset on login/logout, separate from upstream login verification state."
+  },
+  {
+    "file": "web/src/features/security/__tests__/enrollment.test.tsx",
+    "source": "integrated",
+    "reason": "Keep upstream scoped enrollment proof tests adapted to named multiple Passkeys and credentials endpoint."
+  },
+  {
+    "file": "web/src/features/security/__tests__/page.test.tsx",
+    "source": "integrated",
+    "reason": "Keep real avatar/multi-Passkey fixtures and enabled mandatory-IP display."
+  },
+  {
+    "file": "web/src/features/security/components/__tests__/access-token-card.test.tsx",
+    "source": "integrated",
+    "reason": "Keep all incoming token verification scenarios plus cancellation without destructive regeneration."
+  },
+  {
+    "file": "web/src/features/security/components/__tests__/privacy-card.test.tsx",
+    "source": "integrated",
+    "reason": "Keep observable mandatory IP auditing contract; upstream toggle cannot affect preserved backend policy."
+  },
+  {
+    "file": "web/src/features/security/components/__tests__/profile-avatar-control.test.tsx",
+    "source": "integrated",
+    "reason": "Keep downstream avatar behavior tests at module __tests__ location; upstream has no replacement for this preserved feature."
+  },
+  {
+    "file": "web/src/features/security/components/passkey-card.tsx",
+    "source": "integrated",
+    "reason": "Keep named credential management, per-credential proofs, limits/validation and cancellation using shared dialogs; incoming single-key card would regress multiple Passkeys."
+  },
+  {
+    "file": "web/src/features/security/components/privacy-card.tsx",
+    "source": "integrated",
+    "reason": "Keep truthful enabled-only IP audit display instead of offering an ineffective setting."
+  },
+  {
+    "file": "web/src/features/security/index.tsx",
+    "source": "integrated",
+    "reason": "Keep privacy card composition matching mandatory auditing while retaining upstream security page structure."
+  },
+  {
+    "file": "web/package.json",
+    "source": "integrated",
+    "reason": "Keep B15 accepted Vitest 5/testing-library versions, Happy DOM and IndexedDB fixture dependencies; incoming versions predate tested integration."
+  },
+  {
+    "file": "web/bun.lock",
+    "source": "integrated",
+    "reason": "Keep B16 frozen-install verified lock paired with accepted package manifest and Bun 1.4; no dependency re-resolution needed."
+  },
+  {
+    "file": "web/vitest.config.ts",
+    "source": "integrated",
+    "reason": "Keep unified project discovery covering downstream isolated DOM, responsive and playground suites; upstream jsdom-only setup loses required fixture environments."
+  },
+  {
+    "file": "web/src/test-setup.ts",
+    "source": "integrated",
+    "reason": "Keep one existing Range geometry shim; incoming duplicate provides no additional tested behavior."
+  },
+  {
+    "file": "web/src/components/data-table/toolbar/bulk-actions.tsx",
+    "source": "integrated",
+    "reason": "Keep caller className composition for responsive downstream toolbars."
+  },
+  {
+    "file": "web/src/components/layout/components/mobile-drawer.tsx",
+    "source": "integrated",
+    "reason": "Keep unique href/title key for links sharing destinations."
+  },
+  {
+    "file": "web/src/components/ui/__tests__/portal-container.test.tsx",
+    "source": "integrated",
+    "reason": "Keep actual portal assertions with jsdom computed-style normalization from B15."
+  },
+  {
+    "file": "web/src/components/ui/combobox.tsx",
+    "source": "integrated",
+    "reason": "Keep A26 explicit openOnFocus behavior and popup focus-return guard so selected values remain visible; upstream default reopening reproduced a regression."
+  },
+  {
+    "file": "web/src/lib/__tests__/http-cache.test.ts",
+    "source": "integrated",
+    "reason": "Keep single notice ETag test with valid API payload; incoming duplicate is same contract."
+  },
+  {
+    "file": "web/src/lib/__tests__/status-query.test.tsx",
+    "source": "integrated",
+    "reason": "Keep shared status tests plus downstream theme/custom-currency refresh regression."
+  },
+  {
+    "file": "web/src/lib/status-query.ts",
+    "source": "integrated",
+    "reason": "Keep default theme normalization in shared status publication."
+  }
+]
