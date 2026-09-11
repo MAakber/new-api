@@ -7,12 +7,13 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
 	"gorm.io/gorm"
 )
 
 var (
-	ErrPricingPatchConflict   = errors.New("pricing patch conflict")
+	ErrPricingPatchConflict   = model.ErrPricingOptionConflict
 	ErrPricingPatchValidation = errors.New("invalid pricing patch")
 )
 
@@ -51,26 +52,8 @@ func PatchPricingOptionsWithApplied(operations []PricingPatchOperation) (map[str
 	if err := validatePricingOperations(operations); err != nil {
 		return nil, 0, err
 	}
-	var committed map[string]string
 	applied := 0
-	err := model.DB.Transaction(func(tx *gorm.DB) error {
-		maps := make(map[string]map[string]json.RawMessage, len(model.PricingOptionKeys))
-		original := make(map[string]string, len(model.PricingOptionKeys))
-		for _, key := range model.PricingOptionKeys {
-			var option model.Option
-			if err := tx.Where(&model.Option{Key: key}).First(&option).Error; err != nil {
-				if errors.Is(err, gorm.ErrRecordNotFound) {
-					return fmt.Errorf("%w: %s", model.ErrPricingOptionIntegrity, key)
-				}
-				return err
-			}
-			var values map[string]json.RawMessage
-			if err := json.Unmarshal([]byte(option.Value), &values); err != nil || values == nil {
-				return fmt.Errorf("pricing option %q is not a JSON object", key)
-			}
-			maps[key], original[key] = values, option.Value
-		}
-
+	latest, err := model.MutatePricingOptions(func(_ *gorm.DB, maps map[string]map[string]json.RawMessage) error {
 		for _, operation := range operations {
 			if operation.Expected == nil {
 				continue
@@ -101,33 +84,27 @@ func PatchPricingOptionsWithApplied(operations []PricingPatchOperation) (map[str
 				}
 			}
 		}
-		committed = make(map[string]string, len(model.PricingOptionKeys))
-		for _, key := range model.PricingOptionKeys {
-			encoded, err := json.Marshal(maps[key])
-			if err != nil {
-				return err
+		changedModels := make(map[string]bool)
+		for _, operation := range operations {
+			changedModels[operation.Model] = true
+		}
+		for name := range changedModels {
+			pricing := make(model.PricingValues)
+			for _, key := range model.PricingOptionKeys {
+				if raw, exists := maps[key][name]; exists {
+					var value any
+					if err := common.Unmarshal(raw, &value); err != nil {
+						return fmt.Errorf("%w: %s", ErrPricingPatchValidation, err)
+					}
+					pricing[key] = value
+				}
 			}
-			committed[key] = string(encoded)
-			if committed[key] == original[key] {
-				continue
-			}
-			result := tx.Model(&model.Option{}).
-				Where(&model.Option{Key: key}).
-				Where("value = ?", original[key]).
-				Update("value", committed[key])
-			if result.Error != nil {
-				return result.Error
-			}
-			if result.RowsAffected != 1 {
-				return ErrPricingPatchConflict
+			if err := model.ValidateModelPricing(name, pricing); err != nil {
+				return fmt.Errorf("%w: %s", ErrPricingPatchValidation, err)
 			}
 		}
 		return nil
 	})
-	if err != nil {
-		return nil, 0, err
-	}
-	latest, err := model.RefreshPricingOptionMapsFromDatabase()
 	if err != nil {
 		return nil, 0, err
 	}
@@ -146,10 +123,10 @@ func ResetModelRatio(defaultJSON string) (map[string]string, error) {
 		return nil, err
 	}
 	var current, defaults map[string]json.RawMessage
-	if err := json.Unmarshal([]byte(option.Value), &current); err != nil || current == nil {
+	if err := common.Unmarshal([]byte(option.Value), &current); err != nil || current == nil {
 		return nil, fmt.Errorf("pricing option %q is not a JSON object", "ModelRatio")
 	}
-	if err := json.Unmarshal([]byte(defaultJSON), &defaults); err != nil || defaults == nil {
+	if err := common.Unmarshal([]byte(defaultJSON), &defaults); err != nil || defaults == nil {
 		return nil, fmt.Errorf("default ModelRatio is not a JSON object")
 	}
 	models := make(map[string]struct{}, len(current)+len(defaults))
@@ -232,7 +209,7 @@ func validatePricingOperations(operations []PricingPatchOperation) error {
 
 func isPricingScalar(key string, raw json.RawMessage) bool {
 	var value any
-	if len(raw) == 0 || json.Unmarshal(raw, &value) != nil || value == nil {
+	if len(raw) == 0 || common.Unmarshal(raw, &value) != nil || value == nil {
 		return false
 	}
 	if key == "billing_setting.billing_mode" || key == "billing_setting.billing_expr" {
@@ -245,10 +222,10 @@ func isPricingScalar(key string, raw json.RawMessage) bool {
 
 func jsonEqual(left, right json.RawMessage) bool {
 	var a, b any
-	return json.Unmarshal(left, &a) == nil && json.Unmarshal(right, &b) == nil && bytes.Equal(mustJSON(a), mustJSON(b))
+	return common.Unmarshal(left, &a) == nil && common.Unmarshal(right, &b) == nil && bytes.Equal(mustJSON(a), mustJSON(b))
 }
 
 func mustJSON(value any) []byte {
-	encoded, _ := json.Marshal(value)
+	encoded, _ := common.Marshal(value)
 	return encoded
 }

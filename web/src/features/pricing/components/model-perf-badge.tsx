@@ -58,22 +58,20 @@ export const ModelPerfBadge = memo(function ModelPerfBadge(
   props: ModelPerfBadgeProps
 ) {
   const { t } = useTranslation()
-
-  if (!props.perf) {
-    return null
-  }
-
-  const { avg_latency_ms, avg_tps, success_rate } = props.perf
-
+  const latencyText = formatCompactLatency(props.perf?.avg_latency_ms ?? 0)
+  const throughputText = formatCompactThroughput(props.perf?.avg_tps ?? 0)
+  const successRate = props.perf?.success_rate
   const hasSuccessRate =
-    Number.isFinite(success_rate) && success_rate >= 0 && success_rate <= 100
-  const successLabel = hasSuccessRate ? `${success_rate.toFixed(1)}%` : '—'
+    successRate != null &&
+    Number.isFinite(successRate) &&
+    successRate >= 0 &&
+    successRate <= 100
   let statusRates: (number | undefined)[]
-  if (props.perf.recent_success_series != null) {
+  if (props.perf?.recent_success_series != null) {
     // Slot 23 is the current partial hour. Missing hours remain neutral.
     const currentHourStart = Math.floor(Date.now() / 1000 / 3600) * 3600
     const ratesByHour = new Map(
-      props.perf.recent_success_series.map((point) => [
+      props.perf?.recent_success_series.map((point) => [
         point.ts,
         point.success_rate,
       ])
@@ -83,7 +81,7 @@ export const ModelPerfBadge = memo(function ModelPerfBadge(
     )
   } else {
     // Older servers provide samples without timestamps; never invent hours.
-    const samples = props.perf.recent_success_rates?.slice(-24) ?? []
+    const samples = props.perf?.recent_success_rates?.slice(-24) ?? []
     statusRates = [
       ...Array<undefined>(24 - samples.length).fill(undefined),
       ...samples,
@@ -92,64 +90,71 @@ export const ModelPerfBadge = memo(function ModelPerfBadge(
 
   return (
     <div
+      aria-label={t('Performance metrics for the last 24 hours')}
       className={cn(
-        'hidden w-[132px] grid-cols-[38px_48px_30px] gap-x-2 text-right tabular-nums min-[460px]:grid',
+        'flex w-full min-w-0 items-center justify-between gap-3',
         props.className
       )}
     >
-      <div title={t('Average latency')} className='min-w-0'>
-        <div className='text-muted-foreground/55 text-[10px] leading-4'>
-          {t('Latency short')}
+      <dl className='flex min-w-0 items-start gap-5 text-xs tabular-nums'>
+        <div className='w-24 shrink-0'>
+          <dt
+            title={t('Request success rate sampled over the last 24 hours')}
+            className='text-muted-foreground flex items-center justify-between gap-1 text-[11px] leading-4'
+          >
+            <span>{t('Status')}</span>
+            <span className='font-mono'>
+              {hasSuccessRate ? `${successRate.toFixed(1)}%` : '—%'}
+            </span>
+          </dt>
+          <dd
+            role='img'
+            aria-label={t(
+              'Recent success-rate samples; gray bars indicate missing data.'
+            )}
+            title={t(
+              'Recent success-rate samples; gray bars indicate missing data.'
+            )}
+            className='mt-1 flex h-3 w-24 items-center justify-between'
+          >
+            {STATUS_SLOTS.map((slot) => {
+              const rate = statusRates[slot]
+              return (
+                <span
+                  key={slot}
+                  aria-hidden
+                  className={cn(
+                    'h-full w-[3px] shrink-0 rounded-xs',
+                    rate != null &&
+                      Number.isFinite(rate) &&
+                      rate >= 0 &&
+                      rate <= 100
+                      ? getSuccessRateDotClass(rate)
+                      : 'bg-muted-foreground/15'
+                  )}
+                />
+              )
+            })}
+          </dd>
         </div>
-        <div className='text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap'>
-          {formatCompactLatency(avg_latency_ms)}
+        <div title={t('Average latency')} className='shrink-0'>
+          <dt className='text-muted-foreground text-[11px] leading-4'>
+            {t('Latency short')}
+          </dt>
+          <dd className='mt-1 font-mono whitespace-nowrap'>
+            {latencyText === '—' ? '—s' : latencyText}
+          </dd>
         </div>
-      </div>
-      <div title={t('Throughput')} className='min-w-0'>
-        <div className='text-muted-foreground/55 truncate text-[10px] leading-4'>
-          {t('Throughput short')}
+        <div title={t('Throughput')} className='shrink-0'>
+          <dt className='text-muted-foreground text-[11px] leading-4'>
+            {t('Throughput short')}
+          </dt>
+          <dd className='mt-1 font-mono whitespace-nowrap'>
+            {throughputText === '—' ? '—t/s' : throughputText}
+          </dd>
         </div>
-        <div className='text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap'>
-          {formatCompactThroughput(avg_tps)}
-        </div>
-      </div>
-      <div title={`${t('Success rate')}: ${successLabel}`} className='min-w-0'>
-        <div className='text-muted-foreground/55 truncate text-[10px] leading-4'>
-          {t('Status short')}
-        </div>
-        <div className='text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap'>
-          {hasSuccessRate ? `${Math.round(success_rate)}%` : '—'}
-        </div>
-      </div>
-      <div
-        role='img'
-        aria-label={t(
-          'Recent success-rate samples; gray bars indicate missing data.'
-        )}
-        title={t(
-          'Recent success-rate samples; gray bars indicate missing data.'
-        )}
-        className='col-span-3 mt-1 flex h-2 items-center justify-between'
-      >
-        {STATUS_SLOTS.map((slot) => {
-          const rate = statusRates[slot]
-          return (
-            <span
-              key={slot}
-              aria-hidden
-              className={cn(
-                'h-full w-[3px] shrink-0 rounded-xs',
-                rate != null &&
-                  Number.isFinite(rate) &&
-                  rate >= 0 &&
-                  rate <= 100
-                  ? getSuccessRateDotClass(rate)
-                  : 'bg-muted-foreground/15'
-              )}
-            />
-          )
-        })}
-      </div>
+      </dl>
+      {props.children}
     </div>
   )
 })

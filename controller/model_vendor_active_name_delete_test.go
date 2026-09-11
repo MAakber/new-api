@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 
@@ -44,6 +45,8 @@ func TestDeleteModelAndVendorMetaClearActiveNameBeforeSoftDelete(t *testing.T) {
 	assert.True(t, deletedVendor.DeletedAt.Valid)
 	assert.Nil(t, deletedModel.ActiveName)
 	assert.Nil(t, deletedVendor.ActiveName)
+	require.NoError(t, m.Delete(), "repeating a metadata-only deletion remains idempotent")
+	require.NoError(t, v.Delete(), "repeating an unreferenced vendor deletion remains idempotent")
 	require.NoError(t, (&model.Model{ModelName: m.ModelName}).Insert())
 	require.NoError(t, (&model.Vendor{Name: v.Name}).Insert())
 }
@@ -56,12 +59,14 @@ func TestSyncUpstreamModelsReturnsConflictWhenLeaseIsBusy(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, ok)
 
-	recorder := httptest.NewRecorder()
-	ctx, _ := gin.CreateTestContext(recorder)
-	ctx.Request = httptest.NewRequest(http.MethodPost, "/api/models/sync_upstream", nil)
-	SyncUpstreamModels(ctx)
-	assert.Equal(t, http.StatusConflict, recorder.Code)
-	assert.Contains(t, recorder.Body.String(), "正在进行")
+	for _, body := range []string{"", `{"source_version":"preview-version","selections":[{"model_name":"selected","record_version":"record-version","create":true}]}`} {
+		recorder := httptest.NewRecorder()
+		ctx, _ := gin.CreateTestContext(recorder)
+		ctx.Request = httptest.NewRequest(http.MethodPost, "/api/models/sync_upstream", strings.NewReader(body))
+		SyncUpstreamModels(ctx)
+		assert.Equal(t, http.StatusConflict, recorder.Code)
+		assert.Contains(t, recorder.Body.String(), "正在进行")
+	}
 }
 
 func TestSyncUpstreamModelsReturnsSafeFetchFailure(t *testing.T) {

@@ -13,6 +13,7 @@
     "test:playground": "vitest run --config vitest.playground.config.ts",
     "test:preservation": "node scripts/test-preservation.mjs",
     "test:sync": "vitest run --config vitest.sync.config.ts",
+    "test:pricing": "vitest run --config vitest.pricing.config.ts",
     "lint": "oxlint -c .oxlintrc.json .",
     "lint:fix": "oxlint -c .oxlintrc.json . --fix",
     "preview": "rsbuild preview",

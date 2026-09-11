@@ -4,41 +4,45 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/service"
-
 	"github.com/gin-gonic/gin"
 )
 
-type overwriteField struct {
-	ModelName string   `json:"model_name"`
-	Fields    []string `json:"fields"`
-}
-
-type syncRequest struct {
-	Overwrite []overwriteField `json:"overwrite"`
-	Locale    string           `json:"locale"`
-}
-
-// SyncUpstreamModels applies selected upstream metadata changes. A database
-// lease keeps concurrent manual or scheduled syncs from racing.
+// Both the versioned editor and legacy callers share the scheduled sync lease.
 func SyncUpstreamModels(c *gin.Context) {
-	var req syncRequest
-	_ = c.ShouldBindJSON(&req)
-	overwrite := make([]service.ModelMetadataOverwrite, len(req.Overwrite))
-	for i, item := range req.Overwrite {
-		overwrite[i] = service.ModelMetadataOverwrite{ModelName: item.ModelName, Fields: item.Fields}
+	var request struct {
+		Locale        string                           `json:"locale"`
+		SourceVersion *string                          `json:"source_version"`
+		Selections    []model.MetadataSyncSelection    `json:"selections"`
+		Overwrite     []service.ModelMetadataOverwrite `json:"overwrite"`
+	}
+	if err := common.DecodeJson(c.Request.Body, &request); err != nil && !errors.Is(err, io.EOF) {
+		c.JSON(http.StatusBadRequest, gin.H{"success": false, "message": "invalid metadata sync request"})
+		return
+	}
+	versioned := request.SourceVersion != nil || request.Selections != nil
+	if versioned && (request.SourceVersion == nil || *request.SourceVersion == "" || len(request.Selections) == 0 || len(request.Selections) > 1000) {
+		c.JSON(http.StatusBadRequest, gin.H{"success": false, "message": "Preview and select metadata changes before applying"})
+		return
 	}
 	timeout := common.GetEnvOrDefault("SYNC_HTTP_TIMEOUT_SECONDS", 15)
 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Duration(timeout)*time.Second)
 	defer cancel()
-	var summary *service.ModelMetadataSummary
+	var legacy *service.ModelMetadataSummary
+	var selected *model.MetadataSyncResult
 	err := service.WithNamedLease(ctx, "model-metadata-sync", fmt.Sprintf("manual-%d", time.Now().UnixNano()), time.Minute, func(leaseCtx context.Context) error {
 		var syncErr error
-		summary, syncErr = service.SyncModelMetadata(leaseCtx, service.ModelMetadataSyncOptions{Overwrite: overwrite, Locale: req.Locale})
+		if versioned {
+			selected, syncErr = service.SyncSelectedModelMetadata(leaseCtx, request.Locale, *request.SourceVersion, request.Selections)
+		} else {
+			legacy, syncErr = service.SyncModelMetadata(leaseCtx, service.ModelMetadataSyncOptions{Overwrite: request.Overwrite, Locale: request.Locale})
+		}
 		return syncErr
 	})
 	if errors.Is(err, service.ErrNamedLeaseBusy) {
@@ -46,22 +50,35 @@ func SyncUpstreamModels(c *gin.Context) {
 		return
 	}
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"success": false, "message": "获取上游模型失败", "locale": req.Locale})
+		if !versioned {
+			c.JSON(http.StatusOK, gin.H{"success": false, "message": "获取上游模型失败", "locale": request.Locale})
+			return
+		}
+		status := http.StatusBadRequest
+		if errors.Is(err, model.ErrMetadataSyncConflict) {
+			status = http.StatusConflict
+		}
+		c.JSON(status, gin.H{"success": false, "message": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"success": true, "data": summary})
+	if versioned {
+		recordManageAudit(c, "model.metadata.sync", map[string]any{"created_models": selected.CreatedModels, "updated_models": selected.UpdatedModels, "created_vendors": selected.CreatedVendors})
+		common.ApiSuccess(c, selected)
+		return
+	}
+	recordManageAudit(c, "model.metadata.sync", map[string]any{"created_models": legacy.CreatedModels, "updated_models": legacy.UpdatedModels, "created_vendors": legacy.CreatedVendors})
+	common.ApiSuccess(c, legacy)
 }
 
-// SyncUpstreamPreview returns upstream differences without taking the write lease.
+// Preview does not acquire a write lease or persist any metadata.
 func SyncUpstreamPreview(c *gin.Context) {
-	locale := c.Query("locale")
 	timeout := common.GetEnvOrDefault("SYNC_HTTP_TIMEOUT_SECONDS", 15)
 	ctx, cancel := context.WithTimeout(c.Request.Context(), time.Duration(timeout)*time.Second)
 	defer cancel()
-	preview, err := service.PreviewModelMetadata(ctx, locale)
+	preview, err := service.PreviewModelMetadataCatalog(ctx, c.Query("locale"))
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{"success": false, "message": "获取上游模型失败", "locale": locale})
+		common.ApiError(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"success": true, "data": preview})
+	common.ApiSuccess(c, preview)
 }

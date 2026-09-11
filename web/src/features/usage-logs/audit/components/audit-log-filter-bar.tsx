@@ -19,14 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import type { Table } from '@tanstack/react-table'
 import { useTranslation } from 'react-i18next'
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Combobox } from '@/components/ui/combobox'
 
 import { CompactDateTimeRangePicker } from '../../components/compact-date-time-range-picker'
 import {
@@ -44,30 +37,15 @@ function AuditFilterSelect(props: {
 }) {
   return (
     <LogsFilterField>
-      <Select
-        items={props.options}
+      <Combobox
+        options={props.options}
         value={props.value}
         onValueChange={(value) => {
           if (value !== null) props.onChange(value)
         }}
-      >
-        <SelectTrigger aria-label={props.label}>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {props.options.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                disabled={option.disabled}
-              >
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+        aria-label={props.label}
+        className='w-full'
+      />
     </LogsFilterField>
   )
 }

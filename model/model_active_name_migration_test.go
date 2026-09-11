@@ -21,7 +21,7 @@ func useActiveNameTestDB(t *testing.T) *gorm.DB {
 	sqlDB, err := db.DB()
 	require.NoError(t, err)
 	sqlDB.SetMaxOpenConns(1)
-	require.NoError(t, db.AutoMigrate(&Model{}, &Vendor{}))
+	require.NoError(t, db.AutoMigrate(&Model{}, &Vendor{}, &Option{}))
 	DB = db
 	t.Cleanup(func() {
 		DB = previousDB

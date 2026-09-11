@@ -78,7 +78,7 @@ type metadataEnvelope[T any] struct {
 func CanonicalModelMetadataURLs(locale string) ModelMetadataSource {
 	base := strings.TrimRight(common.GetEnvOrDefaultString("SYNC_UPSTREAM_BASE", metadataDefaultBase), "/")
 	l := strings.ToLower(strings.TrimSpace(locale))
-	if l == "en" || l == "zh-cn" || l == "zh-tw" || l == "ja" {
+	if l == "en" || l == "zh" || l == "zh-cn" || l == "zh-tw" || l == "ja" {
 		return ModelMetadataSource{Locale: l, ModelsURL: fmt.Sprintf("%s/api/i18n/%s/newapi/models.json", base, l), VendorsURL: fmt.Sprintf("%s/api/i18n/%s/newapi/vendors.json", base, l)}
 	}
 	return ModelMetadataSource{Locale: locale, ModelsURL: base + "/api/newapi/models.json", VendorsURL: base + "/api/newapi/vendors.json"}
@@ -140,12 +140,12 @@ func fetchMetadataEnvelope[T any](ctx context.Context, url string, out *metadata
 						lastErr = fmt.Errorf("invalid upstream metadata response")
 						return
 					}
-					if json.Unmarshal(body, out) == nil {
+					if common.Unmarshal(body, out) == nil {
 						lastErr = nil
 						return
 					}
 					var array []T
-					if json.Unmarshal(body, &array) == nil {
+					if common.Unmarshal(body, &array) == nil {
 						out.Success = true
 						out.Data = array
 						lastErr = nil

@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -25,22 +25,25 @@ import { toast } from 'sonner'
 import * as z from 'zod'
 
 import { ConfirmDialog } from '@/components/confirm-dialog'
+import { ErrorState } from '@/components/error-state'
+import { LoadingState } from '@/components/loading-state'
+import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  buildPricingChanges,
+  useModelPricing,
+  useSaveModelPricing,
+  type ModelPricingConfig,
+} from '@/features/model-pricing/api'
+import { pricingOptions } from '@/features/model-pricing/pricing'
+import { handleServerError } from '@/lib/handle-server-error'
 
-import { patchPricingOptions, resetModelRatios } from '../api'
 import { SettingsPageTitleStatusPortal } from '../components/settings-page-context'
 import { SettingsSection } from '../components/settings-section'
-import { useSystemOptions } from '../hooks/use-system-options'
 import { useUpdateOption } from '../hooks/use-update-option'
 import { positiveIntegerSchema } from '../utils/numeric-field'
 import { GroupRatioForm } from './group-ratio-form'
 import { ModelRatioForm } from './model-ratio-form'
-import {
-  buildPricingPatchOperations,
-  getPricingOptionMaps,
-  isPricingPatchConflict,
-  type PricingOptionMaps,
-} from './pricing-patch'
 import { ToolPriceSettings } from './tool-price-settings'
 import { UpstreamRatioSync } from './upstream-ratio-sync'
 import {
@@ -161,7 +164,7 @@ type RatioSettingsCardProps = {
 }
 
 export function RatioSettingsCard({
-  modelDefaults,
+  modelDefaults: initialModelDefaults,
   groupDefaults,
   toolPricesDefault,
   titleKey = 'Pricing Ratios',
@@ -169,34 +172,50 @@ export function RatioSettingsCard({
 }: RatioSettingsCardProps) {
   const { t } = useTranslation()
   const updateOption = useUpdateOption()
-  const queryClient = useQueryClient()
-  const { data: systemOptionsData } = useSystemOptions()
-  const pricingPatch = useMutation({ mutationFn: patchPricingOptions })
   const [confirmOpen, setConfirmOpen] = useState(false)
-  const pricingSnapshotRef = useRef<PricingOptionMaps>({})
-  const pricingOptionMaps = useMemo(
-    () => getPricingOptionMaps(systemOptionsData?.data),
-    [systemOptionsData?.data]
-  )
 
+  const pricingQuery = useModelPricing()
+  const savePricing = useSaveModelPricing()
+  const [pricingBaseline, setPricingBaseline] =
+    useState<ModelPricingConfig | null>(null)
   useEffect(() => {
-    pricingSnapshotRef.current = pricingOptionMaps
-  }, [pricingOptionMaps])
-
+    if (!pricingBaseline && pricingQuery.data) {
+      setPricingBaseline(pricingQuery.data)
+    }
+  }, [pricingBaseline, pricingQuery.data])
+  const modelDefaults = useMemo(
+    () =>
+      pricingBaseline
+        ? {
+            ...initialModelDefaults,
+            ...pricingBaseline.options,
+            BillingMode:
+              pricingBaseline.options['billing_setting.billing_mode'],
+            BillingExpr:
+              pricingBaseline.options['billing_setting.billing_expr'],
+          }
+        : initialModelDefaults,
+    [initialModelDefaults, pricingBaseline]
+  )
   const resetMutation = useMutation({
-    mutationFn: resetModelRatios,
-    onSuccess: (data) => {
-      if (data.success) {
-        toast.success(t('Model prices reset successfully'))
-        queryClient.invalidateQueries({ queryKey: ['system-options'] })
-        setConfirmOpen(false)
-      } else {
-        toast.error(data.message || t('Failed to reset model ratios'))
-      }
+    mutationFn: async () => {
+      if (!pricingBaseline) return
+      await savePricing.mutateAsync(
+        pricingBaseline.entries.map((entry) => ({
+          model_name: entry.model_name,
+          expected_version: entry.version,
+          pricing: {},
+          reset: true,
+        }))
+      )
+      const refreshed = await pricingQuery.refetch()
+      setPricingBaseline(refreshed.data ?? null)
     },
-    onError: (error: Error) => {
-      toast.error(error.message || t('Failed to reset model ratios'))
+    onSuccess: () => {
+      toast.success(t('Model prices reset successfully'))
+      setConfirmOpen(false)
     },
+    onError: handleServerError,
   })
 
   const modelNormalizedDefaults = useRef({
@@ -347,62 +366,37 @@ export function RatioSettingsCard({
         BillingExpr: normalizeJsonString(values.BillingExpr),
       }
 
-      const pricingDraft: PricingOptionMaps = {
-        ModelPrice: normalized.ModelPrice,
-        ModelRatio: normalized.ModelRatio,
-        CacheRatio: normalized.CacheRatio,
-        CreateCacheRatio: normalized.CreateCacheRatio,
-        CompletionRatio: normalized.CompletionRatio,
-        ImageRatio: normalized.ImageRatio,
-        AudioRatio: normalized.AudioRatio,
-        AudioCompletionRatio: normalized.AudioCompletionRatio,
-        'billing_setting.billing_mode': normalized.BillingMode,
-        'billing_setting.billing_expr': normalized.BillingExpr,
-      }
-
-      const operations = buildPricingPatchOperations(
-        pricingSnapshotRef.current,
-        pricingDraft
-      )
-      const exposeRatioChanged =
-        normalized.ExposeRatioEnabled !==
-        modelNormalizedDefaults.current.ExposeRatioEnabled
-
-      if (operations.length === 0 && !exposeRatioChanged) {
-        toast.info(t('No model price changes to save'))
-        return
-      }
-
+      if (!pricingBaseline) return
       try {
-        if (operations.length > 0) {
-          const response = await pricingPatch.mutateAsync({ operations })
-          if (!response.success) {
-            throw new Error(response.message || t('Failed to update setting'))
-          }
-          pricingSnapshotRef.current = response.data
-          queryClient.invalidateQueries({ queryKey: ['system-options'] })
+        const changes = buildPricingChanges(
+          pricingBaseline,
+          pricingOptions(modelNormalizedDefaults.current),
+          pricingOptions(normalized)
+        )
+        const visibilityChanged =
+          normalized.ExposeRatioEnabled !==
+          modelNormalizedDefaults.current.ExposeRatioEnabled
+        if (!changes.length && !visibilityChanged) {
+          toast.info(t('No model price changes to save'))
+          return
         }
-        if (exposeRatioChanged) {
+        await savePricing.mutateAsync(changes)
+        if (visibilityChanged) {
           await updateOption.mutateAsync({
             key: 'ExposeRatioEnabled',
             value: normalized.ExposeRatioEnabled,
           })
         }
+        const refreshed = await pricingQuery.refetch()
+        setPricingBaseline(refreshed.data ?? null)
+        modelNormalizedDefaults.current = normalized
+        setSavedModelValues(normalized)
+        toast.success(t('Model pricing saved'))
       } catch (error) {
-        if (isPricingPatchConflict(error)) {
-          toast.error(
-            t('Pricing configuration changed. Refreshed latest values.')
-          )
-          queryClient.invalidateQueries({ queryKey: ['system-options'] })
-          return
-        }
-        throw error
+        handleServerError(error)
       }
-
-      modelNormalizedDefaults.current = normalized
-      setSavedModelValues(normalized)
     },
-    [pricingPatch, queryClient, t, updateOption]
+    [t, updateOption, pricingBaseline, savePricing, pricingQuery]
   )
 
   const saveGroupRatios = useCallback(
@@ -470,16 +464,40 @@ export function RatioSettingsCard({
 
   const renderTabContent = (tab: RatioTabId) => {
     if (tab === 'models' || tab === 'unset-models') {
+      if (pricingQuery.isError) {
+        return (
+          <ErrorState
+            description={pricingQuery.error.message}
+            onRetry={() => void pricingQuery.refetch()}
+          />
+        )
+      }
+      if (!pricingBaseline) return <LoadingState />
       return (
-        <ModelRatioForm
-          form={modelForm}
-          savedValues={savedModelValues}
-          onSave={saveModelRatios}
-          onReset={handleResetRatios}
-          isSaving={updateOption.isPending || pricingPatch.isPending}
-          isResetting={resetMutation.isPending}
-          variant={tab === 'unset-models' ? 'unset' : 'default'}
-        />
+        <>
+          {savePricing.isError && (
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={async () => {
+                const refreshed = await pricingQuery.refetch()
+                if (refreshed.data) setPricingBaseline(refreshed.data)
+                savePricing.reset()
+              }}
+            >
+              {t('Reload pricing')}
+            </Button>
+          )}
+          <ModelRatioForm
+            form={modelForm}
+            savedValues={savedModelValues}
+            onSave={saveModelRatios}
+            onReset={handleResetRatios}
+            isSaving={updateOption.isPending || savePricing.isPending}
+            isResetting={resetMutation.isPending}
+            variant={tab === 'unset-models' ? 'unset' : 'default'}
+          />
+        </>
       )
     }
     if (tab === 'groups') {
@@ -494,7 +512,7 @@ export function RatioSettingsCard({
     if (tab === 'tool-prices') {
       return <ToolPriceSettings defaultValue={toolPricesDefault} />
     }
-    return <UpstreamRatioSync modelRatios={pricingOptionMaps} />
+    return <UpstreamRatioSync />
   }
 
   const renderTabSwitcher = () => (

@@ -19,7 +19,7 @@ func useMetadataSyncTestDB(t *testing.T) *gorm.DB {
 	previous := model.DB
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	require.NoError(t, err)
-	require.NoError(t, db.AutoMigrate(&model.Ability{}, &model.Model{}, &model.Vendor{}))
+	require.NoError(t, db.AutoMigrate(&model.Ability{}, &model.Model{}, &model.Vendor{}, &model.Option{}))
 	model.DB = db
 	t.Cleanup(func() { model.DB = previous })
 	return db
