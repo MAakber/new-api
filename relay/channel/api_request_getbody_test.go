@@ -379,6 +379,12 @@ func runResetOnFirstStreamServer(ln net.Listener, expectRetry bool) <-chan h2Ser
 					return
 				}
 				if !expectRetry {
+					// Deliver RST_STREAM before closing with unread control frames;
+					// otherwise Windows can replace it with a TCP reset.
+					if tcp, ok := conn.(*net.TCPConn); ok {
+						_ = tcp.CloseWrite()
+						_, _ = io.Copy(io.Discard, tcp)
+					}
 					break attempts
 				}
 				continue
