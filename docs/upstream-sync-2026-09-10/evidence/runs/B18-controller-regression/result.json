@@ -1,0 +1,27 @@
+{
+  "id": "B18-controller-regression",
+  "command": [
+    "go",
+    "test",
+    "-mod=readonly",
+    "./controller",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "b28997e8d4e52f1198ae5b2aa91ba0df328161f3",
+  "started_at": "2026-09-11T13:00:06.906Z",
+  "finished_at": "2026-09-11T13:10:16.339Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -2609,3 +2609,27 @@ All B00-B16 accepted; clean integration worktree at f006b9ffa0d352100b9ac6d6039d
 ## 2026-09-11T12:40:09.859Z — B17.2 complete; B17.3 merge commit ready
 
 All 326 initial entries reviewed and staged; zero unresolved paths. Retained downstream UI/auth/diagnostic/accounting behavior. Exact-blob duplicate avatar-test relocation removed while preserving its actual profile fixture. Added missing upstream profile business-failure handling after focused reproduction, retained grid breakpoint regression and HTTP Method translations. Other executable backend code equals accepted B16 source; go.mod differs only in ordering. Final B18 acceptance remains pending.
+
+## 2026-09-11T12:43:10.294Z — B17 verified; B18.1 final candidate acceptance started
+
+Real two-parent merge d46dec4abad83d575d7a7d74558508c898b0193b. Both fixed upstream and downstream baseline are ancestors. All 326 merge-file decisions recorded and no unresolved index. Consolidate final regression on this candidate; do not rerun unchanged successful database/desktop suites without evidence of drift. Production snapshot and real provider interoperability remain pending environment.
+
+## 2026-09-11 — B18.1 controller fixture correction
+
+Root regression at d46dec4abad83d575d7a7d74558508c898b0193b passed every package except controller. Targeted reproduction confirms concurrent account deletion returns no successful response with SQLITE_BUSY; the two Windows temporary-directory cleanup failures did not reproduce. The shared SQLite fixture opens a plain filename, omitting the production busy_timeout, WAL and immediate-transaction settings in common/database.go. Align only the test fixture DSN and rerun the affected controller package. Preserve all assertions and production behavior. Frontend regression (210 files / 1531 tests), frontend build/type/lint/format and independent relaykit build/test already passed; retain their receipts and verify source equivalence after this test-only change.
+
+## 2026-09-11T13:15:12.909Z — B18.1 SQLite concurrent fixture synchronization
+
+The production-equivalent SQLite fixture exposed a test barrier deadlock: TestManageUserQuotaConcurrentSnapshots waited for two transactions to enter their query callbacks, but BEGIN IMMEDIATE serializes writers before that point. B18-controller-regression retains the timeout stack. Move only the SQLite barrier before transaction start; retain the row-locking barrier on other engines and require both adjustments to commit with a continuous exact balance. No production code changed. Two Windows TempDir cleanup-only failures also recurred; their leftover directories were empty at inspection. Run the affected package with a task-local TEMP/TMP on D: and retain actual cleanup assertions, without sleeps or retries.
+
+## 2026-09-11T14:11:53.175Z — B18 local evidence consolidation
+
+Production source equals d46dec4a; only two controller test fixtures changed, at 33398851f677845f450b9cf6f7af546d5a218e0c. Consolidated root/relaykit/frontend checks, targeted controller rechecks, final binary, copyright and changed-literal i18n checks are complete. Database and desktop source-equivalence reports are saved. Browser evidence is persisted. Final preservation mapping and local main integration follow; provider and production-snapshot gates remain open.
+
+## 2026-09-11T14:46:23.363Z — B18 local acceptance verified; B19 local integration prepared
+
+Candidate 33398851f677845f450b9cf6f7af546d5a218e0c; 153/120/26 local reviews recorded. 89 distinct protection tests retained, 33 frontend paths included in 210 files / 1531 passing tests. Backend combines 49 passed root packages, controller run and two same-candidate cleanup rechecks. Source equivalence and browser reports persisted. A33 permits only reversible local main integration before the production-snapshot/provider gates. Next: hash/preserve original untracked plan, verify main baseline and fast-forward; output stays untouched.
+
+## 2026-09-11T14:51:37.427Z — B19.1 verified; local main fast-forward intent
+
+Original main remains 403f7d9dffc6a99728ede5d8f72770efc61f7b83 with no tracked changes. All 25 original untracked plan files have matching SHA256 in both D:\10178\Projects\new-api-upstream-sync-backup-2026-09-10\B19-main-preintegration-20260911T144952Z\plan-copy and D:\10178\Projects\new-api-upstream-sync-backup-2026-09-10\B19-main-preintegration-20260911T144952Z\original-plan; source directory moved aside only after copy verification. output remains in place, with no incoming tracked paths. Commit current acceptance/intent records, then fast-forward local main; do not push or deploy.

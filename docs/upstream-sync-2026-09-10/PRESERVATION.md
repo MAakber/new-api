@@ -1,6 +1,8 @@
 # 下游功能保护矩阵
 
-基线：403f7d9dffc6a99728ede5d8f72770efc61f7b83。本表来自当前源码、测试入口和 120 个下游独有提交；正式集成验收尚未开始。已有测试仅为入口，B00 必须核对实际覆盖与缺口。
+基线：403f7d9dffc6a99728ede5d8f72770efc61f7b83。26 类功能及 120 个下游提交已在最终候选 `33398851f677845f450b9cf6f7af546d5a218e0c` 完成本地代码与契约复核。89 个独立测试文件均保留，33 个前端保护测试文件全部位于最终 210 文件/1531 测试的执行范围；后端按包回归和必要定点复查验收。
+
+逐项证据、源码迁移位置和适用边界见 [B18-preservation-review.json](evidence/B18-preservation-review.json)。本地验收不能代表脱敏生产库或真实供应商已验证；两项仍在 state.json 中阻止完整计划完成。Passkey 卡片已随安全中心迁至 `web/src/features/security/components/passkey-card.tsx`，名称、多个凭据和重新验证契约仍保留。
 
 机器状态见 preservation.json；逐提交追踪见 downstream-ledger.json。
 

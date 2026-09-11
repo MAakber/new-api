@@ -28,14 +28,26 @@
       "61 的既有含义不变；客户端身份、请求整理、会话标识可连续使用",
       "Responses 图片、工具、多轮、无 Content-Type 流及结束事件不回退"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B04-acceptance.json",
+      "evidence/B14-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "61 identity, Responses conversion, image/tool/session and stream contracts retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -63,14 +75,26 @@
       "62 的既有含义不变；/v1/messages/count_tokens 可用",
       "客户端 headers、beta 配置、1m context 开关及工具/思考内容按现有契约处理"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B04-acceptance.json",
+      "evidence/B14-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "62, count_tokens, client headers/beta and context/tool/thinking contracts retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -111,14 +135,26 @@
       "63 保留；请求身份、system 规则、会话续接及 compact 兼容",
       "Responses 经 Chat 转换、DONE 流帧、图片与工具语义不丢失"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B04-acceptance.json",
+      "evidence/B14-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "63 request identity, system/compact handling, continuation and Chat/Responses conversions retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -138,14 +174,25 @@
       "64 保留；前后端类型、URL、鉴权及模型分发一致",
       "生成、流式、错误与额度按既有支持范围回归"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B14-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "64 URL/authentication/model dispatch and Vercel relay contracts retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -173,14 +220,26 @@
       "保留追加/多密钥、分类抓模、多选同步、偏好保存和缺失模型确认",
       "弹窗交互不重复抓模，图标、参数预设及其他字段保存不互相覆盖"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B12-acceptance.json",
+      "evidence/B14-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Model selection, fetch preferences, missing-model confirmation and append-key payloads retained; two-channel saving checked in browser.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -206,14 +265,22 @@
       "同一功能可同时打开独立实例，instance ID、form 状态与 channel ID 不串台",
       "拖拽边界、激活层级、关闭、动画、滚动、键盘及移动布局有效"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B15-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Independent window instances, saved form identity, real drag, activation, mobile scroll and keyboard close verified.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": []
     }
   },
   {
@@ -239,14 +306,24 @@
       "scheduled_all/passive_recovery、Codex 测试请求及诊断内容保留",
       "新并发/自动禁用模式兼容队列、取消、错误与现有 UI 预览"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B10-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Existing scheduled/passive modes, diagnostics, queue/cancel and new concurrency contracts retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -275,14 +352,24 @@
       "配置读取、稳定版本筛选、轻量身份模板、渠道覆盖正确",
       "版本清单异常有现有降级行为，不污染其他渠道身份"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Stable client-version filtering, template fallback and per-channel override contracts retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -313,14 +400,24 @@
       "禁用预热不丢保存值，系统提示词和 Codex payload 遵循当前最终状态",
       "队列/指标/重试/取消有效；保留已 revert 后的行为，不复活撤回补丁"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Previously saved disabled queue configuration survives; existing Codex/system-prompt and queue/cancel contracts retained without reviving reverted changes.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -351,14 +448,24 @@
       "余额凭据、刷新、导航、随渠道保存与签到指示保留",
       "余额限制自动封禁的忽略设置可用，未编辑字段不会被清零"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Custom balance, random check-in and ignore-auto-ban contracts retained; settings controls visible.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -388,12 +495,24 @@
       "同步触发、快照、拦截和配置持久化不回退",
       "敏感词/UA 限制、临时及永久封禁、提示与审计仍正确"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B08-acceptance.json",
+      "evidence/B09-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Auto-sync persistence, upstream interception, sensitive-word/UA bans and audit contracts retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -418,12 +537,24 @@
       "用户级 RPM 与现有模型/分组/令牌限流叠加正确",
       "新自动分组和跨组重试不绕过限流，不重新施加已移除的配置上限"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B08-acceptance.json",
+      "evidence/B10-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Per-user RPM remains additive to existing limits; automatic groups/retries and self-profile restrictions covered.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -455,12 +586,24 @@
       "登录代理覆盖既有登录/OAuth 请求，失败仍给出可用反馈",
       "邀请码在注册完成时校验/消耗，重复提交与失败不会错误扣次数，法律文案支持语言切换"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B08-acceptance.json",
+      "evidence/B11-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Login proxy and atomic registration-code completion retained; fresh login checked, no live OAuth claimed.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -474,7 +617,7 @@
     "sourcePaths": [
       "controller/passkey.go",
       "controller/oauth.go",
-      "web/src/features/profile/components/passkey-card.tsx",
+      "web/src/features/security/components/passkey-card.tsx",
       "web/src/lib/oauth.ts"
     ],
     "existingTests": [
@@ -487,13 +630,38 @@
       "已有多个凭据、命名、登录与删除保留；会话安全升级兼容已有账户",
       "自助资料和 OAuth 绑定/头像 scope 正确，敏感操作重新验证不丢状态"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B08-acceptance.json",
+      "evidence/B11-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
-    }
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Multiple named credentials and scoped verification retained; Passkey UI moved into security center. Existing-identity fixture coverage plus local entry-flow check.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
+    },
+    "baseline_sourcePaths": [
+      "controller/passkey.go",
+      "controller/oauth.go",
+      "web/src/features/profile/components/passkey-card.tsx",
+      "web/src/lib/oauth.ts"
+    ],
+    "source_relocations": [
+      {
+        "from": "web/src/features/profile/components/passkey-card.tsx",
+        "to": "web/src/features/security/components/passkey-card.tsx",
+        "reason": "B08 security-center integration retains named multi-Passkey management"
+      }
+    ]
   },
   {
     "id": "D15",
@@ -526,14 +694,25 @@
       "原始请求开关持久化、完整正文与截断/脱敏边界可验证",
       "普通用户不可读管理诊断，管理员仍可排错；默认错误日志与日期筛选保留"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B07-acceptance.json"
+      "evidence/B07-acceptance.json",
+      "evidence/B08-acceptance.json",
+      "evidence/B13-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Raw request diagnostics, truncation/redaction, role projections and log/date behavior retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -568,12 +747,24 @@
       "本人/管理员访问权限、删除/更新、OAuth 导入和浏览器缓存隔离",
       "用户列表、日志、个人资料中的头像形状和交互保持可用"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B08-acceptance.json",
+      "evidence/B13-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Private avatar authorization, OAuth import and cache isolation contracts retained; profile/avatar UI rendered.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -601,12 +792,24 @@
       "自定义颜色、root 全局默认、个人偏好优先级与旧存储迁移",
       "预设、明暗主题、刷新与账号切换不丢设置"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B09-acceptance.json",
+      "evidence/B15-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Global/default/personal theme precedence and old storage contracts retained; dark navigation/reload and light mobile rendering checked.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -640,12 +843,25 @@
       "公告管理/时间区间/公开可见性、语言与主题保留",
       "登录动画、暗色、移动头部、日期控件不重叠，键盘可访问"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B03-acceptance.json",
+      "evidence/B09-acceptance.json",
+      "evidence/B15-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Public banner/interval/visibility and login/header contracts retained; mobile light/dark and keyboard checked.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -671,12 +887,24 @@
       "健康序列 API 变化兼容已有榜单，缺少历史数据正确降级",
       "安全榜单权限、趋势显示、用户 token 用量指标语义保留"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B09-acceptance.json",
+      "evidence/B13-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Availability history fallback, ranking permissions and user usage semantics retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -701,14 +929,25 @@
       "余额/订阅奖励与可多次使用注册码保持原语义",
       "耗尽注册码处理、CSV 字段和新增 TXT/Markdown/批量删除可共存，并发兑换与审计正确"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
-      "evidence/B10-acceptance.json"
+      "evidence/B10-acceptance.json",
+      "evidence/B11-acceptance.json",
+      "evidence/B13-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Registration/subscription/balance rewards, CSV and batch-management contracts retained; concurrent accounting fixtures and reward controls covered.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -730,12 +969,24 @@
       "余额分档边界、每日幂等、时区及奖励上下限正确",
       "新钱包范围和定价 UI 不改变既有签到配置与奖励语义"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B11-acceptance.json",
+      "evidence/B12-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Balance-tier boundaries, daily idempotency/timezone and reward-limit contracts retained across wallet expansion.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -765,12 +1016,24 @@
       "历史载入前不能误发送；批量搜索、异常响应、推理和流错误正确",
       "保留现有搜索轮次策略与取消，不传供应商不支持的 n 参数"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B04-acceptance.json",
+      "evidence/B15-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "History-before-send, batched search/tools, stream errors, cancellation and existing no-round-cap policy retained.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -800,12 +1063,24 @@
       "生成/编辑/蒙版/多参考图/连线/流式进度/失败重试可用",
       "拖拽/缩放/撤销/导入导出及 IndexedDB 账号隔离，主题/视口刷新不丢失"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B03-acceptance.json",
+      "evidence/B15-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Image routes/auth/billing, editing/masks/references/retry and account-isolated canvas persistence contracts retained; mobile canvas rendered.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -841,15 +1116,24 @@
       "数值输入、响应式弹层、焦点与禁用/加载状态保持可用",
       "en/zh/zh-TW/fr/ru/ja/vi 文案完整，旧测试入口不丢失；盘点三套配置外的保护测试"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
       "evidence/B07-acceptance.json",
-      "evidence/B10-acceptance.json"
+      "evidence/B10-acceptance.json",
+      "evidence/B15-acceptance.json",
+      "evidence/B17-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Shared inputs/dialog contracts and seven-locale keys retained; all protected frontend paths discovered in final 210-file suite.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": []
     }
   },
   {
@@ -874,12 +1158,21 @@
       "日期/commit 版本在 Windows 独立工作树、Docker 与发布产物一致",
       "保持许可证、项目/作者标识、下游发布目标与个人临时文件忽略行为"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
-    "evidence": [],
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
+    "evidence": [
+      "evidence/B16-acceptance.json",
+      "evidence/B18-preservation-review.json"
+    ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Date/SHA and release-tag version contracts, Windows worktree packaging, license resources and project/author identity retained; platform limits recorded.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": []
     }
   },
   {
@@ -904,15 +1197,27 @@
       "数量/时长/token 上限、显式零值、饱和 checked 审计、比率校验不削弱",
       "预扣/结算/退款不出现负扣费；root 与 relaykit 独立构建且三库兼容"
     ],
-    "coverageReview": "B00 inventory complete: 101 frontend files (30 Vitest, 71 isolated node:test), root and independent relaykit tests executed. See baseline-summary.json. Feature-specific browser/provider/data acceptance remains pending.",
-    "status": "pending",
+    "coverageReview": "B18: 89 distinct protection files retained; 33 frontend paths all included in 210-file/1531-test run. Go package results plus focused controller cleanup rechecks and existing real-engine matrices. See B18-preservation-review.json; external gates are not passed.",
+    "status": "verified",
     "evidence": [
       "evidence/B07-acceptance.json",
-      "evidence/B10-acceptance.json"
+      "evidence/B10-acceptance.json",
+      "evidence/B04-acceptance.json",
+      "evidence/B11-acceptance.json",
+      "evidence/B14-acceptance.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Input bounds, explicit zeros, checked saturation/audit, ratio guards and accounting contracts retained; independent relaykit build/test and database fixtures covered.",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   }
 ]

@@ -1,0 +1,1911 @@
+{
+  "status": "verified",
+  "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+  "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "recorded_at": "2026-09-11T14:46:20.521Z",
+  "baseline_mapping": "evidence/runs/B00-002/downstream-mapping-review.json",
+  "counts": {
+    "features": 26,
+    "downstream_commits": 120,
+    "distinct_test_files": 89,
+    "go_test_files": 56,
+    "frontend_test_files": 33,
+    "discovered_frontend_files": 210,
+    "passed_frontend_tests": 1531
+  },
+  "method": "Review existing behavior mappings, retained tests, final suite inclusion, merge decisions, stage evidence and final source equivalence; file existence alone is not behavioral proof.",
+  "reviews": [
+    {
+      "id": "D01",
+      "title": "Codex 兼容渠道",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "61 identity, Responses conversion, image/tool/session and stream contracts retained.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B04",
+        "B07",
+        "B14"
+      ],
+      "stage_evidence": [
+        "evidence/B04-acceptance.json",
+        "evidence/B07-acceptance.json",
+        "evidence/B14-acceptance.json"
+      ],
+      "source_paths": [
+        "constant/channel.go",
+        "relay/channel/openai",
+        "relay/channel/api_request.go",
+        "relaykit/relayconvert/internal/oai_responses",
+        "relay/chat_completions_via_responses.go",
+        "controller/relay.go"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "relay/channel/api_request_test.go",
+          "blob": "ed9c2e29a0d6748bf78a1aa0a5b3b1e83fd46129",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts",
+          "blob": "3a6a0d0d773c2c1e692219dfd3bdb944fa7279c2",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "constant/channel.go",
+        "controller/channel_test_internal_test.go",
+        "controller/channel-test.go",
+        "controller/channel.go",
+        "controller/relay.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/common/relay_info.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D02",
+      "title": "Claude Code 与 count_tokens",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "62, count_tokens, client headers/beta and context/tool/thinking contracts retained.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B04",
+        "B07",
+        "B14"
+      ],
+      "stage_evidence": [
+        "evidence/B04-acceptance.json",
+        "evidence/B07-acceptance.json",
+        "evidence/B14-acceptance.json"
+      ],
+      "source_paths": [
+        "router/relay-router.go",
+        "relay/channel/claude",
+        "relay/channel/api_request.go",
+        "relay/channel/compatibility.go",
+        "relaykit/dto/channel_settings.go",
+        "web/src/features/channels/components/drawers/sections/channel-client-identity-section.tsx"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "relay/channel/api_request_test.go",
+          "blob": "ed9c2e29a0d6748bf78a1aa0a5b3b1e83fd46129",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/option_claude_test.go",
+          "blob": "db9309935870fab5efcb269651b32b492ffddd1f",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        }
+      ],
+      "merge_review_files": [
+        "constant/channel.go",
+        "controller/channel_test_internal_test.go",
+        "controller/channel.go",
+        "controller/relay.go",
+        "relay/channel/api_request_test.go",
+        "relay/channel/api_request.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/claude_handler.go",
+        "relay/common/override.go",
+        "relay/common/relay_info.go",
+        "relaykit/dto/channel_settings_test.go",
+        "router/relay-router.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D03",
+      "title": "CodeBuddy / WorkBuddy",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "63 request identity, system/compact handling, continuation and Chat/Responses conversions retained.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B04",
+        "B07",
+        "B14"
+      ],
+      "stage_evidence": [
+        "evidence/B04-acceptance.json",
+        "evidence/B07-acceptance.json",
+        "evidence/B14-acceptance.json"
+      ],
+      "source_paths": [
+        "constant/channel.go",
+        "relay/channel/api_request.go",
+        "web/src/assets/custom/icon-codebuddy.tsx",
+        "relay/channel/codebuddy.go",
+        "relay/channel/codebuddy_cleanup.go",
+        "relay/channel/codebuddy_system_prompt.go",
+        "relay/channel/openai",
+        "relay/responses_handler.go",
+        "controller/channel_upstream_update_test.go",
+        "relay/channel/compatibility_test.go"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "relay/channel/api_request_test.go",
+          "blob": "ed9c2e29a0d6748bf78a1aa0a5b3b1e83fd46129",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/channels/lib/__tests__/compatibility-channel.test.ts",
+          "blob": "3a6a0d0d773c2c1e692219dfd3bdb944fa7279c2",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "constant/channel.go",
+        "controller/channel_test_internal_test.go",
+        "controller/channel-test.go",
+        "controller/channel.go",
+        "controller/passkey_test.go",
+        "controller/passkey.go",
+        "model/channel.go",
+        "model/main.go",
+        "model/passkey.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/common/relay_info_test.go",
+        "relay/common/relay_info.go",
+        "relay/compatible_handler.go",
+        "router/api-router.go",
+        "service/passkey/session.go",
+        "web/src/features/auth/passkey/api.ts",
+        "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/users/components/data-table-row-actions.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D04",
+      "title": "Vercel AI Gateway 渠道",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "64 URL/authentication/model dispatch and Vercel relay contracts retained.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B07",
+        "B14"
+      ],
+      "stage_evidence": [
+        "evidence/B07-acceptance.json",
+        "evidence/B14-acceptance.json"
+      ],
+      "source_paths": [
+        "constant/channel.go",
+        "web/src/features/channels"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "web/src/features/channels/lib/__tests__/vercel-channel.test.ts",
+          "blob": "35fad6967f74a6d9b470983ced18c09e3b9143bc",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "constant/channel.go",
+        "controller/channel_test_internal_test.go",
+        "relay/common/relay_info.go",
+        "relay/relay_adaptor.go",
+        "web/src/features/channels/constants.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D05",
+      "title": "渠道抓模、密钥和表单增强",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Model selection, fetch preferences, missing-model confirmation and append-key payloads retained; two-channel saving checked in browser.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B07",
+        "B12",
+        "B14"
+      ],
+      "stage_evidence": [
+        "evidence/B07-acceptance.json",
+        "evidence/B12-acceptance.json",
+        "evidence/B14-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/channel.go",
+        "controller/channel_upstream_update.go",
+        "web/src/features/channels"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/channel_upstream_update_test.go",
+          "blob": "34a481abac82a85aa7889687b346c8adffb025c5",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/channel_multi_key_append_test.go",
+          "blob": "4bfffdaec123c3ebdd744d2ddff8f6e1c0417c94",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/channels/__tests__/fetch-models-selection.test.tsx",
+          "blob": "852627a86c405cfafa43755b45dc04e995edd467",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/channels/lib/__tests__/channel-key-append.test.ts",
+          "blob": "ace89f1b38f75b31d67b1e26f1c5f72e4378f1bb",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/channel.go",
+        "controller/passkey_test.go",
+        "controller/passkey.go",
+        "model/channel.go",
+        "model/main.go",
+        "model/passkey.go",
+        "relay/channel/openai/adaptor.go",
+        "router/api-router.go",
+        "service/passkey/session.go",
+        "web/src/features/auth/passkey/api.ts",
+        "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/channels-columns.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/usage-logs/components/model-badge.tsx",
+        "web/src/features/users/components/data-table-row-actions.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D06",
+      "title": "可拖拽、多开浮动窗口",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Independent window instances, saved form identity, real drag, activation, mobile scroll and keyboard close verified.",
+      "external_gate_ids": [],
+      "stage_ids": [
+        "B07",
+        "B15"
+      ],
+      "stage_evidence": [
+        "evidence/B07-acceptance.json",
+        "evidence/B15-acceptance.json"
+      ],
+      "source_paths": [
+        "web/src/stores/floating-window-store.ts",
+        "web/src/components/floating-window",
+        "web/src/features/channels/components/drawers"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "web/src/components/floating-window/__tests__/floating-window-store.test.ts",
+          "blob": "2348bc3b346cf81deec93c8414470510873acb54",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/components/floating-window/__tests__/geometry.test.ts",
+          "blob": "c68b9a71d5762b1413cd66d9e9538058a31ae646",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/components/floating-window/__tests__/motion.test.ts",
+          "blob": "07882e5ea1d4375f46ae96a3c81624801f2ec03d",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "web/src/components/data-table/toolbar/bulk-actions.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D07",
+      "title": "渠道测试模式和能力诊断",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Existing scheduled/passive modes, diagnostics, queue/cancel and new concurrency contracts retained.",
+      "external_gate_ids": [
+        "provider_interop"
+      ],
+      "stage_ids": [
+        "B07",
+        "B10"
+      ],
+      "stage_evidence": [
+        "evidence/B07-acceptance.json",
+        "evidence/B10-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/channel-test.go",
+        "controller/channel_test_diagnostics.go",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/channel_test_internal_test.go",
+          "blob": "16972378ed86a7cfff70a8a93034671d1d676ec9",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/channel_test_diagnostics_test.go",
+          "blob": "477576219e8dec03640f3f6b62fece46affbb50f",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/channel_test_probe_relay_test.go",
+          "blob": "79f341a2ec01a81739eace007609af40ea5769f1",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/channels/components/dialogs/__tests__/channel-test-interactions.test.tsx",
+          "blob": "50706aad9dcfeb18ec8d5448c8dc8a76e2da95b5",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/channel_test_internal_test.go",
+        "controller/channel-test.go",
+        "model/option.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/common/relay_info.go",
+        "setting/operation_setting/monitor_setting.go",
+        "web/package.json",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+        "web/src/features/channels/lib/channel-actions.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/system-settings/models/routing-reliability-section.tsx",
+        "web/src/features/system-settings/models/section-registry.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D08",
+      "title": "可配置客户端身份版本",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Stable client-version filtering, template fallback and per-channel override contracts retained.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B07"
+      ],
+      "stage_evidence": [
+        "evidence/B07-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/client_identity_versions.go",
+        "service/client_identity_versions.go"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/client_identity_versions_test.go",
+          "blob": "cee6afe5a33414b9e078b5ff07e0d7ceb6fe379d",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/client_identity_versions_test.go",
+          "blob": "919b0d8ac834a790478807664f7f464433cace22",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/channels/lib/__tests__/channel-client-identity.test.ts",
+          "blob": "07289cb86920c8830e4984af55834ef2919dd132",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/channel.go",
+        "model/channel.go",
+        "relay/channel/api_request_test.go",
+        "relay/channel/api_request.go",
+        "relay/channel/codex/adaptor_test.go",
+        "relay/channel/openai/adaptor.go",
+        "relay/common/override.go",
+        "relay/common/relay_info.go",
+        "relaykit/dto/channel_settings_test.go",
+        "service/codex_channel_models.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/constants.ts",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D09",
+      "title": "排队预热及系统提示词",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Previously saved disabled queue configuration survives; existing Codex/system-prompt and queue/cancel contracts retained without reviving reverted changes.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B07"
+      ],
+      "stage_evidence": [
+        "evidence/B07-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/channel_queue_warmer.go",
+        "web/src/features/channels",
+        "controller/channel-test.go",
+        "relay/channel/codex"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/channel_queue_warmer_test.go",
+          "blob": "502bab1bf3333ca765e87c517fac52e3e5813828",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/channel_queue_test.go",
+          "blob": "a86c42e6d8d05fb2a2f20581e9b3aec6d9b17095",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/channels/lib/__tests__/channel-form-queue.test.ts",
+          "blob": "f68dddb18312c5775bfe2432105fc2458835b27a",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/channel_test_internal_test.go",
+        "controller/channel-test.go",
+        "model/channel.go",
+        "relay/channel/codex/adaptor_test.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/system-info/components/system-tasks-panel.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D10",
+      "title": "自定义余额与自动签到",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Custom balance, random check-in and ignore-auto-ban contracts retained; settings controls visible.",
+      "external_gate_ids": [
+        "provider_interop",
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B07"
+      ],
+      "stage_evidence": [
+        "evidence/B07-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/channel_custom_balance.go",
+        "service/channel_custom_balance.go",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/components/drawers/sections/channel-custom-balance-section.tsx",
+        "web/src/features/channels/components/channel-card.tsx"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/channel_custom_balance_test.go",
+          "blob": "48fec7275ff9dad252f4a89999d61fdd0a88ac67",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/channel_custom_balance_test.go",
+          "blob": "f28024a79ac470808aab4fcde3cfa362bf409931",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/channel_custom_balance_test.go",
+          "blob": "dbcc872f2dcd1c47470200ace2a60a5eaae0ad5e",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/channels/lib/__tests__/custom-balance.test.ts",
+          "blob": "da0940e01129a8b8f8900d13ee6f267c01c05680",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "common/crypto.go",
+        "controller/channel-billing.go",
+        "controller/channel-test.go",
+        "controller/relay.go",
+        "model/channel.go",
+        "model/main.go",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/lib/index.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D11",
+      "title": "自动同步、上游拦截与安全封禁",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Auto-sync persistence, upstream interception, sensitive-word/UA bans and audit contracts retained.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B08",
+        "B09"
+      ],
+      "stage_evidence": [
+        "evidence/B08-acceptance.json",
+        "evidence/B09-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/auto_sync.go",
+        "controller/relay.go",
+        "model/user.go"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/auto_sync_test.go",
+          "blob": "d6554a275314cc810f46b5c112f2feb393a0c960",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/relay_upstream_interception_test.go",
+          "blob": "90a79edc2618ad1ccf9893072af53e1571b9e1e2",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/relay_sensitive_test.go",
+          "blob": "8428c4c7d89ae205b7ea3257d5e7df4ce3eb70de",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/auto_ban_test.go",
+          "blob": "2e81b02457f3a040af58e2ebbb4bbf8b1aea0c39",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/user_auto_ban_test.go",
+          "blob": "1d05a61ff55b24c068ffd441eb5ca0702a78a593",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "middleware/relay_user_agent_blacklist_test.go",
+          "blob": "be71deb8410c9a6abfe09bb400cb7f30dfcf692a",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        }
+      ],
+      "merge_review_files": [
+        "controller/channel_upstream_update.go",
+        "controller/channel.go",
+        "controller/model_sync.go",
+        "controller/option.go",
+        "controller/passkey.go",
+        "controller/relay.go",
+        "controller/user.go",
+        "controller/video_proxy_gemini.go",
+        "controller/video_proxy.go",
+        "i18n/locales/en.yaml",
+        "i18n/locales/zh-CN.yaml",
+        "i18n/locales/zh-TW.yaml",
+        "middleware/distributor.go",
+        "model/ability.go",
+        "model/channel_cache.go",
+        "model/channel.go",
+        "model/main.go",
+        "model/model_meta.go",
+        "model/option.go",
+        "model/user.go",
+        "model/vendor_meta.go",
+        "relay/channel/openai/helper.go",
+        "relay/claude_handler.go",
+        "relay/compatible_handler.go",
+        "relay/relay_task.go",
+        "router/api-router.go",
+        "router/relay-router.go",
+        "router/video-router.go",
+        "service/channel_select.go",
+        "web/src/features/models/api.ts",
+        "web/src/features/models/index.tsx",
+        "web/src/features/system-settings/models/upstream-ratio-sync.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D12",
+      "title": "每用户 RPM 与重试配置",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Per-user RPM remains additive to existing limits; automatic groups/retries and self-profile restrictions covered.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B08",
+        "B10"
+      ],
+      "stage_evidence": [
+        "evidence/B08-acceptance.json",
+        "evidence/B10-acceptance.json"
+      ],
+      "source_paths": [
+        "setting/rate_limit.go",
+        "middleware/user-request-rate-limit.go",
+        "web/src/features/system-settings/models/routing-reliability-section.tsx"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/user_request_rate_limit_test.go",
+          "blob": "2aed5a7f92fb46bf983bce90372dc5a5533acf1c",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "middleware/user_request_rate_limit_test.go",
+          "blob": "613b85de76099f5b49104a240505692a6e85de43",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/user_request_rate_limit_test.go",
+          "blob": "d418dbd9c9b27ab3f90c3c32d3fe297c5df32c44",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "router/user_request_rate_limit_routes_test.go",
+          "blob": "c49a66ab05b35685d15491bf69bb01787af59589",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        }
+      ],
+      "merge_review_files": [
+        "controller/option.go",
+        "controller/user.go",
+        "i18n/locales/en.yaml",
+        "i18n/locales/zh-CN.yaml",
+        "i18n/locales/zh-TW.yaml",
+        "model/option.go",
+        "model/user.go",
+        "router/relay-router.go",
+        "router/video-router.go",
+        "setting/rate_limit.go",
+        "web/src/features/system-settings/models/routing-reliability-section.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/features/users/components/users-mutate-drawer.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D13",
+      "title": "登录代理与注册邀请码流程",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Login proxy and atomic registration-code completion retained; fresh login checked, no live OAuth claimed.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B08",
+        "B11"
+      ],
+      "stage_evidence": [
+        "evidence/B08-acceptance.json",
+        "evidence/B11-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/oauth.go",
+        "controller/user.go",
+        "service/http_client.go",
+        "model/option.go"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "service/login_http_client_test.go",
+          "blob": "42113fbac148334521b4eb753e5060aa9e0dcd31",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/registration_code_test.go",
+          "blob": "efc3a08f3814b1b1d7309a57ef9a900fe7b672a6",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/auth_flow_test.go",
+          "blob": "c9d53602c4ee1eb8bf1d78d8f5d77f432871af92",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/option_login_proxy_test.go",
+          "blob": "9c06e297d49e30483e5bb7b727050b6e75f83c9f",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/auth/complete-registration/__tests__/flow-response.test.ts",
+          "blob": "c2e4d79b5b5ebe847458bedee8886e7dff810307",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/auth_flow_test.go",
+        "controller/oauth.go",
+        "controller/redemption.go",
+        "controller/user.go",
+        "controller/wechat.go",
+        "i18n/locales/en.yaml",
+        "i18n/locales/zh-CN.yaml",
+        "i18n/locales/zh-TW.yaml",
+        "model/auth_flow.go",
+        "model/main.go",
+        "model/option.go",
+        "model/redemption_test.go",
+        "model/redemption.go",
+        "model/user.go",
+        "router/api-router.go",
+        "service/http_client.go",
+        "web/src/features/auth/hooks/use-auth-redirect.ts",
+        "web/src/features/auth/sign-up/components/sign-up-form.tsx",
+        "web/src/features/auth/types.ts",
+        "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+        "web/src/features/redemption-codes/lib/redemption-form.ts",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts",
+        "web/src/routes/(auth)/oauth.tsx",
+        "web/src/stores/auth-store.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D14",
+      "title": "多 Passkey、自助资料与 OAuth 绑定",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Multiple named credentials and scoped verification retained; Passkey UI moved into security center. Existing-identity fixture coverage plus local entry-flow check.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B08",
+        "B11"
+      ],
+      "stage_evidence": [
+        "evidence/B08-acceptance.json",
+        "evidence/B11-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/passkey.go",
+        "controller/oauth.go",
+        "web/src/features/security/components/passkey-card.tsx",
+        "web/src/lib/oauth.ts"
+      ],
+      "source_relocations": [
+        {
+          "from": "web/src/features/profile/components/passkey-card.tsx",
+          "to": "web/src/features/security/components/passkey-card.tsx",
+          "reason": "B08 security-center integration retains named multi-Passkey management"
+        }
+      ],
+      "tests": [
+        {
+          "file": "controller/passkey_test.go",
+          "blob": "af4c94d8ab742c557e0cc1b37383ebda34464130",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/passkey_migration_test.go",
+          "blob": "1745420f3e01b9b48ceff39abf9db62ef30b422e",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/passkey/user_test.go",
+          "blob": "43996755e707eda4b9b75fadadce71af6eb49764",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/auth/passkey/__tests__/name-validation.test.ts",
+          "blob": "9c40f3d859dfeb1d139768ec5c8566855b103d1f",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/auth_flow_test.go",
+        "controller/channel.go",
+        "controller/oauth.go",
+        "controller/passkey_test.go",
+        "controller/passkey.go",
+        "model/channel.go",
+        "model/main.go",
+        "model/passkey.go",
+        "relay/channel/openai/adaptor.go",
+        "router/api-router.go",
+        "service/passkey/session.go",
+        "web/src/features/auth/passkey/api.ts",
+        "web/src/features/auth/passkey/hooks/use-passkey-management.ts",
+        "web/src/features/channels/api.ts",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/channels/lib/channel-form.ts",
+        "web/src/features/channels/types.ts",
+        "web/src/features/users/components/data-table-row-actions.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/lib/oauth.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D15",
+      "title": "完整请求诊断与日志体验",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Raw request diagnostics, truncation/redaction, role projections and log/date behavior retained.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B08",
+        "B13"
+      ],
+      "stage_evidence": [
+        "evidence/B08-acceptance.json",
+        "evidence/B13-acceptance.json"
+      ],
+      "source_paths": [
+        "common/request_debug.go",
+        "model/log.go",
+        "web/src/features/usage-logs",
+        "common/init.go",
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "common/request_debug_test.go",
+          "blob": "fd32630012da6618dea7cb94fbd7e64f23b8b70e",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/request_debug_body_test.go",
+          "blob": "288d3d552b245934b26a13f432df74e200c0729d",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/log_request_debug_test.go",
+          "blob": "8aad7cad2687663b4b586559164e5cd55cbd9331",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx",
+          "blob": "75de7f94a8103e8631295de042303e22d8647a2f",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "constant/context_key.go",
+        "controller/user.go",
+        "model/log.go",
+        "model/main.go",
+        "model/option.go",
+        "relay/channel/api_request.go",
+        "router/api-router.go",
+        "web/src/features/profile/components/tabs/notification-tab.tsx",
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+        "web/src/features/system-settings/types.ts",
+        "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+        "web/src/features/usage-logs/components/columns/task-logs-columns.tsx",
+        "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx",
+        "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+        "web/src/features/usage-logs/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D16",
+      "title": "私有头像、OAuth 导入与缓存",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Private avatar authorization, OAuth import and cache isolation contracts retained; profile/avatar UI rendered.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B08",
+        "B13"
+      ],
+      "stage_evidence": [
+        "evidence/B08-acceptance.json",
+        "evidence/B13-acceptance.json"
+      ],
+      "source_paths": [
+        "controller/user_avatar.go",
+        "service/avatar_storage.go",
+        "web/src/components",
+        "web/src/features/profile/components/profile-avatar-control.tsx",
+        "web/src/lib/oauth.ts"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/user_avatar_test.go",
+          "blob": "ffb369c645862c39d5a0f52fbb886595cfb3890a",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/oauth_avatar_test.go",
+          "blob": "481005226f6e00f648f69ed8b24b812fac42e5e6",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/avatar_storage_test.go",
+          "blob": "19a67c75cad3626499cd93c82a6d9b410d59571f",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/components/__tests__/authenticated-avatar-image.test.tsx",
+          "blob": "834381c792d8101049edfc80aa32a079b64691c0",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/usage-logs/components/__tests__/user-avatar-visibility.test.tsx",
+          "blob": "35c4a571b06a7aca4c3bd0256314d9adc9af6297",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/auth_flow_test.go",
+        "controller/oauth.go",
+        "controller/user_manage_test.go",
+        "controller/user.go",
+        "model/main.go",
+        "model/user.go",
+        "router/api-router.go",
+        "web/src/components/layout/components/mobile-drawer.tsx",
+        "web/src/features/profile/api.ts",
+        "web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx",
+        "web/src/features/profile/hooks/use-profile.ts",
+        "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+        "web/src/features/usage-logs/components/columns/task-logs-columns.tsx",
+        "web/src/features/users/components/users-columns.tsx",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/lib/oauth.ts",
+        "web/src/stores/auth-store.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D17",
+      "title": "全局主题与持久化迁移",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Global/default/personal theme precedence and old storage contracts retained; dark navigation/reload and light mobile rendering checked.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B09",
+        "B15"
+      ],
+      "stage_evidence": [
+        "evidence/B09-acceptance.json",
+        "evidence/B15-acceptance.json"
+      ],
+      "source_paths": [
+        "web/src/context",
+        "web/src/lib",
+        "setting/theme_setting_test.go",
+        "web/src/stores/system-config-store.ts"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/theme_compat_test.go",
+          "blob": "d2d1b9e6a1159305d40344c0e86de34eda32f450",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "setting/theme_setting_test.go",
+          "blob": "d27fda49df76fbca9a9c8942f6d7db7de8311d95",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/context/__tests__/theme-customization-provider.test.tsx",
+          "blob": "14fd4c622627764a2cdf947f82123bd820df4a93",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/lib/__tests__/theme-customization.test.ts",
+          "blob": "e30d1af88b2a5439958edab2d4cccd7c40d44389",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/option.go",
+        "model/option.go",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D18",
+      "title": "公开公告与登录/移动界面",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Public banner/interval/visibility and login/header contracts retained; mobile light/dark and keyboard checked.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B03",
+        "B09",
+        "B15"
+      ],
+      "stage_evidence": [
+        "evidence/B03-acceptance.json",
+        "evidence/B09-acceptance.json",
+        "evidence/B15-acceptance.json"
+      ],
+      "source_paths": [
+        "web/src/features/banners",
+        "web/src/features/auth/sign-in",
+        "web/src/components/layout"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "router/banner_router_test.go",
+          "blob": "4cd5575f4c252c5849d652f7fcf20e79b666eb05",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "model/banner_migration_test.go",
+          "blob": "883242098e4296b663ac467152fa5974c1be80b4",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/banners/components/__tests__/banner-form-layout.test.tsx",
+          "blob": "cb7a60ba1cda33370e262984248900ed237f5760",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/auth/components/__tests__/auth-login-layout.test.ts",
+          "blob": "0006fd2cbd7935597f0da45f0ff8d6850bb67998",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/components/layout/components/__tests__/header-layout.test.tsx",
+          "blob": "44e1d9dd8436449940a32663af36764ebd5672ba",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/audit.go",
+        "model/main.go",
+        "router/api-router.go",
+        "web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx",
+        "web/src/features/system-settings/content/announcements-section.tsx",
+        "web/src/hooks/use-notifications.ts",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D19",
+      "title": "可用性/安全榜单及用量指标",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Availability history fallback, ranking permissions and user usage semantics retained.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B09",
+        "B13"
+      ],
+      "stage_evidence": [
+        "evidence/B09-acceptance.json",
+        "evidence/B13-acceptance.json"
+      ],
+      "source_paths": [
+        "web/src/features/rankings",
+        "web/src/features/dashboard"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "service/rankings_security_test.go",
+          "blob": "5072fbe3a76357a3c6dbf8cbd194ae56a9efcfbe",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/usedata_flow_test.go",
+          "blob": "a5bc50113dacb2f002fb3625388384682b0a07dc",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/rankings/components/__tests__/availability.test.tsx",
+          "blob": "b2efa6c5350ac79e3efc7e96c5ed9309d99ad934",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/rankings/components/__tests__/visibility.test.tsx",
+          "blob": "8b4c647afc82d9a3095f1f9c030612bb8b886559",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "pkg/perf_metrics/metrics.go",
+        "router/api-router.go",
+        "web/src/features/rankings/hooks/use-rankings.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D20",
+      "title": "订阅兑换、注册码与 CSV 导出",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Registration/subscription/balance rewards, CSV and batch-management contracts retained; concurrent accounting fixtures and reward controls covered.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B10",
+        "B11",
+        "B13"
+      ],
+      "stage_evidence": [
+        "evidence/B10-acceptance.json",
+        "evidence/B11-acceptance.json",
+        "evidence/B13-acceptance.json"
+      ],
+      "source_paths": [
+        "model/redemption.go",
+        "controller/redemption.go",
+        "web/src/features/redemption-codes"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "model/redemption_test.go",
+          "blob": "c1659adcc56df817d25fe401337e51c36df9695d",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/redemption_export_test.go",
+          "blob": "402717263c5391cb8d335d83a91d6a50b228becd",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/registration_code_test.go",
+          "blob": "efc3a08f3814b1b1d7309a57ef9a900fe7b672a6",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/redemption-codes/lib/__tests__/status.test.ts",
+          "blob": "c5e26dfc335579590c992fc5368cc23228caa103",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "controller/audit.go",
+        "controller/redemption.go",
+        "controller/user.go",
+        "model/redemption_test.go",
+        "model/redemption.go",
+        "model/subscription.go",
+        "router/api-router.go",
+        "web/src/features/redemption-codes/api.ts",
+        "web/src/features/redemption-codes/components/data-table-bulk-actions.tsx",
+        "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+        "web/src/features/redemption-codes/lib/redemption-form.ts",
+        "web/src/features/wallet/hooks/use-redemption.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D21",
+      "title": "按余额分档签到奖励",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Balance-tier boundaries, daily idempotency/timezone and reward-limit contracts retained across wallet expansion.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B11",
+        "B12"
+      ],
+      "stage_evidence": [
+        "evidence/B11-acceptance.json",
+        "evidence/B12-acceptance.json"
+      ],
+      "source_paths": [
+        "model/checkin.go",
+        "setting/operation_setting/checkin_setting.go"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "model/checkin_test.go",
+          "blob": "9e15a357e111fb63aecac35298d27c76aafc32a9",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "setting/operation_setting/checkin_setting_test.go",
+          "blob": "a886bd6c2f4af781fc556abcc98d56b7cc3628e1",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/system-settings/general/__tests__/checkin-settings-section.test.tsx",
+          "blob": "9e186a44adf51e7e29c13f8ae6f1ce1e8572193e",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "model/option.go",
+        "web/src/features/system-settings/types.ts",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D22",
+      "title": "聊天、Bing 搜索与批量工具调用",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "History-before-send, batched search/tools, stream errors, cancellation and existing no-round-cap policy retained.",
+      "external_gate_ids": [
+        "provider_interop"
+      ],
+      "stage_ids": [
+        "B04",
+        "B15"
+      ],
+      "stage_evidence": [
+        "evidence/B04-acceptance.json",
+        "evidence/B15-acceptance.json"
+      ],
+      "source_paths": [
+        "web/src/features/playground",
+        "controller/relay.go",
+        "controller/playground_web_search.go"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "controller/playground_web_search_test.go",
+          "blob": "dba81eab8e06e724aa52b0f41d54e8dfafa63342",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "controller/playground_web_search_batch_test.go",
+          "blob": "9043f50b449d2f3a04f655cfdec3eb81da78c6ce",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/playground/hooks/__tests__/stream-errors.test.ts",
+          "blob": "d951b73606c44ae4acfec704d1bbab50d0f86cce",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/playground/lib/streaming/__tests__/payload-builder.test.ts",
+          "blob": "4d1b18bcb1e89c26e810ab1c58c996e7387ce1a9",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "constant/context_key.go",
+        "service/text_quota_test.go",
+        "web/package.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D23",
+      "title": "绘图画布、持久化与图片入口",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Image routes/auth/billing, editing/masks/references/retry and account-isolated canvas persistence contracts retained; mobile canvas rendered.",
+      "external_gate_ids": [
+        "provider_interop"
+      ],
+      "stage_ids": [
+        "B03",
+        "B15"
+      ],
+      "stage_evidence": [
+        "evidence/B03-acceptance.json",
+        "evidence/B15-acceptance.json"
+      ],
+      "source_paths": [
+        "router/relay-router.go",
+        "web/src/features/playground/drawing",
+        "web/src/stores/drawing-store.ts",
+        "docs/playground-drawing.md"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "relay/playground_images_test.go",
+          "blob": "9df92aac7e28c56db7f7a6065bfb0e12715a8723",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "middleware/playground_images_test.go",
+          "blob": "54d59ece641293f49ba43523e23160b5e5d28355",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "web/src/features/playground/drawing/__tests__/workspace.test.tsx",
+          "blob": "ac0b8531142e8d7dd2d99a7ca9f0400cec7312b7",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/playground/drawing/hooks/__tests__/retry.test.tsx",
+          "blob": "d8c56fa557b8b77c733a9f80a30838481f52bb6a",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/playground/drawing/hooks/__tests__/settings-and-persistence.test.tsx",
+          "blob": "7fe5d601b76b8991ad92f610feb2c252276bb133",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "middleware/distributor.go",
+        "relay/channel/openai/adaptor.go",
+        "router/relay-router.go",
+        "web/bun.lock",
+        "web/package.json",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D24",
+      "title": "共享控件、七语翻译与测试配置",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Shared inputs/dialog contracts and seven-locale keys retained; all protected frontend paths discovered in final 210-file suite.",
+      "external_gate_ids": [],
+      "stage_ids": [
+        "B15",
+        "B17"
+      ],
+      "stage_evidence": [
+        "evidence/B15-acceptance.json",
+        "evidence/B17-acceptance.json"
+      ],
+      "source_paths": [
+        "web/package.json",
+        "web/vitest.channels.config.ts",
+        "web/vitest.playground.config.ts",
+        "web/vitest.drawing.config.ts",
+        "web/src/i18n",
+        "web/src/components/data-table/toolbar/bulk-actions.tsx",
+        "web/src/features/channels/components/dialogs"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "web/src/components/ui/__tests__/input-number.test.tsx",
+          "blob": "7b9cc90b74990db57df86b15fdc3da3c7c84ee16",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/lib/__tests__/number-input.test.ts",
+          "blob": "fdb43a8ff8df89666ad13d697ae7e96a3217c8f8",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        },
+        {
+          "file": "web/src/features/auth/components/__tests__/terms-footer-i18n.test.tsx",
+          "blob": "976e5bfe2b3f38910bb3137acdf48179227950e3",
+          "evidence": "evidence/runs/B18-web-regression/result.json",
+          "discovery": "evidence/runs/B18-vitest-discovery/result.json"
+        }
+      ],
+      "merge_review_files": [
+        "web/src/components/data-table/toolbar/bulk-actions.tsx",
+        "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+        "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+        "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+        "web/src/features/channels/components/dialogs/param-override-editor-dialog.tsx",
+        "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+        "web/src/features/keys/components/api-keys-mutate-drawer.tsx",
+        "web/src/features/models/components/dialogs/create-deployment-drawer.tsx",
+        "web/src/features/models/components/dialogs/extend-deployment-dialog.tsx",
+        "web/src/features/profile/components/__tests__/profile-avatar-control.test.tsx",
+        "web/src/features/profile/components/tabs/notification-tab.tsx",
+        "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+        "web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx",
+        "web/src/features/system-settings/general/channel-affinity/index.tsx",
+        "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+        "web/src/features/users/components/user-quota-dialog.tsx",
+        "web/src/i18n/locales/_reports/_sync-report.json",
+        "web/src/i18n/locales/en.json",
+        "web/src/i18n/locales/fr.json",
+        "web/src/i18n/locales/ja.json",
+        "web/src/i18n/locales/ru.json",
+        "web/src/i18n/locales/vi.json",
+        "web/src/i18n/locales/zh-TW.json",
+        "web/src/i18n/locales/zh.json",
+        "web/src/i18n/static-keys.ts"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D25",
+      "title": "版本构建、工作树与项目治理",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Date/SHA and release-tag version contracts, Windows worktree packaging, license resources and project/author identity retained; platform limits recorded.",
+      "external_gate_ids": [],
+      "stage_ids": [
+        "B16"
+      ],
+      "stage_evidence": [
+        "evidence/B16-acceptance.json"
+      ],
+      "source_paths": [
+        ".github/workflows/release.yml",
+        "makefile",
+        "web/rsbuild.config.ts",
+        ".gitignore",
+        "AGENTS.md",
+        "scripts/version.sh"
+      ],
+      "source_relocations": [],
+      "tests": [],
+      "merge_review_files": [
+        ".github/workflows/release.yml"
+      ],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    },
+    {
+      "id": "D26",
+      "title": "计费安全与独立 relaykit",
+      "status": "verified",
+      "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "conclusion": "Input bounds, explicit zeros, checked saturation/audit, ratio guards and accounting contracts retained; independent relaykit build/test and database fixtures covered.",
+      "external_gate_ids": [
+        "production_snapshot"
+      ],
+      "stage_ids": [
+        "B04",
+        "B10",
+        "B11",
+        "B14"
+      ],
+      "stage_evidence": [
+        "evidence/B04-acceptance.json",
+        "evidence/B10-acceptance.json",
+        "evidence/B11-acceptance.json",
+        "evidence/B14-acceptance.json"
+      ],
+      "source_paths": [
+        "common/quota_math.go",
+        "relay/helper/valid_request.go",
+        "service/quota.go",
+        "pkg/billingexpr/expr.md",
+        "relaykit/go.mod"
+      ],
+      "source_relocations": [],
+      "tests": [
+        {
+          "file": "common/quota_math_test.go",
+          "blob": "efa8b9ebc2c2f72859275269b017dd165c921ba7",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "relay/helper/openai_image_request_test.go",
+          "blob": "455571130ac5ce82c793c6d009e30962ca428786",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "relay/helper/max_tokens_bounds_test.go",
+          "blob": "7cdcba874d5744ccaaeb013cf3ec485e1f9c57ae",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/quota_saturation_test.go",
+          "blob": "5be73c96d45a1598059d6a24035d1c4adf1cc1db",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        },
+        {
+          "file": "service/tiered_settle_test.go",
+          "blob": "29a3bfb4fdab0138222bef97159d88d931d09048",
+          "evidence": "evidence/B18-backend-regression.json",
+          "discovery": "Referenced Go file has no build constraints and its package is covered by combined final regression"
+        }
+      ],
+      "merge_review_files": [],
+      "browser_evidence": "evidence/B18-browser-acceptance.json",
+      "source_equivalence": "evidence/B18-source-equivalence.json"
+    }
+  ],
+  "backend": "evidence/B18-backend-regression.json",
+  "external_limitations": [
+    "No sanitized production snapshot",
+    "No authorized real provider configuration/calls"
+  ]
+}

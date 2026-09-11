@@ -1,0 +1,27 @@
+{
+  "id": "B18-go-regression",
+  "command": [
+    "go",
+    "test",
+    "-mod=readonly",
+    "./...",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+  "started_at": "2026-09-11T12:44:11.160Z",
+  "finished_at": "2026-09-11T12:46:19.917Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

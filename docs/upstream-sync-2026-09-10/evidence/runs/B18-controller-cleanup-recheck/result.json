@@ -1,0 +1,32 @@
+{
+  "id": "B18-controller-cleanup-recheck",
+  "command": [
+    "go",
+    "test",
+    "-mod=readonly",
+    "./controller",
+    "-run",
+    "^(TestManageUserDeleteReturnsImmediatelyAndUnknownActionFails|TestUpdateSelfCannotChangeRequestsPerMinute)$",
+    "-count=1",
+    "-timeout",
+    "1m",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "started_at": "2026-09-11T13:17:27.874Z",
+  "finished_at": "2026-09-11T13:17:33.998Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

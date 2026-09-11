@@ -1,0 +1,316 @@
+{
+  "status": "verified",
+  "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "checked_at": "2026-09-11T14:11:52.776Z",
+  "final_regression_source": "d46dec4abad83d575d7a7d74558508c898b0193b",
+  "test_only_delta": [
+    "controller/access_token_audit_test.go",
+    "controller/user_manage_test.go"
+  ],
+  "runtime_inputs": [
+    {
+      "path": "web",
+      "before": "26263e697f1b6e5e98180d1a1a824a59608542af",
+      "after": "26263e697f1b6e5e98180d1a1a824a59608542af"
+    },
+    {
+      "path": "relaykit",
+      "before": "dbb8b7a81f0c364a1a41c3a9a4d4c39af8c9f248",
+      "after": "dbb8b7a81f0c364a1a41c3a9a4d4c39af8c9f248"
+    },
+    {
+      "path": "go.mod",
+      "before": "05e01799f4c3866ff254c0bc3724b0d8af81edf7",
+      "after": "05e01799f4c3866ff254c0bc3724b0d8af81edf7"
+    },
+    {
+      "path": "go.sum",
+      "before": "cb4c676d0916e7de1238ad7239f2bd71474400f6",
+      "after": "cb4c676d0916e7de1238ad7239f2bd71474400f6"
+    }
+  ],
+  "database": {
+    "source": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+    "critical_unchanged": [
+      {
+        "path": "common/database.go",
+        "before": "44e8753139fa656c2585ed67bd2fc2f261864ffd",
+        "after": "44e8753139fa656c2585ed67bd2fc2f261864ffd"
+      },
+      {
+        "path": "model/migration_dialector.go",
+        "before": "c27bd71aa2a9fa04693cc8ae3578ea53b7375d8d",
+        "after": "c27bd71aa2a9fa04693cc8ae3578ea53b7375d8d"
+      },
+      {
+        "path": "model/option_primary_key_migration.go",
+        "before": "f86517bca501ddb715faaf25991bf6309b2b199c",
+        "after": "f86517bca501ddb715faaf25991bf6309b2b199c"
+      },
+      {
+        "path": "model/model_active_name_migration.go",
+        "before": "cade8cb3f73ddf116d6e14daa65ff4cda04cdc1f",
+        "after": "cade8cb3f73ddf116d6e14daa65ff4cda04cdc1f"
+      },
+      {
+        "path": "model/token_migration.go",
+        "before": "c289652ef3d4ddf84c045e43577113bec7ae7f4c",
+        "after": "c289652ef3d4ddf84c045e43577113bec7ae7f4c"
+      },
+      {
+        "path": "model/passkey_migration.go",
+        "before": "b4e711b5b051a87f96a3408e9c4fd6c96f15d17c",
+        "after": "b4e711b5b051a87f96a3408e9c4fd6c96f15d17c"
+      },
+      {
+        "path": "model/banner_migration.go",
+        "before": "ddc8050cb764705d54b73c15bb780b21e9224dd9",
+        "after": "ddc8050cb764705d54b73c15bb780b21e9224dd9"
+      },
+      {
+        "path": "model/frontend_option_migration.go",
+        "before": "e8ac9f27e11203bd2e8ed485795f90a725e1f541",
+        "after": "e8ac9f27e11203bd2e8ed485795f90a725e1f541"
+      },
+      {
+        "path": "model/prefill_group_migration.go",
+        "before": "72cdc03fcbb09af92dde3252daa8837e97a34afa",
+        "after": "72cdc03fcbb09af92dde3252daa8837e97a34afa"
+      },
+      {
+        "path": "model/task_plugin.go",
+        "before": "2213582f957733ede54e567dd5ddfc61dcac5c0d",
+        "after": "2213582f957733ede54e567dd5ddfc61dcac5c0d"
+      },
+      {
+        "path": "model/migrations/wallet64_mysql.sql",
+        "before": "401f96d7ff08b5f0db95862cbece4bcdaff9b22d",
+        "after": "401f96d7ff08b5f0db95862cbece4bcdaff9b22d"
+      },
+      {
+        "path": "model/migrations/wallet64_postgres.sql",
+        "before": "8de62cd933c9fc4ea77fc4326a64dcbaa135f809",
+        "after": "8de62cd933c9fc4ea77fc4326a64dcbaa135f809"
+      },
+      {
+        "path": "go.sum",
+        "before": "cb4c676d0916e7de1238ad7239f2bd71474400f6",
+        "after": "cb4c676d0916e7de1238ad7239f2bd71474400f6"
+      }
+    ],
+    "model_file_reviews": [
+      {
+        "path": "model/audit_log.go",
+        "before": "02cc93108f490d875baaffc7b055ac2a61765b73",
+        "after": "5473a923e04f43e037fe3054330aacd1188fb698",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "4b524a30f717f6b731a2ee9f1004bf6670a41ad2693bdc157c305ca21e3456e5"
+      },
+      {
+        "path": "model/channel.go",
+        "before": "4ee11c436d536fb9edfffd2ce17abdb340cbe0a3",
+        "after": "b3a5d7c6cf22326c1a86bf18d575c7c14aa1a201",
+        "review": "any aliases and equivalent fixed-length key iteration",
+        "diff_sha256": "3fee98819d5b2716ca87e67b5262673095eef4925709e5a8bfb6048ec4a19e00"
+      },
+      {
+        "path": "model/channel_cache.go",
+        "before": "189ff8f37d357b8fbb5eab8daa9489fc24f9d44f",
+        "after": "e57f469b1f71ca380027b8d923714b4e1d08fbd4",
+        "review": "Single-use Split iterator; same group sequence",
+        "diff_sha256": "a91e5b977dfda78a99ae36ce720c2a7b16341fb654535fd7fc04ca6e1f762908"
+      },
+      {
+        "path": "model/channel_satisfy.go",
+        "before": "d1c6ffd306b611cb61d345e6f5dd6093418b29e3",
+        "after": "14a40a0a841c3f80c60d3ac823704aaed54088e7",
+        "review": "Equivalent slices.Contains membership",
+        "diff_sha256": "70051b0f3ac5b7248350aa6d02886c6ef495134dd9300e0a1fa7a06c6afe9dc8"
+      },
+      {
+        "path": "model/checkin.go",
+        "before": "f97b1139a948c72a9b27ea64fb8e714f90d49edc",
+        "after": "842189480a6603ae250b66c3ed3dbcab3a1ea698",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "3903602214435d0646c0b4ace40176c51a93d19a94db4cdc9adf61ebaa917bc3"
+      },
+      {
+        "path": "model/gorm_logger.go",
+        "before": "e48f057b73ee9052ea135be87263260110e47da5",
+        "after": "f2cd9890322a41b7b40cb8db0a68c971d4d7ee88",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "d99125727fdd7b0fcd5bdbc4106d35e91447a5289e3f3615c542b11e6ca0f9a3"
+      },
+      {
+        "path": "model/log.go",
+        "before": "91ac857789a10d1438836597bb5c7a5219173d3e",
+        "after": "b9fbc8eb2c869ee95b907ef5d0ab522bbd37d78a",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "dc69b698482fcaa92d75f5f21930504b6f7f6917fdb4d4102d2a3069b05cf635"
+      },
+      {
+        "path": "model/main.go",
+        "before": "50bdcea1ad85eccf5f6cd557be39ea80e75303d3",
+        "after": "7b32a1dff7917035d8c7abd40429f4066662f6ad",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "35fd85f64601a2fb22f63ec03ecf16c6c8daaac9a2092fd4e3a54a97c9de073c"
+      },
+      {
+        "path": "model/option.go",
+        "before": "19fc08472d3497ca94a023c19854985dbcccd902",
+        "after": "04e7396996ac5ce51febb3362981183c710c2a1b",
+        "review": "maps.Copy into the same initialized OptionMap",
+        "diff_sha256": "1977213a9a8d742a803020e8ccfe21f9fb7907e39e3fc5b758af9ad6b25aaf9c"
+      },
+      {
+        "path": "model/passkey.go",
+        "before": "33cdb0b00c0da7bb3313840afa27a779f7edc0f5",
+        "after": "48fc98f85f6788e58c212ebbc8bb3f6ac4bba0df",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "856e725af2dee71b5d84385ce785eb21b546f09b5b5efdbe27fc65e6831c1560"
+      },
+      {
+        "path": "model/perf_metric.go",
+        "before": "f9c33c8519893a9ae896b3b462e2298f65e7362f",
+        "after": "f1ae6f941b080f2e52f0203addf91572bf5a8174",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "ea2300e6209d8704021ee6a5cf704ffad5b7c4a21cbd9bbb1f6f2af50c4f1236"
+      },
+      {
+        "path": "model/prefill_group.go",
+        "before": "0d3e3d1ef0287c908155d4b9de83de5c1206909a",
+        "after": "a50db1ec2b0f1d5eeec82f27e5372ee250393ef2",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "2b5b695b7790d2c3c76cc4400187ad5f15e51e378ee70cc3ea244304838f5dd2"
+      },
+      {
+        "path": "model/pricing.go",
+        "before": "aad8b633ea053aa09df4756bffdb8a3ce747c4e2",
+        "after": "a88934aab26a1edd8861ee915704c97c80cf11dd",
+        "review": "any aliases and shallow copy into initialized facts",
+        "diff_sha256": "95ea99541a46becfa6c5a98fdfc3f6edadf55686b89826453dab2e453f875eb8"
+      },
+      {
+        "path": "model/quota_reserve.go",
+        "before": "37051f7e784b519a280377d20b25f0ca95bf4d53",
+        "after": "a00e0509b00d852188d9e1f33dcbf28909da3fd5",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "3eb668e831a725bea3b09eba2aa1deb683ca57527bbcb351f4de7cd18be5f43c"
+      },
+      {
+        "path": "model/redemption.go",
+        "before": "58494b970b2adce348756959b48d13787dad49a9",
+        "after": "4c7fdce96b93599e57bcb655994ade7acc873139",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "52ce8ff5c9efcc40dfb18e78402fd83df41410c8dcdf507c537c9cbafd2d7aa9"
+      },
+      {
+        "path": "model/subscription.go",
+        "before": "6afb3644f3cf1a16f0cd323bbdfa176abfaa1c5e",
+        "after": "de1176706771e63981bfa191ff9b9df00fbd5fa9",
+        "review": "any aliases and equivalent integer max(value,0)",
+        "diff_sha256": "2fed765b98df8cc0ef78d375603759992243cb7afe49d8521896de28d2e31da8"
+      },
+      {
+        "path": "model/task.go",
+        "before": "72e6f607311316b178f66215f465e0f3cc75df49",
+        "after": "34ff2f4973dfb12885d83a52befdbcf7e816bd36",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "49ed1736fe81b69c485f8756172d5a5cd9b6d2c5e541b93319829f683dfb248e"
+      },
+      {
+        "path": "model/token.go",
+        "before": "95cbabae6d394d863bf5b7eed3bf26a6bc0dbf5a",
+        "after": "bd2d5bf19d33d555e783752ff3849527727b02ab",
+        "review": "any aliases and single-use IP Split iterator",
+        "diff_sha256": "a76184f02fba17371a229ecd92a790f7313fd4e964ee0f2d9509025d4bacb43b"
+      },
+      {
+        "path": "model/topup.go",
+        "before": "a8b91b77500e14c5e40224fd2a03049ca4496233",
+        "after": "9e031d0f42a8c42950bc65eba68e2cdbfed822e7",
+        "review": "any aliases and maps.Copy with unchanged quota overwrite order",
+        "diff_sha256": "e1c821c5a9794317b1b3b446b6c88257bfbc26f21780a5e1e166b15b256d0fb7"
+      },
+      {
+        "path": "model/twofa.go",
+        "before": "3427745cccac5bb6a83f84f72fb306f68993725b",
+        "after": "d1d050ef17bd948ee19ded2e8446f2f57d743ec8",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "c6a8c69c0e80060c854edf1a3e3833585711872ed01cebb3f920ca88be736b6b"
+      },
+      {
+        "path": "model/usedata.go",
+        "before": "4190235bc2d927ead22154695b8c6a26b8329299",
+        "after": "266fd88b1c5c8ce9748722b66285599a7adc39bd",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "ec6594a3c0a426363ae46e099a1493dddf222e80f82d1b40f8eb30e5d8b0f9f0"
+      },
+      {
+        "path": "model/user.go",
+        "before": "1b41ea68ef3c8e2619a129e1a6a9840abc060f88",
+        "after": "a81923f1e75ee90838025b4e26fe81fa0d9d460f",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "78f1d43cb9ece57d2fa28c6b0adbe6eac052d5893c95b2ebc57d46a3cb2556d6"
+      },
+      {
+        "path": "model/user_auth_cache.go",
+        "before": "2a79e528274bd7cbd221e5ddd72a04a55b4609c9",
+        "after": "57ede5073704664d5eed04eda2cb3e3302884ab1",
+        "review": "any alias and equivalent integer max bounds",
+        "diff_sha256": "4d416f1d53489b2cc63ef0e5dbf4bb7ba6dc79e66064d90ffed47c5e29a4069d"
+      },
+      {
+        "path": "model/user_cache.go",
+        "before": "3c6c455f9f1a5d34dab4f11a69c15c2d8efb93e1",
+        "after": "084d8e308f6b943e2c9414a0b3d8f2b41c8c5402",
+        "review": "interface{} to identical any alias only",
+        "diff_sha256": "200178271d4a3aca01920d9b9f71866721ca5d872016667efd823b8b86a7664e"
+      },
+      {
+        "path": "model/user_session.go",
+        "before": "8857aaf207ebd2bd336a62516280e9a5f38b1fad",
+        "after": "8b20785994092a01481f6a170cee08007551ad77",
+        "review": "any aliases and equivalent cleanup batch min bounds",
+        "diff_sha256": "a80cfec1d0447f18adaa12771b069e079ac4811b024c0e18c95b1150485e34f6"
+      },
+      {
+        "path": "model/utils.go",
+        "before": "63d51c4b88f36e1614d39ceb4cc18f0fb60cf8ec",
+        "after": "aef2f721088e08584fcc950866ecfbb9948406a0",
+        "review": "Equivalent fixed-count range loops",
+        "diff_sha256": "c8a10915188bc8da725d07e029c2f16208850ce00aab7da1f03d0040db3c8bff"
+      }
+    ],
+    "module_versions": "Unchanged; two indirect dependencies reordered only",
+    "additional_review": [
+      "common/quota_math.go changes only AuditMap interface{} to any aliases; all bounds/converters unchanged",
+      "common/init.go uses single-use SplitSeq in unchanged environment parsing loops",
+      "setting/config/config.go uses any/reflect.Pointer aliases; CutPrefix preserves prefix matching and suffix extraction",
+      "Task usage facts retain ordered maps.Copy overwrite behavior; funding retry count and wallet/quota bounds unchanged"
+    ],
+    "matrix": [
+      "evidence/B11-acceptance.json",
+      "evidence/B12-acceptance.json",
+      "evidence/B13-acceptance.json",
+      "evidence/B14-acceptance.json"
+    ],
+    "limits": "Released/synthetic local fixtures; no production snapshot rehearsal"
+  },
+  "desktop": {
+    "source": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+    "unchanged_paths": [
+      "electron",
+      "scripts",
+      ".github",
+      "LICENSE",
+      "NOTICE",
+      "THIRD-PARTY-LICENSES.md",
+      "web/rsbuild.config.ts",
+      "web/package.json",
+      "web/bun.lock"
+    ],
+    "evidence": "evidence/B16-acceptance.json",
+    "limits": "B16 Windows installers validate unchanged packaging. The final B18 standalone binary embeds the final frontend; B16 installers are not final-candidate installers."
+  }
+}

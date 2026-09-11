@@ -1,0 +1,14 @@
+{
+  "status": "verified",
+  "code_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+  "parents": [
+    "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
+    "bdef117505247769268b209665fb3ad7554c3da7"
+  ],
+  "review": "evidence/B17-merge-review.json",
+  "ancestry": {
+    "upstream": true,
+    "downstream": true
+  },
+  "final_acceptance": "B18 pending"
+}

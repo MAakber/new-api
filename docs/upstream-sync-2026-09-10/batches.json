@@ -2673,7 +2673,7 @@
     ],
     "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
     "upstreamCommits": [],
-    "status": "in_progress",
+    "status": "verified",
     "units": [
       {
         "id": "B17.1",
@@ -2697,12 +2697,19 @@
       {
         "id": "B17.3",
         "action": "创建双亲合并提交并核对上下游祖先关系",
-        "status": "applying"
+        "status": "verified",
+        "evidence": [
+          "evidence/B17-acceptance.json"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "建立合并前检查点，执行固定目标真实 merge --no-ff --no-commit"
+    "codeCommits": [
+      "d46dec4abad83d575d7a7d74558508c898b0193b"
+    ],
+    "evidence": [
+      "evidence/B17-acceptance.json"
+    ],
+    "nextAction": "B18 final candidate acceptance"
   },
   {
     "id": "B18",
@@ -2713,27 +2720,59 @@
     ],
     "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
     "upstreamCommits": [],
-    "status": "pending",
+    "status": "blocked",
     "units": [
       {
         "id": "B18.1",
         "action": "对最终代码提交运行前后端、独立模块、所有保护测试与浏览器验收",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B18-local-acceptance.json"
+        ]
       },
       {
         "id": "B18.2",
         "action": "完成三库迁移/对账与供应商/任务生命周期联调",
-        "status": "pending"
+        "status": "blocked",
+        "local_matrix": "verified",
+        "blockers": [
+          "production_snapshot",
+          "provider_interop"
+        ],
+        "evidence": [
+          "evidence/B18-source-equivalence.json",
+          "evidence/B18-local-acceptance.json"
+        ]
       },
       {
         "id": "B18.3",
         "action": "逐项完成 153/120/26 项最终复核及全部质量门槛",
-        "status": "pending"
+        "status": "blocked",
+        "final_code_review": "verified",
+        "counts": {
+          "upstream": 153,
+          "downstream": 120,
+          "features": 26
+        },
+        "detail": "All final code/contract rows reviewed; all-gate acceptance awaits the two external requirements.",
+        "evidence": [
+          "evidence/B18-local-acceptance.json"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "对最终代码提交运行前后端、独立模块、所有保护测试与浏览器验收"
+    "codeCommits": [
+      "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "b28997e8d4e52f1198ae5b2aa91ba0df328161f3",
+      "33398851f677845f450b9cf6f7af546d5a218e0c"
+    ],
+    "evidence": [
+      "evidence/B18-local-acceptance.json",
+      "evidence/B18-preservation-review.json",
+      "evidence/B18-browser-acceptance.json",
+      "evidence/B18-source-equivalence.json",
+      "evidence/B18-backend-regression.json"
+    ],
+    "nextAction": "Complete sanitized production snapshot rehearsal and authorized real-provider interoperability; do not repeat unchanged local suites."
   },
   {
     "id": "B19",
@@ -2742,28 +2781,51 @@
     "depends_on": [
       "B18"
     ],
-    "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
+    "dependencyStatus": "A33: B19.1/B19.2 may follow verified B18.1 for reversible local main integration. Whole B19 still depends on every B18 gate; no push/deployment.",
     "upstreamCommits": [],
-    "status": "pending",
+    "status": "in_progress",
     "units": [
       {
         "id": "B19.1",
         "action": "核对最新下游 main 与新提交，必要时补充保护及重验",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B19-main-backup.json",
+          "evidence/B19-original-plan-manifest.json"
+        ]
       },
       {
         "id": "B19.2",
         "action": "向下游 main 保留历史合并；PR 使用模板且不伪填人工确认",
-        "status": "pending"
+        "status": "applying",
+        "evidence": [
+          "evidence/B19-main-intent.json"
+        ]
       },
       {
         "id": "B19.3",
-        "action": "记录最终 SHA、证据、迁移/回退边界和完成状态",
+        "action": "记录本地 SHA、证据与迁移/回退边界；外部门槛通过后才能确认完整交付",
         "status": "pending"
       }
     ],
     "codeCommits": [],
-    "evidence": [],
-    "nextAction": "核对最新下游 main 与新提交，必要时补充保护及重验"
+    "evidence": [
+      "evidence/B19-main-backup.json",
+      "evidence/B19-main-intent.json"
+    ],
+    "nextAction": "Commit local acceptance records, then fast-forward unchanged original local main to the integration result. No push or deployment.",
+    "unitPrerequisites": {
+      "B19.1": [
+        "B18.1"
+      ],
+      "B19.2": [
+        "B18.1",
+        "B19.1"
+      ],
+      "B19.3": [
+        "B18",
+        "B19.2"
+      ]
+    }
   }
 ]

@@ -1,0 +1,62 @@
+=== RUN   TestSecurityAccountDeletionConcurrentRequestsHaveOneWinner
+    security_account_test.go:222: database: sqlite 3.50.4
+[ERR] 2026/09/11 - 20:49:23 | SYSTEM | auth session internal error (DELETE /api/user/self): database is locked (5) (SQLITE_BUSY) 
+    security_account_test.go:242: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/security_account_test.go:242
+        	Error:      	Not equal: 
+        	            	expected: 1
+        	            	actual  : 0
+        	Test:       	TestSecurityAccountDeletionConcurrentRequestsHaveOneWinner
+--- FAIL: TestSecurityAccountDeletionConcurrentRequestsHaveOneWinner (0.38s)
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/expired
+    security_enrollment_test.go:755: database: sqlite 3.50.4
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/revoked
+    security_enrollment_test.go:755: database: sqlite 3.50.4
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/session_version
+    security_enrollment_test.go:755: database: sqlite 3.50.4
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/user_version
+    security_enrollment_test.go:755: database: sqlite 3.50.4
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/method
+    security_enrollment_test.go:755: database: sqlite 3.50.4
+=== RUN   TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/other_session
+    security_enrollment_test.go:755: database: sqlite 3.50.4
+--- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization (1.77s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/expired (0.30s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/revoked (0.29s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/session_version (0.29s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/user_version (0.30s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/method (0.30s)
+    --- PASS: TestSecurityEnrollmentPendingPasskeyRejectsChangedAuthorization/other_session (0.30s)
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations
+    user_manage_test.go:555: database: sqlite 3.50.4, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations
+    user_manage_test.go:555: database: sqlite 3.50.4, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations
+    user_manage_test.go:555: database: sqlite 3.50.4, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference
+    user_manage_test.go:555: database: sqlite 3.50.4, separate log database: false
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache
+    user_manage_test.go:555: database: sqlite 3.50.4, separate log database: false
+
+2026/09/11 20:49:26 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_quota_adjustment.go:63 [35;1mquota rollback
+[0m[33m[0.523ms] [34;1m[rows:1][0m UPDATE `users` SET `quota`=500 WHERE id = 10000 AND `users`.`deleted_at` IS NULL
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change
+    user_manage_test.go:555: database: sqlite 3.50.4, separate log database: false
+[SYS] 2026/09/11 - 20:49:26 | failed to sync manual quota adjustment for user 10000: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 20:49:26 | failed to synchronously populate user cache: ERR quota cache unavailable 
+[SYS] 2026/09/11 - 20:49:26 | failed to synchronously populate user cache: ERR quota cache unavailable 
+=== RUN   TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created
+    user_manage_test.go:555: database: sqlite 3.50.4, separate log database: false
+--- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference (1.69s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/add_preserves_reservations (0.24s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/subtract_preserves_reservations (0.24s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/override_preserves_reservations (0.24s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/large_odd_difference (0.25s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/rollback_does_not_change_cache (0.23s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/cache_error_keeps_committed_change (0.24s)
+    --- PASS: TestManageUserQuotaCacheUsesCommittedIntegerDifference/missing_cache_is_not_partially_created (0.24s)
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	5.187s
+FAIL

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T12:40:09.853Z",
+  "updatedAt": "2026-09-11T14:51:37.357Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,22 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B17",
-  "current_unit": "B17.3",
-  "active_operation": {
-    "type": "merge",
-    "target": "bdef117505247769268b209665fb3ad7554c3da7",
-    "pre_checkpoint_head": "f006b9ffa0d352100b9ac6d6039dca6e7795773f",
-    "pre_merge_head": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
-    "conflicts": 303,
-    "remaining_conflicts": 0
-  },
-  "last_observed_head": "3e73031a8f3745a40d1c84f94ffa10dc84c976f7",
-  "last_verified_code_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
-  "last_checkpoint_commit": "f006b9ffa0d352100b9ac6d6039dca6e7795773f",
-  "final_merge_commit": null,
+  "current_batch": "B19",
+  "current_unit": "B19.2",
+  "active_operation": null,
+  "last_observed_head": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "last_verified_code_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "last_checkpoint_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "final_merge_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
   "final_downstream_commit": null,
-  "next_action": "Create reviewed actual two-parent merge commit and begin final candidate B18 acceptance.",
+  "next_action": "Commit local acceptance records, then fast-forward unchanged original local main to the integration result. No push or deployment.",
   "blockers": [
     {
       "id": "production_snapshot",
@@ -43,7 +36,7 @@
         "B18"
       ],
       "status": "pending_environment",
-      "detail": "Production version confirmed by authorized read-only ssh nep: MariaDB 11.4.4. Add matching isolated local database tests. Sanitized snapshot rehearsal remains pending; no production migrations or deployment authorized."
+      "detail": "MariaDB 11.4.4 confirmed read-only; matching isolated engine and released fixtures passed. Sanitized production snapshot migration, pricing review and final rollback/transaction reconciliation remain pending. No production writes authorized."
     },
     {
       "id": "provider_interop",
@@ -51,105 +44,166 @@
         "B18"
       ],
       "status": "pending_environment",
-      "detail": "No dedicated provider test configurations supplied; continue all independent implementation and local protocol checks."
+      "detail": "Local protocol and browser contracts passed. Real authorized provider configurations and call scope remain unavailable; no paid/live requests performed."
     }
   ],
   "gates": [
     {
       "id": "upstream_behavior",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B17-merge-review.json",
+        "evidence/B18-local-acceptance.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "downstream_preservation",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "backend_regression",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B18-backend-regression.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "relaykit_independence",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/runs/B18-relaykit-build/result.json",
+        "evidence/runs/B18-relaykit-test/result.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "frontend_regression",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/runs/B18-web-regression/result.json",
+        "evidence/runs/B18-vitest-discovery/result.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "frontend_build",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/runs/B18-web-build/result.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "browser_acceptance",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B18-browser-acceptance.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "i18n",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/runs/B18-i18n-literals/result.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "sqlite_migration",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B14-acceptance.json",
+        "evidence/B18-source-equivalence.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "mysql_migration",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B14-acceptance.json",
+        "evidence/B18-source-equivalence.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "postgres_migration",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B14-acceptance.json",
+        "evidence/B18-source-equivalence.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "billing_reconciliation",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B11-acceptance.json",
+        "evidence/B13-acceptance.json",
+        "evidence/B18-backend-regression.json",
+        "evidence/B18-source-equivalence.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "provider_interop",
-      "status": "pending",
+      "status": "blocked",
       "verified_commit": null,
-      "evidence": []
+      "evidence": [
+        "evidence/B18-local-acceptance.json"
+      ],
+      "detail": "Local protocol coverage exists; real authorized provider calls remain unavailable."
     },
     {
       "id": "task_plugin_migration",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B14-acceptance.json",
+        "evidence/B18-source-equivalence.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "build_release",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B16-acceptance.json",
+        "evidence/B18-local-acceptance.json",
+        "evidence/B18-source-equivalence.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "ancestry",
-      "status": "pending",
-      "verified_commit": null,
-      "evidence": []
+      "status": "verified",
+      "verified_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "evidence": [
+        "evidence/B17-acceptance.json",
+        "evidence/B18-local-acceptance.json"
+      ],
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved"
     },
     {
       "id": "downstream_main_merge",
@@ -166,5 +220,18 @@
     "database_engine": "MariaDB",
     "database_version": "11.4.4-MariaDB"
   },
-  "manual_adaptation": null
+  "manual_adaptation": null,
+  "candidate_code_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "local_acceptance": {
+    "status": "verified",
+    "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+    "evidence": "evidence/B18-local-acceptance.json"
+  },
+  "local_main_operation": {
+    "status": "prepared",
+    "main_before": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+    "target_branch": "codex/upstream-sync-2026-09-10",
+    "code_candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+    "backup": "evidence/B19-main-backup.json"
+  }
 }

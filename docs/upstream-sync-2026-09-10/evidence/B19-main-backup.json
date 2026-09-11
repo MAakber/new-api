@@ -1,0 +1,15 @@
+{
+  "status": "verified",
+  "recorded_at": "2026-09-11T14:49:52.8753471Z",
+  "main_before": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "branch": "main",
+  "tracked_changes": 0,
+  "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10",
+  "backup_directory": "D:\\10178\\Projects\\new-api-upstream-sync-backup-2026-09-10\\B19-main-preintegration-20260911T144952Z",
+  "verified_copy": "D:\\10178\\Projects\\new-api-upstream-sync-backup-2026-09-10\\B19-main-preintegration-20260911T144952Z\\plan-copy",
+  "preserved_original": "D:\\10178\\Projects\\new-api-upstream-sync-backup-2026-09-10\\B19-main-preintegration-20260911T144952Z\\original-plan",
+  "files": 25,
+  "manifest": "evidence/B19-original-plan-manifest.json",
+  "output": "Retained in original location; incoming candidate has no tracked output paths",
+  "no_reset_or_clean": true
+}

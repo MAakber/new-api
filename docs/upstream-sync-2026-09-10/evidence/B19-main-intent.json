@@ -1,0 +1,13 @@
+{
+  "status": "prepared",
+  "recorded_at": "2026-09-11T14:51:37.357Z",
+  "main_worktree": "D:/10178/Projects/new-api",
+  "main_before": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "target_branch": "codex/upstream-sync-2026-09-10",
+  "validated_code": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "method": "fast-forward only after committing evidence; retain real upstream merge ancestry",
+  "backup": "evidence/B19-main-backup.json",
+  "production_operations": false,
+  "push_or_publish": false,
+  "completion_boundary": "code_complete; B18/B19 full acceptance remains blocked by production_snapshot and provider_interop"
+}

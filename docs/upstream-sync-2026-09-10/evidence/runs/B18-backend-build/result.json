@@ -1,0 +1,30 @@
+{
+  "id": "B18-backend-build",
+  "command": [
+    "go",
+    "build",
+    "-mod=readonly",
+    "-ldflags",
+    "-X github.com/QuantumNous/new-api/common.Version=v20260911-d46dec4a",
+    "-o",
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B18-local-acceptance/new-api.exe",
+    "."
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "b28997e8d4e52f1198ae5b2aa91ba0df328161f3",
+  "started_at": "2026-09-11T13:03:05.894Z",
+  "finished_at": "2026-09-11T13:03:10.205Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

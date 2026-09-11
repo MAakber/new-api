@@ -1,0 +1,133 @@
+{
+  "status": "verified",
+  "scope": "Local UI acceptance only",
+  "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "recorded_at": "2026-09-11T14:46:20.521Z",
+  "runtime_source": "d46dec4abad83d575d7a7d74558508c898b0193b",
+  "browser": "Playwright, isolated local context",
+  "base_url": "http://localhost:43118",
+  "data": "Fresh synthetic accounts and two disabled synthetic channels; no production data or provider credentials in evidence.",
+  "backend_version": "v20260911-d46dec4a",
+  "frontend_version": "rv.v20260911-d46dec4a.2k6e8r7p",
+  "checks": [
+    {
+      "id": "fresh_setup_login",
+      "result": "passed",
+      "detail": "Fresh isolated SQLite setup and real UI login; repeated login on the final private page."
+    },
+    {
+      "id": "independent_editors",
+      "result": "passed",
+      "detail": "Two editors retained independent channel IDs, names, URLs and models; 22 unique control IDs; saved B then A and reopened A."
+    },
+    {
+      "id": "window_interaction",
+      "result": "passed",
+      "detail": "Real mouse drag, focus/z-index activation, scrolling and keyboard close button."
+    },
+    {
+      "id": "saved_disabled_queue",
+      "result": "passed",
+      "detail": "Previously saved queue settings were disabled and edited; enabled=false and the edited message survived save and reopen."
+    },
+    {
+      "id": "downstream_channel_controls",
+      "result": "passed",
+      "detail": "Client identity/version, queue, custom balance/check-in, ignore-balance-ban, append-key and sensitive-key verification controls present."
+    },
+    {
+      "id": "profile_security",
+      "result": "passed_in_local_scope",
+      "detail": "Avatar/profile controls, sessions, mandatory IP audit and named Passkey entry flow present. Disabled Passkey configuration correctly blocked the sensitive operation; no real ceremony or OAuth."
+    },
+    {
+      "id": "wallet_redemption",
+      "result": "passed_in_local_scope",
+      "detail": "Synthetic balance displayed; registration/subscription reward variants retained. Missing fresh-install compliance confirmation correctly blocked redemption/transfers; no legal confirmation made."
+    },
+    {
+      "id": "task_plugins",
+      "result": "passed_in_local_scope",
+      "detail": "Ten factory plugins rendered; no live provider task submitted."
+    },
+    {
+      "id": "theme",
+      "result": "passed",
+      "detail": "Dark theme persisted through navigation and reload; light profile/login checked."
+    },
+    {
+      "id": "mobile_editor",
+      "result": "passed",
+      "detail": "390x844 editor stayed inside viewport; body scrolled and footer controls stayed usable; Tab and keyboard close worked."
+    },
+    {
+      "id": "mobile_drawing",
+      "result": "passed_in_local_scope",
+      "detail": "Canvas, toolbar and empty state rendered at 390x844 in dark mode. Real image generation is an external gate."
+    },
+    {
+      "id": "mobile_profile_login",
+      "result": "passed",
+      "detail": "Document width exactly 390; username-to-password keyboard order. Stable light profile screenshot has no open dialog."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "evidence/B18-browser/B18-channel-mobile-dark.png",
+      "bytes": 63681,
+      "sha256": "03ab0aac3ab4ecb768e82255e8e546b7e7b7957114cc96eb5312d7adb74d60b3"
+    },
+    {
+      "path": "evidence/B18-browser/B18-drawing-mobile-dark.png",
+      "bytes": 40112,
+      "sha256": "6c2d28eff4455e243d26e8fa8247729860778d3abd30adaf13227a0d7e756a4f"
+    },
+    {
+      "path": "evidence/B18-browser/B18-login-mobile-light.png",
+      "bytes": 57170,
+      "sha256": "303ba2edd2360f8c1967066af681166c625824abedb15a113092007cc936c636"
+    },
+    {
+      "path": "evidence/B18-browser/B18-profile-dark.png",
+      "bytes": 119033,
+      "sha256": "6cfc11e95c781664dbf75e51d905d40f70fc5aa7041a4c9b0182cb6808cb7291"
+    },
+    {
+      "path": "evidence/B18-browser/B18-profile-mobile-light-stable.png",
+      "bytes": 63926,
+      "sha256": "e0e4e5a153a01f6b8311db7d631d27e2750ad352459961612fc9e3c6555b4f49"
+    },
+    {
+      "path": "evidence/B18-browser/B18-profile-mobile-light.png",
+      "bytes": 101361,
+      "sha256": "9759e56146b0cb8db0d8987e9dd47904066b30537d432c5d2678619854586e56"
+    },
+    {
+      "path": "evidence/B18-browser/B18-task-plugins-dark.png",
+      "bytes": 187106,
+      "sha256": "26240577b26d50ff959cb0b46ea7a6f560c32ad84f633f8e97842c574962bc35"
+    },
+    {
+      "path": "evidence/B18-browser/channel-custom-controls.yml",
+      "bytes": 26603,
+      "sha256": "6f3451e463533f077cba829e56948da0576dd95019b9ee7c1a7f3a58b718eacb"
+    },
+    {
+      "path": "evidence/B18-browser/channel-windows.png",
+      "bytes": 176018,
+      "sha256": "f460d550dd25728b19503aafa94c2e2394295718d3ece7cf0e7e2b27393b2da6"
+    }
+  ],
+  "artifact_notes": [
+    "B18-profile-mobile-light.png captured a theme-panel transition; use B18-profile-mobile-light-stable.png for final visual review. Both retained."
+  ],
+  "harness_notes": [
+    "Window activation reorders DOM; drag checks used stable aria-labelledby identity.",
+    "A never-enabled new queue draft is intentionally omitted as in baseline; persistence was checked on previously saved configuration.",
+    "Default browser page was shared by another task. Acceptance used an owned context; the final stable profile recapture used a fresh owned context after the prior page disappeared."
+  ],
+  "limitations": [
+    "No real provider calls, paid requests, production changes, hardware Passkey/OAuth ceremony or legal confirmation.",
+    "Synthetic localhost favicon targets were absent; their connection failures do not exercise upstream availability."
+  ]
+}

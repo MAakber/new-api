@@ -1,0 +1,132 @@
+{
+  "created_at": "2026-09-11T14:49:52.7117017Z",
+  "source": "D:\\10178\\Projects\\new-api\\docs\\upstream-sync-2026-09-10",
+  "main_before": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "files": [
+    {
+      "path": "batches.json",
+      "bytes": 27475,
+      "sha256": "037d45f44a905f03f2cf5cbbf6b026f72ebe0c8c19b2458224538d6bf8fc5096"
+    },
+    {
+      "path": "batches.json.previous",
+      "bytes": 26638,
+      "sha256": "0b7ef0a6baebc9b037baefb46b4efac2f41ebe186d84e4140c4318fa7428128e"
+    },
+    {
+      "path": "CHECKPOINTS.md",
+      "bytes": 2448,
+      "sha256": "2df3cfd502358797dc7486f0f91170c9f363614a4fa0ac9d716610281a3a61a6"
+    },
+    {
+      "path": "DECISIONS.md",
+      "bytes": 1887,
+      "sha256": "fb1b24cfed0e54cc88888f6bc64603d51a97524a79e6aaf11faeb483365933ae"
+    },
+    {
+      "path": "downstream-ledger.json",
+      "bytes": 121940,
+      "sha256": "1fa2467be3e18e48e65c7f85484744c3c521f9ed29dfcc2de7af5dfe07a30040"
+    },
+    {
+      "path": "evidence/baseline-review/assessment-groups.json",
+      "bytes": 14319,
+      "sha256": "db508e3123dc54ce99a29819970e384b59465f0a66ef1a81d8163ae0bfcf6cf1"
+    },
+    {
+      "path": "evidence/baseline-review/assessment.md",
+      "bytes": 14719,
+      "sha256": "ddd6387813f0de68439d643e2057e0fd36958dd1f91c46f7ea6e17edac54a2e3"
+    },
+    {
+      "path": "evidence/baseline-review/batch-simulations.json",
+      "bytes": 7802,
+      "sha256": "3bd058fd6324cdf474120e9b729f536ea2638a862d2c12d5a1b29b44096f6f7b"
+    },
+    {
+      "path": "evidence/baseline-review/commit-inventory.md",
+      "bytes": 48031,
+      "sha256": "6b07c5bbd962203025ed48e07167525fc8ee600a9520815b0cd8fe8e3d83118a"
+    },
+    {
+      "path": "evidence/baseline-review/full-merge-simulation.json",
+      "bytes": 31312,
+      "sha256": "4bca4b846382de13c84bc49b892ea35d84b99982b9ba919d7ca33e891ebd3ee9"
+    },
+    {
+      "path": "evidence/baseline-review/inventory.json",
+      "bytes": 765431,
+      "sha256": "c9455c8a3889041d145100789022db377b162b895d5ba18a4c65b46433e514b5"
+    },
+    {
+      "path": "evidence/baseline-review/resume-validation.json",
+      "bytes": 2819,
+      "sha256": "3b076f313eb463ccf8ac1c48c8d5c0e07474899763450d9bc1bb5f04d318daed"
+    },
+    {
+      "path": "evidence/baseline-review/resume-verification.json",
+      "bytes": 4268,
+      "sha256": "cbee9a91cdd581cfa9fb1ceef6ee5e6c7f37364920cd9df13406392c52caf003"
+    },
+    {
+      "path": "evidence/baseline-review/validation.json",
+      "bytes": 2290,
+      "sha256": "896ab2928d235d903f2fb2aace275abde9b662e964899d1378d17bb8c6aa814c"
+    },
+    {
+      "path": "evidence/downstream-baseline.json",
+      "bytes": 26305,
+      "sha256": "c305e49b7d6cc9dd48ce7fc6cd3d72be4f9b4be8974596f4496a222bc06b9469"
+    },
+    {
+      "path": "evidence/plan-validation.json",
+      "bytes": 8959,
+      "sha256": "e0b2a651fd34ea68a0f32a4bfa8bd073d65b5027a6edc09535528bab6661dbbc"
+    },
+    {
+      "path": "evidence/runs/README.md",
+      "bytes": 1166,
+      "sha256": "c931c36ba0cc261dca1267d3e0371ea45cbae55d5c6b0d101592c0ca9d89eb93"
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 18849,
+      "sha256": "469602fd2ef59ea8e091bbc512f30041edc6c52dfa4322afd0f32e7c3a194538"
+    },
+    {
+      "path": "preservation.json",
+      "bytes": 25973,
+      "sha256": "e94b474401a2a35e535b1b73d199fc2be5e1b5ca0d7bd6693dcd59f31b69babe"
+    },
+    {
+      "path": "PRESERVATION.md",
+      "bytes": 13954,
+      "sha256": "148878a33b18fe0feaa10e3cae4a0b37abdd147bb66bfc3d1a8670ca4b2ffba5"
+    },
+    {
+      "path": "RESUME.md",
+      "bytes": 8074,
+      "sha256": "d10c6c9c664f769bf0e31a3ca0a15608c0b356b086023f002885deb3b1278b3e"
+    },
+    {
+      "path": "state.json",
+      "bytes": 3792,
+      "sha256": "cf24afc04d3c2cbcffdbeddd9af03fa9f7f032c78f34567f78b2442f94b651f0"
+    },
+    {
+      "path": "state.json.previous",
+      "bytes": 3541,
+      "sha256": "7bf5b8a71462a70556f22b560f8d85a84a7afdbfaff57de88aecf8fde6b1e54b"
+    },
+    {
+      "path": "upstream-ledger.json",
+      "bytes": 310539,
+      "sha256": "b059c8c6fae7f247b81d929c95abdcd01223ae0df7ee0206739f88b5f9d9997c"
+    },
+    {
+      "path": "verify-plan.mjs",
+      "bytes": 15601,
+      "sha256": "79a6fc84ee2f530d9afaf926807a292fc0dfc126b1faa6767412b86a161cc2e4"
+    }
+  ]
+}

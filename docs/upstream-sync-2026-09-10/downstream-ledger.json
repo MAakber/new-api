@@ -20,13 +20,25 @@
       "D17"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D17"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -87,13 +99,25 @@
       "D11"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D11"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -127,13 +151,25 @@
       "D13"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D13"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -156,13 +192,25 @@
       "D11"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D11"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -283,13 +331,25 @@
       "D11"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D11"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -309,13 +369,25 @@
       "D19"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D19"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -343,13 +415,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -378,13 +462,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -398,13 +494,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -432,13 +540,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -477,13 +597,25 @@
       "D20"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D20"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -519,13 +651,27 @@
       "D02"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01",
+        "D02"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -543,13 +689,27 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01",
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -607,13 +767,25 @@
       "D13"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D13"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -648,13 +820,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -669,13 +854,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -689,13 +887,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -714,13 +925,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -741,13 +965,27 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01",
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -764,13 +1002,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -814,13 +1065,25 @@
       "D07"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D07"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -837,13 +1100,27 @@
       "D23"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01",
+        "D23"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -868,13 +1145,27 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D02",
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -891,13 +1182,26 @@
       "D01"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -911,13 +1215,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -931,13 +1247,23 @@
       "D25"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D25"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -963,13 +1289,26 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D11",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -984,13 +1323,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1008,13 +1360,27 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03",
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1028,13 +1394,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1049,13 +1428,26 @@
       "D01"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1079,13 +1471,26 @@
       "D02"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D02"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1147,13 +1552,28 @@
       "D14"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03",
+        "D05",
+        "D14"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1205,13 +1625,25 @@
       "D13"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D13"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1226,13 +1658,25 @@
       "D13"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D13"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1258,13 +1702,26 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1289,13 +1746,26 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1310,13 +1780,26 @@
       "D01"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1341,13 +1824,25 @@
       "D20"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D20"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1367,13 +1862,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1387,13 +1895,23 @@
       "D25"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D25"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -1416,13 +1934,26 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D13",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1451,13 +1982,23 @@
       "D06"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D06"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -1474,13 +2015,23 @@
       "D06"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D06"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -1499,13 +2050,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1522,13 +2086,23 @@
       "D06"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D06"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -1544,13 +2118,26 @@
       "D03"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D03"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1571,13 +2158,26 @@
       "D05"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D05"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1591,13 +2191,26 @@
       "D05"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D05"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1649,13 +2262,26 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1671,13 +2297,26 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1714,13 +2353,25 @@
       "D17"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D17"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1735,13 +2386,25 @@
       "D17"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D17"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1756,13 +2419,25 @@
       "D17"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D17"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1799,13 +2474,25 @@
       "D19"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D19"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1823,13 +2510,25 @@
       "D19"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D19"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1874,13 +2573,26 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1920,13 +2632,23 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -1941,13 +2663,26 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1962,13 +2697,25 @@
       "D19"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D19"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -1989,13 +2736,26 @@
       "D08"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D08"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2016,13 +2776,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2073,13 +2845,25 @@
       "D12"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D12"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2109,13 +2893,25 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2169,13 +2965,25 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2203,13 +3011,26 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2225,13 +3046,25 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2246,13 +3079,25 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2273,13 +3118,26 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2298,13 +3156,25 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2321,13 +3191,25 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2356,13 +3238,25 @@
       "D11"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D11"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2391,13 +3285,26 @@
       "D02"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D02"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2429,13 +3336,25 @@
       "D21"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D21"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2481,13 +3400,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2503,13 +3435,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2556,13 +3501,25 @@
       "D16"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D16"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2576,13 +3533,25 @@
       "D16"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D16"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2599,13 +3568,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2620,13 +3601,25 @@
       "D15"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2646,13 +3639,26 @@
       "D05"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D05"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2671,13 +3677,25 @@
       "D16"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D16"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2706,13 +3724,24 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D06",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -2730,13 +3759,26 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D16",
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2756,13 +3798,26 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D16",
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2777,13 +3832,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2811,13 +3879,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2845,13 +3926,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2866,13 +3960,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2887,13 +3994,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2911,13 +4031,26 @@
       "D16"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D15",
+        "D16"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2935,13 +4068,25 @@
       "D16"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D16"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -2990,13 +4135,26 @@
       "D10"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D10"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3017,13 +4175,26 @@
       "D10"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D10"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3039,13 +4210,26 @@
       "D10"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D10"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3061,13 +4245,26 @@
       "D10"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D10"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3085,13 +4282,23 @@
       "D25"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D25"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -3105,13 +4312,23 @@
       "D25"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D25"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -3125,13 +4342,26 @@
       "D10"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D10"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3152,13 +4382,25 @@
       "D12"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D12"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3197,13 +4439,26 @@
       "D04"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D04"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3238,13 +4493,26 @@
       "D10"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D10"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3261,13 +4529,26 @@
       "D09"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D09"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3294,13 +4575,26 @@
       "D16"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D14",
+        "D16"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3316,13 +4610,26 @@
       "D16"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D14",
+        "D16"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3356,13 +4663,25 @@
       "D22"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D22"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3377,13 +4696,25 @@
       "D18"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D18"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3399,13 +4730,25 @@
       "D22"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D22"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3429,13 +4772,27 @@
       "D07"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D01",
+        "D07"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3514,13 +4871,25 @@
       "D23"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D23"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3536,13 +4905,25 @@
       "D22"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D22"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3580,13 +4961,25 @@
       "D22"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D22"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3631,13 +5024,25 @@
       "D07"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D07"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3651,13 +5056,23 @@
       "D24"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D24"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": []
     }
   },
   {
@@ -3688,13 +5103,25 @@
       "D23"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D23"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3710,13 +5137,25 @@
       "D22"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D22"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3754,13 +5193,26 @@
       "D05"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D05"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop",
+        "production_snapshot"
+      ]
     }
   },
   {
@@ -3775,13 +5227,25 @@
       "D22"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D22"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3798,13 +5262,25 @@
       "D23"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D23"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   },
   {
@@ -3818,13 +5294,25 @@
       "D22"
     ],
     "mapping_review": "verified",
-    "status": "pending",
+    "status": "verified",
     "evidence": [
-      "evidence/runs/B00-002/downstream-mapping-review.json"
+      "evidence/runs/B00-002/downstream-mapping-review.json",
+      "evidence/B18-preservation-review.json"
     ],
     "final_review": {
-      "status": "pending",
-      "commit": null
+      "status": "verified",
+      "commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+      "preservationIds": [
+        "D22"
+      ],
+      "evidence": [
+        "evidence/B18-preservation-review.json"
+      ],
+      "baseline_commit_in_history": true,
+      "unresolved_external_gates": [
+        "provider_interop"
+      ]
     }
   }
 ]

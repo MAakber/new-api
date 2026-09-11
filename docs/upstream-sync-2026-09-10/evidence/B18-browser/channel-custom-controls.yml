@@ -1,0 +1,492 @@
+- dialog [ref=e3803]:
+  - banner [ref=e3804]:
+    - heading "编辑渠道" [level=2] [ref=e3805]
+    - button "关闭" [ref=e3806] [cursor=pointer]:
+      - generic [aria-hidden] [ref=e3807]: ×
+  - generic [ref=e3809]:
+    - generic [ref=e3812]:
+      - heading "编辑渠道OpenAI" [level=3] [ref=e3813]
+      - paragraph [ref=e3819]: 更新渠道配置，完成后点击保存。
+    - generic [ref=e3821]:
+      - complementary [ref=e3822]:
+        - generic [ref=e3823]:
+          - generic [ref=e3825]:
+            - img "OpenAI" [ref=e3828]
+            - generic [ref=e3830]:
+              - paragraph [ref=e3831]: OpenAI
+              - paragraph [ref=e3832]: 已禁用 · 3/3
+          - navigation "渠道" [ref=e3833]:
+            - button "基本信息 就绪" [ref=e3835] [cursor=pointer]:
+              - generic [ref=e3840]:
+                - generic [ref=e3841]: 基本信息
+                - generic [ref=e3842]: 就绪
+              - generic "就绪" [ref=e3843]
+            - button "凭证 就绪" [ref=e3848] [cursor=pointer]:
+              - generic [ref=e3853]:
+                - generic [ref=e3854]: 凭证
+                - generic [ref=e3855]: 就绪
+              - generic "就绪" [ref=e3856]
+            - button "模型与分组 就绪" [ref=e3861] [cursor=pointer]:
+              - generic [ref=e3873]:
+                - generic [ref=e3874]: 模型与分组
+                - generic [ref=e3875]: 就绪
+              - generic "就绪" [ref=e3876]
+            - button "高级设置" [ref=e3881] [cursor=pointer]
+      - generic [ref=e3890]:
+        - generic [ref=e3892]:
+          - generic [ref=e3898]:
+            - heading "基本信息" [level=3] [ref=e3899]
+            - paragraph [ref=e3900]: 名称、供应商类型和可用状态。
+          - generic [ref=e3901]:
+            - group [ref=e3902]:
+              - generic [ref=e3903]:
+                - generic [ref=e3904]: 类型 *
+                - generic [ref=e3905]:
+                  - generic:
+                    - generic
+                  - combobox "搜索渠道类型..." [ref=e3907]: OpenAI
+            - generic [ref=e3908]:
+              - generic [ref=e3909]: 名称 *
+              - textbox "名称 *" [ref=e3910]:
+                - /placeholder: 例如，OpenAI GPT-4 生产环境
+                - text: B18 channel A
+          - group [ref=e3911]:
+            - generic [ref=e3912]:
+              - generic [ref=e3913]: OpenAI 组织
+              - textbox "OpenAI 组织" [ref=e3914]:
+                - /placeholder: org-...
+              - paragraph [ref=e3915]: OpenAI 组织 ID（可选）
+        - generic [ref=e3917]:
+          - generic [ref=e3923]:
+            - heading "凭证" [level=3] [ref=e3924]
+            - paragraph [ref=e3925]: 身份验证
+          - group [ref=e3927]:
+            - generic [ref=e3928]:
+              - generic [ref=e3929]: API 地址
+              - textbox "API 地址" [ref=e3930]:
+                - /placeholder: 留空使用默认
+                - text: http://127.0.0.1:43119
+              - paragraph [ref=e3931]: 自定义 API 基础 URL。对于官方渠道，New API 具有内置地址。仅针对第三方代理站点或特殊端点填写此项。请勿添加 /v1 或尾部斜杠。
+            - generic [ref=e3932]:
+              - heading "身份验证" [level=4] [ref=e3937]
+              - generic [ref=e3938]:
+                - generic [ref=e3939]: API 密钥 *
+                - textbox "API 密钥 *" [ref=e3940]:
+                  - /placeholder: 留空以保留现有密钥
+                - paragraph [ref=e3941]:
+                  - text: 输入新密钥以更新，或留空以保留当前密钥
+                  - generic [ref=e3942]: 追加模式：新键将添加到现有键列表的末尾
+                - generic [ref=e3943]:
+                  - generic [ref=e3944]:
+                    - generic [ref=e3945]
+                    - generic [ref=e3948]
+                  - textbox "隐藏 — 验证以显示" [ref=e3950]
+              - generic [ref=e3951]:
+                - generic [ref=e3952]: 密钥更新模式
+                - combobox "密钥更新模式" [ref=e3953] [cursor=pointer]:
+                  - generic [ref=e3954]: 追加到现有密钥
+                - textbox [aria-hidden] [ref=e3955]: append
+                - paragraph [ref=e3956]: 追加模式：新键将添加到现有键列表的末尾
+        - generic [ref=e3958]:
+          - generic [ref=e3971]:
+            - heading "模型与分组" [level=3] [ref=e3972]
+            - paragraph [ref=e3973]: 已发布的模型、分组和模型重映射规则。
+          - generic [ref=e3974]:
+            - generic [ref=e3975]:
+              - generic [ref=e3976]:
+                - generic [ref=e3977]:
+                  - generic [ref=e3978]:
+                    - generic [ref=e3979]: 模型 *
+                    - paragraph [ref=e3980]: 此渠道支持的模型列表。使用逗号分隔多个模型。
+                  - generic [ref=e3981]: 已选 1 个
+                - toolbar [ref=e3982]:
+                  - generic [ref=e3983]:
+                    - button "gpt-4o-mini" [ref=e3984] [cursor=pointer]
+                    - button [ref=e3985] [cursor=pointer]
+                  - combobox "选择模型或添加自定义模型" [ref=e3986]
+                - textbox [aria-hidden] [ref=e3987]
+              - separator [ref=e3988]
+              - generic [ref=e3989]:
+                - generic [ref=e3990]:
+                  - paragraph [ref=e3991]: 快捷操作
+                  - paragraph [ref=e3992]: 使用预设或上游发现来更快填充模型列表。
+                - generic [ref=e3993]:
+                  - button "填入相关模型" [ref=e3994] [cursor=pointer]
+                  - button "填充所有模型" [ref=e3995] [cursor=pointer]
+                  - button "从上游获取" [ref=e3996] [cursor=pointer]
+                  - button "全部复制" [ref=e3997] [cursor=pointer]
+                  - button "清除全部" [ref=e3998] [cursor=pointer]
+            - generic [ref=e4000]:
+              - generic [ref=e4002]:
+                - generic [ref=e4003]:
+                  - generic [ref=e4004]: 模型映射
+                  - button "模型映射如何工作" [ref=e4005] [cursor=pointer]
+                - paragraph [ref=e4006]: 将请求模型名称映射到实际提供商模型名称 (JSON 格式)
+              - generic [ref=e4008]:
+                - generic [ref=e4009]:
+                  - tablist [ref=e4010]:
+                    - tab "可视化" [selected] [ref=e4011] [cursor=pointer]
+                    - tab "JSON" [ref=e4012] [cursor=pointer]
+                  - button "填入模板" [ref=e4013] [cursor=pointer]
+                - tabpanel "可视化" [ref=e4014]:
+                  - generic [ref=e4015]: 未配置模型映射。点击“添加映射”即可开始使用。
+                  - button "添加映射" [ref=e4016] [cursor=pointer]
+            - generic [ref=e4018]:
+              - generic [ref=e4019]:
+                - generic [ref=e4020]: 分组 *
+                - paragraph [ref=e4021]: 可以访问此渠道的用户组。
+              - toolbar [ref=e4022]:
+                - generic [ref=e4023]:
+                  - generic [ref=e4024]: default
+                  - button [ref=e4025] [cursor=pointer]
+                - combobox "请选择可以访问此渠道的用户组。" [ref=e4026]
+              - textbox [aria-hidden] [ref=e4027]
+        - generic [ref=e4029]:
+          - button "高级设置 请求覆盖、路由行为和上游模型自动化" [expanded] [ref=e4030] [cursor=pointer]:
+            - generic [ref=e4036]:
+              - generic [ref=e4037]: 高级设置
+              - generic [ref=e4038]: 请求覆盖、路由行为和上游模型自动化
+          - generic [ref=e4041]:
+            - generic [ref=e4043]:
+              - generic [ref=e4044]:
+                - generic [ref=e4050]:
+                  - heading "客户端身份与版本" [level=3] [ref=e4051]
+                  - paragraph [ref=e4052]: 选择可选的客户端身份，不改变渠道接口或请求格式。
+                - button "刷新客户端版本" [disabled]
+              - generic [ref=e4053]:
+                - generic [ref=e4054]:
+                  - generic [ref=e4055]: 客户端身份
+                  - combobox "客户端身份" [ref=e4056] [cursor=pointer]:
+                    - generic [ref=e4057]: none
+                  - textbox [aria-hidden] [ref=e4058]: none
+                  - paragraph [ref=e4059]: 客户端身份只修改已验证的客户端请求头。
+                - generic [ref=e4060]:
+                  - generic [ref=e4061]: 客户端版本
+                  - textbox "客户端版本" [disabled]:
+                    - /placeholder: 手动填写版本
+                  - paragraph [ref=e4062]: 手动填写版本
+                - generic [ref=e4063]:
+                  - generic [ref=e4064]: 客户端平台
+                  - combobox "客户端平台" [disabled] [ref=e4065]:
+                    - generic [ref=e4066]: default
+                  - textbox [disabled] [aria-hidden] [ref=e4067]: default
+                  - paragraph [ref=e4068]: 平台会影响兼容客户端身份请求头。
+            - generic [ref=e4071]:
+              - heading "自动上游排队" [level=3] [ref=e4076]
+              - generic [ref=e4077]:
+                - generic [ref=e4078]:
+                  - generic [ref=e4079]: 启用排队预热
+                  - paragraph [ref=e4080]: 周期性发送预热调用以占住上游队列槽位，让真实请求无需重新排队。
+                - switch "启用排队预热" [ref=e4081]
+                - checkbox [aria-hidden] [ref=e4082]
+              - generic [ref=e4083]:
+                - generic [ref=e4084]: 排队模型
+                - textbox "排队模型" [ref=e4085]:
+                  - /placeholder: 要保持排队的模型名称
+                  - text: gpt-4o-mini
+                - paragraph [ref=e4086]: 一个渠道只为一个模型预热。要预热多个模型，请配置多个渠道。
+              - generic [ref=e4087]:
+                - generic [ref=e4088]:
+                  - generic [ref=e4089]: 间隔 (秒)
+                  - generic [ref=e4090]:
+                    - spinbutton "间隔 (秒)" [ref=e4091]: "30"
+                    - generic [ref=e4092]
+                - generic [ref=e4099]:
+                  - generic [ref=e4100]: 超时 (秒)
+                  - generic [ref=e4101]:
+                    - spinbutton "超时 (秒)" [ref=e4102]: "25"
+                    - generic [ref=e4103]
+              - generic [ref=e4110]:
+                - generic [ref=e4111]:
+                  - generic [ref=e4112]: 端点类型
+                  - combobox "端点类型" [ref=e4113] [cursor=pointer]:
+                    - generic [ref=e4114]: 自动检测
+                  - textbox [aria-hidden] [ref=e4115]
+                - generic [ref=e4116]:
+                  - generic [ref=e4117]: 最大 Tokens
+                  - generic [ref=e4118]:
+                    - spinbutton "最大 Tokens" [ref=e4119]: "16"
+                    - generic [ref=e4120]
+                  - paragraph [ref=e4127]: 限制预热请求大小以控制成本。
+              - generic [ref=e4128]:
+                - generic [ref=e4129]: 预热消息
+                - textbox "预热消息" [ref=e4130]:
+                  - /placeholder: 留空则使用默认测试消息
+                  - text: B18 preserved disabled queue configuration
+              - heading "熔断器" [level=4] [ref=e4136]
+              - generic [ref=e4137]:
+                - generic [ref=e4138]:
+                  - generic [ref=e4139]: 启用熔断器
+                  - paragraph [ref=e4140]: 排队中响应 (429/503) 不会触发熔断。只有真正的失败才会暂停预热；真实请求不受影响。
+                - switch "启用熔断器" [checked] [ref=e4141]
+                - checkbox [checked] [aria-hidden] [ref=e4142]
+              - generic [ref=e4143]:
+                - generic [ref=e4144]:
+                  - generic [ref=e4145]: 最大连续失败次数
+                  - generic [ref=e4146]:
+                    - spinbutton "最大连续失败次数" [ref=e4147]: "10"
+                    - generic [ref=e4148]
+                - generic [ref=e4155]:
+                  - generic [ref=e4156]: 冷却 (秒)
+                  - generic [ref=e4157]:
+                    - spinbutton "冷却 (秒)" [ref=e4158]: "300"
+                    - generic [ref=e4159]
+              - generic [ref=e4166]:
+                - generic [ref=e4167]:
+                  - generic [ref=e4168]: 退避 (秒)
+                  - generic [ref=e4169]:
+                    - spinbutton "退避 (秒)" [ref=e4170]: "30"
+                    - generic [ref=e4171]
+                  - paragraph [ref=e4178]: 队列繁忙时，两次挤入尝试之间的等待时间。
+                - generic [ref=e4179]:
+                  - generic [ref=e4180]: 最大排队尝试次数
+                  - generic [ref=e4181]:
+                    - spinbutton "最大排队尝试次数" [ref=e4182]: "0"
+                    - generic [ref=e4183]
+                  - paragraph [ref=e4190]: 0 = 每轮无限次挤入尝试。
+              - generic [ref=e4191]:
+                - generic [ref=e4192]: 排队中状态码
+                - textbox "排队中状态码" [ref=e4193]:
+                  - /placeholder: 429,503
+                  - text: 429,503
+                - paragraph [ref=e4194]: 逗号分隔的 HTTP 状态码，视为"排队中"（不会触发熔断）。
+            - generic [ref=e4196]:
+              - generic [ref=e4202]:
+                - heading "自定义额度与签到" [level=3] [ref=e4203]
+                - paragraph [ref=e4204]: 配置渠道级额度刷新、自动签到和重试行为。
+              - generic [ref=e4205]:
+                - generic [ref=e4206]:
+                  - generic [ref=e4207]: 提供商
+                  - generic [ref=e4208]: New API 兼容
+                - generic [ref=e4209]:
+                  - generic [ref=e4210]: 凭据
+                  - generic [ref=e4211]: 未设置凭据
+              - generic [ref=e4212]:
+                - generic [ref=e4213]:
+                  - generic [ref=e4214]:
+                    - generic [ref=e4215]: 启用自定义额度
+                    - paragraph [ref=e4216]: 使用此渠道查询额度并运行定时签到。
+                  - switch "启用自定义额度" [ref=e4217]
+                  - checkbox [aria-hidden] [ref=e4218]
+                - generic [ref=e4219]:
+                  - generic [ref=e4220]:
+                    - generic [ref=e4221]: 提供商
+                    - combobox "提供商" [ref=e4222] [cursor=pointer]
+                    - textbox [aria-hidden] [ref=e4224]: new_api
+                  - generic [ref=e4225]:
+                    - generic [ref=e4226]: 认证方式
+                    - combobox "认证方式" [ref=e4227] [cursor=pointer]
+                    - textbox [aria-hidden] [ref=e4229]: token
+                - generic [ref=e4230]:
+                  - generic [ref=e4231]: 令牌
+                  - textbox "令牌" [ref=e4232]:
+                    - /placeholder: 留空则保留现有凭据
+                  - paragraph [ref=e4233]: 凭据仅可写入，之后不会再次显示。
+                - generic [ref=e4234]:
+                  - generic [ref=e4235]:
+                    - generic [ref=e4236]: 用户 ID
+                    - textbox "用户 ID" [ref=e4237]
+                  - generic [ref=e4238]:
+                    - generic [ref=e4239]: 每单位额度
+                    - generic [ref=e4240]
+                    - paragraph [ref=e4249]: 将上游额度单位转换为系统额度单位。
+                - generic [ref=e4250]:
+                  - generic [ref=e4251]:
+                    - generic [ref=e4252]: 自动刷新额度
+                    - switch "自动刷新额度" [ref=e4253]
+                    - checkbox [aria-hidden] [ref=e4254]
+                  - generic [ref=e4255]:
+                    - generic [ref=e4256]: 自动签到
+                    - switch "自动签到" [ref=e4257]
+                    - checkbox [aria-hidden] [ref=e4258]
+                  - generic [ref=e4259]:
+                    - generic [ref=e4260]
+                    - switch "忽略余额上限自动封禁" [ref=e4263]
+                    - checkbox [aria-hidden] [ref=e4264]
+                - generic [ref=e4265]:
+                  - generic [ref=e4266]:
+                    - generic [ref=e4267]: 额度刷新周期（秒）
+                    - generic [ref=e4268]
+                  - generic [ref=e4277]:
+                    - generic [ref=e4278]: 签到周期（秒）
+                    - generic [ref=e4279]
+                - generic [ref=e4288]:
+                  - generic [ref=e4289]:
+                    - generic [ref=e4290]: 最大重试次数
+                    - generic [ref=e4291]
+                  - generic [ref=e4300]:
+                    - generic [ref=e4301]: 重试间隔（秒）
+                    - generic [ref=e4302]
+                - generic [ref=e4311]:
+                  - generic [ref=e4312]: 调度状态
+                  - generic [ref=e4318]:
+                    - generic [ref=e4319]: 下次额度刷新
+                    - generic [ref=e4320]: "-"
+                  - generic [ref=e4321]:
+                    - generic [ref=e4322]: 下次签到
+                    - generic [ref=e4323]: "-"
+                - generic [ref=e4324]:
+                  - generic [ref=e4325]:
+                    - generic [ref=e4326]
+                    - generic [ref=e4329]
+                  - generic [ref=e4332]:
+                    - generic [ref=e4333]
+                    - generic [ref=e4336]
+                - generic [ref=e4339]:
+                  - button "保存自定义额度设置" [disabled]
+                  - generic [ref=e4340]:
+                    - button "立即刷新额度" [ref=e4341] [cursor=pointer]
+                    - button "立即签到" [ref=e4342] [cursor=pointer]
+            - generic [ref=e4343]:
+              - heading "路由与覆盖" [level=3] [ref=e4350]
+              - generic [ref=e4351]:
+                - heading "路由策略" [level=4] [ref=e4358]
+                - generic [ref=e4359]:
+                  - generic [ref=e4360]:
+                    - generic [ref=e4361]: 优先级
+                    - generic [ref=e4362]
+                    - paragraph [ref=e4371]: 优先级更高的渠道优先被选中
+                  - generic [ref=e4372]:
+                    - generic [ref=e4373]: 权重
+                    - generic [ref=e4374]
+                    - paragraph [ref=e4383]: 用于负载均衡。权重越高 = 请求越多
+                - generic [ref=e4384]:
+                  - generic [ref=e4385]: 测试模型
+                  - textbox "测试模型" [ref=e4386]:
+                    - /placeholder: 用于测试的模型
+                  - paragraph [ref=e4387]: 测试渠道连接时使用的模型
+                - generic [ref=e4388]:
+                  - generic [ref=e4389]:
+                    - generic [ref=e4390]: 自动封禁
+                    - paragraph [ref=e4391]: 重复失败时自动禁用渠道
+                  - switch "自动封禁" [checked] [ref=e4392]
+                  - checkbox [checked] [aria-hidden] [ref=e4393]
+              - generic [ref=e4394]:
+                - heading "内部备注" [level=4] [ref=e4400]
+                - generic [ref=e4401]:
+                  - generic [ref=e4402]:
+                    - generic [ref=e4403]: 标签
+                    - textbox "标签" [ref=e4404]:
+                      - /placeholder: 用于分组渠道的可选标签
+                    - paragraph [ref=e4405]: 按标签对渠道进行分组以进行批量操作
+                  - generic [ref=e4406]:
+                    - generic [ref=e4407]: 备注
+                    - textbox "备注" [ref=e4408]:
+                      - /placeholder: 关于此渠道的可选备注
+                    - paragraph [ref=e4409]: 内部备注（不显示给用户）
+              - generic [ref=e4410]:
+                - heading "覆盖规则" [level=4] [ref=e4416]
+                - generic [ref=e4417]:
+                  - generic [ref=e4418]:
+                    - generic [ref=e4419]: 状态码映射
+                    - paragraph [ref=e4420]: 将上游状态码映射到不同的代码
+                  - generic [ref=e4421]:
+                    - generic [ref=e4423]
+                    - generic [ref=e4426]
+                - group [ref=e4429]:
+                  - generic [ref=e4430]:
+                    - generic [ref=e4431]
+                    - generic [ref=e4439]
+                  - generic [ref=e4455]:
+                    - generic [ref=e4456]
+                    - generic [ref=e4464]
+                    - paragraph [ref=e4480]
+            - generic [ref=e4483]:
+              - heading "渠道额外设置" [level=3] [ref=e4489]
+              - group [ref=e4490]:
+                - generic [ref=e4491]:
+                  - generic [ref=e4492]:
+                    - generic [ref=e4493]
+                    - switch "强制格式化" [ref=e4496]
+                    - checkbox [aria-hidden] [ref=e4497]
+                  - generic [ref=e4498]:
+                    - generic [ref=e4499]
+                    - switch "思维到内容" [ref=e4502]
+                    - checkbox [aria-hidden] [ref=e4503]
+                  - generic [ref=e4504]:
+                    - generic [ref=e4505]
+                    - switch "透传请求体" [ref=e4508]
+                    - checkbox [aria-hidden] [ref=e4509]
+                  - generic [ref=e4510]:
+                    - generic [ref=e4511]
+                    - switch "跳过异步任务轮询延迟" [ref=e4514]
+                    - checkbox [aria-hidden] [ref=e4515]
+                - generic [ref=e4516]:
+                  - generic [ref=e4517]: 代理地址
+                  - textbox "代理地址" [ref=e4518]:
+                    - /placeholder: socks5://user:pass@host:port
+                  - paragraph [ref=e4519]: 此渠道的网络代理（支持 HTTP、HTTPS、SOCKS5 和 SOCKS5H）
+                - generic [ref=e4520]:
+                  - generic [ref=e4521]: HTTP 协议
+                  - combobox "HTTP 协议" [ref=e4522] [cursor=pointer]:
+                    - generic [ref=e4523]: 自动
+                  - textbox [aria-hidden] [ref=e4524]: auto
+                  - paragraph [ref=e4525]: 自动在可用时协商 HTTP/2。HTTP/1.1 会在并发时使用多条保持连接的连接。
+                - generic [ref=e4526]:
+                  - generic [ref=e4527]: HTTP/2 连接分片
+                  - combobox "HTTP/2 连接分片" [ref=e4528] [cursor=pointer]:
+                    - generic [ref=e4529]: "1"
+                  - textbox [aria-hidden] [ref=e4530]: "1"
+                  - paragraph [ref=e4531]: 将 HTTP/2 流量分散到同一上游源站的多条可复用连接（1-8）。
+                - generic [ref=e4532]:
+                  - generic [ref=e4533]: 系统提示词
+                  - textbox "系统提示词" [ref=e4534]:
+                    - /placeholder: 输入系统提示词（用户提示词优先）
+                  - paragraph [ref=e4535]: 此渠道的默认系统提示
+                - generic [ref=e4536]:
+                  - generic [ref=e4537]:
+                    - generic [ref=e4538]: 系统提示词连接
+                    - paragraph [ref=e4539]: 将渠道系统提示与用户的提示连接起来
+                  - switch "系统提示词连接" [ref=e4540]
+                  - checkbox [aria-hidden] [ref=e4541]
+            - generic [ref=e4542]:
+              - heading "字段透传控制" [level=3] [ref=e4546]
+              - group [ref=e4547]:
+                - generic [ref=e4548]:
+                  - generic [ref=e4549]:
+                    - generic [ref=e4550]
+                    - switch "允许透传 service_tier" [ref=e4553]
+                    - checkbox [aria-hidden] [ref=e4554]
+                  - generic [ref=e4555]:
+                    - generic [ref=e4556]
+                    - switch "禁止透传 store" [ref=e4559]
+                    - checkbox [aria-hidden] [ref=e4560]
+                  - generic [ref=e4561]:
+                    - generic [ref=e4562]
+                    - switch "允许透传 safety_identifier" [ref=e4565]
+                    - checkbox [aria-hidden] [ref=e4566]
+                  - generic [ref=e4567]:
+                    - generic [ref=e4568]
+                    - switch "允许 include 用量混淆透传" [ref=e4571]
+                    - checkbox [aria-hidden] [ref=e4572]
+                  - generic [ref=e4573]:
+                    - generic [ref=e4574]
+                    - switch "允许推理地理位置透传" [ref=e4577]
+                    - checkbox [aria-hidden] [ref=e4578]
+            - generic [ref=e4579]:
+              - heading "检测上游模型设置" [level=3] [ref=e4587]
+              - group [ref=e4588]:
+                - generic [ref=e4589]:
+                  - generic [ref=e4590]:
+                    - generic [ref=e4591]
+                    - switch "上游模型更新检查" [ref=e4594]
+                    - checkbox [aria-hidden] [ref=e4595]
+                  - generic [ref=e4596]:
+                    - generic [ref=e4597]
+                    - switch "自动同步上游模型" [disabled] [ref=e4600]
+                    - checkbox [disabled] [aria-hidden] [ref=e4601]
+                - generic [ref=e4602]:
+                  - generic [ref=e4603]: 已忽略上游模型
+                  - textbox "已忽略上游模型" [ref=e4604]:
+                    - /placeholder: 例如：gpt-4.1-nano,regex:^claude-.*$,regex:^sora-.*$
+                  - paragraph [ref=e4605]: "使用英文逗号分隔精确模型名。以 regex: 开头可使用正则表达式忽略。"
+                - generic [ref=e4606]:
+                  - generic [ref=e4607]:
+                    - generic [ref=e4608]: "上次检测时间:"
+                    - text: "-"
+                  - generic [ref=e4609]:
+                    - generic [ref=e4610]: "上次检测到可加入模型:"
+                    - text: 无
+    - generic [ref=e4611]:
+      - button "取消" [ref=e4612] [cursor=pointer]
+      - button "更新渠道" [ref=e4613] [cursor=pointer]

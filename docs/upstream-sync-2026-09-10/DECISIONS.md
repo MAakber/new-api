@@ -116,3 +116,7 @@ The existing administrator-configured chat iframe requires its original script, 
 ## A32 — Preserve release and desktop build contracts
 
 Local builds retain UTC date and eight-character revision; release builds use the exact triggering tag. Windows worktree paths are converted only in WSL, and both frontend and Go executable embed the resulting version. Existing platform targets and license resources are retained. Windows packaging used a task-local cache to avoid a host EXDEV cache failure, and reused the checksum-verified installed Electron runtime. No publishing, deployment, global toolchain change or unrelated process termination was performed.
+
+## 2026-09-11T14:46:20.521Z — A33 Local main integration after local acceptance
+
+The user requested continued merging with fewer unnecessary checks. Reuse only passing unchanged inputs with explicit B18 equivalence, and preserve every failed receipt. All 153 upstream, 120 downstream and 26 protection rows now have final-candidate local code/contract review at 33398851f677845f450b9cf6f7af546d5a218e0c. Their scope does not certify production data or third-party services. B19.1/B19.2 may precede the unavailable external portion of B18; this is reversible local source integration only. Keep the original B18 dependency for full B19 completion, retain both blockers, and use code_complete after main receives the result. Do not mark completed or alter verify-plan --final to hide missing gates. No push, publication, paid request or production write is authorized.

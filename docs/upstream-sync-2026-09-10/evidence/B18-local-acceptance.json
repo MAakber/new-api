@@ -1,0 +1,144 @@
+{
+  "status": "verified",
+  "scope": "Final candidate code and local contract review; production-snapshot and live-provider gates remain separate and unresolved",
+  "candidate": "33398851f677845f450b9cf6f7af546d5a218e0c",
+  "merge_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+  "recorded_at": "2026-09-11T14:46:20.521Z",
+  "implementation": {
+    "upstream_rows": 153,
+    "resolution_counts": {
+      "applied": 42,
+      "adapted": 106,
+      "equivalent": 3,
+      "superseded": 2
+    },
+    "downstream_rows": 120,
+    "preservation_rows": 26,
+    "merge_file_reviews": 326
+  },
+  "successful_receipts": [
+    {
+      "id": "B18-web-regression",
+      "evidence": "evidence/runs/B18-web-regression/result.json",
+      "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "status": "passed"
+    },
+    {
+      "id": "B18-web-format",
+      "evidence": "evidence/runs/B18-web-format/result.json",
+      "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "status": "passed"
+    },
+    {
+      "id": "B18-web-typecheck",
+      "evidence": "evidence/runs/B18-web-typecheck/result.json",
+      "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "status": "passed"
+    },
+    {
+      "id": "B18-web-lint",
+      "evidence": "evidence/runs/B18-web-lint/result.json",
+      "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "status": "passed"
+    },
+    {
+      "id": "B18-web-build",
+      "evidence": "evidence/runs/B18-web-build/result.json",
+      "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "status": "passed"
+    },
+    {
+      "id": "B18-web-copyright",
+      "evidence": "evidence/runs/B18-web-copyright/result.json",
+      "tested_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "status": "passed"
+    },
+    {
+      "id": "B18-i18n-literals",
+      "evidence": "evidence/runs/B18-i18n-literals/result.json",
+      "tested_commit": "b28997e8d4e52f1198ae5b2aa91ba0df328161f3",
+      "status": "passed"
+    },
+    {
+      "id": "B18-relaykit-build",
+      "evidence": "evidence/runs/B18-relaykit-build/result.json",
+      "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "status": "passed"
+    },
+    {
+      "id": "B18-relaykit-test",
+      "evidence": "evidence/runs/B18-relaykit-test/result.json",
+      "tested_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
+      "status": "passed"
+    },
+    {
+      "id": "B18-backend-build",
+      "evidence": "evidence/runs/B18-backend-build/result.json",
+      "tested_commit": "b28997e8d4e52f1198ae5b2aa91ba0df328161f3",
+      "status": "passed"
+    },
+    {
+      "id": "B18-controller-cleanup-recheck",
+      "evidence": "evidence/runs/B18-controller-cleanup-recheck/result.json",
+      "tested_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "status": "passed"
+    },
+    {
+      "id": "B18-vitest-discovery",
+      "evidence": "evidence/runs/B18-vitest-discovery/result.json",
+      "tested_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
+      "status": "passed"
+    }
+  ],
+  "backend_combined": "evidence/B18-backend-regression.json",
+  "backend_limitation": "No single all-root run fully green. Root passed packages plus controller final run and same-candidate targeted cleanup rechecks compose acceptance. Original failures and external-DSN skips retained.",
+  "frontend": {
+    "files": 210,
+    "tests": 1531,
+    "protected_distinct_files": 33,
+    "omitted_protected_files": []
+  },
+  "database_evidence": [
+    "evidence/B11-acceptance.json",
+    "evidence/B12-acceptance.json",
+    "evidence/B13-acceptance.json",
+    "evidence/B14-acceptance.json"
+  ],
+  "database_engines": [
+    "SQLite 3.41.2 upgrade fixtures; 3.50.4 current wallet/controller tests",
+    "MariaDB 11.4.4",
+    "MySQL 5.7.44",
+    "PostgreSQL 9.6.24"
+  ],
+  "database_reuse": "B14-to-candidate migration/driver inputs and Go modernization reviewed in B18-source-equivalence.json; final local regressions compose with earlier real-engine contract evidence. No assertion that all B11 source equals final source or its rollback binary covers final plugins.",
+  "source_equivalence": "evidence/B18-source-equivalence.json",
+  "preservation": "evidence/B18-preservation-review.json",
+  "browser": "evidence/B18-browser-acceptance.json",
+  "artifact": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B18-local-acceptance/new-api.exe",
+    "sha256": "e9a9259851b943163fb9cd05fd84086511dbbe5943e8d86aad285c7b184c6476",
+    "built_at_commit": "b28997e8d4e52f1198ae5b2aa91ba0df328161f3",
+    "runtime_source": "d46dec4abad83d575d7a7d74558508c898b0193b",
+    "backend_version": "v20260911-d46dec4a",
+    "frontend_version": "rv.v20260911-d46dec4a.2k6e8r7p"
+  },
+  "packaging": {
+    "evidence": "evidence/B16-acceptance.json",
+    "scope": "Unchanged Windows packaging configuration; final standalone B18 binary. B16 installers are not final-candidate installers; macOS/Linux desktop not built here."
+  },
+  "unresolved_external_gates": [
+    {
+      "id": "production_snapshot",
+      "status": "blocked",
+      "reason": "Sanitized production-copy migration, pricing review and final compatible rollback/transaction reconciliation not performed."
+    },
+    {
+      "id": "provider_interop",
+      "status": "blocked",
+      "reason": "No authorized real test-channel configuration and call scope. Local protocol tests do not close this gate."
+    }
+  ],
+  "complete_plan": false,
+  "production_operations": false,
+  "push_or_publish": false
+}
