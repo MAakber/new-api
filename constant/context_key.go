@@ -82,4 +82,9 @@ const (
 	// requests made immediately before a Playground relay round so text billing
 	// can apply the existing web_search per-call price exactly once.
 	ContextKeyWebSearchRequests ContextKey = "web_search_requests"
+
+	// ContextKeyTokenAuditParams contains only the API token operation's safe metadata.
+	ContextKeyTokenAuditParams ContextKey = "token_audit_params"
+	// ContextKeyTokenAuditSucceeded disambiguates token responses that exceed the audit buffer.
+	ContextKeyTokenAuditSucceeded ContextKey = "token_audit_succeeded"
 )

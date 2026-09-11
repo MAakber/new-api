@@ -811,6 +811,26 @@ export const STATIC_I18N_KEYS = [
   // Custom balance and check-in
   'Ignore balance-limit auto-ban',
   'Keep this channel enabled when the upstream reports a temporary balance or quota limit.',
+
+  // API token audit events
+  'Create API token',
+  'Create API token “{{name}}”',
+  'Update API token',
+  'Update API token “{{name}}”',
+  'Delete API token',
+  'Delete API token “{{name}}”',
+  'View API token key',
+  'View key for API token “{{name}}”',
+  'Batch delete API tokens',
+  'View API token keys in batch',
+  'API token creation',
+  'API token configuration update',
+  'API token status update',
+  'API token deletion',
+  'API token batch deletion',
+  'API token key access',
+  'API token batch key access',
+
   // Channel status audit events
   "View other accounts' audit logs",
   'View audit records from user and admin roles. Root records are always excluded.',
@@ -851,6 +871,14 @@ export const STATIC_I18N_KEYS = [
   "Verification does not match this action's details. Please verify again.",
   'The action details are invalid.',
   'You do not have permission to perform this action.',
+  'Increase user quota',
+  'Decrease user quota',
+  'Override user quota',
+  'Increase quota for user “{{name}}”',
+  'Decrease quota for user “{{name}}”',
+  'Override quota for user “{{name}}”',
+  'Adjust user quota',
+  'Adjust quota for user “{{name}}”',
   // Account binding and password-operation messages.
   'Account bindings have changed. Start this operation again.',
   'Add another login method before unlinking this account.',

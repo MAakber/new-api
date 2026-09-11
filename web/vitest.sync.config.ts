@@ -37,6 +37,7 @@ export default defineConfig({
       'src/features/security/**/__tests__/*.test.tsx',
       'src/features/usage-logs/audit/__tests__/*.test.{ts,tsx}',
       'src/features/usage-logs/components/__tests__/log-type-filter.test.tsx',
+      'src/features/usage-logs/components/__tests__/quota-adjustment.test.tsx',
       'src/features/users/components/__tests__/permissions.test.tsx',
       'src/hooks/__tests__/sidebar-config.test.tsx',
       'src/lib/__tests__/http-cache.test.ts',
