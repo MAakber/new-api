@@ -53,3 +53,8 @@ go.work.sum
 .slim/worktrees/
 .slim/worktrees.json
 # END oh-my-opencode-slim worktrees
+
+# Local review output, browser captures, and upload staging.
+/output/
+/.playwright-cli/
+*.upload

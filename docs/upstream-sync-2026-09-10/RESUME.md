@@ -1,12 +1,14 @@
 # 中断恢复入口
 
+2026-09-12：用户已部署、手工调整价格，并转入新开发。独立集成工作树已归档，新任务从主工作区 `main` 及 [POST-MERGE.md](POST-MERGE.md) 开始。本页下文仅在明确要求补做旧计划验收时使用，不应自动继续 B18.2 或重建旧工作树。
+
 本目录的 state.json 是任务进度入口；Git 是代码状态入口。先核对再继续。此文件适用于同一会话继续、换新会话、进程退出和机器重启。
 
 当前本地交付摘要见 [HANDOFF.md](HANDOFF.md)。B17 已创建真实双亲合并；最终本地验证代码是 `33398851f677845f450b9cf6f7af546d5a218e0c`。不要重新挑拣 153 个提交，也不要重复已经完成的全量测试。A33 允许先接入本地 main，但生产副本演练及真实供应商联调仍未通过；`code_complete` 不等于完整计划完成或可以发布。
 
-## 可直接发给下一次会话的指令
+## 明确要求补做旧计划验收时的恢复指令
 
-> 请继续执行 D:/10178/Projects/new-api/docs/upstream-sync-2026-09-10/PLAN.md。先读同目录 RESUME.md、state.json、CHECKPOINTS.md 和 DECISIONS.md，并运行 verify-plan.mjs。若已经建立 D:/10178/Projects/new-api-upstream-sync，以它里面的计划和台账为准。核对 Git 当前操作、未提交改动、最后验证提交和当前单元，再继续第一项未完成工作。目标是完整整合固定上游 bdef117505247769268b209665fb3ad7554c3da7，保留下游 403f7d9dffc6a99728ede5d8f72770efc61f7b83 的全部功能。不要重复已完成补丁，不删除冲突半成品，不把跳过验证当作完成；每个单元及时写检查点。
+> 请先读 D:/10178/Projects/new-api/docs/upstream-sync-2026-09-10/POST-MERGE.md，再核对 RESUME.md、state.json、CHECKPOINTS.md 和 DECISIONS.md。本次合并已在 main 中，旧集成工作树和分支已归档；使用主工作区台账，不重新挑拣 153 个上游提交。只有本次明确要求补做旧验收时，才检查历史 blockers 并继续相应单元；不得把已跳过或缺少证据的验收标为通过。新的功能开发从当前 main 开始。
 
 ## 1. 先运行只读检查
 

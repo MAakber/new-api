@@ -37,7 +37,9 @@ function main() {
   }
   let data = readPlan(directory)
   let redirectedFrom = null
-  const designated = path.resolve(data.state.integration.worktree)
+  const designated = data.state.integration.archived === true
+    ? path.resolve(directory, '..', '..')
+    : path.resolve(data.state.integration.worktree)
   const canonical = path.join(designated, 'docs', 'upstream-sync-2026-09-10')
   if (mode !== 'validate' && path.resolve(directory) !== canonical && fs.existsSync(path.join(canonical, 'state.json'))) {
     const branch = git(designated, ['branch', '--show-current'])
@@ -160,7 +162,8 @@ function main() {
       const planOnly = ancestor && git(repo, ['diff', '--quiet', observed, head, '--', '.', ':(exclude)docs/upstream-sync-2026-09-10/**']).status === 0
       if (!planOnly) reconcile.push('HEAD differs in code/history from last_observed_head; inspect commits and ledger')
     }
-    if (state.integration.created && branch !== state.integration.branch && !(mode === 'final' && branch === 'main')) reconcile.push('Not on the recorded integration branch')
+    const expectedBranch = state.integration.archived === true ? 'main' : state.integration.branch
+    if (state.integration.created && branch !== expectedBranch && !(mode === 'final' && branch === 'main')) reconcile.push('Not on the recorded active branch')
     if (!state.integration.created && fs.existsSync(designated)) reconcile.push('Designated worktree path exists; inspect before creating/reusing it')
     const tracked = git(repo, ['status', '--porcelain=v1', '--untracked-files=no']).stdout.trim()
     if (tracked) reconcile.push('Tracked modifications exist; preserve and reconcile with current unit')

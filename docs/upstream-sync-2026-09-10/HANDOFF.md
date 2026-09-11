@@ -1,6 +1,8 @@
 # 本地合并交付与剩余验收
 
-固定上游的 153 个提交已全部整合，含钱包和任务插件；120 个下游提交、26 类保护功能已完成最终候选的本地代码及契约复核。本地 main 已快进接收 `f44698d0391830d6e6d53aa7e2468b9ad8939041`，之后可追加仅含台账的提交。总状态为 `code_complete`；完整计划仍须等待两项外部验收，不能据本页部署生产。
+2026-09-12 更新：用户已自行部署并反馈运行正常，随后手工调整了旧价格，并授权本地清理和推送仓库。新开发从主工作区 `main` 开始，见 [上线后收尾记录](POST-MERGE.md)。独立集成工作树已归档，本目录保留历史合并与验收证据。
+
+固定上游的 153 个提交已全部整合，含钱包和任务插件；120 个下游提交、26 类保护功能已完成最终候选的本地代码及契约复核。本地 main 已快进接收 `f44698d0391830d6e6d53aa7e2468b9ad8939041`，后续提交另有记录。历史计划总状态仍为 `code_complete`；两项外部验收没有完整通过证据，不因用户部署反馈改写为通过。
 
 | 内容 | 结果 |
 | --- | --- |
@@ -10,8 +12,8 @@
 | 本地 main 接入检查点 | `f44698d0391830d6e6d53aa7e2468b9ad8939041` |
 | 最终本地验证代码 | `33398851f677845f450b9cf6f7af546d5a218e0c` |
 | 候选与合并提交的业务代码差异 | 无；只修正两个 controller 测试夹具 |
-| 集成分支 | `codex/upstream-sync-2026-09-10` |
-| 权威台账 | `D:/10178/Projects/new-api-upstream-sync/docs/upstream-sync-2026-09-10` |
+| 历史集成分支（已归档） | `codex/upstream-sync-2026-09-10`，提交均在 main 与独立 Git bundle 中 |
+| 当前台账 | `D:/10178/Projects/new-api/docs/upstream-sync-2026-09-10` |
 
 ## 本地验收
 
@@ -50,6 +52,6 @@
 
 ## 恢复
 
-从 [RESUME.md](RESUME.md) 开始，运行 `node docs/upstream-sync-2026-09-10/verify-plan.mjs` 及 `--validate`。先核对 `state.json.blockers`、最新 HEAD 和未提交文件，再补外部验收；不要重做已完成的合并和未变化的测试。原 main 的计划副本在 B19 前另行校验备份，`output/` 保留原位；不得用 reset/clean 清理用户工作区。
+新开发从 [POST-MERGE.md](POST-MERGE.md) 开始。只有明确要求补做旧验收时，才按 [RESUME.md](RESUME.md) 运行只读检查并核对历史 blockers。归档状态下检查工具读取主工作区；既有最终门槛继续保留，不重做已经完成的合并和未变化的测试。
 
-原 main 的 25 个计划文件已逐文件 SHA256 核对，复制并移存在 `D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B19-main-preintegration-20260911T144952Z/`；清单见 [B19-original-plan-manifest.json](evidence/B19-original-plan-manifest.json)。`output/` 保持原位；主工作区没有未提交的跟踪文件。本轮只接入源码，原工作区的前端依赖未重复安装；需要在原工作区开发时，按新锁文件执行 Bun 的 frozen-lockfile 安装。
+原 main 的 25 个计划文件已逐文件 SHA256 核对，复制并移存在 `D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B19-main-preintegration-20260911T144952Z/`；清单见 [B19-original-plan-manifest.json](evidence/B19-original-plan-manifest.json)。当时保留原位的 `output/` 已在本次清理中校验归档。主工作区现已使用 Bun 1.4.0 按锁文件同步依赖，并通过类型检查、前端生产构建与后端构建；具体记录见 [POST-MERGE.md](POST-MERGE.md)。
