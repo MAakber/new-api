@@ -35,6 +35,9 @@ func (v *Vendor) Insert() error {
 	err := metadataTransaction(func(tx *gorm.DB) error {
 		var existing Vendor
 		if err := tx.Where("active_name = ?", strings.TrimSpace(v.Name)).First(&existing).Error; err == nil {
+			if existing.Name != strings.TrimSpace(v.Name) {
+				return errors.New("vendor name already exists")
+			}
 			*v = existing
 			return nil
 		} else if !errors.Is(err, gorm.ErrRecordNotFound) {
