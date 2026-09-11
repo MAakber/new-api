@@ -1,0 +1,27 @@
+{
+  "id": "B12-acceptance-pricing-ui",
+  "command": [
+    "bun",
+    "run",
+    "test:pricing",
+    "--maxWorkers",
+    "2"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "98b579a19756b339af71f73173983528b7a97880",
+  "started_at": "2026-09-11T06:26:32.770Z",
+  "finished_at": "2026-09-11T06:28:53.376Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

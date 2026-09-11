@@ -1,0 +1,6 @@
+{
+  "upstream": "75e533209490a8ef3a8b5e3d93e4dac03ba19bcf",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Falling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'web/src/features/system-settings/models/model-pricing-core.ts' cleanly.\nApplied patch to 'web/src/features/system-settings/models/model-pricing-inputs.tsx' cleanly.\nApplied patch to 'web/src/features/system-settings/models/model-pricing-sheet.tsx' cleanly.\nApplied patch to 'web/src/features/system-settings/models/task-pricing-matrix.tsx' cleanly.\nApplied patch to 'web/src/features/system-settings/models/task-usage-pricing-editor.tsx' with conflicts.\nApplied patch to 'web/src/features/system-settings/models/tiered-pricing-editor.tsx' with conflicts.\nFalling back to direct application...\nU web/src/features/system-settings/models/task-usage-pricing-editor.tsx\nU web/src/features/system-settings/models/tiered-pricing-editor.tsx\n"
+}

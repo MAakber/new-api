@@ -1,0 +1,8 @@
+{
+  "upstream": "eb99ab1b40343c3317bb47981cccdbb2b159a5fa",
+  "excluded": [
+    "controller/option.go"
+  ],
+  "exit_code": 1,
+  "output": "Applied patch to 'relay/channel/openai/constant.go' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'setting/billing_setting/tiered_billing.go' with conflicts.\nU setting/billing_setting/tiered_billing.go\n"
+}

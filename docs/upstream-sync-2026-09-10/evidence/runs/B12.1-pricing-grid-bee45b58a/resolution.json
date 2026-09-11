@@ -1,0 +1,10 @@
+{
+  "upstream": "bee45b58a3c0b77e8dc81e6b5aeb4474aa9058d1",
+  "before_head": "2b8770f0680c6dc1342f93b861a4f198a02d68e7",
+  "after_head": "e1adc5cdf19c9985bc7c5356b0d038d58857dc16",
+  "files": [
+    "web/src/features/pricing/components/loading-skeleton.tsx",
+    "web/src/features/pricing/components/model-card-grid.tsx"
+  ],
+  "rationale": "Card and skeleton breakpoints now agree at xl. No new implementation-mirroring CSS assertion was added; frontend type/lint validation is consolidated with the following pricing editor units."
+}

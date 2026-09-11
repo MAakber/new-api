@@ -1,0 +1,29 @@
+{
+  "id": "B12-vendor-mysql-recheck",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run",
+    "^TestVendorManagementDatabaseMatrix$/mysql$/metadata_ownership_preview_merge_delete_and_rollback$",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "2b8770f0680c6dc1342f93b861a4f198a02d68e7",
+  "started_at": "2026-09-11T05:26:29.206Z",
+  "finished_at": "2026-09-11T05:26:43.385Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": true,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

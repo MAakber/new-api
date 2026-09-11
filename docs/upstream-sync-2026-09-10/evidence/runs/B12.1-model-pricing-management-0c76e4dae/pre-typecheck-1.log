@@ -1,0 +1,5 @@
+$ tsgo -b
+src/components/data-table/toolbar/bulk-actions.tsx(57,3): error TS6133: 'className' is declared but its value is never read.
+src/features/pricing/__tests__/task-matrix-display.test.ts(23,43): error TS2307: Cannot find module '../lib/task-matrix-display' or its corresponding type declarations.
+src/features/system-settings/models/model-ratio-visual-editor.tsx(55,10): error TS6133: 'usePricingData' is declared but its value is never read.
+error: script "typecheck" exited with code 1

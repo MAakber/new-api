@@ -1,0 +1,47 @@
+[
+  {
+    "file": "web/src/components/ui/combobox-input.tsx",
+    "anchor": "onKeyDown?:",
+    "rationale": "Expose keyboard and accessible-name callbacks required by draft price fields."
+  },
+  {
+    "file": "web/src/components/ui/combobox-input.tsx",
+    "anchor": "'aria-label': ariaLabel",
+    "rationale": "Read the added input accessibility props."
+  },
+  {
+    "file": "web/src/components/ui/combobox-input.tsx",
+    "anchor": "aria-activedescendant",
+    "rationale": "Expose the actual popup and highlighted option; add supporting IDs below."
+  },
+  {
+    "file": "web/src/components/ui/combobox.tsx",
+    "anchor": "aria-label={props['aria-label']}",
+    "rationale": "Forward the legacy custom-value input props while retaining the existing Base UI focus-restoration fix."
+  },
+  {
+    "file": "web/src/features/pricing/components/pricing-columns.tsx",
+    "anchor": "getDynamicPricingSummary",
+    "rationale": "Cache price calculation moves intact into CachedPriceCell with time updates."
+  },
+  {
+    "file": "web/src/features/pricing/components/pricing-columns.tsx",
+    "anchor": "<CachedPriceCell",
+    "rationale": "Use the reviewed extracted cache component instead of duplicating its calculation."
+  },
+  {
+    "file": "web/src/features/system-settings/models/tiered-pricing-editor.tsx",
+    "anchor": "const serialized = useMemo",
+    "rationale": "The new event-based state preserves raw unparseable rules and replaces the effect that could rewrite them."
+  },
+  {
+    "file": "web/src/features/system-settings/models/tiered-pricing-editor.tsx",
+    "anchor": "[editorMode, invalidDraft, baseExpr, ruleExpr, t]",
+    "rationale": "Mode switching uses preserved base/rule strings and refuses incomplete drafts."
+  },
+  {
+    "file": "web/src/i18n/static-keys.ts",
+    "anchor": "Channel capability probe labels",
+    "rationale": "Retain all downstream channel/drawing labels and add the expression diagnostic labels."
+  }
+]

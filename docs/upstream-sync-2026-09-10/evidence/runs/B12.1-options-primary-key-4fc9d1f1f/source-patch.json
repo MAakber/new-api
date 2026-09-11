@@ -1,0 +1,8 @@
+{
+  "upstream": "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a",
+  "excluded": [
+    "model/model_pricing_config.go"
+  ],
+  "exit_code": 0,
+  "output": "Applied patch to 'model/main.go' cleanly.\nFalling back to direct application...\n"
+}

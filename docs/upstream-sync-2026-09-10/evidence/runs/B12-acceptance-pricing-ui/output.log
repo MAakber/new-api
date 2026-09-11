@@ -1,0 +1,71 @@
+$ vitest run --config vitest.pricing.config.ts --maxWorkers "2"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+stderr | src/features/pricing/__tests__/model-cards.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/pricing/__tests__/model-cards.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/pricing/__tests__/model-cards.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx (18 tests | 3 failed) 15632ms
+   ❯ model cards (18)
+     × copies the complete long model name without opening details 5014ms
+     × keeps browsing and neutral health placeholders available after the metrics request fails 5016ms
+     × paginates the model cards and disables navigation at both boundaries 5016ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/pricing/__tests__/model-cards.test.tsx > model cards > copies the complete long model name without opening details
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx:123:3
+    121|   })
+    122|
+    123|   it('copies the complete long model name without opening details', as…
+       |   ^
+    124|     const user = userEvent.setup()
+    125|     const onClick = vi.fn()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/features/pricing/__tests__/model-cards.test.tsx > model cards > keeps browsing and neutral health placeholders available after the metrics request fails
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx:392:3
+    390|   })
+    391|
+    392|   it('keeps browsing and neutral health placeholders available after t…
+       |   ^
+    393|     const request = vi
+    394|       .spyOn(api, 'get')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/features/pricing/__tests__/model-cards.test.tsx > model cards > paginates the model cards and disables navigation at both boundaries
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx:420:3
+    418|   })
+    419|
+    420|   it('paginates the model cards and disables navigation at both bounda…
+       |   ^
+    421|     queryClient.setQueryData(['perf-metrics-summary', 24], {
+    422|       success: true,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 25 passed (26)
+      Tests  3 failed | 353 passed (356)
+   Start at  14:26:33
+   Duration  139.87s (import 56%, tests 25%, environment 8%, transform 8%, setup 4%)
+
+     Import  3377 modules were evaluated 19090 times · 154.75s total, 56% of tracked time
+             ~51.38s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+error: script "test:pricing" exited with code 1

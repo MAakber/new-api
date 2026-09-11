@@ -1,0 +1,25 @@
+{
+  "id": "B12-acceptance-i18n-scoped",
+  "command": [
+    "node",
+    "docs/upstream-sync-2026-09-10/check-literal-i18n.mjs",
+    "567c837c3bcbf3881a69171320930144f93fbdeb"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "98b579a19756b339af71f73173983528b7a97880",
+  "started_at": "2026-09-11T06:29:28.443Z",
+  "finished_at": "2026-09-11T06:29:28.679Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

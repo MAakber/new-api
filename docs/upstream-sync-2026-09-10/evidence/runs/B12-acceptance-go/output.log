@@ -1,0 +1,7 @@
+ok  	github.com/QuantumNous/new-api/model	1.201s
+ok  	github.com/QuantumNous/new-api/controller	1.091s
+ok  	github.com/QuantumNous/new-api/service	0.897s [no tests to run]
+ok  	github.com/QuantumNous/new-api/setting/billing_setting	0.947s
+ok  	github.com/QuantumNous/new-api/pkg/billingexpr	0.602s [no tests to run]
+ok  	github.com/QuantumNous/new-api/relay/helper	0.764s [no tests to run]
+ok  	github.com/QuantumNous/new-api/relay	0.996s [no tests to run]

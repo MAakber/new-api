@@ -1,0 +1,13 @@
+{
+  "upstream": "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a",
+  "before_head": "0d5daeb250c3bb326f5f18adf5dfd7ff6012f8dd",
+  "after_head": "f1c662f061f8ea6481fb748a1b81a33c63747f99",
+  "files": [
+    "model/main.go",
+    "model/model_pricing_config.go",
+    "model/option_primary_key_migration.go",
+    "model/option_primary_key_migration_test.go",
+    "model/pricing_options.go"
+  ],
+  "rationale": "Adapted legacy repair to preserve table identity and ordinary concurrent writes, keep complete backups and stop on ambiguous values. MySQL/MariaDB use an in-place unique constraint under a physical-connection table lock; SQLite/PostgreSQL use transactional in-place repair. Both pricing APIs reject duplicate canonical rows. Preliminary SQLite behavior passed except a now-fixed map-mutation test fixture; committed four-engine checks follow."
+}

@@ -1,0 +1,10 @@
+{
+  "upstream": "7cf9b473f61eb7dc09f6f0782192f17595140a08",
+  "before_head": "33ae112e4decab45dde15c5763faf714f1f9e8a8",
+  "after_head": "d684b4b1bfafbb0a32c4981dedd2c9660b6c220d",
+  "files": [
+    "web/src/features/model-pricing/model-pricing-panel.tsx",
+    "web/src/features/system-settings/models/model-pricing-sheet.tsx"
+  ],
+  "rationale": "Reviewed the two layout changes: existing content and error/reload handlers move unchanged into the editor scrollHeader, while save controls stay available. Type and pricing regressions are consolidated with the final B12 fixed-price unit."
+}

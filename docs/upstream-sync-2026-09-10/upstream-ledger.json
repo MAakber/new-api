@@ -5593,12 +5593,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Builtin expression and model entry added; configured zero, per-request prices and explicit modes retain precedence. Kept raw option maps for downstream expected-value CAS; effective defaults are distinct and B12 model-pricing snapshot will display them. Targeted expression and pricing-patch regressions pass; stage acceptance follows full B12. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "1fb6171e1ebf95661f77498615571c1491733b89"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.1-builtin-expression-eb99ab1b4/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -6921,12 +6926,18 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated model/vendor management and versioned pricing through the shared canonical CAS writer. Preserved active-name idempotency, scheduled metadata lease, floating channel editor, advanced request rules and timestamped compact metrics. Pure frontend task-pricing dependencies are included; exact backend/plugin deltas remain tracked for B14. Preliminary UI and backend checks pass; exact committed database and final-stage acceptance follow. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "fa94685bc008c5a2ae18cbeb2c6a4f02f6246a79",
+      "2b8770f0680c6dc1342f93b861a4f198a02d68e7"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.1-model-pricing-management-0c76e4dae/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7306,12 +7317,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Card and skeleton breakpoints now agree at xl. No new implementation-mirroring CSS assertion was added; frontend type/lint validation is consolidated with the following pricing editor units. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "e1adc5cdf19c9985bc7c5356b0d038d58857dc16"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.1-pricing-grid-bee45b58a/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7368,12 +7384,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Site currency inputs and previews convert to canonical USD without changing saved prices when switching display currency. Preserved downstream unparseable request-rule fallback and input identities; 25 currency tests plus typecheck and touched lint passed. Stage acceptance follows remaining B12 changes. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "ba1baf9b0cfd9b665ca4039bb5d4cb080f3f7bbb"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.2-editor-currency-75e533209/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7689,12 +7710,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Direct model pricing entry points, responsive editors and task-unit price/log previews are integrated. Kept root/admin projections, saturation precedence and diagnostics; real task display dependencies were pulled forward. 36 affected UI tests, typecheck and touched lint pass. Two plugin-details tests are preserved in B14 deferred evidence. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "33924a09023f4765656ae037e9b3cc393700401b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.2-editor-log-display-0e0ba152b/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7780,12 +7806,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added channel model rows, policy states and shared exact-prefix-suffix-contains metadata precedence. Preserved active metadata and shared pricing writer. Listing backend checks passed; 77 affected frontend cases passed, with the two mobile cases passing after preserving native MediaQueryList methods in the fixtures. Typecheck and touched lint passed before the fixture correction; stage acceptance remains pending. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "0d5daeb250c3bb326f5f18adf5dfd7ff6012f8dd"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.1-model-listing-71c1fd7ca/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -8636,12 +8667,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Adapted legacy repair to preserve table identity and ordinary concurrent writes, keep complete backups and stop on ambiguous values. MySQL/MariaDB use an in-place unique constraint under a physical-connection table lock; SQLite/PostgreSQL use transactional in-place repair. Both pricing APIs reject duplicate canonical rows. Preliminary SQLite behavior passed except a now-fixed map-mutation test fixture; committed four-engine checks follow. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "f1c662f061f8ea6481fb748a1b81a33c63747f99"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.1-options-primary-key-4fc9d1f1f/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -8830,12 +8866,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Time pricing and expression previews now use shared frontend syntax and real backend engine fixtures. Pulled forward actual trace and task-usage engine dependencies, kept saturated quota conversion, raw fallback and stable input keys, and attached traces through LogOther.SetPublic. All 81 focused frontend cases, full billingexpr package, typecheck and touched lint pass. Backend plugin runtime/schema validation stays B14. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "33ae112e4decab45dde15c5763faf714f1f9e8a8"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.2-time-pricing-editor-d52bdc0b4/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -9201,12 +9242,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Reviewed the two layout changes: existing content and error/reload handlers move unchanged into the editor scrollHeader, while save controls stay available. Type and pricing regressions are consolidated with the final B12 fixed-price unit. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "d684b4b1bfafbb0a32c4981dedd2c9660b6c220d"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.2-pricing-scroll-7cf9b473f/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -9329,12 +9375,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added fixed request-price leaves, validation before AST optimization, estimated/actual billing metadata, safe zero/missing usage settlement and matching editor/log units. Kept downstream tool charges, saturation, account balances and log projection. Existing per-call tasks reject unsupported fixed expressions; exact plugin save/submit guards remain recorded for B14. Source committed for focused four-engine and consolidated stage checks. B12 local stage acceptance passed; final candidate review remains pending.",
+    "resolution_commits": [
+      "98b579a19756b339af71f73173983528b7a97880"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B12.2-fixed-request-pricing-064ed943e/resolution.json",
+      "evidence/B12-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

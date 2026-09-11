@@ -1,0 +1,27 @@
+{
+  "id": "B12-expression-final",
+  "command": [
+    "go",
+    "test",
+    "./pkg/billingexpr",
+    "./setting/billing_setting",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "2270b2fb53707e34dce87cc7bd67ca704949f938",
+  "started_at": "2026-09-11T06:39:17.319Z",
+  "finished_at": "2026-09-11T06:39:25.108Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

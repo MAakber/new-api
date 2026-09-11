@@ -1,0 +1,26 @@
+{
+  "upstream": "75e533209490a8ef3a8b5e3d93e4dac03ba19bcf",
+  "unit": "B12.2-editor-currency",
+  "before_head": "e1adc5cdf19c9985bc7c5356b0d038d58857dc16",
+  "rationale": "Add site-currency input and preview with USD persistence, zero-price and draft precision preservation. Compose the existing raw request-rule protections and test only currency/editor behavior before B12 acceptance.",
+  "files": [
+    "web/src/features/model-pricing/__tests__/editor-currency.test.tsx",
+    "web/src/features/model-pricing/currency.ts",
+    "web/src/features/model-pricing/pricing-amount-input.tsx",
+    "web/src/features/model-pricing/pricing-currency-selector.tsx",
+    "web/src/features/system-settings/models/model-pricing-core.ts",
+    "web/src/features/system-settings/models/model-pricing-inputs.tsx",
+    "web/src/features/system-settings/models/model-pricing-sheet.tsx",
+    "web/src/features/system-settings/models/task-pricing-matrix.tsx",
+    "web/src/features/system-settings/models/task-usage-pricing-editor.tsx",
+    "web/src/features/system-settings/models/tiered-pricing-editor.tsx",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json",
+    "web/src/stores/pricing-preferences-store.ts"
+  ]
+}

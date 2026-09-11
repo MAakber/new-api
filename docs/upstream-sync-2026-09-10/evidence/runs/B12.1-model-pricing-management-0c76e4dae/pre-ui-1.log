@@ -1,0 +1,1117 @@
+$ vitest run --config vitest.pricing.config.ts --maxWorkers "2"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/features/system-settings/__tests__/pricing-sync.test.tsx (9 tests | 1 failed) 1918ms
+   ❯ pricing synchronization (7)
+     × shows a mobile comparison list and preserves source-wide selection 31ms
+stderr | src/features/pricing/__tests__/model-cards.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/pricing/__tests__/model-cards.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/pricing/__tests__/model-cards.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx (16 tests | 3 failed) 1283ms
+   ❯ model cards (16)
+     × shows 0.0% for the reported request success rate 0 31ms
+     × shows 99.8% for the reported request success rate 99.8 26ms
+     × shows —% for the reported request success rate NaN 28ms
+stderr | src/features/models/__tests__/metadata-editing.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/models/__tests__/metadata-editing.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/models/__tests__/metadata-editing.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/models/__tests__/metadata-editing.test.tsx (4 tests | 1 failed) 5350ms
+   ❯ metadata editing (4)
+     × allows an administrator to save metadata without loading or changing system pricing 1407ms
+stderr | src/features/models/__tests__/vendor-management.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/models/__tests__/vendor-management.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/models/__tests__/vendor-management.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/models/__tests__/vendor-management.test.tsx (6 tests | 1 failed) 2499ms
+   ❯ vendor management (6)
+     × requires an explicit merge target and previews only the remaining source vendors 381ms
+stderr | src/components/ui/__tests__/combobox.test.tsx > searchable single selection > searches labels and values without committing text, shows empty results, and restores the selection on Escape
+Base UI: A component that acts as a button expected a non-<button> because the `nativeButton` prop is false. Rendering a <button> keeps native behavior while Base UI applies non-native attributes and handlers, which can add unintended extra attributes (such as `role` or `aria-disabled`). Use a non-<button> in the `render` prop, or set `nativeButton` to `true`.
+    at Button (D:/10178/Projects/new-api-upstream-sync/web/src/components/ui/button.tsx:65:57)
+    at InputGroupButton (D:/10178/Projects/new-api-upstream-sync/web/src/components/ui/input-group.tsx:91:57)
+    at ComboboxInput (D:/10178/Projects/new-api-upstream-sync/web/src/components/ui/combobox.tsx:268:79)
+    at OptionCombobox (D:/10178/Projects/new-api-upstream-sync/web/src/components/ui/combobox.tsx:117:62)
+    at Combobox (D:/10178/Projects/new-api-upstream-sync/web/src/components/ui/combobox.tsx:58:87)
+    at Fixture (D:/10178/Projects/new-api-upstream-sync/web/src/components/ui/__tests__/combobox.test.tsx:49:155)
+
+ ❯ src/components/ui/__tests__/combobox.test.tsx (2 tests | 1 failed) 1708ms
+   ❯ searchable single selection (2)
+     × searches labels and values without committing text, shows empty results, and restores the selection on Escape 1604ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/ui/__tests__/combobox.test.tsx > searchable single selection > searches labels and values without committing text, shows empty results, and restores the selection on Escape
+Error: expect(element).toHaveValue(Google)
+
+Expected the element to have value:
+  Google
+Received:
+
+
+Ignored nodes: comments, script, style
+<html>
+  <head />
+  <body>
+    <div
+      data-base-ui-inert=""
+    >
+      <div
+        class="min-w-0"
+      >
+        <div
+          class="group/input-group border-input has-disabled:bg-input/50 has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 dark:has-disabled:bg-input/80 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40 relative flex min-w-0 items-center rounded-lg border transition-colors outline-none in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0 has-disabled:opacity-50 has-[[data-slot=input-group-control]:focus-visible]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-3 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-1.5 has-[>[data-align=inline-start]]:[&>input]:pl-1.5 h-full min-h-8 w-full"
+          data-slot="input-group"
+          role="group"
+        >
+          <span
+            aria-label="Dismiss"
+            role="button"
+            style="clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: absolute;"
+          />
+          <input
+            aria-activedescendant="base-ui-_r_0_-0"
+            aria-autocomplete="list"
+            aria-controls="_r_1_"
+            aria-expanded="true"
+            aria-haspopup="listbox"
+            aria-label="Provider"
+            autocapitalize="none"
+            autocomplete="off"
+            autocorrect="off"
+            class="border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-inset md:text-sm flex-1 rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent"
+            data-popup-open=""
+            data-popup-side="bottom"
+            data-pressed=""
+            data-slot="input-group-control"
+            id="base-ui-_r_0_"
+            placeholder="Search..."
+            role="combobox"
+            spellcheck="false"
+            type="text"
+            value=""
+          />
+          <div
+            aria-hidden="true"
+            class="flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-sm [&>svg:not([class*='size-'])]:size-4 order-last pr-2 has-[>button]:mr-[-0.3rem] has-[>kbd]:mr-[-0.15rem]"
+            data-align="inline-end"
+            data-slot="input-group-addon"
+            role="group"
+          >
+            <button
+              aria-controls="_r_1_"
+              aria-expanded="true"
+              aria-haspopup="listbox"
+              aria-label="Provider"
+              class="group/button shrink-0 justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 flex items-center gap-2 text-sm shadow-none size-6 rounded-md p-0 has-[>svg]:p-0 group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent"
+              data-popup-open=""
+              data-popup-side="bottom"
+              data-pressed=""
+              data-size="icon-xs"
+              data-slot="input-group-button"
+              role="button"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                class="text-muted-foreground pointer-events-none size-4"
+                color="currentColor"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+            </button>
+         ...
+ ❯ src/components/ui/__tests__/combobox.test.tsx:53:39
+     51|     expect(screen.getByRole('option', { name: 'Google' })).toBeVisible…
+     52|     await user.keyboard('{ArrowDown}{Enter}')
+     53|     await waitFor(() => expect(input).toHaveValue('Google'))
+       |                                       ^
+     54|     expect(screen.getByText('gemini')).toHaveTextContent('gemini')
+     55|   })
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  src/features/system-settings/__tests__/pricing-sync.test.tsx > pricing synchronization > shows a mobile comparison list and preserves source-wide selection
+ FAIL  src/features/system-settings/__tests__/pricing-sync.test.tsx > pricing synchronization > shows a mobile comparison list and preserves source-wide selection
+TypeError: media.addEventListener is not a function
+ ❯ src/hooks/use-media-query.ts:35:13
+     33|
+     34|       const media = window.matchMedia(query)
+     35|       media.addEventListener('change', onStoreChange)
+       |             ^
+     36|       return () => media.removeEventListener('change', onStoreChange)
+     37|     },
+ ❯ subscribeToStore node_modules/react-dom/cjs/react-dom-client.development.js:8244:14
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13336:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15484:13
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15718:11
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  src/features/system-settings/__tests__/pricing-sync.test.tsx > pricing synchronization > shows a mobile comparison list and preserves source-wide selection
+TypeError: media.addEventListener is not a function
+ ❯ src/hooks/use-media-query.ts:35:13
+     33|
+     34|       const media = window.matchMedia(query)
+     35|       media.addEventListener('change', onStoreChange)
+       |             ^
+     36|       return () => media.removeEventListener('change', onStoreChange)
+     37|     },
+ ❯ subscribeToStore node_modules/react-dom/cjs/react-dom-client.development.js:8244:14
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13336:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15484:13
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15476:11
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  src/features/pricing/__tests__/model-cards.test.tsx > model cards > shows 0.0% for the reported request success rate 0
+TestingLibraryElementError: Unable to find an element with the text: 1.20s. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<div
+  aria-label="Performance metrics for the last 24 hours"
+  class="flex w-full min-w-0 items-center justify-between gap-3 border-border/60 border-t pt-2"
+>
+  <dl
+    class="flex min-w-0 items-start gap-5 text-xs tabular-nums"
+  >
+    <div
+      class="w-24 shrink-0"
+    >
+      <dt
+        class="text-muted-foreground flex items-center justify-between gap-1 text-[11px] leading-4"
+        title="Request success rate sampled over the last 24 hours"
+      >
+        <span>
+          Status
+        </span>
+        <span
+          class="font-mono"
+        >
+          0.0%
+        </span>
+      </dt>
+      <dd
+        aria-label="Recent success-rate samples; gray bars indicate missing data."
+        class="mt-1 flex h-3 w-24 items-center justify-between"
+        role="img"
+        title="Recent success-rate samples; gray bars indicate missing data."
+      >
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+      </dd>
+    </div>
+    <div
+      class="shrink-0"
+      title="Average latency"
+    >
+      <dt
+        class="text-muted-foreground text-[11px] leading-4"
+      >
+        Latency short
+      </dt>
+      <dd
+        class="mt-1 font-mono whitespace-nowrap"
+      >
+        1s
+      </dd>
+    </div>
+    <div
+      class="shrink-0"
+      title="Throughput"
+    >
+      <dt
+        class="text-muted-foreground text-[11px] leading-4"
+      >
+        Throughput short
+      </dt>
+      <dd
+        class="mt-1 font-mono whitespace-nowrap"
+      >
+        42t
+      </dd>
+    </div>
+  </dl>
+  <button
+    class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-md px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5"
+    data-slot="button"
+    tabindex="0"
+    type="button"
+  >
+    Details
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-chevron-right size-3.5"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m9 18 6-6-6-6"
+      />
+    </svg>
+  </button>
+</div>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx:196:30
+    194|       expect(within(metrics).getByText(expected)).toBeVisible()
+    195|       expect(within(metrics).getByText('Status')).toBeVisible()
+    196|       expect(within(metrics).getByText('1.20s')).toBeVisible()
+       |                              ^
+    197|       expect(within(metrics).getByText('42.0t/s')).toBeVisible()
+    198|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  src/features/pricing/__tests__/model-cards.test.tsx > model cards > shows 99.8% for the reported request success rate 99.8
+TestingLibraryElementError: Unable to find an element with the text: 1.20s. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<div
+  aria-label="Performance metrics for the last 24 hours"
+  class="flex w-full min-w-0 items-center justify-between gap-3 border-border/60 border-t pt-2"
+>
+  <dl
+    class="flex min-w-0 items-start gap-5 text-xs tabular-nums"
+  >
+    <div
+      class="w-24 shrink-0"
+    >
+      <dt
+        class="text-muted-foreground flex items-center justify-between gap-1 text-[11px] leading-4"
+        title="Request success rate sampled over the last 24 hours"
+      >
+        <span>
+          Status
+        </span>
+        <span
+          class="font-mono"
+        >
+          99.8%
+        </span>
+      </dt>
+      <dd
+        aria-label="Recent success-rate samples; gray bars indicate missing data."
+        class="mt-1 flex h-3 w-24 items-center justify-between"
+        role="img"
+        title="Recent success-rate samples; gray bars indicate missing data."
+      >
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+      </dd>
+    </div>
+    <div
+      class="shrink-0"
+      title="Average latency"
+    >
+      <dt
+        class="text-muted-foreground text-[11px] leading-4"
+      >
+        Latency short
+      </dt>
+      <dd
+        class="mt-1 font-mono whitespace-nowrap"
+      >
+        1s
+      </dd>
+    </div>
+    <div
+      class="shrink-0"
+      title="Throughput"
+    >
+      <dt
+        class="text-muted-foreground text-[11px] leading-4"
+      >
+        Throughput short
+      </dt>
+      <dd
+        class="mt-1 font-mono whitespace-nowrap"
+      >
+        42t
+      </dd>
+    </div>
+  </dl>
+  <button
+    class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-md px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5"
+    data-slot="button"
+    tabindex="0"
+    type="button"
+  >
+    Details
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-chevron-right size-3.5"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m9 18 6-6-6-6"
+      />
+    </svg>
+  </button>
+</div>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx:196:30
+    194|       expect(within(metrics).getByText(expected)).toBeVisible()
+    195|       expect(within(metrics).getByText('Status')).toBeVisible()
+    196|       expect(within(metrics).getByText('1.20s')).toBeVisible()
+       |                              ^
+    197|       expect(within(metrics).getByText('42.0t/s')).toBeVisible()
+    198|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  src/features/pricing/__tests__/model-cards.test.tsx > model cards > shows —% for the reported request success rate NaN
+TestingLibraryElementError: Unable to find an element with the text: 1.20s. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<div
+  aria-label="Performance metrics for the last 24 hours"
+  class="flex w-full min-w-0 items-center justify-between gap-3 border-border/60 border-t pt-2"
+>
+  <dl
+    class="flex min-w-0 items-start gap-5 text-xs tabular-nums"
+  >
+    <div
+      class="w-24 shrink-0"
+    >
+      <dt
+        class="text-muted-foreground flex items-center justify-between gap-1 text-[11px] leading-4"
+        title="Request success rate sampled over the last 24 hours"
+      >
+        <span>
+          Status
+        </span>
+        <span
+          class="font-mono"
+        >
+          —%
+        </span>
+      </dt>
+      <dd
+        aria-label="Recent success-rate samples; gray bars indicate missing data."
+        class="mt-1 flex h-3 w-24 items-center justify-between"
+        role="img"
+        title="Recent success-rate samples; gray bars indicate missing data."
+      >
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+        <span
+          aria-hidden="true"
+          class="h-full w-[3px] shrink-0 rounded-xs bg-muted-foreground/15"
+        />
+      </dd>
+    </div>
+    <div
+      class="shrink-0"
+      title="Average latency"
+    >
+      <dt
+        class="text-muted-foreground text-[11px] leading-4"
+      >
+        Latency short
+      </dt>
+      <dd
+        class="mt-1 font-mono whitespace-nowrap"
+      >
+        1s
+      </dd>
+    </div>
+    <div
+      class="shrink-0"
+      title="Throughput"
+    >
+      <dt
+        class="text-muted-foreground text-[11px] leading-4"
+      >
+        Throughput short
+      </dt>
+      <dd
+        class="mt-1 font-mono whitespace-nowrap"
+      >
+        42t
+      </dd>
+    </div>
+  </dl>
+  <button
+    class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-md px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5"
+    data-slot="button"
+    tabindex="0"
+    type="button"
+  >
+    Details
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-chevron-right size-3.5"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m9 18 6-6-6-6"
+      />
+    </svg>
+  </button>
+</div>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/pricing/__tests__/model-cards.test.tsx:196:30
+    194|       expect(within(metrics).getByText(expected)).toBeVisible()
+    195|       expect(within(metrics).getByText('Status')).toBeVisible()
+    196|       expect(within(metrics).getByText('1.20s')).toBeVisible()
+       |                              ^
+    197|       expect(within(metrics).getByText('42.0t/s')).toBeVisible()
+    198|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  src/features/models/__tests__/metadata-editing.test.tsx > metadata editing > allows an administrator to save metadata without loading or changing system pricing
+Error: expect(element).toHaveValue(Another vendor)
+
+Expected the element to have value:
+  Another vendor
+Received:
+
+ ❯ src/features/models/__tests__/metadata-editing.test.tsx:187:25
+    185|     await user.type(vendorInput, 'Another')
+    186|     await user.click(screen.getByRole('option', { name: 'Another vendo…
+    187|     expect(vendorInput).toHaveValue('Another vendor')
+       |                         ^
+    188|     await user.clear(description)
+    189|     await user.type(description, 'Updated metadata')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  src/features/models/__tests__/vendor-management.test.tsx > vendor management > requires an explicit merge target and previews only the remaining source vendors
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Preview changes"
+
+Here are the accessible roles:
+
+  dialog:
+
+  Name "Merge vendors":
+  <div
+    aria-describedby="base-ui-_r_17_"
+    aria-labelledby="base-ui-_r_16_"
+    class="bg-popover text-popover-foreground ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 fixed top-1/2 left-1/2 z-50 max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-xl text-sm ring-1 outline-none flex max-h-[calc(100vh-2rem)] w-full flex-col gap-4 overflow-hidden p-4 sm:p-6 sm:max-w-4xl data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 duration-100"
+    data-base-ui-focusable=""
+    data-base-ui-inert=""
+    data-open=""
+    data-slot="dialog-content"
+    id="_r_14_"
+    role="dialog"
+    style="--nested-dialogs: 0; --dialog-content-height: min(75vh, 760px);"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  group:
+
+  Name "":
+  <div
+    class="group/input-group border-input has-disabled:bg-input/50 has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 dark:has-disabled:bg-input/80 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40 relative flex min-w-0 items-center rounded-lg border transition-colors outline-none in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0 has-disabled:opacity-50 has-[[data-slot=input-group-control]:focus-visible]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-3 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-1.5 has-[>[data-align=inline-start]]:[&>input]:pl-1.5 h-full min-h-8 w-full"
+    data-slot="input-group"
+    role="group"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Dismiss":
+  <span
+    aria-label="Dismiss"
+    role="button"
+    style="clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: absolute;"
+  />
+
+  Name "Dismiss":
+  <span
+    aria-label="Dismiss"
+    role="button"
+    style="clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: absolute;"
+  />
+
+  --------------------------------------------------
+  combobox:
+
+  Name "":
+  <input
+    aria-activedescendant="base-ui-_r_18_-0"
+    aria-autocomplete="list"
+    aria-controls="_r_19_"
+    aria-expanded="true"
+    aria-haspopup="listbox"
+    autocapitalize="none"
+    autocomplete="off"
+    autocorrect="off"
+    class="border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-inset md:text-sm flex-1 rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent"
+    data-popup-open=""
+    data-popup-side="bottom"
+    data-pressed=""
+    data-slot="input-group-control"
+    id="vendor-operation-target"
+    placeholder="Search vendors"
+    role="combobox"
+    spellcheck="false"
+    type="text"
+    value=""
+  />
+
+  --------------------------------------------------
+  presentation:
+
+  Name "":
+  <div
+    class="isolate z-50"
+    data-align="start"
+    data-anchor-hidden=""
+    data-open=""
+    data-side="bottom"
+    role="presentation"
+    style="position: absolute; left: 0px; top: 0px; transform: translate(0px, 6px); --available-width: -10px; --available-height: -11px; --anchor-width: 0px; --anchor-height: 0px; --transform-origin: 0px -6px;"
+  />
+
+  Name "":
+  <div
+    class="group/combobox-content bg-popover text-popover-foreground ring-foreground/10 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-lg shadow-md ring-1 duration-100 data-[chips=true]:min-w-(--anchor-width) *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:shadow-none"
+    data-align="start"
+    data-anchor-hidden=""
+    data-chips="true"
+    data-open=""
+    data-side="bottom"
+    data-slot="combobox-content"
+    role="presentation"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  status:
+
+  Name "":
+  <div
+    aria-atomic="true"
+    aria-live="polite"
+    class="text-muted-foreground hidden w-full justify-center py-2 text-center text-sm group-data-empty/combobox-content:flex"
+    data-slot="combobox-empty"
+    role="status"
+  />
+
+  --------------------------------------------------
+  listbox:
+
+  Name "":
+  <div
+    aria-orientation="vertical"
+    class="no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0"
+    data-base-ui-focusable=""
+    data-slot="combobox-list"
+    id="_r_19_"
+    role="listbox"
+    tabindex="-1"
+  />
+
+  --------------------------------------------------
+  option:
+
+  Name "Google":
+  <div
+    aria-selected="true"
+    class="data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground relative flex w-full cursor-default items-center gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+    data-highlighted=""
+    data-selected=""
+    data-slot="combobox-item"
+    id="base-ui-_r_18_-0"
+    role="option"
+  />
+
+  Name "Target":
+  <div
+    aria-selected="false"
+    class="data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground relative flex w-full cursor-default items-center gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+    data-slot="combobox-item"
+    id="base-ui-_r_18_-1"
+    role="option"
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body
+  style="overflow-y: hidden; overflow-x: hidden;"
+>
+  <div
+    aria-hidden="true"
+    data-base-ui-inert=""
+  />
+  <div
+    data-base-ui-portal=""
+    data-slot="dialog-portal"
+    id="_r_15_"
+  >
+    <div
+      aria-hidden="true"
+      data-base-ui-inert=""
+      role="presentation"
+      style="position: fixed; user-select: none;"
+    />
+    <div
+      aria-hidden="true"
+      class="data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0 fixed inset-0 isolate z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs"
+      data-base-ui-inert=""
+      data-open=""
+      data-slot="dialog-overlay"
+      role="presentation"
+      style="user-select: none;"
+    />
+    <span
+      aria-hidden="true"
+      data-base-ui-focus-guard=""
+      data-base-ui-inert=""
+      data-type="inside"
+      style="clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"
+      tabindex="0"
+    />
+    <div
+      aria-describedby="base-ui-_r_17_"
+      aria-labelledby="base-ui-_r_16_"
+      class="bg-popover text-popover-foreground ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 fixed top-1/2 left-1/2 z-50 max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-xl text-sm ring-1 outline-none flex max-h-[calc(100vh-2rem)] w-full flex-col gap-4 overflow-hidden p-4 sm:p-6 sm:max-w-4xl data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 duration-100"
+      data-base-ui-focusable=""
+      data-base-ui-inert=""
+      data-open=""
+      data-slot="dialog-content"
+      id="_r_14_"
+      role="dialog"
+      style="--nested-dialogs: 0; --dialog-content-height: min(75vh, 760px);"
+      tabindex="-1"
+    >
+      <div
+        aria-hidden="true"
+        class="flex flex-col gap-2 flex-shrink-0 text-start"
+        data-slot="dialog-header"
+      >
+        <h2
+          class="text-base leading-none font-medium"
+          data-slot="dialog-title"
+          id="base-ui-_r_16_"
+        >
+          Merge vendors
+        </h2>
+        <p
+          class="text-muted-foreground *:[a]:hover:text-foreground text-sm *:[a]:underline *:[a]:underline-offset-3"
+          data-slot="dialog-description"
+          id="base-ui-_r_17_"
+        >
+          Review the affected records before applying. Pricing, channels, and model names are preserved.
+        </p>
+      </div>
+      <div
+        class="-mx-1 min-h-0 overflow-x-hidden overflow-y-auto overscroll-contain h-[var(--dialog-content-height)] max-h-[calc(100vh-14rem)]"
+      >
+        <div
+          class="min-w-0 px-1 py-1 [&_form]:overflow-x-visible [&_[data-slot=scroll-area-viewport]]:px-1 [&_[data-slot=scroll-area-viewport]]:py-1"
+        >
+          <div
+            class="space-y-4"
+          >
+            <div
+              class="space-y-2"
+            >
+              <label
+                aria-hidden="true"
+                class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                data-slot="label"
+                for="vendor-operation-target"
+              >
+                Keep this vendor
+              </label>
+              <div
+                class="min-w-0"
+              >
+                <div
+                  class="group/input-group border-input has-disabled:bg-input/50 has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 dark:has-disabled:bg-input/80 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40 relative flex min-w-0 items-center rounded-lg border transition-colors outline-none in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0 has-disabled:opacity-50 has-[[data-slot=input-group-control]:focus-visible]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-3 has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pr-1.5 has-[>[data-align=inline-start]]:[&>input]:pl-1.5 h-full min-h-8 w-full"
+                  data-slot="input-group"
+                  role="group"
+                >
+                  <span
+                    aria-label="Dismiss"
+                    role="button"
+                    style="clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: absolute;"
+                  />
+                  <input
+                    aria-activedescendant="base-ui-_r_18_-0"
+                    aria-autocomplete="list"
+                    aria-controls="_r_19_"
+                    aria-expande...
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/models/__tests__/vendor-management.test.tsx:207:29
+    205|     await user.click(screen.getByRole('combobox', { name: 'Keep this v…
+    206|     await user.click(await screen.findByRole('option', { name: 'Google…
+    207|     await user.click(screen.getByRole('button', { name: 'Preview chang…
+       |                             ^
+    208|     await waitFor(() =>
+    209|       expect(post).toHaveBeenCalledWith('/api/vendors/operations/previ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+
+ Test Files  5 failed | 9 passed (14)
+      Tests  7 failed | 118 passed (125)
+   Start at  13:04:19
+   Duration  67.40s (import 58%, transform 18%, tests 14%, environment 7%, setup 3%)
+
+     Import  3065 modules were evaluated 11974 times · 76.74s total, 58% of tracked time
+             ~18.94s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+error: script "test:pricing" exited with code 1

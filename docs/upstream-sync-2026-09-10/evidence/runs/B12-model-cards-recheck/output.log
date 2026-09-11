@@ -1,0 +1,14 @@
+$ vitest run --config vitest.pricing.config.ts model-cards --maxWorkers "1"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  14:39:17
+   Duration  41.90s (import 48%, transform 43%, tests 4%, environment 3%, setup 2%)
+
+  Transform  transforming modules took 18.10s · 43% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+

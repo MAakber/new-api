@@ -1,0 +1,13 @@
+{
+  "upstream": "eb99ab1b40343c3317bb47981cccdbb2b159a5fa",
+  "before_head": "16e8baabbdc01382a74b63fbcfcdf4266392fce6",
+  "after_head": "1fb6171e1ebf95661f77498615571c1491733b89",
+  "files": [
+    "controller/option.go",
+    "relay/channel/openai/constant.go",
+    "setting/billing_setting/builtin_billing.go",
+    "setting/billing_setting/builtin_billing_test.go",
+    "setting/billing_setting/tiered_billing.go"
+  ],
+  "rationale": "Builtin expression and model entry added; configured zero, per-request prices and explicit modes retain precedence. Kept raw option maps for downstream expected-value CAS; effective defaults are distinct and B12 model-pricing snapshot will display them. Targeted expression and pricing-patch regressions pass; stage acceptance follows full B12."
+}

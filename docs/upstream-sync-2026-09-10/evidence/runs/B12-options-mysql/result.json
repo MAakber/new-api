@@ -1,0 +1,29 @@
+{
+  "id": "B12-options-mysql",
+  "command": [
+    "go",
+    "test",
+    "./model",
+    "-run",
+    "^(TestOptionPrimaryKeyMigration|TestSeedCanonicalPricingOptionsOnlyAddsMissingRows|TestGenericPricingWritesAreRejected)$",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "f1c662f061f8ea6481fb748a1b81a33c63747f99",
+  "started_at": "2026-09-11T06:03:52.813Z",
+  "finished_at": "2026-09-11T06:04:02.254Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

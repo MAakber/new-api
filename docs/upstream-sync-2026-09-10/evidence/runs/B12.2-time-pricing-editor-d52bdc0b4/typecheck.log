@@ -1,0 +1,5 @@
+$ tsgo -b
+src/components/ui/combobox.tsx(80,26): error TS2339: Property 'onKeyDown' does not exist on type 'LegacyComboboxProps'.
+src/features/pricing/lib/task-expr.ts(30,14): error TS2451: Cannot redeclare block-scoped variable 'TASK_TOKEN_PRICE_SCALE'.
+src/features/pricing/lib/task-expr.ts(32,14): error TS2451: Cannot redeclare block-scoped variable 'TASK_TOKEN_PRICE_SCALE'.
+error: script "typecheck" exited with code 1

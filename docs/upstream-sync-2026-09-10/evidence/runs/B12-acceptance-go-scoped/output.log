@@ -1,0 +1,631 @@
+=== RUN   TestFormatUserLogsStripsQuotaSaturation
+--- PASS: TestFormatUserLogsStripsQuotaSaturation (0.00s)
+=== RUN   TestPricingAdvancedCustomUsesConfiguredEndpointTypes
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+--- PASS: TestPricingAdvancedCustomUsesConfiguredEndpointTypes (0.08s)
+=== RUN   TestPricingModelMetadataEndpointsMergeWithAdvancedCustomInference
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+--- PASS: TestPricingModelMetadataEndpointsMergeWithAdvancedCustomInference (0.00s)
+=== RUN   TestPricingModelMetadataEndpointsCanProvideEndpointWithoutChannelInference
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+--- PASS: TestPricingModelMetadataEndpointsCanProvideEndpointWithoutChannelInference (0.00s)
+=== RUN   TestPricingAdvancedCustomMissingConfigFallsBackToChannelType
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+--- PASS: TestPricingAdvancedCustomMissingConfigFallsBackToChannelType (0.00s)
+=== RUN   TestPricingNativeChannelEndpointTypesUnchanged
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+--- PASS: TestPricingNativeChannelEndpointTypesUnchanged (0.00s)
+=== RUN   TestInitChannelCacheInvalidatesPricingCache
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+--- PASS: TestInitChannelCacheInvalidatesPricingCache (0.00s)
+=== RUN   TestInitChannelCacheInvalidatesStartupPricingBuiltBeforeChannelCache
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+[SYS] 2026/09/11 - 14:29:40 | channels synced from database 
+--- PASS: TestInitChannelCacheInvalidatesStartupPricingBuiltBeforeChannelCache (0.07s)
+=== RUN   TestSeedCanonicalPricingOptionsOnlyAddsMissingRows
+--- PASS: TestSeedCanonicalPricingOptionsOnlyAddsMissingRows (0.00s)
+=== RUN   TestGenericPricingWritesAreRejected
+--- PASS: TestGenericPricingWritesAreRejected (0.00s)
+=== RUN   TestApplyPricingOptionMapsRequiresAllRows
+--- PASS: TestApplyPricingOptionMapsRequiresAllRows (0.00s)
+=== RUN   TestPricingIntegrityErrorIsStable
+--- PASS: TestPricingIntegrityErrorIsStable (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/model	1.635s
+=== RUN   TestSettleTestQuotaUsesTieredBilling
+--- PASS: TestSettleTestQuotaUsesTieredBilling (0.00s)
+=== RUN   TestBuildTestLogOtherInjectsTieredInfo
+--- PASS: TestBuildTestLogOtherInjectsTieredInfo (0.00s)
+=== RUN   TestListModelsIncludesTieredBillingModel
+[SYS] 2026/09/11 - 14:29:42 | SQL_DSN not set, using SQLite as database 
+--- PASS: TestListModelsIncludesTieredBillingModel (0.09s)
+=== RUN   TestListModelsUsesAdvancedCustomEndpointTypesFromPricingCache
+[SYS] 2026/09/11 - 14:29:42 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 14:29:42 | channels synced from database 
+--- PASS: TestListModelsUsesAdvancedCustomEndpointTypesFromPricingCache (0.01s)
+=== RUN   TestListModelsTokenLimitIncludesTieredBillingModel
+[SYS] 2026/09/11 - 14:29:42 | SQL_DSN not set, using SQLite as database 
+--- PASS: TestListModelsTokenLimitIncludesTieredBillingModel (0.01s)
+=== RUN   TestModelManagementDatabaseMatrix
+=== RUN   TestModelManagementDatabaseMatrix/sqlite
+[SYS] 2026/09/11 - 14:29:42 | SQL_DSN not set, using SQLite as database 
+    model_management_test.go:115: database version: 3.50.4
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/visible
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/unavailable
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/hidden
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/partial
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/list
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/metadata_only
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/keyword
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/policy
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/vendor_and_sync
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/no_matches
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/channel_model_listing
+
+2026/09/11 14:29:43 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:390
+[0m[35m[warn] [0mremoving callback `fail_listing_channels` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:390
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/pricing_saves_zero_switches_modes_and_rejects_stale_batches
+
+2026/09/11 14:29:43 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:440
+[0m[35m[warn] [0mremoving callback `fail_pricing_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:440
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/builtin_reset
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/concurrent_import_creates_one_record
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/metadata_keeps_pricing_and_channel_identity
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/metadata_preview_selection_versions_and_transaction
+
+2026/09/11 14:29:43 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:633
+[0m[35m[warn] [0mremoving callback `fail_metadata_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:633
+=== RUN   TestModelManagementDatabaseMatrix/mysql
+    model_management_test.go:113: set TEST_MYSQL_DSN to run this database
+=== RUN   TestModelManagementDatabaseMatrix/postgres
+    model_management_test.go:113: set TEST_POSTGRES_DSN to run this database
+--- PASS: TestModelManagementDatabaseMatrix (0.59s)
+    --- PASS: TestModelManagementDatabaseMatrix/sqlite (0.59s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy (0.13s)
+            --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination (0.03s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/visible (0.01s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/unavailable (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/hidden (0.01s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/partial (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/list (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/metadata_only (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/keyword (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/policy (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/vendor_and_sync (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/no_matches (0.00s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/channel_model_listing (0.07s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/pricing_saves_zero_switches_modes_and_rejects_stale_batches (0.02s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/builtin_reset (0.01s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/concurrent_import_creates_one_record (0.01s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/metadata_keeps_pricing_and_channel_identity (0.04s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/metadata_preview_selection_versions_and_transaction (0.07s)
+    --- SKIP: TestModelManagementDatabaseMatrix/mysql (0.00s)
+    --- SKIP: TestModelManagementDatabaseMatrix/postgres (0.00s)
+=== RUN   TestVendorManagementDatabaseMatrix
+=== RUN   TestVendorManagementDatabaseMatrix/sqlite
+[SYS] 2026/09/11 - 14:29:43 | SQL_DSN not set, using SQLite as database 
+    model_management_test.go:700: database version: 3.50.4
+=== RUN   TestVendorManagementDatabaseMatrix/sqlite/pricing_reads_keep_default_brands_without_writing_vendors
+=== RUN   TestVendorManagementDatabaseMatrix/sqlite/metadata_ownership_preview_merge_delete_and_rollback
+
+2026/09/11 14:29:43 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:848
+[0m[35m[warn] [0mremoving callback `vendor_delete_failure` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:848
+=== RUN   TestVendorManagementDatabaseMatrix/sqlite/concurrent_create_and_delete_never_orphan_model
+=== RUN   TestVendorManagementDatabaseMatrix/mysql
+    model_management_test.go:698: set TEST_MYSQL_DSN
+=== RUN   TestVendorManagementDatabaseMatrix/postgres
+    model_management_test.go:698: set TEST_POSTGRES_DSN
+--- PASS: TestVendorManagementDatabaseMatrix (0.31s)
+    --- PASS: TestVendorManagementDatabaseMatrix/sqlite (0.31s)
+        --- PASS: TestVendorManagementDatabaseMatrix/sqlite/pricing_reads_keep_default_brands_without_writing_vendors (0.02s)
+        --- PASS: TestVendorManagementDatabaseMatrix/sqlite/metadata_ownership_preview_merge_delete_and_rollback (0.08s)
+        --- PASS: TestVendorManagementDatabaseMatrix/sqlite/concurrent_create_and_delete_never_orphan_model (0.01s)
+    --- SKIP: TestVendorManagementDatabaseMatrix/mysql (0.00s)
+    --- SKIP: TestVendorManagementDatabaseMatrix/postgres (0.00s)
+=== RUN   TestPricingPatchHandlerSuccessConflictAndBadInput
+
+2026/09/11 14:29:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/ability.go:40 [35;1mSQL logic error: no such table: abilities (1)
+[0m[33m[0.000ms] [34;1m[rows:-][0m SELECT abilities.*, channels.type as channel_type FROM `abilities` left join channels on abilities.channel_id = channels.id WHERE abilities.enabled = true
+[SYS] 2026/09/11 - 14:29:43 | GetAllEnableAbilityWithChannels error: SQL logic error: no such table: abilities (1) 
+
+2026/09/11 14:29:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[0.529ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+
+2026/09/11 14:29:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:1570 [35;1mSQL logic error: no such table: users (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT `username` FROM `users` WHERE id = 1 AND `users`.`deleted_at` IS NULL
+--- PASS: TestPricingPatchHandlerSuccessConflictAndBadInput (0.00s)
+=== RUN   TestResetModelRatioUsesPricingPatchPath
+
+2026/09/11 14:29:43 [31;1mD:/10178/Projects/new-api-upstream-sync/model/ability.go:40 [35;1mSQL logic error: no such table: abilities (1)
+[0m[33m[0.000ms] [34;1m[rows:-][0m SELECT abilities.*, channels.type as channel_type FROM `abilities` left join channels on abilities.channel_id = channels.id WHERE abilities.enabled = true
+[SYS] 2026/09/11 - 14:29:43 | GetAllEnableAbilityWithChannels error: SQL logic error: no such table: abilities (1) 
+--- PASS: TestResetModelRatioUsesPricingPatchPath (0.00s)
+=== RUN   TestGenericOptionHandlerRejectsPricingBeforeRuntimeValidation
+--- PASS: TestGenericOptionHandlerRejectsPricingBeforeRuntimeValidation (0.00s)
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/sqlite
+[SYS] 2026/09/11 - 14:29:43 | SQL_DSN not set, using SQLite as database 
+    pricing_writer_compatibility_test.go:22: database version: 3.50.4
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/sqlite/builtin_display_does_not_change_raw_CAS_values
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/sqlite/different_models_survive_concurrent_old_and_new_writers
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/sqlite/same_model_has_one_winner_and_both_APIs_reject_stale_edits
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/sqlite/missing_canonical_row_rejects_both_writers_without_partial_writes
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql
+    pricing_writer_compatibility_test.go:20: set TEST_MYSQL_DSN to run this database
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/postgres
+    pricing_writer_compatibility_test.go:20: set TEST_POSTGRES_DSN to run this database
+--- PASS: TestPricingWriterCompatibilityDatabaseMatrix (0.22s)
+    --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/sqlite (0.22s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/sqlite/builtin_display_does_not_change_raw_CAS_values (0.00s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/sqlite/different_models_survive_concurrent_old_and_new_writers (0.01s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/sqlite/same_model_has_one_winner_and_both_APIs_reject_stale_edits (0.01s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/sqlite/missing_canonical_row_rejects_both_writers_without_partial_writes (0.01s)
+    --- SKIP: TestPricingWriterCompatibilityDatabaseMatrix/mysql (0.00s)
+    --- SKIP: TestPricingWriterCompatibilityDatabaseMatrix/postgres (0.00s)
+=== RUN   TestPricingSyncExpressionPriority
+=== RUN   TestPricingSyncExpressionPriority/equal_expressions_suppress_stale_ratios
+=== RUN   TestPricingSyncExpressionPriority/local_expression_excludes_legacy-only_source
+=== RUN   TestPricingSyncExpressionPriority/expression_imports_without_legacy_conflicts
+=== RUN   TestPricingSyncExpressionPriority/inactive_expression_follows_explicit_ratio_mode
+=== RUN   TestPricingSyncExpressionPriority/empty_active_expression_never_imports_a_false_free_price
+--- PASS: TestPricingSyncExpressionPriority (0.00s)
+    --- PASS: TestPricingSyncExpressionPriority/equal_expressions_suppress_stale_ratios (0.00s)
+    --- PASS: TestPricingSyncExpressionPriority/local_expression_excludes_legacy-only_source (0.00s)
+    --- PASS: TestPricingSyncExpressionPriority/expression_imports_without_legacy_conflicts (0.00s)
+    --- PASS: TestPricingSyncExpressionPriority/inactive_expression_follows_explicit_ratio_mode (0.00s)
+    --- PASS: TestPricingSyncExpressionPriority/empty_active_expression_never_imports_a_false_free_price (0.00s)
+=== RUN   TestPricingSyncCompleteSourcesAndArrayFormats
+--- PASS: TestPricingSyncCompleteSourcesAndArrayFormats (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	2.936s
+=== RUN   TestRunAutoModelMetadataSyncBatchCreatesMissingModel
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "auto-metadata-model" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `vendors` WHERE name = "auto-vendor" AND `vendors`.`deleted_at` IS NULL ORDER BY `vendors`.`id` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/vendor_meta.go:37 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `vendors` WHERE active_name = "auto-vendor" AND `vendors`.`deleted_at` IS NULL ORDER BY `vendors`.`id` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:242 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE active_name = "auto-metadata-model" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+--- PASS: TestRunAutoModelMetadataSyncBatchCreatesMissingModel (0.11s)
+=== RUN   TestBuildGuardAndEventsUseTxPricingRowsAndRollback
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+--- PASS: TestBuildGuardAndEventsUseTxPricingRowsAndRollback (0.00s)
+=== RUN   TestCanonicalModelMetadataURLsUsesDefaultPathForEmptyLocale
+--- PASS: TestCanonicalModelMetadataURLsUsesDefaultPathForEmptyLocale (0.00s)
+=== RUN   TestSyncModelMetadataFetchFailureDoesNotWrite
+--- PASS: TestSyncModelMetadataFetchFailureDoesNotWrite (0.31s)
+=== RUN   TestSyncModelMetadataCreatesOfficialModel
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.552ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "created" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `vendors` WHERE name = "vendor" AND `vendors`.`deleted_at` IS NULL ORDER BY `vendors`.`id` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/vendor_meta.go:37 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `vendors` WHERE active_name = "vendor" AND `vendors`.`deleted_at` IS NULL ORDER BY `vendors`.`id` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/ability.go:40 [35;1mSQL logic error: no such table: channels (1)
+[0m[33m[0.000ms] [34;1m[rows:-][0m SELECT abilities.*, channels.type as channel_type FROM `abilities` left join channels on abilities.channel_id = channels.id WHERE abilities.enabled = true
+[SYS] 2026/09/11 - 14:29:42 | GetAllEnableAbilityWithChannels error: SQL logic error: no such table: channels (1) 
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:242 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE active_name = "created" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+--- PASS: TestSyncModelMetadataCreatesOfficialModel (0.01s)
+=== RUN   TestSyncModelMetadataCanceledContextDoesNotWrite
+--- PASS: TestSyncModelMetadataCanceledContextDoesNotWrite (0.00s)
+=== RUN   TestSyncModelMetadataStopsAfterCancellationBetweenMutations
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "first" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:242 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE active_name = "first" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+--- PASS: TestSyncModelMetadataStopsAfterCancellationBetweenMutations (0.00s)
+=== RUN   TestSyncModelMetadataNoOpDoesNotFetch
+--- PASS: TestSyncModelMetadataNoOpDoesNotFetch (0.00s)
+=== RUN   TestPatchPricingOptionsZeroDeleteAndSetIfMissing
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/ability.go:40 [35;1mSQL logic error: no such table: abilities (1)
+[0m[33m[0.000ms] [34;1m[rows:-][0m SELECT abilities.*, channels.type as channel_type FROM `abilities` left join channels on abilities.channel_id = channels.id WHERE abilities.enabled = true
+[SYS] 2026/09/11 - 14:29:42 | GetAllEnableAbilityWithChannels error: SQL logic error: no such table: abilities (1) 
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/ability.go:40 [35;1mSQL logic error: no such table: abilities (1)
+[0m[33m[0.000ms] [34;1m[rows:-][0m SELECT abilities.*, channels.type as channel_type FROM `abilities` left join channels on abilities.channel_id = channels.id WHERE abilities.enabled = true
+[SYS] 2026/09/11 - 14:29:42 | GetAllEnableAbilityWithChannels error: SQL logic error: no such table: abilities (1) 
+
+2026/09/11 14:29:42 [31;1mD:/10178/Projects/new-api-upstream-sync/model/ability.go:40 [35;1mSQL logic error: no such table: abilities (1)
+[0m[33m[0.000ms] [34;1m[rows:-][0m SELECT abilities.*, channels.type as channel_type FROM `abilities` left join channels on abilities.channel_id = channels.id WHERE abilities.enabled = true
+[SYS] 2026/09/11 - 14:29:42 | GetAllEnableAbilityWithChannels error: SQL logic error: no such table: abilities (1) 
+--- PASS: TestPatchPricingOptionsZeroDeleteAndSetIfMissing (0.00s)
+=== RUN   TestPatchPricingOptionsIsAtomicOnExpectedConflict
+--- PASS: TestPatchPricingOptionsIsAtomicOnExpectedConflict (0.00s)
+=== RUN   TestPatchPricingOptionsMissingRowIsIntegrityError
+--- PASS: TestPatchPricingOptionsMissingRowIsIntegrityError (0.00s)
+=== RUN   TestAttachQuotaSaturationNestsUnderAdminInfo
+[WARN] 2026/09/11 - 14:29:42 | SYSTEM | quota saturation on consume log: op=QuotaFromDecimal kind=overflow original=1.8e+19 clamped=2147483647 user=7 model=gpt-image-1 
+--- PASS: TestAttachQuotaSaturationNestsUnderAdminInfo (0.00s)
+=== RUN   TestAttachQuotaSaturationPreservesExistingAdminInfo
+[WARN] 2026/09/11 - 14:29:42 | SYSTEM | quota saturation on consume log: op=QuotaFromFloat kind=underflow original=0 clamped=-2147483648 user=0 model= 
+--- PASS: TestAttachQuotaSaturationPreservesExistingAdminInfo (0.00s)
+=== RUN   TestAttachQuotaSaturationNoClampNoMarker
+--- PASS: TestAttachQuotaSaturationNoClampNoMarker (0.00s)
+=== RUN   TestFixedPriceBillingDatabaseMatrix
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite
+    text_quota_test.go:98: database: 3.50.4
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/missing_usage_charges_once
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 1 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=1, params={"channel_id":1,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"上游无计费信息","token_id":1,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704982687,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/zero_usage_charges_once
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 2 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=2, params={"channel_id":2,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":2,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704982688,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/stream_charges_once
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 3 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=3, params={"channel_id":3,"prompt_tokens":100,"completion_tokens":20,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":3,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704982689,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/audio_zero_usage_charges_once
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 4 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=4, params={"channel_id":4,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"模型倍率 0.00，补全倍率 1.00，音频倍率 1.00，音频补全倍率 1.00，分组倍率 1.00","token_id":4,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"audio":true,"audio_completion_ratio":1,"audio_input":0,"audio_output":0,"audio_ratio":1,"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":1,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704982691,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","text_input":0,"text_output":0,"user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/audio_missing_usage_charges_once
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 5 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=5, params={"channel_id":5,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"模型倍率 0.00，补全倍率 1.00，音频倍率 1.00，音频补全倍率 1.00，分组倍率 1.00","token_id":5,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"audio":true,"audio_completion_ratio":1,"audio_input":0,"audio_output":0,"audio_ratio":1,"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":1,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704982693,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","text_input":0,"text_output":0,"user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/token_reservation_refunds_to_fixed_price
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 6 需要预扣费 ＄0.100000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费后返还扣费：＄0.090000（实际消耗：＄0.010000，预扣费：＄0.100000） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=6, params={"channel_id":6,"prompt_tokens":100,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":6,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"bGVuIDw9IDMyMDAwID8gdGllcigic2hvcnQiLCBmaXhlZCgwLjAxKSkgOiB0aWVyKCJsb25nIiwgcCAqIDIp","fixed_price":0.01,"frt":-63924704982694,"group_ratio":1,"matched_tier":"short","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/fixed_reservation_settles_token_fallback
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 7 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费后补扣费：＄0.090000（实际消耗：＄0.100000，预扣费：＄0.010000） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=7, params={"channel_id":7,"prompt_tokens":50000,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":50000,"content":"","token_id":7,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"token","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"bGVuIDw9IDMyMDAwID8gdGllcigic2hvcnQiLCBmaXhlZCgwLjAxKSkgOiB0aWVyKCJsb25nIiwgcCAqIDIp","frt":-63924704982696,"group_ratio":1,"matched_tier":"long","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/missing_usage_uses_estimated_token_fallback
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 8 需要预扣费 ＄0.100000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.100000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=8, params={"channel_id":8,"prompt_tokens":50000,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":50000,"content":"上游无计费信息","token_id":8,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"token","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"bGVuIDw9IDMyMDAwID8gdGllcigic2hvcnQiLCBmaXhlZCgwLjAxKSkgOiB0aWVyKCJsb25nIiwgcCAqIDIp","frt":-63924704982699,"group_ratio":1,"matched_tier":"long","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/evaluation_error_retains_fixed_reservation_metadata
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 9 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=9, params={"channel_id":9,"prompt_tokens":50,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":9,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"cCA9PSA1MCA/IHRpZXIoImVycm9yIiwgcGFyYW0oIm1pc3NpbmciKSAqIHApIDogdGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704982701,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/explicit_zero_remains_free
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.000000（按次计费） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=10, params={"channel_id":10,"prompt_tokens":100,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":0,"content":"","token_id":10,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigiZnJlZSIsIGZpeGVkKDApKQ==","fixed_price":0,"frt":-63924704982702,"group_ratio":1,"matched_tier":"free","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/multipliers_and_separate_tool_surcharge
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 11 需要预扣费 ＄0.030000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 预扣费后补扣费：＄0.006000（实际消耗：＄0.036000，预扣费：＄0.030000） 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | record consume log: userId=11, params={"channel_id":11,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":18000,"content":"上游无计费信息, fixed_billing_tool 调用 1 次，调用花费 ＄0.006000 额度","token_id":11,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKSAqIChwYXJhbSgiZmFzdCIpID09IHRydWUgPyAyIDogMSk=","fixed_price":0.01,"frt":-63924704982704,"group_ratio":1.5,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","request_rules":[{"cond":"param(\"fast\") == true","multiplier":2,"matched":true}],"tool_surcharges":[{"name":"fixed_billing_tool","count":1,"price":4}],"user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/failed_request_refunds_exactly_once
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 12 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 12 请求失败, 返还预扣费（token_quota=＄0.010000, funding=wallet） 
+
+2026/09/11 14:29:42 [34;1mD:/10178/Projects/new-api-upstream-sync/service/text_quota_test.go:185
+[0m[35m[warn] [0mremoving callback `fixed_billing_refund_observed` from D:/10178/Projects/new-api-upstream-sync/service/text_quota_test.go:185
+=== RUN   TestFixedPriceBillingDatabaseMatrix/sqlite/insufficient_wallet_never_reserves_tokens
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql
+    text_quota_test.go:60: TEST_FIXED_MYSQL_DSN is not configured
+=== RUN   TestFixedPriceBillingDatabaseMatrix/postgres
+    text_quota_test.go:60: TEST_FIXED_POSTGRES_DSN is not configured
+--- PASS: TestFixedPriceBillingDatabaseMatrix (0.03s)
+    --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite (0.02s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/missing_usage_charges_once (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/zero_usage_charges_once (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/stream_charges_once (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/audio_zero_usage_charges_once (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/audio_missing_usage_charges_once (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/token_reservation_refunds_to_fixed_price (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/fixed_reservation_settles_token_fallback (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/missing_usage_uses_estimated_token_fallback (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/evaluation_error_retains_fixed_reservation_metadata (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/explicit_zero_remains_free (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/multipliers_and_separate_tool_surcharge (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/failed_request_refunds_exactly_once (0.00s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/sqlite/insufficient_wallet_never_reserves_tokens (0.00s)
+    --- SKIP: TestFixedPriceBillingDatabaseMatrix/mysql (0.00s)
+    --- SKIP: TestFixedPriceBillingDatabaseMatrix/postgres (0.00s)
+=== RUN   TestComposeTieredTextQuotaKeepsToolCallSurcharges
+--- PASS: TestComposeTieredTextQuotaKeepsToolCallSurcharges (0.00s)
+=== RUN   TestComposeTieredTextQuotaFallbackKeepsToolCallSurcharges
+--- PASS: TestComposeTieredTextQuotaFallbackKeepsToolCallSurcharges (0.00s)
+=== RUN   TestComposeTieredTextQuotaErrorFallbackUsesPreConsumedQuota
+--- PASS: TestComposeTieredTextQuotaErrorFallbackUsesPreConsumedQuota (0.00s)
+=== RUN   TestTryTieredSettleRecordsClampOnOverflow
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaRound) overflow: original=5e+20, clamped=2147483647 
+--- PASS: TestTryTieredSettleRecordsClampOnOverflow (0.00s)
+=== RUN   TestTryTieredSettleNoClampInRange
+--- PASS: TestTryTieredSettleNoClampInRange (0.00s)
+=== RUN   TestCalculateTextQuotaSummaryFixedPriceAppliesImageCountOnceAndAllowsOverride
+--- PASS: TestCalculateTextQuotaSummaryFixedPriceAppliesImageCountOnceAndAllowsOverride (0.00s)
+=== RUN   TestTieredRetryRejectsInvalidPriceBeforeChangingReservation
+=== RUN   TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/negative_price
+=== RUN   TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/request_overflow
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaRound) overflow: original=5e+09, clamped=2147483647 
+=== RUN   TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/not_a_number
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaRound) nan: original=NaN, clamped=0 
+=== RUN   TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/infinite_price
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaRound) overflow: original=+Inf, clamped=2147483647 
+--- PASS: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation (0.00s)
+    --- PASS: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/negative_price (0.00s)
+    --- PASS: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/request_overflow (0.00s)
+    --- PASS: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/not_a_number (0.00s)
+    --- PASS: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/infinite_price (0.00s)
+=== RUN   TestTryTieredSettleUsesFrozenRequestInput
+--- PASS: TestTryTieredSettleUsesFrozenRequestInput (0.00s)
+=== RUN   TestTryTieredSettleFallsBackToFrozenPreConsumeOnExprError
+--- PASS: TestTryTieredSettleFallsBackToFrozenPreConsumeOnExprError (0.00s)
+=== RUN   TestTryTieredSettle_PreConsumeMatchesPostConsume
+--- PASS: TestTryTieredSettle_PreConsumeMatchesPostConsume (0.00s)
+=== RUN   TestTryTieredSettle_PostConsumeOverPreConsume
+--- PASS: TestTryTieredSettle_PostConsumeOverPreConsume (0.00s)
+=== RUN   TestTryTieredSettle_PostConsumeUnderPreConsume
+--- PASS: TestTryTieredSettle_PostConsumeUnderPreConsume (0.00s)
+=== RUN   TestTryTieredSettle_ExactBoundary
+--- PASS: TestTryTieredSettle_ExactBoundary (0.00s)
+=== RUN   TestTryTieredSettle_BoundaryPlusOne
+--- PASS: TestTryTieredSettle_BoundaryPlusOne (0.00s)
+=== RUN   TestTryTieredSettle_ZeroTokens
+--- PASS: TestTryTieredSettle_ZeroTokens (0.00s)
+=== RUN   TestTryTieredSettle_HugeTokens
+--- PASS: TestTryTieredSettle_HugeTokens (0.00s)
+=== RUN   TestTryTieredSettle_CacheTokensAffectSettlement
+--- PASS: TestTryTieredSettle_CacheTokensAffectSettlement (0.00s)
+=== RUN   TestTryTieredSettle_RequestProbeInfluencesBilling
+--- PASS: TestTryTieredSettle_RequestProbeInfluencesBilling (0.00s)
+=== RUN   TestTryTieredSettle_NoRequestInput_FallsBackToDefault
+--- PASS: TestTryTieredSettle_NoRequestInput_FallsBackToDefault (0.00s)
+=== RUN   TestPrepareTieredBillingForSelectedGroupUpdatesReservation
+--- PASS: TestPrepareTieredBillingForSelectedGroupUpdatesReservation (0.00s)
+=== RUN   TestPrepareTieredBillingForSelectedGroupStartsBillingAfterFreeGroup
+[INFO] 2026/09/11 - 14:29:42 | SYSTEM | 用户 700 需要预扣费 ＄0.200000 (funding=wallet) 
+--- PASS: TestPrepareTieredBillingForSelectedGroupStartsBillingAfterFreeGroup (0.00s)
+=== RUN   TestPrepareTieredBillingForSelectedGroupPaidToFreeKeepsFreeModelFalse
+--- PASS: TestPrepareTieredBillingForSelectedGroupPaidToFreeKeepsFreeModelFalse (0.00s)
+=== RUN   TestPrepareTieredBillingForSelectedGroupTopUpArrearsAllowsNegativeBalance
+--- PASS: TestPrepareTieredBillingForSelectedGroupTopUpArrearsAllowsNegativeBalance (0.00s)
+=== RUN   TestTryTieredSettleUsesFinalGroupAfterRetry
+=== RUN   TestTryTieredSettleUsesFinalGroupAfterRetry/more_expensive_final_group
+=== RUN   TestTryTieredSettleUsesFinalGroupAfterRetry/free_final_group
+--- PASS: TestTryTieredSettleUsesFinalGroupAfterRetry (0.00s)
+    --- PASS: TestTryTieredSettleUsesFinalGroupAfterRetry/more_expensive_final_group (0.00s)
+    --- PASS: TestTryTieredSettleUsesFinalGroupAfterRetry/free_final_group (0.00s)
+=== RUN   TestTryTieredSettle_GroupRatioScaling
+--- PASS: TestTryTieredSettle_GroupRatioScaling (0.00s)
+=== RUN   TestTryTieredSettle_GroupRatioZero
+--- PASS: TestTryTieredSettle_GroupRatioZero (0.00s)
+=== RUN   TestTryTieredSettle_RatioMode_NilSnapshot
+--- PASS: TestTryTieredSettle_RatioMode_NilSnapshot (0.00s)
+=== RUN   TestTryTieredSettle_RatioMode_WrongBillingMode
+--- PASS: TestTryTieredSettle_RatioMode_WrongBillingMode (0.00s)
+=== RUN   TestTryTieredSettle_RatioMode_EmptyBillingMode
+--- PASS: TestTryTieredSettle_RatioMode_EmptyBillingMode (0.00s)
+=== RUN   TestTryTieredSettle_ErrorFallbackToEstimatedQuotaAfterGroup
+--- PASS: TestTryTieredSettle_ErrorFallbackToEstimatedQuotaAfterGroup (0.00s)
+=== RUN   TestBuildTieredTokenParams_GPT_WithCache
+--- PASS: TestBuildTieredTokenParams_GPT_WithCache (0.00s)
+=== RUN   TestBuildTieredTokenParams_GPT_NoCacheVar
+--- PASS: TestBuildTieredTokenParams_GPT_NoCacheVar (0.00s)
+=== RUN   TestBuildTieredTokenParams_GPT_WithImage
+--- PASS: TestBuildTieredTokenParams_GPT_WithImage (0.00s)
+=== RUN   TestBuildTieredTokenParams_Claude_WithCache
+--- PASS: TestBuildTieredTokenParams_Claude_WithCache (0.00s)
+=== RUN   TestBuildTieredTokenParams_GPT_AudioOutput
+--- PASS: TestBuildTieredTokenParams_GPT_AudioOutput (0.00s)
+=== RUN   TestBuildTieredTokenParams_GPT_AudioOutputNoVar
+--- PASS: TestBuildTieredTokenParams_GPT_AudioOutputNoVar (0.00s)
+=== RUN   TestBuildTieredTokenParams_ParityWithRatio
+--- PASS: TestBuildTieredTokenParams_ParityWithRatio (0.00s)
+=== RUN   TestBuildTieredTokenParams_ParityWithRatio_Image
+--- PASS: TestBuildTieredTokenParams_ParityWithRatio_Image (0.00s)
+=== RUN   TestBuildTieredTokenParams_Len_GPT
+--- PASS: TestBuildTieredTokenParams_Len_GPT (0.00s)
+=== RUN   TestBuildTieredTokenParams_Len_Claude
+--- PASS: TestBuildTieredTokenParams_Len_Claude (0.00s)
+=== RUN   TestBuildTieredTokenParams_Len_TierCondition
+--- PASS: TestBuildTieredTokenParams_Len_TierCondition (0.00s)
+=== RUN   TestValidatePricingSourceDescriptorAndSanitize
+--- PASS: TestValidatePricingSourceDescriptorAndSanitize (0.00s)
+=== RUN   TestParseModelsDevPricingIsDeterministicAndRejectsNegativeAuxiliaries
+--- PASS: TestParseModelsDevPricingIsDeterministicAndRejectsNegativeAuxiliaries (0.00s)
+=== RUN   TestVerifyRealPricingChannelSnapshot
+--- PASS: TestVerifyRealPricingChannelSnapshot (0.00s)
+=== RUN   TestParseOpenRouterPricingCacheAndNegativeValues
+--- PASS: TestParseOpenRouterPricingCacheAndNegativeValues (0.00s)
+=== RUN   TestParseStandardPricingPreservesType2AuxiliaryZeroAndTieredMode
+--- PASS: TestParseStandardPricingPreservesType2AuxiliaryZeroAndTieredMode (0.00s)
+=== RUN   TestBuildMissingPricingPatchUsesCanonicalDBRows
+--- PASS: TestBuildMissingPricingPatchUsesCanonicalDBRows (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/service	1.559s
+testing: warning: no tests to run
+PASS
+ok  	github.com/QuantumNous/new-api/setting/billing_setting	1.176s [no tests to run]
+=== RUN   TestTaskUsageExpressionUsesFactsAndTaskQuotaConversion
+--- PASS: TestTaskUsageExpressionUsesFactsAndTaskQuotaConversion (0.00s)
+=== RUN   TestFixedPriceBranches
+=== RUN   TestFixedPriceBranches/zero_usage_still_charges_once
+=== RUN   TestFixedPriceBranches/fixed_branch_ignores_token_prices
+=== RUN   TestFixedPriceBranches/token_branch_uses_actual_usage
+--- PASS: TestFixedPriceBranches (0.00s)
+    --- PASS: TestFixedPriceBranches/zero_usage_still_charges_once (0.00s)
+    --- PASS: TestFixedPriceBranches/fixed_branch_ignores_token_prices (0.00s)
+    --- PASS: TestFixedPriceBranches/token_branch_uses_actual_usage (0.00s)
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/true_?_tier("ok",_p)_:_tier("bad",_fixed(-0.01))
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(p))
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01_+_0.02))
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(1e308))
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01)_+_p_*_2)
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_p_*_fixed(0.01))
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("a",_fixed(0.01))_+_tier("b",_p_*_2)
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/fixed(0.01)
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01))_*_p
+=== RUN   TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01))_*_(param("fast")_==_true_?_-2_:_1)
+--- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/true_?_tier("ok",_p)_:_tier("bad",_fixed(-0.01)) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(p)) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01_+_0.02)) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(1e308)) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01)_+_p_*_2) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_p_*_fixed(0.01)) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("a",_fixed(0.01))_+_tier("b",_p_*_2) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/fixed(0.01) (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01))_*_p (0.00s)
+    --- PASS: TestFixedPriceRejectsInvalidLeavesIncludingUnselectedBranches/tier("bad",_fixed(0.01))_*_(param("fast")_==_true_?_-2_:_1) (0.00s)
+=== RUN   TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots
+=== RUN   TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/normal_group
+=== RUN   TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/free_group
+=== RUN   TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/explicit_free_price
+=== RUN   TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/oversized_price_saturates_instead_of_crediting
+[SYS] 2026/09/11 - 14:29:41 | quota conversion (QuotaRound) overflow: original=5e+25, clamped=2147483647 
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaRound) overflow: original=5e+25, clamped=2147483647 
+--- PASS: TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots (0.12s)
+    --- PASS: TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/normal_group (0.00s)
+    --- PASS: TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/free_group (0.00s)
+    --- PASS: TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/explicit_free_price (0.00s)
+    --- PASS: TestFixedPriceQuotaBoundariesAndUnsupportedTaskSnapshots/oversized_price_saturates_instead_of_crediting (0.12s)
+=== RUN   TestRequestProbeHelpers
+--- PASS: TestRequestProbeHelpers (0.00s)
+=== RUN   TestRequestProbeMissingFieldReturnsNil
+--- PASS: TestRequestProbeMissingFieldReturnsNil (0.00s)
+=== RUN   TestRequestProbeMultipleRulesTraceAllFactors
+--- PASS: TestRequestProbeMultipleRulesTraceAllFactors (0.00s)
+=== RUN   TestRequestProbeTraceIncludesUnmatchedFactors
+--- PASS: TestRequestProbeTraceIncludesUnmatchedFactors (0.00s)
+=== RUN   TestRequestProbeTracePreservesIntegerConditionalType
+--- PASS: TestRequestProbeTracePreservesIntegerConditionalType (0.00s)
+=== RUN   TestRequestProbeNonUnitFallbackIsNotTraced
+--- PASS: TestRequestProbeNonUnitFallbackIsNotTraced (0.00s)
+=== RUN   TestRequestProbeInternalTraceFunctionIsReserved
+--- PASS: TestRequestProbeInternalTraceFunctionIsReserved (0.00s)
+=== RUN   TestComputeTieredQuota_Basic
+--- PASS: TestComputeTieredQuota_Basic (0.00s)
+=== RUN   TestComputeTieredQuota_SameTier
+--- PASS: TestComputeTieredQuota_SameTier (0.00s)
+=== RUN   TestComputeTieredQuota_WithCache
+--- PASS: TestComputeTieredQuota_WithCache (0.00s)
+=== RUN   TestComputeTieredQuota_WithCacheCrossTier
+--- PASS: TestComputeTieredQuota_WithCacheCrossTier (0.00s)
+=== RUN   TestComputeTieredQuota_BasicSettlement
+--- PASS: TestComputeTieredQuota_BasicSettlement (0.00s)
+=== RUN   TestComputeTieredQuota_WithGroupRatio
+--- PASS: TestComputeTieredQuota_WithGroupRatio (0.00s)
+=== RUN   TestComputeTieredQuota_ZeroTokens
+--- PASS: TestComputeTieredQuota_ZeroTokens (0.00s)
+=== RUN   TestComputeTieredQuota_RoundingEdge
+--- PASS: TestComputeTieredQuota_RoundingEdge (0.00s)
+=== RUN   TestComputeTieredQuota_RoundingEdgeDown
+--- PASS: TestComputeTieredQuota_RoundingEdgeDown (0.00s)
+=== RUN   TestComputeTieredQuotaWithRequest_ProbeAffectsQuota
+--- PASS: TestComputeTieredQuotaWithRequest_ProbeAffectsQuota (0.00s)
+=== RUN   TestComputeTieredQuota_BoundaryTierCrossing
+--- PASS: TestComputeTieredQuota_BoundaryTierCrossing (0.00s)
+=== RUN   TestFrontendSimulationContract
+=== RUN   TestFrontendSimulationContract/versioned_tokens_and_cache
+=== RUN   TestFrontendSimulationContract/nil_false_and_zero
+=== RUN   TestFrontendSimulationContract/normalized_headers_and_two_rules
+=== RUN   TestFrontendSimulationContract/unmatched_rule
+=== RUN   TestFrontendSimulationContract/rules_skipped_by_short_circuit
+=== RUN   TestFrontendSimulationContract/noncanonical_factor_still_evaluates
+=== RUN   TestFrontendSimulationContract/path_escapes_array_indices_and_length
+=== RUN   TestFrontendSimulationContract/literal_path_to_constructor
+=== RUN   TestFrontendSimulationContract/contains_scalars_and_objects
+=== RUN   TestFrontendSimulationContract/math_and_numeric_division
+=== RUN   TestFrontendSimulationContract/task_token_scale_and_request_rule
+=== RUN   TestFrontendSimulationContract/task_enum_conditions
+=== RUN   TestFrontendSimulationContract/scientific_rates_and_parentheses
+=== RUN   TestFrontendSimulationContract/fixed_request_with_zero_usage
+=== RUN   TestFrontendSimulationContract/explicit_free_request
+=== RUN   TestFrontendSimulationContract/mixed_expression_token_fallback
+=== RUN   TestFrontendSimulationContract/fixed_request_with_multiplier
+=== RUN   TestFrontendSimulationContract/fixed_time_condition
+--- PASS: TestFrontendSimulationContract (0.01s)
+    --- PASS: TestFrontendSimulationContract/versioned_tokens_and_cache (0.00s)
+    --- PASS: TestFrontendSimulationContract/nil_false_and_zero (0.00s)
+    --- PASS: TestFrontendSimulationContract/normalized_headers_and_two_rules (0.00s)
+    --- PASS: TestFrontendSimulationContract/unmatched_rule (0.00s)
+    --- PASS: TestFrontendSimulationContract/rules_skipped_by_short_circuit (0.00s)
+    --- PASS: TestFrontendSimulationContract/noncanonical_factor_still_evaluates (0.00s)
+    --- PASS: TestFrontendSimulationContract/path_escapes_array_indices_and_length (0.00s)
+    --- PASS: TestFrontendSimulationContract/literal_path_to_constructor (0.00s)
+    --- PASS: TestFrontendSimulationContract/contains_scalars_and_objects (0.00s)
+    --- PASS: TestFrontendSimulationContract/math_and_numeric_division (0.00s)
+    --- PASS: TestFrontendSimulationContract/task_token_scale_and_request_rule (0.00s)
+    --- PASS: TestFrontendSimulationContract/task_enum_conditions (0.00s)
+    --- PASS: TestFrontendSimulationContract/scientific_rates_and_parentheses (0.00s)
+    --- PASS: TestFrontendSimulationContract/fixed_request_with_zero_usage (0.00s)
+    --- PASS: TestFrontendSimulationContract/explicit_free_request (0.00s)
+    --- PASS: TestFrontendSimulationContract/mixed_expression_token_fallback (0.00s)
+    --- PASS: TestFrontendSimulationContract/fixed_request_with_multiplier (0.00s)
+    --- PASS: TestFrontendSimulationContract/fixed_time_condition (0.00s)
+=== RUN   TestComputeTieredQuota_ClampOnOverflow
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaRound) overflow: original=5e+20, clamped=2147483647 
+--- PASS: TestComputeTieredQuota_ClampOnOverflow (0.00s)
+=== RUN   TestComputeTieredQuota_NoClampInRange
+--- PASS: TestComputeTieredQuota_NoClampInRange (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/pkg/billingexpr	0.934s
+=== RUN   TestModelPriceHelperTieredUsesPreloadedRequestInput
+--- PASS: TestModelPriceHelperTieredUsesPreloadedRequestInput (0.00s)
+=== RUN   TestFixedPricePreConsumeAndRealtimeRejection
+=== RUN   TestFixedPricePreConsumeAndRealtimeRejection/HTTP_charges_once
+=== RUN   TestFixedPricePreConsumeAndRealtimeRejection/Realtime_rejects_even_unselected_fixed_branch
+=== RUN   TestFixedPricePreConsumeAndRealtimeRejection/legacy_tasks_reject_fixed_expressions
+--- PASS: TestFixedPricePreConsumeAndRealtimeRejection (0.00s)
+    --- PASS: TestFixedPricePreConsumeAndRealtimeRejection/HTTP_charges_once (0.00s)
+    --- PASS: TestFixedPricePreConsumeAndRealtimeRejection/Realtime_rejects_even_unselected_fixed_branch (0.00s)
+    --- PASS: TestFixedPricePreConsumeAndRealtimeRejection/legacy_tasks_reject_fixed_expressions (0.00s)
+=== RUN   TestModelPriceHelperTieredPreConsumeMaxTokensFallback
+=== RUN   TestModelPriceHelperTieredPreConsumeMaxTokensFallback/non-free_group_falls_back_to_8192_completion_tokens
+=== RUN   TestModelPriceHelperTieredPreConsumeMaxTokensFallback/explicit_max_tokens_is_used_verbatim
+=== RUN   TestModelPriceHelperTieredPreConsumeMaxTokensFallback/free_group_stays_zero_without_fallback
+--- PASS: TestModelPriceHelperTieredPreConsumeMaxTokensFallback (0.00s)
+    --- PASS: TestModelPriceHelperTieredPreConsumeMaxTokensFallback/non-free_group_falls_back_to_8192_completion_tokens (0.00s)
+    --- PASS: TestModelPriceHelperTieredPreConsumeMaxTokensFallback/explicit_max_tokens_is_used_verbatim (0.00s)
+    --- PASS: TestModelPriceHelperTieredPreConsumeMaxTokensFallback/free_group_stays_zero_without_fallback (0.00s)
+=== RUN   TestModelPriceHelperTieredRejectsPreConsumeOverflow
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaRound) overflow: original=5e+19, clamped=2147483647 
+--- PASS: TestModelPriceHelperTieredRejectsPreConsumeOverflow (0.12s)
+=== RUN   TestModelPriceHelperRequestBillingRatiosOnlyApplyToFixedPrice
+=== RUN   TestModelPriceHelperRequestBillingRatiosOnlyApplyToFixedPrice/fixed_price_applies_image_count
+=== RUN   TestModelPriceHelperRequestBillingRatiosOnlyApplyToFixedPrice/ratio_price_ignores_request_billing_ratios
+[SYS] 2026/09/11 - 14:29:42 | quota conversion (QuotaFromFloat) overflow: original=3.2212254705e+09, clamped=2147483647 
+--- PASS: TestModelPriceHelperRequestBillingRatiosOnlyApplyToFixedPrice (0.00s)
+    --- PASS: TestModelPriceHelperRequestBillingRatiosOnlyApplyToFixedPrice/fixed_price_applies_image_count (0.00s)
+    --- PASS: TestModelPriceHelperRequestBillingRatiosOnlyApplyToFixedPrice/ratio_price_ignores_request_billing_ratios (0.00s)
+PASS
+ok  	github.com/QuantumNous/new-api/relay/helper	1.103s
+testing: warning: no tests to run
+PASS
+ok  	github.com/QuantumNous/new-api/relay	1.285s [no tests to run]

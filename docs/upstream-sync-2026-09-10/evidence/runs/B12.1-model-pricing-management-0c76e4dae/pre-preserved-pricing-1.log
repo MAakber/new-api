@@ -1,0 +1,14 @@
+$ vitest run --config vitest.sync.config.ts time-rule model-perf --maxWorkers "2"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  3 passed (3)
+      Tests  38 passed (38)
+   Start at  13:13:38
+   Duration  7.82s (import 53%, environment 26%, setup 13%, transform 4%, tests 3%)
+
+Environment  happy-dom was created 3 times · 2.77s total, 26% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

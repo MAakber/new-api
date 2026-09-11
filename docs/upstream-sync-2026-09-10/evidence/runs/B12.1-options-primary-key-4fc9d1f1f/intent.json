@@ -1,0 +1,11 @@
+{
+  "upstream": "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a",
+  "unit": "B12.1-options-primary-key",
+  "before_head": "0d5daeb250c3bb326f5f18adf5dfd7ff6012f8dd",
+  "rationale": "Repair legacy option uniqueness while preserving administrator values and ordinary concurrent writers. Retain the canonical missing-row failure and shared CAS pricing writer; use database-enforced locks and fail before changing ambiguous duplicate values.",
+  "files": [
+    "model/main.go",
+    "model/model_pricing_config.go",
+    "model/option_primary_key_migration.go"
+  ]
+}

@@ -1,0 +1,189 @@
+=== RUN   TestModelManagementDatabaseMatrix
+=== RUN   TestModelManagementDatabaseMatrix/mysql
+    model_management_test.go:115: isolated database: newapi_audit_1789103972958458600 (mysql)
+[SYS] 2026/09/11 - 13:19:33 | using MySQL as database 
+    model_management_test.go:115: database version: 5.7.44
+=== RUN   TestModelManagementDatabaseMatrix/mysql/pricing_saves_zero_switches_modes_and_rejects_stale_batches
+
+2026/09/11 13:19:33 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:161
+[0m[35m[warn] [0mremoving callback `fail_pricing_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:161
+=== RUN   TestModelManagementDatabaseMatrix/mysql/builtin_reset
+=== RUN   TestModelManagementDatabaseMatrix/mysql/concurrent_import_creates_one_record
+=== RUN   TestModelManagementDatabaseMatrix/mysql/metadata_keeps_pricing_and_channel_identity
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/metadata_preview_selection_versions_and_transaction
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:34 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:354
+[0m[35m[warn] [0mremoving callback `fail_metadata_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:354
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+--- PASS: TestModelManagementDatabaseMatrix (2.65s)
+    --- PASS: TestModelManagementDatabaseMatrix/mysql (2.65s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/pricing_saves_zero_switches_modes_and_rejects_stale_batches (0.33s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/builtin_reset (0.18s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/concurrent_import_creates_one_record (0.06s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/metadata_keeps_pricing_and_channel_identity (0.48s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/metadata_preview_selection_versions_and_transaction (0.91s)
+=== RUN   TestVendorManagementDatabaseMatrix
+=== RUN   TestVendorManagementDatabaseMatrix/mysql
+    model_management_test.go:421: isolated database: newapi_audit_1789103975611131100 (mysql)
+[SYS] 2026/09/11 - 13:19:35 | using MySQL as database 
+    model_management_test.go:421: database version: 5.7.44
+=== RUN   TestVendorManagementDatabaseMatrix/mysql/pricing_reads_keep_default_brands_without_writing_vendors
+=== RUN   TestVendorManagementDatabaseMatrix/mysql/metadata_ownership_preview_merge_delete_and_rollback
+    model_management_test.go:450: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:450
+        	Error:      	An error is expected but got nil.
+        	Test:       	TestVendorManagementDatabaseMatrix/mysql/metadata_ownership_preview_merge_delete_and_rollback
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:37 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+[0m[35m[warn] [0mremoving callback `vendor_delete_failure` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+=== RUN   TestVendorManagementDatabaseMatrix/mysql/concurrent_create_and_delete_never_orphan_model
+--- FAIL: TestVendorManagementDatabaseMatrix (2.45s)
+    --- FAIL: TestVendorManagementDatabaseMatrix/mysql (2.45s)
+        --- PASS: TestVendorManagementDatabaseMatrix/mysql/pricing_reads_keep_default_brands_without_writing_vendors (0.23s)
+        --- FAIL: TestVendorManagementDatabaseMatrix/mysql/metadata_ownership_preview_merge_delete_and_rollback (1.44s)
+        --- PASS: TestVendorManagementDatabaseMatrix/mysql/concurrent_create_and_delete_never_orphan_model (0.17s)
+=== RUN   TestModelDeletionDatabaseMatrix
+=== RUN   TestModelDeletionDatabaseMatrix/mysql
+    model_management_test.go:632: isolated database: newapi_audit_1789103978059062200 (mysql)
+[SYS] 2026/09/11 - 13:19:38 | using MySQL as database 
+    model_management_test.go:632: database version: 5.7.44
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelDeletionDatabaseMatrix/mysql/rule_0_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:39 | channels synced from database 
+
+2026/09/11 13:19:39 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:710
+[0m[35m[warn] [0mremoving callback `fail_model_deletion` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:710
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 13:19:39 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/mysql/rule_1_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:40 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/mysql/rule_2_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:41 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/mysql/rule_3_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:42 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/mysql/pricing_removal_channels_false
+[SYS] 2026/09/11 - 13:19:42 | channels synced from database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:42 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[0m[35m[warn] [0mremoving callback `fail_deleted_pricing` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelDeletionDatabaseMatrix/mysql/pricing_removal_channels_true
+[SYS] 2026/09/11 - 13:19:43 | channels synced from database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:43 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[0m[35m[warn] [0mremoving callback `fail_deleted_pricing` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 13:19:43 | channels synced from database 
+--- PASS: TestModelDeletionDatabaseMatrix (5.38s)
+    --- PASS: TestModelDeletionDatabaseMatrix/mysql (5.38s)
+        --- PASS: TestModelDeletionDatabaseMatrix/mysql/rule_0_exact_names_only_atomic_and_cached (0.98s)
+        --- PASS: TestModelDeletionDatabaseMatrix/mysql/rule_1_exact_names_only_atomic_and_cached (0.87s)
+        --- PASS: TestModelDeletionDatabaseMatrix/mysql/rule_2_exact_names_only_atomic_and_cached (0.83s)
+        --- PASS: TestModelDeletionDatabaseMatrix/mysql/rule_3_exact_names_only_atomic_and_cached (0.83s)
+        --- PASS: TestModelDeletionDatabaseMatrix/mysql/pricing_removal_channels_false (0.52s)
+        --- PASS: TestModelDeletionDatabaseMatrix/mysql/pricing_removal_channels_true (0.54s)
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql
+    pricing_writer_compatibility_test.go:22: isolated database: newapi_audit_1789103983440614100 (mysql)
+[SYS] 2026/09/11 - 13:19:43 | using MySQL as database 
+    pricing_writer_compatibility_test.go:22: database version: 5.7.44
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/builtin_display_does_not_change_raw_CAS_values
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/different_models_survive_concurrent_old_and_new_writers
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/same_model_has_one_winner_and_both_APIs_reject_stale_edits
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/missing_canonical_row_rejects_both_writers_without_partial_writes
+--- PASS: TestPricingWriterCompatibilityDatabaseMatrix (1.00s)
+    --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql (1.00s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/builtin_display_does_not_change_raw_CAS_values (0.00s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/different_models_survive_concurrent_old_and_new_writers (0.13s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/same_model_has_one_winner_and_both_APIs_reject_stale_edits (0.18s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/missing_canonical_row_rejects_both_writers_without_partial_writes (0.21s)
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	12.397s
+FAIL

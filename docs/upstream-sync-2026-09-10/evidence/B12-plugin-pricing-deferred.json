@@ -1,0 +1,67 @@
+{
+  "upstream": "0c76e4dae77a279e015329b7478e6f02d6b62edd",
+  "status": "pending",
+  "stage": "B14",
+  "files": [
+    "web/src/features/task-plugins/components/plugin-detail-sheet.tsx",
+    "web/src/features/task-plugins/components/plugin-sandbox.tsx",
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx"
+  ],
+  "symbols": [
+    "model.ModelPricingEntry.UsageSchema and GetModelPricingSnapshot registry/alias schema lookup",
+    "model.ValidateModelPricing task SmokeTestTaskExpr and ResolveTaskModelAlias routing",
+    "controller.TestModelManagementDatabaseMatrix task usage registration/validation cases"
+  ],
+  "registration": "\t_, err := jsplugin.DefaultRegistry.Register(`\nexport const meta = {apiVersion: 1, key: \"model-management-task\", name: \"Management task fixture\", version: \"1.0.0\", author: {name: \"Test\"}, models: [\"matrix-task\"], fetchMode: \"per_task\", usageSchema: {seconds: {type: \"number\", unit: \"second\"}}};\nexport function buildSubmitRequest() { return {}; }\nexport function parseSubmitResponse() { return {}; }\nexport function buildQueryRequest() { return {}; }\nexport function parseTaskResult() { return {}; }\n`, jsplugin.Options{})\n\trequire.NoError(t, err)\n\tt.Cleanup(func() { jsplugin.DefaultRegistry.Unregister(\"model-management-task\") })\n",
+  "task_assertions": "\t\t\tt.Run(\"task_usage_and_builtin_reset\", func(t *testing.T) {\n\t\t\t\tsnapshot, err := model.GetModelPricingSnapshot([]string{\"matrix-task\"})\n\t\t\t\trequire.NoError(t, err)\n\t\t\t\tassert.Contains(t, snapshot.Entries[0].UsageSchema, \"seconds\")\n\t\t\t\texpression := `tier(\"base\", u(\"seconds\") * 0.25)`\n\t\t\t\tchange := model.ModelPricingChange{ModelName: \"matrix-task\", ExpectedVersion: snapshot.Entries[0].Version, Pricing: model.PricingValues{\"billing_setting.billing_mode\": \"tiered_expr\", \"billing_setting.billing_expr\": expression}}\n\t\t\t\trequire.NoError(t, model.UpdateModelPricing([]model.ModelPricingChange{change}))\n\t\t\t\tsnapshot, err = model.GetModelPricingSnapshot([]string{\"matrix-task\"})\n\t\t\t\trequire.NoError(t, err)\n\t\t\t\tassert.Equal(t, expression, snapshot.Entries[0].Effective[\"billing_setting.billing_expr\"])\n\t\t\t\tchange.ExpectedVersion = snapshot.Entries[0].Version\n\t\t\t\tchange.Pricing[\"billing_setting.billing_expr\"] = `tier(\"base\", u(\"undeclared\") * 1)`\n\t\t\t\tassert.Error(t, model.UpdateModelPricing([]model.ModelPricingChange{change}))\n",
+  "reason": "The task plugin registry, alias resolution and usage schema APIs are introduced in B14. Preserve complete deltas and reapply them to the shared canonical pricing transaction after that module exists; no fake registry or silent omission.",
+  "prepared_frontend_dependencies": {
+    "source": "0c76e4dae77a279e015329b7478e6f02d6b62edd",
+    "introduced_by": "eb48396d5fe97d27772d0cd5e3ca8aa5caa4f3e9",
+    "files": [
+      "web/src/features/pricing/lib/task-expr.ts",
+      "web/src/features/pricing/lib/billing-mode.ts",
+      "web/src/features/system-settings/models/task-usage-pricing-editor.tsx",
+      "web/src/features/system-settings/models/task-pricing-matrix.tsx",
+      "web/src/lib/localized-text.ts",
+      "web/src/features/pricing/__tests__/dynamic-price.test.ts",
+      "web/src/features/pricing/__tests__/task-expr.test.ts",
+      "web/src/features/pricing/__tests__/task-matrix-display.test.ts",
+      "web/src/features/pricing/__tests__/task-matrix.test.ts",
+      "web/src/lib/__tests__/localized-text.test.ts",
+      "web/src/features/pricing/lib/dynamic-price.ts",
+      "web/src/features/pricing/types.ts",
+      "web/src/features/pricing/lib/billing-expr.ts",
+      "web/src/features/system-settings/models/model-pricing-sheet.tsx",
+      "web/src/features/pricing/components/model-billing-mode-badge.tsx",
+      "web/src/features/pricing/lib/task-matrix-display.ts",
+      "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+      "web/src/features/pricing/components/model-details.tsx",
+      "web/src/features/pricing/lib/breakdown-tier-match.ts",
+      "web/src/features/pricing/__tests__/breakdown-tier-match.test.ts",
+      "web/src/features/pricing/hooks/use-pricing-data.ts",
+      "web/src/features/usage-logs/types.ts"
+    ],
+    "rationale": "These are pure frontend types, parsers and editors required by B12 model pricing. Include their actual upstream implementation and tests now; no backend plugin execution or registry stub is introduced.",
+    "additional_source": "0e0ba152bdcc6891f6053047ccf14d41b3cad60a",
+    "additional_rationale": "Both display components are unchanged between the pinned merge base, downstream baseline and integration HEAD before this unit. Compose the real upstream task display and normalized tier matching helper; preserve downstream log columns separately."
+  },
+  "additional_deferred_tests": [
+    {
+      "source": "0e0ba152bdcc6891f6053047ccf14d41b3cad60a",
+      "file": "web/src/features/usage-logs/components/__tests__/detail-preview.test.tsx",
+      "fragment": "test.each([true, false])(\n  'plugin information in the opened dialog respects admin=%s',\n  async (isAdmin) => {\n    const preview = renderPreview(\n      { model_price: 0.25, admin_info: { task_plugin: plugin } },\n      isAdmin\n    )\n    expect(preview.textContent).toBe('Per-call · $0.25')\n    fireEvent.click(preview)\n    const dialog = within(await screen.findByRole('dialog'))\n    if (isAdmin) {\n      expect(dialog.getByText('Incho')).toBeVisible()\n      expect(dialog.getByText('1.0.1')).toBeVisible()\n      expect(dialog.getByText('Plugin maintainer')).toBeVisible()\n    } else {\n      expect(dialog.queryByText('Incho')).not.toBeInTheDocument()\n      expect(dialog.queryByText('Plugin maintainer')).not.toBeInTheDocument()\n    }\n  }\n)\n",
+      "reason": "Plugin details panel is introduced with the B14 runtime. Restore these two admin projection tests when the panel exists; current price and quota-saturation preview cases remain enrolled."
+    }
+  ],
+  "prepared_backend_dependencies": {
+    "source": "d52bdc0b4087d50d87eb06387e86b2be53e85cd4",
+    "commit": "33ae112e4decab45dde15c5763faf714f1f9e8a8",
+    "evidence": "evidence/runs/B12.2-time-pricing-editor-d52bdc0b4/backend-prerequisites.json",
+    "note": "Actual usage-expression compile/run/settle support exists. Complete registry-backed schema validation, snapshot usage facts and task accounting in B14."
+  },
+  "additional_deferred_files": [
+    "controller/billing_option_test.go"
+  ],
+  "fixed_price_guards": "evidence/runs/B12.2-fixed-request-pricing-064ed943e/plugin-guards-deferred.json"
+}

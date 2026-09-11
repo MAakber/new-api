@@ -1,0 +1,277 @@
+=== RUN   TestModelManagementDatabaseMatrix
+=== RUN   TestModelManagementDatabaseMatrix/mysql
+    model_management_test.go:115: isolated database: newapi_audit_1789108860325835300 (mysql)
+[SYS] 2026/09/11 - 14:41:00 | using MySQL as database 
+    model_management_test.go:115: database version: 11.4.4-MariaDB-ubu2404
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/visible
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/unavailable
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/hidden
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/partial
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/list
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/metadata_only
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/keyword
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/policy
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/vendor_and_sync
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/no_matches
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/channel_model_listing
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 14:41:02 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:390
+[0m[35m[warn] [0mremoving callback `fail_listing_channels` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:390
+=== RUN   TestModelManagementDatabaseMatrix/mysql/pricing_saves_zero_switches_modes_and_rejects_stale_batches
+
+2026/09/11 14:41:03 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:440
+[0m[35m[warn] [0mremoving callback `fail_pricing_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:440
+=== RUN   TestModelManagementDatabaseMatrix/mysql/builtin_reset
+=== RUN   TestModelManagementDatabaseMatrix/mysql/concurrent_import_creates_one_record
+=== RUN   TestModelManagementDatabaseMatrix/mysql/metadata_keeps_pricing_and_channel_identity
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/mysql/metadata_preview_selection_versions_and_transaction
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 14:41:04 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:633
+[0m[35m[warn] [0mremoving callback `fail_metadata_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:633
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+--- PASS: TestModelManagementDatabaseMatrix (4.75s)
+    --- PASS: TestModelManagementDatabaseMatrix/mysql (4.75s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy (1.20s)
+            --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination (0.08s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/visible (0.01s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/unavailable (0.01s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/hidden (0.02s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/partial (0.01s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/list (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/metadata_only (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/keyword (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/policy (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/vendor_and_sync (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/mysql/square_states_follow_catalog_policy/filter_square_state_before_pagination/no_matches (0.00s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/channel_model_listing (0.80s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/pricing_saves_zero_switches_modes_and_rejects_stale_batches (0.33s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/builtin_reset (0.18s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/concurrent_import_creates_one_record (0.11s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/metadata_keeps_pricing_and_channel_identity (0.44s)
+        --- PASS: TestModelManagementDatabaseMatrix/mysql/metadata_preview_selection_versions_and_transaction (0.89s)
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql
+    pricing_writer_compatibility_test.go:22: isolated database: newapi_audit_1789108865076441800 (mysql)
+[SYS] 2026/09/11 - 14:41:05 | using MySQL as database 
+    pricing_writer_compatibility_test.go:22: database version: 11.4.4-MariaDB-ubu2404
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/builtin_display_does_not_change_raw_CAS_values
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/different_models_survive_concurrent_old_and_new_writers
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/same_model_has_one_winner_and_both_APIs_reject_stale_edits
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/mysql/missing_canonical_row_rejects_both_writers_without_partial_writes
+--- PASS: TestPricingWriterCompatibilityDatabaseMatrix (1.10s)
+    --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql (1.10s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/builtin_display_does_not_change_raw_CAS_values (0.00s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/different_models_survive_concurrent_old_and_new_writers (0.14s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/same_model_has_one_winner_and_both_APIs_reject_stale_edits (0.18s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/mysql/missing_canonical_row_rejects_both_writers_without_partial_writes (0.21s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	6.720s

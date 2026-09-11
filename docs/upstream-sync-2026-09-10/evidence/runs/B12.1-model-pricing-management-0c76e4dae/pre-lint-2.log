@@ -1,0 +1,2 @@
+src/features/models/components/dialogs/create-deployment-drawer.tsx:382:5: error eslint(curly): Expected { after 'if' condition. help: Replace `nameAvailabilityMessage = t('Name is available')` with `{nameAvailabilityMessage = t('Name is available')}`.
+src/features/models/components/dialogs/create-deployment-drawer.tsx:384:5: error eslint(curly): Expected { after 'if' condition. help: Replace `nameAvailabilityMessage = t('Name is not available')` with `{nameAvailabilityMessage = t('Name is not available')}`.

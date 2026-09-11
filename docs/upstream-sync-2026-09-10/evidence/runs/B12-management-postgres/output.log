@@ -1,0 +1,196 @@
+=== RUN   TestModelManagementDatabaseMatrix
+=== RUN   TestModelManagementDatabaseMatrix/postgres
+
+2026/09/11 13:19:33 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[620.135ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789103973050568000[0m
+    model_management_test.go:115: isolated database: newapi_audit_1789103973050568000 (postgres)
+[SYS] 2026/09/11 - 13:19:33 | using PostgreSQL as database 
+    model_management_test.go:115: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestModelManagementDatabaseMatrix/postgres/pricing_saves_zero_switches_modes_and_rejects_stale_batches
+
+2026/09/11 13:19:34 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:161
+[0m[35m[warn] [0mremoving callback `fail_pricing_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:161
+=== RUN   TestModelManagementDatabaseMatrix/postgres/builtin_reset
+=== RUN   TestModelManagementDatabaseMatrix/postgres/concurrent_import_creates_one_record
+=== RUN   TestModelManagementDatabaseMatrix/postgres/metadata_keeps_pricing_and_channel_identity
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/postgres/metadata_preview_selection_versions_and_transaction
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:34 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:354
+[0m[35m[warn] [0mremoving callback `fail_metadata_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:354
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+--- PASS: TestModelManagementDatabaseMatrix (1.14s)
+    --- PASS: TestModelManagementDatabaseMatrix/postgres (1.14s)
+        --- PASS: TestModelManagementDatabaseMatrix/postgres/pricing_saves_zero_switches_modes_and_rejects_stale_batches (0.05s)
+        --- PASS: TestModelManagementDatabaseMatrix/postgres/builtin_reset (0.02s)
+        --- PASS: TestModelManagementDatabaseMatrix/postgres/concurrent_import_creates_one_record (0.01s)
+        --- PASS: TestModelManagementDatabaseMatrix/postgres/metadata_keeps_pricing_and_channel_identity (0.05s)
+        --- PASS: TestModelManagementDatabaseMatrix/postgres/metadata_preview_selection_versions_and_transaction (0.06s)
+=== RUN   TestVendorManagementDatabaseMatrix
+=== RUN   TestVendorManagementDatabaseMatrix/postgres
+
+2026/09/11 13:19:34 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[404.859ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789103974186619800[0m
+    model_management_test.go:421: isolated database: newapi_audit_1789103974186619800 (postgres)
+[SYS] 2026/09/11 - 13:19:34 | using PostgreSQL as database 
+    model_management_test.go:421: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestVendorManagementDatabaseMatrix/postgres/pricing_reads_keep_default_brands_without_writing_vendors
+=== RUN   TestVendorManagementDatabaseMatrix/postgres/metadata_ownership_preview_merge_delete_and_rollback
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:34 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+[0m[35m[warn] [0mremoving callback `vendor_delete_failure` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+=== RUN   TestVendorManagementDatabaseMatrix/postgres/concurrent_create_and_delete_never_orphan_model
+--- PASS: TestVendorManagementDatabaseMatrix (0.81s)
+    --- PASS: TestVendorManagementDatabaseMatrix/postgres (0.81s)
+        --- PASS: TestVendorManagementDatabaseMatrix/postgres/pricing_reads_keep_default_brands_without_writing_vendors (0.02s)
+        --- PASS: TestVendorManagementDatabaseMatrix/postgres/metadata_ownership_preview_merge_delete_and_rollback (0.13s)
+        --- PASS: TestVendorManagementDatabaseMatrix/postgres/concurrent_create_and_delete_never_orphan_model (0.02s)
+=== RUN   TestModelDeletionDatabaseMatrix
+=== RUN   TestModelDeletionDatabaseMatrix/postgres
+
+2026/09/11 13:19:35 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[403.390ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789103974994894800[0m
+    model_management_test.go:632: isolated database: newapi_audit_1789103974994894800 (postgres)
+[SYS] 2026/09/11 - 13:19:35 | using PostgreSQL as database 
+    model_management_test.go:632: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelDeletionDatabaseMatrix/postgres/rule_0_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:35 | channels synced from database 
+
+2026/09/11 13:19:35 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:710
+[0m[35m[warn] [0mremoving callback `fail_model_deletion` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:710
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 13:19:35 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/postgres/rule_1_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:35 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/postgres/rule_2_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:35 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/postgres/rule_3_exact_names_only_atomic_and_cached
+[SYS] 2026/09/11 - 13:19:35 | channels synced from database 
+=== RUN   TestModelDeletionDatabaseMatrix/postgres/pricing_removal_channels_false
+[SYS] 2026/09/11 - 13:19:35 | channels synced from database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:35 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[0m[35m[warn] [0mremoving callback `fail_deleted_pricing` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelDeletionDatabaseMatrix/postgres/pricing_removal_channels_true
+[SYS] 2026/09/11 - 13:19:36 | channels synced from database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:19:36 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[0m[35m[warn] [0mremoving callback `fail_deleted_pricing` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 13:19:36 | channels synced from database 
+--- PASS: TestModelDeletionDatabaseMatrix (1.08s)
+    --- PASS: TestModelDeletionDatabaseMatrix/postgres (1.08s)
+        --- PASS: TestModelDeletionDatabaseMatrix/postgres/rule_0_exact_names_only_atomic_and_cached (0.08s)
+        --- PASS: TestModelDeletionDatabaseMatrix/postgres/rule_1_exact_names_only_atomic_and_cached (0.06s)
+        --- PASS: TestModelDeletionDatabaseMatrix/postgres/rule_2_exact_names_only_atomic_and_cached (0.06s)
+        --- PASS: TestModelDeletionDatabaseMatrix/postgres/rule_3_exact_names_only_atomic_and_cached (0.06s)
+        --- PASS: TestModelDeletionDatabaseMatrix/postgres/pricing_removal_channels_false (0.07s)
+        --- PASS: TestModelDeletionDatabaseMatrix/postgres/pricing_removal_channels_true (0.07s)
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/postgres
+
+2026/09/11 13:19:36 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[413.901ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789103976075146000[0m
+    pricing_writer_compatibility_test.go:22: isolated database: newapi_audit_1789103976075146000 (postgres)
+[SYS] 2026/09/11 - 13:19:36 | using PostgreSQL as database 
+    pricing_writer_compatibility_test.go:22: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/postgres/builtin_display_does_not_change_raw_CAS_values
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/postgres/different_models_survive_concurrent_old_and_new_writers
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/postgres/same_model_has_one_winner_and_both_APIs_reject_stale_edits
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestPricingWriterCompatibilityDatabaseMatrix/postgres/missing_canonical_row_rejects_both_writers_without_partial_writes
+--- PASS: TestPricingWriterCompatibilityDatabaseMatrix (0.71s)
+    --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/postgres (0.71s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/postgres/builtin_display_does_not_change_raw_CAS_values (0.00s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/postgres/different_models_survive_concurrent_old_and_new_writers (0.02s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/postgres/same_model_has_one_winner_and_both_APIs_reject_stale_edits (0.03s)
+        --- PASS: TestPricingWriterCompatibilityDatabaseMatrix/postgres/missing_canonical_row_rejects_both_writers_without_partial_writes (0.02s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	4.656s

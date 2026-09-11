@@ -1,0 +1,10 @@
+$ vitest run --config vitest.pricing.config.ts editor-layout metadata-editing task-price-display task-pricing-copy detail-preview --maxWorkers "2"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  5 passed (5)
+      Tests  36 passed (36)
+   Start at  13:37:46
+   Duration  54.99s (import 59%, transform 24%, tests 11%, environment 4%, setup 2%)
+

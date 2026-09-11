@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "scope": "B12 local stage acceptance; final candidate, sanitized production snapshot and provider gates remain pending",
+  "commit": "2270b2fb53707e34dce87cc7bd67ca704949f938",
+  "checked_at": "2026-09-11T06:42:40.838Z",
+  "checks": [
+    "evidence/runs/B12-acceptance-go-scoped/result.json",
+    "evidence/runs/B12-acceptance-lint/result.json",
+    "evidence/runs/B12-clock-types/result.json",
+    "evidence/runs/B12-clock-lint/result.json",
+    "evidence/runs/B12-expression-final/result.json",
+    "evidence/runs/B12-i18n-recheck/result.json",
+    "evidence/runs/B12-model-cards-recheck/result.json",
+    "evidence/runs/B12-management-sqlite/result.json",
+    "evidence/runs/B12-management-postgres/result.json",
+    "evidence/runs/B12-vendor-mariadb-recheck/result.json",
+    "evidence/runs/B12-vendor-mysql-recheck/result.json",
+    "evidence/runs/B12-fixed-mariadb/result.json",
+    "evidence/runs/B12-management-final-mariadb/result.json",
+    "evidence/runs/B12-fixed-mysql/result.json",
+    "evidence/runs/B12-management-final-mysql/result.json",
+    "evidence/runs/B12-fixed-postgres/result.json",
+    "evidence/runs/B12-management-final-postgres/result.json",
+    "evidence/runs/B12-options-sqlite/result.json",
+    "evidence/runs/B12-options-mariadb/result.json",
+    "evidence/runs/B12-options-mysql/result.json",
+    "evidence/runs/B12-options-postgres/result.json"
+  ],
+  "frontend_tests": 356,
+  "partial_runs": [
+    {
+      "receipt": "evidence/runs/B12-acceptance-pricing-ui/result.json",
+      "passed": 353,
+      "failed": 3,
+      "cause": "The time-boundary model-card test left fake timers enabled for subsequent async tests.",
+      "resolved_by": "evidence/runs/B12-model-cards-recheck/result.json",
+      "note": "All 18 model-card tests rerun together; 25 unchanged passing files reused."
+    }
+  ],
+  "retained_failures": [
+    "evidence/runs/B12-acceptance-i18n/result.json",
+    "evidence/runs/B12-acceptance-i18n-scoped/result.json",
+    "evidence/runs/B12-management-mariadb/result.json",
+    "evidence/runs/B12-management-mysql/result.json"
+  ],
+  "source_equivalence": {
+    "fixed_billing": "98b579a19756b339af71f73173983528b7a97880",
+    "options": "f1c662f061f8ea6481fb748a1b81a33c63747f99",
+    "note": "Final follow-up changes only test timer cleanup and two translations. Final external model/CAS checks cover the later duplicate guard. Existing options migration behavior and fixed accounting are unchanged."
+  },
+  "deferred": [
+    "evidence/B12-plugin-pricing-deferred.json",
+    "evidence/runs/B12.2-fixed-request-pricing-064ed943e/plugin-guards-deferred.json"
+  ],
+  "notes": [
+    "Initial B12-acceptance-go regex omitted important cases; acceptance uses the corrected scoped run and full expression package instead.",
+    "Initial i18n invocation omitted the required baseline; retained as an invocation failure, followed by the corrected check and translation fix.",
+    "No production operations or provider calls."
+  ]
+}

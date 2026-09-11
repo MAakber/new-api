@@ -1,0 +1,544 @@
+$ vitest run --config vitest.pricing.config.ts model-listing metadata-editing editor-currency dynamic-price --maxWorkers "2"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+stderr | src/features/models/__tests__/model-listing.test.tsx > keeps prices and channel explanations readable in the mobile card and detail drawer
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <DataTablePage> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <ModelsTable> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <MissingModelsDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <PrefillGroupManagementDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+
+stderr | src/features/models/__tests__/model-listing.test.tsx > keeps prices and channel explanations readable in the mobile card and detail drawer
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <DataTablePage> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <ModelsTable> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <MissingModelsDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <PrefillGroupManagementDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+
+stderr | src/features/models/__tests__/model-listing.test.tsx > opens a long translated reason by touch in the mobile card without requiring the detail drawer
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <DataTablePage> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <ModelsTable> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <MissingModelsDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <PrefillGroupManagementDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+
+stderr | src/features/models/__tests__/model-listing.test.tsx > opens a long translated reason by touch in the mobile card without requiring the detail drawer
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <DataTablePage> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: media.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-media-query.ts:35:13
+    at subscribeToStore (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:8244:14)
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9) {
+  [stack]: [Getter/Setter],
+  [message]: 'media.addEventListener is not a function'
+}
+
+The above error occurred in the <ModelsTable> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: media.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15885:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <MissingModelsDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+TypeError: mql.addEventListener is not a function
+    at D:/10178/Projects/new-api-upstream-sync/web/src/hooks/use-mobile.ts:31:9
+    at Object.react_stack_bottom_frame (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:25989:20)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at commitHookEffectListMount (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13249:29)
+    at commitHookPassiveMountEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:13336:11)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15832:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11)
+    at recursivelyTraverseReconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15784:9)
+    at reconnectPassiveEffects (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:15824:11) {
+  [stack]: [Getter/Setter],
+  [message]: 'mql.addEventListener is not a function'
+}
+
+The above error occurred in the <PrefillGroupManagementDialog> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, CatchBoundaryImpl.
+
+Warning: The following error wasn't caught by any route! At the very least, consider setting an 'errorComponent' in your RootRoute!
+Warning: mql.addEventListener is not a function
+
+stderr | src/features/models/__tests__/model-listing.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/models/__tests__/model-listing.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+stderr | src/features/models/__tests__/model-listing.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/models/__tests__/model-listing.test.tsx (25 tests | 2 failed) 15056ms
+   × keeps prices and channel explanations readable in the mobile card and detail drawer 1063ms
+   × opens a long translated reason by touch in the mobile card without requiring the detail drawer 1064ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/models/__tests__/model-listing.test.tsx > keeps prices and channel explanations readable in the mobile card and detail drawer
+TestingLibraryElementError: Unable to find role="button" and name "catalog-only"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      style="padding: 0.5rem; max-width: 100%;"
+    >
+      <div
+        style="display: flex; align-items: center; gap: .5rem;"
+      >
+        <strong
+          style="font-size: 1rem;"
+        >
+          Something went wrong!
+        </strong>
+        <button
+          style="appearance: none; font-size: 0.6em; border: 1px solid currentcolor; padding: 0.1rem 0.2rem; font-weight: bold; border-radius: 0.25rem;"
+        >
+          Hide Error
+        </button>
+      </div>
+      <div
+        style="height: 0.25rem;"
+      />
+      <div>
+        <pre
+          style="font-size: 0.7em; border: 1px solid red; border-radius: 0.25rem; padding: 0.3rem; color: red; overflow: auto;"
+        >
+          <code>
+            mql.addEventListener is not a function
+          </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      style="padding: 0.5rem; max-width: 100%;"
+    >
+      <div
+        style="display: flex; align-items: center; gap: .5rem;"
+      >
+        <strong
+          style="font-size: 1rem;"
+        >
+          Something went wrong!
+        </strong>
+        <button
+          style="appearance: none; font-size: 0.6em; border: 1px solid currentcolor; padding: 0.1rem 0.2rem; font-weight: bold; border-radius: 0.25rem;"
+        >
+          Hide Error
+        </button>
+      </div>
+      <div
+        style="height: 0.25rem;"
+      />
+      <div>
+        <pre
+          style="font-size: 0.7em; border: 1px solid red; border-radius: 0.25rem; padding: 0.3rem; color: red; overflow: auto;"
+        >
+          <code>
+            mql.addEventListener is not a function
+          </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ renderList src/features/models/__tests__/model-listing.test.tsx:185:18
+    183|   )
+    184|   if (items.length) {
+    185|     await screen.findByRole('button', { name: items[0].model_name })
+       |                  ^
+    186|   } else await screen.findByText('No Models Found')
+    187|   if (options.waitForPricing !== false) {
+ ❯ src/features/models/__tests__/model-listing.test.tsx:356:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/models/__tests__/model-listing.test.tsx > opens a long translated reason by touch in the mobile card without requiring the detail drawer
+TestingLibraryElementError: Unable to find role="button" and name "catalog-only"
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      style="padding: 0.5rem; max-width: 100%;"
+    >
+      <div
+        style="display: flex; align-items: center; gap: .5rem;"
+      >
+        <strong
+          style="font-size: 1rem;"
+        >
+          Something went wrong!
+        </strong>
+        <button
+          style="appearance: none; font-size: 0.6em; border: 1px solid currentcolor; padding: 0.1rem 0.2rem; font-weight: bold; border-radius: 0.25rem;"
+        >
+          Hide Error
+        </button>
+      </div>
+      <div
+        style="height: 0.25rem;"
+      />
+      <div>
+        <pre
+          style="font-size: 0.7em; border: 1px solid red; border-radius: 0.25rem; padding: 0.3rem; color: red; overflow: auto;"
+        >
+          <code>
+            mql.addEventListener is not a function
+          </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      style="padding: 0.5rem; max-width: 100%;"
+    >
+      <div
+        style="display: flex; align-items: center; gap: .5rem;"
+      >
+        <strong
+          style="font-size: 1rem;"
+        >
+          Something went wrong!
+        </strong>
+        <button
+          style="appearance: none; font-size: 0.6em; border: 1px solid currentcolor; padding: 0.1rem 0.2rem; font-weight: bold; border-radius: 0.25rem;"
+        >
+          Hide Error
+        </button>
+      </div>
+      <div
+        style="height: 0.25rem;"
+      />
+      <div>
+        <pre
+          style="font-size: 0.7em; border: 1px solid red; border-radius: 0.25rem; padding: 0.3rem; color: red; overflow: auto;"
+        >
+          <code>
+            mql.addEventListener is not a function
+          </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ renderList src/features/models/__tests__/model-listing.test.tsx:185:18
+    183|   )
+    184|   if (items.length) {
+    185|     await screen.findByRole('button', { name: items[0].model_name })
+       |                  ^
+    186|   } else await screen.findByText('No Models Found')
+    187|   if (options.waitForPricing !== false) {
+ ❯ src/features/models/__tests__/model-listing.test.tsx:517:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 77 passed (79)
+   Start at  13:41:30
+   Duration  62.81s (import 48%, tests 25%, transform 22%, environment 3%, setup 1%)
+
+error: script "test:pricing" exited with code 1

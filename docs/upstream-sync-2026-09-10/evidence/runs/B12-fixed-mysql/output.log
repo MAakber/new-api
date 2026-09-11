@@ -1,0 +1,125 @@
+=== RUN   TestFixedPriceBillingDatabaseMatrix
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql
+
+2026/09/11 14:29:43 [32mD:/10178/Projects/new-api-upstream-sync/service/text_quota_test.go:91 [33mSLOW SQL >= 200ms
+[0m[31;1m[529.324ms] [33m[rows:0][35m CREATE TABLE `logs` (`id` bigint AUTO_INCREMENT,`user_id` bigint,`created_at` bigint,`type` bigint,`content` longtext,`username` varchar(191) DEFAULT '',`token_name` varchar(191) DEFAULT '',`model_name` varchar(191) DEFAULT '',`quota` bigint DEFAULT 0,`prompt_tokens` bigint DEFAULT 0,`completion_tokens` bigint DEFAULT 0,`use_time` bigint DEFAULT 0,`is_stream` boolean,`channel_id` bigint,`channel_name` longtext,`token_id` bigint DEFAULT 0,`group` varchar(191),`ip` varchar(191) DEFAULT '',`request_id` varchar(64) DEFAULT '',`upstream_request_id` varchar(128) DEFAULT '',`other` text,PRIMARY KEY (`id`),INDEX `idx_user_id_id` (`user_id`,`id`),INDEX `idx_logs_user_id` (`user_id`),INDEX `idx_created_at_type` (`created_at`,`type`),INDEX `idx_logs_token_id` (`token_id`),INDEX `idx_logs_ip` (`ip`),INDEX `idx_logs_request_id` (`request_id`),INDEX `idx_logs_upstream_request_id` (`upstream_request_id`),INDEX `idx_created_at_id` (`created_at`,`id`),INDEX `idx_logs_username` (`username`),INDEX `index_username_model_name` (`model_name`,`username`),INDEX `idx_logs_token_name` (`token_name`),INDEX `idx_logs_model_name` (`model_name`),INDEX `idx_logs_channel_id` (`channel_id`),INDEX `idx_logs_group` (`group`))[0m
+    text_quota_test.go:98: database: 5.7.44
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/missing_usage_charges_once
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:43 | SYSTEM | 用户 1 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:44 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:44 | SYSTEM | record consume log: userId=1, params={"channel_id":1,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"上游无计费信息","token_id":1,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704983725,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/zero_usage_charges_once
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:44 | SYSTEM | 用户 2 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:45 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:45 | SYSTEM | record consume log: userId=2, params={"channel_id":2,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":2,"use_time_seconds":1,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704984932,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/stream_charges_once
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:46 | SYSTEM | 用户 3 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:46 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:46 | SYSTEM | record consume log: userId=3, params={"channel_id":3,"prompt_tokens":100,"completion_tokens":20,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":3,"use_time_seconds":0,"is_stream":true,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704986055,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/audio_zero_usage_charges_once
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:46 | SYSTEM | 用户 4 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:47 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:47 | SYSTEM | record consume log: userId=4, params={"channel_id":4,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"模型倍率 0.00，补全倍率 1.00，音频倍率 1.00，音频补全倍率 1.00，分组倍率 1.00","token_id":4,"use_time_seconds":1,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"audio":true,"audio_completion_ratio":1,"audio_input":0,"audio_output":0,"audio_ratio":1,"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":1,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704986918,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","text_input":0,"text_output":0,"user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/audio_missing_usage_charges_once
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:47 | SYSTEM | 用户 5 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:48 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:48 | SYSTEM | record consume log: userId=5, params={"channel_id":5,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"模型倍率 0.00，补全倍率 1.00，音频倍率 1.00，音频补全倍率 1.00，分组倍率 1.00","token_id":5,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"use_channel":null},"audio":true,"audio_completion_ratio":1,"audio_input":0,"audio_output":0,"audio_ratio":1,"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":1,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704987778,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","text_input":0,"text_output":0,"user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/token_reservation_refunds_to_fixed_price
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:48 | SYSTEM | 用户 6 需要预扣费 ＄0.100000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:48 | SYSTEM | 预扣费后返还扣费：＄0.090000（实际消耗：＄0.010000，预扣费：＄0.100000） 
+[INFO] 2026/09/11 - 14:29:49 | SYSTEM | record consume log: userId=6, params={"channel_id":6,"prompt_tokens":100,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":6,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"bGVuIDw9IDMyMDAwID8gdGllcigic2hvcnQiLCBmaXhlZCgwLjAxKSkgOiB0aWVyKCJsb25nIiwgcCAqIDIp","fixed_price":0.01,"frt":-63924704988646,"group_ratio":1,"matched_tier":"short","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/fixed_reservation_settles_token_fallback
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:49 | SYSTEM | 用户 7 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:49 | SYSTEM | 预扣费后补扣费：＄0.090000（实际消耗：＄0.100000，预扣费：＄0.010000） 
+[INFO] 2026/09/11 - 14:29:50 | SYSTEM | record consume log: userId=7, params={"channel_id":7,"prompt_tokens":50000,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":50000,"content":"","token_id":7,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"token","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"bGVuIDw9IDMyMDAwID8gdGllcigic2hvcnQiLCBmaXhlZCgwLjAxKSkgOiB0aWVyKCJsb25nIiwgcCAqIDIp","frt":-63924704989623,"group_ratio":1,"matched_tier":"long","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/missing_usage_uses_estimated_token_fallback
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:50 | SYSTEM | 用户 8 需要预扣费 ＄0.100000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:50 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.100000（按次计费） 
+[INFO] 2026/09/11 - 14:29:50 | SYSTEM | record consume log: userId=8, params={"channel_id":8,"prompt_tokens":50000,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":50000,"content":"上游无计费信息","token_id":8,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"token","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"bGVuIDw9IDMyMDAwID8gdGllcigic2hvcnQiLCBmaXhlZCgwLjAxKSkgOiB0aWVyKCJsb25nIiwgcCAqIDIp","frt":-63924704990583,"group_ratio":1,"matched_tier":"long","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/evaluation_error_retains_fixed_reservation_metadata
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:51 | SYSTEM | 用户 9 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:51 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.010000（按次计费） 
+[INFO] 2026/09/11 - 14:29:51 | SYSTEM | record consume log: userId=9, params={"channel_id":9,"prompt_tokens":50,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":5000,"content":"","token_id":9,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"cCA9PSA1MCA/IHRpZXIoImVycm9yIiwgcGFyYW0oIm1pc3NpbmciKSAqIHApIDogdGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKQ==","fixed_price":0.01,"frt":-63924704991430,"group_ratio":1,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/explicit_zero_remains_free
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:52 | SYSTEM | 预扣费与实际消耗一致，无需调整：＄0.000000（按次计费） 
+[INFO] 2026/09/11 - 14:29:52 | SYSTEM | record consume log: userId=10, params={"channel_id":10,"prompt_tokens":100,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":0,"content":"","token_id":10,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigiZnJlZSIsIGZpeGVkKDApKQ==","fixed_price":0,"frt":-63924704992290,"group_ratio":1,"matched_tier":"free","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/multipliers_and_separate_tool_surcharge
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:53 | SYSTEM | 用户 11 需要预扣费 ＄0.030000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:53 | SYSTEM | 预扣费后补扣费：＄0.006000（实际消耗：＄0.036000，预扣费：＄0.030000） 
+[INFO] 2026/09/11 - 14:29:53 | SYSTEM | record consume log: userId=11, params={"channel_id":11,"prompt_tokens":0,"completion_tokens":0,"model_name":"fixed-test","token_name":"","quota":18000,"content":"上游无计费信息, fixed_billing_tool 调用 1 次，调用花费 ＄0.006000 额度","token_id":11,"use_time_seconds":0,"is_stream":false,"group":"default","other":{"admin_info":{"usage_billing_path":"upstream","use_channel":null},"billing_mode":"tiered_expr","billing_preference":"wallet_only","billing_source":"wallet","billing_unit":"request","cache_ratio":0,"cache_tokens":0,"completion_ratio":0,"expr_b64":"dGllcigicmVxdWVzdCIsIGZpeGVkKDAuMDEpKSAqIChwYXJhbSgiZmFzdCIpID09IHRydWUgPyAyIDogMSk=","fixed_price":0.01,"frt":-63924704993045,"group_ratio":1.5,"matched_tier":"request","model_price":0,"model_ratio":0,"request_path":"/v1/chat/completions","request_rules":[{"cond":"param(\"fast\") == true","multiplier":2,"matched":true}],"tool_surcharges":[{"name":"fixed_billing_tool","count":1,"price":4}],"user_group_ratio":0}} 
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/failed_request_refunds_exactly_once
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 14:29:54 | SYSTEM | 用户 12 需要预扣费 ＄0.010000 (funding=wallet) 
+[INFO] 2026/09/11 - 14:29:54 | SYSTEM | 用户 12 请求失败, 返还预扣费（token_quota=＄0.010000, funding=wallet） 
+
+2026/09/11 14:29:54 [34;1mD:/10178/Projects/new-api-upstream-sync/service/text_quota_test.go:185
+[0m[35m[warn] [0mremoving callback `fixed_billing_refund_observed` from D:/10178/Projects/new-api-upstream-sync/service/text_quota_test.go:185
+=== RUN   TestFixedPriceBillingDatabaseMatrix/mysql/insufficient_wallet_never_reserves_tokens
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+--- PASS: TestFixedPriceBillingDatabaseMatrix (13.08s)
+    --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql (13.08s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/missing_usage_charges_once (1.25s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/zero_usage_charges_once (1.15s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/stream_charges_once (0.91s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/audio_zero_usage_charges_once (0.85s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/audio_missing_usage_charges_once (0.87s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/token_reservation_refunds_to_fixed_price (0.98s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/fixed_reservation_settles_token_fallback (0.96s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/missing_usage_uses_estimated_token_fallback (0.85s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/evaluation_error_retains_fixed_reservation_metadata (0.87s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/explicit_zero_remains_free (0.74s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/multipliers_and_separate_tool_surcharge (0.98s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/failed_request_refunds_exactly_once (0.76s)
+        --- PASS: TestFixedPriceBillingDatabaseMatrix/mysql/insufficient_wallet_never_reserves_tokens (0.50s)
+PASS
+ok  	github.com/QuantumNous/new-api/service	14.218s

@@ -1,0 +1,10 @@
+{
+  "upstream": "7cf9b473f61eb7dc09f6f0782192f17595140a08",
+  "unit": "B12.2-pricing-scroll",
+  "before_head": "33ae112e4decab45dde15c5763faf714f1f9e8a8",
+  "rationale": "Keep the pricing summary and editor in a single scroll region with save controls available. Review the two layout changes and consolidate type and behavior checks with the remaining fixed-price unit.",
+  "files": [
+    "web/src/features/model-pricing/model-pricing-panel.tsx",
+    "web/src/features/system-settings/models/model-pricing-sheet.tsx"
+  ]
+}

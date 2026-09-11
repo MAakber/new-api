@@ -1,0 +1,11 @@
+file:///D:/10178/Projects/new-api-upstream-sync/docs/upstream-sync-2026-09-10/check-literal-i18n.mjs:8
+if (!baseline) throw new Error('Expected a baseline commit')
+                     ^
+
+Error: Expected a baseline commit
+    at file:///D:/10178/Projects/new-api-upstream-sync/docs/upstream-sync-2026-09-10/check-literal-i18n.mjs:8:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.15.0

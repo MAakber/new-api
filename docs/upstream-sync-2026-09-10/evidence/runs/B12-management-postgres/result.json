@@ -1,0 +1,29 @@
+{
+  "id": "B12-management-postgres",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run",
+    "^Test(ModelManagement|VendorManagement|ModelDeletion|PricingWriterCompatibility)DatabaseMatrix$/postgres$",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "fa94685bc008c5a2ae18cbeb2c6a4f02f6246a79",
+  "started_at": "2026-09-11T05:19:14.296Z",
+  "finished_at": "2026-09-11T05:19:36.990Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": true
+  },
+  "log": "output.log"
+}

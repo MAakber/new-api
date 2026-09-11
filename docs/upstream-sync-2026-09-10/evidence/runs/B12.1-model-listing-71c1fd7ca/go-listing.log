@@ -1,0 +1,193 @@
+=== RUN   TestModelManagementDatabaseMatrix
+=== RUN   TestModelManagementDatabaseMatrix/sqlite
+[SYS] 2026/09/11 - 13:41:42 | SQL_DSN not set, using SQLite as database 
+    model_management_test.go:115: database version: 3.50.4
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/visible
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/unavailable
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/hidden
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/partial
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/list
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/metadata_only
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/keyword
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/policy
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/vendor_and_sync
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/no_matches
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+=== RUN   TestModelManagementDatabaseMatrix/sqlite/channel_model_listing
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:41:43 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:390
+[0m[35m[warn] [0mremoving callback `fail_listing_channels` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:390
+--- PASS: TestModelManagementDatabaseMatrix (0.41s)
+    --- PASS: TestModelManagementDatabaseMatrix/sqlite (0.41s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy (0.11s)
+            --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination (0.02s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/visible (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/unavailable (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/hidden (0.01s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/partial (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/list (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/metadata_only (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/keyword (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/policy (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/vendor_and_sync (0.00s)
+                --- PASS: TestModelManagementDatabaseMatrix/sqlite/square_states_follow_catalog_policy/filter_square_state_before_pagination/no_matches (0.00s)
+        --- PASS: TestModelManagementDatabaseMatrix/sqlite/channel_model_listing (0.06s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	1.330s

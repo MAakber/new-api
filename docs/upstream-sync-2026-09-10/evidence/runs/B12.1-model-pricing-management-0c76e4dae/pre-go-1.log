@@ -1,0 +1,60 @@
+# github.com/QuantumNous/new-api/controller [github.com/QuantumNous/new-api/controller.test]
+controller\model_management_test.go:676:73: cannot use nil as string value in argument to model.GetRandomSatisfiedChannel
+controller\model_management_test.go:716:72: cannot use nil as string value in argument to model.GetRandomSatisfiedChannel
+controller\model_management_test.go:745:67: cannot use nil as string value in argument to model.GetRandomSatisfiedChannel
+controller\model_management_test.go:748:80: cannot use nil as string value in argument to model.GetRandomSatisfiedChannel
+ok  	github.com/QuantumNous/new-api/model	0.650s
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "created" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `vendors` WHERE name = "vendor" AND `vendors`.`deleted_at` IS NULL ORDER BY `vendors`.`id` LIMIT 1
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_metadata_sync.go:35 [35;1mSQL logic error: near "=": syntax error (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE  = "metadata_sync_lock" AND `options`.`key` = "metadata_sync_lock" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_metadata_sync.go:35 [35;1mSQL logic error: near "=": syntax error (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE  = "metadata_sync_lock" AND `options`.`key` = "metadata_sync_lock" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync_test.go:112 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "created" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+--- FAIL: TestSyncModelMetadataCreatesOfficialModel (0.04s)
+    model_metadata_sync_test.go:112: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync_test.go:112
+        	Error:      	Received unexpected error:
+        	            	record not found
+        	Test:       	TestSyncModelMetadataCreatesOfficialModel
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "first" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_metadata_sync.go:35 [35;1mSQL logic error: near "=": syntax error (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE  = "metadata_sync_lock" AND `options`.`key` = "metadata_sync_lock" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "second" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_metadata_sync.go:35 [35;1mSQL logic error: near "=": syntax error (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE  = "metadata_sync_lock" AND `options`.`key` = "metadata_sync_lock" ORDER BY `options`.`key` LIMIT 1
+--- FAIL: TestSyncModelMetadataStopsAfterCancellationBetweenMutations (0.00s)
+    model_metadata_sync_test.go:149: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync_test.go:149
+        	Error:      	Expected error with "context canceled" in chain but got nil.
+        	Test:       	TestSyncModelMetadataStopsAfterCancellationBetweenMutations
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/pricing_options.go:157 [35;1mSQL logic error: near "IN": syntax error (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE  IN ("ModelPrice","ModelRatio","CompletionRatio","CacheRatio","CreateCacheRatio","ImageRatio","AudioRatio","AudioCompletionRatio","billing_setting.billing_mode","billing_setting.billing_expr")
+--- FAIL: TestPatchPricingOptionsZeroDeleteAndSetIfMissing (0.00s)
+    pricing_options_test.go:34: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/service/pricing_options_test.go:34
+        	Error:      	Received unexpected error:
+        	            	SQL logic error: near "IN": syntax error (1)
+        	Test:       	TestPatchPricingOptionsZeroDeleteAndSetIfMissing
+
+2026/09/11 12:47:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/pricing_options.go:44 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "AudioRatio" ORDER BY `options`.`key` LIMIT 1
+FAIL
+FAIL	github.com/QuantumNous/new-api/service	0.979s
+FAIL	github.com/QuantumNous/new-api/controller [build failed]
+FAIL

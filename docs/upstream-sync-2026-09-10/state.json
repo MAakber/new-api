@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T04:21:45.018Z",
+  "updatedAt": "2026-09-11T06:42:40.844Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B12",
-  "current_unit": "B12.1",
+  "current_batch": "B13",
+  "current_unit": "B13.1",
   "active_operation": null,
-  "last_observed_head": "567c837c3bcbf3881a69171320930144f93fbdeb",
-  "last_verified_code_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
-  "last_checkpoint_commit": "567c837c3bcbf3881a69171320930144f93fbdeb",
+  "last_observed_head": "2270b2fb53707e34dce87cc7bd67ca704949f938",
+  "last_verified_code_commit": "2270b2fb53707e34dce87cc7bd67ca704949f938",
+  "last_checkpoint_commit": "2270b2fb53707e34dce87cc7bd67ca704949f938",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Begin eb99ab1b built-in expression pricing, then adapt 0c76e4dae model/vendor management and pricing through downstream canonical options/CAS; retain explicit administrator prices, classifications and aliases.",
+  "next_action": "Inspect and adapt B13 stream-status projection, log statistics, quota UI and redemption changes; reuse pulled-forward request traces.",
   "blockers": [
     {
       "id": "production_snapshot",

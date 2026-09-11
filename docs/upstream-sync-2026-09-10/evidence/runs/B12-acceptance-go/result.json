@@ -1,0 +1,34 @@
+{
+  "id": "B12-acceptance-go",
+  "command": [
+    "go",
+    "test",
+    "./model",
+    "./controller",
+    "./service",
+    "./setting/billing_setting",
+    "./pkg/billingexpr",
+    "./relay/helper",
+    "./relay",
+    "-run",
+    "^(Test.*(Fixed|ModelPricing|ModelManagement|VendorManagement|ModelMetadata|PricingOption|PricingPatch|BuiltinBilling|TaskUsageExpression|RequestProbe|FrontendSimulation|Tiered|QuotaClamp|QuotaSaturation)|TestBuildTestLogOtherInjectsTieredInfo)$",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "98b579a19756b339af71f73173983528b7a97880",
+  "started_at": "2026-09-11T06:26:32.812Z",
+  "finished_at": "2026-09-11T06:26:49.587Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

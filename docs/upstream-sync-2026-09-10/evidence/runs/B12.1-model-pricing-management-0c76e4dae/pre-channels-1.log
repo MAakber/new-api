@@ -1,0 +1,14 @@
+$ vitest run --config vitest.channels.config.ts --maxWorkers "2"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  13 passed (13)
+      Tests  138 passed (138)
+   Start at  13:13:38
+   Duration  78.58s (import 64%, transform 16%, tests 10%, environment 6%, setup 3%)
+
+     Import  3028 modules were evaluated 14752 times · 98.29s total, 64% of tracked time
+             ~29.11s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+

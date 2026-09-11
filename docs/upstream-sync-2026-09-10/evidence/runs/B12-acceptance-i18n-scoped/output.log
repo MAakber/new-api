@@ -1,0 +1,46 @@
+{
+  "files": 124,
+  "checked_keys": 1245,
+  "missing": [
+    {
+      "file": "web/src/features/system-settings/auth/custom-oauth/components/preset-selector.tsx",
+      "key": "Select preset",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    },
+    {
+      "file": "web/src/features/system-settings/auth/custom-oauth/components/preset-selector.tsx",
+      "key": "Select preset",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    },
+    {
+      "file": "web/src/features/system-settings/models/upstream-ratio-sync-helpers.ts",
+      "key": "Length",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    }
+  ],
+  "scope": "Literal call sites only; dynamic keys require explicit review."
+}

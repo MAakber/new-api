@@ -1,0 +1,17 @@
+{
+  "source": "d52bdc0b4087d50d87eb06387e86b2be53e85cd4",
+  "files": [
+    "pkg/billingexpr/compile.go",
+    "pkg/billingexpr/run.go",
+    "pkg/billingexpr/types.go",
+    "pkg/billingexpr/settle.go",
+    "pkg/billingexpr/expr.md",
+    "pkg/billingexpr/compile_usage_test.go",
+    "pkg/billingexpr/task_usage_test.go"
+  ],
+  "origins": [
+    "4cf9107f043709b3364a48f7a7bacc5f8ca80928",
+    "eb48396d5fe97d27772d0cd5e3ca8aa5caa4f3e9"
+  ],
+  "rationale": "Reviewed the complete HEAD-to-source diff. Pull forward the actual request-rule trace and task-usage expression engine needed by frontend simulation. Preserve quota saturation and frozen retry state. Backend plugin registry/runtime remains B14; B13 must reconcile the earlier trace source."
+}

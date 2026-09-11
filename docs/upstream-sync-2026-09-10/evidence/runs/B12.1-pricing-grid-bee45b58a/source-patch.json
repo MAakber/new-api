@@ -1,0 +1,8 @@
+{
+  "upstream": "bee45b58a3c0b77e8dc81e6b5aeb4474aa9058d1",
+  "excluded": [
+    "web/src/features/pricing/__tests__/model-cards.test.tsx"
+  ],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/features/pricing/components/loading-skeleton.tsx' cleanly.\nApplied patch to 'web/src/features/pricing/components/model-card-grid.tsx' cleanly.\n"
+}

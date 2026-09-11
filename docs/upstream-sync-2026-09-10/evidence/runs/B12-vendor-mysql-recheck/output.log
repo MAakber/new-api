@@ -1,0 +1,22 @@
+=== RUN   TestVendorManagementDatabaseMatrix
+=== RUN   TestVendorManagementDatabaseMatrix/mysql
+    model_management_test.go:421: isolated database: newapi_audit_1789104401147017700 (mysql)
+[SYS] 2026/09/11 - 13:26:41 | using MySQL as database 
+    model_management_test.go:421: database version: 5.7.44
+=== RUN   TestVendorManagementDatabaseMatrix/mysql/metadata_ownership_preview_merge_delete_and_rollback
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 13:26:43 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+[0m[35m[warn] [0mremoving callback `vendor_delete_failure` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+--- PASS: TestVendorManagementDatabaseMatrix (2.01s)
+    --- PASS: TestVendorManagementDatabaseMatrix/mysql (2.01s)
+        --- PASS: TestVendorManagementDatabaseMatrix/mysql/metadata_ownership_preview_merge_delete_and_rollback (1.42s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	2.814s

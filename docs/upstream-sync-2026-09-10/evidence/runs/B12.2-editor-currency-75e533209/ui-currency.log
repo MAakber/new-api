@@ -1,0 +1,10 @@
+$ vitest run --config vitest.pricing.config.ts editor-currency --maxWorkers "1"
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  1 passed (1)
+      Tests  25 passed (25)
+   Start at  13:29:03
+   Duration  10.55s (import 45%, tests 41%, environment 6%, transform 5%, setup 3%)
+

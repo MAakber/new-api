@@ -72,3 +72,27 @@ Real B10 PostgreSQL testing reproduced a refund balance update committed outside
 ## 2026-09-11T03:54:06.635Z — A24 wallet schema is measured, not inferred
 
 The original released binary creates signed BIGINT wallet columns on all three local external engines even though its Go tags say type:int. Earlier assumptions that those tags alone imply a 32-bit database or an automatic shrink were not established. Actual column metadata is authoritative. Keep explicit BIGINT tags to state the intended contract, and separately test genuine legacy INT schemas, partial migration and unsigned/missing columns. Already-compatible released databases need no ALTER. The original baseline is still not the selected rollback because it lacks the new wallet validation and authentication-format support; a335f0dd is built and rehearsed as the B11 compatible version. Production snapshot acceptance remains pending.
+
+## 2026-09-11T04:29:32.761Z — A25 configured pricing versus effective defaults
+
+The downstream /api/option read feeds expected-value CAS patches. Substituting a display-only builtin into those stored maps would make a first edit claim an existing database value and fail CAS. Preserve raw option reads, while B12 model_pricing exposes the upstream configured/effective distinction and versioned editing. Keep explicit zero and administrator prices, and route both existing patch clients and new model/vendor operations through the same canonical option transaction. New defaults are never persisted by merely opening an editor.
+
+## A26 — B12 metadata and pricing compatibility
+
+- Legacy imports reuse an existing active model/vendor without overwriting metadata. Repeated single metadata-only deletion is harmless; versioned or multi-record destructive operations still reject stale selections and referenced vendors.
+- Both pricing APIs share the ordered canonical row transaction; SQL original-value checks, missing-row failures, zero prices and committed runtime publication remain mandatory. Built-in display snapshots do not change raw option CAS values (A25).
+- Searchable single selection delegates normal opening/closing to Base UI so focus restoration cannot reopen a popup and hide its chosen value. Downstream custom-value behavior and floating channel editor remain.
+- Pure task-pricing frontend prerequisites and exact remaining backend/plugin deltas are in evidence/B12-plugin-pricing-deferred.json. B14 must complete these before plugin acceptance.
+
+## A27 — Focus validation on changed behavior
+
+- User requested faster integration and fewer unnecessary checks on 2026-09-11. Per-unit verification is limited to affected behavior and known failures. Full regressions are consolidated at stage and final acceptance boundaries.
+- Retain mandatory independent relaykit builds for API/module changes, billing/accounting boundary regressions, migration/rollback checks, and downstream preservation. Do not repeat a passed check on unchanged behavior merely to increase evidence counts.
+
+## A28 — Preserve legacy options under repair and concurrent writes
+
+Repair options in place while holding database writer locks, preserving table identity and a complete backup. Identical duplicates can be removed; conflicting values, null values and null/empty keys stop startup before unrelated schema changes. No unordered last-row winner is inferred. MySQL/MariaDB add a full unique key under LOCK TABLES on one connection; SQLite/PostgreSQL repair transactionally. Worker-node seeding requires uniqueness and verifies all canonical rows. Four-engine evidence is in B12-options-sqlite/mariadb/mysql/postgres at f1c662f061f8ea6481fb748a1b81a33c63747f99.
+
+## A29 — Expression preview dependencies
+
+The B12 simulator depends on real trace semantics from B13 4cf9107f0 and task usage expression functions from B14 eb48396d5. Their reviewed engine implementation and tests are pulled forward, retaining saturation and retry invariants. The B13 row remains pending until its complete behavior is reconciled; backend plugin execution and schema validation remain B14. The billing option audit fixture is entirely plugin-dependent and is moved to B14, with its audit-table prerequisite retained.

@@ -1,0 +1,14 @@
+# github.com/QuantumNous/new-api/pkg/billingexpr_test [github.com/QuantumNous/new-api/pkg/billingexpr.test]
+pkg\billingexpr\billingexpr_test.go:1018:2: undefined: require
+pkg\billingexpr\billingexpr_test.go:1031:2: undefined: require
+pkg\billingexpr\billingexpr_test.go:1035:4: undefined: require
+pkg\billingexpr\billingexpr_test.go:1036:139: unknown field Usage in struct literal of type billingexpr.RequestInput
+pkg\billingexpr\billingexpr_test.go:1037:4: undefined: require
+pkg\billingexpr\billingexpr_test.go:1038:4: undefined: assert
+pkg\billingexpr\billingexpr_test.go:1039:4: undefined: assert
+pkg\billingexpr\billingexpr_test.go:1040:4: undefined: require
+pkg\billingexpr\billingexpr_test.go:1040:25: trace.RequestRules undefined (type billingexpr.TraceResult has no field or method RequestRules)
+pkg\billingexpr\billingexpr_test.go:1041:31: trace.RequestRules undefined (type billingexpr.TraceResult has no field or method RequestRules)
+pkg\billingexpr\billingexpr_test.go:1041:31: too many errors
+FAIL	github.com/QuantumNous/new-api/pkg/billingexpr [build failed]
+FAIL

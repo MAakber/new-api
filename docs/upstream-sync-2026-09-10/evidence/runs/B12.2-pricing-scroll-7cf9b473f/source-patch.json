@@ -1,0 +1,6 @@
+{
+  "upstream": "7cf9b473f61eb7dc09f6f0782192f17595140a08",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/features/model-pricing/model-pricing-panel.tsx' cleanly.\nApplied patch to 'web/src/features/system-settings/models/model-pricing-sheet.tsx' cleanly.\n"
+}

@@ -1754,3 +1754,184 @@
 - Four-engine explicit wallet migration, released-schema startup, accounting and compatible rollback passed. 323 UI tests, full-root package coverage (two unchanged failed packages passed on recheck), root build, independent relaykit build/tests, typecheck, i18n and lint are recorded.
 - All failed logs retained; final environment gates remain pending.
 - Next: B12 built-in and model/pricing management, preserving downstream canonical option CAS.
+
+## 2026-09-11T04:26:35.412Z — B12.1-builtin-expression adaptation begun
+
+- Before HEAD: 16e8baabbdc01382a74b63fbcfcdf4266392fce6.
+- Upstream: eb99ab1b40343c3317bb47981cccdbb2b159a5fa.
+- Integrate built-in expression pricing with explicit administrator prices taking precedence. Preserve raw option reads used by downstream CAS; display effective built-in defaults through the configured/effective model-pricing snapshot introduced by the next B12 unit.
+- Evidence: evidence/runs/B12.1-builtin-expression-eb99ab1b4/intent.json.
+
+## 2026-09-11T04:29:32.679Z — B12.1-builtin-expression adaptation recorded
+
+- Code: 1fb6171e1ebf95661f77498615571c1491733b89.
+- Builtin expression and model entry added; configured zero, per-request prices and explicit modes retain precedence. Kept raw option maps for downstream expected-value CAS; effective defaults are distinct and B12 model-pricing snapshot will display them. Targeted expression and pricing-patch regressions pass; stage acceptance follows full B12.
+- Evidence: evidence/runs/B12.1-builtin-expression-eb99ab1b4/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T04:29:33.184Z — B12.1-model-pricing-management adaptation begun
+
+- Before HEAD: 1fb6171e1ebf95661f77498615571c1491733b89.
+- Upstream: 0c76e4dae77a279e015329b7478e6f02d6b62edd.
+- Integrate model/vendor metadata, versioned model pricing, editor and catalog improvements. Preserve canonical pricing rows, downstream CAS and alias/classification behavior, floating channel editor contexts, role projections and request diagnostics. Defer only edits that require the unintroduced B14 task-plugin module, recording every such file/symbol.
+- Evidence: evidence/runs/B12.1-model-pricing-management-0c76e4dae/intent.json.
+
+## 2026-09-11T04:47:27.166Z — B12 model pricing transaction and metadata adaptation
+
+- Pricing patch and versioned model APIs now share the canonical row writer; missing rows fail rather than recreating defaults.
+- Active-name schema and downstream metadata lease/transport remain in the integrated paths.
+- Task-specific pricing deltas are explicitly recorded in evidence/B12-plugin-pricing-deferred.json for B14.
+- Source is uncommitted and not yet verified; continue backend prechecks and UI conflict resolution.
+
+## 2026-09-11T04:58:21.168Z — B12 pricing frontend prerequisites
+
+- Actual pure frontend task usage parser/schema/editor dependencies from eb48396d were pulled forward to support the B12 pricing components. Exact files are recorded in evidence/B12-plugin-pricing-deferred.json.
+- Backend plugin registry/alias validation and plugin-specific pages remain B14; no task runtime is active.
+- Downstream timestamped performance gaps and compact metrics are retained in the new card footer.
+- Targeted model/service/controller checks pass on SQLite; full stage evidence remains pending.
+
+## 2026-09-11T05:18:13.400Z — B12 model/pricing compatibility prechecks
+
+- Restored active-record reuse for repeated model/vendor imports and harmless repeated single metadata deletion. Versioned batch operations retain stale-selection and referenced-vendor guards.
+- Added mixed legacy/versioned pricing concurrency, raw-versus-effective built-in snapshots and missing canonical row regressions. Both sync request formats honor the existing named lease.
+- Preliminary checks: 125 new pricing UI tests, 138 channel UI tests, 38 preserved pricing/time-rule tests and selected model/service/controller tests passed on the dirty source. Typecheck and touched lint pass; failed runs are retained.
+- Next: commit reviewed source, record exact committed checks and run local MariaDB/MySQL/PostgreSQL matrix.
+
+## 2026-09-11T05:19:11.562Z — B12.1-model-pricing-management adaptation recorded
+
+- Code: fa94685bc008c5a2ae18cbeb2c6a4f02f6246a79.
+- Integrated model/vendor management and versioned pricing through the shared canonical CAS writer. Preserved active-name idempotency, scheduled metadata lease, floating channel editor, advanced request rules and timestamped compact metrics. Pure frontend task-pricing dependencies are included; exact backend/plugin deltas remain tracked for B14. Preliminary UI and backend checks pass; exact committed database and final-stage acceptance follow.
+- Evidence: evidence/runs/B12.1-model-pricing-management-0c76e4dae/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T05:25:08.557Z — B12 resumed with focused validation
+
+- User authorized increasing efficiency and reducing unnecessary verification. Run only affected checks per unit, preserve billing/data/downstream protection gates, and consolidate full regression at stage/final boundaries.
+- MariaDB/MySQL failure traced to case-insensitive collation returning a differently cased vendor during legacy idempotent insertion. Exact normalized retries still reuse the record; differing names now reject consistently.
+- Source correction: 2b8770f0680c6dc1342f93b861a4f198a02d68e7.
+
+## 2026-09-11T05:27:04.816Z — B12.1-pricing-grid adaptation begun
+
+- Before HEAD: 2b8770f0680c6dc1342f93b861a4f198a02d68e7.
+- Upstream: bee45b58a3c0b77e8dc81e6b5aeb4474aa9058d1.
+- Adopt the xl three-column breakpoint for both pricing cards and their loading skeleton. Review the two class changes directly; omit the upstream test that merely asserts those exact CSS class strings.
+- Evidence: evidence/runs/B12.1-pricing-grid-bee45b58a/intent.json.
+
+## 2026-09-11T05:27:05.806Z — B12.1-pricing-grid adaptation recorded
+
+- Code: e1adc5cdf19c9985bc7c5356b0d038d58857dc16.
+- Card and skeleton breakpoints now agree at xl. No new implementation-mirroring CSS assertion was added; frontend type/lint validation is consolidated with the following pricing editor units.
+- Evidence: evidence/runs/B12.1-pricing-grid-bee45b58a/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T05:27:06.225Z — B12.2-editor-currency adaptation begun
+
+- Before HEAD: e1adc5cdf19c9985bc7c5356b0d038d58857dc16.
+- Upstream: 75e533209490a8ef3a8b5e3d93e4dac03ba19bcf.
+- Add site-currency input and preview with USD persistence, zero-price and draft precision preservation. Compose the existing raw request-rule protections and test only currency/editor behavior before B12 acceptance.
+- Evidence: evidence/runs/B12.2-editor-currency-75e533209/intent.json.
+
+## 2026-09-11T05:30:17.129Z — B12.2-editor-currency adaptation recorded
+
+- Code: ba1baf9b0cfd9b665ca4039bb5d4cb080f3f7bbb.
+- Site currency inputs and previews convert to canonical USD without changing saved prices when switching display currency. Preserved downstream unparseable request-rule fallback and input identities; 25 currency tests plus typecheck and touched lint passed. Stage acceptance follows remaining B12 changes.
+- Evidence: evidence/runs/B12.2-editor-currency-75e533209/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T05:30:17.551Z — B12.2-editor-log-display adaptation begun
+
+- Before HEAD: ba1baf9b0cfd9b665ca4039bb5d4cb080f3f7bbb.
+- Upstream: 0e0ba152bdcc6891f6053047ccf14d41b3cad60a.
+- Integrate direct model-price editing, task usage price display and log previews. Preserve downstream quota saturation, request diagnostics, aliases, active sessions and raw-rule editing behavior. Pure task display dependencies may be composed now while runtime plugin work remains B14.
+- Evidence: evidence/runs/B12.2-editor-log-display-0e0ba152b/intent.json.
+
+## 2026-09-11T05:39:29.806Z — B12.2-editor-log-display adaptation recorded
+
+- Code: 33924a09023f4765656ae037e9b3cc393700401b.
+- Direct model pricing entry points, responsive editors and task-unit price/log previews are integrated. Kept root/admin projections, saturation precedence and diagnostics; real task display dependencies were pulled forward. 36 affected UI tests, typecheck and touched lint pass. Two plugin-details tests are preserved in B14 deferred evidence.
+- Evidence: evidence/runs/B12.2-editor-log-display-0e0ba152b/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T05:39:30.218Z — B12.1-model-listing adaptation begun
+
+- Before HEAD: 33924a09023f4765656ae037e9b3cc393700401b.
+- Upstream: 71c1fd7caad738db4d13aabbf28eeadb293d0cfe.
+- Integrate configured-channel model rows, catalog visibility states and batch pricing. Preserve active-name schema and idempotency, exact/prefix/suffix/contains precedence, aliases, explicit zero prices and role-filtered logs.
+- Evidence: evidence/runs/B12.1-model-listing-71c1fd7ca/intent.json.
+
+## 2026-09-11T05:47:35.835Z — B12.1-model-listing adaptation recorded
+
+- Code: 0d5daeb250c3bb326f5f18adf5dfd7ff6012f8dd.
+- Added channel model rows, policy states and shared exact-prefix-suffix-contains metadata precedence. Preserved active metadata and shared pricing writer. Listing backend checks passed; 77 affected frontend cases passed, with the two mobile cases passing after preserving native MediaQueryList methods in the fixtures. Typecheck and touched lint passed before the fixture correction; stage acceptance remains pending.
+- Evidence: evidence/runs/B12.1-model-listing-71c1fd7ca/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T05:49:36.117Z — B12.1-options-primary-key adaptation begun
+
+- Before HEAD: 0d5daeb250c3bb326f5f18adf5dfd7ff6012f8dd.
+- Upstream: 4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a.
+- Repair legacy option uniqueness while preserving administrator values and ordinary concurrent writers. Retain the canonical missing-row failure and shared CAS pricing writer; use database-enforced locks and fail before changing ambiguous duplicate values.
+- Evidence: evidence/runs/B12.1-options-primary-key-4fc9d1f1f/intent.json.
+
+## 2026-09-11T06:02:26.710Z — B12.1-options-primary-key adaptation recorded
+
+- Code: f1c662f061f8ea6481fb748a1b81a33c63747f99.
+- Adapted legacy repair to preserve table identity and ordinary concurrent writes, keep complete backups and stop on ambiguous values. MySQL/MariaDB use an in-place unique constraint under a physical-connection table lock; SQLite/PostgreSQL use transactional in-place repair. Both pricing APIs reject duplicate canonical rows. Preliminary SQLite behavior passed except a now-fixed map-mutation test fixture; committed four-engine checks follow.
+- Evidence: evidence/runs/B12.1-options-primary-key-4fc9d1f1f/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:04:04.781Z — B12.2-time-pricing-editor adaptation begun
+
+- Before HEAD: f1c662f061f8ea6481fb748a1b81a33c63747f99.
+- Upstream: d52bdc0b4087d50d87eb06387e86b2be53e85cd4.
+- Integrate time-based pricing and engine-aligned expression preview, preserving downstream request-rule fallback and stable editor inputs. Enroll the actual parser/editor contract tests and retain shared engine fixtures; options migration checks continue on unchanged model source.
+- Evidence: evidence/runs/B12.2-time-pricing-editor-d52bdc0b4/intent.json.
+
+## 2026-09-11T06:18:34.427Z — B12.2-time-pricing-editor adaptation recorded
+
+- Code: 33ae112e4decab45dde15c5763faf714f1f9e8a8.
+- Time pricing and expression previews now use shared frontend syntax and real backend engine fixtures. Pulled forward actual trace and task-usage engine dependencies, kept saturated quota conversion, raw fallback and stable input keys, and attached traces through LogOther.SetPublic. All 81 focused frontend cases, full billingexpr package, typecheck and touched lint pass. Backend plugin runtime/schema validation stays B14.
+- Evidence: evidence/runs/B12.2-time-pricing-editor-d52bdc0b4/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:18:37.517Z — B12 options verified; time editor implemented
+
+- Four-engine options migration checks passed at f1c662f061f8ea6481fb748a1b81a33c63747f99.
+- Time editor source: 33ae112e4decab45dde15c5763faf714f1f9e8a8. 81 affected frontend cases, full expression package, typecheck and touched lint pass.
+- Explicit backend prerequisites and deferred plugin audit fixture are recorded. Remaining B12: one scroll region, fixed per-request pricing, and consolidated acceptance.
+
+## 2026-09-11T06:18:37.947Z — B12.2-pricing-scroll adaptation begun
+
+- Before HEAD: 33ae112e4decab45dde15c5763faf714f1f9e8a8.
+- Upstream: 7cf9b473f61eb7dc09f6f0782192f17595140a08.
+- Keep the pricing summary and editor in a single scroll region with save controls available. Review the two layout changes and consolidate type and behavior checks with the remaining fixed-price unit.
+- Evidence: evidence/runs/B12.2-pricing-scroll-7cf9b473f/intent.json.
+
+## 2026-09-11T06:20:16.044Z — B12.2-pricing-scroll adaptation recorded
+
+- Code: d684b4b1bfafbb0a32c4981dedd2c9660b6c220d.
+- Reviewed the two layout changes: existing content and error/reload handlers move unchanged into the editor scrollHeader, while save controls stay available. Type and pricing regressions are consolidated with the final B12 fixed-price unit.
+- Evidence: evidence/runs/B12.2-pricing-scroll-7cf9b473f/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:20:16.503Z — B12.2-fixed-request-pricing adaptation begun
+
+- Before HEAD: d684b4b1bfafbb0a32c4981dedd2c9660b6c220d.
+- Upstream: 064ed943e1ac40e3eaca1b58ffb7fa5dacb3fde3.
+- Integrate fixed request-price leaves, actual-versus-estimated billing units, safe zero/missing-usage settlement and matching editor/log display. Preserve group retry, separate tool charges and quota saturation. Defer only the exact plugin runtime rejection hooks until B14; reject fixed pricing on existing task paths now.
+- Evidence: evidence/runs/B12.2-fixed-request-pricing-064ed943e/intent.json.
+
+## 2026-09-11T06:26:30.032Z — B12.2-fixed-request-pricing adaptation recorded
+
+- Code: 98b579a19756b339af71f73173983528b7a97880.
+- Added fixed request-price leaves, validation before AST optimization, estimated/actual billing metadata, safe zero/missing usage settlement and matching editor/log units. Kept downstream tool charges, saturation, account balances and log projection. Existing per-call tasks reject unsupported fixed expressions; exact plugin save/submit guards remain recorded for B14. Source committed for focused four-engine and consolidated stage checks.
+- Evidence: evidence/runs/B12.2-fixed-request-pricing-064ed943e/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:42:40.854Z — B12 local acceptance complete; continue B13
+
+- Code: 2270b2fb53707e34dce87cc7bd67ca704949f938.
+- Upstream verified: 109/153.
+- Four-engine options repair and fixed accounting, model/CAS compatibility, expression package, 356 pricing cases, types, lint and i18n accepted with explicit reuse.
+- Exact plugin deferrals remain B14; final release gates remain pending.
+- Evidence: evidence/B12-acceptance.json.

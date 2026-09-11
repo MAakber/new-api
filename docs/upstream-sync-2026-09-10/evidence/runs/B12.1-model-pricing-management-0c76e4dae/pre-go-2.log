@@ -1,0 +1,148 @@
+ok  	github.com/QuantumNous/new-api/model	0.703s
+ok  	github.com/QuantumNous/new-api/service	0.999s
+[SYS] 2026/09/11 - 12:48:29 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 12:48:29 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:161
+[0m[35m[warn] [0mremoving callback `fail_pricing_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:161
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 12:48:30 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:354
+[0m[35m[warn] [0mremoving callback `fail_metadata_matrix` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:354
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+--- FAIL: TestModelManagementDatabaseMatrix (0.37s)
+    --- FAIL: TestModelManagementDatabaseMatrix/sqlite (0.37s)
+        model_management_test.go:115: database version: 3.50.4
+        --- FAIL: TestModelManagementDatabaseMatrix/sqlite/metadata_preview_selection_versions_and_transaction (0.08s)
+            model_management_test.go:296: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:296
+                	            				C:/Program Files/Go/src/net/http/server.go:2322
+                	            				C:/Program Files/Go/src/net/http/server.go:3340
+                	            				C:/Program Files/Go/src/net/http/server.go:2109
+                	            				C:/Program Files/Go/src/runtime/asm_amd64.s:1693
+                	Error:      	"/api/newapi/vendors.json" does not contain "/api/i18n/zh/newapi/"
+                	Test:       	TestModelManagementDatabaseMatrix/sqlite/metadata_preview_selection_versions_and_transaction
+            model_management_test.go:296: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:296
+                	            				C:/Program Files/Go/src/net/http/server.go:2322
+                	            				C:/Program Files/Go/src/net/http/server.go:3340
+                	            				C:/Program Files/Go/src/net/http/server.go:2109
+                	            				C:/Program Files/Go/src/runtime/asm_amd64.s:1693
+                	Error:      	"/api/newapi/models.json" does not contain "/api/i18n/zh/newapi/"
+                	Test:       	TestModelManagementDatabaseMatrix/sqlite/metadata_preview_selection_versions_and_transaction
+            model_management_test.go:385: 
+                	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:385
+                	Error:      	Not equal: 
+                	            	expected: 400
+                	            	actual  : 200
+                	Test:       	TestModelManagementDatabaseMatrix/sqlite/metadata_preview_selection_versions_and_transaction
+[SYS] 2026/09/11 - 12:48:30 | SQL_DSN not set, using SQLite as database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 12:48:30 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+[0m[35m[warn] [0mremoving callback `vendor_delete_failure` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:568
+[SYS] 2026/09/11 - 12:48:30 | SQL_DSN not set, using SQLite as database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+
+2026/09/11 12:48:30 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:710
+[0m[35m[warn] [0mremoving callback `fail_model_deletion` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:710
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 12:48:30 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[0m[35m[warn] [0mremoving callback `fail_deleted_pricing` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 12:48:30 [34;1mD:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[0m[35m[warn] [0mremoving callback `fail_deleted_pricing` from D:/10178/Projects/new-api-upstream-sync/controller/model_management_test.go:803
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[SYS] 2026/09/11 - 12:48:30 | channels synced from database 
+[SYS] 2026/09/11 - 12:48:30 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 12:48:30 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_metadata_sync.go:32 [35;1mSQL logic error: no such table: options (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `options` (`key`,`value`) VALUES ("metadata_sync_lock","") ON CONFLICT DO NOTHING
+--- FAIL: TestDeleteModelAndVendorMetaClearActiveNameBeforeSoftDelete (0.00s)
+    model_vendor_active_name_delete_test.go:21: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/model_vendor_active_name_delete_test.go:21
+        	Error:      	Received unexpected error:
+        	            	SQL logic error: no such table: options (1)
+        	Test:       	TestDeleteModelAndVendorMetaClearActiveNameBeforeSoftDelete
+[SYS] 2026/09/11 - 12:48:30 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 12:48:30 | SQL_DSN not set, using SQLite as database 
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	2.192s
+FAIL

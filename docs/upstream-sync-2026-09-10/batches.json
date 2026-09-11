@@ -1646,27 +1646,27 @@
       "064ed943e1ac40e3eaca1b58ffb7fa5dacb3fde3",
       "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B12.1",
         "action": "按 model-pricing 与 options 接口依赖整合管理/可见性",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B12.2",
         "action": "迁移站点货币和动态/按次表达式，保留模型分类/别名",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B12.3",
         "action": "检查存储美元语义、目录权限、编辑/预览/实际结算一致",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B12.4-options-integrity",
         "action": "Adapt options primary-key repair and missing-only defaults to downstream canonical pricing/CAS service after 0c76e4dae; verify duplicate values, restart and concurrent writes on all databases",
-        "status": "pending",
+        "status": "verified",
         "upstreamCommits": [
           "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
         ]
@@ -1674,19 +1674,118 @@
       {
         "id": "B12.1-scoped-request-rule-logs",
         "action": "When adding request-rule billing details, use LogOther.SetPublic for request_rules and update channel test Snapshot assertions from 057f71c2336c3981187b732a9d06f65490e9a946.",
-        "status": "pending",
+        "status": "verified",
         "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
-        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
+        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json",
+        "codeCommit": "33ae112e4decab45dde15c5763faf714f1f9e8a8"
       },
       {
-        "id": "B12.1-audit-fixture",
-        "status": "pending",
-        "action": "When adding controller/billing_option_test.go from pricing management, migrate AuditLog in its test fixture as required by d8cb177440ceaae422d5bfd96c258d47af4e0f1d."
+        "id": "B12.1-builtin-expression",
+        "action": "feat(billing): add built-in expression pricing for gpt-6-astra",
+        "status": "verified",
+        "upstreamCommits": [
+          "eb99ab1b40343c3317bb47981cccdbb2b159a5fa"
+        ]
+      },
+      {
+        "id": "B12.1-builtin-view",
+        "status": "verified",
+        "action": "Verify the model_pricing configured/effective snapshot exposes built-in defaults while legacy /api/option maps remain raw CAS snapshots; default-only reads must not persist overrides.",
+        "upstreamCommits": [
+          "eb99ab1b40343c3317bb47981cccdbb2b159a5fa"
+        ]
+      },
+      {
+        "id": "B12.1-model-pricing-management",
+        "action": "feat(models): rework model/vendor management and pricing",
+        "status": "verified",
+        "upstreamCommits": [
+          "0c76e4dae77a279e015329b7478e6f02d6b62edd"
+        ]
+      },
+      {
+        "id": "B12.1-pricing-grid",
+        "action": "fix(web): switch the pricing card grid to three columns at xl",
+        "status": "verified",
+        "upstreamCommits": [
+          "bee45b58a3c0b77e8dc81e6b5aeb4474aa9058d1"
+        ]
+      },
+      {
+        "id": "B12.2-editor-currency",
+        "action": "feat(pricing): support site currency in pricing editors",
+        "status": "verified",
+        "upstreamCommits": [
+          "75e533209490a8ef3a8b5e3d93e4dac03ba19bcf"
+        ]
+      },
+      {
+        "id": "B12.2-editor-log-display",
+        "action": "feat(pricing): improve pricing editors and log display",
+        "status": "verified",
+        "upstreamCommits": [
+          "0e0ba152bdcc6891f6053047ccf14d41b3cad60a"
+        ]
+      },
+      {
+        "id": "B12.1-model-listing",
+        "action": "feat(models): improve model listing, pricing and visibility filters",
+        "status": "verified",
+        "upstreamCommits": [
+          "71c1fd7caad738db4d13aabbf28eeadb293d0cfe"
+        ]
+      },
+      {
+        "id": "B12.1-options-primary-key",
+        "action": "fix(options): rebuild options table primary key and stop pricing writes resetting rows",
+        "status": "verified",
+        "upstreamCommits": [
+          "4fc9d1f1fa77c0cfdd9719cb59ff9ecc9885d66a"
+        ]
+      },
+      {
+        "id": "B12.2-time-pricing-editor",
+        "action": "feat(billing): add time-based pricing editor and expression previews",
+        "status": "verified",
+        "upstreamCommits": [
+          "d52bdc0b4087d50d87eb06387e86b2be53e85cd4"
+        ]
+      },
+      {
+        "id": "B12.2-pricing-scroll",
+        "action": "fix(web): keep model pricing content in one scroll area",
+        "status": "verified",
+        "upstreamCommits": [
+          "7cf9b473f61eb7dc09f6f0782192f17595140a08"
+        ]
+      },
+      {
+        "id": "B12.2-fixed-request-pricing",
+        "action": "feat(billing): support fixed per-request expression pricing",
+        "status": "verified",
+        "upstreamCommits": [
+          "064ed943e1ac40e3eaca1b58ffb7fa5dacb3fde3"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "按 model-pricing 与 options 接口依赖整合管理/可见性"
+    "codeCommits": [
+      "1fb6171e1ebf95661f77498615571c1491733b89",
+      "fa94685bc008c5a2ae18cbeb2c6a4f02f6246a79",
+      "2b8770f0680c6dc1342f93b861a4f198a02d68e7",
+      "e1adc5cdf19c9985bc7c5356b0d038d58857dc16",
+      "ba1baf9b0cfd9b665ca4039bb5d4cb080f3f7bbb",
+      "33924a09023f4765656ae037e9b3cc393700401b",
+      "0d5daeb250c3bb326f5f18adf5dfd7ff6012f8dd",
+      "f1c662f061f8ea6481fb748a1b81a33c63747f99",
+      "33ae112e4decab45dde15c5763faf714f1f9e8a8",
+      "d684b4b1bfafbb0a32c4981dedd2c9660b6c220d",
+      "98b579a19756b339af71f73173983528b7a97880",
+      "2270b2fb53707e34dce87cc7bd67ca704949f938"
+    ],
+    "evidence": [
+      "evidence/B12-acceptance.json"
+    ],
+    "nextAction": "B12 accepted; continue B13 logs, quota displays and redemption changes."
   },
   {
     "id": "B13",
@@ -1794,6 +1893,18 @@
         "id": "B14.1-token-audit-fixtures",
         "status": "pending",
         "action": "Integrate d8cb177440ceaae422d5bfd96c258d47af4e0f1d changes to controller/channel_task_plugin_bind_test.go and router/plugin_router_test.go: migrate AuditLog and verify plugin credential paths do not leak into audit rows."
+      },
+      {
+        "id": "B14.1-model-pricing-integration",
+        "status": "pending",
+        "sourceCommit": "0c76e4dae77a279e015329b7478e6f02d6b62edd",
+        "action": "Apply the pricing usage-schema, task expression validation/editor and plugin selectors deferred from B12. Preserve canonical pricing rows and CAS; restore the task usage matrix cases.",
+        "dependencyEvidence": "evidence/B12-plugin-pricing-deferred.json"
+      },
+      {
+        "id": "B14.1-billing-audit-fixture",
+        "status": "pending",
+        "action": "Restore controller/billing_option_test.go task-schema and alias validation from plugin implementation; retain AuditLog fixture migration required by d8cb177440ceaae422d5bfd96c258d47af4e0f1d. Adapt the tests to the shared canonical pricing writer rather than restoring unrestricted generic pricing writes."
       }
     ],
     "codeCommits": [],
