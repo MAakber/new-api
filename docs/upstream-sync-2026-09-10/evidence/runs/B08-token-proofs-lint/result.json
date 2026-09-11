@@ -1,0 +1,33 @@
+{
+  "id": "B08-token-proofs-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/auth/secure-verification/types.ts",
+    "src/features/security/api.ts",
+    "src/features/security/components/__tests__/access-token-card.test.tsx",
+    "src/features/security/components/access-token-card.tsx",
+    "src/features/security/hooks/use-access-token.ts",
+    "src/lib/secure-verification.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "218762699011b6b06b1984e5ad9da7a87acceb22",
+  "started_at": "2026-09-11T00:13:39.038Z",
+  "finished_at": "2026-09-11T00:13:39.572Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

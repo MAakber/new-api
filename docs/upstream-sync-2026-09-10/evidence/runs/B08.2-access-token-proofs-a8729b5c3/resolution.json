@@ -1,0 +1,20 @@
+{
+  "upstream": "a8729b5c3709cc01d88fc3f2db5b91347fc9129e",
+  "before_head": "8df8790b7d7578a1367ff5c2f67a90779e6fa122",
+  "after_head": "218762699011b6b06b1984e5ad9da7a87acceb22",
+  "files": [
+    "controller/access_token.go",
+    "controller/access_token_audit_test.go",
+    "controller/security_enrollment_test.go",
+    "controller/user.go",
+    "router/api-router.go",
+    "service/security_verification.go",
+    "web/src/features/auth/secure-verification/types.ts",
+    "web/src/features/security/api.ts",
+    "web/src/features/security/components/__tests__/access-token-card.test.tsx",
+    "web/src/features/security/components/access-token-card.tsx",
+    "web/src/features/security/hooks/use-access-token.ts",
+    "web/src/lib/secure-verification.ts"
+  ],
+  "rationale": "Added generation/revocation proofs with operation/session binding and stricter method policy. Retained multiple Passkey routes and deletion contexts, token cancellation, one-time plaintext display and mobile audit history. Registered upstream and downstream regressions for subsequent verification."
+}

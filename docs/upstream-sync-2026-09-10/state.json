@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T00:10:06.695Z",
+  "updatedAt": "2026-09-11T00:13:36.474Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -19,14 +19,14 @@
     "created": true
   },
   "current_batch": "B08",
-  "current_unit": "B08.3-clickhouse-compatibility",
+  "current_unit": "B08.2-access-token-proofs",
   "active_operation": null,
-  "last_observed_head": "c3b677317535754423a9ae05803e461490c8f322",
+  "last_observed_head": "218762699011b6b06b1984e5ad9da7a87acceb22",
   "last_verified_code_commit": "54c948f715414eada868462b3c60882ce745a57f",
-  "last_checkpoint_commit": "d658b73113417668d74ecc4e29b5b8896a5c1743",
+  "last_checkpoint_commit": "6fb247078809e339323c6de9ac0aa10d7d63363c",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Fix audit storage for documented ClickHouse 24.8 before completing remaining B08 security integrations; native JSON CREATE fails on the fresh/upgrade fixture.",
+  "next_action": "B08.2-access-token-proofs: verify adapted behavior before acceptance.",
   "blockers": [
     {
       "id": "production_snapshot",

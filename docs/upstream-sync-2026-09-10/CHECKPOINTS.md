@@ -1393,3 +1393,39 @@
 - Earlier database failures came from WSL shutdown; keepalive required for local container fixtures. Failed runs remain retained.
 - Evidence: evidence/runs/B08-telegram-go/result.json, evidence/runs/B08-telegram-ui/result.json, evidence/runs/B08-telegram-types/result.json, evidence/runs/B08-telegram-lint/result.json, evidence/runs/B08-telegram-i18n/result.json, evidence/runs/B08-telegram-mariadb-live/result.json, evidence/runs/B08-telegram-mysql57-live/result.json, evidence/runs/B08-telegram-postgres-live/result.json.
 - B08-clickhouse-audit fails fresh and upgrade startup on ClickHouse 24.8.14.39: experimental JSON column is disabled by default. Fix this supported-version regression before continuing B08. Full stage acceptance pending.
+
+## 2026-09-11T00:11:04.397Z — B08 ClickHouse compatibility fix committed
+
+- Code: 8df8790b7d7578a1367ff5c2f67a90779e6fa122.
+- String storage preserves structured JSON and integer precision without experimental JSON CREATE or query settings.
+- Existing audit matrix covers fresh/upgrade, repeated startup, retention and role projection; required database runs starting.
+
+## 2026-09-11T00:12:16.525Z — B08 documented ClickHouse compatibility verified
+
+- Code: 8df8790b7d7578a1367ff5c2f67a90779e6fa122.
+- SQLite, MariaDB 11.4.4, MySQL 5.7.44, PostgreSQL 9.6.24 and ClickHouse 24.8.14.39 passed fresh/upgrade audit database tests.
+- Repeated startup preserves history, structured metadata including large integers, and privilege projections. Usage cleanup and ClickHouse TTL do not delete audit records.
+- Evidence: evidence/runs/B08-audit-clickhouse24-fixed/result.json, evidence/runs/B08-audit-mariadb-fixed/result.json, evidence/runs/B08-audit-mysql57-fixed/result.json, evidence/runs/B08-audit-postgres-fixed/result.json.
+- No experimental ClickHouse setting required. Proceed to remaining B08 upstream units.
+
+## 2026-09-11T00:12:16.915Z — B08.2-access-token-proofs adaptation begun
+
+- Before HEAD: 8df8790b7d7578a1367ff5c2f67a90779e6fa122.
+- Upstream: a8729b5c3709cc01d88fc3f2db5b91347fc9129e.
+- Require single-use session-bound verification for access-token generation and revocation; preserve targeted Passkey deletion, one-time token display, operation cancellation and downstream audit storage.
+- Evidence: evidence/runs/B08.2-access-token-proofs-a8729b5c3/intent.json.
+
+## 2026-09-11T00:13:36.473Z — B08.2-access-token-proofs adaptation recorded
+
+- Code: 218762699011b6b06b1984e5ad9da7a87acceb22.
+- Added generation/revocation proofs with operation/session binding and stricter method policy. Retained multiple Passkey routes and deletion contexts, token cancellation, one-time plaintext display and mobile audit history. Registered upstream and downstream regressions for subsequent verification.
+- Evidence: evidence/runs/B08.2-access-token-proofs-a8729b5c3/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T00:15:17.538Z — B08 access-token verification checked
+
+- Code: 218762699011b6b06b1984e5ad9da7a87acceb22.
+- Affected Go packages and 79 UI tests passed; types and touched-file lint passed.
+- Scoped one-use proof, credential state, session isolation and token mutation cases pass on real SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24.
+- Evidence: evidence/runs/B08-token-proofs-go/result.json, evidence/runs/B08-token-proofs-ui/result.json, evidence/runs/B08-token-proofs-types/result.json, evidence/runs/B08-token-proofs-lint/result.json, evidence/runs/B08-token-proofs-mariadb/result.json, evidence/runs/B08-token-proofs-mysql57/result.json, evidence/runs/B08-token-proofs-postgres/result.json.
+- Continue account binding/password changes; full B08 acceptance remains pending.

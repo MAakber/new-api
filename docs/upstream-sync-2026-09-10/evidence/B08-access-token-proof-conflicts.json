@@ -1,0 +1,18 @@
+{
+  "upstream": "a8729b5c3709cc01d88fc3f2db5b91347fc9129e",
+  "before_head": "8df8790b7d7578a1367ff5c2f67a90779e6fa122",
+  "resolutions": [
+    {
+      "path": "router/api-router.go",
+      "decision": "Add per-user critical rate limit to revocation while retaining no-cache Passkey status and multiple-credential list routes."
+    },
+    {
+      "path": "service/security_verification.go",
+      "decision": "Add access-token scopes only to empty-context actions; retain separate device-targeted and legacy-all passkey.delete bindings."
+    },
+    {
+      "path": "web/src/features/security/components/__tests__/access-token-card.test.tsx",
+      "decision": "Keep cancellation-without-write regression and upstream confirmation/verification/failure assertions."
+    }
+  ]
+}

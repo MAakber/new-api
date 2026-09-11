@@ -1,0 +1,72 @@
+=== RUN   TestAuditDatabaseMatrix
+=== RUN   TestAuditDatabaseMatrix/postgres
+=== RUN   TestAuditDatabaseMatrix/postgres/upgrade=false
+
+2026/09/11 08:11:26 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[915.000ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085485191075600[0m
+    access_token_audit_test.go:678: isolated database: newapi_audit_1789085485191075600 (postgres)
+    access_token_audit_test.go:694: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[SYS] 2026/09/11 - 08:11:26 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:26 | database migration started 
+[SYS] 2026/09/11 - 08:11:27 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:27 | database migration started 
+
+2026/09/11 08:11:29 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:728 [35;1mERROR: duplicate key value violates unique constraint "idx_users_access_token" (SQLSTATE 23505)
+[0m[33m[1.959ms] [34;1m[rows:0][0m INSERT INTO "users" ("username","password","display_name","role","status","email","github_id","discord_id","oidc_id","wechat_id","telegram_id","access_token","access_token_created_at","quota","used_quota","request_count","requests_per_minute","group","aff_code","aff_count","aff_quota","aff_history","inviter_id","deleted_at","linux_do_id","setting","remark","stripe_customer","created_at","last_login_at","auth_version","auto_ban_until","auto_ban_rule","auto_ban_record_id","auto_ban_response_status","auto_ban_response_code","auto_ban_response_message") VALUES ('duplicate','placeholder','',1,1,'','','','','','','matrix-token',NULL,0,0,0,NULL,'default','duplicate-aff',0,0,0,0,NULL,'','','','',1789085489,0,1,0,'',0,403,'','') RETURNING "id"
+[ERR] 2026/09/11 - 08:11:29 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:29 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+=== RUN   TestAuditDatabaseMatrix/postgres/upgrade=true
+
+2026/09/11 08:11:29 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[412.559ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085489426478800[0m
+    access_token_audit_test.go:678: isolated database: newapi_audit_1789085489426478800 (postgres)
+    access_token_audit_test.go:694: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[SYS] 2026/09/11 - 08:11:29 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:29 | database migration started 
+[SYS] 2026/09/11 - 08:11:31 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:31 | database migration started 
+
+2026/09/11 08:11:33 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:728 [35;1mERROR: duplicate key value violates unique constraint "idx_users_access_token" (SQLSTATE 23505)
+[0m[33m[2.415ms] [34;1m[rows:0][0m INSERT INTO "users" ("username","password","display_name","role","status","email","github_id","discord_id","oidc_id","wechat_id","telegram_id","access_token","access_token_created_at","quota","used_quota","request_count","requests_per_minute","group","aff_code","aff_count","aff_quota","aff_history","inviter_id","deleted_at","linux_do_id","setting","remark","stripe_customer","created_at","last_login_at","auth_version","auto_ban_until","auto_ban_rule","auto_ban_record_id","auto_ban_response_status","auto_ban_response_code","auto_ban_response_message") VALUES ('duplicate','placeholder','',1,1,'','','','','','','matrix-token',NULL,0,0,0,NULL,'default','duplicate-aff',0,0,0,0,NULL,'','','','',1789085493,0,1,0,'',0,403,'','') RETURNING "id"
+[ERR] 2026/09/11 - 08:11:33 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:33 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+--- PASS: TestAuditDatabaseMatrix (8.25s)
+    --- PASS: TestAuditDatabaseMatrix/postgres (8.25s)
+        --- PASS: TestAuditDatabaseMatrix/postgres/upgrade=false (4.24s)
+        --- PASS: TestAuditDatabaseMatrix/postgres/upgrade=true (4.02s)
+=== RUN   TestIndependentAuditLogStores
+=== RUN   TestIndependentAuditLogStores/postgres/upgrade=false
+
+2026/09/11 08:11:34 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[637.851ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085493455827800[0m
+    access_token_audit_test.go:794: isolated database: newapi_audit_1789085493455827800 (postgres)
+[SYS] 2026/09/11 - 08:11:34 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:34 | database migration started 
+[SYS] 2026/09/11 - 08:11:34 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:34 | database migration started 
+[ERR] 2026/09/11 - 08:11:34 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:34 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 08:11:34 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:34 | database migration started 
+[SYS] 2026/09/11 - 08:11:34 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:34 | database migration started 
+=== RUN   TestIndependentAuditLogStores/postgres/upgrade=true
+
+2026/09/11 08:11:35 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:488 [33mSLOW SQL >= 200ms
+[0m[31;1m[521.107ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085494593616600[0m
+    access_token_audit_test.go:794: isolated database: newapi_audit_1789085494593616600 (postgres)
+[SYS] 2026/09/11 - 08:11:35 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:35 | database migration started 
+[SYS] 2026/09/11 - 08:11:35 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:35 | database migration started 
+[ERR] 2026/09/11 - 08:11:35 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:35 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 08:11:35 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:35 | database migration started 
+[SYS] 2026/09/11 - 08:11:35 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:11:35 | database migration started 
+--- PASS: TestIndependentAuditLogStores (2.15s)
+    --- PASS: TestIndependentAuditLogStores/postgres/upgrade=false (1.14s)
+    --- PASS: TestIndependentAuditLogStores/postgres/upgrade=true (1.01s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	11.269s

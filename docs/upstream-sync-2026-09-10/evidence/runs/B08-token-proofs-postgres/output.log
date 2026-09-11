@@ -1,0 +1,162 @@
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation
+
+2026/09/11 08:14:14 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[521.924ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085654344036800[0m
+    security_enrollment_test.go:133: isolated database: newapi_audit_1789085654344036800 (postgres)
+
+2026/09/11 08:14:15 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[420.803ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085654929095400[0m
+    security_enrollment_test.go:133: isolated database: newapi_audit_1789085654929095400 (postgres)
+    security_enrollment_test.go:133: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/GET
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/POST
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/DELETE
+--- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation (1.33s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/GET (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/POST (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/DELETE (0.00s)
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/password
+
+2026/09/11 08:14:16 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[401.031ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085655675024100[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085655675024100 (postgres)
+
+2026/09/11 08:14:16 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[439.900ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085656084561100[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085656084561100 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/existing_passkey
+
+2026/09/11 08:14:17 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[442.565ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085656840065000[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085656840065000 (postgres)
+
+2026/09/11 08:14:17 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[395.246ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085657291624900[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085657291624900 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/existing_twofa
+
+2026/09/11 08:14:18 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[555.003ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085657978908100[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085657978908100 (postgres)
+
+2026/09/11 08:14:18 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[440.331ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085658544949000[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085658544949000 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/locked_twofa_blocks_fallback
+
+2026/09/11 08:14:19 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[395.105ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085659297099100[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085659297099100 (postgres)
+
+2026/09/11 08:14:20 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[457.381ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085659701183100[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085659701183100 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_blocks_fallback
+
+2026/09/11 08:14:20 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[430.305ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085660469934200[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085660469934200 (postgres)
+
+2026/09/11 08:14:21 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[419.247ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085660909976900[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085660909976900 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_does_not_block_password
+
+2026/09/11 08:14:25 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[3491.964ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085661619351800[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085661619351800 (postgres)
+
+2026/09/11 08:14:25 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[443.031ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085665121980700[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085665121980700 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/linked_oauth
+
+2026/09/11 08:14:26 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[404.941ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085665857292200[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085665857292200 (postgres)
+
+2026/09/11 08:14:26 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[423.395ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085666272640800[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085666272640800 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/wechat_session_cannot_manage_tokens
+
+2026/09/11 08:14:27 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[441.051ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085667022465300[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085667022465300 (postgres)
+
+2026/09/11 08:14:27 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[409.577ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085667473146200[0m
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085667473146200 (postgres)
+    security_enrollment_test.go:175: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy (12.53s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/password (1.16s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/existing_passkey (1.14s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/existing_twofa (1.32s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/locked_twofa_blocks_fallback (1.17s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_blocks_fallback (1.15s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_does_not_block_password (4.24s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/linked_oauth (1.16s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/wechat_session_cannot_manage_tokens (1.18s)
+=== RUN   TestSecurityEnrollmentAccessTokenLifecycleConsumesProofs
+
+2026/09/11 08:14:28 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[409.410ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085668204693500[0m
+    security_enrollment_test.go:215: isolated database: newapi_audit_1789085668204693500 (postgres)
+
+2026/09/11 08:14:29 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[449.966ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085668624399200[0m
+    security_enrollment_test.go:215: isolated database: newapi_audit_1789085668624399200 (postgres)
+    security_enrollment_test.go:215: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestSecurityEnrollmentAccessTokenLifecycleConsumesProofs (1.33s)
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs
+
+2026/09/11 08:14:29 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[456.550ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085669535268700[0m
+    security_enrollment_test.go:273: isolated database: newapi_audit_1789085669535268700 (postgres)
+
+2026/09/11 08:14:30 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[411.840ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085670000858600[0m
+    security_enrollment_test.go:273: isolated database: newapi_audit_1789085670000858600 (postgres)
+    security_enrollment_test.go:273: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/session
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/user
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/expired
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/session
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/user
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/expired
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/session
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/user
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/expired
+--- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs (1.23s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/session (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/user (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/expired (0.01s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/session (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/user (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/expired (0.01s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/session (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/user (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/expired (0.01s)
+=== RUN   TestSecurityEnrollmentAccessTokenFailureDoesNotRestoreProof
+
+2026/09/11 08:14:31 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[519.702ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085670762847500[0m
+    security_enrollment_test.go:310: isolated database: newapi_audit_1789085670762847500 (postgres)
+
+2026/09/11 08:14:31 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[434.007ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789085671291652900[0m
+    security_enrollment_test.go:310: isolated database: newapi_audit_1789085671291652900 (postgres)
+    security_enrollment_test.go:310: database: postgres PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[ERR] 2026/09/11 - 08:14:32 | SYSTEM | auth session internal error (POST /api/user/token): private database failure 
+[ERR] 2026/09/11 - 08:14:32 | SYSTEM | auth session internal error (DELETE /api/user/token): private database failure 
+--- PASS: TestSecurityEnrollmentAccessTokenFailureDoesNotRestoreProof (1.29s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	18.526s

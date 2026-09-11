@@ -1,0 +1,60 @@
+=== RUN   TestAuditDatabaseMatrix
+=== RUN   TestAuditDatabaseMatrix/mysql
+=== RUN   TestAuditDatabaseMatrix/mysql/upgrade=false
+    access_token_audit_test.go:678: isolated database: newapi_audit_1789085485178731300 (mysql)
+    access_token_audit_test.go:694: database version: 11.4.4-MariaDB-ubu2404
+[SYS] 2026/09/11 - 08:11:25 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:25 | database migration started 
+[SYS] 2026/09/11 - 08:11:27 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:27 | database migration started 
+
+2026/09/11 08:11:29 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:728 [35;1mError 1062 (23000): Duplicate entry 'matrix-token' for key 'idx_users_access_token'
+[0m[33m[49.549ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ('duplicate','placeholder','',1,1,'','','','','','','matrix-token',NULL,0,0,0,NULL,'default','duplicate-aff',0,0,0,0,NULL,'','','','',1789085488,0,1,0,'',0,403,'','') RETURNING `id`
+[ERR] 2026/09/11 - 08:11:29 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:29 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+=== RUN   TestAuditDatabaseMatrix/mysql/upgrade=true
+    access_token_audit_test.go:678: isolated database: newapi_audit_1789085490693351200 (mysql)
+    access_token_audit_test.go:694: database version: 11.4.4-MariaDB-ubu2404
+[SYS] 2026/09/11 - 08:11:31 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:31 | database migration started 
+[SYS] 2026/09/11 - 08:11:33 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:33 | database migration started 
+
+2026/09/11 08:11:34 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:728 [35;1mError 1062 (23000): Duplicate entry 'matrix-token' for key 'idx_users_access_token'
+[0m[33m[96.943ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ('duplicate','placeholder','',1,1,'','','','','','','matrix-token',NULL,0,0,0,NULL,'default','duplicate-aff',0,0,0,0,NULL,'','','','',1789085494,0,1,0,'',0,403,'','') RETURNING `id`
+[ERR] 2026/09/11 - 08:11:34 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:34 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+--- PASS: TestAuditDatabaseMatrix (10.90s)
+    --- PASS: TestAuditDatabaseMatrix/mysql (10.90s)
+        --- PASS: TestAuditDatabaseMatrix/mysql/upgrade=false (5.51s)
+        --- PASS: TestAuditDatabaseMatrix/mysql/upgrade=true (5.38s)
+=== RUN   TestIndependentAuditLogStores
+=== RUN   TestIndependentAuditLogStores/mysql/upgrade=false
+    access_token_audit_test.go:794: isolated database: newapi_audit_1789085496082590700 (mysql)
+[SYS] 2026/09/11 - 08:11:36 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:36 | database migration started 
+[SYS] 2026/09/11 - 08:11:36 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:36 | database migration started 
+[ERR] 2026/09/11 - 08:11:36 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:36 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 08:11:36 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:36 | database migration started 
+[SYS] 2026/09/11 - 08:11:36 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:36 | database migration started 
+=== RUN   TestIndependentAuditLogStores/mysql/upgrade=true
+    access_token_audit_test.go:794: isolated database: newapi_audit_1789085496858006700 (mysql)
+[SYS] 2026/09/11 - 08:11:37 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:37 | database migration started 
+[SYS] 2026/09/11 - 08:11:37 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:37 | database migration started 
+[ERR] 2026/09/11 - 08:11:37 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:37 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 08:11:37 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:37 | database migration started 
+[SYS] 2026/09/11 - 08:11:37 | using MySQL as database 
+[SYS] 2026/09/11 - 08:11:37 | database migration started 
+--- PASS: TestIndependentAuditLogStores (1.79s)
+    --- PASS: TestIndependentAuditLogStores/mysql/upgrade=false (0.78s)
+    --- PASS: TestIndependentAuditLogStores/mysql/upgrade=true (1.01s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	13.568s

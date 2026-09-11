@@ -1,0 +1,6 @@
+{
+  "upstream": "a8729b5c3709cc01d88fc3f2db5b91347fc9129e",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Applied patch to 'controller/access_token.go' cleanly.\nApplied patch to 'controller/access_token_audit_test.go' cleanly.\nApplied patch to 'controller/security_enrollment_test.go' cleanly.\nApplied patch to 'controller/user.go' cleanly.\nApplied patch to 'router/api-router.go' with conflicts.\nApplied patch to 'service/security_verification.go' with conflicts.\nApplied patch to 'web/src/features/auth/secure-verification/types.ts' cleanly.\nApplied patch to 'web/src/features/security/api.ts' cleanly.\nApplied patch to 'web/src/features/security/components/__tests__/access-token-card.test.tsx' with conflicts.\nApplied patch to 'web/src/features/security/components/access-token-card.tsx' cleanly.\nApplied patch to 'web/src/features/security/hooks/use-access-token.ts' cleanly.\nApplied patch to 'web/src/lib/secure-verification.ts' cleanly.\nU router/api-router.go\nU service/security_verification.go\nU web/src/features/security/components/__tests__/access-token-card.test.tsx\n"
+}

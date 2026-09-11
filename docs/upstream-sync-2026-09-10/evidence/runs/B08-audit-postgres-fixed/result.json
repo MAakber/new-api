@@ -1,0 +1,28 @@
+{
+  "id": "B08-audit-postgres-fixed",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run=^(TestIndependentAuditLogStores|TestAuditDatabaseMatrix)$/^postgres$",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "8df8790b7d7578a1367ff5c2f67a90779e6fa122",
+  "started_at": "2026-09-11T00:11:07.016Z",
+  "finished_at": "2026-09-11T00:11:35.771Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

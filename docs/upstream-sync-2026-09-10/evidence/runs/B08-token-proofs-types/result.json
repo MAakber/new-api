@@ -1,0 +1,25 @@
+{
+  "id": "B08-token-proofs-types",
+  "command": [
+    "bun",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "218762699011b6b06b1984e5ad9da7a87acceb22",
+  "started_at": "2026-09-11T00:13:39.007Z",
+  "finished_at": "2026-09-11T00:13:44.715Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1,0 +1,82 @@
+=== RUN   TestAuditDatabaseMatrix
+=== RUN   TestAuditDatabaseMatrix/sqlite
+=== RUN   TestAuditDatabaseMatrix/sqlite/upgrade=false
+    access_token_audit_test.go:694: database version: 3.50.4
+[SYS] 2026/09/11 - 08:11:25 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 08:11:25 | database migration started 
+
+2026/09/11 08:11:26 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[1.006ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 08:11:26 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+[SYS] 2026/09/11 - 08:11:26 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 08:11:26 | database migration started 
+
+2026/09/11 08:11:26 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.517ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 08:11:26 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 08:11:26 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:728 [35;1mconstraint failed: UNIQUE constraint failed: users.access_token (2067)
+[0m[33m[0.521ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ("duplicate","placeholder","",1,1,"","","","","","","matrix-token",NULL,0,0,0,NULL,"default","duplicate-aff",0,0,0,0,NULL,"","","","",1789085486,0,1,0,"",0,403,"","") RETURNING `id`
+[ERR] 2026/09/11 - 08:11:26 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:26 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+=== RUN   TestAuditDatabaseMatrix/sqlite/upgrade=true
+    access_token_audit_test.go:694: database version: 3.50.4
+[SYS] 2026/09/11 - 08:11:26 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 08:11:26 | database migration started 
+
+2026/09/11 08:11:27 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.794ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 08:11:27 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+[SYS] 2026/09/11 - 08:11:27 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 08:11:27 | database migration started 
+
+2026/09/11 08:11:27 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 08:11:27 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 08:11:27 [31;1mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:728 [35;1mconstraint failed: UNIQUE constraint failed: users.access_token (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `users` (`username`,`password`,`display_name`,`role`,`status`,`email`,`github_id`,`discord_id`,`oidc_id`,`wechat_id`,`telegram_id`,`access_token`,`access_token_created_at`,`quota`,`used_quota`,`request_count`,`requests_per_minute`,`group`,`aff_code`,`aff_count`,`aff_quota`,`aff_history`,`inviter_id`,`deleted_at`,`linux_do_id`,`setting`,`remark`,`stripe_customer`,`created_at`,`last_login_at`,`auth_version`,`auto_ban_until`,`auto_ban_rule`,`auto_ban_record_id`,`auto_ban_response_status`,`auto_ban_response_code`,`auto_ban_response_message`) VALUES ("duplicate","placeholder","",1,1,"","","","","","","matrix-token",NULL,0,0,0,NULL,"default","duplicate-aff",0,0,0,0,NULL,"","","","",1789085487,0,1,0,"",0,403,"","") RETURNING `id`
+[ERR] 2026/09/11 - 08:11:27 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:27 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+--- PASS: TestAuditDatabaseMatrix (2.26s)
+    --- PASS: TestAuditDatabaseMatrix/sqlite (2.26s)
+        --- PASS: TestAuditDatabaseMatrix/sqlite/upgrade=false (1.15s)
+        --- PASS: TestAuditDatabaseMatrix/sqlite/upgrade=true (1.11s)
+=== RUN   TestIndependentAuditLogStores
+=== RUN   TestIndependentAuditLogStores/clickhouse/upgrade=false
+    access_token_audit_test.go:794: isolated database: newapi_audit_1789085487408870700 (clickhouse)
+[SYS] 2026/09/11 - 08:11:27 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:27 | database migration started 
+[SYS] 2026/09/11 - 08:11:27 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:27 | database migration started 
+[ERR] 2026/09/11 - 08:11:27 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:27 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 08:11:27 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:27 | database migration started 
+[SYS] 2026/09/11 - 08:11:27 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:27 | database migration started 
+=== RUN   TestIndependentAuditLogStores/clickhouse/upgrade=true
+    access_token_audit_test.go:794: isolated database: newapi_audit_1789085488014069800 (clickhouse)
+[SYS] 2026/09/11 - 08:11:28 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:28 | database migration started 
+[SYS] 2026/09/11 - 08:11:28 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:28 | database migration started 
+[ERR] 2026/09/11 - 08:11:28 | SYSTEM | audit actor role unavailable (request_id=matrix-role-0, actor_role=0) 
+[ERR] 2026/09/11 - 08:11:28 | SYSTEM | audit actor role unavailable (request_id=matrix-role-99, actor_role=99) 
+[SYS] 2026/09/11 - 08:11:28 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:28 | database migration started 
+[SYS] 2026/09/11 - 08:11:28 | using ClickHouse as log database 
+[SYS] 2026/09/11 - 08:11:28 | database migration started 
+--- PASS: TestIndependentAuditLogStores (1.20s)
+    --- PASS: TestIndependentAuditLogStores/clickhouse/upgrade=false (0.60s)
+    --- PASS: TestIndependentAuditLogStores/clickhouse/upgrade=true (0.59s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	4.308s

@@ -1,0 +1,90 @@
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation
+    security_enrollment_test.go:133: isolated database: newapi_audit_1789085654332733900 (mysql)
+    security_enrollment_test.go:133: isolated database: newapi_audit_1789085654342453900 (mysql)
+    security_enrollment_test.go:133: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/GET
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/POST
+=== RUN   TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/DELETE
+--- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation (1.67s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/GET (0.00s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/POST (0.05s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRequiresProofBeforeMutation/DELETE (0.05s)
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/password
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085656003294700 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085656010147900 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/existing_passkey
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085657809641600 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085657815961200 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/existing_twofa
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085659611880100 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085659618250000 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/locked_twofa_blocks_fallback
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085661488208900 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085661494524000 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_blocks_fallback
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085666022037700 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085666028588600 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_does_not_block_password
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085667837360600 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085667843688200 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/linked_oauth
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085669626590600 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085669632888500 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenMethodPolicy/wechat_session_cannot_manage_tokens
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085671546364000 (mysql)
+    security_enrollment_test.go:175: isolated database: newapi_audit_1789085671552001400 (mysql)
+    security_enrollment_test.go:175: database: mysql 11.4.4-MariaDB-ubu2404
+--- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy (17.60s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/password (1.81s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/existing_passkey (1.80s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/existing_twofa (1.88s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/locked_twofa_blocks_fallback (4.53s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_blocks_fallback (1.82s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/disabled_passkey_does_not_block_password (1.79s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/linked_oauth (1.92s)
+    --- PASS: TestSecurityEnrollmentAccessTokenMethodPolicy/wechat_session_cannot_manage_tokens (2.06s)
+=== RUN   TestSecurityEnrollmentAccessTokenLifecycleConsumesProofs
+    security_enrollment_test.go:215: isolated database: newapi_audit_1789085673601882600 (mysql)
+    security_enrollment_test.go:215: isolated database: newapi_audit_1789085673609354200 (mysql)
+    security_enrollment_test.go:215: database: mysql 11.4.4-MariaDB-ubu2404
+--- PASS: TestSecurityEnrollmentAccessTokenLifecycleConsumesProofs (5.55s)
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs
+    security_enrollment_test.go:273: isolated database: newapi_audit_1789085679148825900 (mysql)
+    security_enrollment_test.go:273: isolated database: newapi_audit_1789085679155766900 (mysql)
+    security_enrollment_test.go:273: database: mysql 11.4.4-MariaDB-ubu2404
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/session
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/user
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/expired
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/session
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/user
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/expired
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/session
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/user
+=== RUN   TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/expired
+--- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs (3.43s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/session (0.05s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/user (0.10s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/GET/expired (0.48s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/session (0.10s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/user (0.09s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/POST/expired (0.48s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/session (0.10s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/user (0.10s)
+    --- PASS: TestSecurityEnrollmentAccessTokenRejectsInvalidProofs/DELETE/expired (0.48s)
+=== RUN   TestSecurityEnrollmentAccessTokenFailureDoesNotRestoreProof
+    security_enrollment_test.go:310: isolated database: newapi_audit_1789085682582400300 (mysql)
+    security_enrollment_test.go:310: isolated database: newapi_audit_1789085682588818300 (mysql)
+    security_enrollment_test.go:310: database: mysql 11.4.4-MariaDB-ubu2404
+[ERR] 2026/09/11 - 08:14:44 | SYSTEM | auth session internal error (POST /api/user/token): private database failure 
+[ERR] 2026/09/11 - 08:14:45 | SYSTEM | auth session internal error (DELETE /api/user/token): private database failure 
+--- PASS: TestSecurityEnrollmentAccessTokenFailureDoesNotRestoreProof (3.28s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	32.345s
