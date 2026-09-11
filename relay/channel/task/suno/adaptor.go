@@ -10,6 +10,7 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/dto"
+	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/relay/channel"
 	taskcommon "github.com/QuantumNous/new-api/relay/channel/task/taskcommon"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
@@ -27,7 +28,7 @@ type TaskAdaptor struct {
 // Suno polling uses a dedicated batch-fetch path (service.UpdateSunoTasks) that
 // receives dto.TaskResponse[[]dto.SunoDataResponse] from the upstream /fetch API.
 // This differs from the per-task polling used by video adaptors.
-func (a *TaskAdaptor) ParseTaskResult([]byte) (*relaycommon.TaskInfo, error) {
+func (a *TaskAdaptor) ParseTaskResult(*model.Task, *http.Response, []byte) (*relaycommon.TaskInfo, error) {
 	return nil, fmt.Errorf("suno uses batch polling via UpdateSunoTasks, ParseTaskResult is not applicable")
 }
 
@@ -127,9 +128,19 @@ func (a *TaskAdaptor) GetChannelName() string {
 	return ChannelName
 }
 
-func (a *TaskAdaptor) FetchTask(baseUrl, key string, body map[string]any, proxy string) (*http.Response, error) {
+func (a *TaskAdaptor) FetchTask(baseUrl, key string, task *model.Task, proxy string) (*http.Response, error) {
+	return a.FetchBatchTasks(baseUrl, key, []*model.Task{task}, proxy)
+}
+
+func (a *TaskAdaptor) FetchBatchTasks(baseUrl, key string, tasks []*model.Task, proxy string) (*http.Response, error) {
+	ids := make([]string, 0, len(tasks))
+	for _, task := range tasks {
+		if task != nil {
+			ids = append(ids, task.GetUpstreamTaskID())
+		}
+	}
 	requestUrl := fmt.Sprintf("%s/suno/fetch", baseUrl)
-	byteBody, err := common.Marshal(body)
+	byteBody, err := common.Marshal(map[string]any{"ids": ids})
 	if err != nil {
 		return nil, err
 	}
@@ -150,11 +161,7 @@ func (a *TaskAdaptor) FetchTask(baseUrl, key string, body map[string]any, proxy 
 
 func (a *TaskAdaptor) FetchMode() string { return "batch" }
 
-func (a *TaskAdaptor) FetchBatchTasks(baseURL, key string, taskIDs []string, proxy string) (*http.Response, error) {
-	return a.FetchTask(baseURL, key, map[string]any{"ids": taskIDs}, proxy)
-}
-
-func (a *TaskAdaptor) ParseBatchResult(body []byte) (map[string]*service.BatchTaskResult, error) {
+func (a *TaskAdaptor) ParseBatchResult(_ []*model.Task, _ *http.Response, body []byte) (map[string]*service.BatchTaskResult, error) {
 	var response dto.TaskResponse[[]dto.SunoDataResponse]
 	if err := common.Unmarshal(body, &response); err != nil {
 		return nil, err
