@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import type { TFunction } from 'i18next'
 import { z } from 'zod'
 
-import { parseQuotaFromDollars, quotaUnitsToDollars } from '@/lib/format'
+import { parseQuotaFromDollars, quotaUnitsToEditableAmount } from '@/lib/format'
 
 import {
   REDEMPTION_VALIDATION,
@@ -139,7 +139,7 @@ export function transformRedemptionToFormDefaults(
     name: redemption.name,
     code_type: redemption.code_type,
     reward_type: redemption.reward_type,
-    quota_dollars: quotaUnitsToDollars(redemption.quota),
+    quota_dollars: quotaUnitsToEditableAmount(redemption.quota),
     plan_id: redemption.plan_id,
     max_uses: redemption.max_uses,
     expired_time:
