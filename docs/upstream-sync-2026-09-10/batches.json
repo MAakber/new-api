@@ -1145,12 +1145,15 @@
       "5c7cca015525212a7ac2741da7f3b51fa2e30db0",
       "c79b74b68358180c68440057596bdc34a99cc649"
     ],
-    "status": "in_progress",
+    "status": "verified",
     "units": [
       {
         "id": "B09.1",
         "action": "按已知缓存提交依赖适配 use-system-config 与绑定",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B09-acceptance.json"
+        ]
       },
       {
         "id": "B09.2",
@@ -1162,13 +1165,17 @@
           "evidence/runs/B09-health-rankings/result.json",
           "evidence/runs/B09-health-types/result.json",
           "evidence/runs/B09-health-lint/result.json",
-          "evidence/runs/B09-health-i18n/result.json"
+          "evidence/runs/B09-health-i18n/result.json",
+          "evidence/B09-acceptance.json"
         ]
       },
       {
         "id": "B09.3",
         "action": "验证账号切换、主题/公告失效及榜单权限",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B09-acceptance.json"
+        ]
       },
       {
         "id": "B09.1-public-cache-audit-test",
@@ -1178,7 +1185,8 @@
           "evidence/runs/B09-cache-go/result.json",
           "evidence/runs/B09-cache-ui/result.json",
           "evidence/runs/B09-cache-types/result.json",
-          "evidence/runs/B09-cache-lint/result.json"
+          "evidence/runs/B09-cache-lint/result.json",
+          "evidence/B09-acceptance.json"
         ]
       },
       {
@@ -1192,7 +1200,8 @@
           "evidence/runs/B09-cache-go/result.json",
           "evidence/runs/B09-cache-ui/result.json",
           "evidence/runs/B09-cache-types/result.json",
-          "evidence/runs/B09-cache-lint/result.json"
+          "evidence/runs/B09-cache-lint/result.json",
+          "evidence/B09-acceptance.json"
         ]
       },
       {
@@ -1206,7 +1215,8 @@
           "evidence/runs/B09-cache-go/result.json",
           "evidence/runs/B09-cache-ui/result.json",
           "evidence/runs/B09-cache-types/result.json",
-          "evidence/runs/B09-cache-lint/result.json"
+          "evidence/runs/B09-cache-lint/result.json",
+          "evidence/B09-acceptance.json"
         ]
       },
       {
@@ -1222,14 +1232,27 @@
           "evidence/runs/B09-health-rankings/result.json",
           "evidence/runs/B09-health-types/result.json",
           "evidence/runs/B09-health-lint/result.json",
-          "evidence/runs/B09-health-i18n/result.json"
+          "evidence/runs/B09-health-i18n/result.json",
+          "evidence/B09-acceptance.json"
+        ]
+      },
+      {
+        "id": "B09.1-shared-status",
+        "action": "fix(frontend): deduplicate /api/status requests (#7189)",
+        "status": "verified",
+        "upstreamCommits": [
+          "c79b74b68358180c68440057596bdc34a99cc649"
+        ],
+        "evidence": [
+          "evidence/B09-acceptance.json"
         ]
       }
     ],
     "codeCommits": [
       "44dd63fae4f638dab5bfb3bbb5fb97e2077c0823",
       "3ec9f5484f43d15786e1c4bc47b66cca542455aa",
-      "f5bd6e15a6a3a065153d926355e2031330f5a14e"
+      "f5bd6e15a6a3a065153d926355e2031330f5a14e",
+      "58e63ed331fa0f881673b48dc2a6e715b94948c6"
     ],
     "evidence": [
       "evidence/runs/B09-cache-go/result.json",
@@ -1241,9 +1264,20 @@
       "evidence/runs/B09-health-rankings/result.json",
       "evidence/runs/B09-health-types/result.json",
       "evidence/runs/B09-health-lint/result.json",
-      "evidence/runs/B09-health-i18n/result.json"
+      "evidence/runs/B09-health-i18n/result.json",
+      "evidence/B09-acceptance.json",
+      "evidence/runs/B09-acceptance-ui/result.json",
+      "evidence/runs/B09-acceptance-preservation/result.json",
+      "evidence/runs/B09-acceptance-types/result.json",
+      "evidence/runs/B09-acceptance-lint/result.json",
+      "evidence/runs/B09-acceptance-i18n/result.json",
+      "evidence/runs/B09-backend-build/result.json",
+      "evidence/runs/B09-frontend-build/result.json",
+      "evidence/runs/B09-avatar-cleanup-recheck/result.json",
+      "evidence/runs/B09-service-cleanup-recheck/result.json",
+      "evidence/runs/B09-acceptance-go/result.json"
     ],
-    "nextAction": "按已知缓存提交依赖适配 use-system-config 与绑定"
+    "nextAction": "Complete. Continue B10 tiered retry billing pair."
   },
   {
     "id": "B10",

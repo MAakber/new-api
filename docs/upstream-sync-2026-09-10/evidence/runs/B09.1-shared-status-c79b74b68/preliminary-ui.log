@@ -1,0 +1,125 @@
+$ vitest run --config vitest.sync.config.ts
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+stderr | src/routes/__tests__/setup-status.test.tsx > setup status routing > rechecks the current server despite a completed status saved by an earlier page
+Failed to load system config: AssertionError: expected '/api/status' to be '/api/setup' // Object.is equality
+    at Function.<anonymous> (D:/10178/Projects/new-api-upstream-sync/web/src/routes/__tests__/setup-status.test.tsx:60:17)
+    at Function.Mock [as get] (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/spy.DPLvp2J7.js:320:40)
+    at getStatus (D:/10178/Projects/new-api-upstream-sync/web/src/lib/api.ts:73:25)
+    at fetchStatus (D:/10178/Projects/new-api-upstream-sync/web/src/lib/status-query.ts:137:25)
+    at Object.fetchFn [as fn] (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/query.js:241:14)
+    at run (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/retryer.js:78:49)
+    at Object.start (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/retryer.js:120:9)
+    at Query.fetch (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/query.js:291:40)
+    at QueryClient.fetchQuery (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/queryClient.js:189:15)
+    at QueryClient.ensureQueryData (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/queryClient.js:79:19) {
+  actual: '/api/status',
+  expected: '/api/setup',
+  showDiff: true,
+  operator: 'strictEqual'
+}
+
+stderr | src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+[root.beforeLoad] setup status check failed Error: Network unavailable
+    at D:/10178/Projects/new-api-upstream-sync/web/src/routes/__tests__/setup-status.test.tsx:109:7
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:1628:35
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:2783:26
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3319:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3314:10)
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3299:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3257:10)
+    at file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/run.CQOUYP-x.js:3876:64
+
+stderr | src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+Failed to load system config: AssertionError: expected '/api/status' to be '/api/setup' // Object.is equality
+    at Function.<anonymous> (D:/10178/Projects/new-api-upstream-sync/web/src/routes/__tests__/setup-status.test.tsx:60:17)
+    at Function.Mock [as get] (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/spy.DPLvp2J7.js:320:40)
+    at getStatus (D:/10178/Projects/new-api-upstream-sync/web/src/lib/api.ts:73:25)
+    at fetchStatus (D:/10178/Projects/new-api-upstream-sync/web/src/lib/status-query.ts:137:25)
+    at Object.fetchFn [as fn] (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/query.js:241:14)
+    at run (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/retryer.js:78:49)
+    at Object.start (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/retryer.js:120:9)
+    at Query.fetch (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/query.js:291:40)
+    at QueryClient.fetchQuery (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/queryClient.js:189:15)
+    at QueryClient.ensureQueryData (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/queryClient.js:79:19) {
+  actual: '/api/status',
+  expected: '/api/setup',
+  showDiff: true,
+  operator: 'strictEqual'
+}
+
+stderr | src/routes/__tests__/setup-status.test.tsx > setup status routing > reuses a successful check during navigation in the same page
+Failed to load system config: AssertionError: expected '/api/status' to be '/api/setup' // Object.is equality
+    at Function.<anonymous> (D:/10178/Projects/new-api-upstream-sync/web/src/routes/__tests__/setup-status.test.tsx:60:17)
+    at Function.Mock [as get] (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vitest/dist/chunks/spy.DPLvp2J7.js:320:40)
+    at getStatus (D:/10178/Projects/new-api-upstream-sync/web/src/lib/api.ts:73:25)
+    at fetchStatus (D:/10178/Projects/new-api-upstream-sync/web/src/lib/status-query.ts:137:25)
+    at Object.fetchFn [as fn] (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/query.js:241:14)
+    at run (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/retryer.js:78:49)
+    at Object.start (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/retryer.js:120:9)
+    at Query.fetch (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/query.js:291:40)
+    at QueryClient.fetchQuery (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/queryClient.js:189:15)
+    at QueryClient.ensureQueryData (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/@tanstack/query-core/build/modern/queryClient.js:79:19) {
+  actual: '/api/status',
+  expected: '/api/setup',
+  showDiff: true,
+  operator: 'strictEqual'
+}
+
+ ❯ src/routes/__tests__/setup-status.test.tsx (3 tests | 3 failed) 10502ms
+   ❯ setup status routing (3)
+     × rechecks the current server despite a completed status saved by an earlier page 63ms
+     × retries on the next navigation after a failed setup request 20ms
+     × reuses a successful check during navigation in the same page 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx > setup status routing > rechecks the current server despite a completed status saved by an earlier page
+AssertionError: expected "Mock" to be called 1 times, but got 2 times
+ ❯ src/routes/__tests__/setup-status.test.tsx:103:21
+    101|     const { router, request } = await setupRouter([false])
+    102|
+    103|     expect(request).toHaveBeenCalledTimes(1)
+       |                     ^
+    104|     expect(router.state.location.pathname).toBe('/setup')
+    105|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx > setup status routing > retries on the next navigation after a failed setup request
+AssertionError: expected "Mock" to be called 2 times, but got 3 times
+ ❯ src/routes/__tests__/setup-status.test.tsx:114:21
+    112|     await act(() => router.navigate({ to: '/pricing' }))
+    113|
+    114|     expect(request).toHaveBeenCalledTimes(2)
+       |                     ^
+    115|     expect(router.state.location.pathname).toBe('/setup')
+    116|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/routes/__tests__/setup-status.test.tsx > setup status routing > reuses a successful check during navigation in the same page
+AssertionError: expected "Mock" to be called 1 times, but got 2 times
+ ❯ src/routes/__tests__/setup-status.test.tsx:122:21
+    120|     await act(() => router.navigate({ to: '/pricing' }))
+    121|
+    122|     expect(request).toHaveBeenCalledTimes(1)
+       |                     ^
+    123|     expect(router.state.location.pathname).toBe('/pricing')
+    124|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 37 passed (38)
+      Tests  3 failed | 280 passed (283)
+   Start at  09:18:26
+   Duration  34.14s (import 62%, environment 16%, tests 12%, setup 6%, transform 3%)
+
+    Isolate  38 workers spawned · ~2.06s startup each (spawn + environment, per file)
+             at least ~3.15s faster with isolate: false — reuses workers across files instead of one per file
+
+error: script "test:sync" exited with code 1

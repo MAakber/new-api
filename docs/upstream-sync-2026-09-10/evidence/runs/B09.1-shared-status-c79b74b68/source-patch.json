@@ -1,0 +1,6 @@
+{
+  "upstream": "c79b74b68358180c68440057596bdc34a99cc649",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Applied patch to 'web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx' with conflicts.\nApplied patch to 'web/src/features/users/components/dialogs/user-binding-dialog.tsx' cleanly.\nApplied patch to 'web/src/hooks/use-status.ts' cleanly.\nApplied patch to 'web/src/hooks/use-system-config.ts' with conflicts.\nFalling back to direct application...\nApplied patch to 'web/src/lib/nav-modules.ts' cleanly.\nFalling back to direct application...\nApplied patch to 'web/src/main.tsx' cleanly.\nApplied patch to 'web/src/routes/pricing/$modelId/index.tsx' cleanly.\nApplied patch to 'web/src/routes/pricing/index.tsx' cleanly.\nApplied patch to 'web/src/routes/rankings/index.tsx' cleanly.\nU web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx\nU web/src/hooks/use-system-config.ts\n"
+}

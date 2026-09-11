@@ -1,0 +1,19 @@
+{
+  "upstream": "c79b74b68358180c68440057596bdc34a99cc649",
+  "unit": "B09.1-shared-status",
+  "before_head": "9163b8061e08873b3199b6e05ff2bc8b3d6f2e40",
+  "rationale": "Deduplicate status bootstrap, hooks and navigation guards; guards must await fresh access flags. Preserve default-theme normalization, custom currency mappings, downstream binding dialog semantics and account isolation.",
+  "files": [
+    "web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+    "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+    "web/src/hooks/use-status.ts",
+    "web/src/hooks/use-system-config.ts",
+    "web/src/lib/__tests__/status-query.test.tsx",
+    "web/src/lib/nav-modules.ts",
+    "web/src/lib/status-query.ts",
+    "web/src/main.tsx",
+    "web/src/routes/pricing/$modelId/index.tsx",
+    "web/src/routes/pricing/index.tsx",
+    "web/src/routes/rankings/index.tsx"
+  ]
+}

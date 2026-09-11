@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "scope": "B09 local stage acceptance; final candidate gates remain pending",
+  "commit": "58e63ed331fa0f881673b48dc2a6e715b94948c6",
+  "checked_at": "2026-09-11T01:26:00.571Z",
+  "checks": [
+    "evidence/runs/B09-acceptance-ui/result.json",
+    "evidence/runs/B09-acceptance-preservation/result.json",
+    "evidence/runs/B09-acceptance-types/result.json",
+    "evidence/runs/B09-acceptance-lint/result.json",
+    "evidence/runs/B09-acceptance-i18n/result.json",
+    "evidence/runs/B09-backend-build/result.json",
+    "evidence/runs/B09-frontend-build/result.json",
+    "evidence/runs/B09-avatar-cleanup-recheck/result.json",
+    "evidence/runs/B09-service-cleanup-recheck/result.json"
+  ],
+  "partial_run": {
+    "receipt": "evidence/runs/B09-acceptance-go/result.json",
+    "passed_packages": [
+      "common",
+      "controller",
+      "middleware",
+      "router",
+      "pkg/perf_metrics"
+    ],
+    "failure": "Windows TempDir cleanup reported nonempty avatar directory; behavioral assertions passed. The unchanged avatar test and complete service package both passed subsequent checks.",
+    "resolved_by": [
+      "evidence/runs/B09-avatar-cleanup-recheck/result.json",
+      "evidence/runs/B09-service-cleanup-recheck/result.json"
+    ]
+  },
+  "preservation_ids": [
+    "D11",
+    "D14",
+    "D17",
+    "D18",
+    "D19"
+  ],
+  "frontend_tests": 283,
+  "legacy_preservation_tests": 23,
+  "notes": [
+    "All four B09 upstream commits integrated with old cache/session and availability contracts retained.",
+    "Public ETags revalidate across encodings; hintless sessions recover on protected paths.",
+    "Hourly health retains legacy sample fields and weighted totals; scoped group data stays filtered.",
+    "Shared status carries downstream global theme/custom currency; guards wait for stale flags and binding dialogs ignore previous-account responses.",
+    "No production operations or real provider requests."
+  ]
+}

@@ -1540,3 +1540,26 @@
 - Four badge cases and four legacy rankings cases pass; types, touched lint and seven-language text pass.
 - Evidence: evidence/runs/B09-health-go/result.json, evidence/runs/B09-health-ui/result.json, evidence/runs/B09-health-rankings/result.json, evidence/runs/B09-health-types/result.json, evidence/runs/B09-health-lint/result.json, evidence/runs/B09-health-i18n/result.json.
 - Shared status query remains next.
+
+## 2026-09-11T01:13:46.548Z — B09.1-shared-status adaptation begun
+
+- Before HEAD: 9163b8061e08873b3199b6e05ff2bc8b3d6f2e40.
+- Upstream: c79b74b68358180c68440057596bdc34a99cc649.
+- Deduplicate status bootstrap, hooks and navigation guards; guards must await fresh access flags. Preserve default-theme normalization, custom currency mappings, downstream binding dialog semantics and account isolation.
+- Evidence: evidence/runs/B09.1-shared-status-c79b74b68/intent.json.
+
+## 2026-09-11T01:21:08.666Z — B09.1-shared-status adaptation recorded
+
+- Code: 58e63ed331fa0f881673b48dc2a6e715b94948c6.
+- Shared bootstrap, hooks and guard cache with preserved default theme and custom currency mapping. Retained all binding types and confirmation components. Reproduced and fixed slow previous-account response overwrite; adapted setup endpoint fixture to shared status transport. Preliminary targeted checks and types passed.
+- Evidence: evidence/runs/B09.1-shared-status-c79b74b68/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T01:26:00.585Z — B09 acceptance complete
+
+- Code: 58e63ed331fa0f881673b48dc2a6e715b94948c6.
+- All four upstream changes verified; 88/153 upstream rows now have stage acceptance.
+- 283 Vitest cases and 23 legacy theme/session/rankings cases pass. Backend/frontend builds, affected Go packages, types/lint and i18n pass.
+- Initial Go batch retains a Windows avatar temporary-directory cleanup failure; unchanged isolated avatar and full service reruns pass, other packages already passed.
+- Evidence: evidence/B09-acceptance.json.
+- Continue B10 pair df43f801/cfaba1dd. Final candidate gates and production snapshot/provider rehearsals remain pending.

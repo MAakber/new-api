@@ -1,0 +1,509 @@
+ok  	github.com/QuantumNous/new-api/common	2.642s
+ok  	github.com/QuantumNous/new-api/controller	108.969s
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [34;1mD:/10178/Projects/new-api-upstream-sync/service/auth_session_test.go:206
+[0m[35m[warn] [0mremoving callback `test:fail_user_session_limit_count` from D:/10178/Projects/new-api-upstream-sync/service/auth_session_test.go:206
+[SYS] 2026/09/11 - 09:21:36 | failed to delete expired user sessions: forced expired cleanup failure 
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auth_session_test.go:324 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_sessions` WHERE sid = "independent-revoked-cleanup" ORDER BY `user_sessions`.`sid` LIMIT 1
+
+2026/09/11 09:21:36 [34;1mD:/10178/Projects/new-api-upstream-sync/service/auth_session_test.go:317
+[0m[35m[warn] [0mremoving callback `test:fail_first_user_session_cleanup_batch` from D:/10178/Projects/new-api-upstream-sync/service/auth_session_test.go:317
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-a" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-7" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-0" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[1.006ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-1" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.515ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-2" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-3" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-4" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-5" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-6" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-a" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:395 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_security_events` WHERE user_id = 1 AND rule_type = "model_probing" AND subject = "model-b" AND created_at >= 1789089396 ORDER BY created_at DESC, id DESC,`user_security_events`.`id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:232 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_auto_ban_records` WHERE user_id = 1 AND rule_type = "model_probing" AND status = "observed" AND created_at >= 1789089396 ORDER BY id DESC,`user_auto_ban_records`.`id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.504ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.531ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "auto-metadata-model" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `vendors` WHERE name = "auto-vendor" AND `vendors`.`deleted_at` IS NULL ORDER BY `vendors`.`id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:164 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_model_metadata_sync" AND status IN ("succeeded","failed") ORDER BY id DESC,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:152 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_price_sync" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/auto_sync_status.go:164 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "auto_price_sync" AND status IN ("succeeded","failed") ORDER BY id DESC,`system_tasks`.`id` LIMIT 1
+--- FAIL: TestLocalAvatarStorageUsesGeneratedKeysAndAtomicFiles (0.02s)
+    testing.go:1369: TempDir RemoveAll cleanup: unlinkat C:\Users\10178\AppData\Local\Temp\TestLocalAvatarStorageUsesGeneratedKeysAndAtomicFiles3769694416\001\42: The directory is not empty.
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.525ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "channel_custom_balance" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.778ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance.go:76 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_model_metadata_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:36 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mSQL logic error: no such table: channel_auto_sync_cursors (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.enabled" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/service/channel_auto_sync_snapshot.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "auto_price_sync.source_descriptor" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.506ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[1.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 09:21:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_model_metadata_sync" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+[WARN] 2026/09/11 - 09:21:37 | SYSTEM | invalid channel http transport setting clamped: http_protocol+http2_connection_shards="http1+8" 
+[WARN] 2026/09/11 - 09:21:37 | SYSTEM | invalid channel http transport setting clamped: http_protocol="http3" 
+[WARN] 2026/09/11 - 09:21:37 | SYSTEM | invalid channel http transport setting clamped: http2_connection_shards="-3" 
+[WARN] 2026/09/11 - 09:21:37 | SYSTEM | invalid channel http transport setting clamped: http2_connection_shards="99" 
+
+2026/09/11 09:21:38 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "created" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 09:21:38 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:220 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `vendors` WHERE name = "vendor" AND `vendors`.`deleted_at` IS NULL ORDER BY `vendors`.`id` LIMIT 1
+
+2026/09/11 09:21:38 [31;1mD:/10178/Projects/new-api-upstream-sync/service/model_metadata_sync.go:246 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `models` WHERE model_name = "first" AND `models`.`deleted_at` IS NULL ORDER BY `models`.`id` LIMIT 1
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/service/pricing_options.go:61 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "AudioRatio" ORDER BY `options`.`key` LIMIT 1
+[WARN] 2026/09/11 - 09:21:40 | SYSTEM | quota saturation on consume log: op=QuotaFromDecimal kind=overflow original=1.8e+19 clamped=2147483647 user=7 model=gpt-image-1 
+[WARN] 2026/09/11 - 09:21:40 | SYSTEM | quota saturation on consume log: op=QuotaFromFloat kind=underflow original=0 clamped=-2147483648 user=0 model= 
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:102 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_price_guards` WHERE id = 999999 ORDER BY `channel_auto_price_guards`.`id` LIMIT 1
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:60 [35;1mSQL logic error: no such table: channel_auto_price_guards (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `channel_auto_price_guards` SET `state`="used",`updated_at`=1789089700 WHERE id = 1 AND channel_id = 30 AND state = "pending"
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "test_due_handler" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "test_enqueue" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "test_enqueue" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/subscription.go:1511 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_subscriptions` WHERE id = 9999 ORDER BY `user_subscriptions`.`id` LIMIT 1
+[WARN] 2026/09/11 - 09:21:40 | SYSTEM | 退还资金来源失败 task task_092140.976: record not found 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.977 差额结算：delta=＄0.002000 额度（实际：＄0.006000 额度，预扣：＄0.004000 额度，adaptor adjustment） 
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/task.go:422 [35;1mWHERE conditions required
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `tasks` SET `quota`=3000,`updated_at`=1789089700
+[ERR] 2026/09/11 - 09:21:40 | SYSTEM | 差额结算回写 quota 失败 task task_092140.977: WHERE conditions required 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.978 差额结算：delta=＄-0.004000 额度（实际：＄0.006000 额度，预扣：＄0.010000 额度，adaptor adjustment） 
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/task.go:422 [35;1mWHERE conditions required
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `tasks` SET `quota`=3000,`updated_at`=1789089700
+[ERR] 2026/09/11 - 09:21:40 | SYSTEM | 差额结算回写 quota 失败 task task_092140.978: WHERE conditions required 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.980 预扣费准确（＄0.006000 额度，exact match） 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.981 差额结算：delta=＄-0.006000 额度（实际：＄0.004000 额度，预扣：＄0.010000 额度，subscription over-charge） 
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/task.go:422 [35;1mWHERE conditions required
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `tasks` SET `quota`=2000,`updated_at`=1789089700
+[ERR] 2026/09/11 - 09:21:40 | SYSTEM | 差额结算回写 quota 失败 task task_092140.981: WHERE conditions required 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.988 差额结算：delta=＄-0.004000 额度（实际：＄0.006000 额度，预扣：＄0.010000 额度，test settle） 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.992 按次计费，跳过差额结算 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.992 按次计费，跳过差额结算 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | 任务 task_092140.994 差额结算：delta=＄-0.004000 额度（实际：＄0.006000 额度，预扣：＄0.010000 额度，adaptor计费调整） 
+
+2026/09/11 09:21:40 [31;1mD:/10178/Projects/new-api-upstream-sync/model/task.go:422 [35;1mWHERE conditions required
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `tasks` SET `quota`=3000,`updated_at`=1789089700
+[ERR] 2026/09/11 - 09:21:40 | SYSTEM | 差额结算回写 quota 失败 task task_092140.994: WHERE conditions required 
+[INFO] 2026/09/11 - 09:21:40 | SYSTEM | Channel #101 pending video tasks: 2 
+[ERR] 2026/09/11 - 09:21:41 | SYSTEM | Channel #101 failed to update video async tasks: context deadline exceeded 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | Channel #102 pending video tasks: 2 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | Channel #202 pending video tasks: 2 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | Channel #201 pending video tasks: 2 
+[ERR] 2026/09/11 - 09:21:41 | SYSTEM | Channel #202 failed to update video async tasks: context deadline exceeded 
+[ERR] 2026/09/11 - 09:21:41 | SYSTEM | Channel #201 failed to update video async tasks: context deadline exceeded 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | Channel #251 pending video tasks: 1 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | Channel #252 pending video tasks: 2 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | Channel #301 pending video tasks: 2 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | Channel #302 pending video tasks: 2 
+[ERR] 2026/09/11 - 09:21:41 | SYSTEM | Channel #301 failed to update video async tasks: context deadline exceeded 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | 渠道 #401 未完成的任务有: 1 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | suno_public_refund_once 构建失败，upstream failed 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | 渠道 #401 未完成的任务有: 1 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | suno_public_refund_once 构建失败，upstream failed 
+[WARN] 2026/09/11 - 09:21:41 | SYSTEM | Task suno_public_refund_once CAS lost or no-op update, skip billing 
+[SYS] 2026/09/11 - 09:21:41 | 任务进度轮询开始 
+[SYS] 2026/09/11 - 09:21:41 | 任务进度轮询完成 
+[INFO] 2026/09/11 - 09:21:41 | SYSTEM | sweepTimedOutTasks: timed out 2 tasks 
+[SYS] 2026/09/11 - 09:21:41 | quota conversion (QuotaRound) overflow: original=5e+17, clamped=2147483647 
+[SYS] 2026/09/11 - 09:21:41 | tool surcharge call count overflow for custom_fn 
+FAIL
+FAIL	github.com/QuantumNous/new-api/service	7.599s
+ok  	github.com/QuantumNous/new-api/middleware	2.100s
+ok  	github.com/QuantumNous/new-api/router	2.388s
+ok  	github.com/QuantumNous/new-api/pkg/perf_metrics	2.017s
+FAIL

@@ -1,0 +1,41 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/lib/__tests__/status-query.test.tsx (12 tests | 1 failed) 260ms
+   ❯ shared status query deduplication (5)
+     × retains downstream theme and custom currency when shared status refreshes 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/__tests__/status-query.test.tsx > shared status query deduplication > retains downstream theme and custom currency when shared status refreshes
+AssertionError: expected { preset: 'default', …(10) } to match object { mode: 'dark', …(2) }
+(8 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "mode": "dark",
+-   "preset": "anthropic",
+-   "sidebarOpen": false,
++   "mode": "system",
++   "preset": "default",
++   "sidebarOpen": true,
+  }
+
+ ❯ src/lib/__tests__/status-query.test.tsx:104:65
+    102|     apiClient.get = async () => ({ data: { success: true, data: status…
+    103|     await ensureStatus(queryClient)
+    104|     expect(useSystemConfigStore.getState().config.defaultTheme).toMatc…
+       |                                                                 ^
+    105|       mode: 'dark',
+    106|       preset: 'anthropic',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  09:15:29
+   Duration  1.71s (environment 39%, setup 19%, import 17%, tests 16%, transform 8%)
+

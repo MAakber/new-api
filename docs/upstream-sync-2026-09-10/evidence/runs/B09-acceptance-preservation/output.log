@@ -1,0 +1,67 @@
+$ node scripts/test-preservation.mjs theme-customization system-config auth-session rankings
+bun test v1.3.14 (0d9b296a)
+
+src\context\__tests__\theme-customization-provider.test.tsx:
+(pass) ThemeCustomizationProvider DOM attributes > keeps non-baseline global defaults applied after they are saved [14.10ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [224.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\rankings\components\__tests__\availability.test.tsx:
+(pass) rankings availability compatibility > renders models when recent rates are null in a legacy response [21.11ms]
+(pass) rankings availability compatibility > gives the success-rate trend a wider column [2.45ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [2.55s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\rankings\components\__tests__\visibility.test.tsx:
+(pass) rankings security visibility > hides the user IP leaderboard from non-admin viewers [13.77ms]
+(pass) rankings security visibility > shows the user IP leaderboard to administrators [4.64ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [119.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\__tests__\theme-customization.test.ts:
+(pass) custom theme colors > normalizes native color values and rejects values that cannot be safely inlined [0.26ms]
+(pass) custom theme colors > chooses a readable foreground for light and dark custom colors [0.09ms]
+(pass) custom theme colors > applies the selected color to all primary, sidebar, ring, and chart tokens [0.09ms]
+(pass) default theme settings > maps the public API payload to the frontend theme defaults [0.86ms]
+(pass) default theme settings > falls back field by field when the public default is invalid [0.06ms]
+(pass) default theme settings > serializes the active theme for the root option API [0.03ms]
+
+ 6 pass
+ 0 fail
+Ran 6 tests across 1 file. [42.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\lib\auth-session.test.ts:
+(pass) authentication session coordination > bootstrap distinguishes a completed anonymous check from an active session [2.13ms]
+(pass) authentication session coordination > a session mismatch clears only local state and retries without the stale SID [0.36ms]
+(pass) authentication session coordination > a rejected refresh confirms anonymous state and synchronizes sign-out [0.09ms]
+(pass) authentication session coordination > a temporary refresh failure remains retryable without clearing the session [0.09ms]
+(pass) authentication session coordination > a rate limited refresh remains retryable without clearing the session [0.06ms]
+(pass) authentication session coordination > an exhausted refresh race clears the unusable local session [0.09ms]
+(pass) authentication session coordination > an unexpected successful response is treated as out of sync [0.06ms]
+(pass) authentication session coordination > a refresh response cannot restore credentials after a newer auth operation [0.08ms]
+(pass) authentication session coordination > explicit rotations update only the current session [0.78ms]
+(pass) authentication session coordination > sign-out clears user-scoped query, mutation, and authentication state [1.11ms]
+
+ 10 pass
+ 0 fail
+Ran 10 tests across 1 file. [117.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\stores\__tests__\system-config-store.test.ts:
+(pass) system config persistence > restores missing theme defaults when hydrating legacy browser state [0.16ms]
+(pass) system config persistence > fills newly added fields in a partially persisted default theme [0.03ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [47.00ms]
+{"files":6,"passed":6,"failed":[]}

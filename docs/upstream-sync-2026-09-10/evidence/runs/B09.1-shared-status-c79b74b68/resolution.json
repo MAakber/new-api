@@ -1,0 +1,21 @@
+{
+  "upstream": "c79b74b68358180c68440057596bdc34a99cc649",
+  "before_head": "9163b8061e08873b3199b6e05ff2bc8b3d6f2e40",
+  "after_head": "58e63ed331fa0f881673b48dc2a6e715b94948c6",
+  "files": [
+    "web/src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+    "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+    "web/src/hooks/use-status.ts",
+    "web/src/hooks/use-system-config.ts",
+    "web/src/lib/__tests__/status-query.test.tsx",
+    "web/src/lib/nav-modules.ts",
+    "web/src/lib/status-query.ts",
+    "web/src/main.tsx",
+    "web/src/routes/__tests__/setup-status.test.tsx",
+    "web/src/routes/pricing/$modelId/index.tsx",
+    "web/src/routes/pricing/index.tsx",
+    "web/src/routes/rankings/index.tsx",
+    "web/vitest.sync.config.ts"
+  ],
+  "rationale": "Shared bootstrap, hooks and guard cache with preserved default theme and custom currency mapping. Retained all binding types and confirmation components. Reproduced and fixed slow previous-account response overwrite; adapted setup endpoint fixture to shared status transport. Preliminary targeted checks and types passed."
+}

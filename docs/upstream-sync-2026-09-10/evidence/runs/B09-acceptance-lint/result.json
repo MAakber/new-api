@@ -1,0 +1,40 @@
+{
+  "id": "B09-acceptance-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/users/components/dialogs/user-binding-dialog.tsx",
+    "src/lib/status-query.ts",
+    "src/lib/__tests__/status-query.test.tsx",
+    "src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx",
+    "src/hooks/use-system-config.ts",
+    "src/hooks/use-status.ts",
+    "src/lib/nav-modules.ts",
+    "src/main.tsx",
+    "src/routes/pricing/index.tsx",
+    "src/routes/pricing/$modelId/index.tsx",
+    "src/routes/rankings/index.tsx",
+    "src/routes/__tests__/setup-status.test.tsx",
+    "vitest.sync.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "58e63ed331fa0f881673b48dc2a6e715b94948c6",
+  "started_at": "2026-09-11T01:21:11.156Z",
+  "finished_at": "2026-09-11T01:21:12.190Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

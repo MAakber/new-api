@@ -4981,7 +4981,8 @@
       "evidence/runs/B09-cache-go/result.json",
       "evidence/runs/B09-cache-ui/result.json",
       "evidence/runs/B09-cache-types/result.json",
-      "evidence/runs/B09-cache-lint/result.json"
+      "evidence/runs/B09-cache-lint/result.json",
+      "evidence/B09-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -5179,7 +5180,8 @@
       "evidence/runs/B09-cache-go/result.json",
       "evidence/runs/B09-cache-ui/result.json",
       "evidence/runs/B09-cache-types/result.json",
-      "evidence/runs/B09-cache-lint/result.json"
+      "evidence/runs/B09-cache-lint/result.json",
+      "evidence/B09-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -7082,7 +7084,8 @@
       "evidence/runs/B09-health-rankings/result.json",
       "evidence/runs/B09-health-types/result.json",
       "evidence/runs/B09-health-lint/result.json",
-      "evidence/runs/B09-health-i18n/result.json"
+      "evidence/runs/B09-health-i18n/result.json",
+      "evidence/B09-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -8622,12 +8625,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Shared bootstrap, hooks and guard cache with preserved default theme and custom currency mapping. Retained all binding types and confirmation components. Reproduced and fixed slow previous-account response overwrite; adapted setup endpoint fixture to shared status transport. Preliminary targeted checks and types passed.",
+    "resolution_commits": [
+      "58e63ed331fa0f881673b48dc2a6e715b94948c6"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B09.1-shared-status-c79b74b68/resolution.json",
+      "evidence/B09-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

@@ -1,0 +1,31 @@
+{
+  "id": "B09-acceptance-go",
+  "command": [
+    "go",
+    "test",
+    "./common",
+    "./controller",
+    "./service",
+    "./middleware",
+    "./router",
+    "./pkg/perf_metrics",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "58e63ed331fa0f881673b48dc2a6e715b94948c6",
+  "started_at": "2026-09-11T01:21:11.205Z",
+  "finished_at": "2026-09-11T01:23:22.848Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

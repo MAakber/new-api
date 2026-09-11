@@ -1,0 +1,6 @@
+{
+  "files": 19,
+  "checked_keys": 28,
+  "missing": [],
+  "scope": "Literal call sites only; dynamic keys require explicit review."
+}
