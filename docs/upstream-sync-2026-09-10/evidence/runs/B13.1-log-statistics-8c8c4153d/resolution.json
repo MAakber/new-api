@@ -1,0 +1,10 @@
+{
+  "upstream": "8c8c4153d4b80d54352d21593de41aa9a6178f7e",
+  "before_head": "26da34651585cdbbeefca4a1b667e1ab4efdf6dc",
+  "after_head": "5734a77ce356a5a4aa24e55177211f8d4485afc1",
+  "files": [
+    "controller/log_statistics_test.go",
+    "model/log.go"
+  ],
+  "rationale": "Applied separate rate-scan result without changing quota filters or historical-range semantics. Added observable aggregate/filter regressions using the existing isolated database fixture; exercise all engines with B13 acceptance."
+}

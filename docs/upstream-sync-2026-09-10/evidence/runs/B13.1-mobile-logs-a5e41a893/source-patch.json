@@ -1,0 +1,6 @@
+{
+  "upstream": "a5e41a893379e49bd9e1d025e775c04df8961c95",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Falling back to direct application...\nApplied patch to 'web/src/components/data-table/core/pagination.tsx' cleanly.\nApplied patch to 'web/src/components/data-table/layout/data-table-page.tsx' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'web/src/features/usage-logs/components/common-logs-filter-bar.tsx' cleanly.\nApplied patch to 'web/src/features/usage-logs/components/compact-date-time-range-picker.tsx' cleanly.\nApplied patch to 'web/src/features/usage-logs/components/logs-filter-toolbar.tsx' with conflicts.\nApplied patch to 'web/src/features/usage-logs/components/model-badge.tsx' cleanly.\nApplied patch to 'web/src/features/usage-logs/components/timing-metrics-cell.tsx' with conflicts.\nApplied patch to 'web/src/features/usage-logs/components/usage-logs-mobile-card.tsx' with conflicts.\nApplied patch to 'web/src/features/usage-logs/components/usage-logs-table.tsx' cleanly.\nU web/src/features/usage-logs/components/logs-filter-toolbar.tsx\nU web/src/features/usage-logs/components/timing-metrics-cell.tsx\nU web/src/features/usage-logs/components/usage-logs-mobile-card.tsx\n"
+}

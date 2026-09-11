@@ -1,0 +1,9 @@
+{
+  "upstream": "8c8c4153d4b80d54352d21593de41aa9a6178f7e",
+  "unit": "B13.1-log-statistics",
+  "before_head": "26da34651585cdbbeefca4a1b667e1ab4efdf6dc",
+  "rationale": "Keep the quota aggregate separate from the RPM/TPM scan so later scans cannot reset it; preserve downstream filtering and accounting.",
+  "files": [
+    "model/log.go"
+  ]
+}

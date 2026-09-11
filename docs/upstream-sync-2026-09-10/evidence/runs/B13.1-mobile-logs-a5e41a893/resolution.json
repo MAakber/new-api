@@ -1,0 +1,30 @@
+{
+  "upstream": "a5e41a893379e49bd9e1d025e775c04df8961c95",
+  "before_head": "c929983b5af488f2bc4545bc494254be8e4b45c1",
+  "after_head": "88167a74b3c03ad40d36304c013248c3d0be26b2",
+  "files": [
+    "web/src/components/data-table/core/__tests__/pagination.test.tsx",
+    "web/src/components/data-table/core/pagination.tsx",
+    "web/src/components/data-table/layout/data-table-page.tsx",
+    "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/mobile-card.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/mobile-filter.test.tsx",
+    "web/src/features/usage-logs/components/common-log-mobile-card.tsx",
+    "web/src/features/usage-logs/components/common-logs-filter-bar.tsx",
+    "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx",
+    "web/src/features/usage-logs/components/logs-filter-toolbar.tsx",
+    "web/src/features/usage-logs/components/model-badge.tsx",
+    "web/src/features/usage-logs/components/timing-metrics-cell.tsx",
+    "web/src/features/usage-logs/components/usage-logs-mobile-card.tsx",
+    "web/src/features/usage-logs/components/usage-logs-table.tsx",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json",
+    "web/vitest.logs-quota.config.ts"
+  ],
+  "rationale": "Integrated compact common-log cards, touch inspection, quick actions and pagination. Preserved authenticated avatars and sensitive masking, downstream task/drawing card layouts, and actual async timing labels. Retained native MediaQueryList methods in imported fixtures. Node preservation suites stay isolated; stage checks follow."
+}

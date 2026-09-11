@@ -1,0 +1,20 @@
+{
+  "conflicts": [
+    {
+      "file": "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+      "ours": "import {\n  REDEMPTION_CODE_TYPE,\n  REDEMPTION_REWARD_TYPE,\n  type Redemption,\n} from '../types'\n",
+      "incoming": "import type { Redemption } from '../types'\n"
+    },
+    {
+      "file": "web/src/features/users/components/users-columns.tsx",
+      "ours": "import { AuthenticatedAvatarImage } from '@/components/authenticated-avatar-image'\n",
+      "incoming": "import { ActivityTimeCell } from '@/components/activity-time-cell'\n"
+    },
+    {
+      "file": "web/src/features/users/components/users-columns.tsx",
+      "ours": "          <div className='flex min-w-[160px] items-center gap-2'>\n            <Avatar\n              aria-hidden='true'\n              className='ring-border/60 size-7 shrink-0 ring-1'\n            >\n              <AuthenticatedAvatarImage\n                avatarUrl={`/api/user/${row.original.id}/avatar`}\n                alt=''\n              />\n              <AvatarFallback\n                className='text-xs font-semibold text-white'\n                style={getUserAvatarStyle(avatarName)}\n              >\n                {getUserAvatarFallback(avatarName)}\n              </AvatarFallback>\n            </Avatar>\n            <div className='flex min-w-0 flex-1 flex-col gap-1'>\n              <div className='flex min-w-0 items-center gap-2'>\n                <LongText className='max-w-[140px] min-w-0 font-medium'>\n                  {username}\n                </LongText>\n                {remark && (\n                  <Tooltip>\n                    <TooltipTrigger\n                      render={\n                        <StatusBadge variant='success' copyable={false} />\n                      }\n                    >\n                      <LongText className='max-w-[80px]'>{remark}</LongText>\n                    </TooltipTrigger>\n                    <TooltipContent>\n                      <p className='text-xs'>{remark}</p>\n                    </TooltipContent>\n                  </Tooltip>\n                )}\n              </div>\n              {displayName && displayName !== username && (\n                <LongText className='text-muted-foreground max-w-[180px] text-xs'>\n                  {displayName}\n                </LongText>\n              )}\n            </div>\n",
+      "incoming": "          <div className='flex min-w-[160px] flex-col gap-1'>\n            <div className='flex items-center gap-2'>\n              <LongText className='max-w-[140px] text-sm font-normal'>\n                {username}\n              </LongText>\n              {remark && (\n                <Tooltip>\n                  <TooltipTrigger\n                    render={\n                      <StatusBadge\n                        variant='success'\n                        copyable={false}\n                        className='font-normal'\n                      />\n                    }\n                  >\n                    <LongText className='max-w-[80px]'>{remark}</LongText>\n                  </TooltipTrigger>\n                  <TooltipContent>\n                    <p className='text-xs'>{remark}</p>\n                  </TooltipContent>\n                </Tooltip>\n              )}\n            </div>\n            {displayName && displayName !== username && (\n              <div\n                data-table-text='secondary'\n                className='text-muted-foreground max-w-[180px] text-xs font-normal'\n              >\n                <LongText>{displayName}</LongText>\n              </div>\n            )}\n"
+    }
+  ],
+  "resolution": "Preserve downstream registration/subscription column imports and authenticated avatars. Apply shared activity/quota components and secondary-text styling within the avatar row."
+}

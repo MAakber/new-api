@@ -1,0 +1,25 @@
+{
+  "upstream": "ea7cb0ba4e0f82e2bfa5e55752eb68bdf902f71b",
+  "unit": "B13.1-shared-quota-cells",
+  "before_head": "8c1f04496ff653a84682c8ae8b309243abb1f7af",
+  "rationale": "Unify existing activity, quota and masked-value table presentations. Preserve existing copy/reveal guards, avatars and downstream redemption columns; reuse shared popovers and table styling.",
+  "files": [
+    "web/src/components/activity-time-cell.tsx",
+    "web/src/components/data-table/core/data-table-view.tsx",
+    "web/src/components/group-badge.tsx",
+    "web/src/components/masked-value-display.tsx",
+    "web/src/components/quota-details-popover.tsx",
+    "web/src/components/ui/table.tsx",
+    "web/src/features/keys/components/__tests__/api-key-group-cell.test.tsx",
+    "web/src/features/keys/components/__tests__/api-key-group-combobox.test.tsx",
+    "web/src/features/keys/components/__tests__/api-key-listing.test.tsx",
+    "web/src/features/keys/components/api-key-quota-cell.tsx",
+    "web/src/features/keys/components/api-key-timestamp-cell.tsx",
+    "web/src/features/keys/components/api-keys-cells.tsx",
+    "web/src/features/redemption-codes/components/redemptions-columns.tsx",
+    "web/src/features/users/components/__tests__/quota-display.test.tsx",
+    "web/src/features/users/components/user-quota-cell.tsx",
+    "web/src/features/users/components/users-columns.tsx",
+    "web/src/features/users/components/users-table.tsx"
+  ]
+}

@@ -1,0 +1,4 @@
+src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx:177:7: error typescript(no-non-null-assertion): Forbidden non-null assertion.
+src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx:203:5: error typescript(no-non-null-assertion): Forbidden non-null assertion.
+src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx:245:5: error typescript(no-non-null-assertion): Forbidden non-null assertion.
+src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx:225:20: error typescript(no-non-null-assertion): Forbidden non-null assertion.

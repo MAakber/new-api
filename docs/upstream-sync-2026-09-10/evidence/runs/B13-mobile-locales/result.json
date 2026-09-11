@@ -1,0 +1,24 @@
+{
+  "id": "B13-mobile-locales",
+  "command": [
+    "node",
+    "scripts/add-missing-keys.mjs"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "c929983b5af488f2bc4545bc494254be8e4b45c1",
+  "started_at": "2026-09-11T06:59:01.297Z",
+  "finished_at": "2026-09-11T06:59:01.435Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

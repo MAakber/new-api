@@ -1,0 +1,28 @@
+{
+  "upstream": "a5e41a893379e49bd9e1d025e775c04df8961c95",
+  "unit": "B13.1-mobile-logs",
+  "before_head": "c929983b5af488f2bc4545bc494254be8e4b45c1",
+  "rationale": "Integrate shared mobile log cards and visible quick actions while preserving avatars, private diagnostics, model classification and role-scoped log views.",
+  "files": [
+    "web/src/components/data-table/core/__tests__/pagination.test.tsx",
+    "web/src/components/data-table/core/pagination.tsx",
+    "web/src/components/data-table/layout/data-table-page.tsx",
+    "web/src/features/usage-logs/components/__tests__/mobile-card.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/mobile-filter.test.tsx",
+    "web/src/features/usage-logs/components/common-log-mobile-card.tsx",
+    "web/src/features/usage-logs/components/common-logs-filter-bar.tsx",
+    "web/src/features/usage-logs/components/compact-date-time-range-picker.tsx",
+    "web/src/features/usage-logs/components/logs-filter-toolbar.tsx",
+    "web/src/features/usage-logs/components/model-badge.tsx",
+    "web/src/features/usage-logs/components/timing-metrics-cell.tsx",
+    "web/src/features/usage-logs/components/usage-logs-mobile-card.tsx",
+    "web/src/features/usage-logs/components/usage-logs-table.tsx",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ]
+}

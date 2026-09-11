@@ -1,0 +1,26 @@
+{
+  "id": "B13-date-layout-fix",
+  "command": [
+    "bun",
+    "run",
+    "test:preservation",
+    "date-range-picker-layout"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "c473175bbcf815e9fee7d0ec9760ccced0373895",
+  "started_at": "2026-09-11T07:22:03.722Z",
+  "finished_at": "2026-09-11T07:22:06.404Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

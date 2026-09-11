@@ -1,0 +1,12 @@
+{
+  "upstream": "84834eee859fd69ed6b8ab3c848f86f1ff98b992",
+  "before_head": "6565ff26505fea758e390e3031c1680888328bd8",
+  "after_head": "26da34651585cdbbeefca4a1b667e1ab4efdf6dc",
+  "files": [
+    "model/log_format_test.go",
+    "model/log_other.go",
+    "web/src/features/usage-logs/components/__tests__/reject-reason.test.tsx",
+    "web/src/features/usage-logs/components/dialogs/details-dialog.tsx"
+  ],
+  "rationale": "Expose typed stream status, known end reasons and nonnegative error count to owners. Keep raw end_error, error arrays, private diagnostics and arbitrary legacy values admin-only. Added role projection and UI regressions; consolidated B13 checks follow."
+}

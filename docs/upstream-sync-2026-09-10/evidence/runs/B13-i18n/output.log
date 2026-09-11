@@ -1,0 +1,20 @@
+{
+  "files": 41,
+  "checked_keys": 410,
+  "missing": [
+    {
+      "file": "web/src/features/usage-logs/components/timing-metrics-cell.tsx",
+      "key": "Async",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    }
+  ],
+  "scope": "Literal call sites only; dynamic keys require explicit review."
+}

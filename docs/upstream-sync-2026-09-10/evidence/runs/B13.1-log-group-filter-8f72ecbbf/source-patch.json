@@ -1,0 +1,9 @@
+{
+  "upstream": "8f72ecbbfd86ded5ee15373921533eed3d334a9a",
+  "excluded": [
+    "web/src/components/ui/combobox.tsx",
+    "web/src/components/ui/combobox-input.tsx"
+  ],
+  "exit_code": 0,
+  "output": "Falling back to direct application...\nApplied patch to 'web/src/features/usage-logs/components/__tests__/log-type-filter.test.tsx' cleanly.\nApplied patch to 'web/src/features/usage-logs/components/common-logs-filter-bar.tsx' cleanly.\n"
+}

@@ -1,0 +1,11 @@
+{
+  "upstream": "950644c9d54445bdd8796643e4e2e18e13167a4c",
+  "unit": "B13.1-quota-spacing",
+  "before_head": "d05c1e39cb3ca4fdc1d9781a810a3695f551c900",
+  "rationale": "Apply reviewed desktop-only quota layout changes; preserve mobile labels, exact values, privacy and actions. Validate together with the shared quota-cell follow-up.",
+  "files": [
+    "web/src/features/keys/components/__tests__/api-key-listing.test.tsx",
+    "web/src/features/keys/components/api-key-quota-cell.tsx",
+    "web/src/features/keys/components/api-keys-table.tsx"
+  ]
+}

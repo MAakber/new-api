@@ -1,0 +1,26 @@
+{
+  "id": "B13-lint",
+  "command": [
+    "node",
+    "docs/upstream-sync-2026-09-10/check-web-changes.mjs",
+    "lint",
+    "2270b2fb53707e34dce87cc7bd67ca704949f938"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "23a8b8fcf991bdf0023f0513de9bca08308b16f6",
+  "started_at": "2026-09-11T07:15:08.264Z",
+  "finished_at": "2026-09-11T07:15:12.594Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

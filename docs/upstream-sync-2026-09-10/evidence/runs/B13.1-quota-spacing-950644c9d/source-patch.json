@@ -1,0 +1,6 @@
+{
+  "upstream": "950644c9d54445bdd8796643e4e2e18e13167a4c",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/features/keys/components/__tests__/api-key-listing.test.tsx' cleanly.\nApplied patch to 'web/src/features/keys/components/api-key-quota-cell.tsx' cleanly.\nApplied patch to 'web/src/features/keys/components/api-keys-table.tsx' cleanly.\n"
+}

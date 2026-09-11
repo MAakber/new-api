@@ -1,0 +1,89 @@
+=== RUN   TestLogStatisticsDatabaseMatrix
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql
+    log_statistics_test.go:19: isolated database: newapi_audit_1789110949959648100 (mysql)
+[SYS] 2026/09/11 - 15:15:50 | using MySQL as database 
+    log_statistics_test.go:19: database version: 11.4.4-MariaDB-ubu2404
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql/quota_survives_rate_scan
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql/historical_quota_keeps_current_rates
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql/no_matching_owner
+=== RUN   TestLogStatisticsDatabaseMatrix/postgres
+
+2026/09/11 15:15:51 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[479.018ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789110950804523700[0m
+    log_statistics_test.go:19: isolated database: newapi_audit_1789110950804523700 (postgres)
+[SYS] 2026/09/11 - 15:15:51 | using PostgreSQL as database 
+    log_statistics_test.go:19: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+=== RUN   TestLogStatisticsDatabaseMatrix/postgres/quota_survives_rate_scan
+=== RUN   TestLogStatisticsDatabaseMatrix/postgres/historical_quota_keeps_current_rates
+=== RUN   TestLogStatisticsDatabaseMatrix/postgres/no_matching_owner
+--- PASS: TestLogStatisticsDatabaseMatrix (1.67s)
+    --- PASS: TestLogStatisticsDatabaseMatrix/mysql (0.84s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/mysql/quota_survives_rate_scan (0.06s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/mysql/historical_quota_keeps_current_rates (0.00s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/mysql/no_matching_owner (0.00s)
+    --- PASS: TestLogStatisticsDatabaseMatrix/postgres (0.82s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/postgres/quota_survives_rate_scan (0.00s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/postgres/historical_quota_keeps_current_rates (0.00s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/postgres/no_matching_owner (0.00s)
+=== RUN   TestDeleteRedemptionBatch
+=== RUN   TestDeleteRedemptionBatch/mysql
+    redemption_batch_test.go:44: isolated database: newapi_audit_1789110951627091400 (mysql)
+    redemption_batch_test.go:45: isolated database: newapi_audit_1789110951635117800 (mysql)
+    redemption_batch_test.go:55: database version: 11.4.4-MariaDB-ubu2404
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/redemption/batch     --> github.com/QuantumNous/new-api/controller.DeleteRedemptionBatch (3 handlers)
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":null}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[0]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,-1]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":["1"]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,1,1,1,1,1,1,1,1,1,1,
+=== RUN   TestDeleteRedemptionBatch/postgres
+
+2026/09/11 15:15:55 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[419.436ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789110954590975200[0m
+    redemption_batch_test.go:44: isolated database: newapi_audit_1789110954590975200 (postgres)
+
+2026/09/11 15:15:55 [32mD:/10178/Projects/new-api-upstream-sync/controller/access_token_audit_test.go:483 [33mSLOW SQL >= 200ms
+[0m[31;1m[415.124ms] [33m[rows:0][35m CREATE DATABASE newapi_audit_1789110955022568100[0m
+    redemption_batch_test.go:45: isolated database: newapi_audit_1789110955022568100 (postgres)
+    redemption_batch_test.go:55: database version: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/redemption/batch     --> github.com/QuantumNous/new-api/controller.DeleteRedemptionBatch (3 handlers)
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{}
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{"ids":[]}
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{"ids":null}
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{"ids":[0]}
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{"ids":[1,-1]}
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{"ids":["1"]}
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{
+=== RUN   TestDeleteRedemptionBatch/postgres/invalid_{"ids":[1,1,1,1,1,1,1,1,1,1,1,
+--- PASS: TestDeleteRedemptionBatch (4.13s)
+    --- PASS: TestDeleteRedemptionBatch/mysql (2.96s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[]} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":null} (0.22s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[0]} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,-1]} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":["1"]} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{ (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,1,1,1,1,1,1,1,1,1,1, (0.20s)
+    --- PASS: TestDeleteRedemptionBatch/postgres (1.16s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{} (0.01s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{"ids":[]} (0.01s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{"ids":null} (0.01s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{"ids":[0]} (0.01s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{"ids":[1,-1]} (0.01s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{"ids":["1"]} (0.01s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{ (0.01s)
+        --- PASS: TestDeleteRedemptionBatch/postgres/invalid_{"ids":[1,1,1,1,1,1,1,1,1,1,1, (0.01s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	6.649s

@@ -1,0 +1,215 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/usage-logs/audit/__tests__/viewer.test.tsx (31 tests | 30 failed) 721ms
+   × shows the target and business outcome for generic directly in the event cell 58ms
+   × shows the target and business outcome for user.quota_add directly in the event cell 10ms
+   × shows the target and business outcome for user.quota_subtract directly in the event cell 9ms
+   × shows the target and business outcome for user.quota_override directly in the event cell 9ms
+   × shows the target and business outcome for token.create directly in the event cell 17ms
+   × shows the target and business outcome for token.update directly in the event cell 10ms
+   × shows the target and business outcome for token.status_update directly in the event cell 9ms
+   × shows the target and business outcome for token.delete directly in the event cell 13ms
+   × shows the target and business outcome for token.key_view directly in the event cell 10ms
+   × shows the target and business outcome for token.delete_batch directly in the event cell 9ms
+   × shows the target and business outcome for token.key_view_batch directly in the event cell 13ms
+   × keeps the ID outside long-name truncation and shows complete details (mobile=false) 10ms
+   × uses the shared log toolbar and opens details in a keyboard-accessible dialog without expanding the row 12ms
+   × renders existing channel status audit records in en 13ms
+   × renders existing channel status audit records in zh 12ms
+   × renders existing channel status audit records in zh-TW 19ms
+   × renders existing channel status audit records in fr 12ms
+   × renders existing channel status audit records in ja 12ms
+   × renders existing channel status audit records in ru 16ms
+   × renders existing channel status audit records in vi 11ms
+   × filters own access history by result, generation and time and resets pagination 9ms
+   × a failed history query exposes retry and no empty history claim 9ms
+   × administrator scope uses the admin endpoint and exposes the username filter 13ms
+   × changing rows per page resets pagination and sends the selected page size 9ms
+   × role 10 defaults to all audit records and can switch both ways 15ms
+   × role 100 defaults to all audit records and can switch both ways 16ms
+   × role 1 without an audit grant queries only its own records without scope tabs 11ms
+   × role 10 without an audit grant queries only its own records without scope tabs 10ms
+   × clears global records and open details on revocation, falls back to self, and refreshes permissions 13ms
+   × mobile access history keeps pagination visible and puts result filters in a drawer 133ms
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 30 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for generic directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for user.quota_add directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for user.quota_subtract directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for user.quota_override directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for token.create directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for token.update directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for token.status_update directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for token.delete directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for token.key_view directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for token.delete_batch directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > shows the target and business outcome for token.key_view_batch directly in the event cell
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > keeps the ID outside long-name truncation and shows complete details (mobile=false)
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > uses the shared log toolbar and opens details in a keyboard-accessible dialog without expanding the row
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > renders existing channel status audit records in en
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > renders existing channel status audit records in zh
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > renders existing channel status audit records in zh-TW
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > renders existing channel status audit records in fr
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > renders existing channel status audit records in ja
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > renders existing channel status audit records in ru
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > renders existing channel status audit records in vi
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > filters own access history by result, generation and time and resets pagination
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > a failed history query exposes retry and no empty history claim
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > administrator scope uses the admin endpoint and exposes the username filter
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > changing rows per page resets pagination and sends the selected page size
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > role 10 defaults to all audit records and can switch both ways
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > role 100 defaults to all audit records and can switch both ways
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > role 1 without an audit grant queries only its own records without scope tabs
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > role 10 without an audit grant queries only its own records without scope tabs
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > clears global records and open details on revocation, falls back to self, and refreshes permissions
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > mobile access history keeps pagination visible and puts result filters in a drawer
+Error: Base UI: <Combobox.Portal> is missing.
+ ❯ useComboboxPortalContext node_modules/@base-ui/react/combobox/portal/ComboboxPortalContext.mjs:10:11
+ ❯ ComboboxPositioner node_modules/@base-ui/react/combobox/positioner/ComboboxPositioner.mjs:49:23
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:20
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:22
+ ❯ updateForwardRef node_modules/react-dom/cjs/react-dom-client.development.js:9724:19
+ ❯ beginWork node_modules/react-dom/cjs/react-dom-client.development.js:12117:18
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:22
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:41
+ ❯ renderRootSync node_modules/react-dom/cjs/react-dom-client.development.js:17450:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/30]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  30 failed | 57 passed (87)
+   Start at  15:22:04
+   Duration  41.93s (import 66%, transform 12%, environment 11%, tests 8%, setup 3%)
+

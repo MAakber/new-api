@@ -1,0 +1,10 @@
+{
+  "upstream": "84834eee859fd69ed6b8ab3c848f86f1ff98b992",
+  "unit": "B13.1-stream-status",
+  "before_head": "6565ff26505fea758e390e3031c1680888328bd8",
+  "rationale": "Expose safe stream outcome fields to log owners while retaining raw transport diagnostics for administrators under downstream visibility rules.",
+  "files": [
+    "model/log.go",
+    "web/src/features/usage-logs/components/dialogs/details-dialog.tsx"
+  ]
+}

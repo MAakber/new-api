@@ -1,0 +1,133 @@
+$ node scripts/test-preservation.mjs redemption-codes usage-logs features/keys components/data-table components/ui
+bun test v1.3.14 (0d9b296a)
+
+src\components\ui\__tests__\input-number.test.tsx:
+(pass) number input controls > increments, decrements, and preserves an empty draft [171.59ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [1006.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\components\ui\dropdown-menu.test.tsx:
+(pass) DropdownMenuItem onSelect compatibility > calls the Radix-style onSelect handler on item click [0.20ms]
+(pass) DropdownMenuItem onSelect compatibility > keeps the Base UI menu open when onSelect prevents default [0.38ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [198.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\keys\components\__tests__\api-keys-mutate-drawer.test.tsx:
+(pass) API keys mutate drawer Auto group integration > inherits the root Auto order and sends an empty override for every batch-created key [235.30ms]
+(pass) API keys mutate drawer Auto group integration > preserves an unsaved custom order and mode after Auto to ordinary to Auto changes [384.98ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [3.77s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\keys\lib\__tests__\auto-group-form.test.ts:
+(pass) API key Auto group form mapping > treats legacy token responses without auto_groups as inheritance [1.81ms]
+(pass) API key Auto group form mapping > creates an Auto token that inherits the global order [0.14ms]
+(pass) API key Auto group form mapping > maps omitted, null, and empty snapshots to inheritance on edit [0.13ms]
+(pass) API key Auto group form mapping > filters a stored snapshot before applying a lowered limit [0.03ms]
+(pass) API key Auto group form mapping > keeps a fully filtered snapshot custom and rejects it until resolved [2.37ms]
+(pass) API key Auto group form mapping > submits a valid custom snapshot in its configured order [0.03ms]
+(pass) API key Auto group form mapping > submits an empty array for inheritance and for non-Auto groups [0.02ms]
+(pass) API key Auto group form mapping > rejects snapshots over the configured limit [0.66ms]
+(pass) API key Auto group form mapping > rejects duplicate custom groups [0.54ms]
+
+ 9 pass
+ 0 fail
+Ran 9 tests across 1 file. [87.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\redemption-codes\lib\__tests__\status.test.ts:
+(pass) redemption status presentation > presents used codes as neutral invalid codes [0.25ms]
+
+ 1 pass
+ 0 fail
+Ran 1 test across 1 file. [64.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\components\__tests__\cost-display.test.tsx:
+(pass) log cost display > keeps the regular cost visible and adds an accessible surcharge marker [32.41ms]
+(pass) log cost display > preserves the subscription badge and adds the same legacy surcharge marker [4.83ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [714.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\components\__tests__\date-range-picker-layout.test.tsx:
+135 |       'This month',
+136 |     ])
+137 |     const presetButtons = [...popover.querySelectorAll('button')].filter(
+138 |       (button) => presetLabels.has(button.textContent ?? '')
+139 |     )
+140 |     assert.equal(presetButtons.length, 5)
+                 ^
+AssertionError: Expected values to be strictly equal:
+
+4 !== 5
+
+ generatedMessage: true,
+     actual: 4,
+   expected: 5,
+   operator: "strictEqual",
+       code: "ERR_ASSERTION"
+
+      at D:\10178\Projects\new-api-upstream-sync\web\src\features\usage-logs\components\__tests__\date-range-picker-layout.test.tsx:140:12
+      at processTicksAndRejections (native:7:39)
+(fail) usage log date range picker layout > keeps the trigger and custom calendar controls usable at narrow widths [221.41ms]
+195 |       (button) => button.textContent === 'Confirm'
+196 |     )
+197 |     assert.ok(confirmButton)
+198 |     await act(async () => confirmButton.click())
+199 | 
+200 |     assert.equal(changes.length, 1)
+                 ^
+AssertionError: Expected values to be strictly equal:
+
+0 !== 1
+
+ generatedMessage: true,
+     actual: 0,
+   expected: 1,
+   operator: "strictEqual",
+       code: "ERR_ASSERTION"
+
+      at D:\10178\Projects\new-api-upstream-sync\web\src\features\usage-logs\components\__tests__\date-range-picker-layout.test.tsx:200:12
+      at processTicksAndRejections (native:7:39)
+(fail) usage log date range picker layout > applies a changed time only after confirming the draft range [194.22ms]
+
+ 0 pass
+ 2 fail
+Ran 2 tests across 1 file. [1375.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\components\__tests__\user-avatar-visibility.test.tsx:
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+(pass) usage log user avatar visibility > requests visible user avatars and preserves the fallback when loading fails [79.03ms]
+(pass) usage log user avatar visibility > does not request avatars and keeps anonymous fallbacks when sensitive details are hidden [7.14ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [4.04s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\lib\__tests__\tool-surcharge.test.ts:
+(pass) tool surcharge detection > shows the marker for a charged structured tool surcharge [0.17ms]
+(pass) tool surcharge detection > keeps the marker visible for legacy Web Search charges [0.03ms]
+(pass) tool surcharge detection > keeps the marker visible for legacy File Search charges
+(pass) tool surcharge detection > keeps the marker visible for legacy Image Generation charges
+(pass) tool surcharge detection > hides the marker when surcharge entries are empty or not chargeable [0.04ms]
+
+ 5 pass
+ 0 fail
+Ran 5 tests across 1 file. [71.00ms]
+{"files":9,"passed":8,"failed":["src/features/usage-logs/components/__tests__/date-range-picker-layout.test.tsx"]}
+error: script "test:preservation" exited with code 1

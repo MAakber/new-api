@@ -1,0 +1,1495 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+ ❯ src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx (9 tests | 3 failed) 4052ms
+   × keeps exact quota and downstream fields when renaming a quota redemption 1094ms
+   × recalculates quota only when the amount is edited 1099ms
+   × ignores the older request when switching records 1137ms
+ ❯ src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx (11 tests | 1 failed) 5089ms
+   × successful batch creation opens export with returned codes and the configured currency 1281ms
+stderr | src/features/usage-logs/components/__tests__/mobile-filter.test.tsx > applies mobile drawer filters only when Search is pressed
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at onRelease (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1228:29)
+    at onPointerUp (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1520:13)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+    at dispatchEvent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:23585:11)
+
+stderr | src/features/usage-logs/components/__tests__/mobile-filter.test.tsx > applies mobile drawer filters only when Search is pressed
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at onRelease (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1228:29)
+    at onPointerUp (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1520:13)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+    at dispatchEvent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:23585:11)
+
+ ❯ src/features/usage-logs/components/__tests__/mobile-filter.test.tsx (7 tests | 2 failed) 4006ms
+   × applies the selected mobile date range directly and resets pagination while retaining filters 1619ms
+   × applies mobile drawer filters only when Search is pressed 1667ms
+stderr | src/features/usage-logs/components/__tests__/group-filter.test.tsx > lets mobile users select a long group name inside the filter drawer and submit it
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at onRelease (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1228:29)
+    at onPointerUp (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1520:13)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+    at dispatchEvent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:23585:11)
+
+stderr | src/features/usage-logs/components/__tests__/group-filter.test.tsx > lets mobile users select a long group name inside the filter drawer and submit it
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at shouldDrag (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:975:49)
+    at onDrag (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1056:46)
+    at onPointerMove (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1511:35)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+
+stderr | src/features/usage-logs/components/__tests__/group-filter.test.tsx > lets mobile users select a long group name inside the filter drawer and submit it
+TypeError: Cannot read properties of undefined (reading 'match')
+    at getTranslate (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:404:25)
+    at onRelease (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1228:29)
+    at onPointerUp (file:///D:/10178/Projects/new-api-upstream-sync/web/node_modules/vaul/dist/index.mjs:1520:13)
+    at executeDispatch (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19116:9)
+    at runWithFiberInDEV (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at processDispatchQueue (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19166:19)
+    at D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19767:9
+    at batchedUpdates$1 (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:3255:40)
+    at dispatchEventForPluginEventSystem (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:19320:7)
+    at dispatchEvent (D:\10178\Projects\new-api-upstream-sync\web\node_modules\react-dom\cjs\react-dom-client.development.js:23585:11)
+
+ ❯ src/features/usage-logs/components/__tests__/group-filter.test.tsx (12 tests | 1 failed) 4932ms
+   × lets mobile users select a long group name inside the filter drawer and submit it 1370ms
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx > mobile access history keeps pagination visible and puts result filters in a drawer
+Base UI: A component that acts as a button expected a non-<button> because the `nativeButton` prop is false. Rendering a <button> keeps native behavior while Base UI applies non-native attributes and handlers, which can add unintended extra attributes (such as `role` or `aria-disabled`). Use a non-<button> in the `render` prop, or set `nativeButton` to `true`.
+    at AuditLogViewer (D:/10178/Projects/new-api-upstream-sync/web/src/features/usage-logs/audit/components/audit-log-viewer.tsx:130:55)
+
+stderr | src/features/usage-logs/audit/__tests__/viewer.test.tsx
+Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
+
+ ❯ src/features/usage-logs/audit/__tests__/viewer.test.tsx (31 tests | 1 failed) 6832ms
+   × mobile access history keeps pagination visible and puts result filters in a drawer 219ms
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1139:18)
+    at afterConnectMultiple (node:net:1714:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3000
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3000
+        at createConnectionError (node:net:1677:14)
+        at afterConnectMultiple (node:net:1707:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3000
+    }
+  ]
+}
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx > successful batch creation opens export with returned codes and the configured currency
+TestingLibraryElementError: Unable to find role="dialog" and name "Redemption codes created"
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m"overflow-y: hidden; overflow-x: hidden;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33maria-hidden[39m=[32m"true"[39m
+    [33mdata-base-ui-inert[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mdata-base-ui-portal[39m=[32m""[39m
+    [33mdata-slot[39m=[32m"sheet-portal"[39m
+    [33mid[39m=[32m"_r_5u_"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"position: fixed; user-select: none;"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"fixed inset-0 z-50 bg-black/10 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs"[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+      [33mdata-open[39m=[32m""[39m
+      [33mdata-slot[39m=[32m"sheet-overlay"[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"user-select: none;"[39m
+    [36m/>[39m
+    [36m<span[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-base-ui-focus-guard[39m=[32m""[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+      [33mdata-type[39m=[32m"inside"[39m
+      [33mstyle[39m=[32m"clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33maria-describedby[39m=[32m"base-ui-_r_60_"[39m
+      [33maria-labelledby[39m=[32m"base-ui-_r_5v_"[39m
+      [33mclass[39m=[32m"fixed z-50 bg-clip-padding text-sm transition duration-200 ease-in-out data-ending-style:opacity-0 data-starting-style:opacity-0 inset-y-0 right-0 border-l data-ending-style:translate-x-[2.5rem] data-starting-style:translate-x-[2.5rem] bg-background text-foreground flex h-dvh w-full flex-col gap-0 overflow-hidden p-0 shadow-none sm:max-w-[600px]"[39m
+      [33mdata-base-ui-focusable[39m=[32m""[39m
+      [33mdata-open[39m=[32m""[39m
+      [33mdata-side[39m=[32m"right"[39m
+      [33mdata-slot[39m=[32m"sheet-content"[39m
+      [33mid[39m=[32m"_r_5t_"[39m
+      [33mrole[39m=[32m"dialog"[39m
+      [33mstyle[39m=[32m"--nested-dialogs: 0;"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-0.5 p-4 border-border/70 bg-background/95 border-b px-4 py-3 text-start backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:px-6 sm:py-4"[39m
+        [33mdata-slot[39m=[32m"sheet-header"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-foreground text-base font-medium"[39m
+          [33mdata-slot[39m=[32m"sheet-title"[39m
+          [33mid[39m=[32m"base-ui-_r_5v_"[39m
+        [36m>[39m
+          [0mCreate Redemption Code[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+          [33mdata-slot[39m=[32m"sheet-description"[39m
+          [33mid[39m=[32m"base-ui-_r_60_"[39m
+        [36m>[39m
+          [0mAdd new redemption code(s) by providing necessary info.[0m
+          [0m [0m
+          [0mClick save when you&apos;re done.[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<form[39m
+        [33maria-busy[39m=[32m"false"[39m
+        [33mclass[39m=[32m"flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5"[39m
+        [33mid[39m=[32m"redemption-form"[39m
+      [36m>[39m
+        [36m<fieldset[39m
+          [33mclass[39m=[32m"contents"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33mclass[39m=[32m"border-border/60 flex flex-col gap-4 border-b pb-6 last:border-b-0 last:pb-0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid gap-2"[39m
+              [33mdata-form-root[39m=[32m"form-_r_61_"[39m
+              [33mdata-slot[39m=[32m"form-item"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 data-[error=true]:text-destructive"[39m
+                [33mdata-error[39m=[32m"false"[39m
+                [33mdata-slot[39m=[32m"form-label"[39m
+                [33mfor[39m=[32m"_r_62_-form-item"[39m
+              [36m>[39m
+                [0mName[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33maria-describedby[39m=[32m"_r_62_-form-item-description"[39m
+                [33maria-invalid[39m=[32m"false"[39m
+                [33mclass[39m=[32m"border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 aria-invalid:ring-inset md:text-sm"[39m
+                [33mdata-form-root[39m=[32m"form-_r_61_"[39m
+                [33mdata-slot[39m=[32m"form-control"[39m
+                [33mid[39m=[32m"_r_62_-form-item"[39m
+                [33mname[39m=[32m"name"[39m
+                [33mplaceholder[39m=[32m"Enter a name"[39m
+                [33mvalue[39m=[32m"batch"[39m
+              [36m/>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+                [33mdata-slot[39m=[32m"form-description"[39m
+                [33mid[39m=[32m"_r_62_-form-item-description"[39m
+              [36m>[39m
+                [0mName for this redemption code (1-20 characters)[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid gap-2"[39m
+              [33mdata-form-root[39m=[32m"form-_r_61_"[39m
+              [33mdata-slot[39m=[32m"form-item"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-di...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m"overflow-y: hidden; overflow-x: hidden;"[39m
+[36m>[39m
+  [36m<div[39m
+    [33maria-hidden[39m=[32m"true"[39m
+    [33mdata-base-ui-inert[39m=[32m""[39m
+  [36m/>[39m
+  [36m<div[39m
+    [33mdata-base-ui-portal[39m=[32m""[39m
+    [33mdata-slot[39m=[32m"sheet-portal"[39m
+    [33mid[39m=[32m"_r_5u_"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"position: fixed; user-select: none;"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mclass[39m=[32m"fixed inset-0 z-50 bg-black/10 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs"[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+      [33mdata-open[39m=[32m""[39m
+      [33mdata-slot[39m=[32m"sheet-overlay"[39m
+      [33mrole[39m=[32m"presentation"[39m
+      [33mstyle[39m=[32m"user-select: none;"[39m
+    [36m/>[39m
+    [36m<span[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-base-ui-focus-guard[39m=[32m""[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+      [33mdata-type[39m=[32m"inside"[39m
+      [33mstyle[39m=[32m"clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33maria-describedby[39m=[32m"base-ui-_r_60_"[39m
+      [33maria-labelledby[39m=[32m"base-ui-_r_5v_"[39m
+      [33mclass[39m=[32m"fixed z-50 bg-clip-padding text-sm transition duration-200 ease-in-out data-ending-style:opacity-0 data-starting-style:opacity-0 inset-y-0 right-0 border-l data-ending-style:translate-x-[2.5rem] data-starting-style:translate-x-[2.5rem] bg-background text-foreground flex h-dvh w-full flex-col gap-0 overflow-hidden p-0 shadow-none sm:max-w-[600px]"[39m
+      [33mdata-base-ui-focusable[39m=[32m""[39m
+      [33mdata-open[39m=[32m""[39m
+      [33mdata-side[39m=[32m"right"[39m
+      [33mdata-slot[39m=[32m"sheet-content"[39m
+      [33mid[39m=[32m"_r_5t_"[39m
+      [33mrole[39m=[32m"dialog"[39m
+      [33mstyle[39m=[32m"--nested-dialogs: 0;"[39m
+      [33mtabindex[39m=[32m"-1"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"flex flex-col gap-0.5 p-4 border-border/70 bg-background/95 border-b px-4 py-3 text-start backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:px-6 sm:py-4"[39m
+        [33mdata-slot[39m=[32m"sheet-header"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-foreground text-base font-medium"[39m
+          [33mdata-slot[39m=[32m"sheet-title"[39m
+          [33mid[39m=[32m"base-ui-_r_5v_"[39m
+        [36m>[39m
+          [0mCreate Redemption Code[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+          [33mdata-slot[39m=[32m"sheet-description"[39m
+          [33mid[39m=[32m"base-ui-_r_60_"[39m
+        [36m>[39m
+          [0mAdd new redemption code(s) by providing necessary info.[0m
+          [0m [0m
+          [0mClick save when you&apos;re done.[0m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<form[39m
+        [33maria-busy[39m=[32m"false"[39m
+        [33mclass[39m=[32m"flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5"[39m
+        [33mid[39m=[32m"redemption-form"[39m
+      [36m>[39m
+        [36m<fieldset[39m
+          [33mclass[39m=[32m"contents"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33mclass[39m=[32m"border-border/60 flex flex-col gap-4 border-b pb-6 last:border-b-0 last:pb-0"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid gap-2"[39m
+              [33mdata-form-root[39m=[32m"form-_r_61_"[39m
+              [33mdata-slot[39m=[32m"form-item"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 data-[error=true]:text-destructive"[39m
+                [33mdata-error[39m=[32m"false"[39m
+                [33mdata-slot[39m=[32m"form-label"[39m
+                [33mfor[39m=[32m"_r_62_-form-item"[39m
+              [36m>[39m
+                [0mName[0m
+              [36m</label>[39m
+              [36m<input[39m
+                [33maria-describedby[39m=[32m"_r_62_-form-item-description"[39m
+                [33maria-invalid[39m=[32m"false"[39m
+                [33mclass[39m=[32m"border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 aria-invalid:ring-inset md:text-sm"[39m
+                [33mdata-form-root[39m=[32m"form-_r_61_"[39m
+                [33mdata-slot[39m=[32m"form-control"[39m
+                [33mid[39m=[32m"_r_62_-form-item"[39m
+                [33mname[39m=[32m"name"[39m
+                [33mplaceholder[39m=[32m"Enter a name"[39m
+                [33mvalue[39m=[32m"batch"[39m
+              [36m/>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+                [33mdata-slot[39m=[32m"form-description"[39m
+                [33mid[39m=[32m"_r_62_-form-item-description"[39m
+              [36m>[39m
+                [0mName for this redemption code (1-20 characters)[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"grid gap-2"[39m
+              [33mdata-form-root[39m=[32m"form-_r_61_"[39m
+              [33mdata-slot[39m=[32m"form-item"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mclass[39m=[32m"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-di...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx:226:37
+    224|     within(createDialog).getByRole('button', { name: 'Save changes' })
+    225|   )
+    226|   const exportDialog = await screen.findByRole('dialog', {
+       |                                     ^
+    227|     name: 'Redemption codes created',
+    228|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx > keeps exact quota and downstream fields when renaming a quota redemption
+AssertionError: expected "wrap" to be called with arguments: [ '/api/redemption/', …(1) ]
+
+Number of calls: 0
+
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mstyle[39m=[32m"scrollbar-gutter: stable;"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mstyle[39m=[32m"overflow-y: hidden; overflow-x: hidden;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mdata-base-ui-portal[39m=[32m""[39m
+      [33mdata-slot[39m=[32m"sheet-portal"[39m
+      [33mid[39m=[32m"_r_2d_"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mrole[39m=[32m"presentation"[39m
+        [33mstyle[39m=[32m"position: fixed; user-select: none;"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mclass[39m=[32m"fixed inset-0 z-50 bg-black/10 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs"[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mdata-open[39m=[32m""[39m
+        [33mdata-slot[39m=[32m"sheet-overlay"[39m
+        [33mrole[39m=[32m"presentation"[39m
+        [33mstyle[39m=[32m"user-select: none;"[39m
+      [36m/>[39m
+      [36m<span[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mdata-base-ui-focus-guard[39m=[32m""[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mdata-type[39m=[32m"inside"[39m
+        [33mstyle[39m=[32m"clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"[39m
+        [33mtabindex[39m=[32m"0"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33maria-describedby[39m=[32m"base-ui-_r_2f_"[39m
+        [33maria-labelledby[39m=[32m"base-ui-_r_2e_"[39m
+        [33mclass[39m=[32m"fixed z-50 bg-clip-padding text-sm transition duration-200 ease-in-out data-ending-style:opacity-0 data-starting-style:opacity-0 inset-y-0 right-0 border-l data-ending-style:translate-x-[2.5rem] data-starting-style:translate-x-[2.5rem] bg-background text-foreground flex h-dvh w-full flex-col gap-0 overflow-hidden p-0 shadow-none sm:max-w-[600px]"[39m
+        [33mdata-base-ui-focusable[39m=[32m""[39m
+        [33mdata-open[39m=[32m""[39m
+        [33mdata-side[39m=[32m"right"[39m
+        [33mdata-slot[39m=[32m"sheet-content"[39m
+        [33mid[39m=[32m"_r_2c_"[39m
+        [33mrole[39m=[32m"dialog"[39m
+        [33mstyle[39m=[32m"--nested-dialogs: 0;"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col gap-0.5 p-4 border-border/70 bg-background/95 border-b px-4 py-3 text-start backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:px-6 sm:py-4"[39m
+          [33mdata-slot[39m=[32m"sheet-header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"text-foreground text-base font-medium"[39m
+            [33mdata-slot[39m=[32m"sheet-title"[39m
+            [33mid[39m=[32m"base-ui-_r_2e_"[39m
+          [36m>[39m
+            [0mUpdate Redemption Code[0m
+          [36m</h2>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+            [33mdata-slot[39m=[32m"sheet-description"[39m
+            [33mid[39m=[32m"base-ui-_r_2f_"[39m
+          [36m>[39m
+            [0mUpdate the redemption code by providing necessary info.[0m
+            [0m [0m
+            [0mClick save when you&apos;re done.[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<form[39m
+          [33maria-busy[39m=[32m"false"[39m
+          [33mclass[39m=[32m"flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5"[39m
+          [33mid[39m=[32m"redemption-form"[39m
+        [36m>[39m
+          [36m<fieldset[39m
+            [33mclass[39m=[32m"contents"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33mclass[39m=[32m"border-border/60 flex flex-col gap-4 border-b pb-6 last:border-b-0 last:pb-0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"grid gap-2"[39m
+                [33mdata-form-root[39m=[32m"form-_r_2g_"[39m
+                [33mdata-slot[39m=[32m"form-item"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 data-[error=true]:text-destructive"[39m
+                  [33mdata-error[39m=[32m"false"[39m
+                  [33mdata-slot[39m=[32m"form-label"[39m
+                  [33mfor[39m=[32m"_r_2h_-form-item"[39m
+                [36m>[39m
+                  [0mName[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33maria-describedby[39m=[32m"_r_2h_-form-item-description"[39m
+                  [33maria-invalid[39m=[32m"false"[39m
+                  [33mclass[39m=[32m"border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 aria-invalid:ring-inset md:text-sm"[39m
+                  [33mdata-form-root[39m=[32m"form-_r_2g_"[39m
+                  [33mdata-slot[39m=[32m"form-control"[39m
+                  [33mid[39m=[32m"_r_2h_-form-item"[39m
+                  [33mname[39m=[32m"name"[39m
+                  [33mplaceholder[39m=[32m"Enter a name"[39m
+                  [33mvalue[39m=[32m"renamed"[39m
+                [36m/>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+                  [33mdata-slot[39m=[32m"form-description"[39m
+                  [33mid[39m=[32m"_r_2h_-form-item-description"[39m
+                [36m>[39m
+                  [0mName for this redemption code (1-20 characters)[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"grid gap-2"[39m
+                [33mdata-form-root[39m=[32m"form-_r_2g_"[39m
+      ...
+ ❯ src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx:176:23
+    174|     fireEvent.click(screen.getByRole('button', { name: 'Save changes' …
+    175|     await waitFor(() =>
+    176|       expect(api.put).toHaveBeenCalledWith(
+       |                       ^
+    177|         '/api/redemption/',
+    178|         expect.objectContaining({
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx > recalculates quota only when the amount is edited
+AssertionError: expected "wrap" to be called with arguments: [ '/api/redemption/', …(1) ]
+
+Number of calls: 0
+
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mstyle[39m=[32m"scrollbar-gutter: stable;"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mstyle[39m=[32m"overflow-y: hidden; overflow-x: hidden;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mdata-base-ui-portal[39m=[32m""[39m
+      [33mdata-slot[39m=[32m"sheet-portal"[39m
+      [33mid[39m=[32m"_r_4c_"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mrole[39m=[32m"presentation"[39m
+        [33mstyle[39m=[32m"position: fixed; user-select: none;"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mclass[39m=[32m"fixed inset-0 z-50 bg-black/10 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs"[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mdata-open[39m=[32m""[39m
+        [33mdata-slot[39m=[32m"sheet-overlay"[39m
+        [33mrole[39m=[32m"presentation"[39m
+        [33mstyle[39m=[32m"user-select: none;"[39m
+      [36m/>[39m
+      [36m<span[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mdata-base-ui-focus-guard[39m=[32m""[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mdata-type[39m=[32m"inside"[39m
+        [33mstyle[39m=[32m"clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"[39m
+        [33mtabindex[39m=[32m"0"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33maria-describedby[39m=[32m"base-ui-_r_4e_"[39m
+        [33maria-labelledby[39m=[32m"base-ui-_r_4d_"[39m
+        [33mclass[39m=[32m"fixed z-50 bg-clip-padding text-sm transition duration-200 ease-in-out data-ending-style:opacity-0 data-starting-style:opacity-0 inset-y-0 right-0 border-l data-ending-style:translate-x-[2.5rem] data-starting-style:translate-x-[2.5rem] bg-background text-foreground flex h-dvh w-full flex-col gap-0 overflow-hidden p-0 shadow-none sm:max-w-[600px]"[39m
+        [33mdata-base-ui-focusable[39m=[32m""[39m
+        [33mdata-open[39m=[32m""[39m
+        [33mdata-side[39m=[32m"right"[39m
+        [33mdata-slot[39m=[32m"sheet-content"[39m
+        [33mid[39m=[32m"_r_4b_"[39m
+        [33mrole[39m=[32m"dialog"[39m
+        [33mstyle[39m=[32m"--nested-dialogs: 0;"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col gap-0.5 p-4 border-border/70 bg-background/95 border-b px-4 py-3 text-start backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:px-6 sm:py-4"[39m
+          [33mdata-slot[39m=[32m"sheet-header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"text-foreground text-base font-medium"[39m
+            [33mdata-slot[39m=[32m"sheet-title"[39m
+            [33mid[39m=[32m"base-ui-_r_4d_"[39m
+          [36m>[39m
+            [0mUpdate Redemption Code[0m
+          [36m</h2>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+            [33mdata-slot[39m=[32m"sheet-description"[39m
+            [33mid[39m=[32m"base-ui-_r_4e_"[39m
+          [36m>[39m
+            [0mUpdate the redemption code by providing necessary info.[0m
+            [0m [0m
+            [0mClick save when you&apos;re done.[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<form[39m
+          [33maria-busy[39m=[32m"false"[39m
+          [33mclass[39m=[32m"flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5"[39m
+          [33mid[39m=[32m"redemption-form"[39m
+        [36m>[39m
+          [36m<fieldset[39m
+            [33mclass[39m=[32m"contents"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33mclass[39m=[32m"border-border/60 flex flex-col gap-4 border-b pb-6 last:border-b-0 last:pb-0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"grid gap-2"[39m
+                [33mdata-form-root[39m=[32m"form-_r_4f_"[39m
+                [33mdata-slot[39m=[32m"form-item"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 data-[error=true]:text-destructive"[39m
+                  [33mdata-error[39m=[32m"false"[39m
+                  [33mdata-slot[39m=[32m"form-label"[39m
+                  [33mfor[39m=[32m"_r_4g_-form-item"[39m
+                [36m>[39m
+                  [0mName[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33maria-describedby[39m=[32m"_r_4g_-form-item-description"[39m
+                  [33maria-invalid[39m=[32m"false"[39m
+                  [33mclass[39m=[32m"border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 aria-invalid:ring-inset md:text-sm"[39m
+                  [33mdata-form-root[39m=[32m"form-_r_4f_"[39m
+                  [33mdata-slot[39m=[32m"form-control"[39m
+                  [33mid[39m=[32m"_r_4g_-form-item"[39m
+                  [33mname[39m=[32m"name"[39m
+                  [33mplaceholder[39m=[32m"Enter a name"[39m
+                  [33mvalue[39m=[32m"code-1"[39m
+                [36m/>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+                  [33mdata-slot[39m=[32m"form-description"[39m
+                  [33mid[39m=[32m"_r_4g_-form-item-description"[39m
+                [36m>[39m
+                  [0mName for this redemption code (1-20 characters)[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"grid gap-2"[39m
+                [33mdata-form-root[39m=[32m"form-_r_4f_"[39m
+       ...
+ ❯ src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx:200:21
+    198|   fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+    199|   await waitFor(() =>
+    200|     expect(api.put).toHaveBeenCalledWith(
+       |                     ^
+    201|       '/api/redemption/',
+    202|       expect.objectContaining({ quota: 1000000 })
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx > ignores the older request when switching records
+AssertionError: expected "wrap" to be called with arguments: [ '/api/redemption/', …(1) ]
+
+Number of calls: 0
+
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mstyle[39m=[32m"scrollbar-gutter: stable;"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mstyle[39m=[32m"overflow-y: hidden; overflow-x: hidden;"[39m
+  [36m>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-base-ui-inert[39m=[32m""[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33mdata-base-ui-portal[39m=[32m""[39m
+      [33mdata-slot[39m=[32m"sheet-portal"[39m
+      [33mid[39m=[32m"_r_4v_"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mrole[39m=[32m"presentation"[39m
+        [33mstyle[39m=[32m"position: fixed; user-select: none;"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mclass[39m=[32m"fixed inset-0 z-50 bg-black/10 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs"[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mdata-open[39m=[32m""[39m
+        [33mdata-slot[39m=[32m"sheet-overlay"[39m
+        [33mrole[39m=[32m"presentation"[39m
+        [33mstyle[39m=[32m"user-select: none;"[39m
+      [36m/>[39m
+      [36m<span[39m
+        [33maria-hidden[39m=[32m"true"[39m
+        [33mdata-base-ui-focus-guard[39m=[32m""[39m
+        [33mdata-base-ui-inert[39m=[32m""[39m
+        [33mdata-type[39m=[32m"inside"[39m
+        [33mstyle[39m=[32m"clip-path: inset(50%); overflow: hidden; white-space: nowrap; border: 0px; padding: 0px; width: 1px; height: 1px; margin: -1px; position: fixed; top: 0px; left: 0px;"[39m
+        [33mtabindex[39m=[32m"0"[39m
+      [36m/>[39m
+      [36m<div[39m
+        [33maria-describedby[39m=[32m"base-ui-_r_51_"[39m
+        [33maria-labelledby[39m=[32m"base-ui-_r_50_"[39m
+        [33mclass[39m=[32m"fixed z-50 bg-clip-padding text-sm transition duration-200 ease-in-out data-ending-style:opacity-0 data-starting-style:opacity-0 inset-y-0 right-0 border-l data-ending-style:translate-x-[2.5rem] data-starting-style:translate-x-[2.5rem] bg-background text-foreground flex h-dvh w-full flex-col gap-0 overflow-hidden p-0 shadow-none sm:max-w-[600px]"[39m
+        [33mdata-base-ui-focusable[39m=[32m""[39m
+        [33mdata-open[39m=[32m""[39m
+        [33mdata-side[39m=[32m"right"[39m
+        [33mdata-slot[39m=[32m"sheet-content"[39m
+        [33mid[39m=[32m"_r_4u_"[39m
+        [33mrole[39m=[32m"dialog"[39m
+        [33mstyle[39m=[32m"--nested-dialogs: 0;"[39m
+        [33mtabindex[39m=[32m"-1"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-col gap-0.5 p-4 border-border/70 bg-background/95 border-b px-4 py-3 text-start backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:px-6 sm:py-4"[39m
+          [33mdata-slot[39m=[32m"sheet-header"[39m
+        [36m>[39m
+          [36m<h2[39m
+            [33mclass[39m=[32m"text-foreground text-base font-medium"[39m
+            [33mdata-slot[39m=[32m"sheet-title"[39m
+            [33mid[39m=[32m"base-ui-_r_50_"[39m
+          [36m>[39m
+            [0mUpdate Redemption Code[0m
+          [36m</h2>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+            [33mdata-slot[39m=[32m"sheet-description"[39m
+            [33mid[39m=[32m"base-ui-_r_51_"[39m
+          [36m>[39m
+            [0mUpdate the redemption code by providing necessary info.[0m
+            [0m [0m
+            [0mClick save when you&apos;re done.[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<form[39m
+          [33maria-busy[39m=[32m"false"[39m
+          [33mclass[39m=[32m"flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5"[39m
+          [33mid[39m=[32m"redemption-form"[39m
+        [36m>[39m
+          [36m<fieldset[39m
+            [33mclass[39m=[32m"contents"[39m
+          [36m>[39m
+            [36m<section[39m
+              [33mclass[39m=[32m"border-border/60 flex flex-col gap-4 border-b pb-6 last:border-b-0 last:pb-0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"grid gap-2"[39m
+                [33mdata-form-root[39m=[32m"form-_r_52_"[39m
+                [33mdata-slot[39m=[32m"form-item"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 data-[error=true]:text-destructive"[39m
+                  [33mdata-error[39m=[32m"false"[39m
+                  [33mdata-slot[39m=[32m"form-label"[39m
+                  [33mfor[39m=[32m"_r_53_-form-item"[39m
+                [36m>[39m
+                  [0mName[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33maria-describedby[39m=[32m"_r_53_-form-item-description"[39m
+                  [33maria-invalid[39m=[32m"false"[39m
+                  [33mclass[39m=[32m"border-input file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 disabled:bg-input/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-8 w-full min-w-0 rounded-lg border bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 focus-visible:ring-inset disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 aria-invalid:ring-inset md:text-sm"[39m
+                  [33mdata-form-root[39m=[32m"form-_r_52_"[39m
+                  [33mdata-slot[39m=[32m"form-control"[39m
+                  [33mid[39m=[32m"_r_53_-form-item"[39m
+                  [33mname[39m=[32m"name"[39m
+                  [33mplaceholder[39m=[32m"Enter a name"[39m
+                  [33mvalue[39m=[32m"code-2"[39m
+                [36m/>[39m
+                [36m<p[39m
+                  [33mclass[39m=[32m"text-muted-foreground text-sm"[39m
+                  [33mdata-slot[39m=[32m"form-description"[39m
+                  [33mid[39m=[32m"_r_53_-form-item-description"[39m
+                [36m>[39m
+                  [0mName for this redemption code (1-20 characters)[0m
+                [36m</p>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"grid gap-2"[39m
+                [33mdata-form-root[39m=[32m"form-_r_52_"[39m
+       ...
+ ❯ src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx:240:21
+    238|   fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+    239|   await waitFor(() =>
+    240|     expect(api.put).toHaveBeenCalledWith(
+       |                     ^
+    241|       '/api/redemption/',
+    242|       expect.objectContaining({ id: 2, quota: 1000001 })
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  src/features/usage-logs/audit/__tests__/viewer.test.tsx > mobile access history keeps pagination visible and puts result filters in a drawer
+Error: Unable to perform pointer interaction as the element inherits `pointer-events: none`:
+
+BODY  <-- This element declared `pointer-events: none`
+ DIV#_r_tg_
+  DIV
+   DIV
+    DIV#_r_t7_
+     DIV#base-ui-_r_t6_-2  <-- Asserted pointer events here
+ ❯ assertPointerEvents node_modules/@testing-library/user-event/dist/esm/utils/pointer/cssPointerEvents.js:45:15
+ ❯ Object.enter node_modules/@testing-library/user-event/dist/esm/system/pointer/pointer.js:48:17
+ ❯ PointerHost.move node_modules/@testing-library/user-event/dist/esm/system/pointer/index.js:49:79
+ ❯ pointerAction node_modules/@testing-library/user-event/dist/esm/pointer/index.js:57:39
+ ❯ Object.pointer node_modules/@testing-library/user-event/dist/esm/pointer/index.js:25:15
+ ❯ Object.asyncWrapper node_modules/@testing-library/react/dist/pure.js:88:22
+ ❯ src/features/usage-logs/audit/__tests__/viewer.test.tsx:754:5
+    752|     const drawer = await screen.findByRole('dialog', { name: 'Filter' …
+    753|     await user.click(within(drawer).getByRole('combobox', { name: 'Res…
+    754|     await user.click(await screen.findByRole('option', { name: 'Failed…
+       |     ^
+    755|     await waitFor(() =>
+    756|       expect(get).toHaveBeenLastCalledWith('/api/audit/self', {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  src/features/usage-logs/components/__tests__/group-filter.test.tsx > lets mobile users select a long group name inside the filter drawer and submit it
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <div
+  aria-describedby="radix-_r_3u_"
+  aria-labelledby="radix-_r_3t_"
+  class="group/drawer-content bg-background text-foreground fixed z-50 flex h-auto flex-col overflow-hidden text-sm shadow-none data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-t data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:rounded-r-xl data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:rounded-l-xl data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-xl data-[vaul-drawer-direction=top]:border-b data-[vaul-drawer-direction=left]:sm:max-w-sm data-[vaul-drawer-direction=right]:sm:max-w-sm max-h-[85dvh] p-0"
+  data-slot="drawer-content"
+  data-state="closed"
+  data-vaul-animate="true"
+  data-vaul-custom-container="false"
+  data-vaul-delayed-snap-points="false"
+  data-vaul-drawer=""
+  data-vaul-drawer-direction="bottom"
+  data-vaul-snap-points="false"
+  id="radix-_r_3s_"
+  role="dialog"
+  tabindex="-1"
+>
+  <div
+    class="bg-muted mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
+  />
+  <div
+    class="mx-auto flex w-full max-w-md flex-1 flex-col overflow-hidden"
+  >
+    <div … />
+    <div … />
+    <div … />
+  </div>
+</div> instead
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mdata-scroll-locked[39m=[32m"1"[39m
+  [36m>[39m
+    [36m<span[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-aria-hidden[39m=[32m"true"[39m
+      [33mdata-radix-focus-guard[39m=[32m""[39m
+      [33mstyle[39m=[32m"opacity: 0; position: fixed; pointer-events: none; outline-color: none; outline-style: none; outline-width: initial;"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-aria-hidden[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bg-card/50 min-w-0 space-y-2.5 rounded-lg border p-2.5"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-sky-500/70"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mUsage[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m$0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-rose-500/65"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mRPM[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-slate-400/70"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mTPM[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"w-full min-w-0 [&_button]:min-h-9"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"min-w-0 [&_[data-slot=select-trigger]]:w-full [&_[data-slot=select-trigger]]:text-sm [&_[data-slot=select-value]]:leading-5 sm:col-span-2"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"dialog"[39m
+              [33maria-label[39m=[32m"2026-09-11 00:00 ~ 2026-09-11 16:16"[39m
+              [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center rounded-lg border bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 min-w-0 w-full justify-start gap-2 overflow-hidden px-2.5 text-sm leading-5 font-normal tabular-nums"[39m
+              [33mdata-base-ui-click-trigger[39m=[32m""[39m
+              [33mdata-slot[39m=[32m"popover-trigger"[39m
+              [33mid[39m=[32m"base-ui-_r_40_"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-calendar-days text-muted-foreground size-4 shrink-0"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 2v4"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mrx[39m=[32m"2"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M3 10h18"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 18h.01"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+            ...
+ ❯ src/features/usage-logs/components/__tests__/group-filter.test.tsx:268:46
+    266|   )
+    267|   await waitFor(() =>
+    268|     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+       |                                              ^
+    269|   )
+    270| })
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  src/features/usage-logs/components/__tests__/mobile-filter.test.tsx > applies the selected mobile date range directly and resets pagination while retaining filters
+AssertionError: expected { startTime: 1789056000000, …(4) } to match object { page: 1, group: 'default', …(3) }
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bg-card/50 min-w-0 space-y-2.5 rounded-lg border p-2.5"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-sky-500/70"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mUsage[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m$0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-rose-500/65"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mRPM[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-slate-400/70"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mTPM[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"w-full min-w-0 [&_button]:min-h-9"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"min-w-0 [&_[data-slot=select-trigger]]:w-full [&_[data-slot=select-trigger]]:text-sm [&_[data-slot=select-value]]:leading-5 sm:col-span-2"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"dialog"[39m
+              [33maria-label[39m=[32m"2026-09-11 00:00 ~ 2026-09-11 16:16"[39m
+              [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center rounded-lg border bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 min-w-0 w-full justify-start gap-2 overflow-hidden px-2.5 text-sm leading-5 font-normal tabular-nums"[39m
+              [33mdata-base-ui-click-trigger[39m=[32m""[39m
+              [33mdata-slot[39m=[32m"popover-trigger"[39m
+              [33mid[39m=[32m"base-ui-_r_4_"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-calendar-days text-muted-foreground size-4 shrink-0"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 2v4"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mrx[39m=[32m"2"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M3 10h18"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 18h.01"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"hidden truncate sm:block"[39m
+              [36m>[39m
+                [0m2026-09-11 00:00 ~ 2026-09-11 16:16[0m
+              [36m</span>[39m
+              [36m<span[39m
+                [33mclass[39m=[32m"min-w-0 [overflow-wrap:anywhere] whitespace-normal sm:hidden"[39m
+              [36m>[39m
+                [0m09/11 00:00–16:16[0m
+              [36m</span>[39m
+            [36m</button>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[...
+
+- Expected
++ Received
+
+  {
+-   "endTime": 1788860700000,
++   "endTime": 1789114565861,
+    "group": "default",
+    "page": 1,
+-   "startTime": 1788744600000,
++   "startTime": 1789056000000,
+    "type": [
+      "2",
+    ],
+  }
+
+ ❯ src/features/usage-logs/components/__tests__/mobile-filter.test.tsx:143:42
+    141|   await user.click(screen.getByRole('button', { name: 'Confirm' }))
+    142|   await waitFor(() =>
+    143|     expect(router.state.location.search).toMatchObject({
+       |                                          ^
+    144|       page: 1,
+    145|       group: 'default',
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  src/features/usage-logs/components/__tests__/mobile-filter.test.tsx > applies mobile drawer filters only when Search is pressed
+Error: expect(element).not.toBeInTheDocument()
+
+expected document not to contain element, found <div
+  aria-describedby="radix-_r_n_"
+  aria-labelledby="radix-_r_m_"
+  class="group/drawer-content bg-background text-foreground fixed z-50 flex h-auto flex-col overflow-hidden text-sm shadow-none data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-xl data-[vaul-drawer-direction=bottom]:border-t data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:rounded-r-xl data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:rounded-l-xl data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-xl data-[vaul-drawer-direction=top]:border-b data-[vaul-drawer-direction=left]:sm:max-w-sm data-[vaul-drawer-direction=right]:sm:max-w-sm max-h-[85dvh] p-0"
+  data-slot="drawer-content"
+  data-state="closed"
+  data-vaul-animate="true"
+  data-vaul-custom-container="false"
+  data-vaul-delayed-snap-points="false"
+  data-vaul-drawer=""
+  data-vaul-drawer-direction="bottom"
+  data-vaul-snap-points="false"
+  id="radix-_r_l_"
+  role="dialog"
+  tabindex="-1"
+>
+  <div
+    class="bg-muted mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
+  />
+  <div
+    class="mx-auto flex w-full max-w-md flex-1 flex-col overflow-hidden"
+  >
+    <div … />
+    <div … />
+    <div … />
+  </div>
+</div> instead
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body[39m
+    [33mdata-scroll-locked[39m=[32m"1"[39m
+  [36m>[39m
+    [36m<span[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-aria-hidden[39m=[32m"true"[39m
+      [33mdata-radix-focus-guard[39m=[32m""[39m
+      [33mstyle[39m=[32m"opacity: 0; position: fixed; pointer-events: none; outline-color: none; outline-style: none; outline-width: initial;"[39m
+      [33mtabindex[39m=[32m"0"[39m
+    [36m/>[39m
+    [36m<div[39m
+      [33maria-hidden[39m=[32m"true"[39m
+      [33mdata-aria-hidden[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"bg-card/50 min-w-0 space-y-2.5 rounded-lg border p-2.5"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"flex flex-wrap items-center gap-2"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-sky-500/70"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mUsage[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m$0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-rose-500/65"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mRPM[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m"border-border/60 bg-muted/25 inline-flex h-7 items-center gap-2 rounded-md border px-2.5 text-xs shadow-xs"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"h-3.5 w-0.5 rounded-full bg-slate-400/70"[39m
+            [36m/>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-muted-foreground"[39m
+            [36m>[39m
+              [0mTPM[0m
+            [36m</span>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"text-foreground/85 font-mono font-semibold tabular-nums"[39m
+            [36m>[39m
+              [0m0[0m
+            [36m</span>[39m
+          [36m</span>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"w-full min-w-0 [&_button]:min-h-9"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"min-w-0 [&_[data-slot=select-trigger]]:w-full [&_[data-slot=select-trigger]]:text-sm [&_[data-slot=select-value]]:leading-5 sm:col-span-2"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-expanded[39m=[32m"false"[39m
+              [33maria-haspopup[39m=[32m"dialog"[39m
+              [33maria-label[39m=[32m"2026-09-11 00:00 ~ 2026-09-11 16:16"[39m
+              [33mclass[39m=[32m"group/button inline-flex shrink-0 items-center rounded-lg border bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 min-w-0 w-full justify-start gap-2 overflow-hidden px-2.5 text-sm leading-5 font-normal tabular-nums"[39m
+              [33mdata-base-ui-click-trigger[39m=[32m""[39m
+              [33mdata-slot[39m=[32m"popover-trigger"[39m
+              [33mid[39m=[32m"base-ui-_r_p_"[39m
+              [33mtabindex[39m=[32m"0"[39m
+              [33mtype[39m=[32m"button"[39m
+            [36m>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-calendar-days text-muted-foreground size-4 shrink-0"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"24"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"24"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 2v4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 2v4"[39m
+                [36m/>[39m
+                [36m<rect[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mrx[39m=[32m"2"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mx[39m=[32m"3"[39m
+                  [33my[39m=[32m"4"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M3 10h18"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 14h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M8 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M12 18h.01"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M16 18h.01"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [36m<span[39m
+             ...
+ ❯ src/features/usage-logs/components/__tests__/mobile-filter.test.tsx:173:11
+    171|     expect(
+    172|       screen.queryByRole('dialog', { name: 'Filter' })
+    173|     ).not.toBeInTheDocument()
+       |           ^
+    174|   )
+    175| })
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  5 failed | 14 passed (19)
+      Tests  8 failed | 212 passed (220)
+   Start at  15:15:41
+   Duration  52.91s (import 74%, tests 9%, environment 8%, transform 6%, setup 3%)
+

@@ -1,0 +1,36 @@
+{
+  "upstream": "4cf9107f043709b3364a48f7a7bacc5f8ca80928",
+  "reviewed_at": "c929983b5af488f2bc4545bc494254be8e4b45c1",
+  "resolution": "equivalent",
+  "implementation_commits": [
+    "33924a09023f4765656ae037e9b3cc393700401b",
+    "33ae112e4decab45dde15c5763faf714f1f9e8a8"
+  ],
+  "files": [
+    "controller/channel_test_internal_test.go",
+    "pkg/billingexpr/billingexpr_test.go",
+    "pkg/billingexpr/compile.go",
+    "pkg/billingexpr/expr.md",
+    "pkg/billingexpr/run.go",
+    "pkg/billingexpr/settle.go",
+    "pkg/billingexpr/types.go",
+    "service/log_info_generate.go",
+    "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "web/src/features/pricing/lib/billing-expr.ts",
+    "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+    "web/src/features/usage-logs/types.ts"
+  ],
+  "contracts": [
+    "Compile canonical request condition/multiplier descriptors; reserve internal trace callback identifiers.",
+    "Preserve integer callback semantics and expression numeric results; every evaluation copies descriptors with unmatched initial state.",
+    "Emit actual settlement request_rules via LogOther.SetPublic and channel-test Snapshot, preserving private scopes.",
+    "Pass authoritative trace list through log types/details into DynamicPricingBreakdown; retain raw condition fallback, stable occurrence keys and matched highlights.",
+    "Retain downstream frozen retry state and saturated quota conversion."
+  ],
+  "checks": [
+    "evidence/runs/B12-expression-final/result.json",
+    "evidence/runs/B12-acceptance-go-scoped/result.json",
+    "evidence/B12-acceptance.json"
+  ],
+  "note": "All twelve source paths were reviewed; their real implementation was pulled forward by B12. Reapplying the older source would regress fixed-price/time/task additions."
+}

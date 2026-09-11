@@ -1,0 +1,14 @@
+{
+  "upstream": "e926e5cacee22fc838d94e8b95b438e825508e11",
+  "before_head": "5734a77ce356a5a4aa24e55177211f8d4485afc1",
+  "after_head": "c929983b5af488f2bc4545bc494254be8e4b45c1",
+  "files": [
+    "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+    "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+    "web/src/features/redemption-codes/lib/redemption-form.ts",
+    "web/src/lib/currency.ts",
+    "web/src/lib/format.ts",
+    "web/vitest.logs-quota.config.ts"
+  ],
+  "rationale": "Integrated precise editable currency values and original-quota preservation on unchanged amounts. Kept registration/subscription payloads and use counts, and rejected failed, wrong-record and obsolete loads. Ported upstream cases to shared Vitest/RTL fixtures and added downstream cases; consolidated checks follow."
+}

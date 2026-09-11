@@ -1,0 +1,13 @@
+{
+  "upstream": "e926e5cacee22fc838d94e8b95b438e825508e11",
+  "unit": "B13.2-redemption-precision",
+  "before_head": "5734a77ce356a5a4aa24e55177211f8d4485afc1",
+  "rationale": "Adapt precision and stale-load protection into the existing quota, subscription and registration-code editor. Keep reward type, plan, use counts and existing input normalization.",
+  "files": [
+    "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+    "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+    "web/src/features/redemption-codes/lib/redemption-form.ts",
+    "web/src/lib/currency.ts",
+    "web/src/lib/format.ts"
+  ]
+}

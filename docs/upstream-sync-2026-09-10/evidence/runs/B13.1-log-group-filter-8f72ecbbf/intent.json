@@ -1,0 +1,13 @@
+{
+  "upstream": "8f72ecbbfd86ded5ee15373921533eed3d334a9a",
+  "unit": "B13.1-log-group-filter",
+  "before_head": "8ecd16e190fc39291ea6f5e1964acdbd104a5852",
+  "rationale": "Add searchable groups with historical custom values, scoped admin/user suggestions, reset and keyboard behavior. Reuse the complete Combobox keyboard/ARIA prerequisites already integrated in B12.",
+  "files": [
+    "web/src/components/ui/combobox-input.tsx",
+    "web/src/components/ui/combobox.tsx",
+    "web/src/features/usage-logs/components/__tests__/group-filter.test.tsx",
+    "web/src/features/usage-logs/components/__tests__/log-type-filter.test.tsx",
+    "web/src/features/usage-logs/components/common-logs-filter-bar.tsx"
+  ]
+}

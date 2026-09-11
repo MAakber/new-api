@@ -1,0 +1,9 @@
+{
+  "upstream": "bd22e45a740a7c02c328704dc419d8795237cb74",
+  "before_head": "d1bebcf877a32f9a941f56508ba17a29dc32499e",
+  "after_head": "d05c1e39cb3ca4fdc1d9781a810a3695f551c900",
+  "files": [
+    "web/src/features/keys/components/api-keys-columns.tsx"
+  ],
+  "rationale": "Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows."
+}

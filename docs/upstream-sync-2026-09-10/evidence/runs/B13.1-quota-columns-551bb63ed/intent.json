@@ -1,0 +1,10 @@
+{
+  "upstream": "551bb63edf4007d7c4b0930504faf6db87012d73",
+  "unit": "B13.1-quota-columns",
+  "before_head": "38e97fd2768b237a3c46df5056a7cb771e3eb1d6",
+  "rationale": "Apply reviewed desktop-only quota layout changes; preserve mobile labels, exact values, privacy and actions. Validate together with the shared quota-cell follow-up.",
+  "files": [
+    "web/src/features/keys/components/__tests__/api-key-listing.test.tsx",
+    "web/src/features/keys/components/api-key-quota-cell.tsx"
+  ]
+}

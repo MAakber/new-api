@@ -1,0 +1,31 @@
+{
+  "upstream": "524455fac3c438321df4ae9ed4ffd11bc635cc4f",
+  "before_head": "3dd4e658a4a2f031f3327ff0f136e86e3068ec3b",
+  "after_head": "23a8b8fcf991bdf0023f0513de9bca08308b16f6",
+  "files": [
+    "controller/audit.go",
+    "controller/redemption.go",
+    "controller/redemption_batch_test.go",
+    "middleware/audit.go",
+    "model/redemption.go",
+    "router/api-router.go",
+    "web/src/features/redemption-codes/api.ts",
+    "web/src/features/redemption-codes/components/__tests__/bulk-delete.test.tsx",
+    "web/src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx",
+    "web/src/features/redemption-codes/components/data-table-bulk-actions.tsx",
+    "web/src/features/redemption-codes/components/redemptions-export-dialog.tsx",
+    "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+    "web/src/features/redemption-codes/components/redemptions-table.tsx",
+    "web/src/features/usage-logs/audit/__tests__/details.test.tsx",
+    "web/src/features/usage-logs/audit/lib/audit-details.ts",
+    "web/src/features/usage-logs/lib/format.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ],
+  "rationale": "Retained downstream CSV, reward-aware subscription and registration export, exact quota load guards and audit metadata; imported batch deletion and optional TXT/Markdown export. External fixtures create separate isolated databases. B13 acceptance follows."
+}

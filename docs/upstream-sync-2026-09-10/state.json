@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T06:42:40.844Z",
+  "updatedAt": "2026-09-11T07:28:22.034Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B13",
-  "current_unit": "B13.1",
+  "current_batch": "B14",
+  "current_unit": "B14.1",
   "active_operation": null,
-  "last_observed_head": "2270b2fb53707e34dce87cc7bd67ca704949f938",
-  "last_verified_code_commit": "2270b2fb53707e34dce87cc7bd67ca704949f938",
-  "last_checkpoint_commit": "2270b2fb53707e34dce87cc7bd67ca704949f938",
+  "last_observed_head": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b",
+  "last_verified_code_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b",
+  "last_checkpoint_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Inspect and adapt B13 stream-status projection, log statistics, quota UI and redemption changes; reuse pulled-forward request traces.",
+  "next_action": "B14.1: inventory channel identifiers and prepare plugin migration preserving downstream channels and in-flight tasks.",
   "blockers": [
     {
       "id": "production_snapshot",

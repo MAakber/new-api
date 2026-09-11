@@ -1935,3 +1935,174 @@
 - Four-engine options repair and fixed accounting, model/CAS compatibility, expression package, 356 pricing cases, types, lint and i18n accepted with explicit reuse.
 - Exact plugin deferrals remain B14; final release gates remain pending.
 - Evidence: evidence/B12-acceptance.json.
+
+## 2026-09-11T06:42:45.466Z — B13.1-stream-status adaptation begun
+
+- Before HEAD: 6565ff26505fea758e390e3031c1680888328bd8.
+- Upstream: 84834eee859fd69ed6b8ab3c848f86f1ff98b992.
+- Expose safe stream outcome fields to log owners while retaining raw transport diagnostics for administrators under downstream visibility rules.
+- Evidence: evidence/runs/B13.1-stream-status-84834eee8/intent.json.
+
+## 2026-09-11T06:46:23.529Z — B13.1-stream-status adaptation recorded
+
+- Code: 26da34651585cdbbeefca4a1b667e1ab4efdf6dc.
+- Expose typed stream status, known end reasons and nonnegative error count to owners. Keep raw end_error, error arrays, private diagnostics and arbitrary legacy values admin-only. Added role projection and UI regressions; consolidated B13 checks follow.
+- Evidence: evidence/runs/B13.1-stream-status-84834eee8/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:47:12.385Z — B13.1-log-statistics adaptation begun
+
+- Before HEAD: 26da34651585cdbbeefca4a1b667e1ab4efdf6dc.
+- Upstream: 8c8c4153d4b80d54352d21593de41aa9a6178f7e.
+- Keep the quota aggregate separate from the RPM/TPM scan so later scans cannot reset it; preserve downstream filtering and accounting.
+- Evidence: evidence/runs/B13.1-log-statistics-8c8c4153d/intent.json.
+
+## 2026-09-11T06:50:22.054Z — B13.1-log-statistics adaptation recorded
+
+- Code: 5734a77ce356a5a4aa24e55177211f8d4485afc1.
+- Applied separate rate-scan result without changing quota filters or historical-range semantics. Added observable aggregate/filter regressions using the existing isolated database fixture; exercise all engines with B13 acceptance.
+- Evidence: evidence/runs/B13.1-log-statistics-8c8c4153d/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:50:22.457Z — B13.2-redemption-precision adaptation begun
+
+- Before HEAD: 5734a77ce356a5a4aa24e55177211f8d4485afc1.
+- Upstream: e926e5cacee22fc838d94e8b95b438e825508e11.
+- Adapt precision and stale-load protection into the existing quota, subscription and registration-code editor. Keep reward type, plan, use counts and existing input normalization.
+- Evidence: evidence/runs/B13.2-redemption-precision-e926e5cac/intent.json.
+
+## 2026-09-11T06:53:17.101Z — B13.2-redemption-precision adaptation recorded
+
+- Code: c929983b5af488f2bc4545bc494254be8e4b45c1.
+- Integrated precise editable currency values and original-quota preservation on unchanged amounts. Kept registration/subscription payloads and use counts, and rejected failed, wrong-record and obsolete loads. Ported upstream cases to shared Vitest/RTL fixtures and added downstream cases; consolidated checks follow.
+- Evidence: evidence/runs/B13.2-redemption-precision-e926e5cac/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:54:25.636Z — B13 request traces reconciled
+
+- Complete behavior already implemented in B12. Evidence: evidence/B13-request-trace-reconciliation.json.
+- Keep the real engine and scoped log integration; do not reapply old source.
+
+## 2026-09-11T06:54:26.043Z — B13.1-mobile-logs adaptation begun
+
+- Before HEAD: c929983b5af488f2bc4545bc494254be8e4b45c1.
+- Upstream: a5e41a893379e49bd9e1d025e775c04df8961c95.
+- Integrate shared mobile log cards and visible quick actions while preserving avatars, private diagnostics, model classification and role-scoped log views.
+- Evidence: evidence/runs/B13.1-mobile-logs-a5e41a893/intent.json.
+
+## 2026-09-11T06:59:03.454Z — B13.1-mobile-logs adaptation recorded
+
+- Code: 88167a74b3c03ad40d36304c013248c3d0be26b2.
+- Integrated compact common-log cards, touch inspection, quick actions and pagination. Preserved authenticated avatars and sensitive masking, downstream task/drawing card layouts, and actual async timing labels. Retained native MediaQueryList methods in imported fixtures. Node preservation suites stay isolated; stage checks follow.
+- Evidence: evidence/runs/B13.1-mobile-logs-a5e41a893/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T06:59:50.397Z — B13.1-key-user-quotas adaptation begun
+
+- Before HEAD: 88167a74b3c03ad40d36304c013248c3d0be26b2.
+- Upstream: 2bec370629aa72d74d3f598b953a4d33b8bcbf7d.
+- Integrate responsive quota, group and activity displays while preserving user avatars, token auto-groups and security verification. Resolve full keys only for explicit copy/chat actions using the existing guarded provider.
+- Evidence: evidence/runs/B13.1-key-user-quotas-2bec37062/intent.json.
+
+## 2026-09-11T07:03:37.743Z — B13.1-key-user-quotas adaptation recorded
+
+- Code: 38e97fd2768b237a3c46df5056a7cb771e3eb1d6.
+- Integrated finite/unlimited key quota, user balance, group and activity displays; retained authenticated avatars and downstream cross-group retry semantics. Full-key reads now occur on explicit actions through existing verified fetchTokenKey. Migrated reviewed group behavior tests to Vitest and retained native media-query fixtures; consolidated checks follow.
+- Evidence: evidence/runs/B13.1-key-user-quotas-2bec37062/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T07:04:30.414Z — B13.1-quota-columns adaptation begun
+
+- Before HEAD: 38e97fd2768b237a3c46df5056a7cb771e3eb1d6.
+- Upstream: 551bb63edf4007d7c4b0930504faf6db87012d73.
+- Apply reviewed desktop-only quota layout changes; preserve mobile labels, exact values, privacy and actions. Validate together with the shared quota-cell follow-up.
+- Evidence: evidence/runs/B13.1-quota-columns-551bb63ed/intent.json.
+
+## 2026-09-11T07:04:31.384Z — B13.1-quota-columns adaptation recorded
+
+- Code: d1bebcf877a32f9a941f56508ba17a29dc32499e.
+- Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows.
+- Evidence: evidence/runs/B13.1-quota-columns-551bb63ed/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T07:04:31.806Z — B13.1-quota-width adaptation begun
+
+- Before HEAD: d1bebcf877a32f9a941f56508ba17a29dc32499e.
+- Upstream: bd22e45a740a7c02c328704dc419d8795237cb74.
+- Apply reviewed desktop-only quota layout changes; preserve mobile labels, exact values, privacy and actions. Validate together with the shared quota-cell follow-up.
+- Evidence: evidence/runs/B13.1-quota-width-bd22e45a7/intent.json.
+
+## 2026-09-11T07:04:32.794Z — B13.1-quota-width adaptation recorded
+
+- Code: d05c1e39cb3ca4fdc1d9781a810a3695f551c900.
+- Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows.
+- Evidence: evidence/runs/B13.1-quota-width-bd22e45a7/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T07:04:33.208Z — B13.1-quota-spacing adaptation begun
+
+- Before HEAD: d05c1e39cb3ca4fdc1d9781a810a3695f551c900.
+- Upstream: 950644c9d54445bdd8796643e4e2e18e13167a4c.
+- Apply reviewed desktop-only quota layout changes; preserve mobile labels, exact values, privacy and actions. Validate together with the shared quota-cell follow-up.
+- Evidence: evidence/runs/B13.1-quota-spacing-950644c9d/intent.json.
+
+## 2026-09-11T07:04:34.181Z — B13.1-quota-spacing adaptation recorded
+
+- Code: 8ecd16e190fc39291ea6f5e1964acdbd104a5852.
+- Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows.
+- Evidence: evidence/runs/B13.1-quota-spacing-950644c9d/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T07:04:34.589Z — B13.1-log-group-filter adaptation begun
+
+- Before HEAD: 8ecd16e190fc39291ea6f5e1964acdbd104a5852.
+- Upstream: 8f72ecbbfd86ded5ee15373921533eed3d334a9a.
+- Add searchable groups with historical custom values, scoped admin/user suggestions, reset and keyboard behavior. Reuse the complete Combobox keyboard/ARIA prerequisites already integrated in B12.
+- Evidence: evidence/runs/B13.1-log-group-filter-8f72ecbbf/intent.json.
+
+## 2026-09-11T07:05:36.151Z — B13.1-log-group-filter adaptation recorded
+
+- Code: 8c1f04496ff653a84682c8ae8b309243abb1f7af.
+- Added scoped group suggestions, historical custom values and keyboard submission. Reused B12 custom Combobox ARIA/keyboard behavior and added the remaining normal-option key handler, retaining focus-restoration protection. Preserved type filter and masking. Consolidated UI checks follow.
+- Evidence: evidence/runs/B13.1-log-group-filter-8f72ecbbf/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T07:05:36.555Z — B13.1-shared-quota-cells adaptation begun
+
+- Before HEAD: 8c1f04496ff653a84682c8ae8b309243abb1f7af.
+- Upstream: ea7cb0ba4e0f82e2bfa5e55752eb68bdf902f71b.
+- Unify existing activity, quota and masked-value table presentations. Preserve existing copy/reveal guards, avatars and downstream redemption columns; reuse shared popovers and table styling.
+- Evidence: evidence/runs/B13.1-shared-quota-cells-ea7cb0ba4/intent.json.
+
+## 2026-09-11T07:07:17.125Z — B13.1-shared-quota-cells adaptation recorded
+
+- Code: 3dd4e658a4a2f031f3327ff0f136e86e3068ec3b.
+- Unified activity, quota detail and masked-value presentations with existing disclosure handlers. Preserved authenticated avatars, registration/subscription columns, cross-group retry labels and prior mobile fixes. Scoped validation follows with final B13 redemption unit.
+- Evidence: evidence/runs/B13.1-shared-quota-cells-ea7cb0ba4/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T07:07:17.530Z — B13.2-redemption-batch-export adaptation begun
+
+- Before HEAD: 3dd4e658a4a2f031f3327ff0f136e86e3068ec3b.
+- Upstream: 524455fac3c438321df4ae9ed4ffd11bc635cc4f.
+- Add confirmed batch soft deletion and optional TXT/Markdown exports after creation. Preserve existing CSV export, subscription and registration code semantics, exact quota edits and audit secrecy.
+- Evidence: evidence/runs/B13.2-redemption-batch-export-524455fac/intent.json.
+
+## 2026-09-11T07:14:30.272Z — B13.2-redemption-batch-export adaptation recorded
+
+- Code: 23a8b8fcf991bdf0023f0513de9bca08308b16f6.
+- Retained downstream CSV, reward-aware subscription and registration export, exact quota load guards and audit metadata; imported batch deletion and optional TXT/Markdown export. External fixtures create separate isolated databases. B13 acceptance follows.
+- Evidence: evidence/runs/B13.2-redemption-batch-export-524455fac/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T07:25:36.630Z — B13 popup dependency
+
+Actual 387a409 drawer/combobox/select portal-context fix is pulled forward after audit pointer regression; B15 full row remains pending.
+
+## 2026-09-11T07:28:22.044Z — B13 verified
+
+- Code: f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b.
+- 121/153 upstream rows verified.
+- 224 frontend cases covered using unchanged passing results and targeted repairs; four-engine statistics/deletion and separate audit storage passed.
+- Evidence: evidence/B13-acceptance.json.
+- Continue B14.1; no production operations.

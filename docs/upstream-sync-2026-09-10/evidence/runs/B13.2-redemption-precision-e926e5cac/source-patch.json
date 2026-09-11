@@ -1,0 +1,10 @@
+{
+  "upstream": "e926e5cacee22fc838d94e8b95b438e825508e11",
+  "excluded": [
+    "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+    "web/src/features/redemption-codes/lib/redemption-form.ts",
+    "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx"
+  ],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/lib/currency.ts' cleanly.\nApplied patch to 'web/src/lib/format.ts' cleanly.\n"
+}

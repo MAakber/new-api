@@ -1,0 +1,10 @@
+{
+  "upstream": "551bb63edf4007d7c4b0930504faf6db87012d73",
+  "before_head": "38e97fd2768b237a3c46df5056a7cb771e3eb1d6",
+  "after_head": "d1bebcf877a32f9a941f56508ba17a29dc32499e",
+  "files": [
+    "web/src/features/keys/components/__tests__/api-key-listing.test.tsx",
+    "web/src/features/keys/components/api-key-quota-cell.tsx"
+  ],
+  "rationale": "Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows."
+}

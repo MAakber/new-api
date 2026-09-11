@@ -1,0 +1,6 @@
+{
+  "upstream": "8c8c4153d4b80d54352d21593de41aa9a6178f7e",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'model/log.go' cleanly.\n"
+}

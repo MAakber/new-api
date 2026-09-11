@@ -62,16 +62,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Expose typed stream status, known end reasons and nonnegative error count to owners. Keep raw end_error, error arrays, private diagnostics and arbitrary legacy values admin-only. Added role projection and UI regressions; consolidated B13 checks follow.",
+    "resolution_commits": [
+      "26da34651585cdbbeefca4a1b667e1ab4efdf6dc"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-stream-status-84834eee8/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "8461e5339d483f3c0699fb009567be9cec25846d",
@@ -782,16 +788,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated precise editable currency values and original-quota preservation on unchanged amounts. Kept registration/subscription payloads and use counts, and rejected failed, wrong-record and obsolete loads. Ported upstream cases to shared Vitest/RTL fixtures and added downstream cases; consolidated checks follow.",
+    "resolution_commits": [
+      "c929983b5af488f2bc4545bc494254be8e4b45c1"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.2-redemption-precision-e926e5cac/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "5c3abffe8572aa8a49f15c3916707d2019d66af4",
@@ -1221,16 +1233,23 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "equivalent",
+    "resolution_rationale": "Complete request multiplier tracing and display were integrated as B12 prerequisites. Reviewed all upstream paths and reused engine/channel/UI checks; downstream scopes, raw-rule fallback and saturation remain.",
+    "resolution_commits": [
+      "33924a09023f4765656ae037e9b3cc393700401b",
+      "33ae112e4decab45dde15c5763faf714f1f9e8a8"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/B13-request-trace-reconciliation.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "9c97e78aced572d540f227007a675d7d007666ac",
@@ -4367,16 +4386,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied separate rate-scan result without changing quota filters or historical-range semantics. Added observable aggregate/filter regressions using the existing isolated database fixture; exercise all engines with B13 acceptance.",
+    "resolution_commits": [
+      "5734a77ce356a5a4aa24e55177211f8d4485afc1"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-log-statistics-8c8c4153d/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "27ff6a8767e728f879d52770c273d4f73214a430",
@@ -7866,16 +7891,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated compact common-log cards, touch inspection, quick actions and pagination. Preserved authenticated avatars and sensitive masking, downstream task/drawing card layouts, and actual async timing labels. Retained native MediaQueryList methods in imported fixtures. Node preservation suites stay isolated; stage checks follow.",
+    "resolution_commits": [
+      "88167a74b3c03ad40d36304c013248c3d0be26b2"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-mobile-logs-a5e41a893/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "2bec370629aa72d74d3f598b953a4d33b8bcbf7d",
@@ -7941,16 +7972,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated finite/unlimited key quota, user balance, group and activity displays; retained authenticated avatars and downstream cross-group retry semantics. Full-key reads now occur on explicit actions through existing verified fetchTokenKey. Migrated reviewed group behavior tests to Vitest and retained native media-query fixtures; consolidated checks follow.",
+    "resolution_commits": [
+      "38e97fd2768b237a3c46df5056a7cb771e3eb1d6"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-key-user-quotas-2bec37062/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "8f72ecbbfd86ded5ee15373921533eed3d334a9a",
@@ -7981,16 +8018,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added scoped group suggestions, historical custom values and keyboard submission. Reused B12 custom Combobox ARIA/keyboard behavior and added the remaining normal-option key handler, retaining focus-restoration protection. Preserved type filter and masking. Consolidated UI checks follow.",
+    "resolution_commits": [
+      "8c1f04496ff653a84682c8ae8b309243abb1f7af"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-log-group-filter-8f72ecbbf/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "551bb63edf4007d7c4b0930504faf6db87012d73",
@@ -8017,16 +8060,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows.",
+    "resolution_commits": [
+      "d1bebcf877a32f9a941f56508ba17a29dc32499e"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-quota-columns-551bb63ed/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "bd22e45a740a7c02c328704dc419d8795237cb74",
@@ -8051,16 +8100,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows.",
+    "resolution_commits": [
+      "d05c1e39cb3ca4fdc1d9781a810a3695f551c900"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-quota-width-bd22e45a7/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "950644c9d54445bdd8796643e4e2e18e13167a4c",
@@ -8088,16 +8143,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Reviewed and applied desktop layout and corresponding regressions. Mobile quota labels and display semantics are preserved; consolidated B13 UI acceptance follows.",
+    "resolution_commits": [
+      "8ecd16e190fc39291ea6f5e1964acdbd104a5852"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-quota-spacing-950644c9d/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "524455fac3c438321df4ae9ed4ffd11bc635cc4f",
@@ -8156,16 +8217,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retained downstream CSV, reward-aware subscription and registration export, exact quota load guards and audit metadata; imported batch deletion and optional TXT/Markdown export. External fixtures create separate isolated databases. B13 acceptance follows.",
+    "resolution_commits": [
+      "23a8b8fcf991bdf0023f0513de9bca08308b16f6"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.2-redemption-batch-export-524455fac/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "fff0635bb14b8ec5f10df9e582a83591df841902",
@@ -8589,16 +8656,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Unified activity, quota detail and masked-value presentations with existing disclosure handlers. Preserved authenticated avatars, registration/subscription columns, cross-group retry labels and prior mobile fixes. Scoped validation follows with final B13 redemption unit.",
+    "resolution_commits": [
+      "3dd4e658a4a2f031f3327ff0f136e86e3068ec3b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B13.1-shared-quota-cells-ea7cb0ba4/resolution.json",
+      "evidence/B13-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "verified_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
   },
   {
     "sha": "9bf328d9749751757d5d6b74088d514813a618bd",

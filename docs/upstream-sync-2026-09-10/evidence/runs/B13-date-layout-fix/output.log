@@ -1,0 +1,11 @@
+$ node scripts/test-preservation.mjs date-range-picker-layout
+bun test v1.3.14 (0d9b296a)
+
+src\features\usage-logs\components\__tests__\date-range-picker-layout.test.tsx:
+(pass) usage log date range picker layout > keeps the trigger and custom calendar controls usable at narrow widths [400.52ms]
+(pass) usage log date range picker layout > applies a changed time only after confirming the draft range [58.20ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [2.24s]
+{"files":1,"passed":1,"failed":[]}

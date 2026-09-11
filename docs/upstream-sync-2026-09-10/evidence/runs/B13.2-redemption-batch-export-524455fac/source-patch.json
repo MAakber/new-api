@@ -1,0 +1,8 @@
+{
+  "upstream": "524455fac3c438321df4ae9ed4ffd11bc635cc4f",
+  "excluded": [
+    "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx"
+  ],
+  "exit_code": 1,
+  "output": "Applied patch to 'controller/audit.go' with conflicts.\nApplied patch to 'controller/redemption.go' cleanly.\nFalling back to direct application...\nApplied patch to 'middleware/audit.go' cleanly.\nApplied patch to 'model/redemption.go' cleanly.\nApplied patch to 'router/api-router.go' cleanly.\nApplied patch to 'web/src/features/redemption-codes/api.ts' with conflicts.\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'web/src/features/redemption-codes/components/data-table-bulk-actions.tsx' with conflicts.\nFalling back to direct application...\nApplied patch to 'web/src/features/redemption-codes/components/redemptions-table.tsx' cleanly.\nApplied patch to 'web/src/features/usage-logs/audit/__tests__/details.test.tsx' cleanly.\nApplied patch to 'web/src/features/usage-logs/audit/lib/audit-details.ts' cleanly.\nApplied patch to 'web/src/features/usage-logs/lib/format.ts' cleanly.\nU controller/audit.go\nU web/src/features/redemption-codes/api.ts\nU web/src/features/redemption-codes/components/data-table-bulk-actions.tsx\n"
+}

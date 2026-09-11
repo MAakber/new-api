@@ -1,0 +1,30 @@
+{
+  "id": "B13-preservation",
+  "command": [
+    "bun",
+    "run",
+    "test:preservation",
+    "redemption-codes",
+    "usage-logs",
+    "features/keys",
+    "components/data-table",
+    "components/ui"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "23a8b8fcf991bdf0023f0513de9bca08308b16f6",
+  "started_at": "2026-09-11T07:15:08.215Z",
+  "finished_at": "2026-09-11T07:15:20.676Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1812,27 +1812,184 @@
       "524455fac3c438321df4ae9ed4ffd11bc635cc4f",
       "ea7cb0ba4e0f82e2bfa5e55752eb68bdf902f71b"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B13.1",
         "action": "合并共享额度/日志组件并保持私有诊断与头像",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
       },
       {
         "id": "B13.2",
         "action": "整合批量删除及 TXT/Markdown 与已有 CSV/订阅/注册码",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
       },
       {
         "id": "B13.3",
         "action": "验证导出权限、字段、精度、移动界面和审计",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-stream-status",
+        "action": "feat(logs): expose stream status to log owners (#6558)",
+        "status": "verified",
+        "upstreamCommits": [
+          "84834eee859fd69ed6b8ab3c848f86f1ff98b992"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-log-statistics",
+        "action": "fix(log): preserve quota in usage statistics (#7108)",
+        "status": "verified",
+        "upstreamCommits": [
+          "8c8c4153d4b80d54352d21593de41aa9a6178f7e"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.2-redemption-precision",
+        "action": "fix: 修复兑换码额度精度损失 (#6685)",
+        "status": "verified",
+        "upstreamCommits": [
+          "e926e5cacee22fc838d94e8b95b438e825508e11"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-request-traces",
+        "action": "feat(billing): highlight matched conditional multipliers in logs (#6561)",
+        "status": "verified",
+        "upstreamCommits": [
+          "4cf9107f043709b3364a48f7a7bacc5f8ca80928"
+        ],
+        "evidence": [
+          "evidence/B13-request-trace-reconciliation.json",
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-mobile-logs",
+        "action": "feat(usage-logs): refine mobile layout and keep quick actions visible",
+        "status": "verified",
+        "upstreamCommits": [
+          "a5e41a893379e49bd9e1d025e775c04df8961c95"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-key-user-quotas",
+        "action": "feat(web): refine API key and user quota displays",
+        "status": "verified",
+        "upstreamCommits": [
+          "2bec370629aa72d74d3f598b953a4d33b8bcbf7d"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-quota-columns",
+        "action": "fix(keys): show desktop quota amounts side by side",
+        "status": "verified",
+        "upstreamCommits": [
+          "551bb63edf4007d7c4b0930504faf6db87012d73"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-quota-width",
+        "action": "style(keys): widen the desktop quota column",
+        "status": "verified",
+        "upstreamCommits": [
+          "bd22e45a740a7c02c328704dc419d8795237cb74"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-quota-spacing",
+        "action": "fix(keys): preserve spacing after desktop quota content",
+        "status": "verified",
+        "upstreamCommits": [
+          "950644c9d54445bdd8796643e4e2e18e13167a4c"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-log-group-filter",
+        "action": "feat(usage-logs): add searchable group filter",
+        "status": "verified",
+        "upstreamCommits": [
+          "8f72ecbbfd86ded5ee15373921533eed3d334a9a"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.1-shared-quota-cells",
+        "action": "refactor(web): unify table cells and quota details",
+        "status": "verified",
+        "upstreamCommits": [
+          "ea7cb0ba4e0f82e2bfa5e55752eb68bdf902f71b"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
+      },
+      {
+        "id": "B13.2-redemption-batch-export",
+        "action": "feat(redemptions): add batch deletion and optional file exports",
+        "status": "verified",
+        "upstreamCommits": [
+          "524455fac3c438321df4ae9ed4ffd11bc635cc4f"
+        ],
+        "evidence": [
+          "evidence/B13-acceptance.json"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "合并共享额度/日志组件并保持私有诊断与头像"
+    "codeCommits": [
+      "26da34651585cdbbeefca4a1b667e1ab4efdf6dc",
+      "5734a77ce356a5a4aa24e55177211f8d4485afc1",
+      "c929983b5af488f2bc4545bc494254be8e4b45c1",
+      "88167a74b3c03ad40d36304c013248c3d0be26b2",
+      "38e97fd2768b237a3c46df5056a7cb771e3eb1d6",
+      "d1bebcf877a32f9a941f56508ba17a29dc32499e",
+      "d05c1e39cb3ca4fdc1d9781a810a3695f551c900",
+      "8ecd16e190fc39291ea6f5e1964acdbd104a5852",
+      "8c1f04496ff653a84682c8ae8b309243abb1f7af",
+      "3dd4e658a4a2f031f3327ff0f136e86e3068ec3b",
+      "23a8b8fcf991bdf0023f0513de9bca08308b16f6",
+      "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b"
+    ],
+    "evidence": [
+      "evidence/B13-acceptance.json"
+    ],
+    "nextAction": "B13 accepted; B14 plugin integration follows."
   },
   {
     "id": "B14",
@@ -1969,6 +2126,15 @@
         "evidence": [
           "evidence/runs/B11-acceptance-go/result.json",
           "evidence/runs/B11-controller-channel-recheck/result.json"
+        ]
+      },
+      {
+        "id": "B15.1-popup-reconcile",
+        "status": "pending",
+        "sourceCommit": "387a40914853310d69adc2f52474134ced5f4811",
+        "action": "Reconcile B13 pulled-forward portal container changes and remaining Node25 storage shim.",
+        "evidence": [
+          "evidence/B13-drawer-popup-dependency.json"
         ]
       }
     ],

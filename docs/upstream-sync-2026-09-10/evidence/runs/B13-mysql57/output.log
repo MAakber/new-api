@@ -1,0 +1,43 @@
+=== RUN   TestLogStatisticsDatabaseMatrix
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql
+    log_statistics_test.go:19: isolated database: newapi_audit_1789110949863175700 (mysql)
+[SYS] 2026/09/11 - 15:15:49 | using MySQL as database 
+    log_statistics_test.go:19: database version: 5.7.44
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql/quota_survives_rate_scan
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql/historical_quota_keeps_current_rates
+=== RUN   TestLogStatisticsDatabaseMatrix/mysql/no_matching_owner
+--- PASS: TestLogStatisticsDatabaseMatrix (1.03s)
+    --- PASS: TestLogStatisticsDatabaseMatrix/mysql (1.03s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/mysql/quota_survives_rate_scan (0.05s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/mysql/historical_quota_keeps_current_rates (0.00s)
+        --- PASS: TestLogStatisticsDatabaseMatrix/mysql/no_matching_owner (0.00s)
+=== RUN   TestDeleteRedemptionBatch
+=== RUN   TestDeleteRedemptionBatch/mysql
+    redemption_batch_test.go:44: isolated database: newapi_audit_1789110950893788400 (mysql)
+    redemption_batch_test.go:45: isolated database: newapi_audit_1789110950907280400 (mysql)
+    redemption_batch_test.go:55: database version: 5.7.44
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/redemption/batch     --> github.com/QuantumNous/new-api/controller.DeleteRedemptionBatch (3 handlers)
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":null}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[0]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,-1]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":["1"]}
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{
+=== RUN   TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,1,1,1,1,1,1,1,1,1,1,
+--- PASS: TestDeleteRedemptionBatch (3.12s)
+    --- PASS: TestDeleteRedemptionBatch/mysql (3.12s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{} (0.21s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[]} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":null} (0.21s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[0]} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,-1]} (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":["1"]} (0.21s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{ (0.20s)
+        --- PASS: TestDeleteRedemptionBatch/mysql/invalid_{"ids":[1,1,1,1,1,1,1,1,1,1,1, (0.20s)
+PASS
+ok  	github.com/QuantumNous/new-api/controller	5.011s

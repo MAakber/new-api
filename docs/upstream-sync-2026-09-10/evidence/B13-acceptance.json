@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "scope": "B13 local stage acceptance; final candidate, production snapshot and provider gates remain pending",
+  "commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b",
+  "checked_at": "2026-09-11T07:28:22.030Z",
+  "checks": [
+    "evidence/runs/B13-stream-projection/result.json",
+    "evidence/runs/B13-sqlite/result.json",
+    "evidence/runs/B13-mariadb-postgres/result.json",
+    "evidence/runs/B13-mysql57/result.json",
+    "evidence/runs/B13-types-final/result.json",
+    "evidence/runs/B13-lint-final/result.json",
+    "evidence/runs/B13-i18n-fix/result.json",
+    "evidence/runs/B13-date-layout-fix/result.json",
+    "evidence/runs/B13-popup-regression/result.json"
+  ],
+  "frontend_tests": 224,
+  "partial_runs": [
+    {
+      "receipt": "evidence/runs/B13-frontend-run/result.json",
+      "passed": 212,
+      "failed": 8,
+      "resolved_by": [
+        "evidence/runs/B13-frontend-fix/result.json",
+        "evidence/runs/B13-popup-regression/result.json"
+      ],
+      "note": "Reuse unchanged successful files. Decimal step failures were Happy DOM exact-remainder validation; forms now exercise real submit validation. Split date/time inputs and browser CSS defaults restored. Audit popup pointer bug fixed with actual upstream portal-container dependency."
+    },
+    {
+      "receipt": "evidence/runs/B13-frontend-fix/result.json",
+      "passed": 57,
+      "failed": 30,
+      "resolved_by": "evidence/runs/B13-popup-regression/result.json",
+      "note": "The attempted inline-popup adaptation lacked required Base UI portal context. Replaced by upstream modal portal context. All 30 viewer cases and both selector suites pass."
+    },
+    {
+      "receipt": "evidence/runs/B13-preservation/result.json",
+      "passed_files": 8,
+      "failed_files": 1,
+      "resolved_by": "evidence/runs/B13-date-layout-fix/result.json",
+      "note": "Current month label update corrected old fixture; both layout and draft-confirm tests pass."
+    }
+  ],
+  "retained_failures": [
+    "evidence/runs/B13-frontend/result.json",
+    "evidence/runs/B13-types/result.json",
+    "evidence/runs/B13-lint/result.json",
+    "evidence/runs/B13-lint-fix/result.json",
+    "evidence/runs/B13-i18n/result.json"
+  ],
+  "source_equivalence": {
+    "database": "23a8b8fcf991bdf0023f0513de9bca08308b16f6",
+    "note": "Later changes affect frontend tests, translations and modal popup context only. Four-engine accounting/statistics/deletion evidence remains applicable."
+  },
+  "dependencies": [
+    "evidence/B13-request-trace-reconciliation.json",
+    "evidence/B13-drawer-popup-dependency.json"
+  ],
+  "notes": [
+    "Preserved CSV, subscription and registration codes, exact quota loads, masked avatars, channel/account diagnostics and administrator-only stream errors.",
+    "Separate audit databases used for deletion on all four engines.",
+    "No production writes or provider calls."
+  ]
+}

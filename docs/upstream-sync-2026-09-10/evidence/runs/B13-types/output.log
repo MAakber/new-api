@@ -1,0 +1,9 @@
+$ tsgo -b
+src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx(276,60): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+src/features/redemption-codes/components/__tests__/redemptions-export.test.tsx(280,65): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+src/features/usage-logs/components/__tests__/mobile-card.test.tsx(64,61): error TS2554: Expected 1 arguments, but got 2.
+error: script "typecheck" exited with code 1

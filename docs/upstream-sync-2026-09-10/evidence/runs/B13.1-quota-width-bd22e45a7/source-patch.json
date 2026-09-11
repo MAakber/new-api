@@ -1,0 +1,6 @@
+{
+  "upstream": "bd22e45a740a7c02c328704dc419d8795237cb74",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/features/keys/components/api-keys-columns.tsx' cleanly.\n"
+}
