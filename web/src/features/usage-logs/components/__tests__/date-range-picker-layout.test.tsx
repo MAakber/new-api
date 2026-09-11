@@ -53,7 +53,7 @@ await i18n.use(initReactI18next).init({
         '7 Days': '7 Days',
         'This week': 'This week',
         '30 Days': '30 Days',
-        'This month': 'This month',
+        'Current month': 'Current month',
         Confirm: 'Confirm',
       },
     },
@@ -132,7 +132,7 @@ describe('usage log date range picker layout', () => {
       '7 Days',
       'This week',
       '30 Days',
-      'This month',
+      'Current month',
     ])
     const presetButtons = [...popover.querySelectorAll('button')].filter(
       (button) => presetLabels.has(button.textContent ?? '')

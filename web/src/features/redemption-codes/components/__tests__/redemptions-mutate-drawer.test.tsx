@@ -121,9 +121,9 @@ test.each(['network', 'unsuccessful', 'wrong record'])(
   'blocks updates after a %s load failure',
   async (failure) => {
     const error = vi.spyOn(toast, 'error')
-    if (failure === 'network')
+    if (failure === 'network') {
       vi.mocked(api.get).mockRejectedValue(new Error('network failure'))
-    else
+    } else {
       vi.mocked(api.get).mockResolvedValue({
         data: {
           success: failure !== 'unsuccessful',
@@ -131,6 +131,7 @@ test.each(['network', 'unsuccessful', 'wrong record'])(
           message: 'raw server message',
         },
       })
+    }
     renderDrawer()
     await waitFor(() => expect(error).toHaveBeenCalled())
     expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled()
@@ -171,7 +172,10 @@ test.each([
     fireEvent.change(screen.getByRole('textbox', { name: 'Name' }), {
       target: { value: 'renamed' },
     })
-    fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+    // Happy DOM's exact-remainder step check incorrectly rejects decimals.
+    fireEvent.submit(
+      screen.getByRole('textbox', { name: 'Name' }).closest('form')!
+    )
     await waitFor(() =>
       expect(api.put).toHaveBeenCalledWith(
         '/api/redemption/',
@@ -195,7 +199,9 @@ test('recalculates quota only when the amount is edited', async () => {
   fireEvent.change(screen.getByRole('spinbutton', { name: 'Quota (USD)' }), {
     target: { value: '2' },
   })
-  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  fireEvent.submit(
+    screen.getByRole('textbox', { name: 'Name' }).closest('form')!
+  )
   await waitFor(() =>
     expect(api.put).toHaveBeenCalledWith(
       '/api/redemption/',
@@ -235,7 +241,9 @@ test('ignores the older request when switching records', async () => {
     await first
   })
   expect(screen.getByRole('textbox', { name: 'Name' })).toHaveValue('code-2')
-  fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
+  fireEvent.submit(
+    screen.getByRole('textbox', { name: 'Name' }).closest('form')!
+  )
   await waitFor(() =>
     expect(api.put).toHaveBeenCalledWith(
       '/api/redemption/',

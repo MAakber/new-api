@@ -587,6 +587,7 @@
     "Assign models from the model list to see them here.": "Назначьте поставщика в списке моделей, чтобы они появились здесь.",
     "Assigned by administrator only": "Назначается только администратором",
     "Assigned by administrators and used to represent a user level, such as default or vip.": "Назначается администраторами и обозначает уровень пользователя, например default или vip.",
+    "Async": "Асинхронно",
     "Async task polling": "Опрос асинхронных задач",
     "Async task refund": "Возврат асинхронной задачи",
     "At least one model regex pattern is required": "Требуется хотя бы один шаблон регулярного выражения модели",

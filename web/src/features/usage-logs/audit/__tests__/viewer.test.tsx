@@ -751,7 +751,9 @@ it('mobile access history keeps pagination visible and puts result filters in a 
     await user.click(screen.getByRole('button', { name: 'Filter' }))
     const drawer = await screen.findByRole('dialog', { name: 'Filter' })
     await user.click(within(drawer).getByRole('combobox', { name: 'Result' }))
-    await user.click(await screen.findByRole('option', { name: 'Failed' }))
+    const failedOption = await screen.findByRole('option', { name: 'Failed' })
+    expect(drawer).toContainElement(failedOption)
+    await user.click(failedOption)
     await waitFor(() =>
       expect(get).toHaveBeenLastCalledWith('/api/audit/self', {
         params: expect.objectContaining({ success: 'false', p: 1 }),

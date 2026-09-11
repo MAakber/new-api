@@ -56,6 +56,16 @@ beforeEach(() => {
     value: vi.fn(),
   })
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+  // Happy DOM has no CSS animation lifecycle or default transform value.
+  const getComputedStyle = window.getComputedStyle.bind(window)
+  vi.spyOn(window, 'getComputedStyle').mockImplementation((element) => {
+    const style = getComputedStyle(element)
+    Object.defineProperties(style, {
+      transform: { configurable: true, value: style.transform || 'none' },
+      animationName: { configurable: true, value: 'none' },
+    })
+    return style
+  })
 })
 
 function Fixture() {
@@ -98,7 +108,7 @@ async function renderMobileFilter() {
     routeTree: root.addChildren([auth.addChildren([logs])]),
     history: createMemoryHistory({
       initialEntries: [
-        '/usage-logs/common?page=3&type=%5B%222%22%5D&group=default',
+        `/usage-logs/common?page=3&type=%5B%222%22%5D&group=default&startTime=${new Date('2026-09-07T00:00').getTime()}&endTime=${new Date('2026-09-08T23:59').getTime()}`,
       ],
     }),
   })
@@ -133,10 +143,10 @@ it('applies the selected mobile date range directly and resets pagination while 
   const user = userEvent.setup()
   await user.click(screen.getByRole('button', { name: /^\d{4}-\d{2}/ }))
   fireEvent.change(screen.getByLabelText('Start Time'), {
-    target: { value: '2026-09-07T09:30' },
+    target: { value: '09:30' },
   })
   fireEvent.change(screen.getByLabelText('End Time'), {
-    target: { value: '2026-09-08T17:45' },
+    target: { value: '17:45' },
   })
   await user.click(screen.getByRole('button', { name: 'Confirm' }))
   await waitFor(() =>

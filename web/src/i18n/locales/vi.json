@@ -587,6 +587,7 @@
     "Assign models from the model list to see them here.": "Gán nhà cung cấp từ danh sách mô hình để hiển thị tại đây.",
     "Assigned by administrator only": "Chỉ quản trị viên gán",
     "Assigned by administrators and used to represent a user level, such as default or vip.": "Do quản trị viên gán và dùng để biểu thị cấp người dùng, ví dụ default hoặc vip.",
+    "Async": "Bất đồng bộ",
     "Async task polling": "Thăm dò tác vụ bất đồng bộ",
     "Async task refund": "Hoàn tiền tác vụ bất đồng bộ",
     "At least one model regex pattern is required": "Cần ít nhất một mẫu regex mô hình",

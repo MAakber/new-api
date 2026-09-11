@@ -38,6 +38,7 @@ function AuditFilterSelect(props: {
   return (
     <LogsFilterField>
       <Combobox
+        portal={false}
         options={props.options}
         value={props.value}
         onValueChange={(value) => {

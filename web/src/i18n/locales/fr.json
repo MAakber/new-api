@@ -587,6 +587,7 @@
     "Assign models from the model list to see them here.": "Attribuez des modèles à ce fournisseur depuis la liste des modèles.",
     "Assigned by administrator only": "Attribué uniquement par l'administrateur",
     "Assigned by administrators and used to represent a user level, such as default or vip.": "Attribué par les administrateurs pour représenter un niveau utilisateur, comme default ou vip.",
+    "Async": "Asynchrone",
     "Async task polling": "Interrogation des tâches asynchrones",
     "Async task refund": "Remboursement de tâche asynchrone",
     "At least one model regex pattern is required": "Au moins un modèle de regex est requis",

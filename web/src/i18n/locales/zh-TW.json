@@ -587,6 +587,7 @@
     "Assign models from the model list to see them here.": "在模型清單中設定供應商歸屬後，模型將顯示於此處。",
     "Assigned by administrator only": "僅管理員分配",
     "Assigned by administrators and used to represent a user level, such as default or vip.": "由管理員分配，用於表示用戶等級，例如 default 或 vip。",
+    "Async": "非同步",
     "Async task polling": "異步任務輪詢",
     "Async task refund": "異步任務退款",
     "At least one model regex pattern is required": "至少需要一個模型正則匹配模式",

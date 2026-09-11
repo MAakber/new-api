@@ -235,6 +235,15 @@ it('keeps the compact input and masks the dropdown together with other sensitive
 })
 
 it('lets mobile users select a long group name inside the filter drawer and submit it', async () => {
+  const getComputedStyle = window.getComputedStyle.bind(window)
+  vi.spyOn(window, 'getComputedStyle').mockImplementation((element) => {
+    const style = getComputedStyle(element)
+    Object.defineProperties(style, {
+      transform: { configurable: true, value: style.transform || 'none' },
+      animationName: { configurable: true, value: 'none' },
+    })
+    return style
+  })
   Object.defineProperty(HTMLElement.prototype, 'setPointerCapture', {
     configurable: true,
     value: vi.fn(),

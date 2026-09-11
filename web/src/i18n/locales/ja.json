@@ -587,6 +587,7 @@
     "Assign models from the model list to see them here.": "モデル一覧でプロバイダーを割り当てると、ここに表示されます。",
     "Assigned by administrator only": "管理者のみ割り当て",
     "Assigned by administrators and used to represent a user level, such as default or vip.": "管理者が割り当て、default や vip などのユーザーレベルを表します。",
+    "Async": "非同期",
     "Async task polling": "非同期タスクのポーリング",
     "Async task refund": "非同期タスク返金",
     "At least one model regex pattern is required": "少なくとも1つのモデル正規表現パターンが必要です",

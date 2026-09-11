@@ -220,9 +220,9 @@ test('successful batch creation opens export with returned codes and the configu
   fireEvent.change(within(createDialog).getByLabelText('Quota (CNY)'), {
     target: { value: '2000' },
   })
-  await user.click(
-    within(createDialog).getByRole('button', { name: 'Save changes' })
-  )
+  // Happy DOM checks decimal input steps with an exact remainder; submit the
+  // form event so React Hook Form validates the real decimal amount instead.
+  fireEvent.submit(within(createDialog).getByLabelText('Name').closest('form')!)
   const exportDialog = await screen.findByRole('dialog', {
     name: 'Redemption codes created',
   })
@@ -272,12 +272,10 @@ test.each([
       target: { value: 'benefit' },
     })
     if (kind === 'registration') {
-      await user.click(
-        screen.getByRole('button', { name: 'Registration', exact: true })
-      )
+      await user.click(screen.getByRole('button', { name: 'Registration' }))
     } else {
       await user.click(
-        screen.getByRole('button', { name: 'Subscription plan', exact: true })
+        screen.getByRole('button', { name: 'Subscription plan' })
       )
       await user.click(
         screen.getByRole('combobox', { name: 'Subscription plan' })

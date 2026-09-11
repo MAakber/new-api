@@ -61,7 +61,7 @@ function Fixture(props: {
   logs?: UsageLog[]
   loading?: boolean
 }) {
-  const columns = useCommonLogsColumns(props.admin ?? true, false)
+  const columns = useCommonLogsColumns(props.admin ?? true)
   const context = useUsageLogsContext()
   const table = useReactTable({
     data: props.logs ?? [log],
