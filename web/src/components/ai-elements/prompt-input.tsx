@@ -89,6 +89,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { handleServerError } from '@/lib/handle-server-error'
 import { cn } from '@/lib/utils'
 
 // ============================================================================
@@ -177,20 +178,19 @@ export function PromptInputProvider({
   const openRef = useRef<() => void>(() => {})
 
   const add = useCallback((files: File[] | FileList) => {
-    const incoming = Array.from(files)
+    const incoming = [...files]
     if (incoming.length === 0) return
 
-    setAttachements((prev) =>
-      prev.concat(
-        incoming.map((file) => ({
-          id: nanoid(),
-          type: 'file' as const,
-          url: URL.createObjectURL(file),
-          mediaType: file.type,
-          filename: file.name,
-        }))
-      )
-    )
+    setAttachements((prev) => [
+      ...prev,
+      ...incoming.map((file) => ({
+        id: nanoid(),
+        type: 'file' as const,
+        url: URL.createObjectURL(file),
+        mediaType: file.type,
+        filename: file.name,
+      })),
+    ])
   }, [])
 
   const remove = useCallback((id: string) => {
@@ -509,7 +509,7 @@ export const PromptInput = ({
 
   const addLocal = useCallback(
     (fileList: File[] | FileList) => {
-      const incoming = Array.from(fileList)
+      const incoming = [...fileList]
       const accepted = incoming.filter((f) => matchesAccept(f))
       if (incoming.length && accepted.length === 0) {
         onError?.({
@@ -552,7 +552,7 @@ export const PromptInput = ({
             filename: file.name,
           })
         }
-        return prev.concat(next)
+        return [...prev, ...next]
       })
     },
     [matchesAccept, maxFiles, maxFileSize, onError, t]
@@ -737,33 +737,39 @@ export const PromptInput = ({
         }
         return item
       })
-    ).then((convertedFiles: FileUIPart[]) => {
-      try {
-        const result = onSubmit({ text, files: convertedFiles }, event)
+    )
+      .then((convertedFiles: FileUIPart[]) => {
+        try {
+          const result = onSubmit({ text, files: convertedFiles }, event)
 
-        // Handle both sync and async onSubmit
-        if (result instanceof Promise) {
-          result
-            .then(() => {
-              clear()
-              if (usingProvider) {
-                controller.textInput.clear()
-              }
-            })
-            .catch(() => {
-              // Don't clear on error - user may want to retry
-            })
-        } else {
-          // Sync function completed without throwing, clear attachments
-          clear()
-          if (usingProvider) {
-            controller.textInput.clear()
+          // Handle both sync and async onSubmit
+          if (result instanceof Promise) {
+            result
+              .then(() => {
+                clear()
+                if (usingProvider) {
+                  controller.textInput.clear()
+                }
+              })
+              .catch(() => {
+                // Don't clear on error - user may want to retry
+              })
+          } else {
+            // Sync function completed without throwing, clear attachments
+            clear()
+            if (usingProvider) {
+              controller.textInput.clear()
+            }
           }
+        } catch {
+          // Don't clear on error - user may want to retry
         }
-      } catch (_error) {
-        // Don't clear on error - user may want to retry
-      }
-    })
+      })
+      .catch((error) => {
+        // Attachment conversion failed before the submit callback could report it.
+        // Retain attachments so the user can retry.
+        handleServerError(error)
+      })
   }
 
   // Render with or without local provider
@@ -842,9 +848,7 @@ export const PromptInputTextarea = ({
     ) {
       e.preventDefault()
       const lastAttachment =
-        attachments.files.length > 0
-          ? attachments.files[attachments.files.length - 1]
-          : undefined
+        attachments.files.length > 0 ? attachments.files.at(-1) : undefined
       if (lastAttachment) {
         attachments.remove(lastAttachment.id)
       }
@@ -1138,9 +1142,12 @@ export const PromptInputSpeechButton = ({
       speechRecognition.onresult = (event) => {
         let finalTranscript = ''
 
-        const results = Array.from(event.results)
-
-        for (const result of results) {
+        for (
+          let resultIndex = 0;
+          resultIndex < event.results.length;
+          resultIndex++
+        ) {
+          const result = event.results[resultIndex]
           if (result.isFinal) {
             finalTranscript += result[0]?.transcript ?? ''
           }

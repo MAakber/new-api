@@ -154,8 +154,9 @@ test.each(['network', 'unsuccessful', 'missing message', 'wrong record'])(
     expect(api.put).not.toHaveBeenCalled()
     let expected = 'Redemption code is no longer available'
     if (failure === 'network') expected = 'network failure'
-    if (failure === 'missing message')
+    if (failure === 'missing message') {
       expected = 'Failed to load redemption code'
+    }
     expect(error).toHaveBeenCalledWith(expected)
   }
 )

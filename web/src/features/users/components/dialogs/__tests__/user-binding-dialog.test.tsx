@@ -270,15 +270,17 @@ describe('UserBindingDialog shared status updates', () => {
     const get = vi.fn(async (url: string) => {
       if (url === '/api/status') return { data: { success: true, data: {} } }
       if (url === '/api/user/7') return previousUser
-      if (url === '/api/user/8')
-        {return {
+      if (url === '/api/user/8') {
+        return {
           data: {
             success: true,
             data: { ...user, id: 8, username: 'selected-user' },
           },
-        }}
-      if (url.endsWith('/oauth/bindings'))
-        {return { data: { success: true, data: [] } }}
+        }
+      }
+      if (url.endsWith('/oauth/bindings')) {
+        return { data: { success: true, data: [] } }
+      }
       throw new Error(`Unexpected GET ${url}`)
     })
     apiClient.get = get

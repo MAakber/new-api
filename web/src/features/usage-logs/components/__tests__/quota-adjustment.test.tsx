@@ -25,14 +25,7 @@ import {
 import { act, render, screen, within } from '@testing-library/react'
 import { createInstance } from 'i18next'
 import { I18nextProvider } from 'react-i18next'
-import {
-  afterEach,
-  beforeEach,
-  describe,
-  expect,
-  test,
-  vi,
-} from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import en from '@/i18n/locales/en.json'
 import zh from '@/i18n/locales/zh.json'

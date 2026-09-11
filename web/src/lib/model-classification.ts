@@ -340,12 +340,22 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
     family: /^phi(?:[-.]|\d|$)/,
   },
   {
-    provider: { id: 'amazon', name: 'Amazon', icon: 'Aws.Color', label: 'Amazon' },
+    provider: {
+      id: 'amazon',
+      name: 'Amazon',
+      icon: 'Aws.Color',
+      label: 'Amazon',
+    },
     namespaces: ['amazon', 'aws'],
     family: /^(?:nova|titan)(?:[-.]|$)/,
   },
   {
-    provider: { id: 'ai21', name: 'AI21 Labs', icon: 'Ai21', label: 'AI21 Labs' },
+    provider: {
+      id: 'ai21',
+      name: 'AI21 Labs',
+      icon: 'Ai21',
+      label: 'AI21 Labs',
+    },
     namespaces: ['ai21', 'ai21labs'],
     family: /^(?:ai21|jamba)(?:[-.]|$)/,
   },
@@ -360,7 +370,12 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
     family: /^hermes(?:[-.]|$)/,
   },
   {
-    provider: { id: '360ai', name: '360 AI', icon: 'Ai360.Color', label: '360 AI' },
+    provider: {
+      id: '360ai',
+      name: '360 AI',
+      icon: 'Ai360.Color',
+      label: '360 AI',
+    },
     namespaces: ['360ai', '360zhinao'],
     family: /^360(?:gpt|zhinao)(?:[-.]|\d|$)/,
   },
@@ -380,7 +395,12 @@ const PROVIDER_RULES: readonly ProviderRule[] = [
     family: /^vidu(?:[-.]|\d|$)/,
   },
   {
-    provider: { id: 'jimeng', name: 'Jimeng', icon: 'Jimeng.Color', label: 'Jimeng' },
+    provider: {
+      id: 'jimeng',
+      name: 'Jimeng',
+      icon: 'Jimeng.Color',
+      label: 'Jimeng',
+    },
     namespaces: ['jimeng'],
     family: /^jimeng(?:[-.]|\d|$)/,
   },

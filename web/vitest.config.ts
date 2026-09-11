@@ -22,6 +22,8 @@ import { fileURLToPath } from 'node:url'
 
 import { defineConfig } from 'vitest/config'
 
+import playgroundConfig from './vitest.playground.config.ts'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Preserve fixtures that own their DOM and responsive tests that use Happy DOM
@@ -32,7 +34,9 @@ const files = fs
   .map((file) => `src/${String(file).replaceAll('\\', '/')}`)
 const isolatedDOM: string[] = []
 const responsive: string[] = []
+const playground = ['src/features/playground/**/*.{test,spec}.{ts,tsx}']
 for (const file of files) {
+  if (file.startsWith('src/features/playground/')) continue
   const source = fs.readFileSync(path.join(__dirname, file), 'utf8')
   if (/new Window\(/.test(source) && source.includes("from 'happy-dom'")) {
     isolatedDOM.push(file)
@@ -60,7 +64,16 @@ export default defineConfig({
           restoreMocks: true,
           server,
           include: ['src/**/*.{test,spec}.{ts,tsx}'],
-          exclude: [...isolatedDOM, ...responsive],
+          exclude: [...isolatedDOM, ...responsive, ...playground],
+        },
+      },
+      {
+        ...playgroundConfig,
+        test: {
+          ...playgroundConfig.test,
+          name: 'playground',
+          server,
+          include: playground,
         },
       },
       {

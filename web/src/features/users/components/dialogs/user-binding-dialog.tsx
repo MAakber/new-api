@@ -197,8 +197,9 @@ export function UserBindingDialog(props: Props) {
         setOauthBindings(oauthRes.data)
       }
     } catch (error) {
-      if (version === loadVersion.current)
+      if (version === loadVersion.current) {
         handleServerError(error, t('Failed to load'))
+      }
     } finally {
       if (version === loadVersion.current) setLoading(false)
     }

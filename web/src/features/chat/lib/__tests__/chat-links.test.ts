@@ -26,7 +26,9 @@ import {
 
 describe('AQBot provider import', () => {
   it('requires an API key before opening the configured custom protocol', () => {
-    const presets = parseChatConfig([{ AQBot: 'aqbot://providers?{aqbotConfig}' }])
+    const presets = parseChatConfig([
+      { AQBot: 'aqbot://providers?{aqbotConfig}' },
+    ])
     expect(presets).toEqual([
       {
         id: '0',
@@ -44,7 +46,8 @@ describe('AQBot provider import', () => {
       const resolved = new URL(
         resolveChatUrl({
           template: 'aqbot://providers?{aqbotConfig}',
-          serverAddress: 'https://gateway.example.test/api?tenant=one&region=two',
+          serverAddress:
+            'https://gateway.example.test/api?tenant=one&region=two',
           apiKey,
         })
       )

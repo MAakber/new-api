@@ -29,7 +29,7 @@ describe('fetch models filtering and selection', () => {
     })
     await screen.findByRole('checkbox', { name: 'grok-4' })
     expect(screen.queryByText('xAI')).not.toBeNull()
-    expect(screen.queryByRole('button', { name: /^Other \d/ })).toBeNull()
+    expect(screen.queryByRole('button', { name: /^Other\s*\d/ })).toBeNull()
   })
 
   it('unions selected types, combines search, and counts each model once', async () => {
@@ -193,7 +193,7 @@ describe('fetch models filtering and selection', () => {
       customFetcher: async () => ['grok-4', 'grok-imagine-image'],
     })
     await screen.findByRole('checkbox', { name: 'grok-4' })
-    const header = screen.getByRole('button', { name: /^xAI / })
+    const header = screen.getByRole('button', { name: /^xAI\s*\d/ })
     await user.click(header)
     expect(header.getAttribute('aria-expanded')).toBe('false')
     await user.click(

@@ -154,6 +154,9 @@ function ChatRouteComponent() {
   }
 
   return (
+    // Administrator-configured chat apps need their original storage, OAuth,
+    // downloads and media permissions. Preserve the existing trusted-app embed.
+    // oxlint-disable-next-line react/iframe-missing-sandbox
     <iframe
       src={iframeSrc}
       key={iframeSrc}
