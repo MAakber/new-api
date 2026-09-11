@@ -134,6 +134,7 @@ function OptionCombobox(props: LegacyComboboxProps) {
           id={props.id}
           disabled={props.disabled}
           onBlur={props.onBlur}
+          onKeyDown={props.onKeyDown}
           onFocus={(event) => {
             // Base UI restores focus after selection. Only open here for an
             // explicit focus preference; ordinary clicks and keys are native.
