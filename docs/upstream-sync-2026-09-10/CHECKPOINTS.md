@@ -2597,3 +2597,7 @@ HEAD 3363f4e6febf1d91174cc8cfeed7035996c08850. Source clean. All 12 B16 adaptati
 ## 2026-09-11T11:40:45.841Z — B16 verified; all 153 upstream adaptations accepted at stage level
 
 Code 3363f4e6febf1d91174cc8cfeed7035996c08850. Windows NSIS and portable artifacts built; packaged backend, desktop source, version and all license files verified. B17 real merge and final 153/120/26 acceptance remain. No publishing or production changes.
+
+## 2026-09-11T11:42:08.754Z — B17.1 fixed upstream merge intent
+
+All B00-B16 accepted; clean integration worktree at f006b9ffa0d352100b9ac6d6039dca6e7795773f. Merge target bdef117505247769268b209665fb3ad7554c3da7. Use normal merge strategy, inspect both automatic edits and conflicts, retain all downstream identities, adapters, accounting invariants and UI state.

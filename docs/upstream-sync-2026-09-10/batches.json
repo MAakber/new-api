@@ -2673,12 +2673,12 @@
     ],
     "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
     "upstreamCommits": [],
-    "status": "pending",
+    "status": "in_progress",
     "units": [
       {
         "id": "B17.1",
         "action": "建立合并前检查点，执行固定目标真实 merge --no-ff --no-commit",
-        "status": "pending"
+        "status": "applying"
       },
       {
         "id": "B17.2",
