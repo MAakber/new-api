@@ -1,0 +1,7 @@
+feat(plugins): support Wan 3 video generation
+
+Adapt upstream 3b4652269a6a6d9e2c8650a84ee8c4e447e6473b.
+
+Imported Wan 3 model protocol support, bounded smart duration estimates and fixtures; legacy Alibaba routing and pricing are retained. Final Wan accounting follow-up remains in this batch.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

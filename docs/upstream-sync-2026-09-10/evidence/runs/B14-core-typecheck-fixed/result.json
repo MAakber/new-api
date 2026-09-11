@@ -1,0 +1,25 @@
+{
+  "id": "B14-core-typecheck-fixed",
+  "command": [
+    "bun",
+    "run",
+    "typecheck"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "af63b8cd98e46fe51e266200481c1358e475c341",
+  "started_at": "2026-09-11T08:39:58.514Z",
+  "finished_at": "2026-09-11T08:40:02.554Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

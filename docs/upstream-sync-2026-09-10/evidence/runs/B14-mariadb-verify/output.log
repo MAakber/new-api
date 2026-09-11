@@ -1,0 +1,15 @@
+=== RUN   TestDatabaseUpgradePreservesDownstreamData
+[SYS] 2026/09/11 - 18:00:46 | using MySQL as database 
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: 11.4.4-MariaDB-ubu2404
+[SYS] 2026/09/11 - 18:00:46 | using MySQL as database 
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 11.4.4-MariaDB-ubu2404
+=== RUN   TestDatabaseUpgradePreservesDownstreamData/task_state_noop_keeps_only_a_valid_lease
+
+2026/09/11 18:00:53 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:256
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state:result` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:256
+
+2026/09/11 18:00:53 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:248
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:248
+--- PASS: TestDatabaseUpgradePreservesDownstreamData (6.92s)
+    --- PASS: TestDatabaseUpgradePreservesDownstreamData/task_state_noop_keeps_only_a_valid_lease (0.43s)
+PASS

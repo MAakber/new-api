@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-09-11T07:30:53.822Z",
+  "head": "af63b8cd98e46fe51e266200481c1358e475c341",
+  "files": [
+    "constant/channel.go",
+    "common/api_type.go",
+    "relay/relay_adaptor.go",
+    "controller/model.go",
+    "model/channel.go",
+    "model/task.go",
+    "relaykit/dto/channel_settings.go",
+    "web/src/features/channels/constants.ts",
+    "web/src/features/channels/lib/channel-form.ts"
+  ],
+  "preserved": {
+    "57": "ChatGPT Subscription (Codex)",
+    "61": "Codex compatibility",
+    "62": "Claude Code",
+    "63": "CodeBuddy",
+    "64": "Vercel AI Gateway"
+  },
+  "allocation": {
+    "TaskPlugin": 65
+  },
+  "rationale": "Full declared backend/frontend enums and independent relaykit identity mappings reserve through 64. No declared channel 65 exists. Add plugin 65 and bounds-safe base URL lookup; do not rewrite existing channel types or interpret downstream 61 as upstream plugin 61.",
+  "storage_policy": "Released baseline fixtures must cover all protected IDs and old in-flight tasks. Production snapshot remains a release gate. Reject ambiguous foreign plugin imports rather than automatic integer-only remapping.",
+  "legacy_policy": "Retain built-in task adaptors, protocol entry points and legacy pricing for unmigrated channels/tasks. Plugin submission and polling use explicit plugin binding/execution snapshots. No bulk conversion at startup."
+}

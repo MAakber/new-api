@@ -1,0 +1,25 @@
+{
+  "id": "B14-relaykit-independent",
+  "command": [
+    "go",
+    "build",
+    "./..."
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\relaykit",
+  "tested_commit": "4c972e46993ed647cab38f22b6d4525b21c42b00",
+  "started_at": "2026-09-11T09:46:37.645Z",
+  "finished_at": "2026-09-11T09:46:40.530Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "off",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

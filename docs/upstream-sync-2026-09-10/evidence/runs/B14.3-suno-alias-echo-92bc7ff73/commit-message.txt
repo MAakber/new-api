@@ -1,0 +1,7 @@
+fix(plugins): preserve Suno aliases and public model echoes
+
+Adapt upstream 92bc7ff73c5ef215496d09d3e4b5769c9e35006b.
+
+Applied alias-safe Suno decoding and response rendering, nonempty header propagation and built-in alias echo regressions.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

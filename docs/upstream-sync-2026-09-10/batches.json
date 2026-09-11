@@ -2022,51 +2022,278 @@
       "9bf328d9749751757d5d6b74088d514813a618bd",
       "a20574136b2746e9afc4b268c99cf99b3f6cc68b"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B14.1",
         "action": "盘点编号/索引数组/数据导入，确定新编号并记录决策",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
       },
       {
         "id": "B14.2",
         "action": "保留旧内置渠道和在途任务语义，完成价格与任务迁移",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
       },
       {
         "id": "B14.3",
         "action": "完整引入插件市场/能力/新视频支持，验证升级、轮询、幂等与退款",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
       },
       {
         "id": "B14.1-scoped-plugin-logs",
         "action": "Apply pending 057f71c2336c3981187b732a9d06f65490e9a946 plugin/task log adaptations and their tests: service/task_plugin_audit.go, appendTaskLogInfo, task TieredSnapshot/UsageFacts, controller context audit and frontend plugin/root metadata types. New plugin metadata must use admin/root scopes and user APIs must strip them.",
-        "status": "pending",
+        "status": "verified",
         "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
-        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
+        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
       },
       {
         "id": "B14.1-token-audit-fixtures",
-        "status": "pending",
-        "action": "Integrate d8cb177440ceaae422d5bfd96c258d47af4e0f1d changes to controller/channel_task_plugin_bind_test.go and router/plugin_router_test.go: migrate AuditLog and verify plugin credential paths do not leak into audit rows."
+        "status": "verified",
+        "action": "Integrate d8cb177440ceaae422d5bfd96c258d47af4e0f1d changes to controller/channel_task_plugin_bind_test.go and router/plugin_router_test.go: migrate AuditLog and verify plugin credential paths do not leak into audit rows.",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
       },
       {
         "id": "B14.1-model-pricing-integration",
-        "status": "pending",
+        "status": "verified",
         "sourceCommit": "0c76e4dae77a279e015329b7478e6f02d6b62edd",
         "action": "Apply the pricing usage-schema, task expression validation/editor and plugin selectors deferred from B12. Preserve canonical pricing rows and CAS; restore the task usage matrix cases.",
-        "dependencyEvidence": "evidence/B12-plugin-pricing-deferred.json"
+        "dependencyEvidence": "evidence/B12-plugin-pricing-deferred.json",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
       },
       {
         "id": "B14.1-billing-audit-fixture",
-        "status": "pending",
-        "action": "Restore controller/billing_option_test.go task-schema and alias validation from plugin implementation; retain AuditLog fixture migration required by d8cb177440ceaae422d5bfd96c258d47af4e0f1d. Adapt the tests to the shared canonical pricing writer rather than restoring unrestricted generic pricing writes."
+        "status": "verified",
+        "action": "Restore controller/billing_option_test.go task-schema and alias validation from plugin implementation; retain AuditLog fixture migration required by d8cb177440ceaae422d5bfd96c258d47af4e0f1d. Adapt the tests to the shared canonical pricing writer rather than restoring unrestricted generic pricing writes.",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.2-plugin-runtime",
+        "action": "feat(task): replace built-in task adaptors with a sandboxed JS plugin system (#7076)",
+        "status": "verified",
+        "upstreamCommits": [
+          "eb48396d5fe97d27772d0cd5e3ca8aa5caa4f3e9"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.2-model-aliases",
+        "action": "feat(task): resolve channel-mapped aliases and case variants for plugin models",
+        "status": "verified",
+        "upstreamCommits": [
+          "6c22550ea325d4fea0e0ece52412cb1e4449291c"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-factory-updates",
+        "action": "feat(web): factory task plugins update only with the system",
+        "status": "verified",
+        "upstreamCommits": [
+          "dc4732cfed712b004d3d3d94a414d3ff127a93cc"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-hailuo-h3",
+        "action": "feat(plugin): add MiniMax-H3 /v2 video generation to the hailuo task … (#7168)",
+        "status": "verified",
+        "upstreamCommits": [
+          "aece11d2f7f095a33052696c5d28d3656609a99e"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-hailuo-input-usage",
+        "action": "fix(plugin): account for MiniMax-H3 input media usage (#7171)",
+        "status": "verified",
+        "upstreamCommits": [
+          "73afad588ca7af07134fa423e8a33fdea6c855b2"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-polling-context",
+        "action": "feat(task): give polling hooks a real query context, host HTTP classification, and bounded poll failures",
+        "status": "verified",
+        "upstreamCommits": [
+          "9df450fe54e1a874a5339b7c38a61014217f02c3"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-channel-diagnostics",
+        "action": "fix(task): explain 503 when a plugin-claimed model has no channel",
+        "status": "verified",
+        "upstreamCommits": [
+          "32c261923a9786c64d2af087327ef057e7bde7e3"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-wan3",
+        "action": "feat(ali): support wan3.0 all-in-one video models",
+        "status": "verified",
+        "upstreamCommits": [
+          "3b4652269a6a6d9e2c8650a84ee8c4e447e6473b"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-disable-overrides",
+        "action": "fix(plugin): suppress factory layer when disabling an overridden task plugin",
+        "status": "verified",
+        "upstreamCommits": [
+          "6298b0f3238461b9629dfc1c00866f8325123aa1"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-suno-alias-echo",
+        "action": "fix(plugins): make sunoapi alias-safe and lock alias echo across built-ins",
+        "status": "verified",
+        "upstreamCommits": [
+          "92bc7ff73c5ef215496d09d3e4b5769c9e35006b"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-plugin-switches",
+        "action": "refactor(task): remove the custom-plugin layer switch",
+        "status": "verified",
+        "upstreamCommits": [
+          "210734bb73bc3c6e37548af90360aa4226566fe2"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-plugin-metadata",
+        "action": "feat(plugins): extend plugin metadata and icon support",
+        "status": "verified",
+        "upstreamCommits": [
+          "99974a814f00a26dfa7431beb313e487529bbeed"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-plugin-marketplace",
+        "action": "feat(web): improve plugin management and marketplace",
+        "status": "verified",
+        "upstreamCommits": [
+          "984330920061e014159c7581b8fcdb726de2c247"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-plugin-channel-ui",
+        "action": "feat(channels): improve plugin channel setup and icons",
+        "status": "verified",
+        "upstreamCommits": [
+          "eb76b136b85ecba9d6ad19c714c5781e51815530"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-sora-query",
+        "action": "fix: preserve provider fields in Sora video queries",
+        "status": "verified",
+        "upstreamCommits": [
+          "9bf328d9749751757d5d6b74088d514813a618bd"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.3-wan-accounting",
+        "action": "fix(alibaba): correct Wan model protocols and usage accounting",
+        "status": "verified",
+        "upstreamCommits": [
+          "a20574136b2746e9afc4b268c99cf99b3f6cc68b"
+        ],
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
+      },
+      {
+        "id": "B14.4-consolidated-acceptance",
+        "status": "verified",
+        "action": "Consolidated plugin, legacy-channel, billing audit and migration acceptance",
+        "evidence": [
+          "evidence/B14-acceptance.json"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "盘点编号/索引数组/数据导入，确定新编号并记录决策"
+    "codeCommits": [
+      "92023c5394bc343e6d775f3f5511b379a90475dd",
+      "456abaeb1807ae0976db435fb8c74d67cbc47d80",
+      "ddd16ddb6ede1a8222746a543e0af9c2aed3b7ab",
+      "5bbd061deb1de5202bb6e5bfc1f95dfb89b83aa0",
+      "284a30c3af0b37fd8bc3f2b868531b54e26e94c8",
+      "64b05de81336f583bc969b851a27fb8b235f18ab",
+      "499885a32887cf25de1593dd55754f1a311d2a2f",
+      "cf98799c0a808078ef879e2e29970c8347f285ab",
+      "822610535d291839360f1ea019bf94a335bcac24",
+      "bd55394bc7e0991f8829bc4b8014af091a9dac51",
+      "3dcb4fd38513417503cae246b96cbef2b2dae888",
+      "bf58139bcce68818e9ee61fc1a48db196819235b",
+      "bb5bc679d23470bb6ddc96b71bf4051ec85c897e",
+      "7f55c4ed5f5ed1e84009b93e9e38477bc8110156",
+      "619264819777dc4b94f6fb18219be087f1af6c25",
+      "6274b21d34dd09ca7341ec4c44fda1d02cf4569b",
+      "4c972e46993ed647cab38f22b6d4525b21c42b00",
+      "aa817ab6c9a6fa9774806b2589214d9945cb48db",
+      "bd66eec0498a4d3262dbdade7597524eb7825c76"
+    ],
+    "evidence": [
+      "evidence/B14-acceptance.json"
+    ],
+    "nextAction": "Proceed to B15; final browser and production environment acceptance remain separate gates"
   },
   {
     "id": "B15",

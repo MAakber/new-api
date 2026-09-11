@@ -1,0 +1,7 @@
+fix(task): explain missing plugin channel bindings
+
+Adapt upstream 32c261923a9786c64d2af087327ef057e7bde7e3.
+
+Added translated binding diagnostics for pinned and shared candidate plugins. The explanation preserves ordinary-channel coexistence and does not require disabling a plugin to use existing legacy channels.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

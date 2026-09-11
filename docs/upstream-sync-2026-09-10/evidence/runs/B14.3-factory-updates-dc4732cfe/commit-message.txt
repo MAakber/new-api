@@ -1,0 +1,7 @@
+feat(plugins): retain factory plugins on the system update path
+
+Adapt upstream dc4732cfed712b004d3d3d94a414d3ff127a93cc.
+
+Applied marketplace action policy and stale override hints with all seven translations. Existing intentional overrides and third-party installations remain available; consolidated B14 UI validation follows.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

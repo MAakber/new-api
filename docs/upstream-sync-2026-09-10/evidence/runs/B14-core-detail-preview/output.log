@@ -1,0 +1,10 @@
+$ vitest run --config vitest.pricing.config.ts src/features/usage-logs/components/__tests__/detail-preview.test.tsx
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  16:39:59
+   Duration  7.65s (import 63%, environment 14%, transform 13%, setup 7%, tests 3%)
+

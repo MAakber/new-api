@@ -1,0 +1,30 @@
+{
+  "id": "B14-fixture-repair",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "./model",
+    "-run",
+    "Test(AddChannelTaskPlugin|UpdateChannelPluginDefault|CodeBuddyChannel|VercelChannel|DatabaseUpgradePreservesDownstreamData|WalletSchemaMigrationContracts)",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "4c972e46993ed647cab38f22b6d4525b21c42b00",
+  "started_at": "2026-09-11T09:46:37.611Z",
+  "finished_at": "2026-09-11T09:46:59.354Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

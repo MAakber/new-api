@@ -1,0 +1,13 @@
+{
+  "upstream": "9bf328d9749751757d5d6b74088d514813a618bd",
+  "before_head": "7f55c4ed5f5ed1e84009b93e9e38477bc8110156",
+  "after_head": "619264819777dc4b94f6fb18219be087f1af6c25",
+  "files": [
+    "docs/plugin-api/README.md",
+    "docs/plugin-api/v1.md",
+    "plugins/tasks/sora/plugin.js",
+    "relay/channel/task/jsplugin/adaptor.go",
+    "relay/channel/task/jsplugin/adaptor_test.go"
+  ],
+  "rationale": "Keep raw provider video fields during query rendering while replacing public task identity and status through the existing protocol adapter. Preserve legacy task fetch behavior and execution snapshots."
+}

@@ -1,0 +1,570 @@
+[
+  {
+    "file": "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "index": 1,
+    "ours": "                        {/* Custom (type 8) */}\n                        {currentType === 8 && (\n",
+    "theirs": "                          {currentType === CHANNEL_TYPE_TASK_PLUGIN && (\n                            <FormField\n                              control={form.control}\n                              name='task_plugin_key'\n                              render={({ field }) => (\n                                <FormItem>\n                                  <FormLabel>{t('Task plugin *')}</FormLabel>\n                                  {canBindTaskPlugin ? (\n                                    <Select\n                                      value={field.value}\n                                      onValueChange={(value) => {\n                                        field.onChange(value)\n                                        const plugin =\n                                          taskPluginOptionsQuery.data?.find(\n                                            (item) => item.key === value\n                                          )\n                                        if (plugin?.models?.length) {\n                                          form.setValue(\n                                            'models',\n                                            formatModelsArray(plugin.models),\n                                            {\n                                              shouldDirty: true,\n                                            }\n                                          )\n                                        }\n                                      }}\n                                      items={(\n                                        taskPluginOptionsQuery.data ?? []\n                                      ).map((plugin) => ({\n                                        value: plugin.key,\n                                        label: `${plugin.name} (${plugin.key})`,\n                                      }))}\n                                    >\n                                      <FormControl>\n                                        <SelectTrigger>\n                                          <SelectValue\n                                            placeholder={t(\n                                              'Select task plugin'\n                                            )}\n                                          />\n                                        </SelectTrigger>\n                                      </FormControl>\n                                      <SelectContent>\n                                        {(\n                                          taskPluginOptionsQuery.data ?? []\n                                        ).map((plugin) => (\n                                          <SelectItem\n                                            key={plugin.key}\n                                            value={plugin.key}\n                                          >\n                                            {plugin.name} ({plugin.key})\n                                          </SelectItem>\n                                        ))}\n                                      </SelectContent>\n                                    </Select>\n                                  ) : (\n                                    <FormControl>\n                                      <Input\n                                        readOnly\n                                        value={field.value ?? ''}\n                                        className='font-mono'\n                                      />\n                                    </FormControl>\n                                  )}\n                                  <FormDescription>\n                                    {t(\n                                      'Selecting a plugin fills its declared models.'\n                                    )}\n                                  </FormDescription>\n                                  <FormMessage />\n                                </FormItem>\n                              )}\n                            />\n                          )}\n\n",
+    "result": "                          {currentType === CHANNEL_TYPE_TASK_PLUGIN && (\n                            <FormField\n                              control={form.control}\n                              name='task_plugin_key'\n                              render={({ field }) => (\n                                <FormItem>\n                                  <FormLabel>{t('Task plugin *')}</FormLabel>\n                                  {canBindTaskPlugin ? (\n                                    <Select\n                                      value={field.value}\n                                      onValueChange={(value) => {\n                                        field.onChange(value)\n                                        const plugin =\n                                          taskPluginOptionsQuery.data?.find(\n                                            (item) => item.key === value\n                                          )\n                                        if (plugin?.models?.length) {\n                                          form.setValue(\n                                            'models',\n                                            formatModelsArray(plugin.models),\n                                            {\n                                              shouldDirty: true,\n                                            }\n                                          )\n                                        }\n                                      }}\n                                      items={(\n                                        taskPluginOptionsQuery.data ?? []\n                                      ).map((plugin) => ({\n                                        value: plugin.key,\n                                        label: `${plugin.name} (${plugin.key})`,\n                                      }))}\n                                    >\n                                      <FormControl>\n                                        <SelectTrigger>\n                                          <SelectValue\n                                            placeholder={t(\n                                              'Select task plugin'\n                                            )}\n                                          />\n                                        </SelectTrigger>\n                                      </FormControl>\n                                      <SelectContent>\n                                        {(\n                                          taskPluginOptionsQuery.data ?? []\n                                        ).map((plugin) => (\n                                          <SelectItem\n                                            key={plugin.key}\n                                            value={plugin.key}\n                                          >\n                                            {plugin.name} ({plugin.key})\n                                          </SelectItem>\n                                        ))}\n                                      </SelectContent>\n                                    </Select>\n                                  ) : (\n                                    <FormControl>\n                                      <Input\n                                        readOnly\n                                        value={field.value ?? ''}\n                                        className='font-mono'\n                                      />\n                                    </FormControl>\n                                  )}\n                                  <FormDescription>\n                                    {t(\n                                      'Selecting a plugin fills its declared models.'\n                                    )}\n                                  </FormDescription>\n                                  <FormMessage />\n                                </FormItem>\n                              )}\n                            />\n                          )}\n\n                        {/* Custom (type 8) */}\n                        {currentType === 8 && (\n",
+    "rationale": "Add the plugin binding selector alongside the existing custom-channel editor."
+  },
+  {
+    "file": "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "index": 2,
+    "ours": "                                      toast.success(\n                                        t(\n                                          'Parsed {{count}} service account file(s)',\n                                          {\n                                            count: keys.length,\n                                          }\n                                        )\n                                      )\n                                    }}\n                                  />\n                                </FormControl>\n                                <FormDescription>\n                                  {isBatchMode\n                                    ? t(\n                                        'Upload multiple JSON files in batch modes'\n                                      )\n                                    : t(\n                                        'Upload a single service account JSON file'\n",
+    "theirs": "                            {/* General base_url for other types */}\n                            {![3, 8, 22, 36, 45].includes(currentType) && (\n                              <FormField\n                                control={form.control}\n                                name='base_url'\n                                render={({ field }) => (\n                                  <FormItem>\n                                    <FormLabel>\n                                      {currentType === CHANNEL_TYPE_TASK_PLUGIN\n                                        ? t('Base URL *')\n                                        : t('Base URL')}\n                                    </FormLabel>\n                                    <FormControl>\n                                      <Input\n                                        placeholder={t(\n                                          FIELD_PLACEHOLDERS.BASE_URL\n                                        )}\n                                        {...field}\n                                      />\n                                    </FormControl>\n                                    <FormDescription>\n                                      {t(\n                                        'Custom API base URL. For official channels, New API has built-in addresses. Only fill this for third-party proxy sites or special endpoints. Do not add /v1 or trailing slash.'\n",
+    "result": "                                      toast.success(\n                                        t(\n                                          'Parsed {{count}} service account file(s)',\n                                          {\n                                            count: keys.length,\n                                          }\n                                        )\n                                      )\n                                    }}\n                                  />\n                                </FormControl>\n                                <FormDescription>\n                                  {isBatchMode\n                                    ? t(\n                                        'Upload multiple JSON files in batch modes'\n                                      )\n                                    : t(\n                                        'Upload a single service account JSON file'\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/channels/constants.ts",
+    "index": 1,
+    "ours": "  61: 'Codex',\n  62: 'Claude Code',\n  63: 'Code Buddy',\n  64: 'Vercel AI Gateway',\n} as const\n\nconst CHANNEL_TYPE_DISPLAY_ORDER: number[] = [\n  1, 64, 61, 63, 14, 62, 33, 24, 43, 3, 41, 48, 60, 58, 42, 34, 20, 4, 40, 27,\n  25, 17, 26, 15, 46, 23, 18, 45, 31, 35, 49, 19, 47, 37, 38, 39, 11, 8, 57, 59,\n  22, 21, 44, 2, 5, 36, 50, 51, 52, 53, 54, 55, 56,\n",
+    "theirs": "  61: 'Task Plugin',\n} as const\n\nconst CHANNEL_TYPE_DISPLAY_ORDER: number[] = [\n  1, 14, 33, 24, 43, 3, 41, 48, 60, 58, 61, 42, 34, 20, 4, 40, 27, 25, 17, 26,\n  15, 46, 23, 18, 45, 31, 35, 49, 19, 47, 37, 38, 39, 11, 8, 57, 59, 22, 21,\n  44, 2, 5, 36, 50, 51, 52, 53, 54, 55, 56,\n",
+    "result": "  61: 'Codex',\n  62: 'Claude Code',\n  63: 'Code Buddy',\n  64: 'Vercel AI Gateway',\n  65: 'Task Plugin',\n} as const\n\nconst CHANNEL_TYPE_DISPLAY_ORDER: number[] = [\n  1, 64, 65, 61, 63, 14, 62, 33, 24, 43, 3, 41, 48, 60, 58, 42, 34, 20, 4, 40, 27,\n  25, 17, 26, 15, 46, 23, 18, 45, 31, 35, 49, 19, 47, 37, 38, 39, 11, 8, 57, 59,\n  22, 21, 44, 2, 5, 36, 50, 51, 52, 53, 54, 55, 56,\n",
+    "rationale": "A30: plugin 65; preserve deployed downstream channel numbers and display order."
+  },
+  {
+    "file": "web/src/features/channels/lib/channel-form.ts",
+    "index": 1,
+    "ours": "  CHANNEL_TYPE_OPENAI,\n",
+    "theirs": "  CHANNEL_TYPE_TASK_PLUGIN,\n",
+    "result": "  CHANNEL_TYPE_OPENAI,\n  CHANNEL_TYPE_TASK_PLUGIN,\n",
+    "rationale": "Keep downstream validation and add explicit plugin base-URL requirements."
+  },
+  {
+    "file": "web/src/features/channels/lib/channel-form.ts",
+    "index": 2,
+    "ours": "      [\n        3,\n        8,\n        36,\n        45,\n        CHANNEL_TYPE_NEW_API,\n        CHANNEL_TYPE_CODEX,\n        CHANNEL_TYPE_CLAUDE_CODE,\n        CHANNEL_TYPE_CODE_BUDDY,\n      ].includes(data.type) &&\n",
+    "theirs": "      [3, 8, 36, 45, CHANNEL_TYPE_NEW_API, CHANNEL_TYPE_TASK_PLUGIN].includes(\n        data.type\n      ) &&\n",
+    "result": "      [\n        3,\n        8,\n        36,\n        45,\n        CHANNEL_TYPE_NEW_API,\n        CHANNEL_TYPE_TASK_PLUGIN,\n        CHANNEL_TYPE_CODEX,\n        CHANNEL_TYPE_CLAUDE_CODE,\n        CHANNEL_TYPE_CODE_BUDDY,\n      ].includes(data.type) &&\n",
+    "rationale": "Keep downstream validation and add explicit plugin base-URL requirements."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 1,
+    "ours": "",
+    "theirs": "  parseTaskTiersFromExpr,\n",
+    "result": "",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 2,
+    "ours": "import { formatBillingCondition } from '../lib/billing-expression/condition-display'\nimport { isBreakdownTierMatched } from '../lib/breakdown-tier-match'\nimport {\n  formatTaskUsageUnitPrice,\n  type DynamicPriceLabelKind,\n  type DynamicPriceOptions,\n} from '../lib/dynamic-price'\nimport { getTaskPricingDisplayTiers } from '../lib/task-matrix-display'\nimport {\n  taskPriceLabel,\n  taskPricingConditions,\n} from '../lib/task-price-display'\n",
+    "theirs": "import { isBreakdownTierMatched } from '../lib/breakdown-tier-match'\nimport type { DynamicPriceLabelKind } from '../lib/dynamic-price'\nimport { getTaskMatrixDisplayTiers } from '../lib/task-matrix-display'\n",
+    "result": "import { formatBillingCondition } from '../lib/billing-expression/condition-display'\nimport { isBreakdownTierMatched } from '../lib/breakdown-tier-match'\nimport {\n  formatTaskUsageUnitPrice,\n  type DynamicPriceLabelKind,\n  type DynamicPriceOptions,\n} from '../lib/dynamic-price'\nimport { getTaskPricingDisplayTiers } from '../lib/task-matrix-display'\nimport {\n  taskPriceLabel,\n  taskPricingConditions,\n} from '../lib/task-price-display'\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 3,
+    "ours": "  taskPriceOptions?: Pick<\n    DynamicPriceOptions,\n    'showRechargePrice' | 'priceRate' | 'usdExchangeRate'\n  >\n",
+    "theirs": "",
+    "result": "  taskPriceOptions?: Pick<\n    DynamicPriceOptions,\n    'showRechargePrice' | 'priceRate' | 'usdExchangeRate'\n  >\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 4,
+    "ours": "  showTokenUnit?: boolean\n",
+    "theirs": "",
+    "result": "  showTokenUnit?: boolean\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 5,
+    "ours": "    return <span className='break-words whitespace-normal'>{field.label}</span>\n  }\n  return field.showTokenUnit\n    ? `${t(field.label)} / ${t('1M token')}`\n    : t(field.label)\n",
+    "theirs": "    return <code className='font-mono'>{field.label}</code>\n  }\n  return t(field.label)\n",
+    "result": "    return <span className='break-words whitespace-normal'>{field.label}</span>\n  }\n  return field.showTokenUnit\n    ? `${t(field.label)} / ${t('1M token')}`\n    : t(field.label)\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 6,
+    "ours": "  t: (key: string) => string,\n  schema: BillingUsageSchema | undefined,\n  language: string,\n  tierCount: number\n): string {\n  if (!isTaskBreakdownTier(tier)) {\n    if (tier.conditionText) {\n      return (\n        formatBillingCondition(tier.conditionText, t, language) ??\n        tier.conditionText\n      )\n    }\n    return formatConditionSummary(tier.conditions, t)\n  }\n  return (\n    taskPricingConditions(tier.conditions, schema, language, t) ||\n    t(tierCount > 1 ? 'Other cases' : 'All requests')\n  )\n",
+    "theirs": "  t: (key: string) => string\n): string {\n  if (!isTaskBreakdownTier(tier)) {\n    return formatConditionSummary(tier.conditions, t)\n  }\n  return tier.conditions\n    .map((condition) => `${condition.field} = ${condition.value}`)\n    .join(' && ')\n",
+    "result": "  t: (key: string) => string,\n  schema: BillingUsageSchema | undefined,\n  language: string,\n  tierCount: number\n): string {\n  if (!isTaskBreakdownTier(tier)) {\n    if (tier.conditionText) {\n      return (\n        formatBillingCondition(tier.conditionText, t, language) ??\n        tier.conditionText\n      )\n    }\n    return formatConditionSummary(tier.conditions, t)\n  }\n  return (\n    taskPricingConditions(tier.conditions, schema, language, t) ||\n    t(tierCount > 1 ? 'Other cases' : 'All requests')\n  )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 7,
+    "ours": "  t: (key: string) => string,\n  taskPriceOptions: DynamicPricingBreakdownProps['taskPriceOptions']\n): string {\n  const amount =\n    field.labelKind === 'schema' || field.unit === 'request'\n      ? formatTaskUsageUnitPrice(value, { tokenUnit: 'M', ...taskPriceOptions })\n      : `${symbol}${(value * rate).toFixed(4)}`\n  if (field.unit === 'second') return `${amount}/${t('s')}`\n  if (field.unit === 'count') return `${amount}/${t('unit')}`\n  if (field.unit === 'credit') return `${amount}/${t('credit')}`\n  if (field.unit === 'token' && field.labelKind === 'schema') {\n",
+    "theirs": "  t: (key: string) => string\n): string {\n  const amount = `${symbol}${(value * rate).toFixed(4)}`\n  if (field.unit === 'second') return `${amount}/${t('s')}`\n  if (field.unit === 'count') return `${amount}/${t('unit')}`\n  if (field.unit === 'credit') return `${amount}/${t('credit')}`\n  if (\n    field.unit === 'token' &&\n    !BILLING_PRICING_VARS.some((variable) => variable.field === field.id)\n  ) {\n",
+    "result": "  t: (key: string) => string,\n  taskPriceOptions: DynamicPricingBreakdownProps['taskPriceOptions']\n): string {\n  const amount =\n    field.labelKind === 'schema' || field.unit === 'request'\n      ? formatTaskUsageUnitPrice(value, { tokenUnit: 'M', ...taskPriceOptions })\n      : `${symbol}${(value * rate).toFixed(4)}`\n  if (field.unit === 'second') return `${amount}/${t('s')}`\n  if (field.unit === 'count') return `${amount}/${t('unit')}`\n  if (field.unit === 'credit') return `${amount}/${t('credit')}`\n  if (field.unit === 'token' && field.labelKind === 'schema') {\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 8,
+    "ours": "  taskPriceOptions,\n",
+    "theirs": "",
+    "result": "  taskPriceOptions,\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 9,
+    "ours": "    const parsedTiers = usageSchema\n      ? getTaskPricingDisplayTiers(split.billingExpr, usageSchema)\n      : parseTiersFromExpr(split.billingExpr)\n",
+    "theirs": "    const matrixTiers = getTaskMatrixDisplayTiers(\n      split.billingExpr,\n      usageSchema\n    )\n    let parsedTiers\n    if (matrixTiers) {\n      parsedTiers = matrixTiers\n    } else if (usageSchema) {\n      parsedTiers = parseTaskTiersFromExpr(split.billingExpr, usageSchema)\n    } else {\n      parsedTiers = parseTiersFromExpr(split.billingExpr)\n    }\n",
+    "result": "    const parsedTiers = usageSchema\n      ? getTaskPricingDisplayTiers(split.billingExpr, usageSchema)\n      : parseTiersFromExpr(split.billingExpr)\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 10,
+    "ours": "          label: taskPriceLabel(definition.description, field, i18n.language),\n",
+    "theirs": "          label: field,\n",
+    "result": "          label: taskPriceLabel(definition.description, field, i18n.language),\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 11,
+    "ours": "          label: 'Additional charge',\n",
+    "theirs": "          label: 'Base charge',\n",
+    "result": "          label: 'Additional charge',\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 12,
+    "ours": "    const fields: BreakdownPriceField[] = BILLING_PRICING_VARS.filter(\n      (variable) => {\n        if (hideCacheColumns && variable.group === 'cache') return false\n        return tiers.some(\n          (tier) =>\n            !isTaskBreakdownTier(tier) &&\n            Number(tier[variable.field as string as keyof ParsedTier] || 0) > 0\n        )\n      }\n    ).map((variable, index) => ({\n",
+    "theirs": "    return BILLING_PRICING_VARS.filter((variable) => {\n      if (hideCacheColumns && variable.group === 'cache') return false\n      return tiers.some(\n        (tier) =>\n          !isTaskBreakdownTier(tier) &&\n          Number(tier[variable.field as string as keyof ParsedTier] || 0) > 0\n      )\n    }).map((variable, index) => ({\n",
+    "result": "    const fields: BreakdownPriceField[] = BILLING_PRICING_VARS.filter(\n      (variable) => {\n        if (hideCacheColumns && variable.group === 'cache') return false\n        return tiers.some(\n          (tier) =>\n            !isTaskBreakdownTier(tier) &&\n            Number(tier[variable.field as string as keyof ParsedTier] || 0) > 0\n        )\n      }\n    ).map((variable, index) => ({\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 13,
+    "ours": "    if (\n      tiers.some(\n        (tier) => !isTaskBreakdownTier(tier) && tier.billingUnit === 'request'\n      )\n    ) {\n      for (const field of fields) field.showTokenUnit = true\n      fields.push({\n        id: 'fixedPrice',\n        label: 'Price per request',\n        labelKind: 'i18n',\n        unit: 'request',\n        value: (tier) =>\n          !isTaskBreakdownTier(tier) && tier.billingUnit === 'request'\n            ? Number(tier.fixedPrice)\n            : Number.NaN,\n      })\n    }\n    return fields\n",
+    "theirs": "",
+    "result": "    if (\n      tiers.some(\n        (tier) => !isTaskBreakdownTier(tier) && tier.billingUnit === 'request'\n      )\n    ) {\n      for (const field of fields) field.showTokenUnit = true\n      fields.push({\n        id: 'fixedPrice',\n        label: 'Price per request',\n        labelKind: 'i18n',\n        unit: 'request',\n        value: (tier) =>\n          !isTaskBreakdownTier(tier) && tier.billingUnit === 'request'\n            ? Number(tier.fixedPrice)\n            : Number.NaN,\n      })\n    }\n    return fields\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 14,
+    "ours": "              const condSummary = formatBreakdownConditionSummary(\n                tier,\n                t,\n                usageSchema,\n                i18n.language,\n                tiers.length\n              )\n",
+    "theirs": "              const condSummary = formatBreakdownConditionSummary(tier, t)\n",
+    "result": "              const condSummary = formatBreakdownConditionSummary(\n                tier,\n                t,\n                usageSchema,\n                i18n.language,\n                tiers.length\n              )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 15,
+    "ours": "                usageFacts,\n                matchedBillingUnit,\n                matchedFixedPrice\n",
+    "theirs": "                usageFacts\n",
+    "result": "                usageFacts,\n                matchedBillingUnit,\n                matchedFixedPrice\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 16,
+    "ours": "                  <div\n                    className={cn(\n                      'grid gap-x-3 gap-y-1.5',\n                      visiblePriceFields.length > 1 && 'grid-cols-2'\n                    )}\n                  >\n",
+    "theirs": "                  <div className='grid grid-cols-2 gap-x-3 gap-y-1.5'>\n",
+    "result": "                  <div\n                    className={cn(\n                      'grid gap-x-3 gap-y-1.5',\n                      visiblePriceFields.length > 1 && 'grid-cols-2'\n                    )}\n                  >\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 17,
+    "ours": "                          <div className='text-muted-foreground text-xs font-medium break-words whitespace-normal'>\n",
+    "theirs": "                          <div className='text-muted-foreground truncate text-[10px] font-medium tracking-wider uppercase'>\n",
+    "result": "                          <div className='text-muted-foreground text-xs font-medium break-words whitespace-normal'>\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 18,
+    "ours": "                            {value > 0 ||\n                            (field.unit === 'request' && Number.isFinite(value))\n",
+    "theirs": "                            {value > 0\n",
+    "result": "                            {value > 0 ||\n                            (field.unit === 'request' && Number.isFinite(value))\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 19,
+    "ours": "                                  t,\n                                  taskPriceOptions\n",
+    "theirs": "                                  t\n",
+    "result": "                                  t,\n                                  taskPriceOptions\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 20,
+    "ours": "                usageFacts,\n                matchedBillingUnit,\n                matchedFixedPrice\n",
+    "theirs": "                usageFacts\n",
+    "result": "                usageFacts,\n                matchedBillingUnit,\n                matchedFixedPrice\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 21,
+    "ours": "                  const condSummary = formatBreakdownConditionSummary(\n                    tier,\n                    t,\n                    usageSchema,\n                    i18n.language,\n                    tiers.length\n                  )\n",
+    "theirs": "                  const condSummary = formatBreakdownConditionSummary(tier, t)\n",
+    "result": "                  const condSummary = formatBreakdownConditionSummary(\n                    tier,\n                    t,\n                    usageSchema,\n                    i18n.language,\n                    tiers.length\n                  )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 22,
+    "ours": "                    usageFacts,\n                    matchedBillingUnit,\n                    matchedFixedPrice\n",
+    "theirs": "                    usageFacts\n",
+    "result": "                    usageFacts,\n                    matchedBillingUnit,\n                    matchedFixedPrice\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/dynamic-pricing-breakdown.tsx",
+    "index": 23,
+    "ours": "                  return value > 0 ||\n                    (field.unit === 'request' && Number.isFinite(value)) ? (\n                    <span className={cn(!compact && 'font-semibold')}>\n                      {formatBreakdownPrice(\n                        value,\n                        field,\n                        symbol,\n                        rate,\n                        t,\n                        taskPriceOptions\n                      )}\n",
+    "theirs": "                  return value > 0 ? (\n                    <span className={cn(!compact && 'font-semibold')}>\n                      {formatBreakdownPrice(value, field, symbol, rate, t)}\n",
+    "result": "                  return value > 0 ||\n                    (field.unit === 'request' && Number.isFinite(value)) ? (\n                    <span className={cn(!compact && 'font-semibold')}>\n                      {formatBreakdownPrice(\n                        value,\n                        field,\n                        symbol,\n                        rate,\n                        t,\n                        taskPriceOptions\n                      )}\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-billing-mode-badge.tsx",
+    "index": 1,
+    "ours": "  const isCaption = props.appearance === 'caption'\n",
+    "theirs": "",
+    "result": "  const isCaption = props.appearance === 'caption'\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-card.tsx",
+    "index": 1,
+    "ours": "  const billingTime = useBillingTime(props.model.billing_expr)\n  const dynamicPriceOptions = {\n    now: billingTime === undefined ? undefined : new Date(billingTime),\n",
+    "theirs": "  const hasCachedPrice = isTokenBased && props.model.cache_ratio != null\n  const dynamicPriceOptions = {\n",
+    "result": "  const billingTime = useBillingTime(props.model.billing_expr)\n  const dynamicPriceOptions = {\n    now: billingTime === undefined ? undefined : new Date(billingTime),\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-card.tsx",
+    "index": 2,
+    "ours": "  const cardExamplePrice = getCardExamplePrice(props.model, dynamicPriceOptions)\n",
+    "theirs": "  const cardExamplePrice = getCardExamplePrice(\n    props.model,\n    dynamicPriceOptions\n  )\n  const showTaskFieldLabels =\n    getTaskNumberFields(props.model.billing_usage_schema).length > 1\n\n  const primaryGroup = groups[0]\n  const bottomTags = [...endpoints.slice(0, 2), ...tags.slice(0, 2)]\n  const hiddenCount =\n    Math.max(groups.length - 1, 0) +\n    Math.max(endpoints.length - 2, 0) +\n    Math.max(tags.length - 2, 0)\n\n  const handleCopy = (e: React.MouseEvent) => {\n    e.stopPropagation()\n    copyToClipboard(props.model.model_name || '')\n  }\n\n",
+    "result": "  const cardExamplePrice = getCardExamplePrice(props.model, dynamicPriceOptions)\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-card.tsx",
+    "index": 3,
+    "ours": "            let label: ReactNode = null\n            if (entry.labelKind !== 'schema') {\n              label = t(entry.shortLabel)\n            } else {\n              label = taskPriceLabel(\n                entry.description,\n                entry.shortLabel,\n                i18n.language\n              )\n            }\n            return (\n              <div\n                key={entry.key}\n                className={cn(\n                  'flex min-w-0 flex-col gap-1',\n                  dynamicSummary.isTaskUsage && 'col-span-full'\n                )}\n              >\n                {label && (\n                  <span className='text-muted-foreground text-xs break-words whitespace-normal'>\n                    {label}\n                  </span>\n                )}\n                <span className='flex flex-wrap items-baseline gap-x-1 font-mono text-sm font-semibold tabular-nums'>\n                  <span>{entry.formattedRange ?? entry.formatted}</span>\n                  <span className='text-muted-foreground text-xs font-normal whitespace-nowrap'>\n                    {' '}\n                    / {unitLabelKey ? t(unitLabelKey) : tokenUnitLabel}\n                  </span>\n                </span>\n              </div>\n            )\n          })}\n          {dynamicSummary.isTimePricing && (\n            <span className='text-muted-foreground col-span-full text-xs'>\n              {t('Current period price')}\n            </span>\n          )}\n          {dynamicSummary.isMixedBilling && (\n            <span className='text-muted-foreground col-span-full text-xs'>\n              {t('Token or per-call pricing')}\n            </span>\n          )}\n          {cardExamplePrice && (\n            <span className='text-muted-foreground col-span-full text-xs break-words'>\n              {cardExamplePrice.label} ≈ {cardExamplePrice.formatted}\n            </span>\n          )}\n",
+    "theirs": "            let fieldPrefix: ReactNode = null\n            if (entry.labelKind !== 'schema') {\n              fieldPrefix = <>{t(entry.shortLabel)} </>\n            } else if (showTaskFieldLabels) {\n              fieldPrefix = (\n                <>\n                  <code className='font-mono text-[11px]'>\n                    {entry.shortLabel}\n                  </code>{' '}\n                </>\n              )\n            }\n            return (\n              <span\n                key={entry.key}\n                className='text-muted-foreground whitespace-nowrap'\n              >\n                {fieldPrefix}\n                <span className='text-foreground font-mono font-semibold'>\n                  {entry.formattedRange ?? entry.formatted}\n                  {unitLabelKey && <>/{t(unitLabelKey)}</>}\n                </span>\n              </span>\n            )\n          })}\n          {cardExamplePrice && (\n            <span className='text-muted-foreground/70 min-w-0 max-w-full truncate text-xs'>\n              {cardExamplePrice.label} ≈ {cardExamplePrice.formatted}\n            </span>\n          )}\n",
+    "result": "            let label: ReactNode = null\n            if (entry.labelKind !== 'schema') {\n              label = t(entry.shortLabel)\n            } else {\n              label = taskPriceLabel(\n                entry.description,\n                entry.shortLabel,\n                i18n.language\n              )\n            }\n            return (\n              <div\n                key={entry.key}\n                className={cn(\n                  'flex min-w-0 flex-col gap-1',\n                  dynamicSummary.isTaskUsage && 'col-span-full'\n                )}\n              >\n                {label && (\n                  <span className='text-muted-foreground text-xs break-words whitespace-normal'>\n                    {label}\n                  </span>\n                )}\n                <span className='flex flex-wrap items-baseline gap-x-1 font-mono text-sm font-semibold tabular-nums'>\n                  <span>{entry.formattedRange ?? entry.formatted}</span>\n                  <span className='text-muted-foreground text-xs font-normal whitespace-nowrap'>\n                    {' '}\n                    / {unitLabelKey ? t(unitLabelKey) : tokenUnitLabel}\n                  </span>\n                </span>\n              </div>\n            )\n          })}\n          {dynamicSummary.isTimePricing && (\n            <span className='text-muted-foreground col-span-full text-xs'>\n              {t('Current period price')}\n            </span>\n          )}\n          {dynamicSummary.isMixedBilling && (\n            <span className='text-muted-foreground col-span-full text-xs'>\n              {t('Token or per-call pricing')}\n            </span>\n          )}\n          {cardExamplePrice && (\n            <span className='text-muted-foreground col-span-full text-xs break-words'>\n              {cardExamplePrice.label} ≈ {cardExamplePrice.formatted}\n            </span>\n          )}\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-card.tsx",
+    "index": 4,
+    "ours": "              <span className='text-muted-foreground col-span-full text-xs break-words'>\n",
+    "theirs": "              <span className='text-muted-foreground text-xs'>\n",
+    "result": "              <span className='text-muted-foreground col-span-full text-xs break-words'>\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-card.tsx",
+    "index": 5,
+    "ours": "",
+    "theirs": "    priceSummary = (\n      <span className='text-muted-foreground text-sm'>\n        {t('Usage-based billing · price not configured')}\n      </span>\n    )\n  } else if (isTokenBased) {\n",
+    "result": "",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-card.tsx",
+    "index": 6,
+    "ours": "        <CopyButton\n          value={props.model.model_name}\n          tooltip={t('Copy model name')}\n          className='size-7'\n          iconClassName='size-3.5'\n        />\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col gap-3'>\n        <div className='flex min-w-0 flex-col gap-1.5'>\n          <p className='text-muted-foreground line-clamp-2 text-[13px] leading-5 break-words'>\n            {props.model.description || t('No description available.')}\n          </p>\n          {tags.length > 0 && (\n            <div\n              role='group'\n              aria-label={t('Tags')}\n              className='text-muted-foreground flex min-w-0 items-baseline gap-1.5 text-xs'\n            >\n              <span className='shrink-0'>{t('Tags')}</span>\n              <span className='truncate' title={tags.join(', ')}>\n                {tags.slice(0, 2).join(', ')}\n              </span>\n              {tags.length > 2 && (\n                <span className='shrink-0' title={tags.slice(2).join(', ')}>\n                  +{tags.length - 2}\n                </span>\n              )}\n            </div>\n",
+    "theirs": "        <ModelPerfBadge perf={props.perf} className='row-span-2 self-start' />\n\n        <div className='flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-0.5 sm:gap-x-3 sm:gap-y-1'>\n          {bottomTags.map((item) => (\n            <span key={item} className='text-muted-foreground/70 text-xs'>\n              {item}\n            </span>\n          ))}\n          {!dynamicSummary?.isTaskUsage && !isUnconfiguredTaskUsage && (\n            <span className='text-muted-foreground/50 text-xs'>\n              {tokenUnitLabel}\n            </span>\n          )}\n          {hiddenCount > 0 && (\n            <span className='text-muted-foreground/40 text-xs'>\n              +{hiddenCount}\n            </span>\n",
+    "result": "        <CopyButton\n          value={props.model.model_name}\n          tooltip={t('Copy model name')}\n          className='size-7'\n          iconClassName='size-3.5'\n        />\n      </CardHeader>\n      <CardContent className='flex flex-1 flex-col gap-3'>\n        <div className='flex min-w-0 flex-col gap-1.5'>\n          <p className='text-muted-foreground line-clamp-2 text-[13px] leading-5 break-words'>\n            {props.model.description || t('No description available.')}\n          </p>\n          {tags.length > 0 && (\n            <div\n              role='group'\n              aria-label={t('Tags')}\n              className='text-muted-foreground flex min-w-0 items-baseline gap-1.5 text-xs'\n            >\n              <span className='shrink-0'>{t('Tags')}</span>\n              <span className='truncate' title={tags.join(', ')}>\n                {tags.slice(0, 2).join(', ')}\n              </span>\n              {tags.length > 2 && (\n                <span className='shrink-0' title={tags.slice(2).join(', ')}>\n                  +{tags.length - 2}\n                </span>\n              )}\n            </div>\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 1,
+    "ours": "import { getTaskPricingDisplayTiers } from '../lib/task-matrix-display'\nimport {\n  hasSimpleTaskPricing,\n  taskPriceLabel,\n  taskPricingConditions,\n} from '../lib/task-price-display'\n",
+    "theirs": "import { getTaskMatrixDisplayTiers } from '../lib/task-matrix-display'\n",
+    "result": "import { getTaskPricingDisplayTiers } from '../lib/task-matrix-display'\nimport {\n  hasSimpleTaskPricing,\n  taskPriceLabel,\n  taskPricingConditions,\n} from '../lib/task-price-display'\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 2,
+    "ours": "  const { t, i18n } = useTranslation()\n  if (props.entry.labelKind === 'schema') {\n    return (\n      <span className='break-words whitespace-normal'>\n        {taskPriceLabel(\n          props.entry.description,\n          props.entry.shortLabel,\n          i18n.language\n        )}\n      </span>\n    )\n",
+    "theirs": "  const { t } = useTranslation()\n  if (props.entry.labelKind === 'schema') {\n    return <code className='font-mono'>{props.entry.shortLabel}</code>\n",
+    "result": "  const { t, i18n } = useTranslation()\n  if (props.entry.labelKind === 'schema') {\n    return (\n      <span className='break-words whitespace-normal'>\n        {taskPriceLabel(\n          props.entry.description,\n          props.entry.shortLabel,\n          i18n.language\n        )}\n      </span>\n    )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 3,
+    "ours": "          <div\n            className={cn(\n              'grid gap-2',\n              dynamicSummary.primaryEntries.length > 1 && 'grid-cols-2'\n            )}\n          >\n",
+    "theirs": "          <div className='grid grid-cols-2 gap-2'>\n",
+    "result": "          <div\n            className={cn(\n              'grid gap-2',\n              dynamicSummary.primaryEntries.length > 1 && 'grid-cols-2'\n            )}\n          >\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 4,
+    "ours": "    const dynamicTiers = props.model.billing_usage_schema\n      ? getTaskPricingDisplayTiers(\n          props.model.billing_expr,\n          props.model.billing_usage_schema\n        )\n      : getDynamicPricingTiers(props.model)\n    const hasRequestPrice = dynamicTiers.some(\n      (tier) => !('unitPrices' in tier) && tier.billingUnit === 'request'\n    )\n",
+    "theirs": "    const dynamicTiers =\n      getTaskMatrixDisplayTiers(\n        props.model.billing_expr,\n        props.model.billing_usage_schema\n      ) ?? getDynamicPricingTiers(props.model)\n",
+    "result": "    const dynamicTiers = props.model.billing_usage_schema\n      ? getTaskPricingDisplayTiers(\n          props.model.billing_expr,\n          props.model.billing_usage_schema\n        )\n      : getDynamicPricingTiers(props.model)\n    const hasRequestPrice = dynamicTiers.some(\n      (tier) => !('unitPrices' in tier) && tier.billingUnit === 'request'\n    )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 5,
+    "ours": "                    ...(hasSimpleTaskPricing(props.model)\n                      ? []\n                      : [\n                          {\n                            id: 'tier',\n                            header: props.model.billing_usage_schema\n                              ? t('Applicable conditions')\n                              : t('Tier'),\n                            className: thClass,\n                            cellClassName:\n                              'text-muted-foreground py-2.5 whitespace-normal break-words',\n                            cell: (tier: DynamicPricingTier) => {\n                              if ('unitPrices' in tier) {\n                                return (\n                                  taskPricingConditions(\n                                    (tier as ParsedTaskTier).conditions,\n                                    props.model.billing_usage_schema,\n                                    i18n.language,\n                                    t\n                                  ) ||\n                                  t(\n                                    dynamicTiers.length > 1\n                                      ? 'Other cases'\n                                      : 'All requests'\n                                  )\n                                )\n                              }\n                              if (tier.conditionText) {\n                                return `${tier.label}: ${formatBillingCondition(tier.conditionText, t, i18n.language) ?? tier.conditionText}`\n                              }\n                              return tier.label || t('Default')\n                            },\n                          },\n                        ]),\n                    ...priceFields.map((fieldEntry) => {\n                      const unitLabelKey =\n                        getDynamicPriceUnitLabelKey(fieldEntry)\n                      let unitLabel = unitLabelKey ? t(unitLabelKey) : ''\n                      if (!unitLabel && hasRequestPrice) {\n                        unitLabel = t('{{unit}} tokens', {\n                          unit: tokenUnitLabel,\n                        })\n                      }\n                      const fieldLabel =\n                        fieldEntry.labelKind === 'schema' ? (\n                          <DynamicPriceEntryLabel entry={fieldEntry} />\n",
+    "theirs": "                    {\n                      id: 'tier',\n                      header: t('Tier'),\n                      className: thClass,\n                      cellClassName: 'text-muted-foreground py-2.5',\n                      cell: (tier) => tier.label || t('Default'),\n                    },\n                    ...priceFields.map((fieldEntry) => {\n                      const unitLabelKey =\n                        getDynamicPriceUnitLabelKey(fieldEntry)\n                      const fieldLabel =\n                        fieldEntry.labelKind === 'schema' ? (\n                          <code className='font-mono'>\n                            {fieldEntry.shortLabel}\n                          </code>\n",
+    "result": "                    ...(hasSimpleTaskPricing(props.model)\n                      ? []\n                      : [\n                          {\n                            id: 'tier',\n                            header: props.model.billing_usage_schema\n                              ? t('Applicable conditions')\n                              : t('Tier'),\n                            className: thClass,\n                            cellClassName:\n                              'text-muted-foreground py-2.5 whitespace-normal break-words',\n                            cell: (tier: DynamicPricingTier) => {\n                              if ('unitPrices' in tier) {\n                                return (\n                                  taskPricingConditions(\n                                    (tier as ParsedTaskTier).conditions,\n                                    props.model.billing_usage_schema,\n                                    i18n.language,\n                                    t\n                                  ) ||\n                                  t(\n                                    dynamicTiers.length > 1\n                                      ? 'Other cases'\n                                      : 'All requests'\n                                  )\n                                )\n                              }\n                              if (tier.conditionText) {\n                                return `${tier.label}: ${formatBillingCondition(tier.conditionText, t, i18n.language) ?? tier.conditionText}`\n                              }\n                              return tier.label || t('Default')\n                            },\n                          },\n                        ]),\n                    ...priceFields.map((fieldEntry) => {\n                      const unitLabelKey =\n                        getDynamicPriceUnitLabelKey(fieldEntry)\n                      let unitLabel = unitLabelKey ? t(unitLabelKey) : ''\n                      if (!unitLabel && hasRequestPrice) {\n                        unitLabel = t('{{unit}} tokens', {\n                          unit: tokenUnitLabel,\n                        })\n                      }\n                      const fieldLabel =\n                        fieldEntry.labelKind === 'schema' ? (\n                          <DynamicPriceEntryLabel entry={fieldEntry} />\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 6,
+    "ours": "                        header: unitLabel ? (\n                          <>\n                            {fieldLabel}\n                            {` / ${unitLabel}`}\n",
+    "theirs": "                        header: unitLabelKey ? (\n                          <>\n                            {fieldLabel}\n                            {` / ${t(unitLabelKey)}`}\n",
+    "result": "                        header: unitLabel ? (\n                          <>\n                            {fieldLabel}\n                            {` / ${unitLabel}`}\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 7,
+    "ours": "            {dynamicTiers.some(\n              (tier) => 'unitPrices' in tier || tier.billingUnit === 'request'\n            )\n",
+    "theirs": "            {dynamicTiers.some((tier) => 'unitPrices' in tier)\n",
+    "result": "            {dynamicTiers.some(\n              (tier) => 'unitPrices' in tier || tier.billingUnit === 'request'\n            )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/model-details.tsx",
+    "index": 8,
+    "ours": "            {showBasePrices && (\n              <PriceSection\n                model={props.model}\n                priceRate={props.priceRate}\n                usdExchangeRate={props.usdExchangeRate}\n                tokenUnit={props.tokenUnit}\n                showRechargePrice={showRechargePrice}\n              />\n            )}\n            {isDynamic && !simpleTaskPricing && (\n              <DynamicPricingBreakdown\n                billingExpr={props.model.billing_expr}\n                usageSchema={props.model.billing_usage_schema}\n                taskPriceOptions={{\n                  showRechargePrice,\n                  priceRate: props.priceRate,\n                  usdExchangeRate: props.usdExchangeRate,\n                }}\n",
+    "theirs": "            <PriceSection\n              model={props.model}\n              priceRate={props.priceRate}\n              usdExchangeRate={props.usdExchangeRate}\n              tokenUnit={props.tokenUnit}\n              showRechargePrice={showRechargePrice}\n            />\n            {isDynamic && (\n              <DynamicPricingBreakdown\n                billingExpr={props.model.billing_expr}\n                usageSchema={props.model.billing_usage_schema}\n",
+    "result": "            {showBasePrices && (\n              <PriceSection\n                model={props.model}\n                priceRate={props.priceRate}\n                usdExchangeRate={props.usdExchangeRate}\n                tokenUnit={props.tokenUnit}\n                showRechargePrice={showRechargePrice}\n              />\n            )}\n            {isDynamic && !simpleTaskPricing && (\n              <DynamicPricingBreakdown\n                billingExpr={props.model.billing_expr}\n                usageSchema={props.model.billing_usage_schema}\n                taskPriceOptions={{\n                  showRechargePrice,\n                  priceRate: props.priceRate,\n                  usdExchangeRate: props.usdExchangeRate,\n                }}\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/pricing-columns.tsx",
+    "index": 1,
+    "ours": "",
+    "theirs": "import { DEFAULT_TOKEN_UNIT } from '../constants'\nimport {\n  getDynamicDisplayGroupRatio,\n  getDynamicPriceUnitLabelKey,\n  getDynamicPricingSummary,\n  isUnconfiguredTaskUsageModel,\n} from '../lib/dynamic-price'\n",
+    "result": "",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/pricing-columns.tsx",
+    "index": 2,
+    "ours": "      cell: ({ row }) => (\n        <ModelPriceCell model={row.original} options={options} />\n      ),\n",
+    "theirs": "      cell: ({ row }) => {\n        const model = row.original\n        const dynamicSummary = getDynamicPricingSummary(model, {\n          tokenUnit,\n          showRechargePrice,\n          priceRate,\n          usdExchangeRate,\n          groupRatioMultiplier: getDynamicDisplayGroupRatio(\n            model,\n            selectedGroup\n          ),\n        })\n\n        if (dynamicSummary) {\n          if (dynamicSummary.isSpecialExpression) {\n            return (\n              <div className='max-w-full min-w-0'>\n                <div className='text-xs font-medium text-amber-700 dark:text-amber-300'>\n                  {t('Special billing expression')}\n                </div>\n                <div className='text-muted-foreground text-[11px]'>\n                  {t('Unable to parse structured pricing')}\n                </div>\n                <code className='text-muted-foreground/70 mt-1 line-clamp-2 block font-mono text-[10px] leading-relaxed break-all'>\n                  {dynamicSummary.rawExpression}\n                </code>\n              </div>\n            )\n          }\n\n          const primaryEntries = dynamicSummary.primaryEntries.slice(0, 2)\n          if (primaryEntries.length === 0) {\n            return (\n              <span className='text-muted-foreground text-xs'>\n                {t('Dynamic Pricing')}\n              </span>\n            )\n          }\n\n          return (\n            <div className='max-w-full min-w-0'>\n              <span className='font-mono text-sm tabular-nums'>\n                {primaryEntries.map((entry, index) => {\n                  const unitLabelKey = getDynamicPriceUnitLabelKey(entry)\n                  return (\n                    <span key={entry.key}>\n                      {index > 0 && (\n                        <span className='text-muted-foreground/40 mx-1'>/</span>\n                      )}\n                      {stripTrailingZeros(\n                        entry.formattedRange ?? entry.formatted\n                      )}\n                      {unitLabelKey && <>/{t(unitLabelKey)}</>}\n                    </span>\n                  )\n                })}\n              </span>\n              <div className='text-muted-foreground/50 text-[10px]'>\n                {!dynamicSummary.isTaskUsage && `/ ${tokenUnitLabel} tokens`}\n                {dynamicSummary.isTaskUsage && dynamicSummary.tier?.label}\n                {dynamicSummary.tierCount > 1 &&\n                  ` · ${t('{{count}} tiers', {\n                    count: dynamicSummary.tierCount,\n                  })}`}\n              </div>\n            </div>\n          )\n        }\n\n        if (isUnconfiguredTaskUsageModel(model)) {\n          return (\n            <div className='max-w-full min-w-0'>\n              <div className='text-sm font-medium'>{t('Not configured')}</div>\n              <div className='text-muted-foreground/50 text-[10px]'>\n                {t('Usage-based billing')}\n              </div>\n            </div>\n          )\n        }\n\n        const isTokenBased = isTokenBasedModel(model)\n\n        if (isTokenBased) {\n          const inputPrice = stripTrailingZeros(\n            formatPrice(\n              model,\n              'input',\n              tokenUnit,\n              showRechargePrice,\n              priceRate,\n              usdExchangeRate,\n              selectedGroup\n            )\n          )\n          const outputPrice = stripTrailingZeros(\n            formatPrice(\n              model,\n              'output',\n              tokenUnit,\n              showRechargePrice,\n              priceRate,\n              usdExchangeRate,\n              selectedGroup\n            )\n          )\n\n          return (\n            <div className='max-w-full min-w-0'>\n              <span className='font-mono text-sm tabular-nums'>\n                {inputPrice}\n                <span className='text-muted-foreground/40 mx-1'>/</span>\n                {outputPrice}\n              </span>\n              <div className='text-muted-foreground/50 text-[10px]'>\n                / {tokenUnitLabel} tokens\n              </div>\n            </div>\n          )\n        }\n\n        const price = stripTrailingZeros(\n          formatRequestPrice(\n            model,\n            showRechargePrice,\n            priceRate,\n            usdExchangeRate,\n            selectedGroup\n          )\n        )\n\n        return (\n          <div className='max-w-full min-w-0'>\n            <span className='font-mono text-sm tabular-nums'>{price}</span>\n            <div className='text-muted-foreground/50 text-[10px]'>\n              / {t('request')}\n            </div>\n          </div>\n        )\n      },\n",
+    "result": "      cell: ({ row }) => (\n        <ModelPriceCell model={row.original} options={options} />\n      ),\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/components/pricing-columns.tsx",
+    "index": 3,
+    "ours": "      cell: ({ row }) => (\n        <CachedPriceCell model={row.original} options={options} />\n      ),\n",
+    "theirs": "      cell: ({ row }) => {\n        const model = row.original\n        const dynamicSummary = getDynamicPricingSummary(model, {\n          tokenUnit,\n          showRechargePrice,\n          priceRate,\n          usdExchangeRate,\n          groupRatioMultiplier: getDynamicDisplayGroupRatio(\n            model,\n            selectedGroup\n          ),\n        })\n\n        if (dynamicSummary) {\n          if (dynamicSummary.isSpecialExpression) {\n            return (\n              <span className='text-muted-foreground/50 text-xs'>\n                {t('Special billing expression')}\n              </span>\n            )\n          }\n\n          const cacheEntry = dynamicSummary.entries.find(\n            (entry) => entry.field === 'cacheReadPrice'\n          )\n          if (!cacheEntry) {\n            return <span className='text-muted-foreground/30 text-xs'>—</span>\n          }\n\n          return (\n            <div className='max-w-full min-w-0'>\n              <span className='font-mono text-sm tabular-nums'>\n                {stripTrailingZeros(cacheEntry.formatted)}\n              </span>\n              <div className='text-muted-foreground/50 text-[10px]'>\n                / {tokenUnitLabel}\n              </div>\n            </div>\n          )\n        }\n\n        if (isUnconfiguredTaskUsageModel(model)) {\n          return <span className='text-muted-foreground/30 text-xs'>—</span>\n        }\n\n        const isTokenBased = isTokenBasedModel(model)\n\n        if (!isTokenBased || model.cache_ratio == null) {\n          return <span className='text-muted-foreground/30 text-xs'>—</span>\n        }\n\n        const cachedPrice = stripTrailingZeros(\n          formatPrice(\n            model,\n            'cache',\n            tokenUnit,\n            showRechargePrice,\n            priceRate,\n            usdExchangeRate,\n            selectedGroup\n          )\n        )\n\n        return (\n          <div className='max-w-full min-w-0'>\n            <span className='font-mono text-sm tabular-nums'>\n              {cachedPrice}\n            </span>\n            <div className='text-muted-foreground/50 text-[10px]'>\n              / {tokenUnitLabel}\n            </div>\n          </div>\n        )\n      },\n",
+    "result": "      cell: ({ row }) => (\n        <CachedPriceCell model={row.original} options={options} />\n      ),\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/billing-expr.ts",
+    "index": 1,
+    "ours": "import {\n  readTokenTierChain,\n  readTaskTierChain,\n  readTimeTokenPricing,\n  type TokenTier,\n} from './billing-expression/display'\nimport { compileBillingExpression } from './billing-expression/parser'\nimport {\n  splitExpressionAtTopLevel,\n  unwrapExpressionParens,\n} from './billing-expression/structure'\n",
+    "theirs": "",
+    "result": "import {\n  readTokenTierChain,\n  readTaskTierChain,\n  readTimeTokenPricing,\n  type TokenTier,\n} from './billing-expression/display'\nimport { compileBillingExpression } from './billing-expression/parser'\nimport {\n  splitExpressionAtTopLevel,\n  unwrapExpressionParens,\n} from './billing-expression/structure'\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 1,
+    "ours": "  getCurrentTimePricingTiers,\n",
+    "theirs": "",
+    "result": "  getCurrentTimePricingTiers,\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 2,
+    "ours": "  now?: Date\n",
+    "theirs": "",
+    "result": "  now?: Date\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 3,
+    "ours": "}\n\nexport type CardExamplePrice = {\n  label: string\n  formatted: string\n}\n\n",
+    "theirs": "}\n\nexport type CardExamplePrice = {\n  label: string\n  formatted: string\n}\n\n",
+    "result": "}\n\nexport type CardExamplePrice = {\n  label: string\n  formatted: string\n}\n\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 4,
+    "ours": "  isTimePricing?: boolean\n  isMixedBilling?: boolean\n",
+    "theirs": "",
+    "result": "  isTimePricing?: boolean\n  isMixedBilling?: boolean\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 5,
+    "ours": "",
+    "theirs": "export function formatTaskUsageUnitPrice(\n  valuePerUnit: number,\n  options: DynamicPriceOptions\n): string {\n  const groupRatio = options.groupRatioMultiplier ?? 1\n  const priceRate = options.priceRate ?? 1\n  const usdExchangeRate = options.usdExchangeRate ?? 1\n  const priceUSD = valuePerUnit * groupRatio\n  const displayPrice = applyRechargeRate(\n    priceUSD,\n    options.showRechargePrice ?? false,\n    priceRate,\n    usdExchangeRate\n  )\n\n  return formatBillingCurrencyFromUSD(displayPrice, {\n    digitsLarge: 4,\n    digitsSmall: 6,\n    abbreviate: false,\n  })\n}\n\n",
+    "result": "",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 6,
+    "ours": "    return parseTaskTiersFromExpr(billingExpr, model.billing_usage_schema, true)\n",
+    "theirs": "    return parseTaskTiersFromExpr(billingExpr, model.billing_usage_schema)\n",
+    "result": "    return parseTaskTiersFromExpr(billingExpr, model.billing_usage_schema, true)\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 7,
+    "ours": "    if (!Number.isFinite(value) || value < 0) return []\n",
+    "theirs": "    if (!Number.isFinite(value) || value <= 0) return []\n",
+    "result": "    if (!Number.isFinite(value) || value < 0) return []\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 8,
+    "ours": "  const baseExpression = splitBillingExprAndRequestRules(\n    model.billing_expr || ''\n  ).billingExpr\n  const timeTiers = isTaskUsage\n    ? null\n    : getCurrentTimePricingTiers(baseExpression, options.now ?? new Date())\n  const summaryTiers = timeTiers ?? tiers\n  const tier = isTaskUsage\n    ? (summaryTiers.at(-1) ?? null)\n    : (summaryTiers[0] ?? null)\n",
+    "theirs": "  const tier = isTaskUsage ? (tiers.at(-1) ?? null) : (tiers[0] ?? null)\n",
+    "result": "  const baseExpression = splitBillingExprAndRequestRules(\n    model.billing_expr || ''\n  ).billingExpr\n  const timeTiers = isTaskUsage\n    ? null\n    : getCurrentTimePricingTiers(baseExpression, options.now ?? new Date())\n  const summaryTiers = timeTiers ?? tiers\n  const tier = isTaskUsage\n    ? (summaryTiers.at(-1) ?? null)\n    : (summaryTiers[0] ?? null)\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 9,
+    "ours": "  let isMixedBilling = false\n  if (!isTaskUsage) {\n    const tokenTier = summaryTiers.find(\n      (item) => !isTaskPricingTier(item) && item.billingUnit !== 'request'\n    )\n    const requestTier = summaryTiers.find(\n      (item) => !isTaskPricingTier(item) && item.billingUnit === 'request'\n    )\n    if (tokenTier && requestTier) {\n      isMixedBilling = true\n      entries = [\n        ...getDynamicPriceEntries(tokenTier, options),\n        ...getDynamicPriceEntries(requestTier, options),\n      ]\n    }\n  }\n",
+    "theirs": "",
+    "result": "  let isMixedBilling = false\n  if (!isTaskUsage) {\n    const tokenTier = summaryTiers.find(\n      (item) => !isTaskPricingTier(item) && item.billingUnit !== 'request'\n    )\n    const requestTier = summaryTiers.find(\n      (item) => !isTaskPricingTier(item) && item.billingUnit === 'request'\n    )\n    if (tokenTier && requestTier) {\n      isMixedBilling = true\n      entries = [\n        ...getDynamicPriceEntries(tokenTier, options),\n        ...getDynamicPriceEntries(requestTier, options),\n      ]\n    }\n  }\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 10,
+    "ours": "        if (!Number.isFinite(value) || value < 0) continue\n",
+    "theirs": "        if (!Number.isFinite(value) || value <= 0) continue\n",
+    "result": "        if (!Number.isFinite(value) || value < 0) continue\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 11,
+    "ours": "        formattedRange: `${formatTaskUsageUnitPrice(range.min, options)} – ${formatTaskUsageUnitPrice(range.max, options)}`,\n",
+    "theirs": "        formattedRange: `${formatTaskUsageUnitPrice(range.min, options)}–${formatTaskUsageUnitPrice(range.max, options)}`,\n",
+    "result": "        formattedRange: `${formatTaskUsageUnitPrice(range.min, options)} – ${formatTaskUsageUnitPrice(range.max, options)}`,\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/lib/dynamic-price.ts",
+    "index": 12,
+    "ours": "      : entries.filter(\n          (entry) =>\n            entry.unit === 'request' || PRIMARY_DYNAMIC_FIELDS.has(entry.field)\n        ),\n    secondaryEntries: isTaskUsage\n      ? entries.filter((entry) => entry.unit === 'request')\n      : entries.filter(\n          (entry) =>\n            entry.unit !== 'request' && !PRIMARY_DYNAMIC_FIELDS.has(entry.field)\n        ),\n    isTaskUsage,\n    isTimePricing: timeTiers !== null,\n    ...(isMixedBilling ? { isMixedBilling } : {}),\n",
+    "theirs": "      : entries.filter((entry) => PRIMARY_DYNAMIC_FIELDS.has(entry.field)),\n    secondaryEntries: isTaskUsage\n      ? entries.filter((entry) => entry.unit === 'request')\n      : entries.filter((entry) => !PRIMARY_DYNAMIC_FIELDS.has(entry.field)),\n    isTaskUsage,\n",
+    "result": "      : entries.filter(\n          (entry) =>\n            entry.unit === 'request' || PRIMARY_DYNAMIC_FIELDS.has(entry.field)\n        ),\n    secondaryEntries: isTaskUsage\n      ? entries.filter((entry) => entry.unit === 'request')\n      : entries.filter(\n          (entry) =>\n            entry.unit !== 'request' && !PRIMARY_DYNAMIC_FIELDS.has(entry.field)\n        ),\n    isTaskUsage,\n    isTimePricing: timeTiers !== null,\n    ...(isMixedBilling ? { isMixedBilling } : {}),\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/pricing/types.ts",
+    "index": 1,
+    "ours": "  enumLabels?: Record<string, string | Record<string, string>>\n",
+    "theirs": "",
+    "result": "  enumLabels?: Record<string, string | Record<string, string>>\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/system-settings/models/model-ratio-visual-editor.tsx",
+    "index": 1,
+    "ours": "import { useModelPricing } from '@/features/model-pricing/api'\nimport {\n  applyPricingDraft,\n  pricingOptions,\n} from '@/features/model-pricing/pricing'\n",
+    "theirs": "import { usePricingData } from '@/features/pricing/hooks/use-pricing-data'\nimport { combineBillingExpr } from '@/features/pricing/lib/billing-expr'\n",
+    "result": "import { useModelPricing } from '@/features/model-pricing/api'\nimport {\n  applyPricingDraft,\n  pricingOptions,\n} from '@/features/model-pricing/pricing'\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+    "index": 1,
+    "ours": "  const segments = buildTypeDetailSegments(log, other, t, usageSchema)\n",
+    "theirs": "  const segments = buildTypeDetailSegments(log, other, t)\n  const adminSegments: DetailSegment[] = []\n",
+    "result": "  const segments = buildTypeDetailSegments(log, other, t, usageSchema)\n  const adminSegments: DetailSegment[] = []\n",
+    "rationale": "Keep task usage schemas and separately projected plugin admin details."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/columns/common-logs-columns.tsx",
+    "index": 2,
+    "ours": "export function useCommonLogsColumns(isAdmin: boolean): ColumnDef<UsageLog>[] {\n  const isRoot = useAuthStore(\n    (state) => state.auth.user?.role === ROLE.SUPER_ADMIN\n  )\n",
+    "theirs": "export function useCommonLogsColumns(\n  isAdmin: boolean,\n  isRoot: boolean\n): ColumnDef<UsageLog>[] {\n",
+    "result": "export function useCommonLogsColumns(isAdmin: boolean): ColumnDef<UsageLog>[] {\n  const isRoot = useAuthStore(\n    (state) => state.auth.user?.role === ROLE.SUPER_ADMIN\n  )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/columns/task-logs-columns.tsx",
+    "index": 1,
+    "ours": "        return (\n          <button\n            type='button'\n            className='flex items-center gap-1.5 text-left'\n            onClick={(e) => {\n              e.stopPropagation()\n              setSelectedUserId(log.user_id)\n              setUserInfoDialogOpen(true)\n            }}\n          >\n            <Avatar className='ring-border/60 size-6 ring-1 max-sm:hidden'>\n              {sensitiveVisible && log.user_id > 0 && (\n                <AuthenticatedAvatarImage\n                  avatarUrl={`/api/user/${log.user_id}/avatar`}\n                  alt=''\n                />\n              )}\n              <AvatarFallback\n                className={cn(\n                  'text-[11px] font-semibold',\n                  !sensitiveVisible && 'bg-muted text-muted-foreground'\n                )}\n                style={\n                  sensitiveVisible ? getUserAvatarStyle(displayName) : undefined\n                }\n              >\n                {sensitiveVisible ? getUserAvatarFallback(displayName) : '•'}\n              </AvatarFallback>\n            </Avatar>\n            <span className='text-muted-foreground truncate text-sm hover:underline'>\n              {sensitiveVisible ? displayName : '••••'}\n            </span>\n          </button>\n        )\n",
+    "theirs": "          return (\n            <button\n              type='button'\n              className='flex items-center gap-1.5 text-left'\n              onClick={(e) => {\n                e.stopPropagation()\n                setSelectedUserId(log.user_id)\n                setUserInfoDialogOpen(true)\n              }}\n            >\n              <Avatar className='ring-border/60 size-6 ring-1 max-sm:hidden'>\n                <AvatarFallback\n                  className={cn(\n                    'text-[11px] font-semibold',\n                    !sensitiveVisible && 'bg-muted text-muted-foreground'\n                  )}\n                  style={\n                    sensitiveVisible\n                      ? getUserAvatarStyle(displayName)\n                      : undefined\n                  }\n                >\n                  {sensitiveVisible ? getUserAvatarFallback(displayName) : '•'}\n                </AvatarFallback>\n              </Avatar>\n              <span className='text-muted-foreground truncate text-sm hover:underline'>\n                {sensitiveVisible ? displayName : '••••'}\n              </span>\n            </button>\n          )\n        },\n",
+    "result": "        return (\n          <button\n            type='button'\n            className='flex items-center gap-1.5 text-left'\n            onClick={(e) => {\n              e.stopPropagation()\n              setSelectedUserId(log.user_id)\n              setUserInfoDialogOpen(true)\n            }}\n          >\n            <Avatar className='ring-border/60 size-6 ring-1 max-sm:hidden'>\n              {sensitiveVisible && log.user_id > 0 && (\n                <AuthenticatedAvatarImage\n                  avatarUrl={`/api/user/${log.user_id}/avatar`}\n                  alt=''\n                />\n              )}\n              <AvatarFallback\n                className={cn(\n                  'text-[11px] font-semibold',\n                  !sensitiveVisible && 'bg-muted text-muted-foreground'\n                )}\n                style={\n                  sensitiveVisible ? getUserAvatarStyle(displayName) : undefined\n                }\n              >\n                {sensitiveVisible ? getUserAvatarFallback(displayName) : '•'}\n              </AvatarFallback>\n            </Avatar>\n            <span className='text-muted-foreground truncate text-sm hover:underline'>\n              {sensitiveVisible ? displayName : '••••'}\n            </span>\n          </button>\n        )\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/dialogs/details-dialog.tsx",
+    "index": 1,
+    "ours": "import { DetailRow, DetailSection } from './log-detail-layout'\n",
+    "theirs": "import { PluginAuthorLink } from '../plugin-author-link'\n",
+    "result": "import { DetailRow, DetailSection } from './log-detail-layout'\nimport { PluginAuthorLink } from '../plugin-author-link'\n",
+    "rationale": "Keep shared log detail layout and add the sanitized plugin author link."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/timing-metrics-cell.tsx",
+    "index": 1,
+    "ours": "  compact?: boolean\n",
+    "theirs": "",
+    "result": "  compact?: boolean\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/timing-metrics-cell.tsx",
+    "index": 2,
+    "ours": "  if (props.isTask) streamLabel = t('Async')\n",
+    "theirs": "  if (props.isTask) {\n    streamLabel = t('Async')\n  }\n",
+    "result": "  if (props.isTask) streamLabel = t('Async')\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/usage-logs-mobile-card.tsx",
+    "index": 1,
+    "ours": "",
+    "theirs": "import { parseLogOther } from '../lib/format'\nimport { TASK_MOBILE_SUMMARY_FIELDS } from '../lib/task-mobile-layout'\nimport {\n  getLogTypeConfig,\n  isDisplayableLogType,\n  isTimingLogType,\n} from '../lib/utils'\n",
+    "result": "import { TASK_MOBILE_SUMMARY_FIELDS } from '../lib/task-mobile-layout'\n",
+    "rationale": "Retain current mobile summary components, authenticated avatars and safe timing; add task field definitions without duplicating common-log components."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/usage-logs-mobile-card.tsx",
+    "index": 2,
+    "ours": "",
+    "theirs": "function MobileLogTimeStatus({\n  createdAt,\n  type,\n}: {\n  createdAt: unknown\n  type: unknown\n}) {\n  const { t } = useTranslation()\n  const timestamp = typeof createdAt === 'number' ? createdAt : undefined\n  const logType = typeof type === 'number' ? type : undefined\n  const config = getLogTypeConfig(logType ?? LOG_TYPE_ENUM.UNKNOWN)\n  const variant = config.color as StatusVariant\n\n  return (\n    <div className='space-y-1'>\n      <div className='font-mono text-xs leading-tight tabular-nums'>\n        {formatTimestampToDate(timestamp)}\n      </div>\n      <div\n        className={cn(\n          'inline-flex items-center gap-1 text-xs leading-none font-medium',\n          textColorMap[variant]\n        )}\n      >\n        <span\n          className={cn('size-1.5 shrink-0 rounded-full', dotColorMap[variant])}\n          aria-hidden='true'\n        />\n        <span>{t(config.label)}</span>\n      </div>\n    </div>\n  )\n}\n\n/** Mobile-only Tokens block: always show cache ↓/↑ when present (no label). */\nfunction MobileTokensField({ log }: { log: UsageLog }) {\n  const { t } = useTranslation()\n\n  if (!isDisplayableLogType(log.type)) return null\n\n  const promptTokens = log.prompt_tokens || 0\n  const completionTokens = log.completion_tokens || 0\n  if (promptTokens === 0 && completionTokens === 0) {\n    return (\n      <div className='bg-muted/20 min-w-0 rounded-md px-2 py-1.5'>\n        <span className='text-muted-foreground text-xs'>-</span>\n      </div>\n    )\n  }\n\n  const other = parseLogOther(log.other)\n  const cacheReadTokens = other?.cache_tokens || 0\n  const cacheWrite5m = other?.cache_creation_tokens_5m || 0\n  const cacheWrite1h = other?.cache_creation_tokens_1h || 0\n  const hasSplitCache = cacheWrite5m > 0 || cacheWrite1h > 0\n  const cacheWriteTokens = hasSplitCache\n    ? cacheWrite5m + cacheWrite1h\n    : other?.cache_creation_tokens || 0\n  const showCache = cacheReadTokens > 0 || cacheWriteTokens > 0\n\n  return (\n    <div className='bg-muted/20 min-w-0 rounded-md px-2 py-1.5'>\n      <div className='flex flex-col gap-0.5'>\n        <span className='font-mono text-xs font-medium tabular-nums'>\n          {promptTokens.toLocaleString()} / {completionTokens.toLocaleString()}\n        </span>\n        {showCache ? (\n          <div className='text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] leading-none'>\n            {cacheReadTokens > 0 && (\n              <span>\n                {t('Cache')}↓ {cacheReadTokens.toLocaleString()}\n              </span>\n            )}\n            {cacheWriteTokens > 0 && (\n              <span>↑ {cacheWriteTokens.toLocaleString()}</span>\n            )}\n          </div>\n        ) : (\n          <span className='text-muted-foreground/50 text-[11px] leading-none'>\n            —\n          </span>\n        )}\n      </div>\n    </div>\n  )\n}\n\n/** Mobile-only User block: own layout so avatar/name always line up on the same baseline. */\nfunction MobileUserField({ log }: { log: UsageLog }) {\n  const { sensitiveVisible, setSelectedUserId, setUserInfoDialogOpen } =\n    useUsageLogsContext()\n\n  if (!log.username) return null\n\n  return (\n    <button\n      type='button'\n      className='bg-muted/20 flex min-w-0 items-center gap-1.5 rounded-md px-2 py-1.5 text-left'\n      onClick={(e) => {\n        e.stopPropagation()\n        setSelectedUserId(log.user_id)\n        setUserInfoDialogOpen(true)\n      }}\n    >\n      <Avatar className='ring-border/60 size-6 shrink-0 ring-1'>\n        <AvatarFallback\n          className={cn(\n            'text-[11px] font-semibold',\n            !sensitiveVisible && 'bg-muted text-muted-foreground'\n          )}\n          style={\n            sensitiveVisible ? getUserAvatarStyle(log.username) : undefined\n          }\n        >\n          {sensitiveVisible ? getUserAvatarFallback(log.username) : '•'}\n        </AvatarFallback>\n      </Avatar>\n      <span className='text-foreground min-w-0 truncate text-sm'>\n        {sensitiveVisible ? log.username : '••••'}\n      </span>\n    </button>\n  )\n}\n\n/** Merge stream badge + TPS with first-token / duration on one row. */\nfunction MobileStreamTimingField({ log }: { log: UsageLog }) {\n  if (!isTimingLogType(log.type)) return null\n\n  const other = parseLogOther(log.other)\n  const useTime = log.use_time || 0\n  const tokensPerSecond =\n    useTime > 0 && log.completion_tokens > 0\n      ? log.completion_tokens / useTime\n      : null\n\n  return (\n    <div className='bg-muted/20 flex min-w-0 items-center gap-2.5 rounded-md px-2 py-1.5'>\n      <TimingMetricsCell\n        useTimeSec={useTime}\n        completionTokens={log.completion_tokens}\n        frtMs={other?.frt}\n        isStream={log.is_stream}\n        indicator='dot'\n        className='min-w-0 flex-1'\n      />\n      <StreamTpsCell\n        isStream={log.is_stream}\n        isTask={other?.is_task === true}\n        tokensPerSecond={tokensPerSecond}\n        streamStatus={other?.stream_status}\n        className='shrink-0'\n      />\n    </div>\n  )\n}\n\nfunction CommonLogsCard<TData>({\n  cells,\n}: {\n  cells: Map<string, Cell<TData, unknown>>\n}) {\n  const { t } = useTranslation()\n\n  const modelCell = cells.get('model_name')\n  const quotaCell = cells.get('quota')\n  const rowData = cells.get('created_at')?.row.original as UsageLog | undefined\n\n  return (\n    <div className='space-y-2.5'>\n      <div className='flex min-w-0 items-center justify-between gap-3'>\n        <CompactCell cell={modelCell} className='flex-1' />\n        <CompactCell\n          cell={quotaCell}\n          className='shrink-0 text-right [&_.flex-col]:items-end'\n        />\n      </div>\n\n      <div className='grid grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] gap-1.5'>\n        <div className='bg-muted/20 min-w-0 rounded-md px-2 py-1.5'>\n          <MobileLogTimeStatus\n            createdAt={rowData?.created_at}\n            type={rowData?.type}\n          />\n        </div>\n        <SummaryField\n          cell={cells.get('channel')}\n          valueClassName='[&_.flex-col]:max-w-none'\n        />\n        {rowData && cells.has('user') ? (\n          <MobileUserField log={rowData} />\n        ) : (\n          <SummaryField cell={cells.get('user')} />\n        )}\n        <SummaryField\n          cell={cells.get('token_name')}\n          valueClassName='[&_.flex-col]:max-w-none [&_.flex-col>*:not(:first-child)]:text-[11px] [&_.flex-col>*:not(:first-child)]:leading-none'\n        />\n        {rowData ? (\n          <MobileStreamTimingField log={rowData} />\n        ) : (\n          <SummaryField cell={cells.get('use_time')} />\n        )}\n        {rowData ? (\n          <MobileTokensField log={rowData} />\n        ) : (\n          <SummaryField cell={cells.get('prompt_tokens')} />\n        )}\n        <SummaryField\n          label={t('Details')}\n          cell={cells.get('content')}\n          className='col-span-2 bg-transparent px-0 py-0'\n        />\n      </div>\n    </div>\n  )\n}\n\n",
+    "result": "",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/usage-logs/components/usage-logs-table.tsx",
+    "index": 1,
+    "ours": "  if (Array.isArray(value)) {\n    return value.filter((item) => String(item) !== LOG_TYPE_ALL_VALUE)\n  }\n  const values = value ? [value] : []\n",
+    "theirs": "  let values: unknown[] = []\n  if (Array.isArray(value)) {\n    values = value\n  } else if (value) {\n    values = [value]\n  }\n",
+    "result": "  if (Array.isArray(value)) {\n    return value.filter((item) => String(item) !== LOG_TYPE_ALL_VALUE)\n  }\n  const values = value ? [value] : []\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  },
+  {
+    "file": "web/src/features/usage-logs/types.ts",
+    "index": 1,
+    "ours": "    // Reject / intercept reason (admin only)\n    reject_reason?: string\n    task_plugin?: TaskPluginInfo\n",
+    "theirs": "    task_plugin?: TaskPluginInfo\n  }\n  root_info?: {\n    task_plugin?: TaskPluginRuntimeInfo\n    upstream_task_id?: string\n    node_name?: string\n",
+    "result": "    // Reject / intercept reason (admin only)\n    reject_reason?: string\n    task_plugin?: TaskPluginInfo\n",
+    "rationale": "Retain B12/B13 pulled-forward pricing, fixed/zero/time pricing, CAS editing, exact diagnostic scopes and downstream presentation. Review nonconflicting source separately."
+  }
+]

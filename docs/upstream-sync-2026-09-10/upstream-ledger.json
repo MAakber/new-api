@@ -3489,12 +3489,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated type-65 sandboxed plugins alongside all legacy channels; preserved native routes, polling, durable task response ordering, quota guards, canonical pricing CAS, scoped logs and downstream frontend behavior. Shared-endpoint coexistence and legacy refund probes pass; alias pricing and consolidated acceptance follow the remaining B14 commits.",
+    "resolution_commits": [
+      "92023c5394bc343e6d775f3f5511b379a90475dd"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.2-plugin-runtime-eb48396d5/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3790,12 +3795,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added declared-name and mapped-alias resolution without rewriting ordinary requests. Plugin-only spelling fallback and resolved model metadata retain original channel ownership; legacy adaptors retain mapping and pricing order. Canonical CAS pricing now validates alias usage schemas, and deferred task pricing database cases are restored. Focused coexistence, pricing, and relay mapping probes pass.",
+    "resolution_commits": [
+      "456abaeb1807ae0976db435fb8c74d67cbc47d80"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.2-model-aliases-6c22550ea/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -3942,12 +3952,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied marketplace action policy and stale override hints with all seven translations. Existing intentional overrides and third-party installations remain available; consolidated B14 UI validation follows.",
+    "resolution_commits": [
+      "ddd16ddb6ede1a8222746a543e0af9c2aed3b7ab"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-factory-updates-dc4732cfe/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4852,12 +4867,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added bounded H3 multimodal generation, query and artifact contracts. Polling carries persisted model identities while preserving legacy action values. Consolidated plugin protocol and billing validation follows.",
+    "resolution_commits": [
+      "5bbd061deb1de5202bb6e5bfc1f95dfb89b83aa0"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-hailuo-h3-aece11d2f/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4922,12 +4942,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied actual input-image and video usage facts with declared schema, bounded estimates and validated completion corrections; existing legacy Hailuo implementation remains intact.",
+    "resolution_commits": [
+      "284a30c3af0b37fd8bc3f2b868531b54e26e94c8"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-hailuo-input-usage-73afad588/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5208,12 +5233,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added private plugin query state, status-aware polling and CAS-protected failure settlement. Migrated all ten retained legacy adapter interfaces and Gemini/Vertex content lookups using original task IDs, actions and credentials; preserved factory injection and execution identity. Focused HTTP classification, batch refunds, legacy parsing and media-query probes pass.",
+    "resolution_commits": [
+      "64b05de81336f583bc969b851a27fb8b235f18ab"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-polling-context-9df450fe5/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5328,12 +5358,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added translated binding diagnostics for pinned and shared candidate plugins. The explanation preserves ordinary-channel coexistence and does not require disabling a plugin to use existing legacy channels.",
+    "resolution_commits": [
+      "499885a32887cf25de1593dd55754f1a311d2a2f"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-channel-diagnostics-32c261923/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -6992,12 +7027,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Imported Wan 3 model protocol support, bounded smart duration estimates and fixtures; legacy Alibaba routing and pricing are retained. Final Wan accounting follow-up remains in this batch.",
+    "resolution_commits": [
+      "cf98799c0a808078ef879e2e29970c8347f285ab"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-wan3-3b4652269/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7210,12 +7250,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied explicit plugin disable semantics and status reporting. Existing legacy channels continue independently of the plugin registry.",
+    "resolution_commits": [
+      "822610535d291839360f1ea019bf94a335bcac24"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-disable-overrides-6298b0f32/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7248,12 +7293,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied alias-safe Suno decoding and response rendering, nonempty header propagation and built-in alias echo regressions.",
+    "resolution_commits": [
+      "bd55394bc7e0991f8829bc4b8014af091a9dac51"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-suno-alias-echo-92bc7ff73/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7304,12 +7354,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Removed the unused override-layer switch and its obsolete tests; retained legacy task constants, master-switch behavior, per-plugin controls and independent legacy adapters.",
+    "resolution_commits": [
+      "3dcb4fd38513417503cae246b96cbef2b2dae888"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-plugin-switches-210734bb7/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7503,12 +7558,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated validated plugin icons, websites and usage labels. Default endpoints participate in downstream sparse patch persistence and sensitive-change authorization; preserve channel cache refresh, returned mutation state, credential redaction and plugin channel ID 65. Added sparse default authorization regression.",
+    "resolution_commits": [
+      "bf58139bcce68818e9ee61fc1a48db196819235b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-plugin-metadata-99974a814/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7607,12 +7667,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Added metadata and source review, validated icon sidecars with authenticated local fetching, installed-version comparison, rollback UI, shared dialogs and copy controls. Reconciled deferred pricing version and sandbox selectors through the downstream Combobox. Preserved license headers and seven-locale translations. Mapped Range geometry fixture to the existing downstream setup; consolidated validation remains pending.",
+    "resolution_commits": [
+      "bb5bc679d23470bb6ddc96b71bf4051ec85c897e"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-plugin-marketplace-984330920/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7656,12 +7721,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Adapted plugin binding, model and default URL prefilling, destination descriptions and authenticated icons into the existing channel editor. Retained multiple floating windows, scoped providers, key append, custom balance, sparse patch controls and sensitive locks. Shared Combobox keeps focus behavior and gains optional selected icons; channel IDs remain unchanged. Placed imported badge tests in the required dedicated test directory.",
+    "resolution_commits": [
+      "7f55c4ed5f5ed1e84009b93e9e38477bc8110156"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-plugin-channel-ui-eb76b136b/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -8704,12 +8774,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Keep raw provider video fields during query rendering while replacing public task identity and status through the existing protocol adapter. Preserve legacy task fetch behavior and execution snapshots.",
+    "resolution_commits": [
+      "619264819777dc4b94f6fb18219be087f1af6c25"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-sora-query-9bf328d97/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -9279,12 +9354,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied final model capability profiles, bounded duration and input media rules, native and shared protocol conversion, input plus output accounting and explicit zero and false parameter preservation. Kept the existing Alibaba adapter and downstream quota saturation helpers.",
+    "resolution_commits": [
+      "6274b21d34dd09ca7341ec4c44fda1d02cf4569b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B14.3-wan-accounting-a20574136/resolution.json",
+      "evidence/B14-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

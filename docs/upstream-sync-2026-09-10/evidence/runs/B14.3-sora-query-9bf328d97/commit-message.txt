@@ -1,0 +1,7 @@
+fix(plugins): preserve Sora provider fields in video queries
+
+Adapt upstream 9bf328d9749751757d5d6b74088d514813a618bd.
+
+Keep raw provider video fields during query rendering while replacing public task identity and status through the existing protocol adapter. Preserve legacy task fetch behavior and execution snapshots.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

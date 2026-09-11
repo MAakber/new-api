@@ -1,0 +1,11 @@
+{
+  "upstream": "92bc7ff73c5ef215496d09d3e4b5769c9e35006b",
+  "unit": "B14.3-suno-alias-echo",
+  "before_head": "822610535d291839360f1ea019bf94a335bcac24",
+  "rationale": "Correct plugin Suno model aliases, public origin-model echoes and header propagation; preserve original Suno route handling.",
+  "files": [
+    "plugins/builtin_plugins_test.go",
+    "plugins/sunoapi_responses_test.go",
+    "plugins/tasks/sunoapi/plugin.js"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "upstream": "0c76e4dae77a279e015329b7478e6f02d6b62edd",
-  "status": "pending",
+  "status": "verified",
   "stage": "B14",
   "files": [
     "web/src/features/task-plugins/components/plugin-detail-sheet.tsx",
@@ -63,5 +63,9 @@
   "additional_deferred_files": [
     "controller/billing_option_test.go"
   ],
-  "fixed_price_guards": "evidence/runs/B12.2-fixed-request-pricing-064ed943e/plugin-guards-deferred.json"
+  "fixed_price_guards": "evidence/runs/B12.2-fixed-request-pricing-064ed943e/plugin-guards-deferred.json",
+  "resolved_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "evidence": [
+    "evidence/B14-acceptance.json"
+  ]
 }

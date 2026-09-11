@@ -1,0 +1,32 @@
+{
+  "id": "B14-mariadb-seed",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-baseline-2.test.exe",
+    "-test.run=^TestDatabaseUpgradePreservesDownstreamData$",
+    "-test.v",
+    "-test.count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "started_at": "2026-09-11T10:00:43.214Z",
+  "finished_at": "2026-09-11T10:00:46.280Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log",
+  "runner_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "fixture": {
+    "flavor": "mariadb",
+    "artifact_sha256": "605ef7dc1a75c026ae16d99e9542ba5c045697e31c767a10fec004e6b359b56f",
+    "build_evidence": "evidence/runs/B06-build-baseline-fixture-2/result.json"
+  }
+}

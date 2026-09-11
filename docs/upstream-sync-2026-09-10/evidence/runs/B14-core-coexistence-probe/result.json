@@ -1,0 +1,30 @@
+{
+  "id": "B14-core-coexistence-probe",
+  "command": [
+    "go",
+    "test",
+    "./middleware",
+    "./service",
+    "./relay",
+    "-run",
+    "TestSharedTaskEndpointPreservesChannelOwnership|TestLegacyTaskSubmissionSurvivesDisabledPlugins|TestUpdateSunoTasksStalePollsRefundExactlyOnce|TestDispatchPlatformUpdateUsesFetchMode",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "af63b8cd98e46fe51e266200481c1358e475c341",
+  "started_at": "2026-09-11T08:33:56.623Z",
+  "finished_at": "2026-09-11T08:34:04.570Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

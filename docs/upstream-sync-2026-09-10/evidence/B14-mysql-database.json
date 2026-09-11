@@ -1,0 +1,13 @@
+{
+  "flavor": "mysql",
+  "status": "passed",
+  "commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "checks": [
+    "evidence/runs/B14-mysql-plugin-storage/result.json",
+    "evidence/runs/B14-mysql-fresh/result.json",
+    "evidence/runs/B14-mysql-seed/result.json",
+    "evidence/runs/B14-mysql-verify/result.json",
+    "evidence/runs/B14-mysql-pricing/result.json"
+  ],
+  "checked_at": "2026-09-11T10:01:35.365Z"
+}

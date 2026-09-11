@@ -1,0 +1,6 @@
+{
+  "upstream": "a20574136b2746e9afc4b268c99cf99b3f6cc68b",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'plugins/alibaba_responses_test.go' cleanly.\nApplied patch to 'plugins/alibaba_wan3_test.go' cleanly.\nApplied patch to 'plugins/tasks/alibaba/plugin.js' cleanly.\n"
+}

@@ -1,0 +1,6 @@
+{
+  "upstream": "73afad588ca7af07134fa423e8a33fdea6c855b2",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'plugins/hailuo_responses_test.go' cleanly.\nApplied patch to 'plugins/tasks/hailuo/plugin.js' cleanly.\n"
+}

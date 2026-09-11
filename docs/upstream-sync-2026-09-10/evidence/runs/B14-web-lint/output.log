@@ -1,0 +1,7 @@
+src/features/channels/components/drawers/channel-mutate-drawer.tsx:143:3: warning eslint(no-unused-vars): Identifier 'CODE_BUDDY_BASE_URL_HELP' is imported but never used. help: Consider removing this import.
+scripts/sync-i18n.mjs:129:10: warning eslint(prefer-template): Unexpected string concatenation. help: Use template literals instead of string concatenation.
+scripts/sync-i18n.mjs:160:11: warning eslint(prefer-object-has-own): Disallow use of `Object.prototype.hasOwnProperty.call()` and prefer use of `Object.hasOwn()`. help: Replace `Object.prototype.hasOwnProperty.call` with `Object.hasOwn`.
+scripts/sync-i18n.mjs:183:12: warning eslint(prefer-object-has-own): Disallow use of `Object.prototype.hasOwnProperty.call()` and prefer use of `Object.hasOwn()`. help: Replace `Object.prototype.hasOwnProperty.call` with ` Object.hasOwn`.
+scripts/sync-i18n.mjs:216:5: warning unicorn(prefer-string-starts-ends-with): Prefer String#startsWith over a regex with a caret. help: Replace `/^org-/.test(s)` with `s.startsWith('org-')`.
+scripts/sync-i18n.mjs:218:5: warning unicorn(prefer-string-starts-ends-with): Prefer String#startsWith over a regex with a caret. help: Replace `/^checkout\./.test(s)` with `s.startsWith('checkout.')`.
+scripts/sync-i18n.mjs:219:5: warning unicorn(prefer-string-starts-ends-with): Prefer String#startsWith over a regex with a caret. help: Replace `/^footer\./.test(s)` with `s.startsWith('footer.')`.

@@ -1,0 +1,6 @@
+{
+  "upstream": "3b4652269a6a6d9e2c8650a84ee8c4e447e6473b",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Falling back to direct application...\nApplied patch to 'plugins/tasks/alibaba/plugin.js' cleanly.\n"
+}

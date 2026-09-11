@@ -1,0 +1,13 @@
+{
+  "upstream": "9bf328d9749751757d5d6b74088d514813a618bd",
+  "unit": "B14.3-sora-query",
+  "before_head": "7f55c4ed5f5ed1e84009b93e9e38477bc8110156",
+  "rationale": "Preserve Sora video query provider fields while retaining task execution snapshot identity and legacy polling.",
+  "files": [
+    "docs/plugin-api/README.md",
+    "docs/plugin-api/v1.md",
+    "plugins/tasks/sora/plugin.js",
+    "relay/channel/task/jsplugin/adaptor.go",
+    "relay/channel/task/jsplugin/adaptor_test.go"
+  ]
+}

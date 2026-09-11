@@ -1,0 +1,30 @@
+{
+  "at": "2026-09-11T08:18:00.253Z",
+  "head": "af63b8cd98e46fe51e266200481c1358e475c341",
+  "source": "eb48396d5fe97d27772d0cd5e3ca8aa5caa4f3e9",
+  "status": "uncommitted_adaptation",
+  "resolved": {
+    "files": 39,
+    "hunks": 106,
+    "indexStagingPending": true
+  },
+  "changes": [
+    "Plugin type 65 preserves all existing channel identities",
+    "Shared endpoints select normal or explicitly bound plugin channels before JS parsing",
+    "Retained legacy task adapters now parse without early client writes; polling and content preserve execution identity",
+    "Scoped plugin logs and canonical CAS pricing retained; fixed-price task guard restored",
+    "Frontend pricing AST and authenticated avatars preserved; deferred detail and audit fixtures restored"
+  ],
+  "probes": [
+    "Root build passed before latest fixture edits",
+    "Frontend typecheck passed before latest preview edits",
+    "Pricing rejection and expression tests passed; legacy test fixture just repaired, rerun pending"
+  ],
+  "remaining": [
+    "Persisted source patch must not be reapplied",
+    "Restrict pinned plugin retries to explicit bindings; test shared endpoint coexistence",
+    "Review legacy polling and task quantity bounds",
+    "Apply reviewed locales through sanctioned writer and sync",
+    "Commit core as implemented, integrate remaining 15 B14 commits, then consolidate acceptance"
+  ]
+}

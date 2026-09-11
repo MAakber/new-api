@@ -1,0 +1,7 @@
+{
+  "restored": [
+    "web/src/features/pricing/lib/billing-expr.ts",
+    "web/src/features/pricing/lib/dynamic-price.ts"
+  ],
+  "rationale": "Core patch reintroduced obsolete duplicate task expression parser and duplicate unreachable pricing branch. The complete newer AST parser and task price display were pulled forward and accepted in B12; no new behavior is removed."
+}

@@ -1,0 +1,4 @@
+$ tsgo -b
+src/features/usage-logs/components/__tests__/detail-preview.test.tsx(282,5): error TS2304: Cannot find name 'fireEvent'.
+src/features/usage-logs/components/__tests__/detail-preview.test.tsx(283,20): error TS2304: Cannot find name 'within'.
+error: script "typecheck" exited with code 1

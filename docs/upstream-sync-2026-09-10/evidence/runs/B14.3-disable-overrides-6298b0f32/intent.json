@@ -1,0 +1,10 @@
+{
+  "upstream": "6298b0f3238461b9629dfc1c00866f8325123aa1",
+  "unit": "B14.3-disable-overrides",
+  "before_head": "cf98799c0a808078ef879e2e29970c8347f285ab",
+  "rationale": "Ensure disabling an overridden plugin suppresses both active layers, with existing channel-use checks and reversible enable semantics.",
+  "files": [
+    "controller/task_plugin.go",
+    "controller/task_plugin_test.go"
+  ]
+}

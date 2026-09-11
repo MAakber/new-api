@@ -1,0 +1,19 @@
+{
+  "upstream": "dc4732cfed712b004d3d3d94a414d3ff127a93cc",
+  "before_head": "456abaeb1807ae0976db435fb8c74d67cbc47d80",
+  "after_head": "ddd16ddb6ede1a8222746a543e0af9c2aed3b7ab",
+  "files": [
+    "web/src/features/task-plugins/__tests__/marketplace.test.ts",
+    "web/src/features/task-plugins/components/marketplace-plugin-card.tsx",
+    "web/src/features/task-plugins/components/plugins-table.tsx",
+    "web/src/features/task-plugins/lib/marketplace.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ],
+  "rationale": "Applied marketplace action policy and stale override hints with all seven translations. Existing intentional overrides and third-party installations remain available; consolidated B14 UI validation follows."
+}

@@ -1,0 +1,7 @@
+feat(plugins): add MiniMax H3 video support
+
+Adapt upstream aece11d2f7f095a33052696c5d28d3656609a99e.
+
+Added bounded H3 multimodal generation, query and artifact contracts. Polling carries persisted model identities while preserving legacy action values. Consolidated plugin protocol and billing validation follows.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

@@ -1,0 +1,23 @@
+=== RUN   TestTaskPluginIconSurvivesRestartsAndSourceUpdates
+[SYS] 2026/09/11 - 18:00:18 | using MySQL as database 
+    task_plugin_test.go:34: TEST_TASK_PLUGIN_DSN: 11.4.4-MariaDB-ubu2404
+
+2026/09/11 18:00:19 [32mD:/10178/Projects/new-api-upstream-sync/model/task_plugin_test.go:28 [33mSLOW SQL >= 200ms
+[0m[31;1m[237.075ms] [33m[rows:1][35m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'codex_sync_b14_plugins%' ORDER BY SCHEMA_NAME='codex_sync_b14_plugins' DESC,SCHEMA_NAME limit 1[0m
+
+2026/09/11 18:00:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/task_plugin_test.go:56 [35;1mmysql error 1062
+[0m[33m[127.828ms] [34;1m[rows:0][0m INSERT INTO `task_plugins` (`key`,`api_version`,`version`,`source`,`source_hash`,`icon`,`enabled`,`active`,`created_at`,`remark`) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING `id`
+--- PASS: TestTaskPluginIconSurvivesRestartsAndSourceUpdates (0.80s)
+=== RUN   TestTaskPluginVersionActivationAndSourceImmutability
+[SYS] 2026/09/11 - 18:00:19 | using MySQL as database 
+    task_plugin_test.go:60: TEST_TASK_PLUGIN_DSN: 11.4.4-MariaDB-ubu2404
+--- PASS: TestTaskPluginVersionActivationAndSourceImmutability (0.40s)
+=== RUN   TestDeleteActiveTaskPluginPromotesNewestRemainingVersion
+[SYS] 2026/09/11 - 18:00:19 | using MySQL as database 
+    task_plugin_test.go:102: TEST_TASK_PLUGIN_DSN: 11.4.4-MariaDB-ubu2404
+--- PASS: TestDeleteActiveTaskPluginPromotesNewestRemainingVersion (0.56s)
+=== RUN   TestTaskPluginSyncSnapshotRevisionTracksDesiredRuntimeState
+[SYS] 2026/09/11 - 18:00:20 | using MySQL as database 
+    task_plugin_test.go:136: TEST_TASK_PLUGIN_DSN: 11.4.4-MariaDB-ubu2404
+--- PASS: TestTaskPluginSyncSnapshotRevisionTracksDesiredRuntimeState (0.34s)
+PASS

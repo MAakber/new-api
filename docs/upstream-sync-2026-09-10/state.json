@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T07:28:22.034Z",
+  "updatedAt": "2026-09-11T10:04:25.244Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B14",
-  "current_unit": "B14.1",
+  "current_batch": "B15",
+  "current_unit": "B15.2",
   "active_operation": null,
-  "last_observed_head": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b",
-  "last_verified_code_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b",
-  "last_checkpoint_commit": "f68d0a4e3b40a49b36d27a8275378a2e9ff2d71b",
+  "last_observed_head": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "last_verified_code_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "last_checkpoint_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B14.1: inventory channel identifiers and prepare plugin migration preserving downstream channels and in-flight tasks.",
+  "next_action": "Integrate all frontend test discovery and popup/error handling changes, preserving downstream tests and multiple floating windows.",
   "blockers": [
     {
       "id": "production_snapshot",

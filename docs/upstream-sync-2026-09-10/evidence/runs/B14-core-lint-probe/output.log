@@ -1,0 +1,9 @@
+src/features/task-plugins/components/plugin-sandbox.tsx:51:9: error eslint(curly): Expected { after 'if' condition. help: Replace `throw new Error(t('Arguments must be a JSON array'))` with `{throw new Error(t('Arguments must be a JSON array'))}`.
+src/features/pricing/constants.ts:19:1: error typescript(no-import-type-side-effects): TypeScript will only remove the inline type specifiers which will leave behind a side effect import at runtime. help: Convert this to a top-level type qualifier to properly remove the entire import.
+src/features/pricing/lib/filters.ts:193:10: error unicorn(prefer-spread): Prefer the spread operator (`...`) over Array.from() help: The spread operator (`...`) is more concise and readable.
+scripts/sync-i18n.mjs:129:10: warning eslint(prefer-template): Unexpected string concatenation. help: Use template literals instead of string concatenation.
+scripts/sync-i18n.mjs:160:11: warning eslint(prefer-object-has-own): Disallow use of `Object.prototype.hasOwnProperty.call()` and prefer use of `Object.hasOwn()`. help: Replace `Object.prototype.hasOwnProperty.call` with `Object.hasOwn`.
+scripts/sync-i18n.mjs:183:12: warning eslint(prefer-object-has-own): Disallow use of `Object.prototype.hasOwnProperty.call()` and prefer use of `Object.hasOwn()`. help: Replace `Object.prototype.hasOwnProperty.call` with ` Object.hasOwn`.
+scripts/sync-i18n.mjs:216:5: warning unicorn(prefer-string-starts-ends-with): Prefer String#startsWith over a regex with a caret. help: Replace `/^org-/.test(s)` with `s.startsWith('org-')`.
+scripts/sync-i18n.mjs:218:5: warning unicorn(prefer-string-starts-ends-with): Prefer String#startsWith over a regex with a caret. help: Replace `/^checkout\./.test(s)` with `s.startsWith('checkout.')`.
+scripts/sync-i18n.mjs:219:5: warning unicorn(prefer-string-starts-ends-with): Prefer String#startsWith over a regex with a caret. help: Replace `/^footer\./.test(s)` with `s.startsWith('footer.')`.

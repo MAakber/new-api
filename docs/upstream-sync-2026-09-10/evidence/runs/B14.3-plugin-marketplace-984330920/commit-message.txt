@@ -1,0 +1,7 @@
+feat(plugins): integrate marketplace previews and management
+
+Adapt upstream 984330920061e014159c7581b8fcdb726de2c247.
+
+Added metadata and source review, validated icon sidecars with authenticated local fetching, installed-version comparison, rollback UI, shared dialogs and copy controls. Reconciled deferred pricing version and sandbox selectors through the downstream Combobox. Preserved license headers and seven-locale translations. Mapped Range geometry fixture to the existing downstream setup; consolidated validation remains pending.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

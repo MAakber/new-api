@@ -1,0 +1,20 @@
+{
+  "upstream": "eb76b136b85ecba9d6ad19c714c5781e51815530",
+  "before_head": "bb5bc679d23470bb6ddc96b71bf4051ec85c897e",
+  "after_head": "7f55c4ed5f5ed1e84009b93e9e38477bc8110156",
+  "files": [
+    "web/src/components/provider-badge.tsx",
+    "web/src/components/ui/__tests__/combobox.test.tsx",
+    "web/src/components/ui/combobox.tsx",
+    "web/src/features/channels/api.ts",
+    "web/src/features/channels/components/__tests__/channel-type-badge.test.tsx",
+    "web/src/features/channels/components/channel-type-badge.tsx",
+    "web/src/features/channels/components/channels-columns.tsx",
+    "web/src/features/channels/components/channels-table.tsx",
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "web/src/features/channels/lib/__tests__/task-plugin-base-url.test.ts",
+    "web/src/features/channels/lib/task-plugin-base-url.ts",
+    "web/src/features/channels/types.ts"
+  ],
+  "rationale": "Adapted plugin binding, model and default URL prefilling, destination descriptions and authenticated icons into the existing channel editor. Retained multiple floating windows, scoped providers, key append, custom balance, sparse patch controls and sensitive locks. Shared Combobox keeps focus behavior and gains optional selected icons; channel IDs remain unchanged. Placed imported badge tests in the required dedicated test directory."
+}

@@ -1,0 +1,10 @@
+{
+  "upstream": "6298b0f3238461b9629dfc1c00866f8325123aa1",
+  "before_head": "cf98799c0a808078ef879e2e29970c8347f285ab",
+  "after_head": "822610535d291839360f1ea019bf94a335bcac24",
+  "files": [
+    "controller/task_plugin.go",
+    "controller/task_plugin_test.go"
+  ],
+  "rationale": "Applied explicit plugin disable semantics and status reporting. Existing legacy channels continue independently of the plugin registry."
+}

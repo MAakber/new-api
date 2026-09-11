@@ -1,0 +1,7 @@
+feat(task): integrate plugin aliases with canonical pricing and channel coexistence
+
+Adapt upstream 6c22550ea325d4fea0e0ece52412cb1e4449291c.
+
+Added declared-name and mapped-alias resolution without rewriting ordinary requests. Plugin-only spelling fallback and resolved model metadata retain original channel ownership; legacy adaptors retain mapping and pricing order. Canonical CAS pricing now validates alias usage schemas, and deferred task pricing database cases are restored. Focused coexistence, pricing, and relay mapping probes pass.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

@@ -1,0 +1,34 @@
+ok  	github.com/QuantumNous/new-api/middleware	0.753s
+ok  	github.com/QuantumNous/new-api/controller	1.220s
+[SYS] 2026/09/11 - 16:49:26 | group ratio not found:  
+[SYS] 2026/09/11 - 16:49:26 | model price not found: declared-model 
+[SYS] 2026/09/11 - 16:49:26 | group ratio not found:  
+[SYS] 2026/09/11 - 16:49:26 | model price not found: alias-model 
+--- FAIL: TestRelayTaskSubmitDoesNotApplyMappingTwice (0.00s)
+    relay_task_test.go:109: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/relay/relay_task_test.go:109
+        	Error:      	Not equal: 
+        	            	expected: "rewritten"
+        	            	actual  : "declared-model"
+        	            	
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-rewritten
+        	            	+declared-model
+        	Test:       	TestRelayTaskSubmitDoesNotApplyMappingTwice
+        	Messages:   	late mapping would overwrite rewriteModel with the chain tail
+[SYS] 2026/09/11 - 16:49:26 | group ratio not found:  
+[SYS] 2026/09/11 - 16:49:26 | model price not found: maporder_text_to_video 
+[SYS] 2026/09/11 - 16:49:26 | model price not found: alias-model 
+[SYS] 2026/09/11 - 16:49:26 | model price not found: alias-model 
+--- FAIL: TestRelayTaskSubmitAliasBillingIdentityAndExprFallback (0.00s)
+    --- FAIL: TestRelayTaskSubmitAliasBillingIdentityAndExprFallback/fallback_uses_tail_expr (0.00s)
+        relay_task_test.go:221: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/relay/relay_task_test.go:221
+            	Error:      	Expected value not to be nil.
+            	Test:       	TestRelayTaskSubmitAliasBillingIdentityAndExprFallback/fallback_uses_tail_expr
+FAIL
+FAIL	github.com/QuantumNous/new-api/relay	0.915s
+FAIL

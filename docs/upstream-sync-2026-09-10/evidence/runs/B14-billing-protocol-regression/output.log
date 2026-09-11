@@ -1,0 +1,7 @@
+ok  	github.com/QuantumNous/new-api/service	5.831s
+ok  	github.com/QuantumNous/new-api/relay/channel/task/jsplugin	1.261s
+ok  	github.com/QuantumNous/new-api/plugins	1.281s
+ok  	github.com/QuantumNous/new-api/relay/helper	3.779s
+ok  	github.com/QuantumNous/new-api/relay/common	0.784s
+ok  	github.com/QuantumNous/new-api/relay	1.072s
+ok  	github.com/QuantumNous/new-api/router	1.260s

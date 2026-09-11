@@ -2106,3 +2106,254 @@ Actual 387a409 drawer/combobox/select portal-context fix is pulled forward after
 - 224 frontend cases covered using unchanged passing results and targeted repairs; four-engine statistics/deletion and separate audit storage passed.
 - Evidence: evidence/B13-acceptance.json.
 - Continue B14.1; no production operations.
+
+## 2026-09-11T07:30:54.240Z — B14.2-plugin-runtime adaptation begun
+
+- Before HEAD: af63b8cd98e46fe51e266200481c1358e475c341.
+- Upstream: eb48396d5fe97d27772d0cd5e3ca8aa5caa4f3e9.
+- Integrate the sandboxed JS task plugin runtime as channel 65 alongside protected downstream and legacy task channels. Preserve in-flight tasks, old pricing, CAS options, quota saturation and diagnostic scopes; reconcile pulled-forward pricing implementation.
+- Evidence: evidence/runs/B14.2-plugin-runtime-eb48396d5/intent.json.
+
+## 2026-09-11T08:18:00.253Z — B14 core recovery checkpoint
+
+- HEAD remains af63b8cd98e46fe51e266200481c1358e475c341; 39 files / 106 hunks resolved, index staging pending.
+- Legacy adapters, shared endpoints, polling, private logs and canonical pricing adapted; code remains uncommitted and not accepted.
+- Evidence: evidence/runs/B14.2-plugin-runtime-eb48396d5/continuation-checkpoint.json.
+- Next: pinned-plugin retry isolation, focused coexistence checks, sanctioned locales, core commit and remaining B14 fixes. Do not reapply the source patch.
+
+## 2026-09-11T08:42:48.387Z — B14.2-plugin-runtime adaptation recorded
+
+- Code: 92023c5394bc343e6d775f3f5511b379a90475dd.
+- Integrated type-65 sandboxed plugins alongside all legacy channels; preserved native routes, polling, durable task response ordering, quota guards, canonical pricing CAS, scoped logs and downstream frontend behavior. Shared-endpoint coexistence and legacy refund probes pass; alias pricing and consolidated acceptance follow the remaining B14 commits.
+- Evidence: evidence/runs/B14.2-plugin-runtime-eb48396d5/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T08:44:02.097Z — B14.2-model-aliases adaptation begun
+
+- Before HEAD: 92023c5394bc343e6d775f3f5511b379a90475dd.
+- Upstream: 6c22550ea325d4fea0e0ece52412cb1e4449291c.
+- Integrate alias and case-fold ownership with explicit plugin channel selection; retain the canonical CAS pricing writer and legacy model mapping order. Restore deferred plugin schema validation in canonical model pricing.
+- Evidence: evidence/runs/B14.2-model-aliases-6c22550ea/intent.json.
+
+## 2026-09-11T08:52:45.054Z — B14.2-model-aliases adaptation recorded
+
+- Code: 456abaeb1807ae0976db435fb8c74d67cbc47d80.
+- Added declared-name and mapped-alias resolution without rewriting ordinary requests. Plugin-only spelling fallback and resolved model metadata retain original channel ownership; legacy adaptors retain mapping and pricing order. Canonical CAS pricing now validates alias usage schemas, and deferred task pricing database cases are restored. Focused coexistence, pricing, and relay mapping probes pass.
+- Evidence: evidence/runs/B14.2-model-aliases-6c22550ea/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T08:53:21.884Z — B14.3-factory-updates adaptation begun
+
+- Before HEAD: 456abaeb1807ae0976db435fb8c74d67cbc47d80.
+- Upstream: dc4732cfed712b004d3d3d94a414d3ff127a93cc.
+- Retain factory plugins as system-versioned components while allowing deliberate third-party installations and overrides; keep marketplace version visibility and review controls.
+- Evidence: evidence/runs/B14.3-factory-updates-dc4732cfe/intent.json.
+
+## 2026-09-11T08:53:55.229Z — B14.3-factory-updates adaptation recorded
+
+- Code: ddd16ddb6ede1a8222746a543e0af9c2aed3b7ab.
+- Applied marketplace action policy and stale override hints with all seven translations. Existing intentional overrides and third-party installations remain available; consolidated B14 UI validation follows.
+- Evidence: evidence/runs/B14.3-factory-updates-dc4732cfe/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T08:53:55.660Z — B14.3-hailuo-h3 adaptation begun
+
+- Before HEAD: ddd16ddb6ede1a8222746a543e0af9c2aed3b7ab.
+- Upstream: aece11d2f7f095a33052696c5d28d3656609a99e.
+- Add MiniMax-H3 plugin request/query formats and usage schemas while retaining legacy Hailuo adapter behavior and task model metadata.
+- Evidence: evidence/runs/B14.3-hailuo-h3-aece11d2f/intent.json.
+
+## 2026-09-11T08:56:50.735Z — B14.3-hailuo-h3 adaptation recorded
+
+- Code: 5bbd061deb1de5202bb6e5bfc1f95dfb89b83aa0.
+- Added bounded H3 multimodal generation, query and artifact contracts. Polling carries persisted model identities while preserving legacy action values. Consolidated plugin protocol and billing validation follows.
+- Evidence: evidence/runs/B14.3-hailuo-h3-aece11d2f/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T08:56:51.168Z — B14.3-hailuo-input-usage adaptation begun
+
+- Before HEAD: 5bbd061deb1de5202bb6e5bfc1f95dfb89b83aa0.
+- Upstream: 73afad588ca7af07134fa423e8a33fdea6c855b2.
+- Include H3 input images and input video duration in bounded usage estimates and reconcile valid completion facts without accepting invalid upstream multipliers.
+- Evidence: evidence/runs/B14.3-hailuo-input-usage-73afad588/intent.json.
+
+## 2026-09-11T08:56:52.655Z — B14.3-hailuo-input-usage adaptation recorded
+
+- Code: 284a30c3af0b37fd8bc3f2b868531b54e26e94c8.
+- Applied actual input-image and video usage facts with declared schema, bounded estimates and validated completion corrections; existing legacy Hailuo implementation remains intact.
+- Evidence: evidence/runs/B14.3-hailuo-input-usage-73afad588/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T08:56:53.071Z — B14.3-polling-context adaptation begun
+
+- Before HEAD: 284a30c3af0b37fd8bc3f2b868531b54e26e94c8.
+- Upstream: 9df450fe54e1a874a5339b7c38a61014217f02c3.
+- Add persisted plugin query context, private state, HTTP failure classification and CAS-protected cleanup. Adapt retained legacy polling interfaces and preserve their actions, keys, refunds and task identity.
+- Evidence: evidence/runs/B14.3-polling-context-9df450fe5/intent.json.
+
+## 2026-09-11T09:03:06.891Z — B14.3-polling-context adaptation recorded
+
+- Code: 64b05de81336f583bc969b851a27fb8b235f18ab.
+- Added private plugin query state, status-aware polling and CAS-protected failure settlement. Migrated all ten retained legacy adapter interfaces and Gemini/Vertex content lookups using original task IDs, actions and credentials; preserved factory injection and execution identity. Focused HTTP classification, batch refunds, legacy parsing and media-query probes pass.
+- Evidence: evidence/runs/B14.3-polling-context-9df450fe5/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:03:07.342Z — B14.3-channel-diagnostics adaptation begun
+
+- Before HEAD: 64b05de81336f583bc969b851a27fb8b235f18ab.
+- Upstream: 32c261923a9786c64d2af087327ef057e7bde7e3.
+- Explain missing task-plugin channels while retaining ordinary channel coexistence and translated errors.
+- Evidence: evidence/runs/B14.3-channel-diagnostics-32c261923/intent.json.
+
+## 2026-09-11T09:05:28.046Z — B14.3-channel-diagnostics adaptation recorded
+
+- Code: 499885a32887cf25de1593dd55754f1a311d2a2f.
+- Added translated binding diagnostics for pinned and shared candidate plugins. The explanation preserves ordinary-channel coexistence and does not require disabling a plugin to use existing legacy channels.
+- Evidence: evidence/runs/B14.3-channel-diagnostics-32c261923/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:05:28.547Z — B14.3-wan3 adaptation begun
+
+- Before HEAD: 499885a32887cf25de1593dd55754f1a311d2a2f.
+- Upstream: 3b4652269a6a6d9e2c8650a84ee8c4e447e6473b.
+- Add Wan 3 plugin protocols, validated smart-duration sentinel conversion and bounded usage estimates without modifying the retained Alibaba adapter.
+- Evidence: evidence/runs/B14.3-wan3-3b4652269/intent.json.
+
+## 2026-09-11T09:05:30.258Z — B14.3-wan3 adaptation recorded
+
+- Code: cf98799c0a808078ef879e2e29970c8347f285ab.
+- Imported Wan 3 model protocol support, bounded smart duration estimates and fixtures; legacy Alibaba routing and pricing are retained. Final Wan accounting follow-up remains in this batch.
+- Evidence: evidence/runs/B14.3-wan3-3b4652269/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:05:30.714Z — B14.3-disable-overrides adaptation begun
+
+- Before HEAD: cf98799c0a808078ef879e2e29970c8347f285ab.
+- Upstream: 6298b0f3238461b9629dfc1c00866f8325123aa1.
+- Ensure disabling an overridden plugin suppresses both active layers, with existing channel-use checks and reversible enable semantics.
+- Evidence: evidence/runs/B14.3-disable-overrides-6298b0f32/intent.json.
+
+## 2026-09-11T09:05:32.212Z — B14.3-disable-overrides adaptation recorded
+
+- Code: 822610535d291839360f1ea019bf94a335bcac24.
+- Applied explicit plugin disable semantics and status reporting. Existing legacy channels continue independently of the plugin registry.
+- Evidence: evidence/runs/B14.3-disable-overrides-6298b0f32/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:06:28.585Z — B14.3-suno-alias-echo adaptation begun
+
+- Before HEAD: 822610535d291839360f1ea019bf94a335bcac24.
+- Upstream: 92bc7ff73c5ef215496d09d3e4b5769c9e35006b.
+- Correct plugin Suno model aliases, public origin-model echoes and header propagation; preserve original Suno route handling.
+- Evidence: evidence/runs/B14.3-suno-alias-echo-92bc7ff73/intent.json.
+
+## 2026-09-11T09:06:30.029Z — B14.3-suno-alias-echo adaptation recorded
+
+- Code: bd55394bc7e0991f8829bc4b8014af091a9dac51.
+- Applied alias-safe Suno decoding and response rendering, nonempty header propagation and built-in alias echo regressions.
+- Evidence: evidence/runs/B14.3-suno-alias-echo-92bc7ff73/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:06:30.459Z — B14.3-plugin-switches adaptation begun
+
+- Before HEAD: bd55394bc7e0991f8829bc4b8014af091a9dac51.
+- Upstream: 210734bb73bc3c6e37548af90360aa4226566fe2.
+- Remove the obsolete plugin override-layer switch while retaining the master and per-plugin controls and all downstream task constants.
+- Evidence: evidence/runs/B14.3-plugin-switches-210734bb7/intent.json.
+
+## 2026-09-11T09:06:32.006Z — B14.3-plugin-switches adaptation recorded
+
+- Code: 3dcb4fd38513417503cae246b96cbef2b2dae888.
+- Removed the unused override-layer switch and its obsolete tests; retained legacy task constants, master-switch behavior, per-plugin controls and independent legacy adapters.
+- Evidence: evidence/runs/B14.3-plugin-switches-210734bb7/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:06:32.428Z — B14.3-plugin-metadata adaptation begun
+
+- Before HEAD: 3dcb4fd38513417503cae246b96cbef2b2dae888.
+- Upstream: 99974a814f00a26dfa7431beb313e487529bbeed.
+- Add validated plugin metadata/icons, persistent auditable default base URLs and richer schemas. Preserve sparse channel updates, read-only field rejection and downstream channel identifiers.
+- Evidence: evidence/runs/B14.3-plugin-metadata-99974a814/intent.json.
+
+## 2026-09-11T17:14:51.2594811+08:00 — B14 metadata continuation checkpoint
+
+- HEAD: 3dcb4fd38513417503cae246b96cbef2b2dae888. Active source patch is already applied; controller/channel.go has two unresolved conflicts.
+- Preserve downstream channel cache invalidation, sparse updates and credential redaction; verify plugin default BaseURL is persisted under sensitive-change authorization.
+- Resume evidence: evidence/runs/B14.3-plugin-metadata-99974a814/resume-metadata.json. No production operations or tests were started by this checkpoint.
+
+
+## 2026-09-11T09:17:55.520Z — B14.3-plugin-metadata adaptation recorded
+
+- Code: bf58139bcce68818e9ee61fc1a48db196819235b.
+- Integrated validated plugin icons, websites and usage labels. Default endpoints participate in downstream sparse patch persistence and sensitive-change authorization; preserve channel cache refresh, returned mutation state, credential redaction and plugin channel ID 65. Added sparse default authorization regression.
+- Evidence: evidence/runs/B14.3-plugin-metadata-99974a814/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:18:40.617Z — B14.3-plugin-marketplace adaptation begun
+
+- Before HEAD: bf58139bcce68818e9ee61fc1a48db196819235b.
+- Upstream: 984330920061e014159c7581b8fcdb726de2c247.
+- Integrate plugin marketplace metadata, install previews, integrity verification, model schemas and icons with existing UI wrappers and downstream pricing and selectors.
+- Evidence: evidence/runs/B14.3-plugin-marketplace-984330920/intent.json.
+
+## 2026-09-11T09:21:57.260Z — B14.3-plugin-marketplace adaptation recorded
+
+- Code: bb5bc679d23470bb6ddc96b71bf4051ec85c897e.
+- Added metadata and source review, validated icon sidecars with authenticated local fetching, installed-version comparison, rollback UI, shared dialogs and copy controls. Reconciled deferred pricing version and sandbox selectors through the downstream Combobox. Preserved license headers and seven-locale translations. Mapped Range geometry fixture to the existing downstream setup; consolidated validation remains pending.
+- Evidence: evidence/runs/B14.3-plugin-marketplace-984330920/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:22:14.158Z — B14.3-plugin-channel-ui adaptation begun
+
+- Before HEAD: bb5bc679d23470bb6ddc96b71bf4051ec85c897e.
+- Upstream: eb76b136b85ecba9d6ad19c714c5781e51815530.
+- Integrate plugin channel setup and identity with the downstream floating editor, selected-model behavior and Combobox API. Preserve all existing channel identifiers and providers.
+- Evidence: evidence/runs/B14.3-plugin-channel-ui-eb76b136b/intent.json.
+
+## 2026-09-11T09:25:34.897Z — B14.3-plugin-channel-ui adaptation recorded
+
+- Code: 7f55c4ed5f5ed1e84009b93e9e38477bc8110156.
+- Adapted plugin binding, model and default URL prefilling, destination descriptions and authenticated icons into the existing channel editor. Retained multiple floating windows, scoped providers, key append, custom balance, sparse patch controls and sensitive locks. Shared Combobox keeps focus behavior and gains optional selected icons; channel IDs remain unchanged. Placed imported badge tests in the required dedicated test directory.
+- Evidence: evidence/runs/B14.3-plugin-channel-ui-eb76b136b/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:25:35.329Z — B14.3-sora-query adaptation begun
+
+- Before HEAD: 7f55c4ed5f5ed1e84009b93e9e38477bc8110156.
+- Upstream: 9bf328d9749751757d5d6b74088d514813a618bd.
+- Preserve Sora video query provider fields while retaining task execution snapshot identity and legacy polling.
+- Evidence: evidence/runs/B14.3-sora-query-9bf328d97/intent.json.
+
+## 2026-09-11T09:26:03.634Z — B14.3-sora-query adaptation recorded
+
+- Code: 619264819777dc4b94f6fb18219be087f1af6c25.
+- Keep raw provider video fields during query rendering while replacing public task identity and status through the existing protocol adapter. Preserve legacy task fetch behavior and execution snapshots.
+- Evidence: evidence/runs/B14.3-sora-query-9bf328d97/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:26:04.078Z — B14.3-wan-accounting adaptation begun
+
+- Before HEAD: 619264819777dc4b94f6fb18219be087f1af6c25.
+- Upstream: a20574136b2746e9afc4b268c99cf99b3f6cc68b.
+- Correct Wan protocol mapping, multimodal image references, duration modes and usage accounting. Review final request quantity bounds and optional values before consolidated B14 acceptance.
+- Evidence: evidence/runs/B14.3-wan-accounting-a20574136/intent.json.
+
+## 2026-09-11T09:28:28.510Z — B14.3-wan-accounting adaptation recorded
+
+- Code: 6274b21d34dd09ca7341ec4c44fda1d02cf4569b.
+- Applied final model capability profiles, bounded duration and input media rules, native and shared protocol conversion, input plus output accounting and explicit zero and false parameter preservation. Kept the existing Alibaba adapter and downstream quota saturation helpers.
+- Evidence: evidence/runs/B14.3-wan-accounting-a20574136/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T09:46:34.976Z — B14 code complete; consolidated acceptance
+
+- Code: 4c972e46993ed647cab38f22b6d4525b21c42b00. All 16 B14 source commits implemented.
+- Plugin UI: 241 tests passed, with formatting-only differences subsequently committed. Backend run exposed fixture assumptions and obsolete replacement-policy assertions; repairs are committed.
+- Added canonical plugin max-token limits, per-task quota saturation audit propagation and Vidu explicit false preservation. Production is unchanged.
+
+## 2026-09-11T10:04:25.246Z — B14 verified; 137 of 153 upstream commits closed
+
+- Code: bd66eec0498a4d3262dbdade7597524eb7825c76. Four-engine fresh and baseline upgrade fixtures passed, including separate log databases and unchanged restarts.
+- Plugin storage and pricing matrix passed all four engines; 241 plugin UI tests passed. Scoped failed-case repairs closed.
+- B08/B12 plugin deferrals are implemented and locally verified. Browser and release environment gates remain pending.
+- Evidence: evidence/B14-acceptance.json. Next: B15 frontend tests and global interactions.

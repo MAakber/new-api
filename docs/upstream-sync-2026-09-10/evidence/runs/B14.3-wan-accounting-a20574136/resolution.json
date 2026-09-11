@@ -1,0 +1,11 @@
+{
+  "upstream": "a20574136b2746e9afc4b268c99cf99b3f6cc68b",
+  "before_head": "619264819777dc4b94f6fb18219be087f1af6c25",
+  "after_head": "6274b21d34dd09ca7341ec4c44fda1d02cf4569b",
+  "files": [
+    "plugins/alibaba_responses_test.go",
+    "plugins/alibaba_wan3_test.go",
+    "plugins/tasks/alibaba/plugin.js"
+  ],
+  "rationale": "Applied final model capability profiles, bounded duration and input media rules, native and shared protocol conversion, input plus output accounting and explicit zero and false parameter preservation. Kept the existing Alibaba adapter and downstream quota saturation helpers."
+}

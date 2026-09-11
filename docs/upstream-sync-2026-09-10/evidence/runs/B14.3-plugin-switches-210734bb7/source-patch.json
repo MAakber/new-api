@@ -1,0 +1,6 @@
+{
+  "upstream": "210734bb73bc3c6e37548af90360aa4226566fe2",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'common/init.go' cleanly.\nApplied patch to 'constant/task.go' cleanly.\nApplied patch to 'controller/task_plugin.go' cleanly.\nApplied patch to 'controller/task_plugin_test.go' cleanly.\nApplied patch to 'model/option.go' cleanly.\nApplied patch to 'model/option_task_plugin_test.go' cleanly.\nApplied patch to 'pkg/jsplugin/registry.go' cleanly.\nApplied patch to 'pkg/jsplugin/registry_disabled_factory_test.go' cleanly.\nApplied patch to 'pkg/jsplugin/registry_master_enabled_test.go' cleanly.\nApplied patch to 'pkg/jsplugin/registry_test.go' cleanly.\nApplied patch to 'pkg/jsplugin/routing.go' cleanly.\nApplied patch to 'pkg/jsplugin/routing_test.go' cleanly.\n"
+}

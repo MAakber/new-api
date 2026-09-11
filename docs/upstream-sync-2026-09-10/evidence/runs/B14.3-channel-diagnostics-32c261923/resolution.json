@@ -1,0 +1,14 @@
+{
+  "upstream": "32c261923a9786c64d2af087327ef057e7bde7e3",
+  "before_head": "64b05de81336f583bc969b851a27fb8b235f18ab",
+  "after_head": "499885a32887cf25de1593dd55754f1a311d2a2f",
+  "files": [
+    "i18n/keys.go",
+    "i18n/locales/en.yaml",
+    "i18n/locales/zh-CN.yaml",
+    "i18n/locales/zh-TW.yaml",
+    "middleware/distributor.go",
+    "middleware/distributor_test.go"
+  ],
+  "rationale": "Added translated binding diagnostics for pinned and shared candidate plugins. The explanation preserves ordinary-channel coexistence and does not require disabling a plugin to use existing legacy channels."
+}

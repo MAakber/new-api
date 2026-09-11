@@ -1,0 +1,20 @@
+=== RUN   TestTaskPluginIconSurvivesRestartsAndSourceUpdates
+[SYS] 2026/09/11 - 18:00:13 | SQL_DSN not set, using SQLite as database 
+    task_plugin_test.go:34: TEST_TASK_PLUGIN_DSN: 3.50.4
+
+2026/09/11 18:00:13 [31;1mD:/10178/Projects/new-api-upstream-sync/model/task_plugin_test.go:56 [35;1msqlite error 2067
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `task_plugins` (`key`,`api_version`,`version`,`source`,`source_hash`,`icon`,`enabled`,`active`,`created_at`,`remark`) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING `id`
+--- PASS: TestTaskPluginIconSurvivesRestartsAndSourceUpdates (0.07s)
+=== RUN   TestTaskPluginVersionActivationAndSourceImmutability
+[SYS] 2026/09/11 - 18:00:13 | SQL_DSN not set, using SQLite as database 
+    task_plugin_test.go:60: TEST_TASK_PLUGIN_DSN: 3.50.4
+--- PASS: TestTaskPluginVersionActivationAndSourceImmutability (0.02s)
+=== RUN   TestDeleteActiveTaskPluginPromotesNewestRemainingVersion
+[SYS] 2026/09/11 - 18:00:13 | SQL_DSN not set, using SQLite as database 
+    task_plugin_test.go:102: TEST_TASK_PLUGIN_DSN: 3.50.4
+--- PASS: TestDeleteActiveTaskPluginPromotesNewestRemainingVersion (0.03s)
+=== RUN   TestTaskPluginSyncSnapshotRevisionTracksDesiredRuntimeState
+[SYS] 2026/09/11 - 18:00:13 | SQL_DSN not set, using SQLite as database 
+    task_plugin_test.go:136: TEST_TASK_PLUGIN_DSN: 3.50.4
+--- PASS: TestTaskPluginSyncSnapshotRevisionTracksDesiredRuntimeState (0.02s)
+PASS

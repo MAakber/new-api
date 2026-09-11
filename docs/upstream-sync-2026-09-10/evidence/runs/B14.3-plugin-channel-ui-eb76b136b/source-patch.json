@@ -1,0 +1,6 @@
+{
+  "upstream": "eb76b136b85ecba9d6ad19c714c5781e51815530",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Applied patch to 'web/src/components/provider-badge.tsx' cleanly.\nApplied patch to 'web/src/components/ui/__tests__/combobox.test.tsx' cleanly.\nApplied patch to 'web/src/components/ui/combobox.tsx' cleanly.\nApplied patch to 'web/src/features/channels/api.ts' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'web/src/features/channels/components/channels-columns.tsx' cleanly.\nApplied patch to 'web/src/features/channels/components/channels-table.tsx' cleanly.\nApplied patch to 'web/src/features/channels/components/drawers/channel-mutate-drawer.tsx' with conflicts.\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'web/src/features/channels/types.ts' cleanly.\nU web/src/features/channels/components/drawers/channel-mutate-drawer.tsx\n"
+}

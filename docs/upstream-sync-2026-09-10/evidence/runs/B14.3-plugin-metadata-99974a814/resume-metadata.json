@@ -1,0 +1,13 @@
+{
+  "captured_at": "2026-09-11T17:14:51.2594811+08:00",
+  "head": "3dcb4fd38513417503cae246b96cbef2b2dae888",
+  "active_upstream": "99974a814f00a26dfa7431beb313e487529bbeed",
+  "unit": "B14.3-plugin-metadata",
+  "source_patch_applied": true,
+  "unresolved": [
+    "controller/channel.go"
+  ],
+  "next_action": "Resolve two channel audit conflicts, retain sparse mutation persistence and sensitive authorization, then commit adaptation; do not apply this patch again.",
+  "validated_upstream": 121,
+  "implemented_pending_acceptance": 11
+}

@@ -1,0 +1,15 @@
+{
+  "upstream": "aece11d2f7f095a33052696c5d28d3656609a99e",
+  "unit": "B14.3-hailuo-h3",
+  "before_head": "ddd16ddb6ede1a8222746a543e0af9c2aed3b7ab",
+  "rationale": "Add MiniMax-H3 plugin request/query formats and usage schemas while retaining legacy Hailuo adapter behavior and task model metadata.",
+  "files": [
+    "docs/plugin-api/v1.md",
+    "plugins/hailuo_responses_test.go",
+    "plugins/tasks/hailuo/plugin.js",
+    "relay/channel/task/jsplugin/adaptor.go",
+    "relay/channel/task/jsplugin/adaptor_test.go",
+    "relay/relay_task.go",
+    "service/task_polling.go"
+  ]
+}

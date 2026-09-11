@@ -1,0 +1,32 @@
+{
+  "id": "B14-sqlite-plugin-storage",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B14-model.test.exe",
+    "-test.run=^(TestTaskPluginVersionActivationAndSourceImmutability|TestTaskPluginIconSurvivesRestartsAndSourceUpdates|TestDeleteActiveTaskPluginPromotesNewestRemainingVersion|TestTaskPluginSyncSnapshotRevisionTracksDesiredRuntimeState)$",
+    "-test.v",
+    "-test.count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "started_at": "2026-09-11T10:00:13.024Z",
+  "finished_at": "2026-09-11T10:00:13.969Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log",
+  "runner_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "fixture": {
+    "flavor": "sqlite",
+    "artifact_sha256": "0af1cb16f6fda5d119b7dd01d98e7346729b71bd1cff4bb59dc43ec04a02c8d0",
+    "build_evidence": "evidence/runs/B14-build-model-fixture/result.json"
+  }
+}

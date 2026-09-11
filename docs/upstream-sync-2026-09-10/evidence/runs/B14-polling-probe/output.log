@@ -1,0 +1,15 @@
+ok  	github.com/QuantumNous/new-api/service	0.952s
+ok  	github.com/QuantumNous/new-api/relay	1.004s
+ok  	github.com/QuantumNous/new-api/relay/channel/task/ali	0.794s [no tests to run]
+?   	github.com/QuantumNous/new-api/relay/channel/task/doubao	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/gemini	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/hailuo	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/jimeng	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/task/jsplugin	0.787s
+?   	github.com/QuantumNous/new-api/relay/channel/task/kling	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/task/sora	0.801s [no tests to run]
+?   	github.com/QuantumNous/new-api/relay/channel/task/suno	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/taskcommon	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/vertex	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/vidu	[no test files]
+ok  	github.com/QuantumNous/new-api/controller	0.912s [no tests to run]

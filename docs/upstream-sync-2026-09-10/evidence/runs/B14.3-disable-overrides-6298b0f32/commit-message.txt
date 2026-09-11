@@ -1,0 +1,7 @@
+fix(plugins): disable both override and factory layers
+
+Adapt upstream 6298b0f3238461b9629dfc1c00866f8325123aa1.
+
+Applied explicit plugin disable semantics and status reporting. Existing legacy channels continue independently of the plugin registry.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

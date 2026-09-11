@@ -1,0 +1,7 @@
+feat(plugins): persist metadata and auditable channel defaults
+
+Adapt upstream 99974a814f00a26dfa7431beb313e487529bbeed.
+
+Integrated validated plugin icons, websites and usage labels. Default endpoints participate in downstream sparse patch persistence and sensitive-change authorization; preserve channel cache refresh, returned mutation state, credential redaction and plugin channel ID 65. Added sparse default authorization regression.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

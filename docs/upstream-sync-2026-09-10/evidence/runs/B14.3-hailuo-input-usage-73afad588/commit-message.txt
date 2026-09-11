@@ -1,0 +1,7 @@
+fix(plugins): account for bounded H3 input media usage
+
+Adapt upstream 73afad588ca7af07134fa423e8a33fdea6c855b2.
+
+Applied actual input-image and video usage facts with declared schema, bounded estimates and validated completion corrections; existing legacy Hailuo implementation remains intact.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

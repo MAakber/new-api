@@ -1,0 +1,10 @@
+{
+  "upstream": "3b4652269a6a6d9e2c8650a84ee8c4e447e6473b",
+  "before_head": "499885a32887cf25de1593dd55754f1a311d2a2f",
+  "after_head": "cf98799c0a808078ef879e2e29970c8347f285ab",
+  "files": [
+    "plugins/alibaba_wan3_test.go",
+    "plugins/tasks/alibaba/plugin.js"
+  ],
+  "rationale": "Imported Wan 3 model protocol support, bounded smart duration estimates and fixtures; legacy Alibaba routing and pricing are retained. Final Wan accounting follow-up remains in this batch."
+}

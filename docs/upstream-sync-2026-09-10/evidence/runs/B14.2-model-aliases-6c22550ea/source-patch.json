@@ -1,0 +1,9 @@
+{
+  "upstream": "6c22550ea325d4fea0e0ece52412cb1e4449291c",
+  "excluded": [
+    "controller/option.go",
+    "controller/billing_option_test.go"
+  ],
+  "exit_code": 1,
+  "output": "Applied patch to 'controller/plugin_protocol_test.go' cleanly.\nApplied patch to 'docs/plugin-api/v1.md' cleanly.\nApplied patch to 'middleware/task_plugin.go' cleanly.\nFalling back to direct application...\nApplied patch to 'middleware/task_plugin_test.go' cleanly.\nApplied patch to 'model/channel_cache.go' cleanly.\nApplied patch to 'model/pricing.go' cleanly.\nApplied patch to 'model/pricing_usage_schema_test.go' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'pkg/jsplugin/registry.go' cleanly.\nApplied patch to 'pkg/jsplugin/routing.go' cleanly.\nApplied patch to 'plugins/tasks/doubao/plugin.js' cleanly.\nApplied patch to 'plugins/tasks/hailuo/plugin.js' cleanly.\nApplied patch to 'plugins/tasks/jimeng/plugin.js' cleanly.\nApplied patch to 'plugins/tasks/kling/plugin.js' cleanly.\nApplied patch to 'plugins/tasks/sunoapi/plugin.js' cleanly.\nApplied patch to 'plugins/tasks/vidu/plugin.js' cleanly.\nApplied patch to 'relay/channel/task/jsplugin/adaptor_test.go' cleanly.\nApplied patch to 'relay/relay_task.go' with conflicts.\nApplied patch to 'relay/relay_task_test.go' cleanly.\nU relay/relay_task.go\n"
+}

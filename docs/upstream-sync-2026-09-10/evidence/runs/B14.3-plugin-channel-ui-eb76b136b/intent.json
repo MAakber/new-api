@@ -1,0 +1,20 @@
+{
+  "upstream": "eb76b136b85ecba9d6ad19c714c5781e51815530",
+  "unit": "B14.3-plugin-channel-ui",
+  "before_head": "bb5bc679d23470bb6ddc96b71bf4051ec85c897e",
+  "rationale": "Integrate plugin channel setup and identity with the downstream floating editor, selected-model behavior and Combobox API. Preserve all existing channel identifiers and providers.",
+  "files": [
+    "web/src/components/provider-badge.tsx",
+    "web/src/components/ui/__tests__/combobox.test.tsx",
+    "web/src/components/ui/combobox.tsx",
+    "web/src/features/channels/api.ts",
+    "web/src/features/channels/components/channel-type-badge.test.tsx",
+    "web/src/features/channels/components/channel-type-badge.tsx",
+    "web/src/features/channels/components/channels-columns.tsx",
+    "web/src/features/channels/components/channels-table.tsx",
+    "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+    "web/src/features/channels/lib/__tests__/task-plugin-base-url.test.ts",
+    "web/src/features/channels/lib/task-plugin-base-url.ts",
+    "web/src/features/channels/types.ts"
+  ]
+}

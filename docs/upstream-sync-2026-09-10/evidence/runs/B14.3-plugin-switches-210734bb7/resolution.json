@@ -1,0 +1,20 @@
+{
+  "upstream": "210734bb73bc3c6e37548af90360aa4226566fe2",
+  "before_head": "bd55394bc7e0991f8829bc4b8014af091a9dac51",
+  "after_head": "3dcb4fd38513417503cae246b96cbef2b2dae888",
+  "files": [
+    "common/init.go",
+    "constant/task.go",
+    "controller/task_plugin.go",
+    "controller/task_plugin_test.go",
+    "model/option.go",
+    "model/option_task_plugin_test.go",
+    "pkg/jsplugin/registry.go",
+    "pkg/jsplugin/registry_disabled_factory_test.go",
+    "pkg/jsplugin/registry_master_enabled_test.go",
+    "pkg/jsplugin/registry_test.go",
+    "pkg/jsplugin/routing.go",
+    "pkg/jsplugin/routing_test.go"
+  ],
+  "rationale": "Removed the unused override-layer switch and its obsolete tests; retained legacy task constants, master-switch behavior, per-plugin controls and independent legacy adapters."
+}

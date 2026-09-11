@@ -1,0 +1,10 @@
+{
+  "upstream": "73afad588ca7af07134fa423e8a33fdea6c855b2",
+  "unit": "B14.3-hailuo-input-usage",
+  "before_head": "5bbd061deb1de5202bb6e5bfc1f95dfb89b83aa0",
+  "rationale": "Include H3 input images and input video duration in bounded usage estimates and reconcile valid completion facts without accepting invalid upstream multipliers.",
+  "files": [
+    "plugins/hailuo_responses_test.go",
+    "plugins/tasks/hailuo/plugin.js"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "upstream": "32c261923a9786c64d2af087327ef057e7bde7e3",
+  "unit": "B14.3-channel-diagnostics",
+  "before_head": "64b05de81336f583bc969b851a27fb8b235f18ab",
+  "rationale": "Explain missing task-plugin channels while retaining ordinary channel coexistence and translated errors.",
+  "files": [
+    "i18n/keys.go",
+    "i18n/locales/en.yaml",
+    "i18n/locales/zh-CN.yaml",
+    "i18n/locales/zh-TW.yaml",
+    "middleware/distributor.go",
+    "middleware/distributor_test.go"
+  ]
+}

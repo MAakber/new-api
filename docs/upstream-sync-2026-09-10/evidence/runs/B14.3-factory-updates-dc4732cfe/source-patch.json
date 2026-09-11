@@ -1,0 +1,6 @@
+{
+  "upstream": "dc4732cfed712b004d3d3d94a414d3ff127a93cc",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/features/task-plugins/__tests__/marketplace.test.ts' cleanly.\nApplied patch to 'web/src/features/task-plugins/components/marketplace-plugin-card.tsx' cleanly.\nApplied patch to 'web/src/features/task-plugins/components/plugins-table.tsx' cleanly.\nApplied patch to 'web/src/features/task-plugins/lib/marketplace.ts' cleanly.\n"
+}

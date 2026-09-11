@@ -1,0 +1,7 @@
+refactor(plugins): use master and per-plugin controls
+
+Adapt upstream 210734bb73bc3c6e37548af90360aa4226566fe2.
+
+Removed the unused override-layer switch and its obsolete tests; retained legacy task constants, master-switch behavior, per-plugin controls and independent legacy adapters.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

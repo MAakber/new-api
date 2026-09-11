@@ -1,0 +1,22 @@
+{
+  "baseline": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B06-model-baseline-2.test.exe",
+    "sha256": "605ef7dc1a75c026ae16d99e9542ba5c045697e31c767a10fec004e6b359b56f",
+    "source_commit": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+    "fixture_sha256": "14109a27ec4e6c59df42d1806fd50d1edd8e43e8f9fa814d4fb8f57558e97fd8",
+    "build_evidence": "evidence/runs/B06-build-baseline-fixture-2/result.json",
+    "note": "Exact git archive of released downstream commit plus the same integration test fixture."
+  },
+  "model": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B14-model.test.exe",
+    "source_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+    "sha256": "0af1cb16f6fda5d119b7dd01d98e7346729b71bd1cff4bb59dc43ec04a02c8d0",
+    "build_evidence": "evidence/runs/B14-build-model-fixture/result.json"
+  },
+  "controller": {
+    "path": "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/B14-controller.test.exe",
+    "source_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+    "sha256": "686aba31042fb3e39748f8609d6f12d0f30a86cbf2c8e818dbff81afdc155c32",
+    "build_evidence": "evidence/runs/B14-build-controller-fixture/result.json"
+  }
+}

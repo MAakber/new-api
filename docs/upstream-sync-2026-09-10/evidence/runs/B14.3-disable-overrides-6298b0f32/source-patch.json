@@ -1,0 +1,6 @@
+{
+  "upstream": "6298b0f3238461b9629dfc1c00866f8325123aa1",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'controller/task_plugin.go' cleanly.\nApplied patch to 'controller/task_plugin_test.go' cleanly.\n"
+}

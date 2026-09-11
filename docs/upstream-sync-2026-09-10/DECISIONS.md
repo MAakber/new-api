@@ -96,3 +96,15 @@ Repair options in place while holding database writer locks, preserving table id
 ## A29 — Expression preview dependencies
 
 The B12 simulator depends on real trace semantics from B13 4cf9107f0 and task usage expression functions from B14 eb48396d5. Their reviewed engine implementation and tests are pulled forward, retaining saturation and retry invariants. The B13 row remains pending until its complete behavior is reconciled; backend plugin execution and schema validation remain B14. The billing option audit fixture is entirely plugin-dependent and is moved to B14, with its audit-table prerequisite retained.
+
+## A30 — Task plugins coexist with downstream and legacy channels
+
+Allocate TaskPlugin=65 after inspecting the complete backend/frontend enums, base-URL indexing, dispatcher and relaykit identity mappings. Keep 57/61/62/63/64 unchanged. Do not translate a bare 61 imported from an unknown source. Preserve built-in task adaptors, legacy request/query routes, existing configured video prices and in-flight tasks; newly bound plugin channels use explicit plugin metadata. Old data migration is verified with released-baseline fixtures; production snapshot remains a separate rollout gate. Inventory: evidence/B14-channel-id-inventory.json.
+
+## 2026-09-11T08:42:42.692Z — B14 coexistence integration
+
+- TaskPlugin uses 65; all downstream IDs and legacy native routes remain stable. Shared Responses/video endpoints select a channel before plugin parsing; explicit plugin retries remain bound to that plugin. Origin-task pins discovered by the parser reuse channel authorization before relay metadata is generated.
+- Legacy Suno/Kling/Jimeng routes retain their adapters and precede matching built-in plugin declarations; the plugins remain accessible through generic and supported shared host protocols. Overlapping native paths are served by the legacy routes.
+- Legacy tasks poll through their original adapters; plugin execution snapshots keep polling identity separate. Public responses are emitted only after persistence and billing.
+- Canonical pricing CAS, fixed-price task rejection, quota saturation, scoped logs, avatars and downstream pricing parsers are retained. Alias pricing integration and consolidated B14 validation remain pending.
+- Core development probes ran on the dirty tree and are not acceptance evidence. No production state was changed.

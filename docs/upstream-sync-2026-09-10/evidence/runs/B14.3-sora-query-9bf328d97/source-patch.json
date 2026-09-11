@@ -1,0 +1,6 @@
+{
+  "upstream": "9bf328d9749751757d5d6b74088d514813a618bd",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'docs/plugin-api/README.md' cleanly.\nApplied patch to 'docs/plugin-api/v1.md' cleanly.\nApplied patch to 'plugins/tasks/sora/plugin.js' cleanly.\nApplied patch to 'relay/channel/task/jsplugin/adaptor.go' cleanly.\nApplied patch to 'relay/channel/task/jsplugin/adaptor_test.go' cleanly.\n"
+}

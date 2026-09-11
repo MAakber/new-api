@@ -1,0 +1,6 @@
+{
+  "upstream": "aece11d2f7f095a33052696c5d28d3656609a99e",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Applied patch to 'docs/plugin-api/v1.md' cleanly.\nApplied patch to 'plugins/hailuo_responses_test.go' cleanly.\nApplied patch to 'plugins/tasks/hailuo/plugin.js' cleanly.\nApplied patch to 'relay/channel/task/jsplugin/adaptor.go' cleanly.\nApplied patch to 'relay/channel/task/jsplugin/adaptor_test.go' cleanly.\nApplied patch to 'relay/relay_task.go' cleanly.\nApplied patch to 'service/task_polling.go' with conflicts.\nU service/task_polling.go\n"
+}

@@ -1,0 +1,6 @@
+{
+  "upstream": "32c261923a9786c64d2af087327ef057e7bde7e3",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'i18n/keys.go' cleanly.\nApplied patch to 'i18n/locales/en.yaml' cleanly.\nApplied patch to 'i18n/locales/zh-CN.yaml' cleanly.\nApplied patch to 'i18n/locales/zh-TW.yaml' cleanly.\nApplied patch to 'middleware/distributor.go' cleanly.\nApplied patch to 'middleware/distributor_test.go' cleanly.\n"
+}

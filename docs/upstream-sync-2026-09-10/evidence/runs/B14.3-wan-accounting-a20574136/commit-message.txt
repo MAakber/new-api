@@ -1,0 +1,7 @@
+fix(plugins): align Wan protocols and usage accounting
+
+Adapt upstream a20574136b2746e9afc4b268c99cf99b3f6cc68b.
+
+Applied final model capability profiles, bounded duration and input media rules, native and shared protocol conversion, input plus output accounting and explicit zero and false parameter preservation. Kept the existing Alibaba adapter and downstream quota saturation helpers.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

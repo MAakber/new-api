@@ -1,0 +1,30 @@
+{
+  "id": "B14-alias-coexistence",
+  "command": [
+    "go",
+    "test",
+    "./middleware",
+    "./controller",
+    "./relay",
+    "-run",
+    "TestSharedTaskEndpointPreservesChannelOwnership|TestPricingPatchRejectsInvalidTaskBillingExpressions|TestModelManagementDatabaseMatrix/sqlite/task_usage|TestRelayTaskSubmit.*(Alias|Mapping|Mapped)",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "92023c5394bc343e6d775f3f5511b379a90475dd",
+  "started_at": "2026-09-11T08:49:10.908Z",
+  "finished_at": "2026-09-11T08:49:27.487Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

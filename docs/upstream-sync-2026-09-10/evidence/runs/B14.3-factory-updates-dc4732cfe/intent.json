@@ -1,0 +1,19 @@
+{
+  "upstream": "dc4732cfed712b004d3d3d94a414d3ff127a93cc",
+  "unit": "B14.3-factory-updates",
+  "before_head": "456abaeb1807ae0976db435fb8c74d67cbc47d80",
+  "rationale": "Retain factory plugins as system-versioned components while allowing deliberate third-party installations and overrides; keep marketplace version visibility and review controls.",
+  "files": [
+    "web/src/features/task-plugins/__tests__/marketplace.test.ts",
+    "web/src/features/task-plugins/components/marketplace-plugin-card.tsx",
+    "web/src/features/task-plugins/components/plugins-table.tsx",
+    "web/src/features/task-plugins/lib/marketplace.ts",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json"
+  ]
+}

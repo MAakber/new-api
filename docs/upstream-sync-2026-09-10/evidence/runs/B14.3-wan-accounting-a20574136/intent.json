@@ -1,0 +1,11 @@
+{
+  "upstream": "a20574136b2746e9afc4b268c99cf99b3f6cc68b",
+  "unit": "B14.3-wan-accounting",
+  "before_head": "619264819777dc4b94f6fb18219be087f1af6c25",
+  "rationale": "Correct Wan protocol mapping, multimodal image references, duration modes and usage accounting. Review final request quantity bounds and optional values before consolidated B14 acceptance.",
+  "files": [
+    "plugins/alibaba_responses_test.go",
+    "plugins/alibaba_wan3_test.go",
+    "plugins/tasks/alibaba/plugin.js"
+  ]
+}

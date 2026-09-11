@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "scope": "B14 local stage acceptance; final browser and release environment gates remain pending",
+  "commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "checked_at": "2026-09-11T10:04:25.222Z",
+  "checks": [
+    "evidence/runs/B14-wallet-fixture-fixed/result.json",
+    "evidence/runs/B14-billing-protocol-regression/result.json",
+    "evidence/runs/B14-relaykit-independent/result.json",
+    "evidence/runs/B14-web-types-fixed/result.json",
+    "evidence/runs/B14-plugin-ui/result.json",
+    "evidence/runs/B14-core-detail-preview/result.json",
+    "evidence/runs/B14-web-final-lint/result.json",
+    "evidence/runs/B14-web-final-i18n/result.json",
+    "evidence/runs/B14-sqlite-plugin-storage/result.json",
+    "evidence/runs/B14-sqlite-fresh/result.json",
+    "evidence/runs/B14-sqlite-seed/result.json",
+    "evidence/runs/B14-sqlite-verify/result.json",
+    "evidence/runs/B14-sqlite-pricing/result.json",
+    "evidence/runs/B14-mariadb-plugin-storage/result.json",
+    "evidence/runs/B14-mariadb-fresh/result.json",
+    "evidence/runs/B14-mariadb-seed/result.json",
+    "evidence/runs/B14-mariadb-verify/result.json",
+    "evidence/runs/B14-mariadb-pricing/result.json",
+    "evidence/runs/B14-mysql-plugin-storage/result.json",
+    "evidence/runs/B14-mysql-fresh/result.json",
+    "evidence/runs/B14-mysql-seed/result.json",
+    "evidence/runs/B14-mysql-verify/result.json",
+    "evidence/runs/B14-mysql-pricing/result.json",
+    "evidence/runs/B14-postgres-plugin-storage/result.json",
+    "evidence/runs/B14-postgres-fresh/result.json",
+    "evidence/runs/B14-postgres-seed/result.json",
+    "evidence/runs/B14-postgres-verify/result.json",
+    "evidence/runs/B14-postgres-pricing/result.json"
+  ],
+  "frontend_tests": 241,
+  "engines": [
+    "SQLite 3.41.2",
+    "MariaDB 11.4.4",
+    "MySQL 5.7.44",
+    "PostgreSQL 9.6.24"
+  ],
+  "partial_runs": [
+    {
+      "receipt": "evidence/runs/B14-consolidated-go/result.json",
+      "note": "Reuse unchanged successful packages and tests. Failed assertions were fixture omissions, obsolete replacement-policy assumptions, and incomplete route registration. A transient discovery error referenced an evidence directory; subsequent go list passed. Full final regression remains B18.",
+      "resolved_by": [
+        "evidence/runs/B14-billing-protocol-regression/result.json",
+        "evidence/runs/B14-fixture-repair/result.json",
+        "evidence/runs/B14-wallet-fixture-fixed/result.json"
+      ]
+    },
+    {
+      "receipt": "evidence/runs/B14-fixture-repair/result.json",
+      "note": "All targeted controller and full startup cases passed. Wallet historical fixture ActiveName omission was repaired and passed in B14-wallet-fixture-fixed."
+    }
+  ],
+  "source_equivalence": {
+    "backend": "4c972e46993ed647cab38f22b6d4525b21c42b00",
+    "frontend": "4c972e46993ed647cab38f22b6d4525b21c42b00",
+    "note": "Subsequent commits change only fixture initialization and storage coverage. UI suite source is unchanged except formatting and restored CodeBuddy description; typecheck and changed-file lint cover the final frontend."
+  },
+  "preservation": [
+    "TaskPlugin=65; existing IDs 57 and 61-64 unchanged",
+    "Legacy adapters, pricing, native routes and in-flight tasks retained",
+    "Canonical pricing CAS and raw options remain intact",
+    "Per-task and zero-delta saturation is audited without changing balances",
+    "Plugin metadata remains admin/root scoped",
+    "Floating channel editor and manually configured BaseURL preserved"
+  ],
+  "deferred_final": [
+    "Browser popup and multi-window acceptance after B15",
+    "Production sanitized-snapshot rehearsal",
+    "Real provider interoperability"
+  ]
+}

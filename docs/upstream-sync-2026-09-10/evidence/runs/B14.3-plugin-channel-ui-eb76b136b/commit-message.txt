@@ -1,0 +1,7 @@
+feat(channels): integrate plugin setup into floating editor
+
+Adapt upstream eb76b136b85ecba9d6ad19c714c5781e51815530.
+
+Adapted plugin binding, model and default URL prefilling, destination descriptions and authenticated icons into the existing channel editor. Retained multiple floating windows, scoped providers, key append, custom balance, sparse patch controls and sensitive locks. Shared Combobox keeps focus behavior and gains optional selected icons; channel IDs remain unchanged.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

@@ -1,0 +1,20 @@
+{
+  "upstream": "210734bb73bc3c6e37548af90360aa4226566fe2",
+  "unit": "B14.3-plugin-switches",
+  "before_head": "bd55394bc7e0991f8829bc4b8014af091a9dac51",
+  "rationale": "Remove the obsolete plugin override-layer switch while retaining the master and per-plugin controls and all downstream task constants.",
+  "files": [
+    "common/init.go",
+    "constant/task.go",
+    "controller/task_plugin.go",
+    "controller/task_plugin_test.go",
+    "model/option.go",
+    "model/option_task_plugin_test.go",
+    "pkg/jsplugin/registry.go",
+    "pkg/jsplugin/registry_disabled_factory_test.go",
+    "pkg/jsplugin/registry_master_enabled_test.go",
+    "pkg/jsplugin/registry_test.go",
+    "pkg/jsplugin/routing.go",
+    "pkg/jsplugin/routing_test.go"
+  ]
+}

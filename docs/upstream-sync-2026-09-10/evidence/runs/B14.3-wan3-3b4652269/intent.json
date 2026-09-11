@@ -1,0 +1,10 @@
+{
+  "upstream": "3b4652269a6a6d9e2c8650a84ee8c4e447e6473b",
+  "unit": "B14.3-wan3",
+  "before_head": "499885a32887cf25de1593dd55754f1a311d2a2f",
+  "rationale": "Add Wan 3 plugin protocols, validated smart-duration sentinel conversion and bounded usage estimates without modifying the retained Alibaba adapter.",
+  "files": [
+    "plugins/alibaba_wan3_test.go",
+    "plugins/tasks/alibaba/plugin.js"
+  ]
+}

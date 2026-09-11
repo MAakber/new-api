@@ -1,0 +1,20 @@
+=== RUN   TestTaskPluginIconSurvivesRestartsAndSourceUpdates
+[SYS] 2026/09/11 - 18:01:37 | using PostgreSQL as database 
+    task_plugin_test.go:34: TEST_TASK_PLUGIN_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+
+2026/09/11 18:01:37 [31;1mD:/10178/Projects/new-api-upstream-sync/model/task_plugin_test.go:56 [35;1mpostgres error SQLSTATE 23505
+[0m[33m[49.374ms] [34;1m[rows:0][0m INSERT INTO "task_plugins" ("key","api_version","version","source","source_hash","icon","enabled","active","created_at","remark") VALUES ($1$,$2$,$3$,$4$,$5$,$6$,$7$,$8$,$9$,$10$) RETURNING "id"
+--- PASS: TestTaskPluginIconSurvivesRestartsAndSourceUpdates (0.35s)
+=== RUN   TestTaskPluginVersionActivationAndSourceImmutability
+[SYS] 2026/09/11 - 18:01:37 | using PostgreSQL as database 
+    task_plugin_test.go:60: TEST_TASK_PLUGIN_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestTaskPluginVersionActivationAndSourceImmutability (0.07s)
+=== RUN   TestDeleteActiveTaskPluginPromotesNewestRemainingVersion
+[SYS] 2026/09/11 - 18:01:37 | using PostgreSQL as database 
+    task_plugin_test.go:102: TEST_TASK_PLUGIN_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestDeleteActiveTaskPluginPromotesNewestRemainingVersion (0.08s)
+=== RUN   TestTaskPluginSyncSnapshotRevisionTracksDesiredRuntimeState
+[SYS] 2026/09/11 - 18:01:37 | using PostgreSQL as database 
+    task_plugin_test.go:136: TEST_TASK_PLUGIN_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+--- PASS: TestTaskPluginSyncSnapshotRevisionTracksDesiredRuntimeState (0.07s)
+PASS

@@ -1,0 +1,7 @@
+feat(task): integrate durable polling contexts and bounded failures
+
+Adapt upstream 9df450fe54e1a874a5339b7c38a61014217f02c3.
+
+Added private plugin query state, status-aware polling and CAS-protected failure settlement. Migrated all ten retained legacy adapter interfaces and Gemini/Vertex content lookups using original task IDs, actions and credentials; preserved factory injection and execution identity. Focused HTTP classification, batch refunds, legacy parsing and media-query probes pass.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.
