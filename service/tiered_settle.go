@@ -1,8 +1,10 @@
 package service
 
 import (
+	"errors"
 	"net/http"
 
+	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/pkg/billingexpr"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relaykit/dto"
@@ -104,6 +106,9 @@ func refreshTieredBillingGroup(relayInfo *relaycommon.RelayInfo) (*billingexpr.B
 	}
 
 	groupRatio := relayInfo.PriceData.GroupRatioInfo.GroupRatio
+	if groupRatio < 0 || snap.EstimatedQuotaBeforeGroup < 0 {
+		return nil, errors.New("tiered billing estimate and group ratio must be non-negative")
+	}
 	if snap.GroupRatio == groupRatio {
 		return snap, nil
 	}
@@ -111,6 +116,10 @@ func refreshTieredBillingGroup(relayInfo *relaycommon.RelayInfo) (*billingexpr.B
 	estimatedQuotaAfterGroup := snap.EstimatedQuotaBeforeGroup * groupRatio
 	estimatedQuota, err := billingexpr.QuotaRoundStrict(estimatedQuotaAfterGroup)
 	if err != nil {
+		var clamp *common.QuotaClamp
+		if errors.As(err, &clamp) {
+			noteQuotaClamp(relayInfo, clamp)
+		}
 		return nil, err
 	}
 	snap.GroupRatio = groupRatio
@@ -132,9 +141,19 @@ func PrepareTieredBillingForSelectedGroup(c *gin.Context, relayInfo *relaycommon
 			types.ErrOptionWithSkipRetry(),
 		)
 	}
-	if snap == nil || snap.GroupRatio == 0 {
+	if snap == nil {
 		return nil
 	}
+	if snap.GroupRatio == 0 {
+		// Paid-to-free keeps FreeModel as-is: FreeModel means "pre-consume was
+		// skipped", which is not true once a session exists, and settlement
+		// already yields 0 for a zero group ratio.
+		return nil
+	}
+
+	// The selected group is paid; clear a FreeModel flag frozen when the
+	// initial group was free so downstream state stays consistent.
+	relayInfo.PriceData.FreeModel = false
 
 	if relayInfo.Billing == nil {
 		return PreConsumeBilling(c, snap.EstimatedQuotaAfterGroup, relayInfo)
