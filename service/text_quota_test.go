@@ -318,13 +318,14 @@ func TestCalculateTextQuotaSummaryUsesOpenAIResponsesInputTokenDetails(t *testin
 	}
 
 	effectiveUsage := effectiveBillingUsage(convertedUsage)
-	require.Equal(t, 40, effectiveUsage.PromptTokensDetails.CachedTokens)
-	require.Zero(t, convertedUsage.BillingUsage.OpenAIUsage.PromptTokensDetails.CachedTokens)
+	require.NotNil(t, effectiveUsage)
+	assert.Equal(t, 40, effectiveUsage.PromptTokensDetails.CachedTokens)
+	assert.Zero(t, convertedUsage.BillingUsage.OpenAIUsage.PromptTokensDetails.CachedTokens)
 
 	summary := calculateTextQuotaSummary(ctx, relayInfo, effectiveUsage)
-	require.Equal(t, 40, summary.CacheTokens)
+	assert.Equal(t, 40, summary.CacheTokens)
 	// 60 uncached input + 40*0.25 cached input + 10*2 output = 90.
-	require.Equal(t, 90, summary.Quota)
+	assert.Equal(t, 90, summary.Quota)
 }
 
 func TestUsageFromOpenAIBillingUsageNormalizesCacheDetailsWithoutOverwritingCanonicalValues(t *testing.T) {
@@ -348,14 +349,15 @@ func TestUsageFromOpenAIBillingUsageNormalizesCacheDetailsWithoutOverwritingCano
 
 	billingUsage := dto.NewOpenAIResponsesBillingUsage(responsesUsage)
 	usage := effectiveBillingUsage(&dto.Usage{BillingUsage: billingUsage})
+	require.NotNil(t, usage)
 
-	require.Equal(t, 8, usage.PromptTokensDetails.CachedTokens)
-	require.Equal(t, 5, usage.PromptTokensDetails.CachedCreationTokens)
-	require.Equal(t, 6, usage.PromptTokensDetails.CacheWriteTokens)
-	require.Equal(t, 12, usage.PromptTokensDetails.TextTokens)
-	require.Equal(t, 7, usage.PromptTokensDetails.ImageTokens)
-	require.Equal(t, 9, usage.PromptTokensDetails.AudioTokens)
-	require.Zero(t, billingUsage.OpenAIUsage.PromptTokensDetails.CachedCreationTokens)
+	assert.Equal(t, 8, usage.PromptTokensDetails.CachedTokens)
+	assert.Equal(t, 5, usage.PromptTokensDetails.CachedCreationTokens)
+	assert.Equal(t, 6, usage.PromptTokensDetails.CacheWriteTokens)
+	assert.Equal(t, 12, usage.PromptTokensDetails.TextTokens)
+	assert.Equal(t, 7, usage.PromptTokensDetails.ImageTokens)
+	assert.Equal(t, 9, usage.PromptTokensDetails.AudioTokens)
+	assert.Zero(t, billingUsage.OpenAIUsage.PromptTokensDetails.CachedCreationTokens)
 }
 
 func TestUsageFromOpenAIBillingUsageFallsBackToPromptCacheHitTokens(t *testing.T) {
@@ -367,7 +369,8 @@ func TestUsageFromOpenAIBillingUsageFallsBackToPromptCacheHitTokens(t *testing.T
 		}),
 	})
 
-	require.Equal(t, 35, usage.PromptTokensDetails.CachedTokens)
+	require.NotNil(t, usage)
+	assert.Equal(t, 35, usage.PromptTokensDetails.CachedTokens)
 }
 
 func TestCalculateTextQuotaSummaryNormalizesOpenAIResponsesBillingUsageDetails(t *testing.T) {
