@@ -1,0 +1,341 @@
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+ ❯ src/features/pricing/components/__tests__/model-perf-badge.test.tsx (4 tests | 4 failed) 51ms
+   × places sparse hourly samples at their actual hours and keeps missing hours neutral 33ms
+   × ignores out-of-window and invalid rates instead of showing healthy hours 5ms
+   × keeps legacy recent samples and the downstream compact latency and throughput 3ms
+   × does not invent history from an aggregate success rate or an empty new series 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/pricing/components/__tests__/model-perf-badge.test.tsx > places sparse hourly samples at their actual hours and keeps missing hours neutral
+TestingLibraryElementError: Unable to find an accessible element with the role "img" and name "Recent success-rate samples; gray bars indicate missing data."
+
+There are no accessible roles. But there might be some inaccessible roles. If you wish to access them, then set the `hidden` option to `true`. Learn more about this here: https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="hidden w-[132px] grid-cols-[38px_48px_30px] gap-x-2 text-right tabular-nums min-[460px]:grid"
+    >
+      <div
+        class="min-w-0"
+        title="Average latency"
+      >
+        <div
+          class="text-muted-foreground/55 text-[10px] leading-4"
+        >
+          Latency short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          120ms
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Throughput"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Throughput short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          1Kt
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Success rate: 100.0%"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Status short
+        </div>
+        <div
+          class="flex h-4 items-center justify-end gap-0.5"
+        >
+          <span
+            class="w-1 rounded-full h-2 bg-emerald-500"
+          />
+          <span
+            class="w-1 rounded-full h-2.5 bg-emerald-500"
+          />
+          <span
+            class="w-1 rounded-full h-3 bg-emerald-500"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/pricing/components/__tests__/model-perf-badge.test.tsx:50:15
+     48|   )
+     49|   const slots = [
+     50|     ...screen.getByRole('img', {
+       |               ^
+     51|       name: 'Recent success-rate samples; gray bars indicate missing d…
+     52|     }).children,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/features/pricing/components/__tests__/model-perf-badge.test.tsx > ignores out-of-window and invalid rates instead of showing healthy hours
+TestingLibraryElementError: Unable to find an accessible element with the role "img"
+
+There are no accessible roles. But there might be some inaccessible roles. If you wish to access them, then set the `hidden` option to `true`. Learn more about this here: https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="hidden w-[132px] grid-cols-[38px_48px_30px] gap-x-2 text-right tabular-nums min-[460px]:grid"
+    >
+      <div
+        class="min-w-0"
+        title="Average latency"
+      >
+        <div
+          class="text-muted-foreground/55 text-[10px] leading-4"
+        >
+          Latency short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          120ms
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Throughput"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Throughput short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          1Kt
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Success rate: 100.0%"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Status short
+        </div>
+        <div
+          class="flex h-4 items-center justify-end gap-0.5"
+        >
+          <span
+            class="w-1 rounded-full h-2 bg-muted-foreground/10"
+          />
+          <span
+            class="w-1 rounded-full h-2.5 bg-muted-foreground/15"
+          />
+          <span
+            class="w-1 rounded-full h-3 bg-emerald-500"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/pricing/components/__tests__/model-perf-badge.test.tsx:79:28
+     77|     />
+     78|   )
+     79|   const slots = [...screen.getByRole('img').children]
+       |                            ^
+     80|   expect(slots).toHaveLength(24)
+     81|   for (const slot of slots) expect(slot).toHaveClass('bg-muted-foregro…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/features/pricing/components/__tests__/model-perf-badge.test.tsx > keeps legacy recent samples and the downstream compact latency and throughput
+TestingLibraryElementError: Unable to find an accessible element with the role "img"
+
+There are no accessible roles. But there might be some inaccessible roles. If you wish to access them, then set the `hidden` option to `true`. Learn more about this here: https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="hidden w-[132px] grid-cols-[38px_48px_30px] gap-x-2 text-right tabular-nums min-[460px]:grid"
+    >
+      <div
+        class="min-w-0"
+        title="Average latency"
+      >
+        <div
+          class="text-muted-foreground/55 text-[10px] leading-4"
+        >
+          Latency short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          120ms
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Throughput"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Throughput short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          1Kt
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Success rate: 100.0%"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Status short
+        </div>
+        <div
+          class="flex h-4 items-center justify-end gap-0.5"
+        >
+          <span
+            class="w-1 rounded-full h-2 bg-emerald-500"
+          />
+          <span
+            class="w-1 rounded-full h-2.5 bg-amber-500"
+          />
+          <span
+            class="w-1 rounded-full h-3 bg-red-500"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/pricing/components/__tests__/model-perf-badge.test.tsx:88:28
+     86|     <ModelPerfBadge perf={{ ...perf, recent_success_rates: [100, 80, 0…
+     87|   )
+     88|   const slots = [...screen.getByRole('img').children]
+       |                            ^
+     89|   expect(slots).toHaveLength(24)
+     90|   expect(slots[21]).toHaveClass('bg-emerald-500')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/features/pricing/components/__tests__/model-perf-badge.test.tsx > does not invent history from an aggregate success rate or an empty new series
+TestingLibraryElementError: Unable to find an accessible element with the role "img"
+
+There are no accessible roles. But there might be some inaccessible roles. If you wish to access them, then set the `hidden` option to `true`. Learn more about this here: https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="hidden w-[132px] grid-cols-[38px_48px_30px] gap-x-2 text-right tabular-nums min-[460px]:grid"
+    >
+      <div
+        class="min-w-0"
+        title="Average latency"
+      >
+        <div
+          class="text-muted-foreground/55 text-[10px] leading-4"
+        >
+          Latency short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          120ms
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Throughput"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Throughput short
+        </div>
+        <div
+          class="text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap"
+        >
+          1Kt
+        </div>
+      </div>
+      <div
+        class="min-w-0"
+        title="Success rate: 100.0%"
+      >
+        <div
+          class="text-muted-foreground/55 truncate text-[10px] leading-4"
+        >
+          Status short
+        </div>
+        <div
+          class="flex h-4 items-center justify-end gap-0.5"
+        >
+          <span
+            class="w-1 rounded-full h-2 bg-muted-foreground/10"
+          />
+          <span
+            class="w-1 rounded-full h-2.5 bg-muted-foreground/15"
+          />
+          <span
+            class="w-1 rounded-full h-3 bg-emerald-500"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/pricing/components/__tests__/model-perf-badge.test.tsx:101:29
+     99| it('does not invent history from an aggregate success rate or an empty…
+    100|   const view = render(<ModelPerfBadge perf={perf} />)
+    101|   for (const slot of screen.getByRole('img').children)
+       |                             ^
+    102|     expect(slot).toHaveClass('bg-muted-foreground/15')
+    103|   view.rerender(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  09:10:07
+   Duration  1.36s (environment 62%, setup 27%, tests 4%, transform 4%, import 2%)
+

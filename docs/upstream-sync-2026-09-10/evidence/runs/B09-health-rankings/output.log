@@ -1,0 +1,20 @@
+$ node scripts/test-preservation.mjs rankings
+bun test v1.3.14 (0d9b296a)
+
+src\features\rankings\components\__tests__\availability.test.tsx:
+(pass) rankings availability compatibility > renders models when recent rates are null in a legacy response [27.93ms]
+(pass) rankings availability compatibility > gives the success-rate trend a wider column [2.11ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [7.41s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\rankings\components\__tests__\visibility.test.tsx:
+(pass) rankings security visibility > hides the user IP leaderboard from non-admin viewers [13.48ms]
+(pass) rankings security visibility > shows the user IP leaderboard to administrators [4.72ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [119.00ms]
+{"files":2,"passed":2,"failed":[]}

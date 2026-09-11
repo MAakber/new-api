@@ -7068,12 +7068,22 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retained legacy sample fields and full-period availability totals. Added weighted hourly series, neutral gaps and old-response fallback to the compact badge. Reproduced absent-series failures before adaptation; current targeted Go and UI regressions passed. Reused existing metric formatter/classification and badge rather than replacing model-card UI.",
+    "resolution_commits": [
+      "f5bd6e15a6a3a065153d926355e2031330f5a14e"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B09.2-hourly-health-5c7cca015/resolution.json",
+      "evidence/runs/B09-health-go/result.json",
+      "evidence/runs/B09-health-ui/result.json",
+      "evidence/runs/B09-health-rankings/result.json",
+      "evidence/runs/B09-health-types/result.json",
+      "evidence/runs/B09-health-lint/result.json",
+      "evidence/runs/B09-health-i18n/result.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

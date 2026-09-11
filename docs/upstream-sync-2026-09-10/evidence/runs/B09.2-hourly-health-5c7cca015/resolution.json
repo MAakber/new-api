@@ -1,0 +1,22 @@
+{
+  "upstream": "5c7cca015525212a7ac2741da7f3b51fa2e30db0",
+  "before_head": "3aa4c3eea44bcdcbc35eb75aca40f8df64dc855c",
+  "after_head": "f5bd6e15a6a3a065153d926355e2031330f5a14e",
+  "files": [
+    "pkg/perf_metrics/metrics.go",
+    "pkg/perf_metrics/summary_compatibility_test.go",
+    "pkg/perf_metrics/types.go",
+    "web/src/features/performance-metrics/types.ts",
+    "web/src/features/pricing/components/__tests__/model-perf-badge.test.tsx",
+    "web/src/features/pricing/components/model-perf-badge.tsx",
+    "web/src/i18n/locales/en.json",
+    "web/src/i18n/locales/fr.json",
+    "web/src/i18n/locales/ja.json",
+    "web/src/i18n/locales/ru.json",
+    "web/src/i18n/locales/vi.json",
+    "web/src/i18n/locales/zh-TW.json",
+    "web/src/i18n/locales/zh.json",
+    "web/vitest.sync.config.ts"
+  ],
+  "rationale": "Retained legacy sample fields and full-period availability totals. Added weighted hourly series, neutral gaps and old-response fallback to the compact badge. Reproduced absent-series failures before adaptation; current targeted Go and UI regressions passed. Reused existing metric formatter/classification and badge rather than replacing model-card UI."
+}

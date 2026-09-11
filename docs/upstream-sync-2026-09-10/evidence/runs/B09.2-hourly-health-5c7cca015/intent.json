@@ -1,0 +1,13 @@
+{
+  "upstream": "5c7cca015525212a7ac2741da7f3b51fa2e30db0",
+  "unit": "B09.2-hourly-health",
+  "before_head": "3aa4c3eea44bcdcbc35eb75aca40f8df64dc855c",
+  "rationale": "Add timestamped hourly success rates without removing legacy samples, full-period availability totals, active-group privacy or downstream compact performance metrics. Verify sparse hours, bucket aggregation, data gaps and legacy frontend fallback.",
+  "files": [
+    "pkg/perf_metrics/metrics.go",
+    "pkg/perf_metrics/types.go",
+    "web/src/features/performance-metrics/types.ts",
+    "web/src/features/pricing/__tests__/model-cards.test.tsx",
+    "web/src/features/pricing/components/model-perf-badge.tsx"
+  ]
+}

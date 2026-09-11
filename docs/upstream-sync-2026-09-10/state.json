@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T01:07:20.314Z",
+  "updatedAt": "2026-09-11T01:13:45.668Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -19,14 +19,14 @@
     "created": true
   },
   "current_batch": "B09",
-  "current_unit": "B09.1-stable-etags",
+  "current_unit": "B09.2-hourly-health",
   "active_operation": null,
-  "last_observed_head": "3ec9f5484f43d15786e1c4bc47b66cca542455aa",
+  "last_observed_head": "f5bd6e15a6a3a065153d926355e2031330f5a14e",
   "last_verified_code_commit": "0c458ec73dc73b4f7fd75ffbe955691240b6bace",
   "last_checkpoint_commit": "0c458ec73dc73b4f7fd75ffbe955691240b6bace",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Integrate timestamped hourly health with legacy recent_success_rates compatibility, then shared status query.",
+  "next_action": "Adapt c79b74b shared status query while preserving downstream theme normalization and account boundaries.",
   "blockers": [
     {
       "id": "production_snapshot",

@@ -1155,7 +1155,15 @@
       {
         "id": "B09.2",
         "action": "兼容新旧健康序列消费者",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/runs/B09-health-go/result.json",
+          "evidence/runs/B09-health-ui/result.json",
+          "evidence/runs/B09-health-rankings/result.json",
+          "evidence/runs/B09-health-types/result.json",
+          "evidence/runs/B09-health-lint/result.json",
+          "evidence/runs/B09-health-i18n/result.json"
+        ]
       },
       {
         "id": "B09.3",
@@ -1200,17 +1208,40 @@
           "evidence/runs/B09-cache-types/result.json",
           "evidence/runs/B09-cache-lint/result.json"
         ]
+      },
+      {
+        "id": "B09.2-hourly-health",
+        "action": "fix(perf): return hourly success-rate series for model health bar",
+        "status": "verified",
+        "upstreamCommits": [
+          "5c7cca015525212a7ac2741da7f3b51fa2e30db0"
+        ],
+        "evidence": [
+          "evidence/runs/B09-health-go/result.json",
+          "evidence/runs/B09-health-ui/result.json",
+          "evidence/runs/B09-health-rankings/result.json",
+          "evidence/runs/B09-health-types/result.json",
+          "evidence/runs/B09-health-lint/result.json",
+          "evidence/runs/B09-health-i18n/result.json"
+        ]
       }
     ],
     "codeCommits": [
       "44dd63fae4f638dab5bfb3bbb5fb97e2077c0823",
-      "3ec9f5484f43d15786e1c4bc47b66cca542455aa"
+      "3ec9f5484f43d15786e1c4bc47b66cca542455aa",
+      "f5bd6e15a6a3a065153d926355e2031330f5a14e"
     ],
     "evidence": [
       "evidence/runs/B09-cache-go/result.json",
       "evidence/runs/B09-cache-ui/result.json",
       "evidence/runs/B09-cache-types/result.json",
-      "evidence/runs/B09-cache-lint/result.json"
+      "evidence/runs/B09-cache-lint/result.json",
+      "evidence/runs/B09-health-go/result.json",
+      "evidence/runs/B09-health-ui/result.json",
+      "evidence/runs/B09-health-rankings/result.json",
+      "evidence/runs/B09-health-types/result.json",
+      "evidence/runs/B09-health-lint/result.json",
+      "evidence/runs/B09-health-i18n/result.json"
     ],
     "nextAction": "按已知缓存提交依赖适配 use-system-config 与绑定"
   },

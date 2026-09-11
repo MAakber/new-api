@@ -1,0 +1,26 @@
+{
+  "id": "B09-health-rankings",
+  "command": [
+    "bun",
+    "run",
+    "test:preservation",
+    "rankings"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "f5bd6e15a6a3a065153d926355e2031330f5a14e",
+  "started_at": "2026-09-11T01:12:48.774Z",
+  "finished_at": "2026-09-11T01:12:56.616Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

@@ -1518,3 +1518,25 @@
 - Restored deferred public-notice regression. Old hintless sessions recover; forged hints grant no authority; private requests retain no-cache/no-store.
 - Evidence: evidence/runs/B09-cache-go/result.json, evidence/runs/B09-cache-ui/result.json, evidence/runs/B09-cache-types/result.json, evidence/runs/B09-cache-lint/result.json.
 - Continue hourly health and shared status query.
+
+## 2026-09-11T01:07:21.143Z — B09.2-hourly-health adaptation begun
+
+- Before HEAD: 3aa4c3eea44bcdcbc35eb75aca40f8df64dc855c.
+- Upstream: 5c7cca015525212a7ac2741da7f3b51fa2e30db0.
+- Add timestamped hourly success rates without removing legacy samples, full-period availability totals, active-group privacy or downstream compact performance metrics. Verify sparse hours, bucket aggregation, data gaps and legacy frontend fallback.
+- Evidence: evidence/runs/B09.2-hourly-health-5c7cca015/intent.json.
+
+## 2026-09-11T01:12:14.734Z — B09.2-hourly-health adaptation recorded
+
+- Code: f5bd6e15a6a3a065153d926355e2031330f5a14e.
+- Retained legacy sample fields and full-period availability totals. Added weighted hourly series, neutral gaps and old-response fallback to the compact badge. Reproduced absent-series failures before adaptation; current targeted Go and UI regressions passed. Reused existing metric formatter/classification and badge rather than replacing model-card UI.
+- Evidence: evidence/runs/B09.2-hourly-health-5c7cca015/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T01:13:45.725Z — B09 hourly health compatibility verified
+
+- Code: f5bd6e15a6a3a065153d926355e2031330f5a14e.
+- Weighted hourly points, database/unflushed group filtering, legacy samples and full-period availability pass.
+- Four badge cases and four legacy rankings cases pass; types, touched lint and seven-language text pass.
+- Evidence: evidence/runs/B09-health-go/result.json, evidence/runs/B09-health-ui/result.json, evidence/runs/B09-health-rankings/result.json, evidence/runs/B09-health-types/result.json, evidence/runs/B09-health-lint/result.json, evidence/runs/B09-health-i18n/result.json.
+- Shared status query remains next.

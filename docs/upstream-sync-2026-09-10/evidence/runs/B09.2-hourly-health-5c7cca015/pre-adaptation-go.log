@@ -1,0 +1,9 @@
+[SYS] 2026/09/11 - 09:10:09 | SQL_DSN not set, using SQLite as database 
+--- FAIL: TestSummaryKeepsLegacySamplesAlongsideHourlySeriesAndFiltersGroups (0.08s)
+    summary_compatibility_test.go:80: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/pkg/perf_metrics/summary_compatibility_test.go:80
+        	Error:      	"[]" should have 3 item(s), but has 0
+        	Test:       	TestSummaryKeepsLegacySamplesAlongsideHourlySeriesAndFiltersGroups
+FAIL
+FAIL	github.com/QuantumNous/new-api/pkg/perf_metrics	0.649s
+FAIL

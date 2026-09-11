@@ -1,0 +1,31 @@
+{
+  "id": "B09-health-lint",
+  "command": [
+    "bun",
+    "x",
+    "oxlint",
+    "-c",
+    ".oxlintrc.json",
+    "src/features/performance-metrics/types.ts",
+    "src/features/pricing/components/model-perf-badge.tsx",
+    "src/features/pricing/components/__tests__/model-perf-badge.test.tsx",
+    "vitest.sync.config.ts"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "f5bd6e15a6a3a065153d926355e2031330f5a14e",
+  "started_at": "2026-09-11T01:12:46.437Z",
+  "finished_at": "2026-09-11T01:12:46.583Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}
