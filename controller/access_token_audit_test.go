@@ -437,13 +437,14 @@ func (releasedAuditLog) TableName() string { return "logs" }
 func newAuditTestDatabase(t *testing.T, kind, dsn string) (*gorm.DB, string) {
 	t.Helper()
 	if kind == "sqlite" {
-		path := t.TempDir() + "/audit.db"
-		db, err := gorm.Open(sqlite.Open(path), &gorm.Config{})
+		// Match the application's per-connection timeout and concurrent writer settings.
+		isolatedDSN := t.TempDir() + "/audit.db?_pragma=busy_timeout(30000)&_pragma=journal_mode(WAL)&_txlock=immediate"
+		db, err := gorm.Open(sqlite.Open(isolatedDSN), &gorm.Config{})
 		require.NoError(t, err)
 		sqlDB, err := db.DB()
 		require.NoError(t, err)
 		t.Cleanup(func() { require.NoError(t, sqlDB.Close()) })
-		return db, path
+		return db, isolatedDSN
 	}
 	require.NotEmpty(t, dsn)
 	name := fmt.Sprintf("newapi_audit_%d", time.Now().UnixNano())
