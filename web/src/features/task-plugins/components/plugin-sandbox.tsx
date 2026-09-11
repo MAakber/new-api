@@ -13,14 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 import { CodeBlock, CodeBlockEditor } from '@/components/ai-elements/code-block'
 import { Button } from '@/components/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Combobox } from '@/components/ui/combobox'
 
 import { dryRunTaskPlugin } from '../api'
 
@@ -65,20 +58,12 @@ export function PluginSandbox(props: { pluginKey: string }) {
 
   return (
     <div className='flex flex-col gap-4'>
-      <Select value={hook} onValueChange={(value) => setHook(value ?? '')}>
-        <SelectTrigger aria-label={t('Hook')}>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {hooks.map((item) => (
-              <SelectItem key={item} value={item}>
-                {item}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <Combobox
+        options={hooks.map((item) => ({ value: item, label: item }))}
+        value={hook}
+        onValueChange={(value) => setHook(value ?? '')}
+        aria-label={t('Hook')}
+      />
       <CodeBlockEditor
         ariaLabel={t('Arguments JSON')}
         language='json'
