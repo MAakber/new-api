@@ -1,9 +1,11 @@
 package model
 
 import (
+	"path/filepath"
+	"strings"
 	"testing"
 
-	"github.com/glebarez/sqlite"
+	"github.com/QuantumNous/new-api/common"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
@@ -12,12 +14,46 @@ import (
 
 func setupTaskPluginModelTest(t *testing.T) {
 	t.Helper()
-	originalDB := DB
-	t.Cleanup(func() { DB = originalDB })
-	var err error
-	DB, err = gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
-	require.NoError(t, err)
+	originalDB, originalSQLite := DB, common.SQLitePath
+	originalMain, originalLog := common.MainDatabaseType(), common.LogDatabaseType()
+	t.Cleanup(func() {
+		DB, common.SQLitePath = originalDB, originalSQLite
+		common.SetDatabaseTypes(originalMain, originalLog)
+		initCol()
+	})
+	db, dialect := openUpgradeFixtureDB(t, "TEST_TASK_PLUGIN_DSN", filepath.Join(t.TempDir(), "plugins.db"))
+	DB = db
+	common.SetDatabaseTypes(dialect, originalLog)
+	initCol()
 	require.NoError(t, DB.AutoMigrate(&TaskPlugin{}))
+	// The external fixture accepts only disposable codex_sync_ databases.
+	require.NoError(t, DB.Where("1 = 1").Delete(&TaskPlugin{}).Error)
+}
+
+func TestTaskPluginIconSurvivesRestartsAndSourceUpdates(t *testing.T) {
+	setupTaskPluginModelTest(t)
+	icon := "data:image/svg+xml;base64," + strings.Repeat("A", 70000)
+	plugin := TaskPlugin{Key: "icon", APIVersion: 1, Version: "1.0.0", Source: "fixture", SourceHash: "fixture-hash", Enabled: true, Icon: icon}
+	require.NoError(t, SaveTaskPlugin(&plugin))
+	for restart := 0; restart < 2; restart++ {
+		recorder := &migrationSQLRecorder{}
+		require.NoError(t, DB.Session(&gorm.Session{Logger: recorder}).AutoMigrate(&TaskPlugin{}))
+		assert.Empty(t, recorder.schemaMutations())
+	}
+	stored, err := GetTaskPluginVersion("icon", "1.0.0")
+	require.NoError(t, err)
+	assert.Equal(t, icon, stored.Icon)
+	assert.True(t, stored.Active)
+	public, err := common.Marshal(stored)
+	require.NoError(t, err)
+	assert.NotContains(t, string(public), "data:image")
+	update := TaskPlugin{Key: "icon", APIVersion: 1, Version: "1.0.0", Source: "fixture", SourceHash: "fixture-hash", Remark: "updated note", Enabled: false}
+	require.NoError(t, SaveTaskPlugin(&update))
+	assert.Equal(t, icon, update.Icon)
+	assert.False(t, update.Enabled)
+	duplicate := plugin
+	duplicate.Id = 0
+	require.Error(t, DB.Create(&duplicate).Error, "key and version must remain unique")
 }
 
 func TestTaskPluginVersionActivationAndSourceImmutability(t *testing.T) {
