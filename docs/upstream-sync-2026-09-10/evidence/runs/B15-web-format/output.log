@@ -1,0 +1,12 @@
+$ node scripts/format-with-protected-headers.mjs --check
+Finished in 1186ms on 1465 files using 16 threads.
+Format issues found in protected-header-safe check:
+package.json
+scripts\add-copyright.mjs
+scripts\format-with-protected-headers.mjs
+scripts\sync-i18n.mjs
+src\features\chat\lib\__tests__\chat-links.test.ts
+src\features\usage-logs\components\__tests__\quota-adjustment.test.tsx
+src\features\users\components\dialogs\__tests__\user-binding-dialog.test.tsx
+src\lib\model-classification.ts
+error: script "format:check" exited with code 1

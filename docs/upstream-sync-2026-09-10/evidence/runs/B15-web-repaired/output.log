@@ -1,0 +1,14 @@
+$ vitest run src/features/playground src/features/channels/__tests__/advanced-custom-editor.test.tsx src/features/channels/__tests__/fetch-models-selection.test.tsx src/features/channels/__tests__/model-mapping src/lib/__tests__/handle-server-error src/lib/__tests__/query-client
+
+ RUN  v5.0.0 D:/10178/Projects/new-api-upstream-sync/web
+
+
+ Test Files  23 passed (23)
+      Tests  96 passed (96)
+   Start at  18:51:22
+   Duration  58.10s (import 52%, transform 19%, environment 14%, tests 8%, setup 7%)
+
+Environment  |playground| happy-dom was created 21 times · 16.81s total, 26% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

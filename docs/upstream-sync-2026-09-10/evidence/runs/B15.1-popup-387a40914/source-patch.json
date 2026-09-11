@@ -1,0 +1,12 @@
+{
+  "upstream": "387a40914853310d69adc2f52474134ced5f4811",
+  "excluded": [
+    "web/src/components/ui/combobox.tsx",
+    "web/src/components/ui/drawer.tsx",
+    "web/src/components/ui/portal-container.ts",
+    "web/src/components/ui/select.tsx",
+    "web/src/components/ui/__tests__/portal-container.test.tsx"
+  ],
+  "exit_code": 0,
+  "output": "Applied patch to 'web/src/test-setup.ts' cleanly.\n"
+}

@@ -2313,61 +2313,127 @@
       "ebe4c368f28787919ea478c0abf1ea7101978179",
       "12be9975c0bf01fa175a2bb3360607767c8ba5fb"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B15.1",
         "action": "保留现有可多开浮窗，按交互语义整合通知/对话框",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B15-acceptance.json"
+        ]
       },
       {
         "id": "B15.2",
         "action": "合并测试配置并确认所有保护测试仍可发现",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B15-acceptance.json"
+        ]
       },
       {
         "id": "B15.3",
         "action": "审查 Go 风格整理的所有交叉文件，不以整文件覆盖解决",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B15-acceptance.json"
+        ]
       },
       {
         "id": "B15.baseline-lint",
-        "action": "Resolve remaining full lint errors without disabling checks; prioritize files touched during adaptation.",
-        "status": "pending",
+        "action": "Resolve full lint errors with global rules enabled; retain a documented element-scoped exception for administrator-configured chat embed compatibility.",
+        "status": "verified",
         "evidence": [
-          "evidence/runs/B00-web-lint/output.log"
+          "evidence/runs/B00-web-lint/output.log",
+          "evidence/B15-acceptance.json"
         ]
       },
       {
         "id": "B15.baseline-format",
         "action": "Format six reported files while preserving protected headers.",
-        "status": "pending",
+        "status": "verified",
         "evidence": [
-          "evidence/runs/B00-web-format/output.log"
+          "evidence/runs/B00-web-format/output.log",
+          "evidence/B15-acceptance.json"
         ]
       },
       {
         "id": "B15.3-windows-fixture-stability",
-        "status": "pending",
+        "status": "verified",
         "action": "Review recurring Windows avatar TempDir cleanup and HTTP/2 no-GetBody reset fixture. Preserve behavior assertions; reset fixture currently closes with unread TCP frames while the GOAWAY fixture already drains the connection.",
         "evidence": [
           "evidence/runs/B11-acceptance-go/result.json",
-          "evidence/runs/B11-controller-channel-recheck/result.json"
+          "evidence/runs/B11-controller-channel-recheck/result.json",
+          "evidence/B15-acceptance.json"
         ]
       },
       {
         "id": "B15.1-popup-reconcile",
-        "status": "pending",
+        "status": "verified",
         "sourceCommit": "387a40914853310d69adc2f52474134ced5f4811",
         "action": "Reconcile B13 pulled-forward portal container changes and remaining Node25 storage shim.",
         "evidence": [
-          "evidence/B13-drawer-popup-dependency.json"
+          "evidence/B13-drawer-popup-dependency.json",
+          "evidence/B15-acceptance.json"
+        ]
+      },
+      {
+        "id": "B15.2-vitest",
+        "action": "test(web): standardize frontend tests on Vitest (#6569)",
+        "status": "verified",
+        "upstreamCommits": [
+          "e2c7aa7b102c2075eae2377df3508658d45e88dc"
+        ],
+        "evidence": [
+          "evidence/B15-acceptance.json"
+        ]
+      },
+      {
+        "id": "B15.1-popup",
+        "action": "fix(web): keep drawer popups interactive and shim storage in tests",
+        "status": "verified",
+        "upstreamCommits": [
+          "387a40914853310d69adc2f52474134ced5f4811"
+        ],
+        "evidence": [
+          "evidence/B15-acceptance.json"
+        ]
+      },
+      {
+        "id": "B15.3-go-style",
+        "action": "refactor: modernize Go code conventions",
+        "status": "verified",
+        "upstreamCommits": [
+          "ebe4c368f28787919ea478c0abf1ea7101978179"
+        ],
+        "evidence": [
+          "evidence/B15-acceptance.json"
+        ]
+      },
+      {
+        "id": "B15.1-notifications",
+        "action": "fix(web): unify server error notifications",
+        "status": "verified",
+        "upstreamCommits": [
+          "12be9975c0bf01fa175a2bb3360607767c8ba5fb"
+        ],
+        "evidence": [
+          "evidence/B15-acceptance.json"
         ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "保留现有可多开浮窗，按交互语义整合通知/对话框"
+    "codeCommits": [
+      "f039a13d05445e0462a52c4468016197eec3ab51",
+      "c9d7adc99c3409e713d35c44b51a2e59c994b0dd",
+      "8bf67d9c62927f7aee71808c09a36f51e1b69a30",
+      "581dbfe3d0552479a1d79e8177a4fe541d9abe3b",
+      "73a44e27318973a1f017e0f3aa80e37d06fd80a4",
+      "1b77521b67919475b133ed3d9a9c52e9413e1501"
+    ],
+    "evidence": [
+      "evidence/B15-acceptance.json"
+    ],
+    "nextAction": "B16: finish remaining release, documentation and desktop dependency updates."
   },
   {
     "id": "B16",

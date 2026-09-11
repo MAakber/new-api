@@ -2357,3 +2357,67 @@ Actual 387a409 drawer/combobox/select portal-context fix is pulled forward after
 - Plugin storage and pricing matrix passed all four engines; 241 plugin UI tests passed. Scoped failed-case repairs closed.
 - B08/B12 plugin deferrals are implemented and locally verified. Browser and release environment gates remain pending.
 - Evidence: evidence/B14-acceptance.json. Next: B15 frontend tests and global interactions.
+
+## 2026-09-11T10:05:04.319Z — B15.2-vitest adaptation begun
+
+- Before HEAD: e78757f58a7de648e45fd70ca089df1834f7acee.
+- Upstream: e2c7aa7b102c2075eae2377df3508658d45e88dc.
+- Unify frontend test discovery and shared DOM setup while retaining all downstream protection tests, specialized runners and existing dependency versions.
+- Evidence: evidence/runs/B15.2-vitest-e2c7aa7b1/intent.json.
+
+## 2026-09-11T10:11:44.781Z — B15.2-vitest adaptation recorded
+
+- Code: f039a13d05445e0462a52c4468016197eec3ab51.
+- Adopt shared jsdom and CI entry points; migrate all remaining node:test suites to Vitest. Retain already migrated downstream auth, compact group and registration/subscription redemption tests. Enroll self-owned DOM and responsive fixtures as separate projects; preserve specialized commands and newer RTL/Vitest versions. Move the session utility conversion to its current security feature path.
+- Evidence: evidence/runs/B15.2-vitest-e2c7aa7b1/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:11:45.205Z — B15.1-popup adaptation begun
+
+- Before HEAD: f039a13d05445e0462a52c4468016197eec3ab51.
+- Upstream: 387a40914853310d69adc2f52474134ced5f4811.
+- Reconcile popup portal context pulled forward in B13, retaining downstream Combobox value/focus behavior and plugin icons; add the remaining storage shim to shared tests.
+- Evidence: evidence/runs/B15.1-popup-387a40914/intent.json.
+
+## 2026-09-11T10:12:34.577Z — B15.1-popup adaptation recorded
+
+- Code: c9d7adc99c3409e713d35c44b51a2e59c994b0dd.
+- Portal container, Drawer, Select and Combobox behavior was already pulled forward and tested in B13. Keep later focus, custom-value and icon adaptations. Add the remaining Node storage shim to the shared Vitest setup; final popup and floating-window acceptance remains part of B15/B18.
+- Evidence: evidence/runs/B15.1-popup-387a40914/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:12:34.995Z — B15.3-go-style adaptation begun
+
+- Before HEAD: c9d7adc99c3409e713d35c44b51a2e59c994b0dd.
+- Upstream: ebe4c368f28787919ea478c0abf1ea7101978179.
+- Apply modern Go conventions contextually without replacing downstream accounting, metadata CAS, channel mutation or task routing behavior.
+- Evidence: evidence/runs/B15.3-go-style-ebe4c368f/intent.json.
+
+## 2026-09-11T10:14:34.864Z — B15.3-go-style adaptation recorded
+
+- Code: 8bf67d9c62927f7aee71808c09a36f51e1b69a30.
+- Adapt all 214 upstream files by context. Preserve shared metadata and channel mutation services, canonical pricing CAS, request-rate fields, avatar cleanup, registration and subscription redemption fields, common JSON wrappers and the subscription refund transaction. Modernize surviving type aliases and clamps; do not restore obsolete duplicate writers or legacy auth binding paths.
+- Evidence: evidence/runs/B15.3-go-style-ebe4c368f/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:15:53.403Z — B15.1-notifications adaptation begun
+
+- Before HEAD: 8bf67d9c62927f7aee71808c09a36f51e1b69a30.
+- Upstream: 12be9975c0bf01fa175a2bb3360607767c8ba5fb.
+- Unify operation-scoped server error notifications and settings failure handling. Preserve downstream dialogs, channel mutation paths, protected auth messages, refresh semantics and one-use proof replay protection.
+- Evidence: evidence/runs/B15.1-notifications-12be9975c/intent.json.
+
+## 2026-09-11T10:21:38.603Z — B15.1-notifications adaptation recorded
+
+- Code: 581dbfe3d0552479a1d79e8177a4fe541d9abe3b.
+- Adopt operation-scoped error causes, safe auth messages, Query/Mutation ownership and failed-settings rejection. Reconcile channels, profile avatars, ranking security, numeric input and multi-window forms in place. Preserve registration/subscription redemption payloads, mandatory IP audit display, stale-request guards and single-use authorization; extend error-detail assertions in the existing redemption fixture.
+- Evidence: evidence/runs/B15.1-notifications-12be9975c/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:51:16.266Z — B15 acceptance repair committed
+
+Code: 73a44e27318973a1f017e0f3aa80e37d06fd80a4. Restore dedicated playground environment within unified Vitest; repair whitespace-sensitive role queries. Complete baseline lint cleanup and 35 missing locale translations. Preserve trusted administrator chat iframe capabilities with a narrow documented lint exception; unused general URL preview keeps scripts but isolates origin. Check repaired files and affected interactions; no repeated database runs.
+
+## 2026-09-11T10:56:08.437Z — B15 verified; 141/153 upstream commits accepted
+
+Code 1b77521b67919475b133ed3d9a9c52e9413e1501. Full backend and independent relaykit results reused; six frontend failures fixed with 23 files/96 tests passing. Type, full lint, protected-header format and literal i18n pass. Review details: evidence/B15-acceptance.json. Proceed to B16, leaving production untouched.

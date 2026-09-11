@@ -1,0 +1,7 @@
+test(web): unify Vitest discovery while preserving downstream suites
+
+Adapt upstream e2c7aa7b102c2075eae2377df3508658d45e88dc.
+
+Adopt shared jsdom and CI entry points; migrate all remaining node:test suites to Vitest. Retain already migrated downstream auth, compact group and registration/subscription redemption tests. Enroll self-owned DOM and responsive fixtures as separate projects; preserve specialized commands and newer RTL/Vitest versions. Move the session utility conversion to its current security feature path.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

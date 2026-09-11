@@ -108,3 +108,7 @@ Allocate TaskPlugin=65 after inspecting the complete backend/frontend enums, bas
 - Legacy tasks poll through their original adapters; plugin execution snapshots keep polling identity separate. Public responses are emitted only after persistence and billing.
 - Canonical pricing CAS, fixed-price task rejection, quota saturation, scoped logs, avatars and downstream pricing parsers are retained. Alias pricing integration and consolidated B14 validation remain pending.
 - Core development probes ran on the dirty tree and are not acceptance evidence. No production state was changed.
+
+## A31 — Preserve administrator chat embedding during lint cleanup
+
+The existing administrator-configured chat iframe requires its original script, origin storage, OAuth, downloads and media capabilities. Preserve that contract with one explicit element-scoped iframe lint exception rather than imposing an incompatible sandbox. Global lint rules stay enabled. The general URL-preview component currently has no consumers; its sandbox now isolates origin while retaining script execution. Full lint has no errors; warnings remain recorded.

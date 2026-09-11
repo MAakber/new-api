@@ -1,0 +1,72 @@
+{
+  "files": 180,
+  "checked_keys": 2302,
+  "missing": [
+    {
+      "file": "web/src/features/channels/components/dialogs/ollama-models-dialog.tsx",
+      "key": "Delete model \"{{name}}\"? This cannot be undone.",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    },
+    {
+      "file": "web/src/features/system-settings/content/announcements-section.tsx",
+      "key": "{{count}} announcements deleted. Click \"Save Settings\" to apply.",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    },
+    {
+      "file": "web/src/features/system-settings/content/api-info-section.tsx",
+      "key": "{{count}} API entries deleted. Click \"Save Settings\" to apply.",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    },
+    {
+      "file": "web/src/features/system-settings/content/faq-section.tsx",
+      "key": "{{count}} FAQs deleted. Click \"Save Settings\" to apply.",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    },
+    {
+      "file": "web/src/features/system-settings/content/uptime-kuma-section.tsx",
+      "key": "{{count}} groups deleted. Click \"Save Settings\" to apply.",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    }
+  ],
+  "scope": "Literal call sites only; dynamic keys require explicit review."
+}

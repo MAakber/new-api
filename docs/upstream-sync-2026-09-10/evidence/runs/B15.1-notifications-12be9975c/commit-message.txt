@@ -1,0 +1,7 @@
+fix(web): unify failure reporting across downstream interactions
+
+Adapt upstream 12be9975c0bf01fa175a2bb3360607767c8ba5fb.
+
+Adopt operation-scoped error causes, safe auth messages, Query/Mutation ownership and failed-settings rejection. Reconcile channels, profile avatars, ranking security, numeric input and multi-window forms in place. Preserve registration/subscription redemption payloads, mandatory IP audit display, stale-request guards and single-use authorization; extend error-detail assertions in the existing redemption fixture.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

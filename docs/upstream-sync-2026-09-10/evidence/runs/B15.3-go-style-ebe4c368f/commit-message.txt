@@ -1,0 +1,7 @@
+refactor: modernize Go conventions with downstream behavior intact
+
+Adapt upstream ebe4c368f28787919ea478c0abf1ea7101978179.
+
+Adapt all 214 upstream files by context. Preserve shared metadata and channel mutation services, canonical pricing CAS, request-rate fields, avatar cleanup, registration and subscription redemption fields, common JSON wrappers and the subscription refund transaction. Modernize surviving type aliases and clamps; do not restore obsolete duplicate writers or legacy auth binding paths.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

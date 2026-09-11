@@ -1,0 +1,7 @@
+test(web): complete shared popup and storage compatibility
+
+Adapt upstream 387a40914853310d69adc2f52474134ced5f4811.
+
+Portal container, Drawer, Select and Combobox behavior was already pulled forward and tested in B13. Keep later focus, custom-value and icon adaptations. Add the remaining Node storage shim to the shared Vitest setup; final popup and floating-window acceptance remains part of B15/B18.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

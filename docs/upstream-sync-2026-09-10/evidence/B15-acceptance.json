@@ -1,0 +1,78 @@
+{
+  "status": "verified",
+  "code_commit": "1b77521b67919475b133ed3d9a9c52e9413e1501",
+  "runs": [
+    {
+      "id": "B15-go-conventions",
+      "evidence": "evidence/runs/B15-go-conventions/result.json",
+      "tested_commit": "8bf67d9c62927f7aee71808c09a36f51e1b69a30"
+    },
+    {
+      "id": "B15-relaykit",
+      "evidence": "evidence/runs/B15-relaykit/result.json",
+      "tested_commit": "8bf67d9c62927f7aee71808c09a36f51e1b69a30"
+    },
+    {
+      "id": "B15-relaykit-build",
+      "evidence": "evidence/runs/B15-relaykit-build/result.json",
+      "tested_commit": "8bf67d9c62927f7aee71808c09a36f51e1b69a30"
+    },
+    {
+      "id": "B15-vitest-discovery",
+      "evidence": "evidence/runs/B15-vitest-discovery/result.json",
+      "tested_commit": "8bf67d9c62927f7aee71808c09a36f51e1b69a30"
+    },
+    {
+      "id": "B15-web-repaired",
+      "evidence": "evidence/runs/B15-web-repaired/result.json",
+      "tested_commit": "73a44e27318973a1f017e0f3aa80e37d06fd80a4"
+    },
+    {
+      "id": "B15-web-types-final",
+      "evidence": "evidence/runs/B15-web-types-final/result.json",
+      "tested_commit": "73a44e27318973a1f017e0f3aa80e37d06fd80a4"
+    },
+    {
+      "id": "B15-web-lint-final",
+      "evidence": "evidence/runs/B15-web-lint-final/result.json",
+      "tested_commit": "73a44e27318973a1f017e0f3aa80e37d06fd80a4"
+    },
+    {
+      "id": "B15-web-i18n-final",
+      "evidence": "evidence/runs/B15-web-i18n-final/result.json",
+      "tested_commit": "73a44e27318973a1f017e0f3aa80e37d06fd80a4"
+    },
+    {
+      "id": "B15-web-format-final",
+      "evidence": "evidence/runs/B15-web-format-final/result.json",
+      "tested_commit": "73a44e27318973a1f017e0f3aa80e37d06fd80a4"
+    },
+    {
+      "id": "B15-http2-fixture",
+      "evidence": "evidence/runs/B15-http2-fixture/result.json",
+      "tested_commit": "1b77521b67919475b133ed3d9a9c52e9413e1501"
+    }
+  ],
+  "reused_frontend": {
+    "evidence": "evidence/runs/B15-web-suite/result.json",
+    "passed_files": 203,
+    "passed_tests": 1513,
+    "failed_files": 6,
+    "failed_tests": 15,
+    "disposition": "All six failing files are included in B15-web-repaired (23 files, 96 tests passed). Existing successful files are reused; final candidate regression remains B18."
+  },
+  "windows_fixture_review": {
+    "http2": "The existing no-GetBody RST_STREAM server closed TCP with unread control frames. Drain after CloseWrite as in its GOAWAY fixture; all four protocol tests passed without relaxing error/body assertions.",
+    "avatar": "Reviewed synchronous OAuth import, atomic Put and image Open/Close. B11 failure occurred in Windows TempDir directory removal after behavior assertions; full B15 Go run passed. No reproducible avatar handle leak established. No retry loop, sleeps, cleanup suppression or production change added."
+  },
+  "preservation": [
+    "Downstream floating editors and custom channel test matrix",
+    "Single-use authentication proof is never replayed",
+    "Registration/subscription redemption payloads",
+    "Mandatory IP audit display",
+    "Canonical pricing, quota saturation, wallet and task adapters retained by Go style conflict review"
+  ],
+  "compatibility_exception": "Administrator-configured embedded chat keeps its existing unsandboxed capability contract. One documented iframe lint exception is scoped to that element; global rules stay enabled. General URL preview has no current consumers and now isolates its origin.",
+  "residual_warnings": "Pre-existing lint warnings remain; no lint errors.",
+  "final_acceptance": "B18 required"
+}

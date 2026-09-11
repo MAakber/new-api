@@ -2371,12 +2371,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Adopt shared jsdom and CI entry points; migrate all remaining node:test suites to Vitest. Retain already migrated downstream auth, compact group and registration/subscription redemption tests. Enroll self-owned DOM and responsive fixtures as separate projects; preserve specialized commands and newer RTL/Vitest versions. Move the session utility conversion to its current security feature path.",
+    "resolution_commits": [
+      "f039a13d05445e0462a52c4468016197eec3ab51"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B15.2-vitest-e2c7aa7b1/resolution.json",
+      "evidence/B15-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -7163,12 +7168,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Portal container, Drawer, Select and Combobox behavior was already pulled forward and tested in B13. Keep later focus, custom-value and icon adaptations. Add the remaining Node storage shim to the shared Vitest setup; final popup and floating-window acceptance remains part of B15/B18.",
+    "resolution_commits": [
+      "c9d7adc99c3409e713d35c44b51a2e59c994b0dd"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B15.1-popup-387a40914/resolution.json",
+      "evidence/B15-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -8665,12 +8675,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Adapt all 214 upstream files by context. Preserve shared metadata and channel mutation services, canonical pricing CAS, request-rate fields, avatar cleanup, registration and subscription redemption fields, common JSON wrappers and the subscription refund transaction. Modernize surviving type aliases and clamps; do not restore obsolete duplicate writers or legacy auth binding paths.",
+    "resolution_commits": [
+      "8bf67d9c62927f7aee71808c09a36f51e1b69a30"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B15.3-go-style-ebe4c368f/resolution.json",
+      "evidence/B15-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -9316,12 +9331,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Adopt operation-scoped error causes, safe auth messages, Query/Mutation ownership and failed-settings rejection. Reconcile channels, profile avatars, ranking security, numeric input and multi-window forms in place. Preserve registration/subscription redemption payloads, mandatory IP audit display, stale-request guards and single-use authorization; extend error-detail assertions in the existing redemption fixture.",
+    "resolution_commits": [
+      "581dbfe3d0552479a1d79e8177a4fe541d9abe3b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B15.1-notifications-12be9975c/resolution.json",
+      "evidence/B15-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

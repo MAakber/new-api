@@ -1,0 +1,28 @@
+{
+  "id": "B15-http2-fixture",
+  "command": [
+    "go",
+    "test",
+    "./relay/channel",
+    "-run",
+    "TestUpstreamGetBody_HTTP2",
+    "-count=1"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "1b77521b67919475b133ed3d9a9c52e9413e1501",
+  "started_at": "2026-09-11T10:54:14.611Z",
+  "finished_at": "2026-09-11T10:54:23.623Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

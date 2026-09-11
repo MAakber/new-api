@@ -1,0 +1,341 @@
+{
+  "rows": [
+    {
+      "file": "web/src/features/auth/forgot-password/components/forgot-password-form.tsx",
+      "index": 1,
+      "ours": "    } catch {\n      // Errors are handled by global interceptor\n",
+      "theirs": "    } catch (_error) {\n      handleServerError(\n        AuthOperationError.from(_error, t('Failed to send reset email'))\n      )\n",
+      "result": "    } catch (_error) {\n      handleServerError(\n        AuthOperationError.from(_error, t('Failed to send reset email'))\n      )\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+      "index": 1,
+      "ours": "",
+      "theirs": "import { useQueryClient } from '@tanstack/react-query'\nimport type {\n  ColumnDef,\n  RowSelectionState,\n  Table as TanStackTable,\n} from '@tanstack/react-table'\nimport {\n  Check,\n  CheckCircle2,\n  Copy,\n  Gauge,\n  Info,\n  Loader2,\n  Settings,\n  Trash2,\n} from 'lucide-react'\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+      "index": 2,
+      "ours": "",
+      "theirs": "import { Checkbox } from '@/components/ui/checkbox'\nimport { Combobox } from '@/components/ui/combobox'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+      "index": 3,
+      "ours": "",
+      "theirs": "import { useIsMobile } from '@/hooks/use-mobile'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+      "index": 4,
+      "ours": "export function ChannelTestDialog(props: ChannelTestDialogProps) {\n",
+      "theirs": "type ChannelTestDialogContentProps = ChannelTestDialogProps & {\n  currentRow: Channel\n}\n\ntype ModelRow = {\n  model: string\n}\n\ntype TestStatus = 'idle' | 'testing' | 'success' | 'error'\n\ntype TestResult = {\n  status: TestStatus\n  responseTime?: number\n  completedAt?: number\n  error?: string\n  errorCode?: string\n}\n\ntype BatchProgress = {\n  total: number\n  completed: number\n  success: number\n  failed: number\n}\n\ntype ChannelTestCachePatch = {\n  responseTime: number\n  testTime: number\n}\n\ntype LatestChannelTestCachePatch = {\n  patch: ChannelTestCachePatch\n  completedAt: number\n}\n\ntype ChannelListCache = GetChannelsResponse | SearchChannelsResponse\n\nfunction createChannelTestCachePatch(\n  responseTime?: number,\n  completedAt = Date.now()\n): ChannelTestCachePatch | undefined {\n  if (typeof responseTime !== 'number' || !Number.isFinite(responseTime)) {\n    return undefined\n  }\n\n  return {\n    responseTime,\n    testTime: Math.floor(completedAt / 1000),\n  }\n}\n\nfunction getLatestChannelTestCachePatch(\n  results: TestResult[]\n): ChannelTestCachePatch | undefined {\n  const latest = results.reduce<LatestChannelTestCachePatch | undefined>(\n    (latestPatch, result) => {\n      const completedAt = result.completedAt ?? 0\n      const patch = createChannelTestCachePatch(\n        result.responseTime,\n        completedAt\n      )\n      if (!patch) return latestPatch\n      if (!latestPatch || completedAt >= latestPatch.completedAt) {\n        return { patch, completedAt }\n      }\n      return latestPatch\n    },\n    undefined\n  )\n\n  return latest?.patch\n}\n\nconst endpointTypeOptions: Array<{ value: string; label: string }> = [\n  { value: 'auto', label: 'Auto detect (default)' },\n  { value: 'openai', label: 'OpenAI (/v1/chat/completions)' },\n  { value: 'openai-response', label: 'OpenAI Responses (/v1/responses)' },\n  {\n    value: 'openai-response-compact',\n    label: 'OpenAI Response Compaction (/v1/responses/compact)',\n  },\n  { value: 'anthropic', label: 'Anthropic (/v1/messages)' },\n  {\n    value: 'gemini',\n    label: 'Gemini (/v1beta/models/{model}:generateContent)',\n  },\n  { value: 'jina-rerank', label: 'Jina Rerank (/v1/rerank)' },\n  {\n    value: 'image-generation',\n    label: 'Image Generation (/v1/images/generations)',\n  },\n  { value: 'embeddings', label: 'Embeddings (/v1/embeddings)' },\n]\n\nconst STREAM_INCOMPATIBLE_ENDPOINTS = new Set([\n  'embeddings',\n  'image-generation',\n  'jina-rerank',\n  'openai-response-compact',\n])\n\nconst MODEL_PRICE_ERROR_CODE = 'model_price_error'\nconst FAILURE_SUMMARY_MAX_LENGTH = 96\nconst BATCH_TEST_CONCURRENCY = 5\nconst BATCH_TEST_DELAY_MS = 100\n\ntype FailureStatusDisplay = {\n  summary: string\n  details?: string\n}\n\ntype FailureDetailsState = {\n  model: string\n  summary: string\n  details: string\n}\n\nfunction sleep(ms: number) {\n  return new Promise<void>((resolve) => window.setTimeout(resolve, ms))\n}\n\nfunction normalizeInlineError(errorText: string) {\n  return errorText.replaceAll(/\\s+/g, ' ').trim()\n}\n\nfunction getFirstErrorLine(errorText: string) {\n  return errorText\n    .split(/\\r?\\n/)\n    .map((line) => line.trim())\n    .find(Boolean)\n}\n\nfunction truncateFailureSummary(summary: string) {\n  if (summary.length <= FAILURE_SUMMARY_MAX_LENGTH) {\n    return summary\n  }\n\n  return `${summary.slice(0, FAILURE_SUMMARY_MAX_LENGTH).trimEnd()}...`\n}\n\nfunction getFailureStatusDisplay({\n  errorText,\n  fallbackSummary,\n  isModelPriceError,\n  modelPriceSummary,\n}: {\n  errorText?: string\n  fallbackSummary: string\n  isModelPriceError: boolean\n  modelPriceSummary: string\n}): FailureStatusDisplay {\n  const rawError = errorText?.trim()\n\n  if (!rawError) {\n    return { summary: fallbackSummary }\n  }\n\n  if (isModelPriceError) {\n    return {\n      summary: modelPriceSummary,\n      details: rawError === modelPriceSummary ? undefined : rawError,\n    }\n  }\n\n  const firstLine = getFirstErrorLine(rawError) ?? rawError\n  const summary = truncateFailureSummary(normalizeInlineError(firstLine))\n  const normalizedRawError = normalizeInlineError(rawError)\n\n  return {\n    summary,\n    details: summary === normalizedRawError ? undefined : rawError,\n  }\n}\n\nfunction getTestTableColumnClass(columnId: string) {\n  switch (columnId) {\n    case 'select':\n      return 'w-10 min-w-10'\n    case 'model':\n      return 'w-auto min-w-48 whitespace-nowrap'\n    case 'status':\n      return 'w-28 min-w-28 whitespace-nowrap'\n    case 'result':\n      return 'w-80 min-w-80 max-w-80 whitespace-normal'\n    case 'actions':\n      return 'bg-popover w-px whitespace-nowrap'\n    default:\n      return undefined\n  }\n}\n\nexport function ChannelTestDialog({\n  open,\n  onOpenChange,\n}: ChannelTestDialogProps) {\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+      "index": 5,
+      "ours": "      if (!response.success) {\n        toast.error(response.message || t('Failed to delete failed models'))\n        return\n",
+      "theirs": "      if (response.success) {\n        setRemovedModels((prev) => {\n          const next = new Set(prev)\n          for (const model of failed) next.add(model)\n          return next\n        })\n        setTestResults((prev) => {\n          const next = { ...prev }\n          for (const model of failed) delete next[model]\n          return next\n        })\n        setRowSelection((prev) => {\n          const next = { ...prev }\n          for (const model of failed) delete next[model]\n          return next\n        })\n        toast.success(\n          t('Deleted {{count}} failed models', { count: failed.length })\n        )\n        refreshChannelLists()\n        setIsDeleteFailedDialogOpen(false)\n      } else {\n        handleServerError(response, t('Failed to delete failed models'))\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+      "index": 6,
+      "ours": "        <DialogHeader className='shrink-0 px-4 pt-5 pr-14 pb-4 sm:px-6 sm:pr-16'>\n          <DialogTitle className='flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1 text-lg'>\n            <span>{t('Test Channel Connection')}</span>\n            <span className='text-muted-foreground' aria-hidden='true'>\n              ·\n            </span>\n            <span className='min-w-0 truncate'>{props.channel.name}</span>\n          </DialogTitle>\n          <DialogDescription>\n            {t(\n              'Compare model responses, streaming and tool calls in one place.'\n            )}\n          </DialogDescription>\n          <DialogClose\n            render={\n              <Button\n                variant='ghost'\n                size='icon-sm'\n                className='absolute top-4 right-4'\n                aria-label={t('Close')}\n              />\n            }\n          >\n            <HugeiconsIcon icon={Cancel01Icon} aria-hidden='true' />\n          </DialogClose>\n        </DialogHeader>\n        <ChannelTestControls\n          selected={selectedProbes}\n          onSelectedChange={setSelectedProbes}\n          endpoint={endpoint}\n          onEndpointChange={setEndpoint}\n          message={message}\n          onMessageChange={setMessage}\n          disabled={busy}\n        />\n        <div className='flex shrink-0 flex-wrap items-center gap-2 px-4 py-3 sm:px-6'>\n          <div className='relative min-w-36 flex-1 sm:max-w-sm'>\n            <HugeiconsIcon\n              icon={Search01Icon}\n              className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2'\n              aria-hidden='true'\n            />\n            <Input\n              className='pl-9'\n              aria-label={t('Filter models...')}\n              placeholder={t('Filter models...')}\n              value={search}\n              onChange={(event) => setSearch(event.target.value)}\n            />\n          </div>\n          <Select\n            items={filterItems}\n            value={filter}\n            onValueChange={(value) => {\n              if (value) setFilter(value)\n            }}\n          >\n            <SelectTrigger\n              className='w-40 max-sm:w-32'\n              aria-label={t('Filter test results')}\n            >\n              <SelectValue />\n            </SelectTrigger>\n            <SelectContent>\n              {filterItems.map((item) => (\n                <SelectItem key={item.value} value={item.value}>\n                  {item.label}\n                </SelectItem>\n              ))}\n            </SelectContent>\n          </Select>\n          <div className='text-muted-foreground ml-auto flex items-center gap-2 text-xs'>\n            <span className='tabular-nums'>\n              {t('{{count}} models selected', { count: selectedModels.length })}\n            </span>\n            {selectedModels.length > 0 && (\n              <Button\n                variant='ghost'\n                size='icon-sm'\n                aria-label={t('Copy selected models')}\n                onClick={() => void copyToClipboard(selectedModels.join(','))}\n              >\n                <HugeiconsIcon icon={Copy01Icon} aria-hidden='true' />\n              </Button>\n            )}\n            {selectedModels.length > 0 && (\n              <Button variant='ghost' size='sm' onClick={() => setSelected({})}>\n                {t('Clear selection')}\n              </Button>\n            )}\n          </div>\n        </div>\n        <ChannelTestMatrix\n          models={filteredModels}\n          results={probes.results}\n          selected={selected}\n          onSelectedChange={setSelected}\n          endpointOverrides={endpointOverrides}\n          onEndpointChange={(model, value) =>\n            setEndpointOverrides((previous) => {\n              const next = { ...previous }\n              if (value === 'inherit') delete next[model]\n              else next[model] = value\n              return next\n            })\n          }\n          endpointForModel={endpointForModel}\n          configurationKey={configurationKey}\n          busy={busy}\n          defaultModel={props.channel.test_model ?? undefined}\n          onRun={runSingle}\n          onDetails={(model, probe, trigger) => {\n            detailTrigger.current = trigger\n            setDetail({ model, probe })\n          }}\n          emptyText={\n            models.length === 0\n              ? t('This channel has no configured models.')\n              : t('No models matched your search.')\n          }\n        />\n        <DialogFooter className='bg-muted/25 mx-0 mb-0 shrink-0 flex-col gap-3 rounded-none px-4 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)] sm:flex-col sm:px-6'>\n          <div className='flex flex-wrap items-center gap-x-4 gap-y-2'>\n            <div\n              className='mr-auto min-w-0 flex-1 text-xs'\n              role='status'\n              aria-live='polite'\n            >\n              {progress.total > 0 ? (\n                <div className='flex flex-col gap-1.5'>\n                  <div className='flex flex-wrap items-center gap-x-3 gap-y-1'>\n                    <span className='font-medium tabular-nums'>\n                      {t('{{completed}}/{{total}} completed', {\n                        completed: progress.completed,\n                        total: progress.total,\n                      })}\n                    </span>\n                    <span className='text-muted-foreground'>{summary}</span>\n                    {progress.cancelled > 0 && (\n                      <span className='text-muted-foreground'>\n                        {t('{{count}} stopped', { count: progress.cancelled })}\n                      </span>\n                    )}\n                  </div>\n                  <progress\n                    aria-label={t('Test progress')}\n                    value={finished}\n                    max={progress.total}\n                    className='[&::-webkit-progress-bar]:bg-muted [&::-webkit-progress-value]:bg-primary [&::-moz-progress-bar]:bg-primary h-1 w-full overflow-hidden rounded-full'\n                  />\n                </div>\n              ) : (\n                <span className='text-muted-foreground'>\n                  {t('Select capabilities and models, then start testing.')}\n",
+      "theirs": "        <div className='max-h-[78vh] space-y-4 overflow-y-auto py-4 pr-1'>\n          <div className='grid gap-4 md:grid-cols-2'>\n            <div className='grid gap-2'>\n              <Label htmlFor='endpoint-type'>{t('Endpoint Type')}</Label>\n              <Combobox\n                options={endpointSelectItems}\n                value={endpointType}\n                onValueChange={handleEndpointTypeChange}\n                id='endpoint-type'\n                className='w-full min-w-0'\n                placeholder={t('Auto detect (default)')}\n              />\n              <p className='text-muted-foreground text-xs'>\n                {t(\n                  'Override the endpoint used for testing. Leave empty to auto detect.'\n                )}\n              </p>\n            </div>\n            <div className='grid gap-2'>\n              <Label htmlFor='stream-toggle'>{t('Stream Mode')}</Label>\n              <div className='flex items-center gap-2'>\n                <Switch\n                  id='stream-toggle'\n                  checked={effectiveStreamTest}\n                  onCheckedChange={setIsStreamTest}\n                  disabled={streamDisabled}\n                />\n                <span className='text-sm'>\n                  {effectiveStreamTest ? t('Enabled') : t('Disabled')}\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+      "index": 1,
+      "ours": "  Empty,\n  EmptyContent,\n  EmptyDescription,\n  EmptyHeader,\n  EmptyTitle,\n} from '@/components/ui/empty'\nimport { Spinner } from '@/components/ui/spinner'\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'\nimport { cn } from '@/lib/utils'\n",
+      "theirs": "  Tooltip,\n  TooltipContent,\n  TooltipTrigger,\n} from '@/components/ui/tooltip'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+      "index": 2,
+      "ours": "    mounted.current = true\n    return () => {\n      mounted.current = false\n",
+      "theirs": "    if (open && (activeChannel || customFetcher)) {\n      handleFetchModels()\n    }\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, [open, activeChannel?.id, customFetcher])\n\n  const handleFetchModels = async () => {\n    if (!activeChannel && !customFetcher) return\n\n    setIsFetching(true)\n    try {\n      if (customFetcher) {\n        const list = await customFetcher()\n        setFetchedModels(list)\n        setSelectedModels(existingModels)\n        toast.success(t('Fetched {{count}} models', { count: list.length }))\n      } else if (activeChannel) {\n        const response = await fetchUpstreamModels(activeChannel.id)\n        if (response.success) {\n          const list = Array.isArray(response.data) ? response.data : []\n          setFetchedModels(list)\n          setSelectedModels(existingModels)\n          toast.success(t('Fetched {{count}} models', { count: list.length }))\n        } else {\n          handleServerError(response, t('Failed to fetch models'))\n          setFetchedModels([])\n        }\n      }\n    } catch (error: unknown) {\n      handleServerError(error, t('Failed to fetch models'))\n      setFetchedModels([])\n    } finally {\n      setIsFetching(false)\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+      "index": 3,
+      "ours": "        void queryClient.invalidateQueries({\n          queryKey: channelsQueryKeys.lists(),\n        })\n      }\n      if (!mounted.current) return\n      if (!response.success) {\n        toast.error(response.message || t('Failed to update models'))\n        return\n",
+      "theirs": "        toast.success(t('Models updated successfully'))\n        queryClient.invalidateQueries({ queryKey: channelsQueryKeys.lists() })\n        onOpenChange(false)\n      } else {\n        handleServerError(response, t('Failed to update models'))\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+      "index": 4,
+      "ours": "      if (!mounted.current) return\n      toast.error(\n        error instanceof Error ? error.message : t('Failed to update models')\n      )\n",
+      "theirs": "      handleServerError(error, t('Failed to update models'))\n    } finally {\n      setIsSaving(false)\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+      "index": 1,
+      "ours": "import { ROLE } from '@/lib/roles'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+      "index": 2,
+      "ours": "      void loadKeyStatus(1, pageSize, null)\n      hideKey()\n    } else if (!open) {\n      hideKey()\n",
+      "theirs": "      loadKeyStatus(1, pageSize, null)\n    }\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, [open, currentRow?.id])\n\n  const loadKeyStatus = async (\n    page: number = currentPage,\n    size: number = pageSize,\n    status: number | null = statusFilter\n  ) => {\n    if (!currentRow) return\n\n    setIsLoading(true)\n    try {\n      const response = await getMultiKeyStatus(\n        currentRow.id,\n        page,\n        size,\n        status === null ? undefined : status\n      )\n\n      if (response.success && response.data) {\n        setKeys(response.data.keys || [])\n        setTotal(response.data.total || 0)\n        setCurrentPage(response.data.page || 1)\n        setPageSize(response.data.page_size || 10)\n        setTotalPages(response.data.total_pages || 0)\n        setEnabledCount(response.data.enabled_count || 0)\n        setManualDisabledCount(response.data.manual_disabled_count || 0)\n        setAutoDisabledCount(response.data.auto_disabled_count || 0)\n      } else {\n        handleServerError(response, t('Failed to load key status'))\n      }\n    } catch (error: unknown) {\n      handleServerError(error, t('Failed to load key status'))\n    } finally {\n      setIsLoading(false)\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+      "index": 3,
+      "ours": "          <div className='min-h-0 min-w-0 flex-1 overflow-auto rounded-md border'>\n",
+      "theirs": "          <div className='min-h-0 flex-1 overflow-auto rounded-md border'>\n"
+    },
+    {
+      "file": "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+      "index": 4,
+      "ours": "            {!isLoading && keys.length > 0 && (\n",
+      "theirs": "            {!isLoading && !(keys.length === 0) && (\n"
+    },
+    {
+      "file": "web/src/features/channels/components/drawers/channel-mutate-drawer.tsx",
+      "index": 1,
+      "ours": "import { parseNumberInputValue } from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n",
+      "result": "import { parseNumberInputValue } from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/keys/components/api-keys-mutate-drawer.tsx",
+      "index": 1,
+      "ours": "import {\n  parseIntegerInputValue,\n  parseNumberInputValue,\n} from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\nimport { requireServerSuccess } from '@/lib/server-error-message'\n",
+      "result": "import {\n  parseIntegerInputValue,\n  parseNumberInputValue,\n} from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\nimport { requireServerSuccess } from '@/lib/server-error-message'\n"
+    },
+    {
+      "file": "web/src/features/models/components/dialogs/create-deployment-drawer.tsx",
+      "index": 1,
+      "ours": "import { parseNumberInputValue } from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\nimport { requireServerSuccess } from '@/lib/server-error-message'\n",
+      "result": "import { parseNumberInputValue } from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\nimport { requireServerSuccess } from '@/lib/server-error-message'\n"
+    },
+    {
+      "file": "web/src/features/models/components/dialogs/create-deployment-drawer.tsx",
+      "index": 2,
+      "ours": "                        {nameAvailabilityMessage}\n",
+      "theirs": "                        {isCheckingName && t('Checking name...')}\n                        {!isCheckingName &&\n                          nameAvailable === true &&\n                          t('Name is available')}\n                        {!isCheckingName &&\n                          !(nameAvailable === true) &&\n                          nameAvailable === false &&\n                          t('Name is not available')}\n                        {!isCheckingName &&\n                          !(nameAvailable === true) &&\n                          !(nameAvailable === false) &&\n                          ''}\n",
+      "result": "                        {nameAvailabilityMessage}\n"
+    },
+    {
+      "file": "web/src/features/models/components/dialogs/extend-deployment-dialog.tsx",
+      "index": 1,
+      "ours": "import { parseIntegerInputValue } from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\nimport { requireServerSuccess } from '@/lib/server-error-message'\n",
+      "result": "import { parseIntegerInputValue } from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\nimport { requireServerSuccess } from '@/lib/server-error-message'\n"
+    },
+    {
+      "file": "web/src/features/models/components/dialogs/extend-deployment-dialog.tsx",
+      "index": 2,
+      "ours": "    queryFn: () =>\n      priceParams\n        ? estimatePrice({\n            location_ids: priceParams.location_ids,\n            hardware_id: priceParams.hardware_id,\n            gpus_per_container: priceParams.gpus_per_container,\n            replica_count: priceParams.replica_count,\n            duration_hours: typeof hours === 'number' ? hours : 0,\n            currency: 'usdc',\n          })\n        : null,\n    enabled:\n      open && Boolean(priceParams) && typeof hours === 'number' && hours > 0,\n",
+      "theirs": "    queryFn: async () =>\n      requireServerSuccess(\n        await (priceParams\n          ? estimatePrice({\n              location_ids: priceParams.location_ids,\n              hardware_id: priceParams.hardware_id,\n              gpus_per_container: priceParams.gpus_per_container,\n              replica_count: priceParams.replica_count,\n              duration_hours: hours,\n              currency: 'usdc',\n            })\n          : null)\n      ),\n    enabled: open && Boolean(priceParams) && hours > 0,\n",
+      "result": "    queryFn: async () =>\n      requireServerSuccess(\n        await (priceParams\n          ? estimatePrice({\n              location_ids: priceParams.location_ids,\n              hardware_id: priceParams.hardware_id,\n              gpus_per_container: priceParams.gpus_per_container,\n              replica_count: priceParams.replica_count,\n              duration_hours: typeof hours === 'number' ? hours : 0,\n              currency: 'usdc',\n            })\n          : null)\n      ),\n    enabled: open && Boolean(priceParams) && typeof hours === 'number' && hours > 0,\n"
+    },
+    {
+      "file": "web/src/features/profile/components/tabs/notification-tab.tsx",
+      "index": 1,
+      "ours": "import { parseNumberInputValue } from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n",
+      "result": "import { parseNumberInputValue } from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/profile/hooks/use-profile.ts",
+      "index": 1,
+      "ours": "import { useAuthStore } from '@/stores/auth-store'\n\nimport {\n  deleteUserAvatar,\n  getUserProfile,\n  updateUserProfile,\n  updateUserSettings,\n  uploadUserAvatar,\n} from '../api'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n\nimport { getUserProfile, updateUserProfile, updateUserSettings } from '../api'\n"
+    },
+    {
+      "file": "web/src/features/profile/hooks/use-profile.ts",
+      "index": 2,
+      "ours": "        if (response.success && response.data) {\n          const nextProfile: UserProfile = {\n            ...response.data,\n            avatar_url: response.data.avatar_url ?? '',\n          }\n          setProfile(nextProfile)\n          syncAuthUser(nextProfile)\n        }\n      } catch (error) {\n        // eslint-disable-next-line no-console\n        console.error('Failed to fetch profile:', error)\n        if (!silent) {\n          toast.error(t('Failed to load profile'))\n        }\n      } finally {\n        if (!silent) {\n          setLoading(false)\n        }\n",
+      "theirs": "      if (response.success && response.data) {\n        setProfile(response.data)\n      } else if (!silent) {\n        handleServerError(response, i18next.t('Failed to load profile'))\n      }\n    } catch (error) {\n      if (!silent) {\n        handleServerError(error, i18next.t('Failed to load profile'))\n      }\n    } finally {\n      if (!silent) {\n        setLoading(false)\n"
+    },
+    {
+      "file": "web/src/features/profile/hooks/use-profile.ts",
+      "index": 3,
+      "ours": "        toast.error(response.message || t('Failed to update profile'))\n        return false\n      } catch (error) {\n        // eslint-disable-next-line no-console\n        console.error('Failed to update profile:', error)\n        toast.error(t('Failed to update profile'))\n",
+      "theirs": "        handleServerError(response, i18next.t('Failed to update profile'))\n        return false\n      } catch (error) {\n        handleServerError(error, i18next.t('Failed to update profile'))\n"
+    },
+    {
+      "file": "web/src/features/profile/hooks/use-profile.ts",
+      "index": 4,
+      "ours": "        toast.error(response.message || t('Failed to update settings'))\n        return false\n      } catch (error) {\n        // eslint-disable-next-line no-console\n        console.error('Failed to update settings:', error)\n        toast.error(t('Failed to update settings'))\n",
+      "theirs": "        handleServerError(response, i18next.t('Failed to update settings'))\n        return false\n      } catch (error) {\n        handleServerError(error, i18next.t('Failed to update settings'))\n"
+    },
+    {
+      "file": "web/src/features/rankings/hooks/use-rankings.ts",
+      "index": 1,
+      "ours": "import { getRankingAvailability, getRankings, getRankingSecurity } from '../api'\nimport type { RankingBanSort, RankingPeriod } from '../types'\n",
+      "theirs": "import { requireServerSuccess } from '@/lib/server-error-message'\n\nimport { getRankings } from '../api'\nimport type { RankingPeriod } from '../types'\n",
+      "result": "import { getRankingAvailability, getRankings, getRankingSecurity } from '../api'\nimport type { RankingBanSort, RankingPeriod } from '../types'\nimport { requireServerSuccess } from '@/lib/server-error-message'\n"
+    },
+    {
+      "file": "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+      "index": 1,
+      "ours": "  vi.mocked(api.get).mockResolvedValue({\n    data: { success: true, data: redemption(1, { quota: 13888889 }) },\n",
+      "theirs": "\n  test('blocks updates and reports an error when loading rejects', async () => {\n    const updates: unknown[] = []\n    Reflect.set(console, 'log', () => undefined)\n    apiClient.get = async () => {\n      throw new Error('network failure')\n    }\n    apiClient.put = async (_url, data) => {\n      updates.push(data)\n      return { data: { success: true } }\n    }\n\n    await renderDrawer(redemption(1))\n    await waitFor(() =>\n      expect(document.body).toHaveTextContent('network failure')\n    )\n\n    expect(getSaveButton()).toBeDisabled()\n    submitForm()\n    expect(updates).toEqual([])\n"
+    },
+    {
+      "file": "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+      "index": 2,
+      "ours": "test.each(['network', 'unsuccessful', 'wrong record'])(\n  'blocks updates after a %s load failure',\n  async (failure) => {\n    const error = vi.spyOn(toast, 'error')\n    if (failure === 'network') {\n      vi.mocked(api.get).mockRejectedValue(new Error('network failure'))\n    } else {\n      vi.mocked(api.get).mockResolvedValue({\n        data: {\n          success: failure !== 'unsuccessful',\n          data: redemption(2),\n          message: 'raw server message',\n        },\n      })\n    }\n    renderDrawer()\n    await waitFor(() => expect(error).toHaveBeenCalled())\n    expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled()\n    const name = screen.getByRole('textbox', { name: 'Name' })\n    expect(name).toBeDisabled()\n    const form = name.closest('form')\n    if (!form) throw new Error('Expected redemption form')\n    await act(async () => {\n      fireEvent.submit(form)\n    })\n    expect(api.put).not.toHaveBeenCalled()\n    expect(screen.queryByText('raw server message')).toBeNull()\n  }\n)\n\ntest.each([\n  { name: 'quota redemption', value: redemption() },\n  {\n    name: 'registration code',\n    value: redemption(1, {\n      code_type: 'registration',\n      max_uses: 5,\n      used_count: 3,\n    }),\n  },\n  {\n    name: 'subscription redemption',\n    value: redemption(1, { reward_type: 'subscription', plan_id: 7 }),\n  },\n])(\n  'keeps exact quota and downstream fields when renaming a $name',\n  async ({ value }) => {\n    vi.mocked(api.get).mockResolvedValue({\n      data: { success: true, data: value },\n    })\n    renderDrawer(value)\n    await ready()\n    fireEvent.change(screen.getByRole('textbox', { name: 'Name' }), {\n      target: { value: 'renamed' },\n    })\n    // Happy DOM's exact-remainder step check incorrectly rejects decimals.\n    submitRedemptionForm()\n    await waitFor(() =>\n      expect(api.put).toHaveBeenCalledWith(\n        '/api/redemption/',\n        expect.objectContaining({\n          id: value.id,\n          name: 'renamed',\n          quota: value.quota,\n          code_type: value.code_type,\n          reward_type: value.reward_type,\n          plan_id: value.plan_id,\n          max_uses: value.max_uses,\n        })\n      )\n    )\n  }\n)\n\ntest('recalculates quota only when the amount is edited', async () => {\n  renderDrawer()\n  await ready()\n  fireEvent.change(screen.getByRole('spinbutton', { name: 'Quota (USD)' }), {\n    target: { value: '2' },\n",
+      "theirs": "  test.each([\n    {\n      message: 'Redemption code is no longer available',\n      expected: 'Redemption code is no longer available',\n    },\n    { message: undefined, expected: 'Failed to load' },\n  ])(\n    'blocks updates and reports the server reason or localized fallback: $expected',\n    async ({ message, expected }) => {\n      apiClient.get = async () => ({\n        data: { success: false, message },\n      })\n      await renderDrawer(redemption(1))\n      await waitFor(() => expect(document.body).toHaveTextContent(expected))\n      expect(getSaveButton()).toBeDisabled()\n    }\n  )\n\n  test('keeps the original quota when another field changes', async () => {\n    const original = redemption(1)\n    const updates: Array<Record<string, unknown>> = []\n    apiClient.get = async () => ({ data: { success: true, data: original } })\n    apiClient.put = async (_url, data) => {\n      expect(data && typeof data === 'object').toBeTruthy()\n      updates.push(data as Record<string, unknown>)\n      return { data: { success: true, data: original } }\n    }\n\n    await renderDrawer(original)\n    await waitForLoadedForm()\n    expect(getControlByLabel('Quota (USD)').value).toBe('1')\n\n    changeInput(getControlByLabel('Name'), 'renamed')\n    submitForm()\n    await waitFor(() => expect(updates).toHaveLength(1))\n\n    expect(updates[0]?.name).toBe('renamed')\n    expect(updates[0]?.quota).toBe(500001)\n  })\n\n  test('recalculates quota when the quota field changes', async () => {\n    const original = redemption(1)\n    const updates: Array<Record<string, unknown>> = []\n    apiClient.get = async () => ({ data: { success: true, data: original } })\n    apiClient.put = async (_url, data) => {\n      expect(data && typeof data === 'object').toBeTruthy()\n      updates.push(data as Record<string, unknown>)\n      return { data: { success: true, data: original } }\n    }\n\n    await renderDrawer(original)\n    await waitForLoadedForm()\n    changeInput(getControlByLabel('Quota (USD)'), '2')\n    submitForm()\n    await waitFor(() => expect(updates).toHaveLength(1))\n\n    expect(updates[0]?.quota).toBe(1000000)\n"
+    },
+    {
+      "file": "web/src/features/redemption-codes/components/redemptions-mutate-drawer.tsx",
+      "index": 1,
+      "ours": "          toast.error(t('Failed to load redemption code'))\n",
+      "theirs": "          handleServerError(result, t('Failed to load'))\n",
+      "result": "          handleServerError(result, t('Failed to load redemption code'))\n"
+    },
+    {
+      "file": "web/src/features/security/components/__tests__/privacy-card.test.tsx",
+      "index": 1,
+      "ours": "describe('mandatory IP auditing', () => {\n  it('shows enabled recording without offering an ineffective user toggle', () => {\n    render(<PrivacyCard />)\n    expect(screen.getByText('Record IP Address')).toBeVisible()\n    expect(screen.getByText('Enabled')).toBeVisible()\n    expect(screen.queryByRole('switch')).not.toBeInTheDocument()\n",
+      "theirs": "const profile: UserProfile = {\n  id: 1,\n  username: 'alice',\n  display_name: 'Alice',\n  role: 1,\n  group: 'default',\n  quota: 1000000,\n  used_quota: 0,\n  request_count: 0,\n  status: 1,\n  aff_count: 0,\n  aff_quota: 0,\n  aff_history_quota: 0,\n  created_time: 0,\n  setting: JSON.stringify({ record_ip_log: true }),\n}\n\nafterEach(() => {\n  toast.dismiss()\n  vi.restoreAllMocks()\n})\n\nfunction renderPrivacy() {\n  const client = new QueryClient({\n    defaultOptions: { queries: { retry: false }, mutations: { retry: false } },\n  })\n  const onUpdate = vi.fn()\n  const rendered = render(\n    <QueryClientProvider client={client}>\n      <PrivacyCard profile={profile} onUpdate={onUpdate} />\n      <Toaster />\n    </QueryClientProvider>\n  )\n  return { ...rendered, onUpdate }\n}\n\ndescribe('privacy settings', () => {\n  it('keyboard toggling off saves false and refreshes the displayed profile', async () => {\n    vi.spyOn(api, 'get').mockResolvedValue({\n      data: { success: true, data: profile },\n    })\n    const put = vi\n      .spyOn(api, 'put')\n      .mockResolvedValue({ data: { success: true } })\n    const user = userEvent.setup()\n    const { onUpdate } = renderPrivacy()\n    const toggle = screen.getByRole('switch', { name: 'Record IP Address' })\n    expect(toggle).toBeChecked()\n    toggle.focus()\n    await user.keyboard(' ')\n    expect(toggle).not.toBeChecked()\n    await user.click(screen.getByRole('button', { name: 'Save Settings' }))\n    await waitFor(() => expect(onUpdate).toHaveBeenCalled())\n    expect(put).toHaveBeenCalledWith(\n      '/api/user/setting',\n      expect.objectContaining({ record_ip_log: false })\n    )\n  })\n\n  it('failed configuration reads preserve the edited toggle and do not submit or refresh', async () => {\n    vi.spyOn(api, 'get').mockRejectedValue(new Error('offline'))\n    const put = vi.spyOn(api, 'put')\n    const user = userEvent.setup()\n    const { onUpdate } = renderPrivacy()\n    await user.click(screen.getByRole('switch', { name: 'Record IP Address' }))\n    await user.click(screen.getByRole('button', { name: 'Save Settings' }))\n    expect(await screen.findByText('offline')).toBeVisible()\n    expect(put).not.toHaveBeenCalled()\n    expect(onUpdate).not.toHaveBeenCalled()\n    expect(\n      screen.getByRole('switch', { name: 'Record IP Address' })\n    ).not.toBeChecked()\n    expect(screen.getByRole('button', { name: 'Save Settings' })).toBeEnabled()\n  })\n\n  it('failed saves keep the draft available for retry without refreshing the profile', async () => {\n    vi.spyOn(api, 'get').mockResolvedValue({\n      data: { success: true, data: profile },\n    })\n    vi.spyOn(api, 'put').mockResolvedValue({ data: { success: false } })\n    const user = userEvent.setup()\n    const { onUpdate } = renderPrivacy()\n    await user.click(screen.getByRole('switch', { name: 'Record IP Address' }))\n    await user.click(screen.getByRole('button', { name: 'Save Settings' }))\n    expect(await screen.findByText('Failed to update settings')).toBeVisible()\n    expect(onUpdate).not.toHaveBeenCalled()\n"
+    },
+    {
+      "file": "web/src/features/security/components/privacy-card.tsx",
+      "index": 1,
+      "ours": "",
+      "theirs": "import { updateUserSettings } from '@/features/profile/api'\nimport { parseUserSettings } from '@/features/profile/lib/format'\nimport type { UserProfile } from '@/features/profile/types'\nimport { handleServerError } from '@/lib/handle-server-error'\nimport { createServerError } from '@/lib/server-error-message'\n"
+    },
+    {
+      "file": "web/src/features/security/components/privacy-card.tsx",
+      "index": 2,
+      "ours": "",
+      "theirs": "  const [recordIpLog, setRecordIpLog] = useState(() =>\n    Boolean(parseUserSettings(props.profile.setting).record_ip_log)\n  )\n  useEffect(() => {\n    setRecordIpLog(\n      Boolean(parseUserSettings(props.profile.setting).record_ip_log)\n    )\n  }, [props.profile.setting])\n\n  const save = useMutation({\n    mutationFn: async () => {\n      const response = await updateUserSettings({ record_ip_log: recordIpLog })\n      if (!response.success) {\n        throw createServerError(response, t('Failed to update settings'))\n      }\n    },\n    onSuccess: () => {\n      toast.success(t('Settings updated successfully'))\n      props.onUpdate()\n    },\n    onError: (error) =>\n      handleServerError(error, t('Failed to update settings')),\n  })\n"
+    },
+    {
+      "file": "web/src/features/subscriptions/components/subscriptions-mutate-drawer.tsx",
+      "index": 1,
+      "ours": "import {\n  parseIntegerInputValue,\n  parseNumberInputValue,\n} from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n",
+      "result": "import {\n  parseIntegerInputValue,\n  parseNumberInputValue,\n} from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/system-info/components/system-tasks-panel.tsx",
+      "index": 1,
+      "ours": "        {renderTaskContent(\n          loading,\n          tasksQuery.isError,\n          tasksQuery.error,\n          tasks,\n          activeTasks,\n          historyTasks,\n          () => void tasksQuery.refetch(),\n          t\n",
+      "theirs": "        {loading && (\n          <div className='space-y-2 p-4 sm:p-5'>\n            <Skeleton className='h-9 w-full rounded-md' />\n            <Skeleton className='h-9 w-full rounded-md' />\n            <Skeleton className='h-9 w-full rounded-md' />\n            <Skeleton className='h-9 w-full rounded-md' />\n          </div>\n        )}\n        {!loading && tasksQuery.isError && (\n          <ErrorState\n            title={t('We could not load system tasks.')}\n            description={\n              tasksQuery.error instanceof Error\n                ? tasksQuery.error.message\n                : undefined\n            }\n            onRetry={() => {\n              void tasksQuery.refetch()\n            }}\n            className='min-h-[260px]'\n          />\n        )}\n        {!loading && !tasksQuery.isError && tasks.length === 0 && (\n          <div className='px-4 py-10 text-center sm:px-5'>\n            <div className='bg-muted mx-auto mb-3 flex size-10 items-center justify-center rounded-lg'>\n              <ListChecks\n                className='text-muted-foreground size-5'\n                aria-hidden='true'\n              />\n            </div>\n            <p className='text-muted-foreground text-sm'>\n              {t('No system tasks yet.')}\n            </p>\n          </div>\n        )}\n        {!loading && !tasksQuery.isError && !(tasks.length === 0) && (\n          <div className='space-y-4 p-4 sm:p-5'>\n            <div>\n              <div className='mb-2 flex items-center justify-between gap-3'>\n                <div>\n                  <h4 className='text-sm font-medium'>{t('Active Tasks')}</h4>\n                  <p className='text-muted-foreground mt-0.5 text-xs'>\n                    {t('Tasks currently pending or running.')}\n                  </p>\n                </div>\n                <Badge variant='outline'>{activeTasks.length}</Badge>\n              </div>\n              {activeTasks.length > 0 ? (\n                <SystemTasksTable tasks={activeTasks} />\n              ) : (\n                <div className='text-muted-foreground rounded-md border border-dashed px-4 py-6 text-center text-sm'>\n                  {t('No active system tasks.')}\n                </div>\n              )}\n            </div>\n\n            <div>\n              <div className='mb-2 flex items-center justify-between gap-3'>\n                <div>\n                  <h4 className='text-sm font-medium'>{t('Task History')}</h4>\n                  <p className='text-muted-foreground mt-0.5 text-xs'>\n                    {t('Recently completed or failed system task runs.')}\n                  </p>\n                </div>\n                <Badge variant='outline'>{historyTasks.length}</Badge>\n              </div>\n              {historyTasks.length > 0 ? (\n                <SystemTasksTable tasks={historyTasks} />\n              ) : (\n                <div className='text-muted-foreground rounded-md border border-dashed px-4 py-6 text-center text-sm'>\n                  {t('No historical system tasks.')}\n                </div>\n              )}\n            </div>\n          </div>\n",
+      "result": "        {renderTaskContent(\n          loading,\n          tasksQuery.isError,\n          tasksQuery.error,\n          tasks,\n          activeTasks,\n          historyTasks,\n          () => void tasksQuery.refetch(),\n          t\n"
+    },
+    {
+      "file": "web/src/features/system-settings/content/announcements-section.tsx",
+      "index": 1,
+      "ours": "",
+      "theirs": "import dayjs from '@/lib/dayjs'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/system-settings/general/channel-affinity/index.tsx",
+      "index": 1,
+      "ours": "import { parseIntegerInputValue } from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n",
+      "result": "import { parseIntegerInputValue } from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/system-settings/maintenance/log-settings-section.tsx",
+      "index": 1,
+      "ours": "import { parseIntegerInputValue } from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\nimport {\n  requireServerSuccess,\n  createServerError,\n} from '@/lib/server-error-message'\n",
+      "result": "import { parseIntegerInputValue } from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\nimport {\n  requireServerSuccess,\n  createServerError,\n} from '@/lib/server-error-message'\n"
+    },
+    {
+      "file": "web/src/features/task-plugins/components/plugin-detail-sheet.tsx",
+      "index": 1,
+      "ours": "/*\nCopyright (C) 2023-2026 QuantumNous\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU Affero General Public License as\npublished by the Free Software Foundation, either version 3 of the\nLicense, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU Affero General Public License for more details.\n\nYou should have received a copy of the GNU Affero General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n\nFor commercial licensing, please contact support@quantumnous.com\n*/\n",
+      "theirs": "",
+      "result": "/*\nCopyright (C) 2023-2026 QuantumNous\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU Affero General Public License as\npublished by the Free Software Foundation, either version 3 of the\nLicense, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU Affero General Public License for more details.\n\nYou should have received a copy of the GNU Affero General Public License\nalong with this program. If not, see <https://www.gnu.org/licenses/>.\n\nFor commercial licensing, please contact support@quantumnous.com\n*/\n"
+    },
+    {
+      "file": "web/src/features/users/components/data-table-row-actions.tsx",
+      "index": 1,
+      "ours": "import { useAuthStore } from '@/stores/auth-store'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n",
+      "result": "import { useAuthStore } from '@/stores/auth-store'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+      "index": 1,
+      "ours": "      if (version !== loadVersion.current) return\n",
+      "theirs": "      requireServerSuccess(userRes)\n",
+      "result": "      if (version !== loadVersion.current) return\n      requireServerSuccess(userRes)\n"
+    },
+    {
+      "file": "web/src/features/users/components/dialogs/user-binding-dialog.tsx",
+      "index": 2,
+      "ours": "    } catch {\n      if (version === loadVersion.current) toast.error(t('Failed to load'))\n",
+      "theirs": "    } catch (error) {\n      handleServerError(error, t('Failed to load'))\n",
+      "result": "    } catch (error) {\n      if (version === loadVersion.current) handleServerError(error, t('Failed to load'))\n"
+    },
+    {
+      "file": "web/src/features/users/components/user-quota-dialog.tsx",
+      "index": 1,
+      "ours": "  const parsedAmount = amount.trim() === '' ? null : Number.parseFloat(amount)\n  const amountValue = parsedAmount ?? 0\n",
+      "theirs": "  const amountValue = Number.parseFloat(amount) || 0\n",
+      "result": "  const parsedAmount = amount.trim() === '' ? null : Number.parseFloat(amount)\n  const amountValue = parsedAmount ?? 0\n"
+    },
+    {
+      "file": "web/src/features/users/components/users-mutate-drawer.tsx",
+      "index": 1,
+      "ours": "import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'\n",
+      "theirs": "",
+      "result": "import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'\n"
+    },
+    {
+      "file": "web/src/features/users/components/users-mutate-drawer.tsx",
+      "index": 2,
+      "ours": "import { parseNumberInputValue } from '@/lib/number-input'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\n",
+      "result": "import { parseNumberInputValue } from '@/lib/number-input'\nimport { handleServerError } from '@/lib/handle-server-error'\n"
+    },
+    {
+      "file": "web/src/features/users/components/users-mutate-drawer.tsx",
+      "index": 3,
+      "ours": "        .catch(() => {\n          toast.error(t(ERROR_MESSAGES.UNEXPECTED))\n        })\n",
+      "theirs": "        .catch((error) => handleServerError(error, t('Failed to load')))\n",
+      "result": "        .catch((error) => handleServerError(error, t('Failed to load')))\n"
+    },
+    {
+      "file": "web/src/features/users/components/users-mutate-drawer.tsx",
+      "index": 4,
+      "ours": "                            field.onChange(Number.parseInt(value, 10))\n",
+      "theirs": "                            field.onChange(Number.parseInt(value))\n",
+      "result": "                            field.onChange(Number.parseInt(value, 10))\n"
+    },
+    {
+      "file": "web/src/features/wallet/hooks/use-redemption.ts",
+      "index": 1,
+      "ours": "        toast.error(response.message || i18next.t('Redemption failed'))\n        return null\n      } catch {\n        toast.error(i18next.t('Redemption failed'))\n        return null\n      } finally {\n        setRedeeming(false)\n      }\n    },\n    []\n  )\n",
+      "theirs": "      handleServerError(response, i18next.t('Redemption failed'))\n      return false\n    } catch (_error) {\n      handleServerError(_error, i18next.t('Redemption failed'))\n      return false\n    } finally {\n      setRedeeming(false)\n    }\n  }, [])\n",
+      "result": "        handleServerError(response, i18next.t('Redemption failed'))\n        return null\n      } catch (error) {\n        handleServerError(error, i18next.t('Redemption failed'))\n        return null\n      } finally {\n        setRedeeming(false)\n      }\n    },\n    []\n  )\n"
+    },
+    {
+      "file": "web/src/hooks/use-notifications.ts",
+      "index": 1,
+      "ours": "\n",
+      "theirs": "",
+      "result": "\n"
+    },
+    {
+      "file": "web/src/routes/(auth)/oauth.tsx",
+      "index": 1,
+      "ours": "import { getServerErrorMessageKey } from '@/lib/server-error-message'\nimport { useAuthStore } from '@/stores/auth-store'\n",
+      "theirs": "import { handleServerError } from '@/lib/handle-server-error'\nimport { AuthOperationError } from '@/lib/secure-verification'\nimport { createServerError } from '@/lib/server-error-message'\n",
+      "result": "import { useAuthStore } from '@/stores/auth-store'\nimport { handleServerError } from '@/lib/handle-server-error'\nimport { AuthOperationError } from '@/lib/secure-verification'\nimport { createServerError } from '@/lib/server-error-message'\n"
+    }
+  ],
+  "reconstructed_files": [
+    "web/src/features/channels/components/dialogs/channel-test-dialog.tsx",
+    "web/src/features/channels/components/dialogs/fetch-models-dialog.tsx",
+    "web/src/features/channels/components/dialogs/multi-key-manage-dialog.tsx",
+    "web/src/features/profile/hooks/use-profile.ts",
+    "web/src/features/redemption-codes/components/__tests__/redemptions-mutate-drawer.test.tsx",
+    "web/src/features/security/components/__tests__/privacy-card.test.tsx",
+    "web/src/features/security/components/privacy-card.tsx",
+    "web/src/features/system-settings/content/announcements-section.tsx"
+  ],
+  "reason": "Apply error handling inside retained downstream structures; privacy is read-only because IP auditing is mandatory. Existing per-window state, request version checks, numeric semantics and return payloads remain required."
+}

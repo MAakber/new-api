@@ -1,0 +1,14 @@
+{
+  "upstream": "387a40914853310d69adc2f52474134ced5f4811",
+  "unit": "B15.1-popup",
+  "before_head": "f039a13d05445e0462a52c4468016197eec3ab51",
+  "rationale": "Reconcile popup portal context pulled forward in B13, retaining downstream Combobox value/focus behavior and plugin icons; add the remaining storage shim to shared tests.",
+  "files": [
+    "web/src/components/ui/__tests__/portal-container.test.tsx",
+    "web/src/components/ui/combobox.tsx",
+    "web/src/components/ui/drawer.tsx",
+    "web/src/components/ui/portal-container.ts",
+    "web/src/components/ui/select.tsx",
+    "web/src/test-setup.ts"
+  ]
+}

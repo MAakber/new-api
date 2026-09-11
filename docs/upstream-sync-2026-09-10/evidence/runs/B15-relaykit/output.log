@@ -1,0 +1,17 @@
+ok  	github.com/QuantumNous/new-api/relaykit/dto	0.550s
+?   	github.com/QuantumNous/new-api/relaykit/reasonmap	[no test files]
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert	0.558s
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert/convmeta	0.291s
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/claude_messages	0.293s
+?   	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/convdiag	[no test files]
+?   	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/gemini_chat	[no test files]
+?   	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/jsonutil	[no test files]
+?   	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/media	[no test files]
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/oai_chat	0.394s
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/oai_responses	0.408s
+?   	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/shared/claude	[no test files]
+?   	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/shared/gemini	[no test files]
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert/internal/toolconv	0.305s
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert/kitutil	0.354s
+ok  	github.com/QuantumNous/new-api/relaykit/relayconvert/reasoning	0.392s
+?   	github.com/QuantumNous/new-api/relaykit/types	[no test files]

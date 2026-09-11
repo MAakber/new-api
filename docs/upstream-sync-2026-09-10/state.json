@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T10:04:25.244Z",
+  "updatedAt": "2026-09-11T10:56:08.425Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B15",
-  "current_unit": "B15.2",
+  "current_batch": "B16",
+  "current_unit": "B16.1",
   "active_operation": null,
-  "last_observed_head": "bd66eec0498a4d3262dbdade7597524eb7825c76",
-  "last_verified_code_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
-  "last_checkpoint_commit": "bd66eec0498a4d3262dbdade7597524eb7825c76",
+  "last_observed_head": "1b77521b67919475b133ed3d9a9c52e9413e1501",
+  "last_verified_code_commit": "1b77521b67919475b133ed3d9a9c52e9413e1501",
+  "last_checkpoint_commit": "1b77521b67919475b133ed3d9a9c52e9413e1501",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Integrate all frontend test discovery and popup/error handling changes, preserving downstream tests and multiple floating windows.",
+  "next_action": "B16: finish remaining release, documentation and desktop dependency updates.",
   "blockers": [
     {
       "id": "production_snapshot",
