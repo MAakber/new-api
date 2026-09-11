@@ -24,6 +24,7 @@ func TestSharedTaskEndpointPreservesChannelOwnership(t *testing.T) {
 		pluginsDisabled bool
 		originTask      bool
 		checkRetry      bool
+		alias           bool
 		body            string
 		wantChannel     int
 		wantPlugin      bool
@@ -32,6 +33,8 @@ func TestSharedTaskEndpointPreservesChannelOwnership(t *testing.T) {
 		{name: "disabled plugins leave ordinary channels available", pluginsDisabled: true, body: `{"model":"coexist-model","stream":true}`, wantChannel: 1},
 		{name: "explicit plugin retries cannot use ordinary channels", checkRetry: true, body: `{"model":"coexist-model"}`, wantChannel: 2, wantPlugin: true},
 		{name: "origin task replaces initial channel before relay", originTask: true, body: `{"model":"coexist-model","originTaskIds":["task_prior"]}`, wantChannel: 3, wantPlugin: true},
+		{name: "declared model case variant reaches bound plugin", body: `{"model":"COEXIST-MODEL"}`, wantChannel: 2, wantPlugin: true},
+		{name: "mapped alias case variant reaches bound plugin", alias: true, body: `{"model":"COEXIST-ALIAS"}`, wantChannel: 2, wantPlugin: true},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			setupOriginTaskDB(t)
@@ -66,10 +69,15 @@ func TestSharedTaskEndpointPreservesChannelOwnership(t *testing.T) {
 				ch.Status, ch.Key, ch.Models, ch.Group = common.ChannelStatusEnabled, "local-fixture", "coexist-model", "default"
 				if ch.Type == constant.ChannelTypeTaskPlugin {
 					ch.SetSetting(kitdto.ChannelSettings{TaskPluginKey: "coexist-plugin"})
+					if tc.alias {
+						ch.Models = "coexist-alias"
+						ch.ModelMapping = common.GetPointer(`{"coexist-alias":"coexist-model"}`)
+					}
 				}
 				require.NoError(t, model.DB.Create(ch).Error)
 				require.NoError(t, model.DB.Create(&model.Ability{ChannelId: ch.Id, Group: ch.Group, Model: ch.Models, Enabled: true, Priority: ch.Priority, Weight: 1}).Error)
 			}
+			model.InitChannelCache()
 			if tc.originTask {
 				insertOriginOwnedTask(t, "task_prior", 7, 3, "coexist-plugin")
 			}
@@ -85,7 +93,11 @@ func TestSharedTaskEndpointPreservesChannelOwnership(t *testing.T) {
 				assert.Equal(t, tc.wantChannel, common.GetContextKeyInt(c, constant.ContextKeyChannelId))
 				_, pinned := c.Get(jsplugin.ContextKeyPinnedEndpoint)
 				assert.Equal(t, tc.wantPlugin, pinned)
-				assert.Equal(t, "coexist-model", c.GetString("original_model"))
+				wantModel := "coexist-model"
+				if tc.alias {
+					wantModel = "coexist-alias"
+				}
+				assert.Equal(t, wantModel, c.GetString("original_model"))
 				if tc.checkRetry {
 					require.NoError(t, model.DB.Model(&model.Ability{}).Where("channel_id = ?", 2).Update("enabled", false).Error)
 					retryChannel, _, _ := service.CacheGetRandomSatisfiedChannel(&service.RetryParam{Ctx: c, TokenGroup: "default", ModelName: "coexist-model", Retry: common.GetPointer(1)})

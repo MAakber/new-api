@@ -165,7 +165,13 @@ func GetModelPricingSnapshot(names []string) (*ModelPricingSnapshot, error) {
 	for _, name := range names {
 		configured := modelPricingValues(values, name)
 		entry := ModelPricingEntry{ModelName: name, Version: ModelPricingVersion(configured), Configured: configured, Effective: effectiveModelPricing(values, name)}
-		if plugin, ok := generation.GetByModel(name); ok {
+		plugin, found := generation.GetByModel(name)
+		if !found {
+			if target, resolved := ResolveTaskModelAlias(generation, name); resolved {
+				plugin, found = generation.Get(target.PluginKey)
+			}
+		}
+		if found {
 			entry.UsageSchema = plugin.Meta.UsageSchema
 		}
 		result.Entries = append(result.Entries, entry)
@@ -214,7 +220,14 @@ func ValidateModelPricing(name string, values PricingValues) error {
 				return errors.New("billing expression is required")
 			}
 			var err error
-			if plugin, ok := jsplugin.DefaultRegistry.Generation().GetByModel(name); ok {
+			generation := jsplugin.DefaultRegistry.Generation()
+			plugin, found := generation.GetByModel(name)
+			if !found {
+				if target, resolved := ResolveTaskModelAlias(generation, name); resolved {
+					plugin, found = generation.Get(target.PluginKey)
+				}
+			}
+			if found {
 				err = billing_setting.SmokeTestTaskExpr(expression, plugin.Meta.UsageSchema)
 			} else {
 				err = billing_setting.SmokeTestExpr(expression)

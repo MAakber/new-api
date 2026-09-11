@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/pkg/jsplugin"
 	"github.com/stretchr/testify/assert"
@@ -26,6 +27,14 @@ export function parseTaskResult() { return {}; }
 `, jsplugin.Options{})
 	require.NoError(t, err)
 	t.Cleanup(func() { jsplugin.DefaultRegistry.Unregister("billing-save-probe") })
+	require.NoError(t, db.AutoMigrate(&model.Channel{}))
+	mapping := `{"billing-save-alias":"billing-save-model"}`
+	require.NoError(t, db.Create(&model.Channel{Type: constant.ChannelTypeTaskPlugin, Status: common.ChannelStatusEnabled, Models: "billing-save-alias,billing-save-model", ModelMapping: &mapping}).Error)
+	model.InitChannelCache()
+	snapshot, err := model.GetModelPricingSnapshot([]string{"billing-save-alias"})
+	require.NoError(t, err)
+	require.Len(t, snapshot.Entries, 1)
+	assert.Contains(t, snapshot.Entries[0].UsageSchema, "seconds")
 	var before model.Option
 	require.NoError(t, db.Where("key = ?", "billing_setting.billing_expr").First(&before).Error)
 
@@ -33,6 +42,7 @@ export function parseTaskResult() { return {}; }
 		{"invalid syntax", "billing-save-model", `tier("base",`, "expr compile error"},
 		{"undeclared usage key", "billing-save-model", `tier("base", u("clips") * 0.1)`, `usage key "clips" is not declared`},
 		{"fixed request pricing", "billing-save-model", `tier("base", fixed(0.01))`, "fixed pricing is not supported for task usage expressions"},
+		{"alias uses declared schema", "billing-save-alias", `u("clips")`, `usage key "clips" is not declared`},
 		{"missing plugin schema", "billing-save-model-without-plugin", `u("mode") == "std" ? 1 : 2`, "no task plugin usage schema"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
@@ -56,4 +66,11 @@ export function parseTaskResult() { return {}; }
 			assert.Equal(t, before.Value, after.Value)
 		})
 	}
+	body, err := common.Marshal(map[string]any{"operations": []map[string]any{{
+		"key": "billing_setting.billing_expr", "model": "billing-save-alias", "action": "set",
+		"value": `u("seconds")`, "expected": map[string]bool{"present": false},
+	}}})
+	require.NoError(t, err)
+	accepted := performPricingPatch(t, string(body))
+	assert.Equal(t, http.StatusOK, accepted.Code, accepted.Body.String())
 }

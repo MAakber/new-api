@@ -217,6 +217,22 @@ const maxRequestGuardCandidateAttempts = 1024
 func selectAuthorizedRequestChannel(group, modelName string, retry int, filters []dto.ChannelFilter, excluded map[int]struct{}) (*model.Channel, error) {
 	for attempts := 0; attempts < maxRequestGuardCandidateAttempts; attempts++ {
 		channel, err := model.GetRandomSatisfiedChannelExcluding(group, modelName, retry, filters, excluded)
+		if channel == nil && err == nil {
+			for _, filter := range filters {
+				if filter.Kind != dto.FilterTaskPluginIdentity || filter.TaskPluginModel == "" || filter.TaskPluginModel == modelName || len(filter.TaskPluginKeys) == 0 {
+					continue
+				}
+				// A case-folded plugin name is a fallback only when the
+				// original spelling has no channel. Keep ordinary requests
+				// unchanged and restrict this fallback to explicit bindings.
+				pluginOnly := dto.ChannelFilter{Kind: dto.FilterTaskPluginIdentity, TaskPluginKey: filter.TaskPluginKeys[0], TaskPluginKeys: filter.TaskPluginKeys}
+				fallbackFilters := append(append([]dto.ChannelFilter(nil), filters...), pluginOnly)
+				channel, err = model.GetRandomSatisfiedChannelExcluding(group, filter.TaskPluginModel, retry, fallbackFilters, excluded)
+				if channel != nil || err != nil {
+					break
+				}
+			}
+		}
 		if err != nil || channel == nil {
 			if channel == nil && len(excluded) > 0 {
 				return nil, ErrChannelRequestGuardRejected
