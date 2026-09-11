@@ -156,15 +156,15 @@ func TestSessionLimitDoesNotRecordRejectedLoginAsSuccessful(t *testing.T) {
 }
 
 func TestSetupLoginReturnsConfiguredAutoBanResponse(t *testing.T) {
-	previousDB := model.DB
+	previousDB, previousLogDB := model.DB, model.LOG_DB
 	previousRedis := common.RedisEnabled
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	require.NoError(t, err)
-	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserSession{}))
-	model.DB = db
+	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserSession{}, &model.UserAvatar{}, &model.AuditLog{}))
+	model.DB, model.LOG_DB = db, db
 	common.RedisEnabled = false
 	t.Cleanup(func() {
-		model.DB = previousDB
+		model.DB, model.LOG_DB = previousDB, previousLogDB
 		common.RedisEnabled = previousRedis
 	})
 
@@ -177,16 +177,22 @@ func TestSetupLoginReturnsConfiguredAutoBanResponse(t *testing.T) {
 	}
 	require.NoError(t, db.Create(user).Error)
 
-	gin.SetMode(gin.TestMode)
-	recorder := httptest.NewRecorder()
-	c, _ := gin.CreateTestContext(recorder)
-	c.Request = httptest.NewRequest(http.MethodPost, "/api/user/login", nil)
-	setupLogin(user, c)
+	stale := *user
+	stale.AutoBanUntil = 0
+	for name, candidate := range map[string]*model.User{"banned snapshot": user, "ban after snapshot": &stale} {
+		t.Run(name, func(t *testing.T) {
+			gin.SetMode(gin.TestMode)
+			recorder := httptest.NewRecorder()
+			c, _ := gin.CreateTestContext(recorder)
+			c.Request = httptest.NewRequest(http.MethodPost, "/api/user/login", nil)
+			setupLogin(candidate, c)
 
-	assert.Equal(t, http.StatusUnavailableForLegalReasons, recorder.Code)
-	assert.Contains(t, recorder.Body.String(), `"code":"sensitive_content_blocked"`)
-	assert.Contains(t, recorder.Body.String(), fmt.Sprintf(`"ban_until":%d`, banUntil))
-	var sessionCount int64
-	require.NoError(t, db.Model(&model.UserSession{}).Count(&sessionCount).Error)
-	assert.Zero(t, sessionCount)
+			assert.Equal(t, http.StatusUnavailableForLegalReasons, recorder.Code)
+			assert.Contains(t, recorder.Body.String(), `"code":"sensitive_content_blocked"`)
+			assert.Contains(t, recorder.Body.String(), fmt.Sprintf(`"ban_until":%d`, banUntil))
+			var sessionCount int64
+			require.NoError(t, db.Model(&model.UserSession{}).Count(&sessionCount).Error)
+			assert.Zero(t, sessionCount)
+		})
+	}
 }

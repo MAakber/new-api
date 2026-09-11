@@ -16,7 +16,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { generateKeyPairSync, privateDecrypt, webcrypto } from 'node:crypto'
+import {
+  createDecipheriv,
+  generateKeyPairSync,
+  privateDecrypt,
+  webcrypto,
+} from 'node:crypto'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -75,11 +80,33 @@ describe('password login transport', () => {
   })
 
   it.each([
-    { name: 'Web Crypto', crypto: webcrypto },
-    { name: 'HTTP fallback', crypto: undefined },
+    {
+      name: 'Web Crypto legacy RSA',
+      crypto: webcrypto,
+      password: '密码-🔐',
+      envelope: false,
+    },
+    {
+      name: 'HTTP fallback legacy RSA',
+      crypto: undefined,
+      password: '密码-🔐',
+      envelope: false,
+    },
+    {
+      name: 'Web Crypto long Unicode',
+      crypto: webcrypto,
+      password: '密🔒 '.repeat(32),
+      envelope: true,
+    },
+    {
+      name: 'HTTP fallback long Unicode',
+      crypto: undefined,
+      password: '密🔒 '.repeat(32),
+      envelope: true,
+    },
   ])(
     'sends only ciphertext using $name through the configured API proxy',
-    async ({ crypto }) => {
+    async ({ crypto, password, envelope }) => {
       vi.stubGlobal('crypto', crypto)
       const requests: string[] = []
       api.defaults.adapter = async (config) => {
@@ -104,12 +131,39 @@ describe('password login transport', () => {
           ])
           expect(body.username).toBe('fixture-user')
           expect(body.encryption_key_id).toBe('fixture-key')
-          expect(
-            privateDecrypt(
-              { key: keys.privateKey, oaepHash: 'sha256' },
-              Buffer.from(body.password_encrypted, 'base64')
-            ).toString()
-          ).toBe('密码-🔐')
+          if (envelope) {
+            const [version, wrappedKey, nonce, encoded] =
+              body.password_encrypted.split('.')
+            expect(version).toBe('v2')
+            const secret = privateDecrypt(
+              {
+                key: keys.privateKey,
+                oaepHash: 'sha256',
+                oaepLabel: Buffer.from('password-v2'),
+              },
+              Buffer.from(wrappedKey, 'base64')
+            )
+            const ciphertext = Buffer.from(encoded, 'base64')
+            const decipher = createDecipheriv(
+              'aes-256-gcm',
+              secret,
+              Buffer.from(nonce, 'base64')
+            )
+            decipher.setAAD(Buffer.from('password-v2:fixture-key'))
+            decipher.setAuthTag(ciphertext.subarray(-16))
+            const plaintext = Buffer.concat([
+              decipher.update(ciphertext.subarray(0, -16)),
+              decipher.final(),
+            ])
+            expect(plaintext.toString()).toBe(password)
+          } else {
+            expect(
+              privateDecrypt(
+                { key: keys.privateKey, oaepHash: 'sha256' },
+                Buffer.from(body.password_encrypted, 'base64')
+              ).toString()
+            ).toBe(password)
+          }
           expect(config.skipAuthRefresh).toBe(true)
           data = { success: true }
         }
@@ -117,7 +171,7 @@ describe('password login transport', () => {
       }
       await login({
         username: 'fixture-user',
-        password: '密码-🔐',
+        password,
         passwordEncryptionEnabled: true,
         turnstile: 'solved-token',
       })

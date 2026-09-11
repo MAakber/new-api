@@ -152,6 +152,32 @@ func TestCompleteRegistrationConsumesCodeAndFlowAtomically(t *testing.T) {
 	assert.Equal(t, int64(1), useCount)
 }
 
+func TestRegistrationCodeCompletionRetainsLongUnicodePassword(t *testing.T) {
+	db := setupRegistrationCompletionTest(t)
+	t.Setenv("ACCOUNT_PASSWORD_HASH_ALGORITHM", "argon2id")
+	code := model.Redemption{
+		Name: "unicode registration", Key: "50000000000000000000000000000002",
+		Status: common.RedemptionCodeStatusEnabled, CodeType: model.RedemptionCodeTypeRegistration,
+		MaxUses: 1, CreatedTime: common.GetTimestamp(),
+	}
+	require.NoError(t, db.Create(&code).Error)
+	password := strings.Repeat("密🔒 ", 32)
+	request, err := common.Marshal(map[string]string{"username": "unicode-code", "password": password})
+	require.NoError(t, err)
+	challenge := requestRegistration(t, string(request))
+	var count int64
+	require.NoError(t, db.Model(&model.User{}).Count(&count).Error)
+	assert.Zero(t, count, "a long password must not bypass registration-code approval")
+	response := completeRegistration(t, challenge.FlowToken, code.Key)
+	assert.Contains(t, response.Body.String(), `"success":true`)
+	var user model.User
+	require.NoError(t, db.Where("username = ?", "unicode-code").First(&user).Error)
+	assert.True(t, common.ValidatePasswordAndHash(password, user.Password))
+	assert.False(t, common.ValidatePasswordAndHash(strings.TrimSpace(password), user.Password))
+	require.NoError(t, db.First(&code, code.Id).Error)
+	assert.Equal(t, 1, code.UsedCount)
+}
+
 func TestOAuthRegistrationReturnsChallengeOnlyForNewAccounts(t *testing.T) {
 	setupRegistrationCompletionTest(t)
 	provider := &authFlowTestOAuthProvider{}

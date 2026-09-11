@@ -29,12 +29,27 @@ export type SecurityProofScope =
   | '2fa.setup'
   | 'access_token.generate'
   | 'access_token.revoke'
+  | 'account.binding.bind'
+  | 'account.binding.unbind'
+  | 'account.password.set'
+  | 'account.password.change'
 
 export type VerificationOperation =
   | { scope: 'channel.key.read'; context: { channel_id: number } }
   | { scope: 'passkey.delete'; context?: { credential_id: number } }
   | {
-      scope: Exclude<SecurityProofScope, 'channel.key.read' | 'passkey.delete'>
+      scope: 'account.binding.bind'
+      context: { provider: string; email?: string; code?: string }
+    }
+  | { scope: 'account.binding.unbind'; context: { provider_id: number } }
+  | {
+      scope: Exclude<
+        SecurityProofScope,
+        | 'channel.key.read'
+        | 'passkey.delete'
+        | 'account.binding.bind'
+        | 'account.binding.unbind'
+      >
       context?: Record<string, never>
     }
 
