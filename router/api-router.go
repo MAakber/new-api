@@ -115,7 +115,7 @@ func SetApiRouter(router *gin.Engine) {
 				selfRoute.GET("/token", middleware.CriticalRateLimit(), middleware.UserCriticalRateLimit("access-token"), middleware.DisableCache(), controller.GenerateAccessToken)
 				selfRoute.GET("/token/status", middleware.DisableCache(), controller.GetAccessTokenStatus)
 				selfRoute.POST("/token", middleware.CriticalRateLimit(), middleware.UserCriticalRateLimit("access-token"), middleware.DisableCache(), controller.GenerateAccessToken)
-				selfRoute.DELETE("/token", middleware.CriticalRateLimit(), middleware.DisableCache(), controller.RevokeAccessToken)
+				selfRoute.DELETE("/token", middleware.CriticalRateLimit(), middleware.UserCriticalRateLimit("access-token"), middleware.DisableCache(), controller.RevokeAccessToken)
 				selfRoute.GET("/passkey", middleware.DisableCache(), controller.PasskeyStatus)
 				selfRoute.GET("/passkeys", middleware.DisableCache(), controller.PasskeyList)
 				selfRoute.POST("/passkey/register/begin", middleware.UserCriticalRateLimit("security-verification"), middleware.DisableCache(), controller.PasskeyRegisterBegin)
