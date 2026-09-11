@@ -239,7 +239,7 @@ export function buildSubmitRequest(ctx) {
   );
   delete body.action;
   if (!body.prompt) delete body.prompt;
-  if (!body.bgm) delete body.bgm;
+  if (body.bgm == null) delete body.bgm;
   if (Array.isArray(body.images)) body.images = body.images.map(filePlaceholder);
   return {
     url: ctx.baseUrl + "/ent/v2" + pathFor(action),

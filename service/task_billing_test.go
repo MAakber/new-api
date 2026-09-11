@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"math"
 	"net/http"
 	"net/http/httptest"
@@ -1082,6 +1083,44 @@ func TestRecalculate_ActualQuotaZero(t *testing.T) {
 	require.NotNil(t, log)
 	assert.Equal(t, model.LogTypeRefund, log.Type)
 	assert.Equal(t, preConsumed, log.Quota)
+}
+
+func TestPluginUsageSaturationRemainsAuditableAfterSettlement(t *testing.T) {
+	for _, preConsumed := range []int{2_000, 3_000} {
+		t.Run(fmt.Sprintf("reserved_%d", preConsumed), func(t *testing.T) {
+			truncate(t)
+			const userID, initialQuota, actualQuota = 91, 10_000, 3_000
+			seedUser(t, userID, initialQuota)
+			task := makeTask(userID, 0, preConsumed, 0, BillingSourceWallet, 0)
+			task.Status = model.TaskStatusSuccess
+			expression := `tier("actual", u("tokens") / 2147483647 * 3)`
+			task.PrivateData.BillingContext.TieredSnapshot = &billingexpr.BillingSnapshot{
+				ExprString: expression, ExprHash: billingexpr.ExprHashString(expression),
+				GroupRatio: 1, QuotaPerUnit: 1_000, ExprVersion: 1, TaskUsageBilling: true,
+			}
+			_, clamp := common.QuotaFromFloatChecked(float64(common.MaxQuota) + 1)
+			require.NotNil(t, clamp)
+			result := &relaycommon.TaskInfo{
+				Status:     model.TaskStatusSuccess,
+				UsageFacts: map[string]any{"tokens": float64(common.MaxQuota)}, QuotaClamp: clamp,
+			}
+			require.True(t, settleTaskBillingOnComplete(context.Background(), nil, task, result))
+			assert.Equal(t, actualQuota, task.Quota)
+			assert.Equal(t, initialQuota+preConsumed-actualQuota, getUserQuota(t, userID))
+			log := getLastLog(t)
+			require.NotNil(t, log)
+			assert.Equal(t, actualQuota-preConsumed, log.Quota)
+			var other map[string]any
+			require.NoError(t, common.UnmarshalJsonStr(log.Other, &other))
+			assert.NotContains(t, other, "quota_saturation")
+			admin, ok := other["admin_info"].(map[string]any)
+			require.True(t, ok)
+			marker, ok := admin["quota_saturation"].(map[string]any)
+			require.True(t, ok)
+			assert.Equal(t, "overflow", marker["kind"])
+			assert.Equal(t, float64(common.MaxQuota)+1, marker["original"])
+		})
+	}
 }
 
 func TestRecalculate_RejectsNegativeActualQuota(t *testing.T) {

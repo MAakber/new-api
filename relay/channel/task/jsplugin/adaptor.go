@@ -27,6 +27,7 @@ import (
 	pluginruntime "github.com/QuantumNous/new-api/pkg/jsplugin"
 	"github.com/QuantumNous/new-api/relay/channel"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	"github.com/QuantumNous/new-api/relay/helper"
 	kitdto "github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
@@ -723,16 +724,16 @@ func (a *TaskAdaptor) ParseTaskResult(task *model.Task, resp *http.Response, bod
 		return nil, err
 	}
 	result := &relaycommon.TaskInfo{
-		Code:             parsed.Code,
-		TaskID:           parsed.TaskID,
-		Status:           parsed.Status,
-		Progress:         parsed.Progress,
-		Reason:           parsed.Reason,
-		Url:              parsed.URL,
-		RemoteUrl:        parsed.RemoteURL,
-		CompletionTokens: positiveInt(parsed.CompletionTokens),
-		TotalTokens:      positiveInt(parsed.TotalTokens),
+		Code:      parsed.Code,
+		TaskID:    parsed.TaskID,
+		Status:    parsed.Status,
+		Progress:  parsed.Progress,
+		Reason:    parsed.Reason,
+		Url:       parsed.URL,
+		RemoteUrl: parsed.RemoteURL,
 	}
+	result.CompletionTokens = positiveInt(parsed.CompletionTokens, &result.QuotaClamp)
+	result.TotalTokens = positiveInt(parsed.TotalTokens, &result.QuotaClamp)
 	if pluginState, present := encodeReturnedPluginState(value); present {
 		if len(pluginState) > maxTaskPluginPersistedJSONBytes {
 			logger.LogWarn(context.Background(), fmt.Sprintf("task plugin %s rejected oversized poll state (%d bytes)", a.plugin.Meta.Key, len(pluginState)))
@@ -761,7 +762,8 @@ func (a *TaskAdaptor) ParseTaskResult(task *model.Task, resp *http.Response, bod
 }
 
 func (a *TaskAdaptor) applyCompletionUsageFacts(result *relaycommon.TaskInfo, facts any) {
-	values, err := a.validatedCompletionUsageFacts(facts)
+	var clamp *common.QuotaClamp
+	values, err := a.validatedCompletionUsageFacts(facts, &clamp)
 	if err != nil {
 		a.logRejectedUsage("extractUsageOnComplete", err)
 		return
@@ -770,16 +772,19 @@ func (a *TaskAdaptor) applyCompletionUsageFacts(result *relaycommon.TaskInfo, fa
 		return
 	}
 	result.UsageFacts = values
-	if units := positiveInt(values["upstreamUnits"]); units > 0 {
+	if result.QuotaClamp == nil {
+		result.QuotaClamp = clamp
+	}
+	if units := positiveInt(values["upstreamUnits"], &result.QuotaClamp); units > 0 {
 		result.CompletionTokens = units
 		result.TotalTokens = units
 		return
 	}
 	if completionTokens, exists := values["completionTokens"]; exists {
-		result.CompletionTokens = positiveInt(completionTokens)
+		result.CompletionTokens = positiveInt(completionTokens, &result.QuotaClamp)
 	}
 	if totalTokens, exists := values["totalTokens"]; exists {
-		result.TotalTokens = positiveInt(totalTokens)
+		result.TotalTokens = positiveInt(totalTokens, &result.QuotaClamp)
 	}
 }
 
@@ -1337,12 +1342,13 @@ func (a *TaskAdaptor) validateResolvedUsageValue(value any) error {
 	switch typed := value.(type) {
 	case map[string]any:
 		for key, item := range typed {
-			if schema, declared := a.plugin.Meta.UsageSchema[key]; declared {
-				if _, err := validateUsageValue(item, schema, true); err != nil {
+			if limit, canonical := canonicalUsageLimit(key); canonical {
+				if err := validateUsageLimit(item, limit, true); err != nil {
 					return err
 				}
-			} else if limit, canonical := canonicalUsageLimit(key); canonical {
-				if err := validateUsageLimit(item, limit, true); err != nil {
+			}
+			if schema, declared := a.plugin.Meta.UsageSchema[key]; declared {
+				if _, err := validateUsageValue(item, schema, true, nil); err != nil {
 					return err
 				}
 			}
@@ -1362,9 +1368,13 @@ func (a *TaskAdaptor) validateResolvedUsageValue(value any) error {
 
 func (a *TaskAdaptor) validatedUsageRatios(facts map[string]any) (map[string]float64, error) {
 	ratios := make(map[string]float64)
+	var clampTarget **common.QuotaClamp
+	if a.info != nil {
+		clampTarget = &a.info.QuotaClamp
+	}
 	for key, value := range facts {
 		if schema, declared := a.plugin.Meta.UsageSchema[key]; declared {
-			number, err := validateUsageValue(value, schema, false)
+			number, err := validateUsageValue(value, schema, false, clampTarget)
 			if err != nil {
 				return nil, err
 			}
@@ -1397,7 +1407,7 @@ func (a *TaskAdaptor) validatedUsageRatios(facts map[string]any) (map[string]flo
 	return ratios, nil
 }
 
-func (a *TaskAdaptor) validatedCompletionUsageFacts(facts any) (map[string]any, error) {
+func (a *TaskAdaptor) validatedCompletionUsageFacts(facts any, clampTarget **common.QuotaClamp) (map[string]any, error) {
 	if facts == nil {
 		return nil, nil
 	}
@@ -1409,7 +1419,7 @@ func (a *TaskAdaptor) validatedCompletionUsageFacts(facts any) (map[string]any, 
 	for key, value := range values {
 		validated[key] = value
 		if schema, declared := a.plugin.Meta.UsageSchema[key]; declared {
-			number, err := validateUsageValue(value, schema, false)
+			number, err := validateUsageValue(value, schema, false, clampTarget)
 			if err != nil {
 				return nil, err
 			}
@@ -1435,13 +1445,17 @@ func (a *TaskAdaptor) validatedCompletionUsageFacts(facts any) (map[string]any, 
 			if !numeric || math.IsNaN(number) || math.IsInf(number, 0) || number < 0 {
 				return nil, fmt.Errorf("plugin usage value must be a finite non-negative number")
 			}
-			validated[key] = float64(common.QuotaFromFloat(number))
+			quota, clamp := common.QuotaFromFloatChecked(number)
+			if clamp != nil && clampTarget != nil && *clampTarget == nil {
+				*clampTarget = clamp
+			}
+			validated[key] = float64(quota)
 		}
 	}
 	return validated, nil
 }
 
-func validateUsageValue(value any, schema pluginruntime.UsageFieldSchema, allowNumericString bool) (float64, error) {
+func validateUsageValue(value any, schema pluginruntime.UsageFieldSchema, allowNumericString bool, clampTarget **common.QuotaClamp) (float64, error) {
 	if len(schema.Enum) > 0 {
 		text, ok := value.(string)
 		if !ok {
@@ -1469,6 +1483,12 @@ func validateUsageValue(value any, schema pluginruntime.UsageFieldSchema, allowN
 		// Bound-check with QuotaFromFloatChecked (int32 saturation) but keep
 		// the original fractional part so credit facts like 3.5 survive.
 		if quota, clamp := common.QuotaFromFloatChecked(number); clamp != nil {
+			if allowNumericString {
+				return 0, fmt.Errorf("plugin usage value exceeds the host limit")
+			}
+			if clampTarget != nil && *clampTarget == nil {
+				*clampTarget = clamp
+			}
 			return float64(quota), nil
 		}
 		return number, nil
@@ -1527,6 +1547,8 @@ func canonicalUsageLimit(key string) (int, bool) {
 		return relaycommon.MaxTaskDurationSeconds, true
 	case "n", "count", "imagecount", "samplecount", "batchcount", "numimages":
 		return kitdto.MaxImageN, true
+	case "maxtokens", "maxoutputtokens", "maxcompletiontokens":
+		return helper.MaxTokensLimit, true
 	default:
 		return 0, false
 	}
@@ -1559,21 +1581,24 @@ func jsonValue(value any) any {
 	}
 	return normalized
 }
-func positiveInt(value any) int {
+func positiveInt(value any, clampTarget **common.QuotaClamp) int {
+	var raw float64
 	switch number := value.(type) {
 	case int64:
-		if number <= 0 {
-			return 0
-		}
-		return common.QuotaFromFloat(float64(number))
+		raw = float64(number)
 	case float64:
-		if number <= 0 {
-			return 0
-		}
-		return common.QuotaFromFloat(number)
+		raw = number
 	default:
 		return 0
 	}
+	if raw <= 0 {
+		return 0
+	}
+	quota, clamp := common.QuotaFromFloatChecked(raw)
+	if clamp != nil && clampTarget != nil && *clampTarget == nil {
+		*clampTarget = clamp
+	}
+	return quota
 }
 
 var _ channel.TaskAdaptor = (*TaskAdaptor)(nil)

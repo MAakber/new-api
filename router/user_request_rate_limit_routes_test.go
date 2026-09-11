@@ -12,6 +12,7 @@ func TestUserRequestRateLimitSubmissionRouteCoverage(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	engine := gin.New()
 	SetRelayRouter(engine)
+	SetTaskPluginProtocolRouter(engine)
 	SetVideoRouter(engine)
 
 	for _, route := range []struct {

@@ -184,7 +184,10 @@ import {
   collectInvalidStatusCodeEntries,
   collectNewDisallowedStatusCodeRedirects,
 } from '../../lib/status-code-risk-guard'
-import { assessBaseUrlTrust, nextTaskPluginBaseUrl } from '../../lib/task-plugin-base-url'
+import {
+  assessBaseUrlTrust,
+  nextTaskPluginBaseUrl,
+} from '../../lib/task-plugin-base-url'
 import type { Channel } from '../../types'
 import { ChannelTypeLogo } from '../channel-type-badge'
 import { ChannelsProvider, useOptionalChannels } from '../channels-provider'
@@ -2004,7 +2007,11 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       <div className='min-w-0'>
         <ChannelEditorTitle presentation={presentation}>
           <IconBadge tone='info' size='title'>
-            <ChannelTypeLogo type={currentType} plugin={boundTaskPlugin} size={22} />
+            <ChannelTypeLogo
+              type={currentType}
+              plugin={boundTaskPlugin}
+              size={22}
+            />
           </IconBadge>
           <span>
             {isEditing ? t('Edit Channel') : t('Create Channel')}
@@ -2124,7 +2131,13 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
           ) : (
             <div className='grid gap-5 lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-start'>
               <ChannelEditorNav
-                providerLogo={<ChannelTypeLogo type={currentType} plugin={boundTaskPlugin} size={18} />}
+                providerLogo={
+                  <ChannelTypeLogo
+                    type={currentType}
+                    plugin={boundTaskPlugin}
+                    size={18}
+                  />
+                }
                 providerLabel={boundTaskPlugin?.name || t(currentTypeLabel)}
                 statusLabel={t(currentStatusLabel)}
                 progressLabel={progressLabel}
@@ -2377,66 +2390,66 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                               <FormItem>
                                 <FormLabel>{t('Task plugin *')}</FormLabel>
                                 {canBindTaskPlugin ? (
-                                    <FormControl>
-                                      <Combobox
-                                        value={field.value}
-                                        onValueChange={(value) => {
-                                          const options =
-                                            taskPluginOptionsQuery.data ?? []
-                                          const previousPlugin = options.find(
-                                            (item) => item.key === field.value
-                                          )
-                                          field.onChange(value)
-                                          const plugin = options.find(
-                                            (item) => item.key === value
-                                          )
-                                          if (plugin?.models?.length) {
-                                            form.setValue(
-                                              'models',
-                                              formatModelsArray(plugin.models),
-                                              {
-                                                shouldDirty: true,
-                                              }
-                                            )
-                                          }
-                                          const prefilledBaseUrl =
-                                            nextTaskPluginBaseUrl(
-                                              form.getValues('base_url'),
-                                              previousPlugin?.baseUrl,
-                                              plugin?.baseUrl
-                                            )
-                                          if (prefilledBaseUrl !== null) {
-                                            form.setValue(
-                                              'base_url',
-                                              prefilledBaseUrl,
-                                              {
-                                                shouldDirty: true,
-                                                shouldValidate: true,
-                                              }
-                                            )
-                                          }
-                                        }}
-                                        options={(
+                                  <FormControl>
+                                    <Combobox
+                                      value={field.value}
+                                      onValueChange={(value) => {
+                                        const options =
                                           taskPluginOptionsQuery.data ?? []
-                                        ).map((plugin) => ({
-                                          value: plugin.key,
-                                          label: `${plugin.name} (${plugin.key})`,
-                                          icon: (
-                                            <PluginIcon
-                                              plugin={{
-                                                ...plugin,
-                                                hasIcon: plugin.hasIcon,
-                                              }}
-                                              size={16}
-                                            />
-                                          ),
-                                        }))}
-                                        className='w-full'
-                                        placeholder={t('Select task plugin')}
-                                        showSelectedIcon
-                                      />
-                                    </FormControl>
-                                  ) : (
+                                        const previousPlugin = options.find(
+                                          (item) => item.key === field.value
+                                        )
+                                        field.onChange(value)
+                                        const plugin = options.find(
+                                          (item) => item.key === value
+                                        )
+                                        if (plugin?.models?.length) {
+                                          form.setValue(
+                                            'models',
+                                            formatModelsArray(plugin.models),
+                                            {
+                                              shouldDirty: true,
+                                            }
+                                          )
+                                        }
+                                        const prefilledBaseUrl =
+                                          nextTaskPluginBaseUrl(
+                                            form.getValues('base_url'),
+                                            previousPlugin?.baseUrl,
+                                            plugin?.baseUrl
+                                          )
+                                        if (prefilledBaseUrl !== null) {
+                                          form.setValue(
+                                            'base_url',
+                                            prefilledBaseUrl,
+                                            {
+                                              shouldDirty: true,
+                                              shouldValidate: true,
+                                            }
+                                          )
+                                        }
+                                      }}
+                                      options={(
+                                        taskPluginOptionsQuery.data ?? []
+                                      ).map((plugin) => ({
+                                        value: plugin.key,
+                                        label: `${plugin.name} (${plugin.key})`,
+                                        icon: (
+                                          <PluginIcon
+                                            plugin={{
+                                              ...plugin,
+                                              hasIcon: plugin.hasIcon,
+                                            }}
+                                            size={16}
+                                          />
+                                        ),
+                                      }))}
+                                      className='w-full'
+                                      placeholder={t('Select task plugin')}
+                                      showSelectedIcon
+                                    />
+                                  </FormControl>
+                                ) : (
                                   <FormControl>
                                     <Input
                                       readOnly
@@ -3018,75 +3031,76 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                                     {...field}
                                   />
                                 </FormControl>
-                                {currentType !==
-                                      CHANNEL_TYPE_TASK_PLUGIN && (
-                                      <FormDescription>
-                                        {t(
+                                {currentType !== CHANNEL_TYPE_TASK_PLUGIN && (
+                                  <FormDescription>
+                                    {currentType === CHANNEL_TYPE_CODE_BUDDY
+                                      ? t(CODE_BUDDY_BASE_URL_HELP)
+                                      : t(
                                           'Custom API base URL. For official channels, New API has built-in addresses. Only fill this for third-party proxy sites or special endpoints. Do not add /v1 or trailing slash.'
                                         )}
-                                      </FormDescription>
-                                    )}
-                                    {currentType === CHANNEL_TYPE_TASK_PLUGIN &&
-                                      !boundTaskPlugin?.baseUrl && (
-                                        <FormDescription>
-                                          {t(
-                                            'The upstream address this plugin sends requests to. The plugin declares no default, so it must be filled in.'
-                                          )}
-                                        </FormDescription>
+                                  </FormDescription>
+                                )}
+                                {currentType === CHANNEL_TYPE_TASK_PLUGIN &&
+                                  !boundTaskPlugin?.baseUrl && (
+                                    <FormDescription>
+                                      {t(
+                                        'The upstream address this plugin sends requests to. The plugin declares no default, so it must be filled in.'
                                       )}
-                                    {currentType === CHANNEL_TYPE_TASK_PLUGIN &&
-                                      boundTaskPlugin?.baseUrl && (
-                                        <FormDescription className='flex flex-wrap items-center gap-x-1'>
-                                          <span>{t('Plugin default')}:</span>
-                                          <span className='font-mono break-all'>
-                                            {boundTaskPlugin.baseUrl}
-                                          </span>
-                                          {(field.value ?? '')
-                                            .trim()
-                                            .replace(/\/+$/, '') !==
-                                            boundTaskPlugin.baseUrl && (
-                                            <Button
-                                              type='button'
-                                              variant='link'
-                                              size='xs'
-                                              className='h-auto p-0'
-                                              onClick={() =>
-                                                form.setValue(
-                                                  'base_url',
-                                                  boundTaskPlugin.baseUrl ?? '',
-                                                  {
-                                                    shouldDirty: true,
-                                                    shouldValidate: true,
-                                                  }
-                                                )
+                                    </FormDescription>
+                                  )}
+                                {currentType === CHANNEL_TYPE_TASK_PLUGIN &&
+                                  boundTaskPlugin?.baseUrl && (
+                                    <FormDescription className='flex flex-wrap items-center gap-x-1'>
+                                      <span>{t('Plugin default')}:</span>
+                                      <span className='font-mono break-all'>
+                                        {boundTaskPlugin.baseUrl}
+                                      </span>
+                                      {(field.value ?? '')
+                                        .trim()
+                                        .replace(/\/+$/, '') !==
+                                        boundTaskPlugin.baseUrl && (
+                                        <Button
+                                          type='button'
+                                          variant='link'
+                                          size='xs'
+                                          className='h-auto p-0'
+                                          onClick={() =>
+                                            form.setValue(
+                                              'base_url',
+                                              boundTaskPlugin.baseUrl ?? '',
+                                              {
+                                                shouldDirty: true,
+                                                shouldValidate: true,
                                               }
-                                            >
-                                              {t('Use default')}
-                                            </Button>
-                                          )}
-                                        </FormDescription>
+                                            )
+                                          }
+                                        >
+                                          {t('Use default')}
+                                        </Button>
                                       )}
-                                    <FormMessage />
-                                    {(taskPluginBaseUrlTrust?.plainHttp ||
-                                      taskPluginBaseUrlTrust?.privateHost) && (
-                                      <Alert>
-                                        <AlertCircle />
-                                        <AlertDescription>
-                                          {taskPluginBaseUrlTrust?.plainHttp &&
-                                            t(
-                                              'This base URL uses plain HTTP, so the channel key is sent unencrypted.'
-                                            )}
-                                          {taskPluginBaseUrlTrust?.plainHttp &&
-                                            taskPluginBaseUrlTrust?.privateHost &&
-                                            ' '}
-                                          {taskPluginBaseUrlTrust?.privateHost &&
-                                            t(
-                                              'This base URL points at a private or local network host. Make sure it is an upstream you control.'
-                                            )}
-                                        </AlertDescription>
-                                      </Alert>
-                                    )}
-                                  </FormItem>
+                                    </FormDescription>
+                                  )}
+                                <FormMessage />
+                                {(taskPluginBaseUrlTrust?.plainHttp ||
+                                  taskPluginBaseUrlTrust?.privateHost) && (
+                                  <Alert>
+                                    <AlertCircle />
+                                    <AlertDescription>
+                                      {taskPluginBaseUrlTrust?.plainHttp &&
+                                        t(
+                                          'This base URL uses plain HTTP, so the channel key is sent unencrypted.'
+                                        )}
+                                      {taskPluginBaseUrlTrust?.plainHttp &&
+                                        taskPluginBaseUrlTrust?.privateHost &&
+                                        ' '}
+                                      {taskPluginBaseUrlTrust?.privateHost &&
+                                        t(
+                                          'This base URL points at a private or local network host. Make sure it is an upstream you control.'
+                                        )}
+                                    </AlertDescription>
+                                  </Alert>
+                                )}
+                              </FormItem>
                             )}
                           />
                         )}

@@ -1,6 +1,14 @@
 package plugins_test
 
-import "testing"
+import (
+	"context"
+	"testing"
+
+	"github.com/QuantumNous/new-api/pkg/jsplugin"
+	builtinplugins "github.com/QuantumNous/new-api/plugins"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+)
 
 func TestViduResponsesProtocol(t *testing.T) {
 	testVideoResponsesProtocol(t, videoResponsesTestCase{
@@ -28,4 +36,27 @@ func TestViduResponsesProtocol(t *testing.T) {
 		wantSubmitUsageKeys: []string{"duration", "resolution"},
 		wantVendorName:      "vidu",
 	})
+}
+
+func TestViduSubmitPreservesExplicitFalseAndZero(t *testing.T) {
+	source, err := builtinplugins.Source("vidu")
+	require.NoError(t, err)
+	plugin, err := jsplugin.NewRegistry().RegisterFactory(source, jsplugin.Options{Key: "vidu"})
+	require.NoError(t, err)
+	value, err := plugin.Engine.Call(context.Background(), "buildSubmitRequest", map[string]any{
+		"baseUrl": "https://provider.example", "upstreamModel": "viduq2", "apiKey": "fixture-key",
+		"requestBody": map[string]any{
+			"model": "viduq2", "prompt": "a quiet landscape", "duration": 8, "size": "720p",
+			"metadata": map[string]any{"bgm": false, "seed": 0},
+		},
+	})
+	require.NoError(t, err)
+	request, ok := value.(map[string]any)
+	require.True(t, ok)
+	body, ok := request["body"].(map[string]any)
+	require.True(t, ok)
+	assert.Contains(t, body, "bgm")
+	assert.Equal(t, false, body["bgm"])
+	assert.Contains(t, body, "seed")
+	assert.EqualValues(t, 0, body["seed"])
 }

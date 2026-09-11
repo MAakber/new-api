@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGetTaskAdaptorMapsMigratedPlatformsToFactoryPlugins(t *testing.T) {
+func TestFactoryTaskPluginsRemainAvailableForExplicitBindings(t *testing.T) {
 	platforms := []constant.TaskPlatform{
 		constant.TaskPlatformSuno,
 		constant.TaskPlatform(strconv.Itoa(constant.ChannelTypeAli)),
@@ -30,8 +30,10 @@ func TestGetTaskAdaptorMapsMigratedPlatformsToFactoryPlugins(t *testing.T) {
 		constant.TaskPlatform(strconv.Itoa(constant.ChannelTypeVertexAi)),
 	}
 	for _, platform := range platforms {
-		_, isJS := GetTaskAdaptor(platform).(*jspluginadaptor.TaskAdaptor)
-		assert.True(t, isJS, "platform %s should use its factory plugin", platform)
+		plugin, found := ResolveTaskPluginForPlatform(pluginruntime.DefaultRegistry.Generation(), platform)
+		require.True(t, found, "platform %s has a factory plugin for explicit bindings", platform)
+		_, isJS := GetTaskPluginAdaptor(plugin.Meta.Key).(*jspluginadaptor.TaskAdaptor)
+		assert.True(t, isJS, "explicit binding to %s uses its plugin", plugin.Meta.Key)
 	}
 }
 
@@ -78,15 +80,15 @@ export function parseTaskResult() { return {status: "SUCCESS"}; }
 	assert.Equal(t, "Pinned Generation", adaptor.GetChannelName())
 }
 
-func TestGetTaskAdaptorForRequestPinsLegacyMappedPlugin(t *testing.T) {
+func TestGetTaskAdaptorForRequestPinsFactoryPluginKey(t *testing.T) {
 	c, _ := gin.CreateTestContext(httptest.NewRecorder())
 	c.Request = httptest.NewRequest(http.MethodPost, "/v1/videos/video_1/remix", nil)
-	legacyPlatform := constant.TaskPlatform(strconv.Itoa(constant.ChannelTypeSora))
+	pluginPlatform := constant.TaskPlatform("sora")
 
-	platform, adaptor := getTaskAdaptorForRequest(c, legacyPlatform)
+	platform, adaptor := getTaskAdaptorForRequest(c, pluginPlatform)
 
 	require.NotNil(t, adaptor)
-	assert.Equal(t, legacyPlatform, platform)
+	assert.Equal(t, pluginPlatform, platform)
 	pinnedValue, exists := c.Get(pluginruntime.ContextKeyPinnedPlugin)
 	require.True(t, exists)
 	pinned, ok := pinnedValue.(pluginruntime.PinnedPlugin)

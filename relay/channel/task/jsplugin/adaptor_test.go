@@ -732,6 +732,14 @@ export function extractUsageOnComplete(task, result, body) { return (body || {})
 				},
 			},
 		},
+		{
+			name: "declared token request quantity cannot exceed the quota domain",
+			body: map[string]any{"tokens": float64(common.MaxQuota) + 1},
+		},
+		{
+			name: "Responses token limit also covers plugin metadata",
+			body: map[string]any{"metadata": map[string]any{"max_output_tokens": "18446744073686646784"}},
+		},
 	}
 	for _, testCase := range requestTests {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -832,6 +840,8 @@ export function extractUsageOnComplete(task, result, body) { return (body || {})
 		facts, err := adaptor.ExtractUsageFactsValidated(context, info)
 		require.NoError(t, err)
 		assert.EqualValues(t, common.MaxQuota, facts["tokens"])
+		require.NotNil(t, info.QuotaClamp)
+		assert.Equal(t, float64(common.MaxQuota)+1, info.QuotaClamp.Original)
 	})
 
 	t.Run("canonical maxima and enum are accepted", func(t *testing.T) {
@@ -955,6 +965,30 @@ export function extractUsageOnComplete() { return {units: 3.5}; }
 		assert.Equal(t, 5000, result.TotalTokens)
 		assert.EqualValues(t, 5000, result.UsageFacts["upstreamUnits"])
 	})
+
+	for _, key := range []string{"tokens", "upstreamUnits"} {
+		t.Run("completion saturation for "+key+" is scoped to its task", func(t *testing.T) {
+			adaptor, _, _ := newRequest(t, map[string]any{})
+			body, err := common.Marshal(map[string]any{"completionUsage": map[string]any{key: float64(common.MaxQuota) + 1}})
+			require.NoError(t, err)
+			response := &http.Response{StatusCode: http.StatusOK, Header: make(http.Header)}
+			result, err := adaptor.ParseTaskResult(&model.Task{}, response, body)
+			require.NoError(t, err)
+			assert.EqualValues(t, common.MaxQuota, result.UsageFacts[key])
+			require.NotNil(t, result.QuotaClamp)
+			assert.Equal(t, float64(common.MaxQuota)+1, result.QuotaClamp.Original)
+			encoded, err := common.Marshal(result)
+			require.NoError(t, err)
+			assert.NotContains(t, string(encoded), "QuotaClamp")
+			assert.NotContains(t, string(encoded), "quota_saturation")
+			nextBody, err := common.Marshal(map[string]any{"completionUsage": map[string]any{key: 3}})
+			require.NoError(t, err)
+			next, err := adaptor.ParseTaskResult(&model.Task{}, response, nextBody)
+			require.NoError(t, err)
+			assert.Nil(t, next.QuotaClamp)
+			assert.EqualValues(t, 3, next.UsageFacts[key])
+		})
+	}
 
 	t.Run("invalid post-submit adjustment is discarded before recalculation", func(t *testing.T) {
 		adaptor, _, info := newRequest(t, map[string]any{})

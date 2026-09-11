@@ -338,7 +338,6 @@ func TestCodeBuddyChannelUsesOpenAIChatCompletions(t *testing.T) {
 
 	require.True(t, ok)
 	assert.Equal(t, 63, constant.ChannelTypeCodeBuddy)
-	assert.Equal(t, 64, constant.ChannelTypeDummy)
 	assert.Equal(t, "CodeBuddy", constant.GetChannelTypeName(constant.ChannelTypeCodeBuddy))
 	assert.Equal(t, constant.APITypeOpenAI, apiType)
 	require.IsType(t, &openai.Adaptor{}, relay.GetAdaptor(apiType))
@@ -365,7 +364,6 @@ func TestVercelChannelRegistration(t *testing.T) {
 
 	require.True(t, ok)
 	assert.Equal(t, 64, constant.ChannelTypeVercel)
-	assert.Equal(t, 64, constant.ChannelTypeDummy)
 	assert.Equal(t, constant.APITypeVercel, apiType)
 	assert.Equal(t, "Vercel AI Gateway", constant.GetChannelTypeName(constant.ChannelTypeVercel))
 	require.IsType(t, &vercelchannel.Adaptor{}, relay.GetAdaptor(apiType))

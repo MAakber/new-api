@@ -31,7 +31,7 @@ func setupTaskPluginBindChannelTest(t *testing.T) {
 	sqlDB, err := database.DB()
 	require.NoError(t, err)
 	sqlDB.SetMaxOpenConns(1)
-	require.NoError(t, database.AutoMigrate(&model.Channel{}, &model.Ability{}, &model.CasbinRule{}, &model.AuthzRole{}, &model.Log{}, &model.AuditLog{}, &model.User{}))
+	require.NoError(t, database.AutoMigrate(&model.Channel{}, &model.Ability{}, &model.Option{}, &model.CasbinRule{}, &model.AuthzRole{}, &model.Log{}, &model.AuditLog{}, &model.User{}))
 	model.DB = database
 	model.LOG_DB = database
 	require.NoError(t, authz.Init(database))
@@ -226,7 +226,7 @@ export function parseTaskResult() { return {}; }
 				assert.Contains(t, string(encoded), `"base_url_source":"plugin_default"`)
 			} else {
 				assert.Equal(t, "before", stored.Name)
-				assert.Nil(t, stored.BaseURL)
+				assert.Empty(t, stored.GetBaseURL())
 			}
 		})
 	}
