@@ -89,7 +89,7 @@ func TestSmokeTestTaskExprValidatesDeclaredUsageVectors(t *testing.T) {
 func TestSmokeTestTaskExprCapsOversizedEnumProductsAtLastCombination(t *testing.T) {
 	schema := make(map[string]jsplugin.UsageFieldSchema, 7)
 	condition := ""
-	for index := 0; index < 7; index++ {
+	for index := range 7 {
 		schema[fmt.Sprintf("enum_%d", index)] = jsplugin.UsageFieldSchema{Enum: []string{"first", "middle", "last"}}
 		if condition != "" {
 			condition += " && "

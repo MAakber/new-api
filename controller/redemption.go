@@ -149,7 +149,7 @@ func AddRedemption(c *gin.Context) {
 		}
 		keys = append(keys, key)
 	}
-	auditParams := map[string]interface{}{
+	auditParams := map[string]any{
 		"name":        redemption.Name,
 		"count":       redemption.Count,
 		"code_type":   redemption.CodeType,

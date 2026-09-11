@@ -317,7 +317,7 @@ func Redeem(key string, userId int) (result *RedeemResult, err error) {
 		// same code loses here even without a row lock (e.g. on SQLite).
 		updateResult := tx.Model(&Redemption{}).
 			Where("id = ? AND status = ?", redemption.Id, common.RedemptionCodeStatusEnabled).
-			Updates(map[string]interface{}{
+			Updates(map[string]any{
 				"redeemed_time":            common.GetTimestamp(),
 				"status":                   common.RedemptionCodeStatusUsed,
 				"used_user_id":             userId,

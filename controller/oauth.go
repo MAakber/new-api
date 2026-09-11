@@ -83,7 +83,7 @@ func GenerateOAuthCode(c *gin.Context) {
 		sessionID = identity.SessionID
 		if request.Intent == model.AuthFlowIntentBind {
 			defer func() {
-				recordUserSecurityAudit(c, userID, "user.binding_start", map[string]interface{}{"provider": request.Provider, "success": bindingStarted})
+				recordUserSecurityAudit(c, userID, "user.binding_start", map[string]any{"provider": request.Provider, "success": bindingStarted})
 			}()
 			context, err := common.Marshal(service.AccountBindingContext{Provider: request.Provider})
 			if err != nil {
@@ -177,7 +177,7 @@ func HandleOAuth(c *gin.Context) {
 	bindSucceeded, notificationFailed := false, false
 	if pendingFlow.Intent == model.AuthFlowIntentBind {
 		defer func() {
-			recordUserSecurityAudit(c, pendingFlow.UserId, "user.binding_bind", map[string]interface{}{"provider": providerName, "success": bindSucceeded, "notification_failed": notificationFailed})
+			recordUserSecurityAudit(c, pendingFlow.UserId, "user.binding_bind", map[string]any{"provider": providerName, "success": bindSucceeded, "notification_failed": notificationFailed})
 		}()
 	}
 	// Bind and verification callbacks must use the dashboard session that started them.
@@ -311,7 +311,7 @@ func handleOAuthVerification(c *gin.Context, provider string, oauthUser *oauth.O
 		writeSecurityOperationError(c, err)
 		return
 	}
-	recordUserSecurityAudit(c, identity.UserID, "user.security_verify", map[string]interface{}{"method": proof.Method, "scope": proof.Scope, "provider": provider})
+	recordUserSecurityAudit(c, identity.UserID, "user.security_verify", map[string]any{"method": proof.Method, "scope": proof.Scope, "provider": provider})
 	common.ApiSuccess(c, proof)
 }
 
