@@ -67,6 +67,9 @@ func readModelPricingMaps(db *gorm.DB) (map[string]map[string]any, error) {
 	}
 	values := make(map[string]map[string]any, len(PricingOptionKeys))
 	for _, row := range rows {
+		if _, exists := values[row.Key]; exists {
+			return nil, fmt.Errorf("%w: %s", ErrPricingOptionIntegrity, row.Key)
+		}
 		var entries map[string]any
 		if err := common.UnmarshalJsonStr(row.Value, &entries); err != nil {
 			return nil, fmt.Errorf("%s: %w", row.Key, err)

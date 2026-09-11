@@ -325,6 +325,9 @@ func is64BitIntegerType(dbType common.DatabaseType, dataType string) bool {
 }
 
 func migrateDB() error {
+	if err := migrateOptionPrimaryKey(DB); err != nil {
+		return fmt.Errorf("migrate options uniqueness: %w", err)
+	}
 	if err := ensureUserQuotaColumns(DB, common.MainDatabaseType()); err != nil {
 		return err
 	}

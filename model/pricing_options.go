@@ -23,7 +23,7 @@ var PricingOptionKeys = []string{
 
 var (
 	ErrPricingOptionRequiresPatch = errors.New("pricing options must be updated through the pricing patch service")
-	ErrPricingOptionIntegrity     = errors.New("pricing option integrity error: canonical option row is missing")
+	ErrPricingOptionIntegrity     = errors.New("pricing option integrity error: canonical option row is missing or duplicated")
 	ErrPricingOptionConflict      = errors.New("pricing patch conflict")
 	pricingOptionMutationMutex    sync.Mutex
 	pricingOptionPublishMutex     sync.Mutex
@@ -40,13 +40,14 @@ func MutatePricingOptions(mutate func(*gorm.DB, map[string]map[string]json.RawMe
 		maps := make(map[string]map[string]json.RawMessage, len(PricingOptionKeys))
 		original := make(map[string]string, len(PricingOptionKeys))
 		for _, key := range PricingOptionKeys {
-			var option Option
-			if err := lockForUpdate(tx).Where(&Option{Key: key}).First(&option).Error; err != nil {
-				if errors.Is(err, gorm.ErrRecordNotFound) {
-					return fmt.Errorf("%w: %s", ErrPricingOptionIntegrity, key)
-				}
+			var rows []Option
+			if err := lockForUpdate(tx).Where(&Option{Key: key}).Limit(2).Find(&rows).Error; err != nil {
 				return err
 			}
+			if len(rows) != 1 {
+				return fmt.Errorf("%w: %s", ErrPricingOptionIntegrity, key)
+			}
+			option := rows[0]
 			var values map[string]json.RawMessage
 			if err := common.UnmarshalJsonStr(option.Value, &values); err != nil || values == nil {
 				return fmt.Errorf("pricing option %q is not a JSON object", key)
@@ -126,6 +127,13 @@ func CanonicalPricingOptionDefaults() map[string]string {
 // SeedCanonicalPricingOptions creates only missing canonical rows. Existing
 // administrator values are deliberately never read-modified-written here.
 func SeedCanonicalPricingOptions() error {
+	unique, err := optionsKeyIsUnique(DB)
+	if err != nil {
+		return err
+	}
+	if !unique {
+		return fmt.Errorf("%w: repair options uniqueness before seeding", ErrPricingOptionIntegrity)
+	}
 	defaults := CanonicalPricingOptionDefaults()
 	return DB.Transaction(func(tx *gorm.DB) error {
 		for _, key := range PricingOptionKeys {
@@ -133,7 +141,8 @@ func SeedCanonicalPricingOptions() error {
 				return fmt.Errorf("seed pricing option %q: %w", key, err)
 			}
 		}
-		return nil
+		_, err := readModelPricingMaps(tx)
+		return err
 	})
 }
 
@@ -158,6 +167,9 @@ func RefreshPricingOptionMapsFromDatabase() (map[string]string, error) {
 		return nil, err
 	}
 	for _, option := range rows {
+		if _, exists := values[option.Key]; exists {
+			return nil, fmt.Errorf("%w: %s", ErrPricingOptionIntegrity, option.Key)
+		}
 		var object map[string]json.RawMessage
 		if err := common.UnmarshalJsonStr(option.Value, &object); err != nil || object == nil {
 			return nil, fmt.Errorf("pricing option %q is not a JSON object", option.Key)
