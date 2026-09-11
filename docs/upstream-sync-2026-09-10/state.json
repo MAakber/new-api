@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T18:11:34.275Z",
+  "updatedAt": "2026-09-11T18:19:49.781Z",
   "status": "code_complete",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -24,9 +24,9 @@
   "current_batch": "B18",
   "current_unit": "B18.2",
   "active_operation": null,
-  "last_observed_head": "5538152143b3f2968b020c2bc82e1301665e2b12",
+  "last_observed_head": "ebdf72f8573d737fd3d3daff4e049a26f4cd3d8b",
   "last_verified_code_commit": "33398851f677845f450b9cf6f7af546d5a218e0c",
-  "last_checkpoint_commit": "f67a3ad037fd8bbf5aede078fcee47506b9e1087",
+  "last_checkpoint_commit": "ebdf72f8573d737fd3d3daff4e049a26f4cd3d8b",
   "final_merge_commit": "d46dec4abad83d575d7a7d74558508c898b0193b",
   "final_downstream_commit": "f44698d0391830d6e6d53aa7e2468b9ad8939041",
   "next_action": "Start new development from main as requested; read POST-MERGE.md. The user reported production deployment and manual price adjustments, then authorized local cleanup and publication to MAakber/new-api. This plan is now a historical reference. Resume its outstanding external acceptance only when explicitly requested; do not repeat the completed merge or mark missing evidence as passed.",
@@ -34,6 +34,7 @@
     "user_reported_deployed": true,
     "user_reported_manual_price_adjustment": true,
     "cleanup_report": "POST-MERGE.md",
+    "cleanup_commit": "ebdf72f8573d737fd3d3daff4e049a26f4cd3d8b",
     "publication_target": "MAakber/new-api:main",
     "publication_authorized": true
   },
