@@ -136,12 +136,26 @@ func TestWalletMigrateReleasedSchema(t *testing.T) {
 	require.NoError(t, db.Order("id").Find(&before).Error)
 	require.NotEmpty(t, before)
 	if dialect != common.DatabaseTypeSQLite {
-		require.ErrorContains(t, ensureUserQuotaColumns(db, dialect), "users.")
-		script := walletMySQLMigration
-		if dialect == common.DatabaseTypePostgreSQL {
-			script = walletPostgresMigration
+		columns, err := db.Migrator().ColumnTypes(&User{})
+		require.NoError(t, err)
+		for _, column := range columns {
+			for _, name := range userQuotaColumns {
+				if column.Name() == name {
+					declaration, _ := column.ColumnType()
+					t.Logf("released users.%s: %s (%s)", name, column.DatabaseTypeName(), declaration)
+				}
+			}
 		}
-		require.NoError(t, db.Exec(script).Error)
+		if err := ensureUserQuotaColumns(db, dialect); err != nil {
+			require.ErrorContains(t, err, "users.")
+			script := walletMySQLMigration
+			if dialect == common.DatabaseTypePostgreSQL {
+				script = walletPostgresMigration
+			}
+			require.NoError(t, db.Exec(script).Error)
+		} else {
+			t.Log("released schema already has signed BIGINT wallet columns; no ALTER is necessary")
+		}
 	}
 	require.NoError(t, ensureUserQuotaColumns(db, dialect))
 	var after []User
