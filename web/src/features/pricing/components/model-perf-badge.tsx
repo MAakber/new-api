@@ -20,6 +20,7 @@ import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { getSuccessRateDotClass } from '@/features/performance-metrics/lib/format'
+import type { SuccessRatePoint } from '@/features/performance-metrics/types'
 import { cn } from '@/lib/utils'
 
 export type ModelPerfBadgeData = {
@@ -27,11 +28,14 @@ export type ModelPerfBadgeData = {
   success_rate: number
   avg_tps: number
   recent_success_rates?: number[]
+  recent_success_series?: SuccessRatePoint[]
 }
 
 export interface ModelPerfBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   perf: ModelPerfBadgeData | undefined
 }
+
+const STATUS_SLOTS = Array.from({ length: 24 }, (_, slot) => slot)
 
 function formatCompactNumber(value: number): string {
   if (!Number.isFinite(value) || value <= 0) return '—'
@@ -61,15 +65,30 @@ export const ModelPerfBadge = memo(function ModelPerfBadge(
 
   const { avg_latency_ms, avg_tps, success_rate } = props.perf
 
-  const recentRates =
-    props.perf.recent_success_rates?.filter((rate) => Number.isFinite(rate)) ??
-    []
-  const statusRates =
-    recentRates.length > 0 ? recentRates.slice(-3) : [success_rate]
-  const statusBars = [
-    ...Array(Math.max(0, 3 - statusRates.length)).fill(null),
-    ...statusRates,
-  ].slice(-3)
+  const hasSuccessRate =
+    Number.isFinite(success_rate) && success_rate >= 0 && success_rate <= 100
+  const successLabel = hasSuccessRate ? `${success_rate.toFixed(1)}%` : '—'
+  let statusRates: (number | undefined)[]
+  if (props.perf.recent_success_series != null) {
+    // Slot 23 is the current partial hour. Missing hours remain neutral.
+    const currentHourStart = Math.floor(Date.now() / 1000 / 3600) * 3600
+    const ratesByHour = new Map(
+      props.perf.recent_success_series.map((point) => [
+        point.ts,
+        point.success_rate,
+      ])
+    )
+    statusRates = STATUS_SLOTS.map((slot) =>
+      ratesByHour.get(currentHourStart - (23 - slot) * 3600)
+    )
+  } else {
+    // Older servers provide samples without timestamps; never invent hours.
+    const samples = props.perf.recent_success_rates?.slice(-24) ?? []
+    statusRates = [
+      ...Array<undefined>(24 - samples.length).fill(undefined),
+      ...samples,
+    ]
+  }
 
   return (
     <div
@@ -94,31 +113,42 @@ export const ModelPerfBadge = memo(function ModelPerfBadge(
           {formatCompactThroughput(avg_tps)}
         </div>
       </div>
-      <div
-        title={`${t('Success rate')}: ${success_rate.toFixed(1)}%`}
-        className='min-w-0'
-      >
+      <div title={`${t('Success rate')}: ${successLabel}`} className='min-w-0'>
         <div className='text-muted-foreground/55 truncate text-[10px] leading-4'>
           {t('Status short')}
         </div>
-        <div className='flex h-4 items-center justify-end gap-0.5'>
-          {statusBars.map((rate, index) => (
+        <div className='text-muted-foreground/80 font-mono text-xs leading-4 whitespace-nowrap'>
+          {hasSuccessRate ? `${Math.round(success_rate)}%` : '—'}
+        </div>
+      </div>
+      <div
+        role='img'
+        aria-label={t(
+          'Recent success-rate samples; gray bars indicate missing data.'
+        )}
+        title={t(
+          'Recent success-rate samples; gray bars indicate missing data.'
+        )}
+        className='col-span-3 mt-1 flex h-2 items-center justify-between'
+      >
+        {STATUS_SLOTS.map((slot) => {
+          const rate = statusRates[slot]
+          return (
             <span
-              key={`${index}-${rate ?? 'empty'}`}
+              key={slot}
+              aria-hidden
               className={cn(
-                'w-1 rounded-full',
-                index === 0 && 'h-2',
-                index === 1 && 'h-2.5',
-                index === 2 && 'h-3',
-                rate == null
-                  ? index === 0
-                    ? 'bg-muted-foreground/10'
-                    : 'bg-muted-foreground/15'
-                  : getSuccessRateDotClass(rate)
+                'h-full w-[3px] shrink-0 rounded-xs',
+                rate != null &&
+                  Number.isFinite(rate) &&
+                  rate >= 0 &&
+                  rate <= 100
+                  ? getSuccessRateDotClass(rate)
+                  : 'bg-muted-foreground/15'
               )}
             />
-          ))}
-        </div>
+          )
+        })}
       </div>
     </div>
   )

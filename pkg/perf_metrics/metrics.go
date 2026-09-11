@@ -255,12 +255,13 @@ func buildModelSummaries(totals map[string]counters, modelBuckets map[string]map
 			avgTps = float64(total.outputTokens) / (float64(total.generationMs) / 1000.0)
 		}
 		models = append(models, ModelSummary{
-			ModelName:          name,
-			AvgLatencyMs:       avgLatency,
-			SuccessRate:        math.Round(successRate*100) / 100,
-			AvgTps:             math.Round(avgTps*100) / 100,
-			RecentSuccessRates: recentSuccessRates(modelBuckets[name], recentLimit),
-			RequestCount:       total.requestCount,
+			ModelName:           name,
+			AvgLatencyMs:        avgLatency,
+			SuccessRate:         math.Round(successRate*100) / 100,
+			AvgTps:              math.Round(avgTps*100) / 100,
+			RecentSuccessRates:  recentSuccessRates(modelBuckets[name], recentLimit),
+			RecentSuccessSeries: recentSuccessSeries(modelBuckets[name]),
+			RequestCount:        total.requestCount,
 		})
 	}
 	sort.Slice(models, func(i, j int) bool {
@@ -321,6 +322,40 @@ func recentSuccessRates(buckets map[int64]counters, limit int) []float64 {
 		rates = append(rates, math.Round(successRate(buckets[ts])*100)/100)
 	}
 	return rates
+}
+
+func recentSuccessSeries(buckets map[int64]counters) []SuccessRatePoint {
+	if len(buckets) == 0 {
+		return nil
+	}
+	hourly := map[int64]counters{}
+	for ts, value := range buckets {
+		hourTs := ts - ts%3600
+		merged := hourly[hourTs]
+		merged.requestCount += value.requestCount
+		merged.successCount += value.successCount
+		hourly[hourTs] = merged
+	}
+	timestamps := make([]int64, 0, len(hourly))
+	for hourTs, value := range hourly {
+		if value.requestCount > 0 {
+			timestamps = append(timestamps, hourTs)
+		}
+	}
+	if len(timestamps) == 0 {
+		return nil
+	}
+	sort.Slice(timestamps, func(i, j int) bool {
+		return timestamps[i] < timestamps[j]
+	})
+	points := make([]SuccessRatePoint, 0, len(timestamps))
+	for _, hourTs := range timestamps {
+		points = append(points, SuccessRatePoint{
+			Ts:          hourTs,
+			SuccessRate: math.Round(successRate(hourly[hourTs])*100) / 100,
+		})
+	}
+	return points
 }
 
 func allowedGroupSet(groups []string) map[string]struct{} {

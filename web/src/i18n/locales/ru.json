@@ -4276,6 +4276,7 @@
     "Received amount": "Полученная сумма",
     "Recent maintenance tasks running across instances and their execution status.": "Недавние задачи обслуживания, выполняемые на всех экземплярах, и их статус выполнения.",
     "Recent success rate trend": "Недавняя динамика успешности",
+    "Recent success-rate samples; gray bars indicate missing data.": "Последние показатели успешности; серые столбцы означают отсутствие данных.",
     "Recently completed or failed system task runs.": "Недавние запуски системных задач, завершенные или завершившиеся с ошибкой.",
     "Recently launched models": "Недавно запущенные модели",
     "Recently launched models gaining traction": "Недавно вышедшие модели, набирающие популярность",

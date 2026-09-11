@@ -4276,6 +4276,7 @@
     "Received amount": "Montant reçu",
     "Recent maintenance tasks running across instances and their execution status.": "Tâches de maintenance récentes exécutées sur les instances et leur état d'exécution.",
     "Recent success rate trend": "Tendance récente du taux de réussite",
+    "Recent success-rate samples; gray bars indicate missing data.": "Taux de réussite récents ; les barres grises indiquent des données manquantes.",
     "Recently completed or failed system task runs.": "Exécutions de tâches système récemment terminées ou échouées.",
     "Recently launched models": "Modèles récemment lancés",
     "Recently launched models gaining traction": "Modèles récemment publiés et en forte progression",

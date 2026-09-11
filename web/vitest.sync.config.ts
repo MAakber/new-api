@@ -43,6 +43,7 @@ export default defineConfig({
       'src/lib/__tests__/session-hint.test.ts',
       'src/features/chat/lib/__tests__/*.test.{ts,tsx}',
       'src/features/pricing/lib/__tests__/time-rule-expr.test.ts',
+      'src/features/pricing/components/__tests__/model-perf-badge.test.tsx',
       'src/features/system-settings/models/__tests__/time-rule-editor.test.tsx',
       'src/features/auth/sign-in/**/__tests__/*.test.{ts,tsx}',
       'src/features/wallet/hooks/__tests__/*.test.{ts,tsx}',

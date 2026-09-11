@@ -4276,6 +4276,7 @@
     "Received amount": "受け取り額",
     "Recent maintenance tasks running across instances and their execution status.": "各インスタンスで実行された最近のメンテナンスタスクとその実行状態。",
     "Recent success rate trend": "最近の成功率推移",
+    "Recent success-rate samples; gray bars indicate missing data.": "最近の成功率。灰色のバーはデータがないことを示します。",
     "Recently completed or failed system task runs.": "最近完了または失敗したシステムタスク実行です。",
     "Recently launched models": "最近リリースされたモデル",
     "Recently launched models gaining traction": "最近リリースされ勢いのあるモデル",
