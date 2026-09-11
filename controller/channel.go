@@ -485,11 +485,19 @@ func validateChannel(channel *model.Channel, isAdd bool) error {
 		if len(pluginKey) > 30 {
 			return fmt.Errorf("task plugin key must not exceed 30 characters")
 		}
-		if _, ok := jsplugin.DefaultRegistry.Get(pluginKey); !ok {
+		plugin, ok := jsplugin.DefaultRegistry.Get(pluginKey)
+		if !ok {
 			return fmt.Errorf("task plugin %q is not registered", pluginKey)
 		}
 		if channel.BaseURL == nil || strings.TrimSpace(*channel.BaseURL) == "" {
-			return fmt.Errorf("base URL is required for task plugin channels")
+			// The plugin default is persisted onto the channel instead of being
+			// resolved per request, so the destination host stays an auditable
+			// channel property that only an administrator edit can change.
+			if plugin.Meta.BaseURL == "" {
+				return fmt.Errorf("base URL is required for task plugin channels")
+			}
+			defaultBaseURL := plugin.Meta.BaseURL
+			channel.BaseURL = &defaultBaseURL
 		}
 	}
 
@@ -640,6 +648,9 @@ func AddChannel(c *gin.Context) {
 		return
 	}
 
+	baseURLFromPluginDefault := addChannelRequest.Channel != nil &&
+		addChannelRequest.Channel.Type == constant.ChannelTypeTaskPlugin &&
+		(addChannelRequest.Channel.BaseURL == nil || strings.TrimSpace(*addChannelRequest.Channel.BaseURL) == "")
 	// 使用统一的校验函数
 	if err := validateChannel(addChannelRequest.Channel, true); err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -725,11 +736,15 @@ func AddChannel(c *gin.Context) {
 		return
 	}
 	model.InitChannelCache()
-	recordManageAudit(c, "channel.create", map[string]interface{}{
+	createAudit := map[string]interface{}{
 		"name":  addChannelRequest.Channel.Name,
 		"type":  addChannelRequest.Channel.Type,
 		"count": len(channels),
-	})
+	}
+	if baseURLFromPluginDefault {
+		createAudit["base_url_source"] = "plugin_default"
+	}
+	recordManageAudit(c, "channel.create", createAudit)
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "",
@@ -1034,6 +1049,8 @@ func UpdateChannel(c *gin.Context) {
 		return
 	}
 
+	baseURLFromPluginDefault := channel.Type == constant.ChannelTypeTaskPlugin &&
+		(channel.BaseURL == nil || strings.TrimSpace(*channel.BaseURL) == "")
 	// 使用统一的校验函数
 	if err := validateChannel(&channel.Channel, false); err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -1051,6 +1068,11 @@ func UpdateChannel(c *gin.Context) {
 	channel.ChannelInfo.MultiKeyDisabledTime = originChannel.ChannelInfo.MultiKeyDisabledTime
 	channel.ChannelInfo.MultiKeyPollingIndex = originChannel.ChannelInfo.MultiKeyPollingIndex
 
+	if baseURLFromPluginDefault {
+		// Plugin defaults become stored channel configuration, so sparse updates
+		// must authorize and persist them just like an explicitly supplied URL.
+		requestData["base_url"] = channel.BaseURL
+	}
 	if channelHasSensitiveChanges(&channel, originChannel, requestData) &&
 		!authz.Can(c.GetInt("id"), c.GetInt("role"), authz.ChannelSensitiveWrite) {
 		common.ApiErrorI18n(c, i18n.MsgAuthInsufficientPrivilege)
@@ -1122,11 +1144,15 @@ func UpdateChannel(c *gin.Context) {
 	if updated.Key != originChannel.Key {
 		changedFields = append(changedFields, "key")
 	}
-	recordManageAudit(c, "channel.update", map[string]interface{}{
+	updateAudit := map[string]interface{}{
 		"id":             updated.Id,
 		"name":           updated.Name,
 		"changed_fields": changedFields,
-	})
+	}
+	if baseURLFromPluginDefault {
+		updateAudit["base_url_source"] = "plugin_default"
+	}
+	recordManageAudit(c, "channel.update", updateAudit)
 	updated.Key = ""
 	clearChannelInfo(updated)
 	c.JSON(http.StatusOK, gin.H{
