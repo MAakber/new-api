@@ -19,8 +19,9 @@ For commercial licensing, please contact support@quantumnous.com
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
-import { describe, test } from 'node:test'
 import { fileURLToPath } from 'node:url'
+
+import { describe, test } from 'vitest'
 
 const authStyles = await readFile(
   resolve(

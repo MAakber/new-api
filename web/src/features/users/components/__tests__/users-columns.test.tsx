@@ -15,10 +15,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 import assert from 'node:assert/strict'
-import { after, test } from 'node:test'
 
 import type { Cell, ColumnDef, Row } from '@tanstack/react-table'
 import { Window } from 'happy-dom'
+import { afterAll as after, test } from 'vitest'
 
 import type { User } from '../../types'
 

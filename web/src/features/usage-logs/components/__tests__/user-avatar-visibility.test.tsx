@@ -17,11 +17,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import assert from 'node:assert/strict'
-import { after, describe, test } from 'node:test'
 
 import type { Cell, ColumnDef, Row, Table } from '@tanstack/react-table'
 import { Window } from 'happy-dom'
 import type React from 'react'
+import { afterAll as after, describe, test } from 'vitest'
 
 import type { UsageLog } from '../../data/schema'
 import type { TaskLog } from '../../types'
