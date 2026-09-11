@@ -1,0 +1,8 @@
+=== RUN   TestPasswordEncryptionPersistence
+=== RUN   TestPasswordEncryptionPersistence/postgres
+[SYS] 2026/09/11 - 08:49:06 | using PostgreSQL as database 
+[SYS] 2026/09/11 - 08:49:06 | using PostgreSQL as database 
+--- PASS: TestPasswordEncryptionPersistence (0.18s)
+    --- PASS: TestPasswordEncryptionPersistence/postgres (0.18s)
+PASS
+ok  	github.com/QuantumNous/new-api/model	0.865s

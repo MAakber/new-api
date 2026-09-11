@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T00:33:14.764Z",
+  "updatedAt": "2026-09-11T00:54:56.412Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B08",
-  "current_unit": "B08.2-account-security",
+  "current_batch": "B09",
+  "current_unit": "B09.1",
   "active_operation": null,
-  "last_observed_head": "73daee4b5345c95fe2b7ef17b31336676f6c6a3b",
-  "last_verified_code_commit": "54c948f715414eada868462b3c60882ce745a57f",
-  "last_checkpoint_commit": "6fb247078809e339323c6de9ac0aa10d7d63363c",
+  "last_observed_head": "0c458ec73dc73b4f7fd75ffbe955691240b6bace",
+  "last_verified_code_commit": "0c458ec73dc73b4f7fd75ffbe955691240b6bace",
+  "last_checkpoint_commit": "0c458ec73dc73b4f7fd75ffbe955691240b6bace",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "Integrate remaining B08 unified login verification 6f233399, preserving multi-Passkey, automatic bans, registration-code flows and avatar deletion.",
+  "next_action": "Proceed to B09 public caching, health series compatibility and shared status query.",
   "blockers": [
     {
       "id": "production_snapshot",

@@ -60,3 +60,7 @@ The documented docker-compose.yml uses ClickHouse 24.8. Native JSON in new audit
 ## 2026-09-11T00:27:07.184Z — A21 quota audit requires B10/B11
 
 Pending upstream 3f8a50cf8877683669cd812240a0beaf7b171c32 introduces AdjustUserQuota using common.MaxWalletQuota, WalletQuotaFromDecimalStrict and ErrWalletQuotaLimitExceeded from B11 a073f74b; it also patches model/quota_reserve.go and Token.AutoGroups from B10. Those APIs/files do not exist at the current B08 checkpoint. Move the entire unstarted commit to B11 immediately after wallet integration instead of introducing temporary accounting semantics or a dependency cycle. B08 6f233399 does not depend on these quota/token audit additions and can proceed. Total remains 153; all token, audit UI and quota behavior stays required.
+
+## 2026-09-11T00:47:00.276Z — A22 unified login contract rollout
+
+6f233399 unifies second-factor login challenges and scoped deletion. The frontend and all backend nodes must deploy together; the temporary legacy 2fa_login flow is not interchangeable with login_verification. Existing issued sessions remain supported. Preserve registration-code handoff separately from second-factor verification. All Passkey ceremonies now require user verification. Before any future rollout, verify supported authenticators can provide UV and document the coordinated version boundary. No production operation is included in local integration.

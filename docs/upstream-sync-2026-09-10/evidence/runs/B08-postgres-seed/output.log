@@ -1,0 +1,8 @@
+=== RUN   TestDatabaseUpgradePreservesDownstreamData
+[SYS] 2026/09/11 - 08:50:15 | using PostgreSQL as database 
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+[SYS] 2026/09/11 - 08:50:15 | using PostgreSQL as database 
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit
+    database_upgrade_test.go:54: released schema and downstream data seeded; verification belongs to the upgraded checkout
+--- PASS: TestDatabaseUpgradePreservesDownstreamData (2.25s)
+PASS

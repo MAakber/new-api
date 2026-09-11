@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "commit": "0c458ec73dc73b4f7fd75ffbe955691240b6bace",
+  "baseline": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "checked_at": "2026-09-11T00:54:56.407Z",
+  "checks": [
+    "evidence/runs/B08-sqlite-fresh/result.json",
+    "evidence/runs/B08-sqlite-seed/result.json",
+    "evidence/runs/B08-sqlite-upgrade/result.json",
+    "evidence/runs/B08-mariadb-fresh/result.json",
+    "evidence/runs/B08-mariadb-seed/result.json",
+    "evidence/runs/B08-mariadb-upgrade/result.json",
+    "evidence/runs/B08-mysql57-fresh/result.json",
+    "evidence/runs/B08-mysql57-seed/result.json",
+    "evidence/runs/B08-mysql57-upgrade/result.json",
+    "evidence/runs/B08-postgres-fresh/result.json",
+    "evidence/runs/B08-postgres-seed/result.json",
+    "evidence/runs/B08-postgres-upgrade/result.json"
+  ],
+  "artifacts": "evidence/B08-fixture-binaries.json",
+  "notes": [
+    "Each engine uses separate disposable main/log databases; production was untouched.",
+    "Old binaries seeded downstream data before the candidate upgraded it. Repeated startup, sessions, named Passkeys, avatars, registration uses, channel IDs, billing audit and records are retained."
+  ]
+}

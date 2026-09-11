@@ -870,27 +870,27 @@
       "0973dc2b8f550de71b75fdd3805576d3ce6ccf42",
       "6f2333990613bf3e9dd36f541fc380148c7b5175"
     ],
-    "status": "in_progress",
+    "status": "verified",
     "units": [
       {
         "id": "B08.1",
         "action": "按会话、验证、审计、日志投影与配置依赖拆分",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B08.2",
         "action": "迁移安全中心和密码加密开关，保留全部下游账户能力",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B08.3",
         "action": "逐角色/旧会话/旧账户/凭据迁移验收，防止数据泄漏",
-        "status": "pending"
+        "status": "verified"
       },
       {
         "id": "B08.1-oauth-popup",
         "action": "fix(oauth): stop treating a foreign window.opener as a bind flow (#6425)",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "e78e1db1e4ed7d65e37c2527826f290c0c63b041"
         ]
@@ -898,7 +898,7 @@
       {
         "id": "B08.1-account-updates",
         "action": "Merge commit from fork",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "0cd9dc85e334018d15c5a480e39753d0866e2035"
         ]
@@ -906,7 +906,7 @@
       {
         "id": "B08.1-user-critical-limit",
         "action": "feat(rate-limit): add user critical rate limit middleware for access token and aff transfer routes",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "1da23d6b33421daf88a1a15a6821d6304940691a"
         ]
@@ -914,7 +914,7 @@
       {
         "id": "B08.2-token-confirmation",
         "action": "fix(web): require confirmation before rotating access token (#6749)",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "9c97e78aced572d540f227007a675d7d007666ac"
         ]
@@ -922,7 +922,7 @@
       {
         "id": "B08.1-binding-columns",
         "action": "fix(oauth): avoid overwriting user state when binding",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "d7992672a606c3e97257ed411d77adecf22559c0"
         ]
@@ -930,7 +930,7 @@
       {
         "id": "B08.2-custom-bindings",
         "action": "fix(oauth): align custom binding response fields in frontend (#6818)",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "116255f076a3e9d92b0c9a85303daae73997b55e"
         ]
@@ -938,7 +938,7 @@
       {
         "id": "B08.2-admin-unbind",
         "action": "fix(web): restore admin unbinding for built-in providers (#6987)",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "692e8d6ee6a9a1620c2d731cb51a1e3154a7042b"
         ]
@@ -946,7 +946,7 @@
       {
         "id": "B08.2-password-encryption",
         "action": "feat(auth): encrypt password login transport",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "b80d633cf586b001cfbb4200bae93e65abe57c2b"
         ]
@@ -954,7 +954,7 @@
       {
         "id": "B08.2-encryption-opt-in",
         "action": "feat(auth): make password encryption opt-in #6743",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "918427d8ab41f6adaa4113d0496f1f8621855b70"
         ]
@@ -962,7 +962,7 @@
       {
         "id": "B08.1-log-metadata",
         "action": "fix(logs): isolate privileged metadata",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "057f71c2336c3981187b732a9d06f65490e9a946"
         ]
@@ -970,7 +970,7 @@
       {
         "id": "B08.1-log-projection",
         "action": "refactor(logs): simplify LogOther projection and dedupe sensitive keys",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "9f506dd7f905c288b4a119a8197cd64b77eb4a3f"
         ]
@@ -978,7 +978,7 @@
       {
         "id": "B08.2-security-center",
         "action": "feat(security): add access token management and audit logs",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "d8cb177440ceaae422d5bfd96c258d47af4e0f1d"
         ]
@@ -986,7 +986,7 @@
       {
         "id": "B08.2-operation-proofs",
         "action": "fix(security): bind verification proofs to sessions and actions",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "45c3fbe8aeb049f03c13e14298a40b87aea5bd87"
         ]
@@ -994,7 +994,7 @@
       {
         "id": "B08.2-telegram-oauth",
         "action": "feat(auth): migrate Telegram to unified OAuth",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "3e84ec0ab8239cf2277f8a10d45566630a9c10fa"
         ]
@@ -1007,7 +1007,7 @@
       {
         "id": "B08.2-access-token-proofs",
         "action": "feat(security): require verification for access token management",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "a8729b5c3709cc01d88fc3f2db5b91347fc9129e"
         ]
@@ -1015,9 +1015,17 @@
       {
         "id": "B08.2-account-security",
         "action": "feat(security): harden account binding and password changes",
-        "status": "verifying",
+        "status": "verified",
         "upstreamCommits": [
           "0973dc2b8f550de71b75fdd3805576d3ce6ccf42"
+        ]
+      },
+      {
+        "id": "B08.2-login-verification",
+        "action": "feat(auth): unify login verification and secure account deletion",
+        "status": "verified",
+        "upstreamCommits": [
+          "6f2333990613bf3e9dd36f541fc380148c7b5175"
         ]
       }
     ],
@@ -1040,7 +1048,8 @@
       "c3b677317535754423a9ae05803e461490c8f322",
       "8df8790b7d7578a1367ff5c2f67a90779e6fa122",
       "218762699011b6b06b1984e5ad9da7a87acceb22",
-      "73daee4b5345c95fe2b7ef17b31336676f6c6a3b"
+      "73daee4b5345c95fe2b7ef17b31336676f6c6a3b",
+      "0c458ec73dc73b4f7fd75ffbe955691240b6bace"
     ],
     "evidence": [
       "evidence/runs/B08.2-security-center-d8cb17744/resolution.json",
@@ -1089,9 +1098,37 @@
       "evidence/runs/B08-account-security-mariadb/result.json",
       "evidence/runs/B08-account-security-mysql57/result.json",
       "evidence/runs/B08-account-security-postgres/result.json",
-      "evidence/B08-account-security-conflicts.json"
+      "evidence/B08-account-security-conflicts.json",
+      "evidence/runs/B08-login-go/result.json",
+      "evidence/runs/B08-login-ui/result.json",
+      "evidence/runs/B08-login-auth-session/result.json",
+      "evidence/runs/B08-login-types/result.json",
+      "evidence/runs/B08-login-lint/result.json",
+      "evidence/runs/B08-login-i18n/result.json",
+      "evidence/runs/B08-backend-build/result.json",
+      "evidence/runs/B08-frontend-build/result.json",
+      "evidence/runs/B08-login-mariadb/result.json",
+      "evidence/runs/B08-login-mysql57/result.json",
+      "evidence/runs/B08-login-postgres/result.json",
+      "evidence/runs/B08-password-mariadb/result.json",
+      "evidence/runs/B08-password-mysql57/result.json",
+      "evidence/runs/B08-password-postgres/result.json",
+      "evidence/runs/B08-sqlite-fresh/result.json",
+      "evidence/runs/B08-sqlite-seed/result.json",
+      "evidence/runs/B08-sqlite-upgrade/result.json",
+      "evidence/runs/B08-mariadb-fresh/result.json",
+      "evidence/runs/B08-mariadb-seed/result.json",
+      "evidence/runs/B08-mariadb-upgrade/result.json",
+      "evidence/runs/B08-mysql57-fresh/result.json",
+      "evidence/runs/B08-mysql57-seed/result.json",
+      "evidence/runs/B08-mysql57-upgrade/result.json",
+      "evidence/runs/B08-postgres-fresh/result.json",
+      "evidence/runs/B08-postgres-seed/result.json",
+      "evidence/runs/B08-postgres-upgrade/result.json",
+      "evidence/B08-database-matrix.json",
+      "evidence/B08-acceptance.json"
     ],
-    "nextAction": "按会话、验证、审计、日志投影与配置依赖拆分"
+    "nextAction": "Proceed to B09 public caching, health series compatibility and shared status query."
   },
   {
     "id": "B09",

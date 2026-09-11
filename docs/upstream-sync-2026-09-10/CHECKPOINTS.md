@@ -1458,3 +1458,27 @@
 - Long Unicode registration passwords and profile RPM/automatic-ban data remain protected.
 - Evidence: evidence/runs/B08-account-security-go/result.json, evidence/runs/B08-account-ui/result.json, evidence/runs/B08-account-types/result.json, evidence/runs/B08-account-lint/result.json, evidence/runs/B08-account-i18n/result.json, evidence/runs/B08-account-security-mariadb/result.json, evidence/runs/B08-account-security-mysql57/result.json, evidence/runs/B08-account-security-postgres/result.json.
 - Continue 6f233399; full B08 acceptance remains pending.
+
+## 2026-09-11T00:33:57.663Z — B08.2-login-verification adaptation begun
+
+- Before HEAD: 0f5d08cfb658d39ab8f5c4b37a9f86ca68829f28.
+- Upstream: 6f2333990613bf3e9dd36f541fc380148c7b5175.
+- Unify primary-login verification and scoped account deletion; preserve named multiple Passkeys, automatic bans at challenge and session issuance, registration-code redirects, session isolation and avatar cleanup. Verify on isolated databases only.
+- Evidence: evidence/runs/B08.2-login-verification-6f2333990/intent.json.
+
+## 2026-09-11T00:47:01.086Z — B08.2-login-verification adaptation recorded
+
+- Code: 0c458ec73dc73b4f7fd75ffbe955691240b6bace.
+- Integrated unified second-factor login and scoped deletion. Preserved named multi-device Passkeys, automatic-ban projection and atomic-issuance checks, registration code handoff, session isolation and avatar cleanup. Preliminary regressions passed; committed-source and real-database acceptance follow.
+- Evidence: evidence/runs/B08.2-login-verification-6f2333990/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T00:54:56.421Z — B08 local acceptance complete
+
+- Code: 0c458ec73dc73b4f7fd75ffbe955691240b6bace.
+- All 17 stage commits verified; 84/153 rows now have stage evidence.
+- Go packages/build, 124 UI tests, 10 session tests, types, lint and translations passed.
+- Login/enrollment/deletion tests passed on SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24.
+- Full fresh/old-baseline-upgrade/repeat startup and persistent encryption keys passed on all supported relational databases.
+- Evidence: evidence/B08-acceptance.json, evidence/B08-database-matrix.json.
+- Final gates remain pending; next B09.1 public caching.

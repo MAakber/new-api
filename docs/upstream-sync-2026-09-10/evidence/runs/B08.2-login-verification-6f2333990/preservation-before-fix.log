@@ -1,0 +1,34 @@
+--- FAIL: TestSecurityLoginAutoBanAtEveryAuthorizationBoundary (0.79s)
+    --- FAIL: TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/primary_authentication (0.29s)
+        login_verification_preservation_test.go:22: database: sqlite 3.50.4
+        login_verification_preservation_test.go:52: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/login_verification_preservation_test.go:52
+            	Error:      	Expected nil, but got: &service.LoginChallenge{RequireVerification:true, FlowToken:"I3xa3L_-QhpuFVEUqvPShNrf2bURpgr36wUfyVqROq8", ExpiresAt:1789087457, Methods:[]service.VerificationMethodOption{service.VerificationMethodOption{Method:"2fa", Available:true, Reason:""}}}
+            	Test:       	TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/primary_authentication
+        login_verification_preservation_test.go:61: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/login_verification_preservation_test.go:61
+            	Error:      	An error is expected but got nil.
+            	Test:       	TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/primary_authentication
+    --- FAIL: TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/factor_validation (0.24s)
+        login_verification_preservation_test.go:22: database: sqlite 3.50.4
+        login_verification_preservation_test.go:55: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/login_verification_preservation_test.go:55
+            	Error:      	Expected nil, but got: &service.LoginVerification{Flow:(*model.AuthFlow)(0xc0004c14a0), State:(*model.UserVerificationState)(0xc00085fd10), payload:service.loginFlowPayload{AuthVersion:1, LoginMethod:"password"}}
+            	Test:       	TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/factor_validation
+        login_verification_preservation_test.go:61: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/login_verification_preservation_test.go:61
+            	Error:      	An error is expected but got nil.
+            	Test:       	TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/factor_validation
+    --- FAIL: TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/session_commit (0.25s)
+        login_verification_preservation_test.go:22: database: sqlite 3.50.4
+        login_verification_preservation_test.go:59: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/login_verification_preservation_test.go:59
+            	Error:      	Expected nil, but got: &service.AuthBundle{AccessToken:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzaWQiOiJmYjRlZGRiYS1jNmQ5LTRkZjUtOGU2OC1mZmQ3NTBhYjNkY2QiLCJ1diI6MSwic3YiOjEsImlzcyI6Im5ldy1hcGkiLCJzdWIiOiIxIiwiYXVkIjpbIm5ldy1hcGktZGFzaGJvYXJkIl0sImV4cCI6MTc4OTA4ODA1NywibmJmIjoxNzg5MDg3MTUyLCJpYXQiOjE3ODkwODcxNTcsImp0aSI6IjA1ZDg5YjEzLTNhZjItNDA0ZS04NjBjLWJiZmM2ZmVjNjcxOCJ9.YlfEdlFRII9FwpY42AikReiLYL0FkstxxLg_z4CzoyA", TokenType:"Bearer", AccessExpiresAt:1789088057, Session:service.LoginSessionView{SID:"fb4eddba-c6d9-4df5-8e68-ffd750ab3dcd", Current:true, LoginMethod:"password", IP:"127.0.0.1", UserAgent:"ban-preservation", CreatedAt:1789087157, LastActiveAt:1789087157, ExpiresAt:1791679157}, RefreshToken:"fb4eddba-c6d9-4df5-8e68-ffd750ab3dcd.GPSpATe6GPKUuPJwOlgUwMhEzZBFGOOZIMT7rg1kPajTnawBTa7IKIFwU143efCo"}
+            	Test:       	TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/session_commit
+        login_verification_preservation_test.go:61: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/login_verification_preservation_test.go:61
+            	Error:      	An error is expected but got nil.
+            	Test:       	TestSecurityLoginAutoBanAtEveryAuthorizationBoundary/session_commit
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	1.824s
+FAIL

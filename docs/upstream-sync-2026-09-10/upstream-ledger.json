@@ -137,7 +137,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Use a popup-scoped provider/state stamp to distinguish binding from foreign-opener login, retaining the downstream pending-registration challenge and sanitized auth redirect flow.",
     "resolution_commits": [
@@ -145,7 +145,8 @@
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B08.1-oauth-popup-e78e1db1e/resolution.json"
+      "evidence/runs/B08.1-oauth-popup-e78e1db1e/resolution.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -601,7 +602,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Rotate access tokens through a targeted column update; make invitation increments atomic and exclude concurrent accounting/token fields from general user updates. Preserve per-user RPM validation, profile authorization, avatar routes and named multiple Passkeys.",
     "resolution_commits": [
@@ -609,7 +610,8 @@
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B08.1-account-updates-0cd9dc85e/resolution.json"
+      "evidence/runs/B08.1-account-updates-0cd9dc85e/resolution.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -721,7 +723,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Apply user-scoped access-token and affiliate-transfer limits through the existing Redis/in-memory limiter, preserving Retry-After and local account routes. Add deterministic Redis behavior tests for IP rotation, separate actions, separate users and missing authentication.",
     "resolution_commits": [
@@ -729,7 +731,8 @@
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B08.1-user-critical-limit-1da23d6b3/resolution.json"
+      "evidence/runs/B08.1-user-critical-limit-1da23d6b3/resolution.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -1251,7 +1254,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Opening the token dialog no longer changes credentials. Regeneration requires confirmation, is guarded during the request, and closes with the one-time token display cleared.",
     "resolution_commits": [
@@ -1259,7 +1262,8 @@
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B08.2-token-confirmation-9c97e78ac/resolution.json"
+      "evidence/runs/B08.2-token-confirmation-9c97e78ac/resolution.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -1519,7 +1523,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "applied",
     "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
     "resolution_commits": [
@@ -1527,7 +1531,8 @@
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B08.1-binding-columns-d7992672a/result.json"
+      "evidence/runs/B08.1-binding-columns-d7992672a/result.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -2222,7 +2227,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Use the actual numeric provider IDs and provider_user_id fields in both self and administrator binding views. Preserve OAuth popup ownership, avatars and profile state, and restore configurable policy examples with seven-language guidance.",
     "resolution_commits": [
@@ -2230,7 +2235,8 @@
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B08.2-custom-bindings-116255f07/resolution.json"
+      "evidence/runs/B08.2-custom-bindings-116255f07/resolution.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -2920,7 +2926,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Keep stored user fields unchanged and send provider type names accepted by the backend. Tests cover all seven built-in bindings and custom bindings for enabled and removed/disabled providers.",
     "resolution_commits": [
@@ -2928,7 +2934,8 @@
     ],
     "preservationIds": [],
     "evidence": [
-      "evidence/runs/B08.2-admin-unbind-692e8d6ee/resolution.json"
+      "evidence/runs/B08.2-admin-unbind-692e8d6ee/resolution.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -3532,7 +3539,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Persist a shared RSA key in its own table and expose only the public key through the existing login API. Add the table to the downstream ordered migrator; do not resurrect the removed concurrent migrator. Verify together with the dependent opt-in change.",
     "resolution_commits": [
@@ -3544,7 +3551,8 @@
       "evidence/runs/B08-password-go/result.json",
       "evidence/runs/B08-password-ui/result.json",
       "evidence/runs/B08-password-types/result.json",
-      "evidence/runs/B08-password-lint/result.json"
+      "evidence/runs/B08-password-lint/result.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -3628,7 +3636,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "applied",
     "resolution_rationale": "Inspected upstream patch applied with original SHA retained; behavior verification pending.",
     "resolution_commits": [
@@ -3640,7 +3648,8 @@
       "evidence/runs/B08-password-go/result.json",
       "evidence/runs/B08-password-ui/result.json",
       "evidence/runs/B08-password-types/result.json",
-      "evidence/runs/B08-password-lint/result.json"
+      "evidence/runs/B08-password-lint/result.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -4908,7 +4917,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Use LogOther audience scopes and lossless legacy projection for all existing log writers. Preserve downstream mandatory IP capture, safe request-debug metadata and private stream diagnostics. Pending B10/B12/B14 units record changes requiring later-only types; final verification must include them.",
     "resolution_commits": [
@@ -4920,7 +4929,8 @@
       "evidence/runs/B08-logs-go/result.json",
       "evidence/runs/B08-logs-ui/result.json",
       "evidence/runs/B08-logs-types/result.json",
-      "evidence/runs/B08-logs-lint/result.json"
+      "evidence/runs/B08-logs-lint/result.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -5003,7 +5013,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Share legacy-sensitive keys and non-mutating LogOther snapshots while preserving downstream stream diagnostic privacy. Keep future plugin/snapshot tests in the pending B14 scoped-log unit.",
     "resolution_commits": [
@@ -5015,7 +5025,8 @@
       "evidence/runs/B08-logs-go/result.json",
       "evidence/runs/B08-logs-ui/result.json",
       "evidence/runs/B08-logs-types/result.json",
-      "evidence/runs/B08-logs-lint/result.json"
+      "evidence/runs/B08-logs-lint/result.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -5782,7 +5793,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Preserved named multi-Passkey credentials, avatar APIs, mandatory IP auditing, downstream log privacy, account fields, compact date picker and channel floating windows. Added session-independent audit storage with SQLite TEXT fallback, JSON precision, role projections, token lifecycle and cancellation tests. Go packages and 76 frontend cases pass; real SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24 fresh/upgrade/split-log tests pass. B09 public-cache and B14 plugin fixtures remain tracked dependencies. ClickHouse and full startup DDL matrix remain B08 validation work. ClickHouse audit metadata uses String JSON text for the documented 24.8 server, with exact structured API data preserved; fresh/upgrade matrix passed.",
     "resolution_commits": [
@@ -5806,7 +5817,8 @@
       "evidence/runs/B08-audit-clickhouse24-fixed/result.json",
       "evidence/runs/B08-audit-mariadb-fixed/result.json",
       "evidence/runs/B08-audit-mysql57-fixed/result.json",
-      "evidence/runs/B08-audit-postgres-fixed/result.json"
+      "evidence/runs/B08-audit-postgres-fixed/result.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -5999,7 +6011,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Integrated session/auth-version/scope/context bound single-use proofs, password and linked OAuth verification and protected enrollment. Preserved named multiple Passkeys with device-targeted deletion, server-owned registration names, proxy HTTP transports through initialization injection, structured multi-key disclosure and late-response cancellation. Preliminary affected Go packages, UI cases, types and touched-file lint pass; real database and recorded final-source checks follow.",
     "resolution_commits": [
@@ -6015,7 +6027,8 @@
       "evidence/runs/B08-proofs-i18n/result.json",
       "evidence/runs/B08-proofs-mariadb/result.json",
       "evidence/runs/B08-proofs-mysql57/result.json",
-      "evidence/runs/B08-proofs-postgres-url/result.json"
+      "evidence/runs/B08-proofs-postgres-url/result.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -6120,7 +6133,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Integrated PKCE, ID-token verification, provider name conflicts and strict session-bound Telegram binding. Existing identity IDs are retained and unknown Telegram accounts do not create new users. Kept downstream registration-code/avatar contracts, proxy transport for token and cached JWKS calls, named multiple Passkeys and logout coordination. Administrator Telegram OAuth configuration is a deployment prerequisite when Telegram login is enabled.",
     "resolution_commits": [
@@ -6137,7 +6150,8 @@
       "evidence/runs/B08-telegram-mariadb-live/result.json",
       "evidence/runs/B08-telegram-mysql57-live/result.json",
       "evidence/runs/B08-telegram-postgres-live/result.json",
-      "evidence/B08-telegram-conflicts.json"
+      "evidence/B08-telegram-conflicts.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -6189,7 +6203,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Added generation/revocation proofs with operation/session binding and stricter method policy. Retained multiple Passkey routes and deletion contexts, token cancellation, one-time plaintext display and mobile audit history. Registered upstream and downstream regressions for subsequent verification.",
     "resolution_commits": [
@@ -6205,7 +6219,8 @@
       "evidence/runs/B08-token-proofs-mariadb/result.json",
       "evidence/runs/B08-token-proofs-mysql57/result.json",
       "evidence/runs/B08-token-proofs-postgres/result.json",
-      "evidence/B08-access-token-proof-conflicts.json"
+      "evidence/B08-access-token-proof-conflicts.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -6336,7 +6351,7 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "implemented",
+    "status": "verified",
     "resolution": "adapted",
     "resolution_rationale": "Integrated scoped one-use account proofs, session-bound OAuth/email confirmations, last-login-method protection, dual password-hash readers and long-password envelopes. Retained downstream registration-code/identity flows, profile limits and automatic-ban data, avatars, named multiple Passkeys and audit actions. Preliminary regression checks pass; real-database and committed-source verification follow.",
     "resolution_commits": [
@@ -6353,7 +6368,8 @@
       "evidence/runs/B08-account-security-mariadb/result.json",
       "evidence/runs/B08-account-security-mysql57/result.json",
       "evidence/runs/B08-account-security-postgres/result.json",
-      "evidence/B08-account-security-conflicts.json"
+      "evidence/B08-account-security-conflicts.json",
+      "evidence/B08-acceptance.json"
     ],
     "final_review": {
       "status": "pending",
@@ -6604,12 +6620,44 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated unified second-factor login and scoped deletion. Preserved named multi-device Passkeys, automatic-ban projection and atomic-issuance checks, registration code handoff, session isolation and avatar cleanup. Preliminary regressions passed; committed-source and real-database acceptance follow.",
+    "resolution_commits": [
+      "0c458ec73dc73b4f7fd75ffbe955691240b6bace"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-login-verification-6f2333990/resolution.json",
+      "evidence/B08-acceptance.json",
+      "evidence/runs/B08-login-go/result.json",
+      "evidence/runs/B08-login-ui/result.json",
+      "evidence/runs/B08-login-auth-session/result.json",
+      "evidence/runs/B08-login-types/result.json",
+      "evidence/runs/B08-login-lint/result.json",
+      "evidence/runs/B08-login-i18n/result.json",
+      "evidence/runs/B08-backend-build/result.json",
+      "evidence/runs/B08-frontend-build/result.json",
+      "evidence/runs/B08-login-mariadb/result.json",
+      "evidence/runs/B08-login-mysql57/result.json",
+      "evidence/runs/B08-login-postgres/result.json",
+      "evidence/runs/B08-password-mariadb/result.json",
+      "evidence/runs/B08-password-mysql57/result.json",
+      "evidence/runs/B08-password-postgres/result.json",
+      "evidence/runs/B08-sqlite-fresh/result.json",
+      "evidence/runs/B08-sqlite-seed/result.json",
+      "evidence/runs/B08-sqlite-upgrade/result.json",
+      "evidence/runs/B08-mariadb-fresh/result.json",
+      "evidence/runs/B08-mariadb-seed/result.json",
+      "evidence/runs/B08-mariadb-upgrade/result.json",
+      "evidence/runs/B08-mysql57-fresh/result.json",
+      "evidence/runs/B08-mysql57-seed/result.json",
+      "evidence/runs/B08-mysql57-upgrade/result.json",
+      "evidence/runs/B08-postgres-fresh/result.json",
+      "evidence/runs/B08-postgres-seed/result.json",
+      "evidence/runs/B08-postgres-upgrade/result.json",
+      "evidence/B08-login-verification-conflicts.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

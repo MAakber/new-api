@@ -1,0 +1,8 @@
+=== RUN   TestPasswordEncryptionPersistence
+=== RUN   TestPasswordEncryptionPersistence/mysql
+[SYS] 2026/09/11 - 08:49:02 | using MySQL as database 
+[SYS] 2026/09/11 - 08:49:02 | using MySQL as database 
+--- PASS: TestPasswordEncryptionPersistence (0.41s)
+    --- PASS: TestPasswordEncryptionPersistence/mysql (0.41s)
+PASS
+ok  	github.com/QuantumNous/new-api/model	1.142s

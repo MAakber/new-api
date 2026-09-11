@@ -1,0 +1,17 @@
+bun test v1.3.14 (0d9b296a)
+
+src\lib\auth-session.test.ts:
+(pass) authentication session coordination > bootstrap distinguishes a completed anonymous check from an active session [0.86ms]
+(pass) authentication session coordination > a session mismatch clears only local state and retries without the stale SID [0.66ms]
+(pass) authentication session coordination > a rejected refresh confirms anonymous state and synchronizes sign-out [0.21ms]
+(pass) authentication session coordination > a temporary refresh failure remains retryable without clearing the session [0.17ms]
+(pass) authentication session coordination > a rate limited refresh remains retryable without clearing the session [0.15ms]
+(pass) authentication session coordination > an exhausted refresh race clears the unusable local session [0.19ms]
+(pass) authentication session coordination > an unexpected successful response is treated as out of sync [0.23ms]
+(pass) authentication session coordination > a refresh response cannot restore credentials after a newer auth operation [0.23ms]
+(pass) authentication session coordination > explicit rotations update only the current session [0.68ms]
+(pass) authentication session coordination > sign-out clears user-scoped query, mutation, and authentication state [2.27ms]
+
+ 10 pass
+ 0 fail
+Ran 10 tests across 1 file. [297.00ms]

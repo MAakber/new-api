@@ -1,0 +1,28 @@
+{
+  "id": "B08-login-mariadb",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "-run=^(TestSecurityLogin|TestSecurityAccountDeletion|TestSecurityEnrollment)",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "0c458ec73dc73b4f7fd75ffbe955691240b6bace",
+  "started_at": "2026-09-11T00:48:02.104Z",
+  "finished_at": "2026-09-11T00:53:52.752Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": true,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}
