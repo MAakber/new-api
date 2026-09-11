@@ -868,7 +868,6 @@
       "3e84ec0ab8239cf2277f8a10d45566630a9c10fa",
       "a8729b5c3709cc01d88fc3f2db5b91347fc9129e",
       "0973dc2b8f550de71b75fdd3805576d3ce6ccf42",
-      "3f8a50cf8877683669cd812240a0beaf7b171c32",
       "6f2333990613bf3e9dd36f541fc380148c7b5175"
     ],
     "status": "in_progress",
@@ -1012,6 +1011,14 @@
         "upstreamCommits": [
           "a8729b5c3709cc01d88fc3f2db5b91347fc9129e"
         ]
+      },
+      {
+        "id": "B08.2-account-security",
+        "action": "feat(security): harden account binding and password changes",
+        "status": "verifying",
+        "upstreamCommits": [
+          "0973dc2b8f550de71b75fdd3805576d3ce6ccf42"
+        ]
       }
     ],
     "codeCommits": [
@@ -1032,7 +1039,8 @@
       "5bf3f4b30a853589c568287608d2a0d91ee12447",
       "c3b677317535754423a9ae05803e461490c8f322",
       "8df8790b7d7578a1367ff5c2f67a90779e6fa122",
-      "218762699011b6b06b1984e5ad9da7a87acceb22"
+      "218762699011b6b06b1984e5ad9da7a87acceb22",
+      "73daee4b5345c95fe2b7ef17b31336676f6c6a3b"
     ],
     "evidence": [
       "evidence/runs/B08.2-security-center-d8cb17744/resolution.json",
@@ -1072,7 +1080,16 @@
       "evidence/runs/B08-token-proofs-lint/result.json",
       "evidence/runs/B08-token-proofs-mariadb/result.json",
       "evidence/runs/B08-token-proofs-mysql57/result.json",
-      "evidence/runs/B08-token-proofs-postgres/result.json"
+      "evidence/runs/B08-token-proofs-postgres/result.json",
+      "evidence/runs/B08-account-security-go/result.json",
+      "evidence/runs/B08-account-ui/result.json",
+      "evidence/runs/B08-account-types/result.json",
+      "evidence/runs/B08-account-lint/result.json",
+      "evidence/runs/B08-account-i18n/result.json",
+      "evidence/runs/B08-account-security-mariadb/result.json",
+      "evidence/runs/B08-account-security-mysql57/result.json",
+      "evidence/runs/B08-account-security-postgres/result.json",
+      "evidence/B08-account-security-conflicts.json"
     ],
     "nextAction": "按会话、验证、审计、日志投影与配置依赖拆分"
   },
@@ -1179,7 +1196,8 @@
     ],
     "dependencyStatus": "Planned prerequisites; inspect additional code dependencies before each unit",
     "upstreamCommits": [
-      "a073f74b38a33bb154821089c097658cbdcc0fbe"
+      "a073f74b38a33bb154821089c097658cbdcc0fbe",
+      "3f8a50cf8877683669cd812240a0beaf7b171c32"
     ],
     "status": "pending",
     "units": [
@@ -1197,6 +1215,17 @@
         "id": "B11.3",
         "action": "验证大余额、精度、单请求 int32 上限与迁移后写入恢复",
         "status": "pending"
+      },
+      {
+        "id": "B11.3-token-quota-audit",
+        "action": "Integrate 3f8a50cf token/quota audit only after a073f74b wallet bounds and B10 quota cache/automatic groups; preserve signed balances, int32 per-request safety and correlated usage/audit records.",
+        "status": "pending",
+        "upstreamCommits": [
+          "3f8a50cf8877683669cd812240a0beaf7b171c32"
+        ],
+        "afterUpstream": [
+          "a073f74b38a33bb154821089c097658cbdcc0fbe"
+        ]
       }
     ],
     "codeCommits": [],

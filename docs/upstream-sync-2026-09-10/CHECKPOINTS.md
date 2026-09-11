@@ -1429,3 +1429,32 @@
 - Scoped one-use proof, credential state, session isolation and token mutation cases pass on real SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24.
 - Evidence: evidence/runs/B08-token-proofs-go/result.json, evidence/runs/B08-token-proofs-ui/result.json, evidence/runs/B08-token-proofs-types/result.json, evidence/runs/B08-token-proofs-lint/result.json, evidence/runs/B08-token-proofs-mariadb/result.json, evidence/runs/B08-token-proofs-mysql57/result.json, evidence/runs/B08-token-proofs-postgres/result.json.
 - Continue account binding/password changes; full B08 acceptance remains pending.
+
+## 2026-09-11T00:15:18.639Z — B08.2-account-security adaptation begun
+
+- Before HEAD: af7baee3ba8491c62cfbf14bd820fe1af3fddaea.
+- Upstream: 0973dc2b8f550de71b75fdd3805576d3ce6ccf42.
+- Integrate scoped account binding/password operations, session-bound email/OAuth flows, last-login-method protection, bcrypt-compatible Argon2id and long-password envelopes. Preserve registration-code challenges, profile/avatar fields, named multiple Passkeys, login proxy transport and audited quotas. Record dual-reader rollout and rollback prerequisites; no production settings or data are changed.
+- Evidence: evidence/runs/B08.2-account-security-0973dc2b8/intent.json.
+
+## 2026-09-11T00:24:15.628Z — B08.2-account-security adaptation recorded
+
+- Code: 73daee4b5345c95fe2b7ef17b31336676f6c6a3b.
+- Integrated scoped one-use account proofs, session-bound OAuth/email confirmations, last-login-method protection, dual password-hash readers and long-password envelopes. Retained downstream registration-code/identity flows, profile limits and automatic-ban data, avatars, named multiple Passkeys and audit actions. Preliminary regression checks pass; real-database and committed-source verification follow.
+- Evidence: evidence/runs/B08.2-account-security-0973dc2b8/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T00:27:07.185Z — B08 to B11 dependency correction
+
+- Move unstarted 3f8a50cf8877683669cd812240a0beaf7b171c32 to B11 after a073f74b.
+- Required wallet limits/strict conversions and quota reserve cache do not exist yet; B10/B11 provide them.
+- No source patch skipped or partially accepted. B08 login verification remains next.
+
+## 2026-09-11T00:33:14.868Z — B08 account security verification registered
+
+- Code: 73daee4b5345c95fe2b7ef17b31336676f6c6a3b.
+- Go regressions, 103 UI tests, types, touched lint and literal translation checks passed.
+- Security account/enrollment and OAuth binding cases passed on local SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24.
+- Long Unicode registration passwords and profile RPM/automatic-ban data remain protected.
+- Evidence: evidence/runs/B08-account-security-go/result.json, evidence/runs/B08-account-ui/result.json, evidence/runs/B08-account-types/result.json, evidence/runs/B08-account-lint/result.json, evidence/runs/B08-account-i18n/result.json, evidence/runs/B08-account-security-mariadb/result.json, evidence/runs/B08-account-security-mysql57/result.json, evidence/runs/B08-account-security-postgres/result.json.
+- Continue 6f233399; full B08 acceptance remains pending.

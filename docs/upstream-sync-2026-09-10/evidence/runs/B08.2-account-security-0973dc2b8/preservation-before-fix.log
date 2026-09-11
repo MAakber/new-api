@@ -1,0 +1,42 @@
+
+2026/09/11 08:18:49 [31;1mD:/10178/Projects/new-api-upstream-sync/model/password_crypto.go:27 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `login_encryption_keys` WHERE slot = "active" ORDER BY `login_encryption_keys`.`id` LIMIT 1
+
+2026/09/11 08:18:49 [31;1mD:/10178/Projects/new-api-upstream-sync/model/twofa.go:45 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `two_fas` WHERE user_id = 1 AND `two_fas`.`deleted_at` IS NULL ORDER BY `two_fas`.`id` LIMIT 1
+
+2026/09/11 08:18:49 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 08:18:49 [31;1mD:/10178/Projects/new-api-upstream-sync/model/twofa.go:45 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `two_fas` WHERE user_id = 1 AND `two_fas`.`deleted_at` IS NULL ORDER BY `two_fas`.`id` LIMIT 1
+
+2026/09/11 08:18:49 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 1 ORDER BY `user_avatars`.`id` LIMIT 1
+--- FAIL: TestPasswordLoginEncryptionPreservesAuthentication (0.24s)
+    --- FAIL: TestPasswordLoginEncryptionPreservesAuthentication/disabled_keeps_normal_login (0.04s)
+        password_login_test.go:114: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/password_login_test.go:114
+            	Error:      	Not equal: 
+            	            	expected: int(23)
+            	            	actual  : <nil>(<nil>)
+            	Test:       	TestPasswordLoginEncryptionPreservesAuthentication/disabled_keeps_normal_login
+    --- FAIL: TestPasswordLoginEncryptionPreservesAuthentication/enabled_decrypts_login (0.04s)
+        password_login_test.go:114: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/password_login_test.go:114
+            	Error:      	Not equal: 
+            	            	expected: int(23)
+            	            	actual  : <nil>(<nil>)
+            	Test:       	TestPasswordLoginEncryptionPreservesAuthentication/enabled_decrypts_login
+
+2026/09/11 08:18:49 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user.go:325 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE username = "unicode-code" ORDER BY `users`.`id` LIMIT 1
+--- FAIL: TestRegistrationCodeCompletionRetainsLongUnicodePassword (0.00s)
+    registration_code_test.go:167: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/controller/registration_code_test.go:83
+        	            				D:/10178/Projects/new-api-upstream-sync/controller/registration_code_test.go:167
+        	Error:      	Should be true
+        	Test:       	TestRegistrationCodeCompletionRetainsLongUnicodePassword
+FAIL
+FAIL	github.com/QuantumNous/new-api/controller	0.999s
+FAIL

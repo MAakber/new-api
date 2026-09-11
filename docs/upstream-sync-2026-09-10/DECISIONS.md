@@ -52,3 +52,11 @@ Upstream 3e84ec0ab8239cf2277f8a10d45566630a9c10fa replaces legacy Telegram widge
 ## 2026-09-11T00:10:06.783Z — A19 ClickHouse audit compatibility
 
 The documented docker-compose.yml uses ClickHouse 24.8. Native JSON in new audit table creation fails on this default version, as B08-clickhouse-audit shows. Store validated JSON text in String, matching the existing usage-log storage, while retaining typed AuditOther and exact numeric metadata in APIs. Do not require experimental server settings or silently raise the supported log-database version. Verify fresh/upgrade startup, repeat initialization, historical usage rows, cleanup/TTL independence and role projections against 24.8.14.39. This integration has not been deployed; there is no released native-JSON audit schema to migrate.
+
+## 2026-09-11T00:24:14.541Z — A20 password format rollout and rollback
+
+0973dc2b8f550de71b75fdd3805576d3ce6ccf42 reads historical bcrypt hashes and new Argon2id hashes; long encrypted passwords use v2 RSA-OAEP/AES-GCM envelopes while legacy RSA ciphertext remains readable. There is no bulk password rewrite. For a rolling deployment, first deploy the dual-format readers to every serving instance with ACCOUNT_PASSWORD_HASH_ALGORITHM=bcrypt, then enable Argon2id writes. Once new hashes exist, a rollback build must retain both hash readers and both envelope readers; the original baseline alone is no longer a valid password-format rollback. Record this in B18 release acceptance. The downstream registration-code flow also uses the new hash writer but still creates accounts only after atomic code consumption. Production remains unchanged.
+
+## 2026-09-11T00:27:07.184Z — A21 quota audit requires B10/B11
+
+Pending upstream 3f8a50cf8877683669cd812240a0beaf7b171c32 introduces AdjustUserQuota using common.MaxWalletQuota, WalletQuotaFromDecimalStrict and ErrWalletQuotaLimitExceeded from B11 a073f74b; it also patches model/quota_reserve.go and Token.AutoGroups from B10. Those APIs/files do not exist at the current B08 checkpoint. Move the entire unstarted commit to B11 immediately after wallet integration instead of introducing temporary accounting semantics or a dependency cycle. B08 6f233399 does not depend on these quota/token audit additions and can proceed. Total remains 153; all token, audit UI and quota behavior stays required.

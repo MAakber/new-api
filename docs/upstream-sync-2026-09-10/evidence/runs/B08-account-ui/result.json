@@ -1,0 +1,32 @@
+{
+  "id": "B08-account-ui",
+  "command": [
+    "bun",
+    "x",
+    "vitest",
+    "run",
+    "--config",
+    "vitest.sync.config.ts",
+    "src/features/auth",
+    "src/features/security",
+    "src/features/profile",
+    "src/features/users"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "73daee4b5345c95fe2b7ef17b31336676f6c6a3b",
+  "started_at": "2026-09-11T00:24:18.229Z",
+  "finished_at": "2026-09-11T00:24:38.655Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

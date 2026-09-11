@@ -1,0 +1,64 @@
+{
+  "upstream": "0973dc2b8f550de71b75fdd3805576d3ce6ccf42",
+  "before_head": "af7baee3ba8491c62cfbf14bd820fe1af3fddaea",
+  "resolutions": [
+    {
+      "path": "common/crypto.go",
+      "decision": "Retain existing AES encryption helpers and add Argon2id-aware validation."
+    },
+    {
+      "path": "controller/audit.go",
+      "decision": "Retain downstream banner audit actions alongside new binding/password events."
+    },
+    {
+      "path": "controller/auth_flow_test.go",
+      "decision": "Initialize both security flow/session/audit tables and downstream avatar table."
+    },
+    {
+      "path": "controller/model_list_test.go",
+      "decision": "Remove obsolete private password-helper tests. API current-password, missing-proof and first-password race contracts are exercised by security_account_test.go. Do not pull unrelated future custom-auto-group tests from the patch context."
+    },
+    {
+      "path": "controller/passkey.go",
+      "decision": "Require user verification for account operations using the complete downstream named-credential list."
+    },
+    {
+      "path": "model/auth_flow.go",
+      "decision": "Keep registration and registration-identity flow purposes and add email binding."
+    },
+    {
+      "path": "service/security_verification.go",
+      "decision": "Retain device-targeted passkey.delete contexts while adding provider/email/code-bound account actions and password scopes."
+    },
+    {
+      "path": "controller/user.go",
+      "decision": "Retain automatic-ban checks, rate-limit and avatar profile fields and avatar cleanup. Replace legacy email binding handler with session-bound flow. Registration-code payload hashes now use HashAccountPassword to support long Unicode while keeping deferred creation."
+    },
+    {
+      "path": "controller/wechat.go",
+      "decision": "Keep localized downstream registration challenge behavior and scoped session-bound binding."
+    },
+    {
+      "path": "web/src/features/auth/secure-verification/types.ts",
+      "decision": "Union includes targeted Passkey deletion and strict binding contexts without empty-context escape."
+    },
+    {
+      "path": "web/src/features/profile/api.ts",
+      "decision": "Retain avatar upload response and endpoints alongside secure account operations."
+    },
+    {
+      "path": "web/src/features/users/components/users-mutate-drawer.tsx",
+      "decision": "Retain numeric input behavior and add shared Unicode password validation."
+    },
+    {
+      "path": "model/user.go",
+      "decision": "New profile SELECT keeps requests_per_minute and automatic-ban fields while excluding password hash and management bearer token."
+    }
+  ],
+  "verification": {
+    "preliminary_go": "All affected packages passed after preserving downstream fields and registration hashing.",
+    "preliminary_ui": "101 auth/profile/security/user tests passed; two additional long Unicode cipher interoperability cases subsequently passed (7 password transport cases).",
+    "regression_before_fix": "evidence/runs/B08.2-account-security-0973dc2b8/preservation-before-fix.log",
+    "locales": "37 keys applied across all seven locales using sanctioned writer."
+  }
+}

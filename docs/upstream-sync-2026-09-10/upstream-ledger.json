@@ -6336,12 +6336,25 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "implemented",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated scoped one-use account proofs, session-bound OAuth/email confirmations, last-login-method protection, dual password-hash readers and long-password envelopes. Retained downstream registration-code/identity flows, profile limits and automatic-ban data, avatars, named multiple Passkeys and audit actions. Preliminary regression checks pass; real-database and committed-source verification follow.",
+    "resolution_commits": [
+      "73daee4b5345c95fe2b7ef17b31336676f6c6a3b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B08.2-account-security-0973dc2b8/resolution.json",
+      "evidence/runs/B08-account-security-go/result.json",
+      "evidence/runs/B08-account-ui/result.json",
+      "evidence/runs/B08-account-types/result.json",
+      "evidence/runs/B08-account-lint/result.json",
+      "evidence/runs/B08-account-i18n/result.json",
+      "evidence/runs/B08-account-security-mariadb/result.json",
+      "evidence/runs/B08-account-security-mysql57/result.json",
+      "evidence/runs/B08-account-security-postgres/result.json",
+      "evidence/B08-account-security-conflicts.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -6392,7 +6405,7 @@
     ],
     "assessmentGroup": "统一安全中心、访问令牌和账户审计",
     "assessmentRisk": 4,
-    "batchId": "B08",
+    "batchId": "B11",
     "plannedResolution": "adapted",
     "baselineSimulation": {
       "exitCode": 1,
@@ -6434,7 +6447,8 @@
     "final_review": {
       "status": "pending",
       "commit": null
-    }
+    },
+    "dependency_note": "Requires B10 quota reservation cache and automatic token groups plus B11 a073f74b wallet bounds/strict decimal conversion; apply after wallet migration implementation."
   },
   {
     "sha": "521cebf585efc2e782dd9fb93d0f66752c8d3c32",
