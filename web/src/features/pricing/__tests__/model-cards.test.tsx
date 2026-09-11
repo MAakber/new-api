@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import {
   act,
+  cleanup,
   fireEvent,
   render,
   screen,
@@ -77,6 +78,8 @@ beforeEach(() => {
   })
 })
 afterEach(() => {
+  cleanup()
+  vi.useRealTimers()
   queryClient.clear()
   useSystemConfigStore
     .getState()
