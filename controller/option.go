@@ -77,6 +77,8 @@ func buildCompletionRatioMetaValue(optionValues map[string]string) string {
 }
 
 func GetOptions(c *gin.Context) {
+	// Pricing patch clients use these stored maps as their CAS snapshot. Keep
+	// display-only built-in defaults separate from administrator configuration.
 	var options []*model.Option
 	optionValues := make(map[string]string)
 	common.OptionMapRWMutex.Lock()
