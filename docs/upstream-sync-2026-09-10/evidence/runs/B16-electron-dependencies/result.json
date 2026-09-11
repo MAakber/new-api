@@ -1,0 +1,27 @@
+{
+  "id": "B16-electron-dependencies",
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js",
+    "ci",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\electron",
+  "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3",
+  "started_at": "2026-09-11T11:03:55.212Z",
+  "finished_at": "2026-09-11T11:04:07.847Z",
+  "status": "failed",
+  "exit_code": 1,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

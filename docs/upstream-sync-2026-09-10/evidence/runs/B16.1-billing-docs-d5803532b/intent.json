@@ -1,0 +1,9 @@
+{
+  "upstream": "d5803532bdccde3a2b1583291f51e92d3519b1c6",
+  "unit": "B16.1-billing-docs",
+  "before_head": "7b4e6bcdf90ac8b8056346b25d146f132eec8dd8",
+  "rationale": "Document built-in expression prices and consolidated behavior tests without altering downstream administrator overrides or accounting logic.",
+  "files": [
+    "AGENTS.md"
+  ]
+}

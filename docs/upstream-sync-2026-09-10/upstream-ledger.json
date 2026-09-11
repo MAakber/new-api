@@ -826,12 +826,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Preserve repository variable, token scope and pinned workflow identities. Synchronization is explicitly dispatched; release text is updated first and binary assets are uploaded only when sync_files is true. No workflow was dispatched.",
+    "resolution_commits": [
+      "f5127055ca82fe15456101b20fa5f3435c501441"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.1-gitcode-5c3abffe8/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1825,12 +1830,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Apply the reviewed builder 26.15.3 and runtime 9.7.0 graph. Desktop platform targets, bundled license resources and local date/SHA version mechanism remain intact.",
+    "resolution_commits": [
+      "05a8fbb08616ac8f5fc05466bbe6b262f6c39316"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.2-builder-626058075/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1897,12 +1907,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Apply the scoped fast-uri 3.1.5 lockfile update while retaining the downstream dependency graph.",
+    "resolution_commits": [
+      "3b23c23812326dbd4097f463b55e6bcfb2a12b82"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.2-fast-uri-53a8739ee/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2022,12 +2037,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Apply the scoped js-yaml 4.3.1 lockfile update while retaining downstream desktop packaging.",
+    "resolution_commits": [
+      "537b0891205c7fa046f943e2eb8a0cc1ab38b38b"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.2-js-yaml-cf38105a9/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2058,12 +2078,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Update Electron to 39.8.10 with matching lock integrity; preserve platform targets, license resources and host API behavior.",
+    "resolution_commits": [
+      "b832165cd22f4783f746958672ab985ea0794369"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.2-electron-bbf67df04/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2808,12 +2833,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Pin CI and the upstream-verified Docker manifest to Bun 1.4.0. Keep existing Go image, local relaykit build wiring and downstream version mechanism.",
+    "resolution_commits": [
+      "bf5fe2a551f6816a931322ff606c8a5a7a22faa8"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.2-bun-8c25eee71/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2968,12 +2998,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Retain the upstream templates and remove its obsolete PR-check workflow. Existing downstream release and integration workflows remain. Owner-template reconciliation follows the later upstream commit; no issue or PR was published.",
+    "resolution_commits": [
+      "9cd45598c7a4d1e14dc47df7de846616b25c830f"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.1-governance-e468b7391/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4504,12 +4539,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Update only video API documentation destinations in six READMEs; preserve protected names, attributions and downstream documentation.",
+    "resolution_commits": [
+      "cb387d34831cdd4fe5e4487b32c0c750364c3708"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.1-readmes-67a0585d0/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4911,12 +4951,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Allow project-owner pull requests to use the ordinary language-matched template, preserving the downstream owner workflow and AI disclosure rule.",
+    "resolution_commits": [
+      "7b4e6bcdf90ac8b8056346b25d146f132eec8dd8"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.1-owner-templates-d8ca0ed0b/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5323,12 +5368,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Use the existing shared version script for exact tag-triggered releases and local UTC date/SHA builds. Resolve Windows worktrees correctly under both Git Bash and WSL. Correct release linker symbols to the actual module path so binaries report the selected version.",
+    "resolution_commits": [
+      "ca451a7a77e8a81833449ce0dfe6543b9247f053"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.1-release-version-8f5ab8e40/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -5619,12 +5669,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Document built-in expression prices and consolidated behavior tests without altering downstream administrator overrides or accounting logic.",
+    "resolution_commits": [
+      "3dbfe59a71c83e9b14fb64affb6b60e3e80a5710"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.1-billing-docs-d5803532b/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -8335,12 +8390,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Document the current host, independent relaykit, task plugins and frontend; preserve all downstream invariants and project identity.",
+    "resolution_commits": [
+      "1dbdf20ea2a584b0d1507320df1184db09409dc1"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B16.1-architecture-fff0635bb/resolution.json",
+      "evidence/B16-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null

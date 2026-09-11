@@ -1,0 +1,10 @@
+{
+  "upstream": "626058075524f61bfaf38d7b478d3501144be14e",
+  "before_head": "f5127055ca82fe15456101b20fa5f3435c501441",
+  "after_head": "05a8fbb08616ac8f5fc05466bbe6b262f6c39316",
+  "files": [
+    "electron/package-lock.json",
+    "electron/package.json"
+  ],
+  "rationale": "Apply the reviewed builder 26.15.3 and runtime 9.7.0 graph. Desktop platform targets, bundled license resources and local date/SHA version mechanism remain intact."
+}

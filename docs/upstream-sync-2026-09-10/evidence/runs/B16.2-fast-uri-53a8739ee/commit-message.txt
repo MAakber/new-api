@@ -1,0 +1,7 @@
+chore(electron): update fast-uri lock entry
+
+Adapt upstream 53a8739eedbf69decd621c1a8313cc0b8b367dee.
+
+Apply the scoped fast-uri 3.1.5 lockfile update while retaining the downstream dependency graph.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

@@ -1,0 +1,10 @@
+{
+  "upstream": "8f5ab8e4048a90d88b20ae1e6d5228b04233d3b8",
+  "before_head": "1dbdf20ea2a584b0d1507320df1184db09409dc1",
+  "after_head": "ca451a7a77e8a81833449ce0dfe6543b9247f053",
+  "files": [
+    ".github/workflows/release.yml",
+    "scripts/version.sh"
+  ],
+  "rationale": "Use the existing shared version script for exact tag-triggered releases and local UTC date/SHA builds. Resolve Windows worktrees correctly under both Git Bash and WSL. Correct release linker symbols to the actual module path so binaries report the selected version."
+}

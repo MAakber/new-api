@@ -1,0 +1,49 @@
+npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup   [
+npm warn cleanup     '\\\\?\\D:\\10178\\Projects\\new-api-upstream-sync\\electron\\node_modules',
+npm warn cleanup     [Error: EPERM: operation not permitted, rmdir 'D:\10178\Projects\new-api-upstream-sync\electron\node_modules\dir-compare\build'] {
+npm warn cleanup       errno: -4048,
+npm warn cleanup       code: 'EPERM',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: 'D:\\10178\\Projects\\new-api-upstream-sync\\electron\\node_modules\\dir-compare\\build'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '\\\\?\\D:\\10178\\Projects\\new-api-upstream-sync\\electron\\node_modules\\app-builder-lib\\node_modules\\@electron',
+npm warn cleanup     [Error: EPERM: operation not permitted, rmdir 'D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\node_modules\@electron\get'] {
+npm warn cleanup       errno: -4048,
+npm warn cleanup       code: 'EPERM',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: 'D:\\10178\\Projects\\new-api-upstream-sync\\electron\\node_modules\\app-builder-lib\\node_modules\\@electron\\get'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '\\\\?\\D:\\10178\\Projects\\new-api-upstream-sync\\electron\\node_modules\\app-builder-lib\\node_modules',
+npm warn cleanup     [Error: EPERM: operation not permitted, rmdir 'D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\node_modules'] {
+npm warn cleanup       errno: -4048,
+npm warn cleanup       code: 'EPERM',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: 'D:\\10178\\Projects\\new-api-upstream-sync\\electron\\node_modules\\app-builder-lib\\node_modules'
+npm warn cleanup     }
+npm warn cleanup   ]
+npm warn cleanup ]
+npm error code 1
+npm error path D:\10178\Projects\new-api-upstream-sync\electron\node_modules\electron
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c node install.js
+npm error ReadError: The server aborted pending request
+npm error     at IncomingMessage.<anonymous> (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\got\dist\source\core\index.js:809:31)
+npm error     at Object.onceWrapper (node:events:632:28)
+npm error     at IncomingMessage.emit (node:events:530:35)
+npm error     at origin.emit (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\@szmarczak\http-timer\dist\source\index.js:43:20)
+npm error     at IncomingMessage._destroy (node:_http_incoming:221:10)
+npm error     at _destroy (node:internal/streams/destroy:122:10)
+npm error     at IncomingMessage.destroy (node:internal/streams/destroy:84:5)
+npm error     at TLSSocket.socketCloseListener (node:_http_client:478:11)
+npm error     at TLSSocket.emit (node:events:530:35)
+npm error     at node:net:351:12
+npm error A complete log of this run can be found in: C:\Users\10178\AppData\Local\npm-cache\_logs\2026-09-11T11_03_55_327Z-debug-0.log

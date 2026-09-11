@@ -1,0 +1,1 @@
+shasum -a 256 new-api-macos-* > checksums-macos.txt

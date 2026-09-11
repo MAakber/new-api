@@ -1,0 +1,6 @@
+{
+  "upstream": "67a0585d0f252dfca445c11b7600971b7eeb8eea",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'README.en.md' cleanly.\nApplied patch to 'README.fr.md' cleanly.\nApplied patch to 'README.ja.md' cleanly.\nApplied patch to 'README.md' cleanly.\nApplied patch to 'README.zh_CN.md' cleanly.\nApplied patch to 'README.zh_TW.md' cleanly.\n"
+}

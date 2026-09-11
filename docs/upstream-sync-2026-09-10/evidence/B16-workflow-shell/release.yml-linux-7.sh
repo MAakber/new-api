@@ -1,0 +1,1 @@
+sha256sum new-api-* > checksums-linux.txt

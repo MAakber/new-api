@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T10:56:08.425Z",
+  "updatedAt": "2026-09-11T11:40:45.818Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B16",
-  "current_unit": "B16.1",
+  "current_batch": "B17",
+  "current_unit": "B17.1",
   "active_operation": null,
-  "last_observed_head": "1b77521b67919475b133ed3d9a9c52e9413e1501",
-  "last_verified_code_commit": "1b77521b67919475b133ed3d9a9c52e9413e1501",
-  "last_checkpoint_commit": "1b77521b67919475b133ed3d9a9c52e9413e1501",
+  "last_observed_head": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "last_verified_code_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "last_checkpoint_commit": "7c787a6e00f206420613c4cdf1ca1ed2b40ce113",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B16: finish remaining release, documentation and desktop dependency updates.",
+  "next_action": "B17: execute a real merge of the fixed upstream and review conflicts plus automatic merge changes.",
   "blockers": [
     {
       "id": "production_snapshot",

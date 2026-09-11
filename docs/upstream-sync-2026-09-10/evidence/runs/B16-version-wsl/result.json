@@ -1,0 +1,30 @@
+{
+  "id": "B16-version-wsl",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu-SF3D",
+    "-u",
+    "root",
+    "--",
+    "bash",
+    "/mnt/d/10178/Projects/new-api-upstream-sync/scripts/version.sh"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3",
+  "started_at": "2026-09-11T11:11:06.855Z",
+  "finished_at": "2026-09-11T11:11:07.135Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

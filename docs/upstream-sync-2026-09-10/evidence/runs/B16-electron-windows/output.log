@@ -1,0 +1,7 @@
+  • electron-builder  version=26.15.3 os=10.0.26300
+  • loaded configuration  file=package.json ("build" field)
+  • executing @electron/rebuild  electronVersion=39.8.10 arch=x64 buildFromSource=false workspaceRoot=D:\10178\Projects\new-api-upstream-sync\electron projectDir=./ appDir=./
+  • installing native dependencies  arch=x64
+  • completed installing native dependencies
+  • packaging       platform=win32 arch=x64 electron=39.8.10 appOutDir=dist\win-unpacked
+  • downloaded      label=electron progress=100%

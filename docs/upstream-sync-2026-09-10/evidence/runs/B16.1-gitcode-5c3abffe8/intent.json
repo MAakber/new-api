@@ -1,0 +1,9 @@
+{
+  "upstream": "5c3abffe8572aa8a49f15c3916707d2019d66af4",
+  "unit": "B16.1-gitcode",
+  "before_head": "7c787a6e00f206420613c4cdf1ca1ed2b40ce113",
+  "rationale": "Adapt optional GitCode release file synchronization while preserving downstream workflow permissions and targets.",
+  "files": [
+    ".github/workflows/sync-release-to-gitcode.yml"
+  ]
+}

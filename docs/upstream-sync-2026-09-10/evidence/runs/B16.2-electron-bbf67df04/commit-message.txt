@@ -1,0 +1,7 @@
+chore(electron): update desktop runtime to 39.8.10
+
+Adapt upstream bbf67df0499c4881779c7fdd04761f5b09567fdb.
+
+Update Electron to 39.8.10 with matching lock integrity; preserve platform targets, license resources and host API behavior.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

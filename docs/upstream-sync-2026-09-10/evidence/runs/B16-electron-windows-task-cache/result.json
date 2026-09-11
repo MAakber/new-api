@@ -1,0 +1,30 @@
+{
+  "id": "B16-electron-windows-task-cache",
+  "command": [
+    "node",
+    "node_modules/electron-builder/cli.js",
+    "--win",
+    "--x64",
+    "--publish",
+    "never",
+    "--config.electronDist=node_modules/electron/dist",
+    "--config.extraMetadata.version=2026.9.11-g3363f4e6"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\electron",
+  "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "started_at": "2026-09-11T11:36:08.997Z",
+  "finished_at": "2026-09-11T11:37:03.893Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

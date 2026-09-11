@@ -1,0 +1,29 @@
+{
+  "id": "B16-electron-windows",
+  "command": [
+    "node",
+    "node_modules/electron-builder/cli.js",
+    "--win",
+    "--x64",
+    "--publish",
+    "never",
+    "--config.extraMetadata.version=2026.9.11-g3363f4e6"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\electron",
+  "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "started_at": "2026-09-11T11:22:52.119Z",
+  "finished_at": "2026-09-11T11:29:02.162Z",
+  "status": "failed",
+  "exit_code": 4294967295,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

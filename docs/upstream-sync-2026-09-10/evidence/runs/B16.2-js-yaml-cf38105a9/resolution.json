@@ -1,0 +1,9 @@
+{
+  "upstream": "cf38105a9946f041890ed404a8b81f63bee2568f",
+  "before_head": "3b23c23812326dbd4097f463b55e6bcfb2a12b82",
+  "after_head": "537b0891205c7fa046f943e2eb8a0cc1ab38b38b",
+  "files": [
+    "electron/package-lock.json"
+  ],
+  "rationale": "Apply the scoped js-yaml 4.3.1 lockfile update while retaining downstream desktop packaging."
+}

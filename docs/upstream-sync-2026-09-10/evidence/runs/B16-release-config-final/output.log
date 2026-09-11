@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "code_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "workflows": [
+    "ci.yml",
+    "release.yml",
+    "electron-build.yml",
+    "sync-release-to-gitcode.yml"
+  ],
+  "shell_snippets": 31,
+  "versions": [
+    {
+      "name": "local date and commit",
+      "actual": "v20260911-3363f4e6"
+    },
+    {
+      "name": "tag ref overrides repository tags",
+      "actual": "v9.8.7"
+    },
+    {
+      "name": "tag metadata fallback",
+      "actual": "v20260911-1234abcd"
+    }
+  ],
+  "desktop": {
+    "electron": "39.8.10",
+    "builder": "26.15.3",
+    "runtime": "9.7.0",
+    "platforms_and_licenses_preserved": true
+  },
+  "gitcode": "Manual dispatch with optional file synchronization; no workflow executed"
+}

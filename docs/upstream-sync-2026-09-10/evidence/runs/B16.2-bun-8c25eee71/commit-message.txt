@@ -1,0 +1,7 @@
+chore(build): pin Bun 1.4.0 in CI and Docker
+
+Adapt upstream 8c25eee71ba03ea19851dcc4f12ee4ecfcfb0808.
+
+Pin CI and the upstream-verified Docker manifest to Bun 1.4.0. Keep existing Go image, local relaykit build wiring and downstream version mechanism.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

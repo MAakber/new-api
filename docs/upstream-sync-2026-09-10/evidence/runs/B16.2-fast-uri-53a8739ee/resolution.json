@@ -1,0 +1,9 @@
+{
+  "upstream": "53a8739eedbf69decd621c1a8313cc0b8b367dee",
+  "before_head": "05a8fbb08616ac8f5fc05466bbe6b262f6c39316",
+  "after_head": "3b23c23812326dbd4097f463b55e6bcfb2a12b82",
+  "files": [
+    "electron/package-lock.json"
+  ],
+  "rationale": "Apply the scoped fast-uri 3.1.5 lockfile update while retaining the downstream dependency graph."
+}

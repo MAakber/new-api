@@ -27,7 +27,11 @@ for (const file of files) {
 }
 const goFiles = files.filter(file => file.endsWith('.go') && fs.existsSync(path.join(repository, file)))
 if (goFiles.length) run('gofmt', ['-w', ...goFiles])
-run('git', ['add', '--', ...files])
+// git apply --3way can stage a deletion before this checkpoint. Such a path
+// no longer exists in either the index or the worktree and cannot be re-added.
+const stageableFiles = files.filter(file => fs.existsSync(path.join(repository, file)) ||
+  spawnSync('git', ['ls-files', '--error-unmatch', '--', file], { cwd: repository, windowsHide: true, stdio: 'ignore' }).status === 0)
+if (stageableFiles.length) run('git', ['add', '--', ...stageableFiles])
 if (run('git', ['ls-files', '--unmerged']).trim()) throw new Error('Unmerged index entries remain')
 run('git', ['diff', '--cached', '--check'])
 const message = `${title}\n\nAdapt upstream ${sha}.\n\n${rationale}\n\nImplementation checkpoint; consolidated acceptance is recorded separately.\n`

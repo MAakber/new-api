@@ -1,0 +1,7 @@
+docs: refresh architecture and modern Go conventions
+
+Adapt upstream fff0635bb14b8ec5f10df9e582a83591df841902.
+
+Document the current host, independent relaykit, task plugins and frontend; preserve all downstream invariants and project identity.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

@@ -1,0 +1,6 @@
+{
+  "upstream": "d5803532bdccde3a2b1583291f51e92d3519b1c6",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'AGENTS.md' cleanly.\n"
+}

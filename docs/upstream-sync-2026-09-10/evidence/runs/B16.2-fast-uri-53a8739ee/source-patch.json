@@ -1,0 +1,6 @@
+{
+  "upstream": "53a8739eedbf69decd621c1a8313cc0b8b367dee",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'electron/package-lock.json' cleanly.\n"
+}

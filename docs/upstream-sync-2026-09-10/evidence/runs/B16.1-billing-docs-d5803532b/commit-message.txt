@@ -1,0 +1,7 @@
+docs: record expression pricing and focused regression conventions
+
+Adapt upstream d5803532bdccde3a2b1583291f51e92d3519b1c6.
+
+Document built-in expression prices and consolidated behavior tests without altering downstream administrator overrides or accounting logic.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

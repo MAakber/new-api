@@ -1,0 +1,12 @@
+{
+  "upstream": "8c25eee71ba03ea19851dcc4f12ee4ecfcfb0808",
+  "before_head": "b832165cd22f4783f746958672ab985ea0794369",
+  "after_head": "bf5fe2a551f6816a931322ff606c8a5a7a22faa8",
+  "files": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/electron-build.yml",
+    ".github/workflows/release.yml",
+    "Dockerfile"
+  ],
+  "rationale": "Pin CI and the upstream-verified Docker manifest to Bun 1.4.0. Keep existing Go image, local relaykit build wiring and downstream version mechanism."
+}

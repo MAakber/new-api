@@ -1,0 +1,7 @@
+ci: make GitCode release asset sync optional
+
+Adapt upstream 5c3abffe8572aa8a49f15c3916707d2019d66af4.
+
+Preserve repository variable, token scope and pinned workflow identities. Synchronization is explicitly dispatched; release text is updated first and binary assets are uploaded only when sync_files is true. No workflow was dispatched.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

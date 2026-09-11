@@ -1,0 +1,9 @@
+{
+  "upstream": "5c3abffe8572aa8a49f15c3916707d2019d66af4",
+  "before_head": "7c787a6e00f206420613c4cdf1ca1ed2b40ce113",
+  "after_head": "f5127055ca82fe15456101b20fa5f3435c501441",
+  "files": [
+    ".github/workflows/sync-release-to-gitcode.yml"
+  ],
+  "rationale": "Preserve repository variable, token scope and pinned workflow identities. Synchronization is explicitly dispatched; release text is updated first and binary assets are uploaded only when sync_files is true. No workflow was dispatched."
+}

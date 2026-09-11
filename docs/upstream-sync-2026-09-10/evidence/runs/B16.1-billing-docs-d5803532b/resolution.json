@@ -1,0 +1,9 @@
+{
+  "upstream": "d5803532bdccde3a2b1583291f51e92d3519b1c6",
+  "before_head": "7b4e6bcdf90ac8b8056346b25d146f132eec8dd8",
+  "after_head": "3dbfe59a71c83e9b14fb64affb6b60e3e80a5710",
+  "files": [
+    "AGENTS.md"
+  ],
+  "rationale": "Document built-in expression prices and consolidated behavior tests without altering downstream administrator overrides or accounting logic."
+}

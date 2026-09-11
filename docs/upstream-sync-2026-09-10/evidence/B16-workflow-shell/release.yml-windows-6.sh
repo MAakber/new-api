@@ -1,0 +1,1 @@
+sha256sum new-api-*.exe > checksums-windows.txt

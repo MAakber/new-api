@@ -1,0 +1,7 @@
+chore(electron): update builder dependency graph
+
+Adapt upstream 626058075524f61bfaf38d7b478d3501144be14e.
+
+Apply the reviewed builder 26.15.3 and runtime 9.7.0 graph. Desktop platform targets, bundled license resources and local date/SHA version mechanism remain intact.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

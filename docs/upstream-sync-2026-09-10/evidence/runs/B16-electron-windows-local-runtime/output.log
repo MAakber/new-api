@@ -1,0 +1,31 @@
+  • electron-builder  version=26.15.3 os=10.0.26300
+  • loaded configuration  file=package.json ("build" field)
+  • executing @electron/rebuild  electronVersion=39.8.10 arch=x64 buildFromSource=false workspaceRoot=D:\10178\Projects\new-api-upstream-sync\electron projectDir=./ appDir=./
+  • installing native dependencies  arch=x64
+  • completed installing native dependencies
+  • packaging       platform=win32 arch=x64 electron=39.8.10 appOutDir=dist\win-unpacked
+  • using custom unpacked Electron distribution  electronDist=node_modules\electron\dist
+  • copying unpacked Electron  source=D:\10178\Projects\new-api-upstream-sync\electron\node_modules\electron\dist destination=D:\10178\Projects\new-api-upstream-sync\electron\dist\win-unpacked
+  • searching for node modules  pm=npm searchDir=D:\10178\Projects\new-api-upstream-sync\electron
+  • searching for node modules  pm=traversal searchDir=D:\10178\Projects\new-api-upstream-sync\electron
+  • using manual traversal of node_modules to build dependency tree
+  • no node modules returned while searching directories  searchDirectories=[""]
+  • updating asar integrity executable resource  executablePath=dist\win-unpacked\New-API-App.exe
+  • downloaded      label=icons-bundle.tar.gz progress=100%
+  ⨯ EXDEV: cross-device link not permitted, rename 'C:\Users\10178\AppData\Local\electron-builder\Cache\icons@1.1.0\icons-bundle-1hpnz.tmp' -> 'C:\Users\10178\AppData\Local\electron-builder\Cache\icons@1.1.0\icons-bundle-1hpnz'  failedTask=build stackTrace=Error: EXDEV: cross-device link not permitted, rename 'C:\Users\10178\AppData\Local\electron-builder\Cache\icons@1.1.0\icons-bundle-1hpnz.tmp' -> 'C:\Users\10178\AppData\Local\electron-builder\Cache\icons@1.1.0\icons-bundle-1hpnz'
+    at Object.rename (node:internal/fs/promises:778:10)
+    at extractArchive (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\util\electronGet.ts:249:5)
+    at downloadAndExtract (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\util\electronGet.ts:460:5)
+    at runIconsTool (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\toolsets\icons.ts:37:23)
+    at doConvertSingleFile (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\util\iconConverter.ts:312:3)
+    at convertIcon (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\util\iconConverter.ts:42:15)
+    at WinPackager.resolveIcon (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\platformPackager.ts:863:20)
+    at WinPackager.getOrConvertIcon (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\platformPackager.ts:835:20)
+    at WinPackager.signAndEditResources (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\winPackager.ts:181:22)
+    at WinPackager.signApp (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\winPackager.ts:291:9)
+    at WinPackager.doSignAfterPack (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\platformPackager.ts:442:21)
+    at WinPackager.doPack (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\platformPackager.ts:356:7)
+    at WinPackager.pack (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\platformPackager.ts:163:5)
+    at Packager.doBuild (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\packager.ts:530:11)
+    at executeFinally (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\builder-util\src\promise.ts:12:14)
+    at Packager.build (D:\10178\Projects\new-api-upstream-sync\electron\node_modules\app-builder-lib\src\packager.ts:450:31)

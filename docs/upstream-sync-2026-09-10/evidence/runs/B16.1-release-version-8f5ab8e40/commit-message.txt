@@ -1,0 +1,7 @@
+fix(release): honor trigger tags and preserve local worktree versions
+
+Adapt upstream 8f5ab8e4048a90d88b20ae1e6d5228b04233d3b8.
+
+Use the existing shared version script for exact tag-triggered releases and local UTC date/SHA builds. Resolve Windows worktrees correctly under both Git Bash and WSL. Correct release linker symbols to the actual module path so binaries report the selected version.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

@@ -2421,3 +2421,179 @@ Code: 73a44e27318973a1f017e0f3aa80e37d06fd80a4. Restore dedicated playground env
 ## 2026-09-11T10:56:08.437Z — B15 verified; 141/153 upstream commits accepted
 
 Code 1b77521b67919475b133ed3d9a9c52e9413e1501. Full backend and independent relaykit results reused; six frontend failures fixed with 23 files/96 tests passing. Type, full lint, protected-header format and literal i18n pass. Review details: evidence/B15-acceptance.json. Proceed to B16, leaving production untouched.
+
+## 2026-09-11T10:56:09.852Z — B16.1-gitcode adaptation begun
+
+- Before HEAD: 7c787a6e00f206420613c4cdf1ca1ed2b40ce113.
+- Upstream: 5c3abffe8572aa8a49f15c3916707d2019d66af4.
+- Adapt optional GitCode release file synchronization while preserving downstream workflow permissions and targets.
+- Evidence: evidence/runs/B16.1-gitcode-5c3abffe8/intent.json.
+
+## 2026-09-11T10:56:58.829Z — B16.1-gitcode adaptation recorded
+
+- Code: f5127055ca82fe15456101b20fa5f3435c501441.
+- Preserve repository variable, token scope and pinned workflow identities. Synchronization is explicitly dispatched; release text is updated first and binary assets are uploaded only when sync_files is true. No workflow was dispatched.
+- Evidence: evidence/runs/B16.1-gitcode-5c3abffe8/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:56:59.351Z — B16.2-builder adaptation begun
+
+- Before HEAD: f5127055ca82fe15456101b20fa5f3435c501441.
+- Upstream: 626058075524f61bfaf38d7b478d3501144be14e.
+- Update electron-builder and builder-util-runtime lock graph without changing desktop platforms, resources, licensing or downstream version conversion.
+- Evidence: evidence/runs/B16.2-builder-626058075/intent.json.
+
+## 2026-09-11T10:57:43.171Z — B16.2-builder adaptation recorded
+
+- Code: 05a8fbb08616ac8f5fc05466bbe6b262f6c39316.
+- Apply the reviewed builder 26.15.3 and runtime 9.7.0 graph. Desktop platform targets, bundled license resources and local date/SHA version mechanism remain intact.
+- Evidence: evidence/runs/B16.2-builder-626058075/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:57:43.788Z — B16.2-fast-uri adaptation begun
+
+- Before HEAD: 05a8fbb08616ac8f5fc05466bbe6b262f6c39316.
+- Upstream: 53a8739eedbf69decd621c1a8313cc0b8b367dee.
+- Apply the scoped fast-uri 3.1.5 lockfile update while retaining the downstream dependency graph.
+- Evidence: evidence/runs/B16.2-fast-uri-53a8739ee/intent.json.
+
+## 2026-09-11T10:57:45.787Z — B16.2-fast-uri adaptation recorded
+
+- Code: 3b23c23812326dbd4097f463b55e6bcfb2a12b82.
+- Apply the scoped fast-uri 3.1.5 lockfile update while retaining the downstream dependency graph.
+- Evidence: evidence/runs/B16.2-fast-uri-53a8739ee/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:57:46.308Z — B16.2-js-yaml adaptation begun
+
+- Before HEAD: 3b23c23812326dbd4097f463b55e6bcfb2a12b82.
+- Upstream: cf38105a9946f041890ed404a8b81f63bee2568f.
+- Apply the scoped js-yaml 4.3.1 lockfile update while retaining downstream desktop packaging.
+- Evidence: evidence/runs/B16.2-js-yaml-cf38105a9/intent.json.
+
+## 2026-09-11T10:57:48.051Z — B16.2-js-yaml adaptation recorded
+
+- Code: 537b0891205c7fa046f943e2eb8a0cc1ab38b38b.
+- Apply the scoped js-yaml 4.3.1 lockfile update while retaining downstream desktop packaging.
+- Evidence: evidence/runs/B16.2-js-yaml-cf38105a9/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:57:48.518Z — B16.2-electron adaptation begun
+
+- Before HEAD: 537b0891205c7fa046f943e2eb8a0cc1ab38b38b.
+- Upstream: bbf67df0499c4881779c7fdd04761f5b09567fdb.
+- Update Electron to 39.8.10 with matching lock integrity; preserve platform targets, license resources and host API behavior.
+- Evidence: evidence/runs/B16.2-electron-bbf67df04/intent.json.
+
+## 2026-09-11T10:57:50.307Z — B16.2-electron adaptation recorded
+
+- Code: b832165cd22f4783f746958672ab985ea0794369.
+- Update Electron to 39.8.10 with matching lock integrity; preserve platform targets, license resources and host API behavior.
+- Evidence: evidence/runs/B16.2-electron-bbf67df04/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:57:50.803Z — B16.2-bun adaptation begun
+
+- Before HEAD: b832165cd22f4783f746958672ab985ea0794369.
+- Upstream: 8c25eee71ba03ea19851dcc4f12ee4ecfcfb0808.
+- Pin CI and the upstream-verified Docker manifest to Bun 1.4.0. Keep existing Go image, local relaykit build wiring and downstream version mechanism.
+- Evidence: evidence/runs/B16.2-bun-8c25eee71/intent.json.
+
+## 2026-09-11T10:57:52.586Z — B16.2-bun adaptation recorded
+
+- Code: bf5fe2a551f6816a931322ff606c8a5a7a22faa8.
+- Pin CI and the upstream-verified Docker manifest to Bun 1.4.0. Keep existing Go image, local relaykit build wiring and downstream version mechanism.
+- Evidence: evidence/runs/B16.2-bun-8c25eee71/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T10:59:05.933Z — B16.1-governance adaptation begun
+
+- Before HEAD: bf5fe2a551f6816a931322ff606c8a5a7a22faa8.
+- Upstream: e468b73915e5028e9849de62c5018a0faa203012.
+- Integrate agent issue/PR documentation and human templates, preserving the downstream project-owner workflow and protected attribution.
+- Evidence: evidence/runs/B16.1-governance-e468b7391/intent.json.
+
+## 2026-09-11T11:00:24.466Z — B16.1-governance adaptation recorded
+
+- Code: 9cd45598c7a4d1e14dc47df7de846616b25c830f.
+- Retain the upstream templates and remove its obsolete PR-check workflow. Existing downstream release and integration workflows remain. Owner-template reconciliation follows the later upstream commit; no issue or PR was published.
+- Evidence: evidence/runs/B16.1-governance-e468b7391/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T11:00:25.080Z — B16.1-readmes adaptation begun
+
+- Before HEAD: 9cd45598c7a4d1e14dc47df7de846616b25c830f.
+- Upstream: 67a0585d0f252dfca445c11b7600971b7eeb8eea.
+- Update only video API documentation destinations in six READMEs; preserve protected names, attributions and downstream documentation.
+- Evidence: evidence/runs/B16.1-readmes-67a0585d0/intent.json.
+
+## 2026-09-11T11:00:27.170Z — B16.1-readmes adaptation recorded
+
+- Code: cb387d34831cdd4fe5e4487b32c0c750364c3708.
+- Update only video API documentation destinations in six READMEs; preserve protected names, attributions and downstream documentation.
+- Evidence: evidence/runs/B16.1-readmes-67a0585d0/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T11:00:27.791Z — B16.1-owner-templates adaptation begun
+
+- Before HEAD: cb387d34831cdd4fe5e4487b32c0c750364c3708.
+- Upstream: d8ca0ed0bb596e910e1955461e7691e40d224d70.
+- Allow project-owner pull requests to use the ordinary language-matched template, preserving the downstream owner workflow and AI disclosure rule.
+- Evidence: evidence/runs/B16.1-owner-templates-d8ca0ed0b/intent.json.
+
+## 2026-09-11T11:00:30.061Z — B16.1-owner-templates adaptation recorded
+
+- Code: 7b4e6bcdf90ac8b8056346b25d146f132eec8dd8.
+- Allow project-owner pull requests to use the ordinary language-matched template, preserving the downstream owner workflow and AI disclosure rule.
+- Evidence: evidence/runs/B16.1-owner-templates-d8ca0ed0b/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T11:00:30.694Z — B16.1-billing-docs adaptation begun
+
+- Before HEAD: 7b4e6bcdf90ac8b8056346b25d146f132eec8dd8.
+- Upstream: d5803532bdccde3a2b1583291f51e92d3519b1c6.
+- Document built-in expression prices and consolidated behavior tests without altering downstream administrator overrides or accounting logic.
+- Evidence: evidence/runs/B16.1-billing-docs-d5803532b/intent.json.
+
+## 2026-09-11T11:00:32.847Z — B16.1-billing-docs adaptation recorded
+
+- Code: 3dbfe59a71c83e9b14fb64affb6b60e3e80a5710.
+- Document built-in expression prices and consolidated behavior tests without altering downstream administrator overrides or accounting logic.
+- Evidence: evidence/runs/B16.1-billing-docs-d5803532b/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T11:00:33.373Z — B16.1-architecture adaptation begun
+
+- Before HEAD: 3dbfe59a71c83e9b14fb64affb6b60e3e80a5710.
+- Upstream: fff0635bb14b8ec5f10df9e582a83591df841902.
+- Document the current host, independent relaykit, task plugins and frontend; preserve all downstream invariants and project identity.
+- Evidence: evidence/runs/B16.1-architecture-fff0635bb/intent.json.
+
+## 2026-09-11T11:00:35.114Z — B16.1-architecture adaptation recorded
+
+- Code: 1dbdf20ea2a584b0d1507320df1184db09409dc1.
+- Document the current host, independent relaykit, task plugins and frontend; preserve all downstream invariants and project identity.
+- Evidence: evidence/runs/B16.1-architecture-fff0635bb/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T11:02:37.154Z — B16.1-release-version adaptation begun
+
+- Before HEAD: 1dbdf20ea2a584b0d1507320df1184db09409dc1.
+- Upstream: 8f5ab8e4048a90d88b20ae1e6d5228b04233d3b8.
+- Prefer the exact trigger tag for releases through the existing shared version script; preserve date/SHA versions for local builds and fix Windows Git Bash worktree resolution.
+- Evidence: evidence/runs/B16.1-release-version-8f5ab8e40/intent.json.
+
+## 2026-09-11T11:02:44.054Z — B16.1-release-version adaptation recorded
+
+- Code: ca451a7a77e8a81833449ce0dfe6543b9247f053.
+- Use the existing shared version script for exact tag-triggered releases and local UTC date/SHA builds. Resolve Windows worktrees correctly under both Git Bash and WSL. Correct release linker symbols to the actual module path so binaries report the selected version.
+- Evidence: evidence/runs/B16.1-release-version-8f5ab8e40/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T11:36:08.844Z — B16.3 Windows packaging resumed
+
+HEAD 3363f4e6febf1d91174cc8cfeed7035996c08850. Source clean. All 12 B16 adaptations committed. Prior download failure and cache EXDEV retained as failed evidence. Retry with process-local ELECTRON_BUILDER_CACHE/TEMP/TMP in the task backup directory; reuse verified Electron 39.8.10 and publish never.
+
+## 2026-09-11T11:40:45.841Z — B16 verified; all 153 upstream adaptations accepted at stage level
+
+Code 3363f4e6febf1d91174cc8cfeed7035996c08850. Windows NSIS and portable artifacts built; packaged backend, desktop source, version and all license files verified. B17 real merge and final 153/120/26 acceptance remain. No publishing or production changes.

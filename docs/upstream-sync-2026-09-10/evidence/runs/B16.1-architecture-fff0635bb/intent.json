@@ -1,0 +1,9 @@
+{
+  "upstream": "fff0635bb14b8ec5f10df9e582a83591df841902",
+  "unit": "B16.1-architecture",
+  "before_head": "3dbfe59a71c83e9b14fb64affb6b60e3e80a5710",
+  "rationale": "Document the current host, independent relaykit, task plugins and frontend; preserve all downstream invariants and project identity.",
+  "files": [
+    "AGENTS.md"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "status": "verified",
+  "code_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "runs": [
+    {
+      "id": "B16-bun-toolchain",
+      "evidence": "evidence/runs/B16-bun-toolchain/result.json",
+      "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3"
+    },
+    {
+      "id": "B16-web-dependencies",
+      "evidence": "evidence/runs/B16-web-dependencies/result.json",
+      "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3"
+    },
+    {
+      "id": "B16-web-build-stamped",
+      "evidence": "evidence/runs/B16-web-build-stamped/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    },
+    {
+      "id": "B16-build-config-lint",
+      "evidence": "evidence/runs/B16-build-config-lint/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    },
+    {
+      "id": "B16-web-copyright",
+      "evidence": "evidence/runs/B16-web-copyright/result.json",
+      "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3"
+    },
+    {
+      "id": "B16-electron-dependencies-mirror",
+      "evidence": "evidence/runs/B16-electron-dependencies-mirror/result.json",
+      "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3"
+    },
+    {
+      "id": "B16-electron-graph",
+      "evidence": "evidence/runs/B16-electron-graph/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    },
+    {
+      "id": "B16-release-config-final",
+      "evidence": "evidence/runs/B16-release-config-final/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    },
+    {
+      "id": "B16-windows-backend",
+      "evidence": "evidence/runs/B16-windows-backend/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    },
+    {
+      "id": "B16-binary-version",
+      "evidence": "evidence/runs/B16-binary-version/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    },
+    {
+      "id": "B16-version-wsl",
+      "evidence": "evidence/runs/B16-version-wsl/result.json",
+      "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3"
+    },
+    {
+      "id": "B16-electron-windows-task-cache",
+      "evidence": "evidence/runs/B16-electron-windows-task-cache/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    },
+    {
+      "id": "B16-packaged-artifacts",
+      "evidence": "evidence/runs/B16-packaged-artifacts/result.json",
+      "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    }
+  ],
+  "artifacts": "evidence/B16-artifacts.json",
+  "configuration": "evidence/B16-release-configuration.json",
+  "version_contract": "Shared UTC date/eight-character commit local version, exact triggering release tag, actual Go linker package and frontend import.meta.env build substitution verified.",
+  "platforms": "Windows x64 NSIS and portable packaging passed. Existing macOS/Linux targets and license resources match baseline; those platforms were not built on this Windows host.",
+  "local_environment": "Electron runtime installed with checksum-verified process-local mirror. Builder reused installed runtime. D-drive task-local ELECTRON_BUILDER_CACHE/TEMP/TMP resolved Windows EXDEV. No global configuration changes; publish never.",
+  "retained_failures": [
+    "B16-electron-dependencies",
+    "B16-electron-install-retry",
+    "B16-electron-windows",
+    "B16-electron-windows-local-runtime",
+    "B16-release-config"
+  ],
+  "git_bash": "Windows Git Bash had a host fork error; WSL executed the real shared version script successfully. No unrelated process terminated.",
+  "final_acceptance": "B17 real merge and B18 final candidate acceptance remain required."
+}

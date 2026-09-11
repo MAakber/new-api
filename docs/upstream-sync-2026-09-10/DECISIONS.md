@@ -112,3 +112,7 @@ Allocate TaskPlugin=65 after inspecting the complete backend/frontend enums, bas
 ## A31 — Preserve administrator chat embedding during lint cleanup
 
 The existing administrator-configured chat iframe requires its original script, origin storage, OAuth, downloads and media capabilities. Preserve that contract with one explicit element-scoped iframe lint exception rather than imposing an incompatible sandbox. Global lint rules stay enabled. The general URL-preview component currently has no consumers; its sandbox now isolates origin while retaining script execution. Full lint has no errors; warnings remain recorded.
+
+## A32 — Preserve release and desktop build contracts
+
+Local builds retain UTC date and eight-character revision; release builds use the exact triggering tag. Windows worktree paths are converted only in WSL, and both frontend and Go executable embed the resulting version. Existing platform targets and license resources are retained. Windows packaging used a task-local cache to avoid a host EXDEV cache failure, and reused the checksum-verified installed Electron runtime. No publishing, deployment, global toolchain change or unrelated process termination was performed.

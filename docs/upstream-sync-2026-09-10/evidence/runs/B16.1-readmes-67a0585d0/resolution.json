@@ -1,0 +1,14 @@
+{
+  "upstream": "67a0585d0f252dfca445c11b7600971b7eeb8eea",
+  "before_head": "9cd45598c7a4d1e14dc47df7de846616b25c830f",
+  "after_head": "cb387d34831cdd4fe5e4487b32c0c750364c3708",
+  "files": [
+    "README.en.md",
+    "README.fr.md",
+    "README.ja.md",
+    "README.md",
+    "README.zh_CN.md",
+    "README.zh_TW.md"
+  ],
+  "rationale": "Update only video API documentation destinations in six READMEs; preserve protected names, attributions and downstream documentation."
+}

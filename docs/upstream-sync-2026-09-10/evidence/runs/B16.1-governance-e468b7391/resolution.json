@@ -1,0 +1,18 @@
+{
+  "upstream": "e468b73915e5028e9849de62c5018a0faa203012",
+  "before_head": "bf5fe2a551f6816a931322ff606c8a5a7a22faa8",
+  "after_head": "9cd45598c7a4d1e14dc47df7de846616b25c830f",
+  "files": [
+    ".agents/github/ISSUE.md",
+    ".agents/github/PR.md",
+    ".github/ISSUE_TEMPLATE/bug_report.yml",
+    ".github/ISSUE_TEMPLATE/bug_report_en.yml",
+    ".github/ISSUE_TEMPLATE/feature_request.yml",
+    ".github/ISSUE_TEMPLATE/feature_request_en.yml",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/PULL_REQUEST_TEMPLATE/en.md",
+    ".github/workflows/pr-check.yml",
+    "AGENTS.md"
+  ],
+  "rationale": "Retain the upstream templates and remove its obsolete PR-check workflow. Existing downstream release and integration workflows remain. Owner-template reconciliation follows the later upstream commit; no issue or PR was published."
+}

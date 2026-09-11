@@ -1,0 +1,25 @@
+{
+  "id": "B16-web-dependencies",
+  "command": [
+    "D:/10178/Projects/new-api-upstream-sync-backup-2026-09-10/tools/bun-1.4.0/node_modules/bun/bin/bun.exe",
+    "install",
+    "--frozen-lockfile"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "82eb859a19d80550b633d0c6d6ba8254e6fa3db3",
+  "started_at": "2026-09-11T11:07:13.062Z",
+  "finished_at": "2026-09-11T11:07:16.364Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

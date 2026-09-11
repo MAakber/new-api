@@ -1,0 +1,24 @@
+{
+  "id": "B16-binary-version",
+  "command": [
+    "./new-api.exe",
+    "--version"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "started_at": "2026-09-11T11:22:50.539Z",
+  "finished_at": "2026-09-11T11:22:51.935Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

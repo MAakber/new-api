@@ -2460,35 +2460,194 @@
       "d5803532bdccde3a2b1583291f51e92d3519b1c6",
       "fff0635bb14b8ec5f10df9e582a83591df841902"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B16.1",
         "action": "适配上游文档与发布流程，保留保护信息和下游目标",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
       },
       {
         "id": "B16.2",
         "action": "统一 Bun/Electron 依赖和锁文件，校验现有版本机制",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
       },
       {
         "id": "B16.3",
         "action": "按实际交付平台构建，记录新旧配置与运维变更",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
       },
       {
         "id": "B16.baseline-copyright",
         "action": "Add missing canonical headers with repository script; preserve existing identity and licenses.",
-        "status": "pending",
+        "status": "verified",
         "evidence": [
-          "evidence/runs/B00-web-copyright/output.log"
+          "evidence/runs/B00-web-copyright/output.log",
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.1-gitcode",
+        "action": "CI: enhance release synchronization workflow with optional file syncing",
+        "status": "verified",
+        "upstreamCommits": [
+          "5c3abffe8572aa8a49f15c3916707d2019d66af4"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.2-builder",
+        "action": "chore(deps): bump builder-util-runtime and electron-builder in /electron (#6467)",
+        "status": "verified",
+        "upstreamCommits": [
+          "626058075524f61bfaf38d7b478d3501144be14e"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.2-fast-uri",
+        "action": "chore(deps-dev): bump fast-uri from 3.1.4 to 3.1.5 in /electron (#6846)",
+        "status": "verified",
+        "upstreamCommits": [
+          "53a8739eedbf69decd621c1a8313cc0b8b367dee"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.2-js-yaml",
+        "action": "chore(deps-dev): bump js-yaml from 4.3.0 to 4.3.1 in /electron (#6704)",
+        "status": "verified",
+        "upstreamCommits": [
+          "cf38105a9946f041890ed404a8b81f63bee2568f"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.2-electron",
+        "action": "chore(deps-dev): bump electron from 39.8.5 to 39.8.10 in /electron (#6705)",
+        "status": "verified",
+        "upstreamCommits": [
+          "bbf67df0499c4881779c7fdd04761f5b09567fdb"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.2-bun",
+        "action": "chore(build): upgrade Bun to 1.4.0",
+        "status": "verified",
+        "upstreamCommits": [
+          "8c25eee71ba03ea19851dcc4f12ee4ecfcfb0808"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.1-governance",
+        "action": "docs: update PR template and remove PR Check workflow (#7053)",
+        "status": "verified",
+        "upstreamCommits": [
+          "e468b73915e5028e9849de62c5018a0faa203012"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.1-readmes",
+        "action": "fix(docs): correct Video API links across localized READMEs (#7116)",
+        "status": "verified",
+        "upstreamCommits": [
+          "67a0585d0f252dfca445c11b7600971b7eeb8eea"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.1-owner-templates",
+        "action": "chore: let owners use human PR templates",
+        "status": "verified",
+        "upstreamCommits": [
+          "d8ca0ed0bb596e910e1955461e7691e40d224d70"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.1-billing-docs",
+        "action": "docs: require expression pricing and consolidated tests",
+        "status": "verified",
+        "upstreamCommits": [
+          "d5803532bdccde3a2b1583291f51e92d3519b1c6"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.1-architecture",
+        "action": "docs: update project architecture and Go conventions",
+        "status": "verified",
+        "upstreamCommits": [
+          "fff0635bb14b8ec5f10df9e582a83591df841902"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
+        ]
+      },
+      {
+        "id": "B16.1-release-version",
+        "action": "fix(ci): resolve release version from trigger tag",
+        "status": "verified",
+        "upstreamCommits": [
+          "8f5ab8e4048a90d88b20ae1e6d5228b04233d3b8"
+        ],
+        "evidence": [
+          "evidence/B16-acceptance.json"
         ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "适配上游文档与发布流程，保留保护信息和下游目标"
+    "codeCommits": [
+      "f5127055ca82fe15456101b20fa5f3435c501441",
+      "05a8fbb08616ac8f5fc05466bbe6b262f6c39316",
+      "3b23c23812326dbd4097f463b55e6bcfb2a12b82",
+      "537b0891205c7fa046f943e2eb8a0cc1ab38b38b",
+      "b832165cd22f4783f746958672ab985ea0794369",
+      "bf5fe2a551f6816a931322ff606c8a5a7a22faa8",
+      "9cd45598c7a4d1e14dc47df7de846616b25c830f",
+      "cb387d34831cdd4fe5e4487b32c0c750364c3708",
+      "7b4e6bcdf90ac8b8056346b25d146f132eec8dd8",
+      "3dbfe59a71c83e9b14fb64affb6b60e3e80a5710",
+      "1dbdf20ea2a584b0d1507320df1184db09409dc1",
+      "ca451a7a77e8a81833449ce0dfe6543b9247f053",
+      "82eb859a19d80550b633d0c6d6ba8254e6fa3db3",
+      "3363f4e6febf1d91174cc8cfeed7035996c08850"
+    ],
+    "evidence": [
+      "evidence/B16-acceptance.json"
+    ],
+    "nextAction": "B17: execute a real merge of the fixed upstream and review conflicts plus automatic merge changes."
   },
   {
     "id": "B17",

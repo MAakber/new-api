@@ -1,0 +1,6 @@
+{
+  "upstream": "e468b73915e5028e9849de62c5018a0faa203012",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Falling back to direct application...\nFalling back to direct application...\nApplied patch to '.github/ISSUE_TEMPLATE/bug_report.yml' cleanly.\nApplied patch to '.github/ISSUE_TEMPLATE/bug_report_en.yml' cleanly.\nApplied patch to '.github/ISSUE_TEMPLATE/feature_request.yml' cleanly.\nApplied patch to '.github/ISSUE_TEMPLATE/feature_request_en.yml' cleanly.\nApplied patch to '.github/PULL_REQUEST_TEMPLATE.md' cleanly.\nFalling back to direct application...\nFalling back to direct application...\nApplied patch to 'AGENTS.md' cleanly.\n"
+}

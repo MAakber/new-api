@@ -1,0 +1,10 @@
+{
+  "upstream": "626058075524f61bfaf38d7b478d3501144be14e",
+  "unit": "B16.2-builder",
+  "before_head": "f5127055ca82fe15456101b20fa5f3435c501441",
+  "rationale": "Update electron-builder and builder-util-runtime lock graph without changing desktop platforms, resources, licensing or downstream version conversion.",
+  "files": [
+    "electron/package-lock.json",
+    "electron/package.json"
+  ]
+}

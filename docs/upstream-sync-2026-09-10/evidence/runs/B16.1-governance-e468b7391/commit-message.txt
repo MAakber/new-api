@@ -1,0 +1,7 @@
+docs: integrate issue and pull request governance
+
+Adapt upstream e468b73915e5028e9849de62c5018a0faa203012.
+
+Retain the upstream templates and remove its obsolete PR-check workflow. Existing downstream release and integration workflows remain. Owner-template reconciliation follows the later upstream commit; no issue or PR was published.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

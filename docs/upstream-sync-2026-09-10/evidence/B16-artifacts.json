@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "code_commit": "3363f4e6febf1d91174cc8cfeed7035996c08850",
+  "version": "v20260911-3363f4e6",
+  "desktopVersion": "2026.9.11-g3363f4e6",
+  "pairs": [
+    {
+      "source": "new-api.exe",
+      "packaged": "electron/dist/win-unpacked/resources/bin/new-api.exe",
+      "sha256": "09063250b92bd9e035f1cc99596cef550b9ce50524bc56a47e11c35193e3b631"
+    },
+    {
+      "source": "LICENSE",
+      "packaged": "electron/dist/win-unpacked/resources/licenses/LICENSE",
+      "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75"
+    },
+    {
+      "source": "NOTICE",
+      "packaged": "electron/dist/win-unpacked/resources/licenses/NOTICE",
+      "sha256": "903b9ca441be6912459551f39b70338ee7a410eba6cce097043cf006622bd6bc"
+    },
+    {
+      "source": "THIRD-PARTY-LICENSES.md",
+      "packaged": "electron/dist/win-unpacked/resources/licenses/THIRD-PARTY-LICENSES.md",
+      "sha256": "8c819d10b444f9510cd5cd8633a9f119150b40dbbb0f2102b8ce03a22d58cf1e"
+    },
+    {
+      "source": "electron/node_modules/electron/dist/LICENSE",
+      "packaged": "electron/dist/win-unpacked/resources/licenses/electron/LICENSE",
+      "sha256": "5154e165bd6c2cc0cfbcd8916498c7abab0497923bafcd5cb07673fe8480087d"
+    },
+    {
+      "source": "electron/node_modules/electron/dist/LICENSES.chromium.html",
+      "packaged": "electron/dist/win-unpacked/resources/licenses/electron/LICENSES.chromium.html",
+      "sha256": "f9c475876b01bb4d654b8f630f11219cc96198efe91d7f2602a97f0f3c86c3cb"
+    }
+  ],
+  "installers": [
+    {
+      "file": "electron/dist/New-API-App Setup 2026.9.11-g3363f4e6.exe",
+      "bytes": 124830127,
+      "sha256": "66512edbf13daca725bbde5158226f92a5d0d96332a217131cb441dce31d118e"
+    },
+    {
+      "file": "electron/dist/New-API-App 2026.9.11-g3363f4e6.exe",
+      "bytes": 124587498,
+      "sha256": "c05917fe44fd8f10e7f86cda88b4cd9ad4396ddd58d4b71fdf404c0bb789d2d7"
+    }
+  ],
+  "desktop_source": "Exact main/preload in ASAR",
+  "frontend_revision": "Present in bundled JavaScript",
+  "publication": "No publishing or installation performed"
+}

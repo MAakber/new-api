@@ -1,0 +1,18 @@
+{
+  "upstream": "e468b73915e5028e9849de62c5018a0faa203012",
+  "unit": "B16.1-governance",
+  "before_head": "bf5fe2a551f6816a931322ff606c8a5a7a22faa8",
+  "rationale": "Integrate agent issue/PR documentation and human templates, preserving the downstream project-owner workflow and protected attribution.",
+  "files": [
+    ".agents/github/ISSUE.md",
+    ".agents/github/PR.md",
+    ".github/ISSUE_TEMPLATE/bug_report.yml",
+    ".github/ISSUE_TEMPLATE/bug_report_en.yml",
+    ".github/ISSUE_TEMPLATE/feature_request.yml",
+    ".github/ISSUE_TEMPLATE/feature_request_en.yml",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".github/PULL_REQUEST_TEMPLATE/en.md",
+    ".github/workflows/pr-check.yml",
+    "AGENTS.md"
+  ]
+}

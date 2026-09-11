@@ -1,0 +1,9 @@
+{
+  "upstream": "d8ca0ed0bb596e910e1955461e7691e40d224d70",
+  "unit": "B16.1-owner-templates",
+  "before_head": "cb387d34831cdd4fe5e4487b32c0c750364c3708",
+  "rationale": "Allow project-owner pull requests to use the ordinary language-matched template, preserving the downstream owner workflow and AI disclosure rule.",
+  "files": [
+    "AGENTS.md"
+  ]
+}

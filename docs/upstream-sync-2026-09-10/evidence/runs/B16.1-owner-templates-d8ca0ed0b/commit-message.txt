@@ -1,0 +1,7 @@
+docs: preserve owner choice of human PR templates
+
+Adapt upstream d8ca0ed0bb596e910e1955461e7691e40d224d70.
+
+Allow project-owner pull requests to use the ordinary language-matched template, preserving the downstream owner workflow and AI disclosure rule.
+
+Implementation checkpoint; consolidated acceptance is recorded separately.

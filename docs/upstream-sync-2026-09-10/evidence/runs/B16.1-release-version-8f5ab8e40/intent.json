@@ -1,0 +1,9 @@
+{
+  "upstream": "8f5ab8e4048a90d88b20ae1e6d5228b04233d3b8",
+  "unit": "B16.1-release-version",
+  "before_head": "1dbdf20ea2a584b0d1507320df1184db09409dc1",
+  "rationale": "Prefer the exact trigger tag for releases through the existing shared version script; preserve date/SHA versions for local builds and fix Windows Git Bash worktree resolution.",
+  "files": [
+    ".github/workflows/release.yml"
+  ]
+}

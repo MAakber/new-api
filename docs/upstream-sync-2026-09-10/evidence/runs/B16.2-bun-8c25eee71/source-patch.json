@@ -1,0 +1,6 @@
+{
+  "upstream": "8c25eee71ba03ea19851dcc4f12ee4ecfcfb0808",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to '.github/workflows/ci.yml' cleanly.\nApplied patch to '.github/workflows/electron-build.yml' cleanly.\nApplied patch to '.github/workflows/release.yml' cleanly.\nApplied patch to 'Dockerfile' cleanly.\n"
+}
