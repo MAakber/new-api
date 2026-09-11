@@ -24,7 +24,15 @@ import {
   RouterProvider,
 } from '@tanstack/react-router'
 import { act, cleanup, render, screen } from '@testing-library/react'
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest'
 
 let client: QueryClient
 
@@ -49,19 +57,16 @@ async function setupRouter(responses: (boolean | Error)[]) {
   const { api } = await import('@/lib/api')
   const { useAuthStore } = await import('@/stores/auth-store')
   useAuthStore.getState().auth.setBootstrapState('complete')
-  vi.stubGlobal(
-    'fetch',
-    vi.fn(async (input) => {
-      expect(input).toBe('/api/status')
-      return new Response(JSON.stringify({ success: true, data: {} }))
-    })
-  )
-  const request = vi.spyOn(api, 'get').mockImplementation(async (url) => {
-    expect(url).toBe('/api/setup')
+  const request = vi.fn(async () => {
     const status = responses.shift()
     if (status instanceof Error) throw status
     if (status === undefined) throw new Error('Unexpected extra setup request')
     return { data: { success: true, data: { status } } }
+  })
+  vi.spyOn(api, 'get').mockImplementation(async (url) => {
+    if (url === '/api/status') return { data: { success: true, data: {} } }
+    expect(url).toBe('/api/setup')
+    return request()
   })
   const { Route } = await import('../__root')
   const routeTree = Route.addChildren([
