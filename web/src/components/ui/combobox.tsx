@@ -53,6 +53,7 @@ type LegacyComboboxProps = {
   disabled?: boolean
   name?: string
   onBlur?: React.FocusEventHandler<HTMLInputElement>
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
   ref?: React.Ref<HTMLInputElement>
   'aria-label'?: string
   'aria-labelledby'?: string
@@ -74,6 +75,10 @@ function Combobox(
     return (
       <LegacyComboboxInput
         id={props.id}
+        aria-label={props['aria-label']}
+        aria-labelledby={props['aria-labelledby']}
+        aria-invalid={props['aria-invalid']}
+        onKeyDown={props.onKeyDown}
         options={props.options}
         value={props.value ?? ''}
         onValueChange={(value) => props.onValueChange?.(value)}

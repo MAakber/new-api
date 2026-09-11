@@ -326,5 +326,8 @@ func InjectTieredBillingInfo(other *model.LogOther, relayInfo *relaycommon.Relay
 	other.SetPublic("expr_b64", base64.StdEncoding.EncodeToString([]byte(snap.ExprString)))
 	if result != nil {
 		other.SetPublic("matched_tier", result.MatchedTier)
+		if len(result.RequestRules) > 0 {
+			other.SetPublic("request_rules", result.RequestRules)
+		}
 	}
 }
