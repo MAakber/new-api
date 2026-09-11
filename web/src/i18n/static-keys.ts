@@ -149,6 +149,7 @@ export const STATIC_I18N_KEYS = [
   'Canvas files must be smaller than 200 MB.',
   'This file is not a valid drawing canvas.',
 
+  'Account deletion',
   // Header navigation
   'Home',
   'Console',

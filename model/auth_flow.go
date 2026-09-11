@@ -32,6 +32,8 @@ const (
 	AuthFlowPurposeTwoFASetup           = "2fa_setup"
 	AuthFlowPurposeSecurityProof        = "security_proof"
 	AuthFlowPurposeEmailBinding         = "email_binding"
+	AuthFlowPurposeLoginVerification    = "login_verification"
+	AuthFlowPurposeLoginPasskey         = "login_passkey"
 )
 
 var (

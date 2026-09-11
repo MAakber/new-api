@@ -301,7 +301,14 @@ describe('authentication session coordination', () => {
       mutationFn: async () => undefined,
     })
     useAuthStore.getState().auth.setBundle(bundle)
-    useAuthStore.getState().auth.setPending2FAFlowToken('pending-flow')
+    useAuthStore.getState().auth.setPendingLoginVerification({
+      challenge: {
+        require_verification: true,
+        flow_token: 'pending-flow',
+        expires_at: 9999999999,
+        methods: [{ method: '2fa', available: true }],
+      },
+    })
 
     clearAuthenticatedClientState(queryClient, false)
 
@@ -310,7 +317,7 @@ describe('authentication session coordination', () => {
     assert.equal(useAuthStore.getState().auth.user, null)
     assert.equal(useAuthStore.getState().auth.accessToken, null)
     assert.equal(useAuthStore.getState().auth.session, null)
-    assert.equal(useAuthStore.getState().auth.pending2FAFlowToken, null)
+    assert.equal(useAuthStore.getState().auth.pendingLoginVerification, null)
     assert.equal(useAuthStore.getState().auth.bootstrapState, 'complete')
 
     const nextBundle: AuthBundle = {

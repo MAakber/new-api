@@ -41,7 +41,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { login, wechatLoginByCode } from '@/features/auth/api'
-import { isPendingRegistrationChallenge } from '@/features/auth/complete-registration/flow-response'
 import { LegalConsent } from '@/features/auth/components/legal-consent'
 import { OAuthProviders } from '@/features/auth/components/oauth-providers'
 import { loginFormSchema } from '@/features/auth/constants'
@@ -50,7 +49,6 @@ import { useTurnstile } from '@/features/auth/hooks/use-turnstile'
 import { beginPasskeyLogin, finishPasskeyLogin } from '@/features/auth/passkey'
 import type { AuthFormProps } from '@/features/auth/types'
 import { useStatus } from '@/hooks/use-status'
-import { isAuthBundle } from '@/lib/api'
 import {
   buildAssertionResult,
   prepareCredentialRequestOptions,
@@ -58,7 +56,6 @@ import {
 } from '@/lib/passkey'
 import { getServerErrorMessageKey } from '@/lib/server-error-message'
 import { cn } from '@/lib/utils'
-import { useAuthStore } from '@/stores/auth-store'
 
 export function UserAuthForm({
   className,
@@ -96,14 +93,7 @@ export function UserAuthForm({
     setTurnstileToken,
     validateTurnstile,
   } = useTurnstile()
-  const { handleLoginSuccess, redirectTo2FA, redirectToRegistrationCode } =
-    useAuthRedirect()
-  const setPending2FAFlowToken = useAuthStore(
-    (state) => state.auth.setPending2FAFlowToken
-  )
-  const setPendingRegistrationFlowToken = useAuthStore(
-    (state) => state.auth.setPendingRegistrationFlowToken
-  )
+  const { handleLoginResult } = useAuthRedirect()
 
   const hasUserAgreement = Boolean(status?.user_agreement_enabled)
   const hasPrivacyPolicy = Boolean(status?.privacy_policy_enabled)
@@ -184,20 +174,10 @@ export function UserAuthForm({
       })
 
       if (res.success) {
-        if (res.data && 'require_2fa' in res.data && res.data.require_2fa) {
-          if (!res.data.flow_token) {
-            throw new Error(t('Login flow expired. Please sign in again.'))
-          }
-          setPending2FAFlowToken(res.data.flow_token)
-          redirectTo2FA()
-          return
+        form.setValue('password', '')
+        if (await handleLoginResult(res.data, redirectTo)) {
+          toast.success(t('Welcome back!'))
         }
-
-        if (!isAuthBundle(res.data)) {
-          throw new Error(t('Login failed'))
-        }
-        await handleLoginSuccess(res.data, redirectTo)
-        toast.success(t('Welcome back!'))
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) return
@@ -233,16 +213,11 @@ export function UserAuthForm({
     setIsWeChatSubmitting(true)
     try {
       const res = await wechatLoginByCode(wechatCode)
-      if (res?.success && isPendingRegistrationChallenge(res.data)) {
-        setPendingRegistrationFlowToken(res.data.flow_token)
+      if (res?.success) {
         handleWeChatDialogChange(false)
-        redirectToRegistrationCode()
-        return
-      }
-      if (res?.success && isAuthBundle(res.data)) {
-        await handleLoginSuccess(res.data, redirectTo)
-        toast.success(t('Signed in via WeChat'))
-        handleWeChatDialogChange(false)
+        if (await handleLoginResult(res.data, redirectTo)) {
+          toast.success(t('Signed in via WeChat'))
+        }
       } else {
         if (getServerErrorMessageKey(res)) return
         toast.error(res?.message || loginFailedMessage)
@@ -307,12 +282,9 @@ export function UserAuthForm({
         throw new Error(finish.message || t('Failed to complete Passkey login'))
       }
 
-      if (!isAuthBundle(finish.data)) {
-        throw new Error(t('Missing user data from Passkey login response'))
+      if (await handleLoginResult(finish.data, redirectTo)) {
+        toast.success(t('Signed in with Passkey'))
       }
-
-      await handleLoginSuccess(finish.data, redirectTo)
-      toast.success(t('Signed in with Passkey'))
     } catch (error: unknown) {
       if (getServerErrorMessageKey(error)) return
       if (error instanceof DOMException && error.name === 'NotAllowedError') {

@@ -30,6 +30,7 @@ export default defineConfig({
       'src/features/auth/api.test.ts',
       'src/features/auth/lib/__tests__/*.test.ts',
       'src/features/auth/secure-verification/__tests__/*.test.{ts,tsx}',
+      'src/features/auth/otp/__tests__/*.test.tsx',
       'src/features/channels/hooks/__tests__/channel-key-disclosure.test.tsx',
       'src/features/users/components/dialogs/__tests__/user-binding-dialog.test.tsx',
       'src/features/profile/__tests__/*.test.{ts,tsx}',

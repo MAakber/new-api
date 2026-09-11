@@ -51,7 +51,6 @@ import {
   saveAffiliateCode,
 } from '@/features/auth/lib/storage'
 import { useStatus } from '@/hooks/use-status'
-import { isAuthBundle } from '@/lib/api'
 import { getServerErrorMessageKey } from '@/lib/server-error-message'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth-store'
@@ -78,7 +77,7 @@ export function SignUpForm({
     setTurnstileToken,
     validateTurnstile,
   } = useTurnstile()
-  const { redirectToLogin, redirectToRegistrationCode, handleLoginSuccess } =
+  const { redirectToLogin, redirectToRegistrationCode, handleLoginResult } =
     useAuthRedirect()
   const setPendingRegistrationFlowToken = useAuthStore(
     (state) => state.auth.setPendingRegistrationFlowToken
@@ -225,16 +224,11 @@ export function SignUpForm({
     setIsWeChatSubmitting(true)
     try {
       const res = await wechatLoginByCode(wechatCode)
-      if (res?.success && isPendingRegistrationChallenge(res.data)) {
-        setPendingRegistrationFlowToken(res.data.flow_token)
+      if (res?.success) {
         handleWeChatDialogChange(false)
-        redirectToRegistrationCode()
-        return
-      }
-      if (res?.success && isAuthBundle(res.data)) {
-        await handleLoginSuccess(res.data)
-        toast.success(t('Signed in via WeChat'))
-        handleWeChatDialogChange(false)
+        if (await handleLoginResult(res.data)) {
+          toast.success(t('Signed in via WeChat'))
+        }
       } else {
         if (getServerErrorMessageKey(res)) return
         toast.error(res?.message || t('Login failed'))

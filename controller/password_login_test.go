@@ -41,7 +41,7 @@ func TestPasswordLoginEncryptionPreservesAuthentication(t *testing.T) {
 	require.NoError(t, err)
 	sqlDB.SetMaxOpenConns(1)
 	t.Cleanup(func() { _ = sqlDB.Close() })
-	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserAvatar{}, &model.UserSession{}, &model.TwoFA{}, &model.AuthFlow{}, &model.Log{}, &model.AuditLog{}, &model.LoginEncryptionKey{}))
+	require.NoError(t, db.AutoMigrate(&model.User{}, &model.UserAvatar{}, &model.UserSession{}, &model.TwoFA{}, &model.PasskeyCredential{}, &model.AuthFlow{}, &model.Log{}, &model.AuditLog{}, &model.LoginEncryptionKey{}))
 	model.DB, model.LOG_DB = db, db
 	common.SetDatabaseTypes(common.DatabaseTypeSQLite, common.DatabaseTypeSQLite)
 	common.RedisEnabled, common.PasswordLoginEnabled = false, true
@@ -123,7 +123,7 @@ func TestPasswordLoginEncryptionPreservesAuthentication(t *testing.T) {
 	assert.EqualValues(t, 2, sessions)
 	assert.EqualValues(t, 2, audits)
 
-	// An encrypted password still requires the existing second-factor flow.
+	// An encrypted password still requires the configured second factor.
 	require.NoError(t, db.Create(&model.TwoFA{UserId: user.Id, Secret: "fixture-secret", IsEnabled: true}).Error)
 	common.PasswordLoginEncryptionEnabled = true
 	body, err := common.Marshal(LoginRequest{Username: user.Username, PasswordEncrypted: encoded, EncryptionKeyID: keyID})
@@ -133,14 +133,14 @@ func TestPasswordLoginEncryptionPreservesAuthentication(t *testing.T) {
 	var response struct {
 		Success bool `json:"success"`
 		Data    struct {
-			RequireTwoFA bool   `json:"require_2fa"`
-			FlowToken    string `json:"flow_token"`
-			AccessToken  string `json:"access_token"`
+			service.LoginChallenge
+			AccessToken string `json:"access_token"`
 		} `json:"data"`
 	}
 	require.NoError(t, common.Unmarshal(recorder.Body.Bytes(), &response))
 	require.True(t, response.Success)
-	assert.True(t, response.Data.RequireTwoFA)
+	assert.True(t, response.Data.RequireVerification)
+	assert.Equal(t, []service.VerificationMethodOption{{Method: service.VerificationMethodTwoFA, Available: true}}, response.Data.Methods)
 	assert.NotEmpty(t, response.Data.FlowToken)
 	assert.Empty(t, response.Data.AccessToken)
 	assert.Empty(t, recorder.Header().Get("Set-Cookie"))

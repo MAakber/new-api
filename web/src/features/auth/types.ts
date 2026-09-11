@@ -18,6 +18,8 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import type { AuthBundle } from '@/stores/auth-store'
 
+import type { LoginResult } from './secure-verification/types'
+
 // ============================================================================
 // API Payloads
 // ============================================================================
@@ -77,13 +79,7 @@ export interface BindEmailPayload {
 export interface LoginResponse {
   success: boolean
   message: string
-  data?:
-    | AuthBundle
-    | {
-        require_2fa?: boolean
-        flow_token?: string
-        expires_at?: number
-      }
+  data?: LoginResult | PendingRegistrationChallenge
 }
 
 export interface Login2FAResponse {

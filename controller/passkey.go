@@ -119,7 +119,9 @@ func PasskeyRegisterBegin(c *gin.Context) {
 	}
 
 	waUser := passkeysvc.NewWebAuthnUser(user, credentials)
-	var options []webauthnlib.RegistrationOption
+	selection := wa.Config.AuthenticatorSelection
+	selection.UserVerification = protocol.VerificationRequired
+	options := []webauthnlib.RegistrationOption{webauthnlib.WithAuthenticatorSelection(selection)}
 	if len(credentials) > 0 {
 		descriptors := make([]protocol.CredentialDescriptor, 0, len(credentials))
 		for i := range credentials {
@@ -209,6 +211,10 @@ func PasskeyRegisterFinish(c *gin.Context) {
 	)
 	if err != nil {
 		writeSecurityOperationError(c, err)
+		return
+	}
+	if sessionData.UserVerification != protocol.VerificationRequired {
+		writeSecurityOperationError(c, model.ErrAuthFlowInvalid)
 		return
 	}
 	if err := service.ValidateFlowAuthorization(identity, service.VerificationOperation{Scope: service.VerificationScopePasskeyRegister}, security.Authorization); err != nil {
@@ -400,7 +406,7 @@ func PasskeyLoginBegin(c *gin.Context) {
 		return
 	}
 
-	assertion, sessionData, err := wa.BeginDiscoverableLogin()
+	assertion, sessionData, err := wa.BeginDiscoverableLogin(webauthnlib.WithUserVerification(protocol.VerificationRequired))
 	if err != nil {
 		writeSecurityOperationError(c, err)
 		return
@@ -460,6 +466,10 @@ func PasskeyLoginFinish(c *gin.Context) {
 	)
 	if err != nil {
 		writeSecurityOperationError(c, err)
+		return
+	}
+	if sessionData.UserVerification != protocol.VerificationRequired {
+		writeSecurityOperationError(c, model.ErrAuthFlowInvalid)
 		return
 	}
 
@@ -524,7 +534,8 @@ func PasskeyLoginFinish(c *gin.Context) {
 		return
 	}
 
-	setupLogin(modelUser, c)
+	c.Set("login_verification_method", service.VerificationMethodPasskey)
+	setupLoginAtAuthVersion(modelUser, modelUser.AuthVersion, c)
 }
 
 func AdminResetPasskey(c *gin.Context) {
@@ -631,12 +642,7 @@ func PasskeyVerifyBegin(c *gin.Context) {
 	}
 
 	waUser := passkeysvc.NewWebAuthnUser(user, credentials)
-	var options []webauthnlib.LoginOption
-	switch request.Scope {
-	case service.VerificationScopeAccountBind, service.VerificationScopeAccountUnbind, service.VerificationScopePasswordSet, service.VerificationScopePasswordChange:
-		options = append(options, webauthnlib.WithUserVerification(protocol.VerificationRequired))
-	}
-	assertion, sessionData, err := wa.BeginLogin(waUser, options...)
+	assertion, sessionData, err := wa.BeginLogin(waUser, webauthnlib.WithUserVerification(protocol.VerificationRequired))
 	if err != nil {
 		writeSecurityOperationError(c, err)
 		return
@@ -720,6 +726,10 @@ func PasskeyVerifyFinish(c *gin.Context) {
 	)
 	if err != nil {
 		writeSecurityOperationError(c, err)
+		return
+	}
+	if sessionData.UserVerification != protocol.VerificationRequired {
+		writeSecurityOperationError(c, model.ErrAuthFlowInvalid)
 		return
 	}
 
