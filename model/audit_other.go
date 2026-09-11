@@ -52,8 +52,11 @@ func (AuditOther) GormDataType() string {
 }
 
 func (AuditOther) GormDBDataType(db *gorm.DB, _ *schema.Field) string {
-	if db.Dialector.Name() == "sqlite" {
+	switch db.Dialector.Name() {
+	case "sqlite":
 		return "TEXT"
+	case "clickhouse":
+		return "String"
 	}
 	return "JSON"
 }

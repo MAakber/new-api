@@ -545,6 +545,9 @@ func verifyAuditJSONStorage(t *testing.T) {
 	case "mysql":
 		// MariaDB exposes its JSON alias as LONGTEXT through column metadata.
 		assert.Contains(t, []string{"json", "longtext"}, otherType)
+	case "clickhouse":
+		// ClickHouse 24.8 must work without experimental JSON settings.
+		assert.Equal(t, "string", otherType)
 	default:
 		assert.Equal(t, "json", otherType)
 	}
