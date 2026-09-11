@@ -1,0 +1,9 @@
+{
+  "upstream": "f116414284162ad15d8925f7bca494c109b83e93",
+  "before_head": "b6aa5c9b6990de5a8e4a0f5fb97385ce418cb59e",
+  "after_head": "61a03a203505ae3b24ff878a18805cee5535533d",
+  "files": [
+    "service/text_quota_test.go"
+  ],
+  "rationale": "Production normalization and all three upstream regression cases already existed from B04. Verified them through relaykit CanonicalUsage, retained downstream cache-write coverage, and aligned non-fatal assertions with project conventions. No duplicate root converter or duplicate tests were introduced."
+}

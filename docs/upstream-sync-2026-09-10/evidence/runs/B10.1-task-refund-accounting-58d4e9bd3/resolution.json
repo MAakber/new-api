@@ -1,0 +1,17 @@
+{
+  "upstream": "58d4e9bd3bb035df8ea235dd682ccc8a45d0332a",
+  "before_head": "ecc1c7124dfc7fb62f79773902adbf360f998f28",
+  "after_head": "ac68710df889dee40647e8027d82a26a195145aa",
+  "files": [
+    "controller/midjourney.go",
+    "model/midjourney.go",
+    "model/user.go",
+    "model/user_update_test.go",
+    "relay/mjproxy_handler.go",
+    "service/midjourney.go",
+    "service/quota.go",
+    "service/task_billing.go",
+    "service/task_billing_test.go"
+  ],
+  "rationale": "Reconciled wallet/subscription/token/channel usage on task refunds and settlement without inflating request counts. Durable MJ billing fields track partial funding/token application and actual billing channel. Integrated deferred 057f71c scoped refund metadata, preserved task saturation audit and CAS guards. Task/refund/model/controller/relay regressions pass; shared helper package had no matching tests in this targeted run."
+}

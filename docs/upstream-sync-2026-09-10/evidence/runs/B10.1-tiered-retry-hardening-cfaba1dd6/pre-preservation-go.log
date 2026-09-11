@@ -1,0 +1,36 @@
+[SYS] 2026/09/11 - 09:28:47 | quota conversion (QuotaRound) overflow: original=5e+09, clamped=2147483647 
+[SYS] 2026/09/11 - 09:28:47 | quota conversion (QuotaRound) nan: original=NaN, clamped=0 
+[SYS] 2026/09/11 - 09:28:47 | quota conversion (QuotaRound) overflow: original=+Inf, clamped=2147483647 
+--- FAIL: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation (0.04s)
+    --- FAIL: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/negative_price (0.00s)
+        tiered_retry_safety_test.go:42: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/service/tiered_retry_safety_test.go:42
+            	Error:      	Expected value not to be nil.
+            	Test:       	TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/negative_price
+    --- FAIL: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/request_overflow (0.04s)
+        tiered_retry_safety_test.go:51: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/service/tiered_retry_safety_test.go:51
+            	Error:      	Not same: 
+            	            	expected: 0xc000353170 &common.QuotaClamp{Op:"QuotaRound", Kind:"overflow", Original:5e+09, Clamped:2147483647}
+            	            	actual  : 0x0 (*common.QuotaClamp)(nil)
+            	Test:       	TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/request_overflow
+            	Messages:   	keep request-correlated saturation diagnostics
+    --- FAIL: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/not_a_number (0.00s)
+        tiered_retry_safety_test.go:51: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/service/tiered_retry_safety_test.go:51
+            	Error:      	Not same: 
+            	            	expected: 0xc0003532f0 &common.QuotaClamp{Op:"QuotaRound", Kind:"nan", Original:NaN, Clamped:0}
+            	            	actual  : 0x0 (*common.QuotaClamp)(nil)
+            	Test:       	TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/not_a_number
+            	Messages:   	keep request-correlated saturation diagnostics
+    --- FAIL: TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/infinite_price (0.00s)
+        tiered_retry_safety_test.go:51: 
+            	Error Trace:	D:/10178/Projects/new-api-upstream-sync/service/tiered_retry_safety_test.go:51
+            	Error:      	Not same: 
+            	            	expected: 0xc000353440 &common.QuotaClamp{Op:"QuotaRound", Kind:"overflow", Original:+Inf, Clamped:2147483647}
+            	            	actual  : 0x0 (*common.QuotaClamp)(nil)
+            	Test:       	TestTieredRetryRejectsInvalidPriceBeforeChangingReservation/infinite_price
+            	Messages:   	keep request-correlated saturation diagnostics
+FAIL
+FAIL	github.com/QuantumNous/new-api/service	0.662s
+FAIL

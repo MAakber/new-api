@@ -1,0 +1,6 @@
+{
+  "upstream": "df43f801536b348b00bfa4da7639b42c2c036821",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'controller/relay.go' cleanly.\nApplied patch to 'pkg/billingexpr/expr.md' cleanly.\nApplied patch to 'pkg/billingexpr/types.go' cleanly.\nApplied patch to 'relay/common/relay_info.go' cleanly.\nApplied patch to 'service/tiered_settle.go' cleanly.\nApplied patch to 'service/tiered_settle_test.go' cleanly.\n"
+}

@@ -1301,34 +1301,191 @@
       "47ba9d2c63d6dcbf3a183ee421b136ee1b1331ed",
       "f116414284162ad15d8925f7bca494c109b83e93"
     ],
-    "status": "pending",
+    "status": "verified",
     "units": [
       {
         "id": "B10.1",
         "action": "先配对 df43f8015 与 cfaba1dd6，再按依赖补齐充值/退款/缓存扣费",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
       },
       {
         "id": "B10.2",
         "action": "整合令牌自动分组和下游每用户 RPM",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
       },
       {
         "id": "B10.3",
         "action": "三库并发、免费付费跨组、钱包订阅、退款和饱和审计对账",
-        "status": "pending"
+        "status": "verified",
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
       },
       {
         "id": "B10.1-scoped-midjourney-logs",
         "action": "When adding upstream durable Midjourney billing/refund helpers, adapt the 057f71c2336c3981187b732a9d06f65490e9a946 delta to model.LogOther; preserve quota saturation and request diagnostics.",
-        "status": "pending",
+        "status": "verified",
         "sourceCommit": "057f71c2336c3981187b732a9d06f65490e9a946",
-        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json"
+        "dependencyEvidence": "evidence/B08-log-metadata-conflicts.json",
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-tiered-retry",
+        "action": "fix(billing): settle tiered retries with final group (#6518)",
+        "status": "verified",
+        "upstreamCommits": [
+          "df43f801536b348b00bfa4da7639b42c2c036821"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-tiered-retry-hardening",
+        "action": "fix(billing): harden tiered retry group-switch billing (#6570)",
+        "status": "verified",
+        "upstreamCommits": [
+          "cfaba1dd6754d4238e1360247c198a64a313e96c"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-token-auto-groups",
+        "action": "Feat/auto group (#6590)",
+        "status": "verified",
+        "upstreamCommits": [
+          "0ab02020603d22e5613bc4cf46bfab06f8567769"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-atomic-topups",
+        "action": "fix(topup): settle recharge orders atomically",
+        "status": "verified",
+        "upstreamCommits": [
+          "50e5377ea5feec326c416450e4e8bcc0bdfe7749"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-concurrent-reservations",
+        "action": "fix: harden concurrent quota and status updates",
+        "status": "verified",
+        "upstreamCommits": [
+          "ccd535ef8e50cf6e5846a59278c40b7ff59d1b7d"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-task-refund-accounting",
+        "action": "fix(billing): 异步任务退款时同步减少 used_quota (#6795)",
+        "status": "verified",
+        "upstreamCommits": [
+          "58d4e9bd3bb035df8ea235dd682ccc8a45d0332a"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-prepayment-quota-limits",
+        "action": "fix(topup): reject uncreditable orders before payment (#6845)",
+        "status": "verified",
+        "upstreamCommits": [
+          "2a0ce3475c2df51ef5fd725f1eb0249822eb1c35"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-wallet-credit-guards",
+        "action": "fix(topup): guard wallet quota during recharge",
+        "status": "verified",
+        "upstreamCommits": [
+          "47ba9d2c63d6dcbf3a183ee421b136ee1b1331ed"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
+      },
+      {
+        "id": "B10.1-responses-cached-usage",
+        "action": "fix: settle Responses cached token usage (#6892)",
+        "status": "verified",
+        "upstreamCommits": [
+          "f116414284162ad15d8925f7bca494c109b83e93"
+        ],
+        "evidence": [
+          "evidence/B10-acceptance.json"
+        ]
       }
     ],
-    "codeCommits": [],
-    "evidence": [],
-    "nextAction": "先配对 df43f8015 与 cfaba1dd6，再按依赖补齐充值/退款/缓存扣费"
+    "codeCommits": [
+      "05fe98057c4788258ee941f20d04a600f1ec014f",
+      "ac0ac67f7617160dd24739750ea9ad542d137a39",
+      "ca09139d21baed88db118cfd4d470fc06548b544",
+      "0cd451abd632aefa647f189070a605d5df6eb496",
+      "ecc1c7124dfc7fb62f79773902adbf360f998f28",
+      "ac68710df889dee40647e8027d82a26a195145aa",
+      "fd12cb3aa1b734839c9478f7a6784b506ecb33cd",
+      "b6aa5c9b6990de5a8e4a0f5fb97385ce418cb59e",
+      "61a03a203505ae3b24ff878a18805cee5535533d",
+      "fb8bf8ea020f18b813bedb34f3dfa140ac8d6c0c",
+      "d2a5a40075a568c4acd5dca1ce0f4f56b46093a4"
+    ],
+    "evidence": [
+      "evidence/B10-acceptance.json",
+      "evidence/B10-database-matrix.json",
+      "evidence/runs/B10-tiered-pair-go/result.json",
+      "evidence/runs/B10-auto-groups-go/result.json",
+      "evidence/runs/B10-auto-groups-ui/result.json",
+      "evidence/runs/B10-acceptance-preservation/result.json",
+      "evidence/runs/B10-acceptance-types/result.json",
+      "evidence/runs/B10-acceptance-lint/result.json",
+      "evidence/runs/B10-ui-recheck/result.json",
+      "evidence/runs/B10-i18n-recheck/result.json",
+      "evidence/runs/B10-model-channel-recheck/result.json",
+      "evidence/runs/B10-relaykit-build/result.json",
+      "evidence/runs/B10-frontend-build-2/result.json",
+      "evidence/runs/B10-backend-build/result.json",
+      "evidence/runs/B10-accounting-sqlite/result.json",
+      "evidence/runs/B10-sqlite-fresh/result.json",
+      "evidence/runs/B10-sqlite-seed/result.json",
+      "evidence/runs/B10-sqlite-verify/result.json",
+      "evidence/runs/B10-accounting-mariadb/result.json",
+      "evidence/runs/B10-mariadb-fresh/result.json",
+      "evidence/runs/B10-mariadb-seed/result.json",
+      "evidence/runs/B10-mariadb-verify/result.json",
+      "evidence/runs/B10-accounting-mysql/result.json",
+      "evidence/runs/B10-mysql-fresh/result.json",
+      "evidence/runs/B10-mysql-seed/result.json",
+      "evidence/runs/B10-mysql-verify/result.json",
+      "evidence/runs/B10-accounting-postgres/result.json",
+      "evidence/runs/B10-postgres-fresh/result.json",
+      "evidence/runs/B10-postgres-seed/result.json",
+      "evidence/runs/B10-postgres-verify/result.json",
+      "evidence/runs/B10-acceptance-go/result.json",
+      "evidence/runs/B10-acceptance-ui/result.json",
+      "evidence/runs/B10-acceptance-i18n/result.json"
+    ],
+    "nextAction": "Complete. Continue B11 explicit wallet-schema migration and quota audit."
   },
   {
     "id": "B11",

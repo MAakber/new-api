@@ -1563,3 +1563,152 @@
 - Initial Go batch retains a Windows avatar temporary-directory cleanup failure; unchanged isolated avatar and full service reruns pass, other packages already passed.
 - Evidence: evidence/B09-acceptance.json.
 - Continue B10 pair df43f801/cfaba1dd. Final candidate gates and production snapshot/provider rehearsals remain pending.
+
+## 2026-09-11T01:26:01.521Z — B10.1-tiered-retry adaptation begun
+
+- Before HEAD: fdbde5306abcddcf0fa6d1b071af7c3444d8bf4a.
+- Upstream: df43f801536b348b00bfa4da7639b42c2c036821.
+- Refresh only routing-dependent snapshot fields before retry; preserve expression/request freeze, saturation audit and existing wallet/subscription semantics. Pair with cfaba1dd before acceptance.
+- Evidence: evidence/runs/B10.1-tiered-retry-df43f8015/intent.json.
+
+## 2026-09-11T01:26:28.405Z — B10.1-tiered-retry adaptation recorded
+
+- Code: 05fe98057c4788258ee941f20d04a600f1ec014f.
+- Cleanly adapted routing-dependent tiered snapshot refresh and reservation. Existing downstream diagnostics and checked settlement auditing retained. Paired acceptance follows cfaba1dd.
+- Evidence: evidence/runs/B10.1-tiered-retry-df43f8015/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T01:26:28.821Z — B10.1-tiered-retry-hardening adaptation begun
+
+- Before HEAD: 05fe98057c4788258ee941f20d04a600f1ec014f.
+- Upstream: cfaba1dd6754d4238e1360247c198a64a313e96c.
+- Complete the tiered retry pair: free-to-paid billing state, successful-channel ratio refresh and wallet arrears reconciliation; preserve subscription hard caps and request saturation safeguards.
+- Evidence: evidence/runs/B10.1-tiered-retry-hardening-cfaba1dd6/intent.json.
+
+## 2026-09-11T01:33:55.812Z — B10.1-tiered-retry-hardening adaptation recorded
+
+- Code: ac0ac67f7617160dd24739750ea9ad542d137a39.
+- Applied free-to-paid and successful-channel group refresh. Added negative-price rejection before reservation and retained typed saturation diagnostics. Targeted tiered/billing/quota tests pass; full stage database verification remains pending.
+- Evidence: evidence/runs/B10.1-tiered-retry-hardening-cfaba1dd6/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T01:34:35.443Z — B10.1-token-auto-groups adaptation begun
+
+- Before HEAD: ac0ac67f7617160dd24739750ea9ad542d137a39.
+- Upstream: 0ab02020603d22e5613bc4cf46bfab06f8567769.
+- Add permission-filtered per-token ordered automatic groups and existing editor composition; preserve downstream RPM, floating-window state, compact aliases and routing-aware model selection.
+- Evidence: evidence/runs/B10.1-token-auto-groups-0ab020206/intent.json.
+
+## 2026-09-11T01:51:50.457Z — B10.1-token-auto-groups adaptation recorded
+
+- Code: ca09139d21baed88db118cfd4d470fc06548b544.
+- Merged token AutoGroups storage/cache/context/routing and editor behavior. Kept B08 deletion of obsolete password fixtures; retained concurrency validation and RoutingMatchModelName with alias permission tests. Uses existing EmptyState, Combobox and Sheet. Corrected upstream Auto badge and cross-group indicator regression; 27 UI and targeted backend tests, types and touched lint pass. Real database stage matrix remains pending.
+- Evidence: evidence/runs/B10.1-token-auto-groups-0ab020206/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T01:52:55.013Z — B10.1-atomic-topups adaptation begun
+
+- Before HEAD: ca09139d21baed88db118cfd4d470fc06548b544.
+- Upstream: 50e5377ea5feec326c416450e4e8bcc0bdfe7749.
+- Apply transactionally atomic recharge callbacks, strict quota conversions and guarded cache credits; retain multi-database row locks and downstream logs.
+- Evidence: evidence/runs/B10.1-atomic-topups-50e5377ea/intent.json.
+
+## 2026-09-11T01:55:15.409Z — B10.1-atomic-topups adaptation recorded
+
+- Code: 0cd451abd632aefa647f189070a605d5df6eb496.
+- Recharge transactions and strict credit conversions integrated. Retained subscription reward and registration-code paths in Redeem, crediting cache only for quota rewards; targeted recharge/redemption/registration/quota tests passed. Database matrix awaits the reservation and remaining guard patches.
+- Evidence: evidence/runs/B10.1-atomic-topups-50e5377ea/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T01:55:15.834Z — B10.1-concurrent-reservations adaptation begun
+
+- Before HEAD: 0cd451abd632aefa647f189070a605d5df6eb496.
+- Upstream: ccd535ef8e50cf6e5846a59278c40b7ff59d1b7d.
+- Harden atomic quota reservations, token-cache mutation fencing, channel status and purchase limits while preserving downstream auth bans, RPM, quota clamps and custom account balances.
+- Evidence: evidence/runs/B10.1-concurrent-reservations-ccd535ef8/intent.json.
+
+## 2026-09-11T02:03:01.807Z — B10.1-concurrent-reservations adaptation recorded
+
+- Code: ecc1c7124dfc7fb62f79773902adbf360f998f28.
+- Integrated conditional DB/cache reservations and token mutation fences. Channel updates retain downstream database transaction and whole-channel notification semantics, now hold polling lock for the full update and persist only owned fields. Shared factory locks the user for every subscription grant including redemption. Targeted reservation/cap/rollback/polling and account-deletion checks pass; initial broader controller run failed only Windows TempDir cleanup, retained in evidence; stage matrix remains pending.
+- Evidence: evidence/runs/B10.1-concurrent-reservations-ccd535ef8/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T02:03:02.234Z — B10.1-task-refund-accounting adaptation begun
+
+- Before HEAD: ecc1c7124dfc7fb62f79773902adbf360f998f28.
+- Upstream: 58d4e9bd3bb035df8ea235dd682ccc8a45d0332a.
+- Reconcile async task/Midjourney refunds across user/token/channel accounting, preserve downstream checked quota/audit and scoped logs, and integrate deferred B08 Midjourney metadata.
+- Evidence: evidence/runs/B10.1-task-refund-accounting-58d4e9bd3/intent.json.
+
+## 2026-09-11T02:08:03.101Z — B10.1-task-refund-accounting adaptation recorded
+
+- Code: ac68710df889dee40647e8027d82a26a195145aa.
+- Reconciled wallet/subscription/token/channel usage on task refunds and settlement without inflating request counts. Durable MJ billing fields track partial funding/token application and actual billing channel. Integrated deferred 057f71c scoped refund metadata, preserved task saturation audit and CAS guards. Task/refund/model/controller/relay regressions pass; shared helper package had no matching tests in this targeted run.
+- Evidence: evidence/runs/B10.1-task-refund-accounting-58d4e9bd3/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T02:08:03.506Z — B10.1-prepayment-quota-limits adaptation begun
+
+- Before HEAD: ac68710df889dee40647e8027d82a26a195145aa.
+- Upstream: 2a0ce3475c2df51ef5fd725f1eb0249822eb1c35.
+- Reject recharge amounts that cannot be credited before payment checkout, matching provider settlement conversions and downstream currency modes.
+- Evidence: evidence/runs/B10.1-prepayment-quota-limits-2a0ce3475/intent.json.
+
+## 2026-09-11T02:09:05.865Z — B10.1-prepayment-quota-limits adaptation recorded
+
+- Code: fd12cb3aa1b734839c9478f7a6784b506ecb33cd.
+- Applied pre-checkout creditability checks without source conflicts. Provider amount and quota-display conversions retained; relevant controller/model regressions pass. Pair with subsequent atomic wallet-cap guard for stage acceptance.
+- Evidence: evidence/runs/B10.1-prepayment-quota-limits-2a0ce3475/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T02:09:06.254Z — B10.1-wallet-credit-guards adaptation begun
+
+- Before HEAD: fd12cb3aa1b734839c9478f7a6784b506ecb33cd.
+- Upstream: 47ba9d2c63d6dcbf3a183ee421b136ee1b1331ed.
+- Validate current wallet capacity before checkout and repeat the guard atomically on credit, preserving multi-provider recharge and transaction rollback.
+- Evidence: evidence/runs/B10.1-wallet-credit-guards-47ba9d2c6/intent.json.
+
+## 2026-09-11T02:14:40.445Z — B10.1-wallet-credit-guards adaptation recorded
+
+- Code: b6aa5c9b6990de5a8e4a0f5fb97385ce418cb59e.
+- Applied pre-checkout wallet-capacity validation and conditional atomic credit guards across payment providers. Relevant controller and model topup tests passed before commit; stage database matrix remains pending.
+- Evidence: evidence/runs/B10.1-wallet-credit-guards-47ba9d2c6/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T02:15:09.180Z — B10.1-responses-cached-usage adaptation begun
+
+- Before HEAD: b6aa5c9b6990de5a8e4a0f5fb97385ce418cb59e.
+- Upstream: f116414284162ad15d8925f7bca494c109b83e93.
+- Verify Responses cached-token settlement through the existing independent relaykit CanonicalUsage implementation; retain upstream regression cases without resurrecting a duplicate root conversion.
+- Evidence: evidence/runs/B10.1-responses-cached-usage-f11641428/intent.json.
+
+## 2026-09-11T02:16:40.620Z — B10.1-responses-cached-usage adaptation recorded
+
+- Code: 61a03a203505ae3b24ff878a18805cee5535533d.
+- Production normalization already lives in independent relaykit CanonicalUsage. Added the three upstream root settlement contracts and retained the downstream cache-write regression. Text quota, billing usage and tiered retry tests passed; no duplicate root converter was reintroduced.
+- Evidence: evidence/runs/B10.1-responses-cached-usage-f11641428/resolution.json.
+- Verification remains pending.
+
+## 2026-09-11T02:20:21.333Z — B10.3 database accounting acceptance begun
+
+- Code: 61a03a203505ae3b24ff878a18805cee5535533d.
+- Add deterministic concurrent reservation, callback, purchase cap and refund rollback tests.
+- Existing Responses canonicalization and three source regression cases were confirmed already present; no duplicate implementation.
+- Production remains read-only; no production tests or deployment.
+
+## 2026-09-11T02:30:54.356Z — B10.3 accounting regressions corrected
+
+- Code: fb8bf8ea020f18b813bedb34f3dfa140ac8d6c0c.
+- PostgreSQL 9.6 reproduced a quota refund committed without its idempotency record; the shared transaction fixes it.
+- MySQL 5.7 reproduced two grants past a one-purchase cap when redemption read an older snapshot; a locking current read fixes it.
+- Both failed runs retained as evidence/B10-accounting-postgres-pre.log and evidence/B10-accounting-mysql-pre.log.
+- SQLite, MariaDB 11.4.4, MySQL 5.7.44 and PostgreSQL 9.6.24 committed accounting contracts pass. Startup and broader acceptance remain pending.
+
+## 2026-09-11T02:49:41.154Z — B10 stage acceptance complete
+
+- Code: d2a5a40075a568c4acd5dca1ce0f4f56b46093a4.
+- 97/153 upstream rows now have stage verification.
+- Evidence: evidence/B10-acceptance.json and evidence/B10-database-matrix.json.
+- Four engines pass accounting and fresh/upgrade/restart contracts; broad failed checks retained and resolved by package/full-UI rechecks.
+- Next: B11 wallet-schema and quota-audit integration; downstream final reviews and final candidate gates remain pending.

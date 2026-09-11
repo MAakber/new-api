@@ -1,0 +1,34 @@
+{
+  "id": "B10-auto-groups-go",
+  "command": [
+    "go",
+    "test",
+    "./controller",
+    "./middleware",
+    "./service",
+    "./model",
+    "./setting",
+    "-run",
+    "Token|AutoGroup|ListModels|UserRequestRateLimit",
+    "-count=1",
+    "-timeout",
+    "180s"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "ca09139d21baed88db118cfd4d470fc06548b544",
+  "started_at": "2026-09-11T01:52:06.538Z",
+  "finished_at": "2026-09-11T01:52:19.234Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

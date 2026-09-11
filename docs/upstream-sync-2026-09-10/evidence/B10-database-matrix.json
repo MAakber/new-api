@@ -1,0 +1,59 @@
+{
+  "tested_commit": "fb8bf8ea020f18b813bedb34f3dfa140ac8d6c0c",
+  "baseline_source": "403f7d9dffc6a99728ede5d8f72770efc61f7b83",
+  "matrix": [
+    {
+      "flavor": "sqlite",
+      "version": "accounting_database_test.go:29: TEST_ACCOUNTING_DSN: 3.50.4",
+      "accounting": "evidence/runs/B10-accounting-sqlite/result.json",
+      "startup": [
+        "evidence/runs/B10-sqlite-fresh/result.json",
+        "evidence/runs/B10-sqlite-seed/result.json",
+        "evidence/runs/B10-sqlite-verify/result.json"
+      ]
+    },
+    {
+      "flavor": "mariadb",
+      "version": "accounting_database_test.go:29: TEST_ACCOUNTING_DSN: 11.4.4-MariaDB-ubu2404",
+      "accounting": "evidence/runs/B10-accounting-mariadb/result.json",
+      "startup": [
+        "evidence/runs/B10-mariadb-fresh/result.json",
+        "evidence/runs/B10-mariadb-seed/result.json",
+        "evidence/runs/B10-mariadb-verify/result.json"
+      ]
+    },
+    {
+      "flavor": "mysql",
+      "version": "accounting_database_test.go:29: TEST_ACCOUNTING_DSN: 5.7.44",
+      "accounting": "evidence/runs/B10-accounting-mysql/result.json",
+      "startup": [
+        "evidence/runs/B10-mysql-fresh/result.json",
+        "evidence/runs/B10-mysql-seed/result.json",
+        "evidence/runs/B10-mysql-verify/result.json"
+      ]
+    },
+    {
+      "flavor": "postgres",
+      "version": "accounting_database_test.go:29: TEST_ACCOUNTING_DSN: PostgreSQL 9.6.24 on x86_64-pc-linux-gnu (Debian 9.6.24-1.pgdg90+1), compiled by gcc (Debian 6.3.0-18+deb9u1) 6.3.0 20170516, 64-bit",
+      "accounting": "evidence/runs/B10-accounting-postgres/result.json",
+      "startup": [
+        "evidence/runs/B10-postgres-fresh/result.json",
+        "evidence/runs/B10-postgres-seed/result.json",
+        "evidence/runs/B10-postgres-verify/result.json"
+      ]
+    }
+  ],
+  "fixture_manifest": "evidence/B10-fixture-binaries.json",
+  "retained_failures": [
+    "evidence/B10-accounting-postgres-pre.log",
+    "evidence/B10-accounting-mysql-pre.log"
+  ],
+  "contracts": [
+    "Concurrent wallet and token reservations never overspend; AutoGroups roundtrip.",
+    "Duplicate Epay callbacks credit and log once; competing credits preserve pending orders on failure.",
+    "Admin, paid order and downstream redemption share purchase caps, including stale MySQL snapshots.",
+    "Failed subscription refund record rolls back quota; repeated refunds are idempotent.",
+    "Credits preserve downstream user RPM, auth version and billing preference.",
+    "Fresh startup, released-schema upgrade and two repeated startups preserve downstream data without repeated DDL."
+  ]
+}

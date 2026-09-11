@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAt": "2026-09-10T08:21:11.277Z",
-  "updatedAt": "2026-09-11T01:26:00.576Z",
+  "updatedAt": "2026-09-11T02:49:41.154Z",
   "status": "in_progress",
   "objective": "Integrate pinned upstream fully into downstream while preserving local behavior and resumable evidence",
   "baseline": {
@@ -18,15 +18,15 @@
     "worktree": "D:/10178/Projects/new-api-upstream-sync",
     "created": true
   },
-  "current_batch": "B09",
-  "current_unit": "B09.3",
+  "current_batch": "B11",
+  "current_unit": "B11.1",
   "active_operation": null,
-  "last_observed_head": "58e63ed331fa0f881673b48dc2a6e715b94948c6",
-  "last_verified_code_commit": "58e63ed331fa0f881673b48dc2a6e715b94948c6",
-  "last_checkpoint_commit": "58e63ed331fa0f881673b48dc2a6e715b94948c6",
+  "last_observed_head": "d2a5a40075a568c4acd5dca1ce0f4f56b46093a4",
+  "last_verified_code_commit": "d2a5a40075a568c4acd5dca1ce0f4f56b46093a4",
+  "last_checkpoint_commit": "d2a5a40075a568c4acd5dca1ce0f4f56b46093a4",
   "final_merge_commit": null,
   "final_downstream_commit": null,
-  "next_action": "B10.1: integrate df43f801 and dependent cfaba1dd together, preserving int32 request saturation and full ledger reconciliation.",
+  "next_action": "B11.1: integrate a073f74b wallet bounds with explicit tested schema migration and rollback compatibility; retain int32 per-request clamps and downstream grant flows.",
   "blockers": [
     {
       "id": "production_snapshot",

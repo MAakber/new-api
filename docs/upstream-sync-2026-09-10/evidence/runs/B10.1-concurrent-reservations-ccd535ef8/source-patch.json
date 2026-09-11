@@ -1,0 +1,6 @@
+{
+  "upstream": "ccd535ef8e50cf6e5846a59278c40b7ff59d1b7d",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Applied patch to 'controller/token.go' cleanly.\nApplied patch to 'model/channel.go' with conflicts.\nFalling back to direct application...\nApplied patch to 'model/quota_reserve.go' cleanly.\nFalling back to direct application...\nApplied patch to 'model/subscription.go' cleanly.\nApplied patch to 'model/token.go' cleanly.\nApplied patch to 'model/token_auto_groups_cache_test.go' cleanly.\nApplied patch to 'model/token_cache.go' cleanly.\nApplied patch to 'model/user.go' cleanly.\nApplied patch to 'model/user_cache.go' cleanly.\nApplied patch to 'service/billing_session.go' cleanly.\nApplied patch to 'service/funding_source.go' cleanly.\nApplied patch to 'service/quota.go' cleanly.\nU model/channel.go\n"
+}

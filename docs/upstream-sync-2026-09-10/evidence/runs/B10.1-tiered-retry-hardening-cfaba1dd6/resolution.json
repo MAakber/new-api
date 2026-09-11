@@ -1,0 +1,13 @@
+{
+  "upstream": "cfaba1dd6754d4238e1360247c198a64a313e96c",
+  "before_head": "05fe98057c4788258ee941f20d04a600f1ec014f",
+  "after_head": "ac0ac67f7617160dd24739750ea9ad542d137a39",
+  "files": [
+    "controller/relay.go",
+    "service/billing_session.go",
+    "service/tiered_retry_safety_test.go",
+    "service/tiered_settle.go",
+    "service/tiered_settle_test.go"
+  ],
+  "rationale": "Applied free-to-paid and successful-channel group refresh. Added negative-price rejection before reservation and retained typed saturation diagnostics. Targeted tiered/billing/quota tests pass; full stage database verification remains pending."
+}

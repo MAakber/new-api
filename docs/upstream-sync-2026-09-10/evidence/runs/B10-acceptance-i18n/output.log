@@ -1,0 +1,20 @@
+{
+  "files": 18,
+  "checked_keys": 271,
+  "missing": [
+    {
+      "file": "web/src/features/system-settings/models/group-ratio-visual-editor.tsx",
+      "key": "Configure a custom ratio for \"{{userGroup}}\" users when using a specific token group.",
+      "locales": [
+        "en",
+        "zh",
+        "zh-TW",
+        "fr",
+        "ja",
+        "ru",
+        "vi"
+      ]
+    }
+  ],
+  "scope": "Literal call sites only; dynamic keys require explicit review."
+}

@@ -1,0 +1,6 @@
+{
+  "upstream": "cfaba1dd6754d4238e1360247c198a64a313e96c",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'controller/relay.go' cleanly.\nApplied patch to 'service/billing_session.go' cleanly.\nApplied patch to 'service/tiered_settle.go' cleanly.\nApplied patch to 'service/tiered_settle_test.go' cleanly.\n"
+}

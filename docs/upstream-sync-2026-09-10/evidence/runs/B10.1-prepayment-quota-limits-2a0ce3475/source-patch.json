@@ -1,0 +1,6 @@
+{
+  "upstream": "2a0ce3475c2df51ef5fd725f1eb0249822eb1c35",
+  "excluded": [],
+  "exit_code": 0,
+  "output": "Applied patch to 'controller/topup.go' cleanly.\nApplied patch to 'controller/topup_creem.go' cleanly.\nFalling back to direct application...\nApplied patch to 'controller/topup_stripe.go' cleanly.\nApplied patch to 'controller/topup_waffo.go' cleanly.\nApplied patch to 'controller/topup_waffo_pancake.go' cleanly.\n"
+}

@@ -1,0 +1,186 @@
+import fs from 'node:fs/promises'
+import path from 'node:path'
+
+const LOCALES_DIR = path.resolve('src/i18n/locales')
+function stableStringify(obj) {
+  return JSON.stringify(obj, null, 2) + '\n'
+}
+const newKeys = {
+  "en": {
+    "{{count}} / {{max}} groups selected": "{{count}} / {{max}} groups selected",
+    "Add Auto group": "Add Auto group",
+    "Auto group order": "Auto group order",
+    "Auto groups must not contain duplicates": "Auto groups must not contain duplicates",
+    "Choose and order the groups this API key will try.": "Choose and order the groups this API key will try.",
+    "Drag {{group}} to reorder": "Drag {{group}} to reorder",
+    "Inherit global Auto order": "Inherit global Auto order",
+    "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.": "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.",
+    "Maximum {{max}} groups selected": "Maximum {{max}} groups selected",
+    "Maximum custom groups per token": "Maximum custom groups per token",
+    "Move {{group}} down": "Move {{group}} down",
+    "Move {{group}} up": "Move {{group}} up",
+    "No available groups in the global Auto order.": "No available groups in the global Auto order.",
+    "No custom groups. Saving will inherit the complete global Auto order.": "No custom groups. Saving will inherit the complete global Auto order.",
+    "No valid custom Auto groups remain. Add a group or restore global Auto.": "No valid custom Auto groups remain. Add a group or restore global Auto.",
+    "Remove {{group}}": "Remove {{group}}",
+    "Restore global Auto": "Restore global Auto",
+    "Select at least one Auto group or restore global Auto.": "Select at least one Auto group or restore global Auto.",
+    "Select at most {{max}} Auto groups": "Select at most {{max}} Auto groups",
+    "Using the complete global Auto order ({{count}} groups)": "Using the complete global Auto order ({{count}} groups)"
+  },
+  "zh": {
+    "{{count}} / {{max}} groups selected": "已选择 {{count}} / {{max}} 个分组",
+    "Add Auto group": "添加 Auto 分组",
+    "Auto group order": "Auto 分组顺序",
+    "Auto groups must not contain duplicates": "Auto 分组不能重复",
+    "Choose and order the groups this API key will try.": "选择并排列此 API 密钥将依次尝试的分组。",
+    "Drag {{group}} to reorder": "拖动 {{group}} 以重新排序",
+    "Inherit global Auto order": "继承全局 Auto 顺序",
+    "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.": "仅限制令牌专属的 Auto 快照；继承全局 Auto 时不受此限制。",
+    "Maximum {{max}} groups selected": "已达到 {{max}} 个分组上限",
+    "Maximum custom groups per token": "每个令牌的最大自定义分组数",
+    "Move {{group}} down": "将 {{group}} 下移",
+    "Move {{group}} up": "将 {{group}} 上移",
+    "No available groups in the global Auto order.": "全局 Auto 顺序中当前没有可用分组。",
+    "No custom groups. Saving will inherit the complete global Auto order.": "未自定义分组。保存后将继承完整的全局 Auto 顺序。",
+    "No valid custom Auto groups remain. Add a group or restore global Auto.": "没有可用的自定义 Auto 分组。请添加分组或恢复全局 Auto。",
+    "Remove {{group}}": "移除 {{group}}",
+    "Restore global Auto": "恢复全局 Auto",
+    "Select at least one Auto group or restore global Auto.": "请至少选择一个 Auto 分组，或恢复全局 Auto。",
+    "Select at most {{max}} Auto groups": "最多选择 {{max}} 个 Auto 分组",
+    "Using the complete global Auto order ({{count}} groups)": "正在使用完整全局 Auto 顺序（{{count}} 个分组）"
+  },
+  "zh-TW": {
+    "{{count}} / {{max}} groups selected": "已選擇 {{count}} / {{max}} 個分組",
+    "Add Auto group": "新增 Auto 分組",
+    "Auto group order": "Auto 分組順序",
+    "Auto groups must not contain duplicates": "Auto 分組不得重複",
+    "Choose and order the groups this API key will try.": "選擇此 API 金鑰要依序嘗試的分組並排序。",
+    "Drag {{group}} to reorder": "拖曳 {{group}} 以重新排序",
+    "Inherit global Auto order": "繼承全域 Auto 順序",
+    "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.": "僅限制令牌專屬的 Auto 快照；繼承全域 Auto 時不受限制。",
+    "Maximum {{max}} groups selected": "已達到 {{max}} 個分組上限",
+    "Maximum custom groups per token": "每個令牌的最大自訂分組數",
+    "Move {{group}} down": "將 {{group}} 下移",
+    "Move {{group}} up": "將 {{group}} 上移",
+    "No available groups in the global Auto order.": "全域 Auto 順序中目前沒有可用分組。",
+    "No custom groups. Saving will inherit the complete global Auto order.": "未自訂分組。儲存後將繼承完整的全域 Auto 順序。",
+    "No valid custom Auto groups remain. Add a group or restore global Auto.": "沒有可用的自訂 Auto 分組。請新增分組或恢復全域 Auto。",
+    "Remove {{group}}": "移除 {{group}}",
+    "Restore global Auto": "恢復全域 Auto",
+    "Select at least one Auto group or restore global Auto.": "請至少選擇一個 Auto 分組，或恢復全域 Auto。",
+    "Select at most {{max}} Auto groups": "最多選擇 {{max}} 個 Auto 分組",
+    "Using the complete global Auto order ({{count}} groups)": "正在使用完整的全域 Auto 順序（{{count}} 個分組）"
+  },
+  "fr": {
+    "{{count}} / {{max}} groups selected": "{{count}} groupes sélectionnés sur {{max}}",
+    "Add Auto group": "Ajouter un groupe Auto",
+    "Auto group order": "Ordre des groupes Auto",
+    "Auto groups must not contain duplicates": "Les groupes Auto ne doivent pas contenir de doublons",
+    "Choose and order the groups this API key will try.": "Sélectionnez et ordonnez les groupes que cette clé API essaiera.",
+    "Drag {{group}} to reorder": "Faites glisser {{group}} pour réorganiser",
+    "Inherit global Auto order": "Hériter de l’ordre Auto global",
+    "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.": "Limite uniquement les instantanés Auto propres aux jetons. L’héritage Auto global reste illimité.",
+    "Maximum {{max}} groups selected": "Maximum de {{max}} groupes atteint",
+    "Maximum custom groups per token": "Nombre maximal de groupes personnalisés par jeton",
+    "Move {{group}} down": "Déplacer {{group}} vers le bas",
+    "Move {{group}} up": "Déplacer {{group}} vers le haut",
+    "No available groups in the global Auto order.": "Aucun groupe disponible dans l’ordre Auto global.",
+    "No custom groups. Saving will inherit the complete global Auto order.": "Aucun groupe personnalisé. Après l’enregistrement, l’ordre Auto global complet sera hérité.",
+    "No valid custom Auto groups remain. Add a group or restore global Auto.": "Aucun groupe Auto personnalisé valide ne subsiste. Ajoutez un groupe ou restaurez l’Auto global.",
+    "Remove {{group}}": "Supprimer {{group}}",
+    "Restore global Auto": "Restaurer l’Auto global",
+    "Select at least one Auto group or restore global Auto.": "Sélectionnez au moins un groupe Auto ou restaurez l’Auto global.",
+    "Select at most {{max}} Auto groups": "Sélectionnez au maximum {{max}} groupes Auto",
+    "Using the complete global Auto order ({{count}} groups)": "Utilisation de l’ordre Auto global complet ({{count}} groupes)"
+  },
+  "ja": {
+    "{{count}} / {{max}} groups selected": "{{count}} / {{max}} グループを選択済み",
+    "Add Auto group": "Auto グループを追加",
+    "Auto group order": "Auto グループの順序",
+    "Auto groups must not contain duplicates": "Auto グループを重複させることはできません",
+    "Choose and order the groups this API key will try.": "この API キーが試行するグループを選択して並べ替えます。",
+    "Drag {{group}} to reorder": "{{group}} をドラッグして並べ替え",
+    "Inherit global Auto order": "グローバル Auto 順序を継承",
+    "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.": "トークン固有の Auto スナップショットだけを制限します。グローバル Auto の継承には上限がありません。",
+    "Maximum {{max}} groups selected": "最大 {{max}} グループを選択済み",
+    "Maximum custom groups per token": "トークンごとのカスタムグループ上限",
+    "Move {{group}} down": "{{group}} を下に移動",
+    "Move {{group}} up": "{{group}} を上に移動",
+    "No available groups in the global Auto order.": "グローバル Auto 順序に利用可能なグループがありません。",
+    "No custom groups. Saving will inherit the complete global Auto order.": "カスタムグループはありません。保存すると、グローバル Auto の全順序を継承します。",
+    "No valid custom Auto groups remain. Add a group or restore global Auto.": "有効なカスタム Auto グループがありません。グループを追加するか、グローバル Auto に戻してください。",
+    "Remove {{group}}": "{{group}} を削除",
+    "Restore global Auto": "グローバル Auto に戻す",
+    "Select at least one Auto group or restore global Auto.": "Auto グループを1つ以上選択するか、グローバル Auto に戻してください。",
+    "Select at most {{max}} Auto groups": "Auto グループは最大 {{max}} 個まで選択できます",
+    "Using the complete global Auto order ({{count}} groups)": "グローバル Auto の全順序を使用中（{{count}} グループ）"
+  },
+  "ru": {
+    "{{count}} / {{max}} groups selected": "Выбрано групп: {{count}} из {{max}}",
+    "Add Auto group": "Добавить группу Auto",
+    "Auto group order": "Порядок групп Auto",
+    "Auto groups must not contain duplicates": "Группы Auto не должны повторяться",
+    "Choose and order the groups this API key will try.": "Выберите и упорядочьте группы, которые будет использовать этот API-ключ.",
+    "Drag {{group}} to reorder": "Перетащите {{group}}, чтобы изменить порядок",
+    "Inherit global Auto order": "Наследовать глобальный порядок Auto",
+    "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.": "Ограничивает только снимки Auto для отдельных токенов. Глобальное наследование Auto не ограничено.",
+    "Maximum {{max}} groups selected": "Выбрано максимально допустимое число групп: {{max}}",
+    "Maximum custom groups per token": "Максимум пользовательских групп на токен",
+    "Move {{group}} down": "Переместить {{group}} вниз",
+    "Move {{group}} up": "Переместить {{group}} вверх",
+    "No available groups in the global Auto order.": "В глобальном порядке Auto нет доступных групп.",
+    "No custom groups. Saving will inherit the complete global Auto order.": "Пользовательские группы не заданы. После сохранения будет унаследован полный глобальный порядок Auto.",
+    "No valid custom Auto groups remain. Add a group or restore global Auto.": "Доступных пользовательских групп Auto не осталось. Добавьте группу или восстановите глобальный порядок Auto.",
+    "Remove {{group}}": "Удалить {{group}}",
+    "Restore global Auto": "Восстановить глобальный Auto",
+    "Select at least one Auto group or restore global Auto.": "Выберите хотя бы одну группу Auto или восстановите глобальный порядок Auto.",
+    "Select at most {{max}} Auto groups": "Выберите не более {{max}} групп Auto",
+    "Using the complete global Auto order ({{count}} groups)": "Используется полный глобальный порядок Auto (групп: {{count}})"
+  },
+  "vi": {
+    "{{count}} / {{max}} groups selected": "Đã chọn {{count}} / {{max}} nhóm",
+    "Add Auto group": "Thêm nhóm Auto",
+    "Auto group order": "Thứ tự nhóm Auto",
+    "Auto groups must not contain duplicates": "Các nhóm Auto không được trùng lặp",
+    "Choose and order the groups this API key will try.": "Chọn và sắp xếp các nhóm mà khóa API này sẽ thử.",
+    "Drag {{group}} to reorder": "Kéo {{group}} để sắp xếp lại",
+    "Inherit global Auto order": "Kế thừa thứ tự Auto toàn cục",
+    "Limits only token-specific Auto snapshots. Global Auto inheritance remains unlimited.": "Chỉ giới hạn cấu hình Auto riêng của token. Việc kế thừa Auto toàn cục không bị giới hạn.",
+    "Maximum {{max}} groups selected": "Đã chọn tối đa {{max}} nhóm",
+    "Maximum custom groups per token": "Số nhóm tùy chỉnh tối đa cho mỗi token",
+    "Move {{group}} down": "Di chuyển {{group}} xuống",
+    "Move {{group}} up": "Di chuyển {{group}} lên",
+    "No available groups in the global Auto order.": "Không có nhóm khả dụng trong thứ tự Auto toàn cục.",
+    "No custom groups. Saving will inherit the complete global Auto order.": "Chưa có nhóm tùy chỉnh. Sau khi lưu, thứ tự Auto toàn cục đầy đủ sẽ được kế thừa.",
+    "No valid custom Auto groups remain. Add a group or restore global Auto.": "Không còn nhóm Auto tùy chỉnh hợp lệ. Hãy thêm nhóm hoặc khôi phục Auto toàn cục.",
+    "Remove {{group}}": "Xóa {{group}}",
+    "Restore global Auto": "Khôi phục Auto toàn cục",
+    "Select at least one Auto group or restore global Auto.": "Chọn ít nhất một nhóm Auto hoặc khôi phục Auto toàn cục.",
+    "Select at most {{max}} Auto groups": "Chọn tối đa {{max}} nhóm Auto",
+    "Using the complete global Auto order ({{count}} groups)": "Đang dùng thứ tự Auto toàn cục đầy đủ ({{count}} nhóm)"
+  }
+}
+
+async function main() {
+  let totalAdded = 0
+  for (const [locale, trans] of Object.entries(newKeys)) {
+    const filePath = path.join(LOCALES_DIR, locale + '.json')
+    const json = JSON.parse(await fs.readFile(filePath, 'utf8'))
+    let count = 0
+    for (const [key, value] of Object.entries(trans)) {
+      if (!Object.prototype.hasOwnProperty.call(json.translation, key) || json.translation[key] !== value) {
+        json.translation[key] = value
+        count++
+      }
+    }
+    if (count > 0) {
+      json.translation = Object.fromEntries(Object.entries(json.translation).sort(([a], [b]) => a.localeCompare(b)))
+      await fs.writeFile(filePath, stableStringify(json), 'utf8')
+    }
+    console.log(locale + ': ' + count + ' translations applied')
+    totalAdded += count
+  }
+  console.log('Total: ' + totalAdded + ' translations applied')
+}
+main().catch((err) => { console.error(err); process.exitCode = 1 })

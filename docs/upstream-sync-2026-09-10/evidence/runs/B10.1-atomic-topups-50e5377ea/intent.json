@@ -1,0 +1,15 @@
+{
+  "upstream": "50e5377ea5feec326c416450e4e8bcc0bdfe7749",
+  "unit": "B10.1-atomic-topups",
+  "before_head": "ca09139d21baed88db118cfd4d470fc06548b544",
+  "rationale": "Apply transactionally atomic recharge callbacks, strict quota conversions and guarded cache credits; retain multi-database row locks and downstream logs.",
+  "files": [
+    "common/quota_math.go",
+    "controller/topup.go",
+    "model/payment_method_guard_test.go",
+    "model/quota_reserve.go",
+    "model/redemption.go",
+    "model/topup.go",
+    "model/user_cache.go"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "upstream": "50e5377ea5feec326c416450e4e8bcc0bdfe7749",
+  "before_head": "ca09139d21baed88db118cfd4d470fc06548b544",
+  "after_head": "0cd451abd632aefa647f189070a605d5df6eb496",
+  "files": [
+    "common/quota_math.go",
+    "controller/topup.go",
+    "model/payment_method_guard_test.go",
+    "model/quota_reserve.go",
+    "model/redemption.go",
+    "model/topup.go",
+    "model/user_cache.go"
+  ],
+  "rationale": "Recharge transactions and strict credit conversions integrated. Retained subscription reward and registration-code paths in Redeem, crediting cache only for quota rewards; targeted recharge/redemption/registration/quota tests passed. Database matrix awaits the reservation and remaining guard patches."
+}

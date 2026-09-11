@@ -1,0 +1,22 @@
+{
+  "upstream": "ccd535ef8e50cf6e5846a59278c40b7ff59d1b7d",
+  "unit": "B10.1-concurrent-reservations",
+  "before_head": "0cd451abd632aefa647f189070a605d5df6eb496",
+  "rationale": "Harden atomic quota reservations, token-cache mutation fencing, channel status and purchase limits while preserving downstream auth bans, RPM, quota clamps and custom account balances.",
+  "files": [
+    "controller/token.go",
+    "model/channel.go",
+    "model/channel_status_test.go",
+    "model/quota_reserve.go",
+    "model/quota_reserve_test.go",
+    "model/subscription.go",
+    "model/token.go",
+    "model/token_auto_groups_cache_test.go",
+    "model/token_cache.go",
+    "model/user.go",
+    "model/user_cache.go",
+    "service/billing_session.go",
+    "service/funding_source.go",
+    "service/quota.go"
+  ]
+}

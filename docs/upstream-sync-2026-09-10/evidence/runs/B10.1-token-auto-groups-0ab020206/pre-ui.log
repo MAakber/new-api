@@ -1,0 +1,71 @@
+$ node scripts/test-preservation.mjs features/keys group-auto-limit-validation
+bun test v1.3.14 (0d9b296a)
+
+src\features\keys\components\__tests__\api-key-group-cell.test.tsx:
+(pass) API key group table cell > renders two unclipped rings and a localized Auto ratio when API data uses a nonlocalized string [68.57ms]
+(pass) API key group table cell > keeps static Auto frames but omits both moving layers for reduced motion [6.44ms]
+(pass) API key group table cell > shows only the Auto badge when ratio data is unavailable [3.62ms]
+(pass) API key group table cell > narrows normal group ratios to numbers and never applies Auto rings [9.89ms]
+
+ 4 pass
+ 0 fail
+Ran 4 tests across 1 file. [1275.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\keys\components\__tests__\api-key-group-combobox.test.tsx:
+(pass) API key group combobox Auto effect > rings the selected Auto trigger and its localized ratio without rendering the API ratio text [111.06ms]
+(pass) API key group combobox Auto effect > keeps search and selection behavior while leaving normal groups unstyled [56.82ms]
+(pass) API key group combobox Auto effect > preserves the static Auto treatment but omits moving layers for reduced motion [29.52ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 file. [997.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\keys\components\__tests__\api-keys-mutate-drawer.test.tsx:
+(pass) API keys mutate drawer Auto group integration > inherits the root Auto order and sends an empty override for every batch-created key [171.18ms]
+(pass) API keys mutate drawer Auto group integration > preserves an unsaved custom order and mode after Auto to ordinary to Auto changes [202.57ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [1.60s]
+bun test v1.3.14 (0d9b296a)
+
+src\features\keys\components\__tests__\auto-group-order-editor.test.tsx:
+(pass) Auto group order editor > enforces the limit and exposes accessible reorder controls [84.72ms]
+(pass) Auto group order editor > adds and removes groups, then restores inheritance as an empty value [78.00ms]
+(pass) Auto group order editor > shows the complete inherited order with metadata beyond the custom limit [3.96ms]
+(pass) Auto group order editor > shows an explicit empty state when the global Auto order has no groups [11.60ms]
+(pass) Auto group order editor > keeps an empty custom order distinct from global inheritance [15.69ms]
+(pass) Auto group order editor > adding a group from inheritance explicitly creates a custom order [46.25ms]
+(pass) Auto group order editor > removing the last custom group does not silently enable inheritance [15.48ms]
+
+ 7 pass
+ 0 fail
+Ran 7 tests across 1 file. [984.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\keys\lib\__tests__\auto-group-form.test.ts:
+(pass) API key Auto group form mapping > treats legacy token responses without auto_groups as inheritance [1.35ms]
+(pass) API key Auto group form mapping > creates an Auto token that inherits the global order [0.08ms]
+(pass) API key Auto group form mapping > maps omitted, null, and empty snapshots to inheritance on edit [0.11ms]
+(pass) API key Auto group form mapping > filters a stored snapshot before applying a lowered limit [0.03ms]
+(pass) API key Auto group form mapping > keeps a fully filtered snapshot custom and rejects it until resolved [1.96ms]
+(pass) API key Auto group form mapping > submits a valid custom snapshot in its configured order [0.02ms]
+(pass) API key Auto group form mapping > submits an empty array for inheritance and for non-Auto groups [0.02ms]
+(pass) API key Auto group form mapping > rejects snapshots over the configured limit [0.54ms]
+(pass) API key Auto group form mapping > rejects duplicate custom groups [0.45ms]
+
+ 9 pass
+ 0 fail
+Ran 9 tests across 1 file. [65.00ms]
+bun test v1.3.14 (0d9b296a)
+
+src\features\system-settings\models\__tests__\group-auto-limit-validation.test.ts:
+(pass) per-token Auto group limit validation > accepts any positive integer without a product upper bound [0.31ms]
+(pass) per-token Auto group limit validation > rejects zero, negative, and fractional limits [0.27ms]
+
+ 2 pass
+ 0 fail
+Ran 2 tests across 1 file. [57.00ms]
+{"files":6,"passed":6,"failed":[]}

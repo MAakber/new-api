@@ -1,0 +1,8 @@
+{
+  "upstream": "f116414284162ad15d8925f7bca494c109b83e93",
+  "excluded": [
+    "service/billing_usage.go"
+  ],
+  "exit_code": 1,
+  "output": "Applied patch to 'service/text_quota_test.go' with conflicts.\nU service/text_quota_test.go\n"
+}

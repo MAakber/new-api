@@ -1,0 +1,49 @@
+=== RUN   TestAccountingDatabaseContracts
+[SYS] 2026/09/11 - 10:26:27 | using MySQL as database 
+    accounting_database_test.go:29: TEST_ACCOUNTING_DSN: 5.7.44
+=== RUN   TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations
+=== RUN   TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/wallet
+=== RUN   TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/token
+=== RUN   TestAccountingDatabaseContracts/duplicate_epay_callback
+[SYS] 2026/09/11 - 10:26:28 | 易支付充值成功 trade_no=accounting-duplicate user_id=2 quota_to_add=200 money=2.00 
+=== RUN   TestAccountingDatabaseContracts/competing_topups_at_wallet_limit
+[SYS] 2026/09/11 - 10:26:28 | 易支付充值成功 trade_no=accounting-capacity-a user_id=3 quota_to_add=100 money=1.00 
+[SYS] 2026/09/11 - 10:26:28 | epay topup failed: top-up quota limit exceeded 
+=== RUN   TestAccountingDatabaseContracts/subscription_purchase_cap_across_grant_paths
+[SYS] 2026/09/11 - 10:26:29 | redemption failed: 已达到该套餐购买上限 
+=== RUN   TestAccountingDatabaseContracts/redemption_rechecks_cap_after_concurrent_grant
+    accounting_database_test.go:237: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:237
+        	Error:      	Expected error with "redeem.failed" in chain but got nil.
+        	Test:       	TestAccountingDatabaseContracts/redemption_rechecks_cap_after_concurrent_grant
+    accounting_database_test.go:240: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:240
+        	Error:      	Not equal: 
+        	            	expected: int(1)
+        	            	actual  : int64(2)
+        	Test:       	TestAccountingDatabaseContracts/redemption_rechecks_cap_after_concurrent_grant
+    accounting_database_test.go:242: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:242
+        	Error:      	Not equal: 
+        	            	expected: 1
+        	            	actual  : 3
+        	Test:       	TestAccountingDatabaseContracts/redemption_rechecks_cap_after_concurrent_grant
+
+2026/09/11 10:26:32 [34;1mD:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:221
+[0m[35m[warn] [0mremoving callback `accounting_redemption_snapshot` from D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:221
+=== RUN   TestAccountingDatabaseContracts/subscription_reservation_and_atomic_refund
+
+2026/09/11 10:26:32 [34;1mD:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:273
+[0m[35m[warn] [0mremoving callback `accounting_refund_record_failure` from D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:273
+--- FAIL: TestAccountingDatabaseContracts (4.94s)
+    --- PASS: TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations (0.20s)
+        --- PASS: TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/wallet (0.05s)
+        --- PASS: TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/token (0.05s)
+    --- PASS: TestAccountingDatabaseContracts/duplicate_epay_callback (0.18s)
+    --- PASS: TestAccountingDatabaseContracts/competing_topups_at_wallet_limit (0.22s)
+    --- PASS: TestAccountingDatabaseContracts/subscription_purchase_cap_across_grant_paths (0.99s)
+    --- FAIL: TestAccountingDatabaseContracts/redemption_rechecks_cap_after_concurrent_grant (2.47s)
+    --- PASS: TestAccountingDatabaseContracts/subscription_reservation_and_atomic_refund (0.52s)
+FAIL
+FAIL	github.com/QuantumNous/new-api/model	5.517s
+FAIL

@@ -1,0 +1,26 @@
+{
+  "id": "B10-ui-recheck",
+  "command": [
+    "bun",
+    "run",
+    "test:sync",
+    "--maxWorkers=4"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync\\web",
+  "tested_commit": "d2a5a40075a568c4acd5dca1ce0f4f56b46093a4",
+  "started_at": "2026-09-11T02:44:11.302Z",
+  "finished_at": "2026-09-11T02:45:00.819Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

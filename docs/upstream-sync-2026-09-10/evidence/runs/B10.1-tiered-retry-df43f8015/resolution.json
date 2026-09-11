@@ -1,0 +1,14 @@
+{
+  "upstream": "df43f801536b348b00bfa4da7639b42c2c036821",
+  "before_head": "fdbde5306abcddcf0fa6d1b071af7c3444d8bf4a",
+  "after_head": "05fe98057c4788258ee941f20d04a600f1ec014f",
+  "files": [
+    "controller/relay.go",
+    "pkg/billingexpr/expr.md",
+    "pkg/billingexpr/types.go",
+    "relay/common/relay_info.go",
+    "service/tiered_settle.go",
+    "service/tiered_settle_test.go"
+  ],
+  "rationale": "Cleanly adapted routing-dependent tiered snapshot refresh and reservation. Existing downstream diagnostics and checked settlement auditing retained. Paired acceptance follows cfaba1dd."
+}

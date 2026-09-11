@@ -1,0 +1,23 @@
+{
+  "upstream": "ccd535ef8e50cf6e5846a59278c40b7ff59d1b7d",
+  "before_head": "0cd451abd632aefa647f189070a605d5df6eb496",
+  "after_head": "ecc1c7124dfc7fb62f79773902adbf360f998f28",
+  "files": [
+    "controller/token.go",
+    "model/channel.go",
+    "model/channel_status_test.go",
+    "model/quota_reserve.go",
+    "model/quota_reserve_test.go",
+    "model/subscription.go",
+    "model/token.go",
+    "model/token_auto_groups_cache_test.go",
+    "model/token_cache.go",
+    "model/user.go",
+    "model/user_cache.go",
+    "service/billing_session.go",
+    "service/funding_source.go",
+    "service/quota.go",
+    "service/tiered_retry_safety_test.go"
+  ],
+  "rationale": "Integrated conditional DB/cache reservations and token mutation fences. Channel updates retain downstream database transaction and whole-channel notification semantics, now hold polling lock for the full update and persist only owned fields. Shared factory locks the user for every subscription grant including redemption. Targeted reservation/cap/rollback/polling and account-deletion checks pass; initial broader controller run failed only Windows TempDir cleanup, retained in evidence; stage matrix remains pending."
+}

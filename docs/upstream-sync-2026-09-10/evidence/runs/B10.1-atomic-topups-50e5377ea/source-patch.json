@@ -1,0 +1,6 @@
+{
+  "upstream": "50e5377ea5feec326c416450e4e8bcc0bdfe7749",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Applied patch to 'common/quota_math.go' cleanly.\nApplied patch to 'controller/topup.go' cleanly.\nApplied patch to 'model/payment_method_guard_test.go' cleanly.\nFalling back to direct application...\nApplied patch to 'model/redemption.go' with conflicts.\nApplied patch to 'model/topup.go' cleanly.\nApplied patch to 'model/user_cache.go' cleanly.\nU model/redemption.go\n"
+}

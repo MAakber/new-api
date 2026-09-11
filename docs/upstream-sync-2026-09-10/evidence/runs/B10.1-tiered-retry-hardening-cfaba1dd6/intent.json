@@ -1,0 +1,12 @@
+{
+  "upstream": "cfaba1dd6754d4238e1360247c198a64a313e96c",
+  "unit": "B10.1-tiered-retry-hardening",
+  "before_head": "05fe98057c4788258ee941f20d04a600f1ec014f",
+  "rationale": "Complete the tiered retry pair: free-to-paid billing state, successful-channel ratio refresh and wallet arrears reconciliation; preserve subscription hard caps and request saturation safeguards.",
+  "files": [
+    "controller/relay.go",
+    "service/billing_session.go",
+    "service/tiered_settle.go",
+    "service/tiered_settle_test.go"
+  ]
+}

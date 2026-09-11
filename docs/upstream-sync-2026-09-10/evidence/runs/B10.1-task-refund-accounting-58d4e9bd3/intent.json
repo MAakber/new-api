@@ -1,0 +1,17 @@
+{
+  "upstream": "58d4e9bd3bb035df8ea235dd682ccc8a45d0332a",
+  "unit": "B10.1-task-refund-accounting",
+  "before_head": "ecc1c7124dfc7fb62f79773902adbf360f998f28",
+  "rationale": "Reconcile async task/Midjourney refunds across user/token/channel accounting, preserve downstream checked quota/audit and scoped logs, and integrate deferred B08 Midjourney metadata.",
+  "files": [
+    "controller/midjourney.go",
+    "model/midjourney.go",
+    "model/user.go",
+    "model/user_update_test.go",
+    "relay/mjproxy_handler.go",
+    "service/midjourney.go",
+    "service/quota.go",
+    "service/task_billing.go",
+    "service/task_billing_test.go"
+  ]
+}

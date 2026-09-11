@@ -256,12 +256,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Cleanly adapted routing-dependent tiered snapshot refresh and reservation. Existing downstream diagnostics and checked settlement auditing retained. Paired acceptance follows cfaba1dd.",
+    "resolution_commits": [
+      "05fe98057c4788258ee941f20d04a600f1ec014f"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-tiered-retry-df43f8015/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -295,12 +300,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied free-to-paid and successful-channel group refresh. Added negative-price rejection before reservation and retained typed saturation diagnostics. Targeted tiered/billing/quota tests pass; full stage database verification remains pending.",
+    "resolution_commits": [
+      "ac0ac67f7617160dd24739750ea9ad542d137a39"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-tiered-retry-hardening-cfaba1dd6/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -431,12 +441,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Merged token AutoGroups storage/cache/context/routing and editor behavior. Kept B08 deletion of obsolete password fixtures; retained concurrency validation and RoutingMatchModelName with alias permission tests. Uses existing EmptyState, Combobox and Sheet. Corrected upstream Auto badge and cross-group indicator regression; 27 UI and targeted backend tests, types and touched lint pass. Real database stage matrix remains pending.",
+    "resolution_commits": [
+      "ca09139d21baed88db118cfd4d470fc06548b544"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-token-auto-groups-0ab020206/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1568,12 +1583,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Recharge transactions and strict credit conversions integrated. Retained subscription reward and registration-code paths in Redeem, crediting cache only for quota rewards; targeted recharge/redemption/registration/quota tests passed. Database matrix awaits the reservation and remaining guard patches.",
+    "resolution_commits": [
+      "0cd451abd632aefa647f189070a605d5df6eb496"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-atomic-topups-50e5377ea/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1618,12 +1638,18 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Integrated conditional DB/cache reservations and token mutation fences. Channel updates retain downstream database transaction and whole-channel notification semantics, now hold polling lock for the full update and persist only owned fields. Shared factory locks the user for every subscription grant including redemption. Targeted reservation/cap/rollback/polling and account-deletion checks pass; initial broader controller run failed only Windows TempDir cleanup, retained in evidence; stage matrix remains pending.",
+    "resolution_commits": [
+      "ecc1c7124dfc7fb62f79773902adbf360f998f28",
+      "fb8bf8ea020f18b813bedb34f3dfa140ac8d6c0c"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-concurrent-reservations-ccd535ef8/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1660,12 +1686,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Reconciled wallet/subscription/token/channel usage on task refunds and settlement without inflating request counts. Durable MJ billing fields track partial funding/token application and actual billing channel. Integrated deferred 057f71c scoped refund metadata, preserved task saturation audit and CAS guards. Task/refund/model/controller/relay regressions pass; shared helper package had no matching tests in this targeted run.",
+    "resolution_commits": [
+      "ac68710df889dee40647e8027d82a26a195145aa"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-task-refund-accounting-58d4e9bd3/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -1933,12 +1964,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied pre-checkout creditability checks without source conflicts. Provider amount and quota-display conversions retained; relevant controller/model regressions pass. Pair with subsequent atomic wallet-cap guard for stage acceptance.",
+    "resolution_commits": [
+      "fd12cb3aa1b734839c9478f7a6784b506ecb33cd"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-prepayment-quota-limits-2a0ce3475/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2051,12 +2087,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Applied pre-checkout wallet-capacity validation and conditional atomic credit guards across payment providers. Relevant controller and model topup tests passed before commit; stage database matrix remains pending.",
+    "resolution_commits": [
+      "b6aa5c9b6990de5a8e4a0f5fb97385ce418cb59e"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-wallet-credit-guards-47ba9d2c6/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -2575,12 +2616,17 @@
       "empty": false,
       "in21CommitTrial": false
     },
-    "status": "pending",
-    "resolution": null,
-    "resolution_rationale": null,
-    "resolution_commits": [],
+    "status": "verified",
+    "resolution": "adapted",
+    "resolution_rationale": "Production normalization and all three upstream regression cases already existed from B04. Verified them through relaykit CanonicalUsage, retained downstream cache-write coverage, and aligned non-fatal assertions with project conventions. No duplicate root converter or duplicate tests were introduced.",
+    "resolution_commits": [
+      "61a03a203505ae3b24ff878a18805cee5535533d"
+    ],
     "preservationIds": [],
-    "evidence": [],
+    "evidence": [
+      "evidence/runs/B10.1-responses-cached-usage-f11641428/resolution.json",
+      "evidence/B10-acceptance.json"
+    ],
     "final_review": {
       "status": "pending",
       "commit": null
@@ -4930,7 +4976,8 @@
       "evidence/runs/B08-logs-ui/result.json",
       "evidence/runs/B08-logs-types/result.json",
       "evidence/runs/B08-logs-lint/result.json",
-      "evidence/B08-acceptance.json"
+      "evidence/B08-acceptance.json",
+      "evidence/B10-acceptance.json"
     ],
     "final_review": {
       "status": "pending",

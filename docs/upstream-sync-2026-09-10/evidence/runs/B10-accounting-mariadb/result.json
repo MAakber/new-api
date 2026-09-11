@@ -1,0 +1,31 @@
+{
+  "id": "B10-accounting-mariadb",
+  "command": [
+    "go",
+    "test",
+    "./model",
+    "-run",
+    "^TestAccountingDatabaseContracts$",
+    "-v",
+    "-count=1",
+    "-timeout",
+    "180s"
+  ],
+  "cwd": "D:\\10178\\Projects\\new-api-upstream-sync",
+  "tested_commit": "fb8bf8ea020f18b813bedb34f3dfa140ac8d6c0c",
+  "started_at": "2026-09-11T02:29:24.374Z",
+  "finished_at": "2026-09-11T02:29:40.060Z",
+  "status": "passed",
+  "exit_code": 0,
+  "signal": null,
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "v22.15.0",
+    "GOWORK": "default",
+    "CGO_ENABLED": "default",
+    "mysql_test_dsn_present": false,
+    "postgres_test_dsn_present": false
+  },
+  "log": "output.log"
+}

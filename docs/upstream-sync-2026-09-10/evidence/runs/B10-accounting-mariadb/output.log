@@ -1,0 +1,33 @@
+=== RUN   TestAccountingDatabaseContracts
+[SYS] 2026/09/11 - 10:29:34 | using MySQL as database 
+    accounting_database_test.go:29: TEST_ACCOUNTING_DSN: 11.4.4-MariaDB-ubu2404
+=== RUN   TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations
+=== RUN   TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/wallet
+=== RUN   TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/token
+=== RUN   TestAccountingDatabaseContracts/duplicate_epay_callback
+[SYS] 2026/09/11 - 10:29:34 | 易支付充值成功 trade_no=accounting-duplicate user_id=2 quota_to_add=200 money=2.00 
+=== RUN   TestAccountingDatabaseContracts/competing_topups_at_wallet_limit
+[SYS] 2026/09/11 - 10:29:35 | 易支付充值成功 trade_no=accounting-capacity-b user_id=3 quota_to_add=100 money=1.00 
+[SYS] 2026/09/11 - 10:29:35 | epay topup failed: top-up quota limit exceeded 
+=== RUN   TestAccountingDatabaseContracts/subscription_purchase_cap_across_grant_paths
+[SYS] 2026/09/11 - 10:29:36 | redemption failed: 已达到该套餐购买上限 
+=== RUN   TestAccountingDatabaseContracts/redemption_rechecks_cap_after_concurrent_grant
+[SYS] 2026/09/11 - 10:29:39 | redemption failed: 已达到该套餐购买上限 
+
+2026/09/11 10:29:39 [34;1mD:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:221
+[0m[35m[warn] [0mremoving callback `accounting_redemption_snapshot` from D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:221
+=== RUN   TestAccountingDatabaseContracts/subscription_reservation_and_atomic_refund
+
+2026/09/11 10:29:39 [34;1mD:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:273
+[0m[35m[warn] [0mremoving callback `accounting_refund_record_failure` from D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:273
+--- PASS: TestAccountingDatabaseContracts (5.94s)
+    --- PASS: TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations (0.20s)
+        --- PASS: TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/wallet (0.05s)
+        --- PASS: TestAccountingDatabaseContracts/concurrent_wallet_and_token_reservations/token (0.05s)
+    --- PASS: TestAccountingDatabaseContracts/duplicate_epay_callback (0.18s)
+    --- PASS: TestAccountingDatabaseContracts/competing_topups_at_wallet_limit (0.23s)
+    --- PASS: TestAccountingDatabaseContracts/subscription_purchase_cap_across_grant_paths (1.51s)
+    --- PASS: TestAccountingDatabaseContracts/redemption_rechecks_cap_after_concurrent_grant (2.74s)
+    --- PASS: TestAccountingDatabaseContracts/subscription_reservation_and_atomic_refund (0.51s)
+PASS
+ok  	github.com/QuantumNous/new-api/model	6.668s

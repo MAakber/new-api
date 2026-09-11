@@ -1,0 +1,6 @@
+{
+  "upstream": "58d4e9bd3bb035df8ea235dd682ccc8a45d0332a",
+  "excluded": [],
+  "exit_code": 1,
+  "output": "Applied patch to 'controller/midjourney.go' with conflicts.\nApplied patch to 'model/midjourney.go' cleanly.\nApplied patch to 'model/user.go' cleanly.\nApplied patch to 'model/user_update_test.go' cleanly.\nApplied patch to 'relay/mjproxy_handler.go' cleanly.\nApplied patch to 'service/midjourney.go' cleanly.\nApplied patch to 'service/quota.go' cleanly.\nApplied patch to 'service/task_billing.go' cleanly.\nApplied patch to 'service/task_billing_test.go' cleanly.\nU controller/midjourney.go\n"
+}

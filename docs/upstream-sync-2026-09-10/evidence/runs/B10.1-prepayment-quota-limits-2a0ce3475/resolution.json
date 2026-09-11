@@ -1,0 +1,14 @@
+{
+  "upstream": "2a0ce3475c2df51ef5fd725f1eb0249822eb1c35",
+  "before_head": "ac68710df889dee40647e8027d82a26a195145aa",
+  "after_head": "fd12cb3aa1b734839c9478f7a6784b506ecb33cd",
+  "files": [
+    "controller/topup.go",
+    "controller/topup_creem.go",
+    "controller/topup_quota_limit_test.go",
+    "controller/topup_stripe.go",
+    "controller/topup_waffo.go",
+    "controller/topup_waffo_pancake.go"
+  ],
+  "rationale": "Applied pre-checkout creditability checks without source conflicts. Provider amount and quota-display conversions retained; relevant controller/model regressions pass. Pair with subsequent atomic wallet-cap guard for stage acceptance."
+}

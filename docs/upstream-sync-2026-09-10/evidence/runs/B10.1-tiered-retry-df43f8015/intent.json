@@ -1,0 +1,14 @@
+{
+  "upstream": "df43f801536b348b00bfa4da7639b42c2c036821",
+  "unit": "B10.1-tiered-retry",
+  "before_head": "fdbde5306abcddcf0fa6d1b071af7c3444d8bf4a",
+  "rationale": "Refresh only routing-dependent snapshot fields before retry; preserve expression/request freeze, saturation audit and existing wallet/subscription semantics. Pair with cfaba1dd before acceptance.",
+  "files": [
+    "controller/relay.go",
+    "pkg/billingexpr/expr.md",
+    "pkg/billingexpr/types.go",
+    "relay/common/relay_info.go",
+    "service/tiered_settle.go",
+    "service/tiered_settle_test.go"
+  ]
+}

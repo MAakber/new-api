@@ -1,0 +1,456 @@
+ok  	github.com/QuantumNous/new-api/common	1.710s
+[SYS] 2026/09/11 - 10:32:02 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 10:32:03 | 易支付充值成功 trade_no=accounting-duplicate user_id=2 quota_to_add=200 money=2.00 
+[SYS] 2026/09/11 - 10:32:03 | 易支付充值成功 trade_no=accounting-capacity-b user_id=3 quota_to_add=100 money=1.00 
+[SYS] 2026/09/11 - 10:32:03 | epay topup failed: top-up quota limit exceeded 
+[SYS] 2026/09/11 - 10:32:03 | redemption failed: 已达到该套餐购买上限 
+
+2026/09/11 10:32:04 [34;1mD:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:273
+[0m[35m[warn] [0mremoving callback `accounting_refund_record_failure` from D:/10178/Projects/new-api-upstream-sync/model/accounting_database_test.go:273
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auth_flow.go:258 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `auth_flows` WHERE (token_hash = "bec6fa89d0a4d04349c64f17b08b58fd2a111e20df937f1ade59bfa6e2c3b79f" AND purpose = "oauth") AND provider = "github" AND intent = "bind" AND user_id = 99 AND session_id = "session-a" ORDER BY `auth_flows`.`id` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:102 [35;1mrecord not found
+[0m[33m[0.509ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_price_guards` WHERE id = 999999 ORDER BY `channel_auto_price_guards`.`id` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_price_guard.go:102 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_price_guards` WHERE id = 999999 ORDER BY `channel_auto_price_guards`.`id` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "price" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.534ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "metadata" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.513ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "price" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "price" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "auto_price_task" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "empty" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/auto_sync_event.go:87 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_auto_sync_cursors` WHERE type = "finalize" ORDER BY `channel_auto_sync_cursors`.`type` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/banner_migration.go:30 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "migration.banners_from_console_setting.announcements.v1" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/banner_migration.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `banners` WHERE `banners`.`id` = 42 ORDER BY `banners`.`id` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance_test.go:43 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 1 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/channel_custom_balance_test.go:48 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `channel_custom_balances` WHERE channel_id = 2 ORDER BY `channel_custom_balances`.`channel_id` LIMIT 1
+[SYS] 2026/09/11 - 10:32:04 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:04 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 10:32:04 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 10:32:04 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state:result` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:255
+
+2026/09/11 10:32:04 [34;1mD:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+[0m[35m[warn] [0mremoving callback `fixture:unchanged_task_state` from D:/10178/Projects/new-api-upstream-sync/model/database_upgrade_test.go:247
+--- FAIL: TestDatabaseUpgradePreservesDownstreamData (0.85s)
+    database_upgrade_test.go:42: TEST_UPGRADE_DSN: 3.50.4
+    database_upgrade_test.go:43: TEST_UPGRADE_LOG_DSN: 3.50.4
+    testing.go:1369: TempDir RemoveAll cleanup: unlinkat C:\Users\10178\AppData\Local\Temp\TestDatabaseUpgradePreservesDownstreamData2589931542\001: The directory is not empty.
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/external_identity_claim.go:50 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `external_identity_claims` WHERE provider = "telegram" AND subject = "telegram-456" ORDER BY `external_identity_claims`.`id` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:78 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.api_info" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:78 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.announcements" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:78 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.faq" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:191 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.uptime_kuma_groups" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "ApiInfo" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "Announcements" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "FAQ" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaUrl" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaSlug" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "ApiInfo" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.511ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "Announcements" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "FAQ" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:177 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaUrl" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:182 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaSlug" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "theme.frontend" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:78 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.api_info" ORDER BY `options`.`key` LIMIT 1
+[SYS] 2026/09/11 - 10:32:04 | legacy option ApiInfo was not migrated: invalid character 'i' looking for beginning of object key string 
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "Announcements" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:78 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.faq" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:182 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaSlug" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:191 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.uptime_kuma_groups" ORDER BY `options`.`key` LIMIT 1
+[SYS] 2026/09/11 - 10:32:04 | legacy Uptime Kuma options were not migrated: both URL and slug are required 
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.api_info" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "FAQ" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:04 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.uptime_kuma_groups" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "theme.frontend" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "ApiInfo" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "Announcements" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:78 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.faq" ORDER BY `options`.`key` LIMIT 1
+[SYS] 2026/09/11 - 10:32:05 | legacy option FAQ was not migrated: FAQ entry 1 is missing a question or answer 
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:177 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaUrl" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:182 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaSlug" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "console_setting.faq" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "theme.frontend" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "Announcements" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "FAQ" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "ApiInfo" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaUrl" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaSlug" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:53 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "theme.frontend" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.520ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "Announcements" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration.go:70 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "FAQ" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "ApiInfo" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaUrl" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/frontend_option_migration_test.go:40 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `options` WHERE `options`.`key` = "UptimeKumaSlug" ORDER BY `options`.`key` LIMIT 1
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/gorm_logger_test.go:70 [35;1mSQL logic error: no such table: missing_table (1)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO missing_table (k) VALUES ("secret-value")
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[INFO] 2026/09/11 - 10:32:05 | SYSTEM | record consume log: userId=1, params={"channel_id":0,"prompt_tokens":0,"completion_tokens":0,"model_name":"","token_name":"","quota":0,"content":"consume","token_id":0,"use_time_seconds":0,"is_stream":false,"group":"","other":{"admin_info":{"billing_model":"mapped-billing-model"},"model_price":2}} 
+[INFO] 2026/09/11 - 10:32:05 | SYSTEM | record error log: userId=1, channelId=0, modelName=model, tokenName=token, content=error 
+[SYS] 2026/09/11 - 10:32:05 | SQL_DSN not set, using SQLite as database 
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("concurrent","concurrent","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:90 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `models` SET `model_name`="model-a",`active_name`="model-a",`description`="",`icon`="",`tags`="",`vendor_id`=0,`endpoints`="",`status`=1,`sync_official`=1,`updated_time`=1789093925,`name_rule`=0 WHERE id = 2 AND `models`.`deleted_at` IS NULL
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/vendor_meta.go:60 [35;1mconstraint failed: UNIQUE constraint failed: vendors.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m UPDATE `vendors` SET `name`="vendor-a",`active_name`="vendor-a",`description`="",`icon`="",`status`=1,`updated_time`=1789093925 WHERE id = 2 AND `vendors`.`deleted_at` IS NULL
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/model_meta.go:59 [35;1mconstraint failed: UNIQUE constraint failed: models.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `models` (`model_name`,`active_name`,`description`,`icon`,`tags`,`vendor_id`,`endpoints`,`status`,`sync_official`,`created_time`,`updated_time`,`deleted_at`,`name_rule`) VALUES ("same-model","same-model","","","",0,"",1,1,1789093925,1789093925,NULL,0) RETURNING `id`
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/vendor_meta.go:33 [35;1mconstraint failed: UNIQUE constraint failed: vendors.active_name (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `vendors` (`name`,`active_name`,`description`,`icon`,`status`,`created_time`,`updated_time`,`deleted_at`) VALUES ("same-vendor","same-vendor","","",1,1789093925,1789093925,NULL) RETURNING `id`
+[SYS] 2026/09/11 - 10:32:05 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:05 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:05 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:05 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:05 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:05 | channels synced from database 
+
+2026/09/11 10:32:05 [31;1mD:/10178/Projects/new-api-upstream-sync/model/named_lease.go:28 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `named_leases` WHERE name = "missing" ORDER BY `named_leases`.`name` LIMIT 1
+
+2026/09/11 10:32:05 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:3][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+
+2026/09/11 10:32:05 [32mC:/Users/10178/go/pkg/mod/github.com/glebarez/sqlite@v1.11.0/migrator.go:342
+[0m[33m[0.000ms] [34;1m[rows:2][0m SELECT * FROM PRAGMA_index_list("passkey_credentials")
+[SYS] 2026/09/11 - 10:32:05 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 10:32:06 | SQL_DSN not set, using SQLite as database 
+[SYS] 2026/09/11 - 10:32:06 | waffo pancake topup failed: payment method mismatch 
+
+2026/09/11 10:32:06 [31;1mD:/10178/Projects/new-api-upstream-sync/model/topup.go:138 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `top_ups` WHERE trade_no = "sub-guard-order" ORDER BY `top_ups`.`id` LIMIT 1
+[SYS] 2026/09/11 - 10:32:06 | 易支付充值成功 trade_no=EPAYTESTONCE user_id=501 quota_to_add=1000000 money=10.00 
+[SYS] 2026/09/11 - 10:32:06 | 易支付充值成功 trade_no=EPAYTESTREDISSYNC user_id=502 quota_to_add=10 money=10.00 
+[SYS] 2026/09/11 - 10:32:06 | 易支付充值成功 trade_no=EPAYTESTMETHOD user_id=503 quota_to_add=1000000 money=10.00 
+
+2026/09/11 10:32:06 [31;1mD:/10178/Projects/new-api-upstream-sync/model/topup.go:189 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `top_ups` WHERE `trade_no` = "EPAYTESTMISSING" ORDER BY `top_ups`.`id` LIMIT 1
+[SYS] 2026/09/11 - 10:32:06 | quota conversion (QuotaFromDecimal) overflow: original=4.294967294e+09, clamped=2147483647 
+[SYS] 2026/09/11 - 10:32:06 | epay topup failed: invalid top-up quota 
+[SYS] 2026/09/11 - 10:32:06 | 易支付充值成功 trade_no=EPAYTESTWALLETLIMIT user_id=506 quota_to_add=1000000 money=10.00 
+[SYS] 2026/09/11 - 10:32:06 | epay topup failed: top-up quota limit exceeded 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | channels synced from database 
+[SYS] 2026/09/11 - 10:32:06 | batch update started 
+[SYS] 2026/09/11 - 10:32:06 | batch update finished 
+[SYS] 2026/09/11 - 10:32:06 | user quota cache reserve unavailable, falling back to database: dial tcp 127.0.0.1:52704: connectex: No connection could be made because the target machine actively refused it. 
+[SYS] 2026/09/11 - 10:32:06 | user quota cache reserve unavailable, falling back to database: dial tcp 127.0.0.1:52704: connectex: No connection could be made because the target machine actively refused it. 
+[SYS] 2026/09/11 - 10:32:10 | redemption failed: 该兑换码已被使用 
+[SYS] 2026/09/11 - 10:32:14 | redemption failed: 兑换码关联的套餐已禁用 
+[SYS] 2026/09/11 - 10:32:15 | redemption failed: 已达到该套餐购买上限 
+[SYS] 2026/09/11 - 10:32:15 | redemption failed: 该兑换码已被使用 
+[SYS] 2026/09/11 - 10:32:16 | redemption failed: 该兑换码已被使用 
+[SYS] 2026/09/11 - 10:32:16 | redemption failed: 该兑换码已被使用 
+[SYS] 2026/09/11 - 10:32:18 | redemption failed: 该兑换码已被使用 
+
+2026/09/11 10:32:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/request_debug_body.go:120 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `request_debug_body_records` WHERE request_id = "request-debug-cleanup" ORDER BY `request_debug_body_records`.`request_id` LIMIT 1
+[SYS] 2026/09/11 - 10:32:18 | failed to refresh user group cache after admin subscription creation for user 1: forced redis failure 
+
+2026/09/11 10:32:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:151 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "log_cleanup" AND status IN ("pending","running") ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 10:32:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:130 [35;1mconstraint failed: UNIQUE constraint failed: system_tasks.active_key (2067)
+[0m[33m[0.722ms] [34;1m[rows:0][0m INSERT INTO `system_tasks` (`task_id`,`type`,`status`,`active_key`,`payload`,`state`,`result`,`error`,`locked_by`,`created_at`,`updated_at`) VALUES ("systask_o0BI9jV7iG7VfOiyoEXqLDjS1UsfuKqj","log_cleanup","pending","log_cleanup","{""target_timestamp"":1000,""batch_size"":100}","{""total"":0,""processed"":0,""progress"":0,""remaining"":0}","","","",1789093938,1789093938) RETURNING `id`
+
+2026/09/11 10:32:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:291 [35;1mconstraint failed: UNIQUE constraint failed: system_task_locks.type (1555)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `system_task_locks` (`type`,`task_id`,`locked_by`,`locked_until`,`updated_at`) VALUES ("log_cleanup","systask_LfFDOSlAykUiIxHca5T5eJMkjBJvwC8F","runner-b",1789093998,1789093938)
+
+2026/09/11 10:32:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:291 [35;1mconstraint failed: UNIQUE constraint failed: system_task_locks.type (1555)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `system_task_locks` (`type`,`task_id`,`locked_by`,`locked_until`,`updated_at`) VALUES ("log_cleanup","systask_iSxN6UK4gdAG3a30dvi4HmEsjrIUcw2R","runner-b",1789093998,1789093938)
+
+2026/09/11 10:32:18 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:210 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `system_tasks` WHERE type = "channel_test" ORDER BY id desc,`system_tasks`.`id` LIMIT 1
+
+2026/09/11 10:32:19 [32mD:/10178/Projects/new-api-upstream-sync/model/system_task_test.go:323 [33mSLOW SQL >= 200ms
+[0m[31;1m[1133.754ms] [33m[rows:1][35m UPDATE `system_task_locks` SET `locked_by`="runner-b",`updated_at`=1789093939 WHERE task_id = "systask_nzJFTEjdFiGjrcWcs0C8noVqcHfzx5y0"[0m
+
+2026/09/11 10:32:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/system_task.go:130 [35;1mconstraint failed: UNIQUE constraint failed: system_tasks.active_key (2067)
+[0m[33m[0.000ms] [34;1m[rows:0][0m INSERT INTO `system_tasks` (`task_id`,`type`,`status`,`active_key`,`payload`,`state`,`result`,`error`,`locked_by`,`created_at`,`updated_at`) VALUES ("systask_JnGLuuZZgCQr9SV9xAPULMZVNcoEz0B2","tx_task","pending","tx_task","","","","","",1789093939,1789093939) RETURNING `id`
+
+2026/09/11 10:32:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/usedata.go:113 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `quota_data` WHERE user_id = 1 and username = "alice" and model_name = "gpt-a" and created_at = 3600 and use_group = "default" and token_id = 11 and channel_id = 1 and node_name = "node-a" ORDER BY `quota_data`.`id` LIMIT 1
+
+2026/09/11 10:32:19 [31;1mD:/10178/Projects/new-api-upstream-sync/model/usedata.go:113 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `quota_data` WHERE user_id = 1 and username = "alice" and model_name = "gpt-a" and created_at = 3600 and use_group = "vip" and token_id = 11 and channel_id = 1 and node_name = "node-a" ORDER BY `quota_data`.`id` LIMIT 1
+[SYS] 2026/09/11 - 10:32:19 | 保存数据看板数据成功，共保存2条数据 
+
+2026/09/11 10:32:20 [31;1mD:/10178/Projects/new-api-upstream-sync/model/twofa_enrollment.go:33 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `two_fas` WHERE user_id = 521 AND `two_fas`.`deleted_at` IS NULL ORDER BY `two_fas`.`id` LIMIT 1
+
+2026/09/11 10:32:21 [31;1mD:/10178/Projects/new-api-upstream-sync/model/passkey.go:348 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `passkey_credentials` WHERE (id = 6 AND user_id = 524) AND `passkey_credentials`.`deleted_at` IS NULL ORDER BY `passkey_credentials`.`id` LIMIT 1
+
+2026/09/11 10:32:21 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_auto_ban.go:232 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_auto_ban_records` WHERE user_id = 1 AND rule_type = "model_probing" AND status = "observed" AND created_at >= 1789093641 ORDER BY id DESC,`user_auto_ban_records`.`id` LIMIT 1
+
+2026/09/11 10:32:21 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:67 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 7 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 10:32:21 [31;1mD:/10178/Projects/new-api-upstream-sync/model/user_avatar.go:38 [35;1mrecord not found
+[0m[33m[0.000ms] [34;1m[rows:0][0m SELECT * FROM `user_avatars` WHERE user_id = 7 ORDER BY `user_avatars`.`id` LIMIT 1
+
+2026/09/11 10:32:21 [34;1mD:/10178/Projects/new-api-upstream-sync/model/user_cache_auth_version_test.go:130
+[0m[35m[warn] [0mremoving callback `test:block_delayed_group_refresh` from D:/10178/Projects/new-api-upstream-sync/model/user_cache_auth_version_test.go:130
+
+2026/09/11 10:32:22 [34;1mD:/10178/Projects/new-api-upstream-sync/model/user_session_test.go:490
+[0m[35m[warn] [0mremoving callback `test:fail_second_user_session_revoke_batch` from D:/10178/Projects/new-api-upstream-sync/model/user_session_test.go:490
+
+2026/09/11 10:32:22 [34;1mD:/10178/Projects/new-api-upstream-sync/model/user_session_test.go:558
+[0m[35m[warn] [0mremoving callback `test:recheck_user_session_cleanup_predicate` from D:/10178/Projects/new-api-upstream-sync/model/user_session_test.go:558
+[SYS] 2026/09/11 - 10:32:22 | batch update started 
+[SYS] 2026/09/11 - 10:32:22 | batch update finished 
+[SYS] 2026/09/11 - 10:32:22 | 为新用户 passwordless-user (角色: 1) 初始化边栏配置 
+FAIL
+FAIL	github.com/QuantumNous/new-api/model	21.172s
+ok  	github.com/QuantumNous/new-api/service	10.381s
+ok  	github.com/QuantumNous/new-api/controller	64.825s
+ok  	github.com/QuantumNous/new-api/middleware	4.169s
+ok  	github.com/QuantumNous/new-api/relay	3.648s
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+--- FAIL: TestUpstreamGetBody_HTTP2CannotRetryWithoutGetBody (0.00s)
+    api_request_getbody_test.go:592: 
+        	Error Trace:	D:/10178/Projects/new-api-upstream-sync/relay/channel/api_request_getbody_test.go:592
+        	Error:      	Error "Post \"http://upstream.test/v1/chat/completions\": read tcp 127.0.0.1:8831->127.0.0.1:8830: wsarecv: An existing connection was forcibly closed by the remote host." does not contain "cannot retry err"
+        	Test:       	TestUpstreamGetBody_HTTP2CannotRetryWithoutGetBody
+FAIL
+FAIL	github.com/QuantumNous/new-api/relay/channel	3.044s
+ok  	github.com/QuantumNous/new-api/relay/channel/advancedcustom	2.432s
+?   	github.com/QuantumNous/new-api/relay/channel/ai360	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/ali	2.334s
+ok  	github.com/QuantumNous/new-api/relay/channel/aws	1.359s
+?   	github.com/QuantumNous/new-api/relay/channel/baidu	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/baidu_v2	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/claude	1.111s
+?   	github.com/QuantumNous/new-api/relay/channel/cloudflare	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/codex	1.044s
+?   	github.com/QuantumNous/new-api/relay/channel/cohere	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/coze	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/deepseek	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/dify	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/gemini	1.135s
+?   	github.com/QuantumNous/new-api/relay/channel/jimeng	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/jina	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/lingyiwanwu	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/minimax	1.349s
+?   	github.com/QuantumNous/new-api/relay/channel/mistral	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/mokaai	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/moonshot	1.026s
+ok  	github.com/QuantumNous/new-api/relay/channel/newapi	1.142s
+ok  	github.com/QuantumNous/new-api/relay/channel/ollama	1.030s
+ok  	github.com/QuantumNous/new-api/relay/channel/openai	1.266s
+?   	github.com/QuantumNous/new-api/relay/channel/openrouter	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/palm	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/perplexity	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/replicate	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/siliconflow	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/sub2api	0.881s
+?   	github.com/QuantumNous/new-api/relay/channel/submodel	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/task/ali	0.978s
+?   	github.com/QuantumNous/new-api/relay/channel/task/doubao	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/gemini	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/hailuo	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/jimeng	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/kling	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/task/sora	0.928s
+?   	github.com/QuantumNous/new-api/relay/channel/task/suno	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/taskcommon	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/vertex	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/task/vidu	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/channel/tencent	0.844s
+ok  	github.com/QuantumNous/new-api/relay/channel/vercel	0.733s
+?   	github.com/QuantumNous/new-api/relay/channel/vertex	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/volcengine	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/xai	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/xinference	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/xunfei	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/zhipu	[no test files]
+?   	github.com/QuantumNous/new-api/relay/channel/zhipu_4v	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/common	0.602s
+?   	github.com/QuantumNous/new-api/relay/common_handler	[no test files]
+ok  	github.com/QuantumNous/new-api/relay/constant	0.259s
+ok  	github.com/QuantumNous/new-api/relay/helper	3.332s
+ok  	github.com/QuantumNous/new-api/pkg/billingexpr	0.605s
+FAIL

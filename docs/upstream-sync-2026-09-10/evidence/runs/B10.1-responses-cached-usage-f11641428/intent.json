@@ -1,0 +1,10 @@
+{
+  "upstream": "f116414284162ad15d8925f7bca494c109b83e93",
+  "unit": "B10.1-responses-cached-usage",
+  "before_head": "b6aa5c9b6990de5a8e4a0f5fb97385ce418cb59e",
+  "rationale": "Verify Responses cached-token settlement through the existing independent relaykit CanonicalUsage implementation; retain upstream regression cases without resurrecting a duplicate root conversion.",
+  "files": [
+    "service/billing_usage.go",
+    "service/text_quota_test.go"
+  ]
+}

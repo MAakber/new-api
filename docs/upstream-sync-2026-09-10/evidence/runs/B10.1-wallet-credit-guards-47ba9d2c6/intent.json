@@ -1,0 +1,16 @@
+{
+  "upstream": "47ba9d2c63d6dcbf3a183ee421b136ee1b1331ed",
+  "unit": "B10.1-wallet-credit-guards",
+  "before_head": "fd12cb3aa1b734839c9478f7a6784b506ecb33cd",
+  "rationale": "Validate current wallet capacity before checkout and repeat the guard atomically on credit, preserving multi-provider recharge and transaction rollback.",
+  "files": [
+    "controller/topup.go",
+    "controller/topup_creem.go",
+    "controller/topup_quota_limit_test.go",
+    "controller/topup_stripe.go",
+    "controller/topup_waffo.go",
+    "controller/topup_waffo_pancake.go",
+    "model/payment_method_guard_test.go",
+    "model/topup.go"
+  ]
+}

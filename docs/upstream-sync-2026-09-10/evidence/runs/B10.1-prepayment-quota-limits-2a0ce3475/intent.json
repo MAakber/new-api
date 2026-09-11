@@ -1,0 +1,14 @@
+{
+  "upstream": "2a0ce3475c2df51ef5fd725f1eb0249822eb1c35",
+  "unit": "B10.1-prepayment-quota-limits",
+  "before_head": "ac68710df889dee40647e8027d82a26a195145aa",
+  "rationale": "Reject recharge amounts that cannot be credited before payment checkout, matching provider settlement conversions and downstream currency modes.",
+  "files": [
+    "controller/topup.go",
+    "controller/topup_creem.go",
+    "controller/topup_quota_limit_test.go",
+    "controller/topup_stripe.go",
+    "controller/topup_waffo.go",
+    "controller/topup_waffo_pancake.go"
+  ]
+}
