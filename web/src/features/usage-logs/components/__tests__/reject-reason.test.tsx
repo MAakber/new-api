@@ -52,7 +52,12 @@ function makeLog(other: LogOtherData): UsageLog {
   }
 }
 
-function renderDetails(isAdmin: boolean): void {
+function renderDetails(
+  isAdmin: boolean,
+  other: LogOtherData = {
+    admin_info: { reject_reason: 'blocked by channel policy' },
+  }
+): void {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   })
@@ -63,11 +68,7 @@ function renderDetails(isAdmin: boolean): void {
   render(
     <QueryClientProvider client={queryClient}>
       <DetailsDialog
-        log={makeLog({
-          admin_info: {
-            reject_reason: 'blocked by channel policy',
-          },
-        })}
+        log={makeLog(other)}
         isAdmin={isAdmin}
         isRoot={false}
         open
@@ -82,6 +83,33 @@ afterEach(() => {
     queryClient.clear()
   }
   queryClients.length = 0
+})
+
+describe('usage log stream outcome', () => {
+  const other: LogOtherData = {
+    stream_status: {
+      status: 'error',
+      end_reason: 'timeout',
+      error_count: 2,
+      end_error: 'private upstream address',
+      errors: ['private provider diagnostics'],
+    },
+  }
+
+  test('shows owners the outcome without private transport diagnostics', () => {
+    renderDetails(false, other)
+    expect(screen.getByText('Stream Status')).toBeInTheDocument()
+    expect(screen.getByText('timeout')).toBeInTheDocument()
+    expect(screen.getByText('Soft Errors')).toBeInTheDocument()
+    expect(screen.queryByText('private upstream address')).toBeNull()
+    expect(screen.queryByText('private provider diagnostics')).toBeNull()
+  })
+
+  test('keeps raw transport diagnostics available to administrators', () => {
+    renderDetails(true, other)
+    expect(screen.getByText('private upstream address')).toBeInTheDocument()
+    expect(screen.getByText('private provider diagnostics')).toBeInTheDocument()
+  })
 })
 
 describe('usage log reject reason', () => {

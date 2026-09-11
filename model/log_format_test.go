@@ -35,6 +35,29 @@ func TestFormatUserLogsStripsQuotaSaturation(t *testing.T) {
 	require.Contains(t, parsed, "model_price")
 }
 
+func TestStreamStatusVisibilityPreservesOnlyOwnerSafeFields(t *testing.T) {
+	for _, test := range []struct {
+		name  string
+		other string
+		want  string
+	}{
+		{"outcome_without_private_errors", `{"stream_status":{"status":"error","end_reason":"timeout","error_count":2,"end_error":"private upstream URL","errors":["provider credential"],"future_field":"private"}}`, `{"stream_status":{"status":"error","end_reason":"timeout","error_count":2}}`},
+		{"normal_outcome", `{"stream_status":{"status":"ok","end_reason":"done"}}`, `{"stream_status":{"status":"ok","end_reason":"done"}}`},
+		{"unrecognized_reason_and_negative_count", `{"stream_status":{"status":"error","end_reason":"private upstream URL","error_count":-1}}`, `{"stream_status":{"status":"error"}}`},
+		{"unrecognized_status", `{"stream_status":{"status":"private diagnostics"}}`, `{}`},
+		{"malformed_status", `{"stream_status":"private diagnostics"}`, `{}`},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			logs := []*Log{{Other: test.other}}
+			formatUserLogs(logs, 0)
+			assert.JSONEq(t, test.want, logs[0].Other)
+			logs = []*Log{{Other: test.other}}
+			FormatAdminLogs(logs)
+			assert.JSONEq(t, test.other, logs[0].Other)
+		})
+	}
+}
+
 func TestTaskPluginLogVisibilityIsRoleSeparated(t *testing.T) {
 	other := common.MapToJsonStr(map[string]interface{}{
 		"model_price": 1.25,

@@ -229,10 +229,34 @@ func formatLogOtherJSON(value string, visibility logOtherVisibility) string {
 
 	changed := false
 	if visibility == logOtherVisibilityUser {
-		for _, key := range []string{logOtherAdminInfoKey, logOtherRootInfoKey, logOtherAuditInfoKey, "stream_status"} {
+		for _, key := range []string{logOtherAdminInfoKey, logOtherRootInfoKey, logOtherAuditInfoKey} {
 			if _, exists := values[key]; exists {
 				delete(values, key)
 				changed = true
+			}
+		}
+		if raw, exists := values["stream_status"]; exists {
+			// Owners can inspect the outcome, but transport errors may contain
+			// private upstream addresses or provider diagnostics.
+			delete(values, "stream_status")
+			changed = true
+			var status struct {
+				Status     string `json:"status"`
+				EndReason  string `json:"end_reason,omitempty"`
+				ErrorCount int    `json:"error_count,omitempty"`
+			}
+			if common.Unmarshal(raw, &status) == nil && (status.Status == "ok" || status.Status == "error") {
+				switch status.EndReason {
+				case "", "done", "timeout", "client_gone", "scanner_error", "handler_stop", "eof", "panic", "ping_fail":
+				default:
+					status.EndReason = ""
+				}
+				if status.ErrorCount < 0 {
+					status.ErrorCount = 0
+				}
+				if encoded, err := common.Marshal(status); err == nil {
+					values["stream_status"] = encoded
+				}
 			}
 		}
 		for _, key := range legacySensitiveLogOtherKeys {
