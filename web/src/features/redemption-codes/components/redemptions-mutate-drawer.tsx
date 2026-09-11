@@ -176,7 +176,7 @@ export function RedemptionsMutateDrawer({
           result.data.id !== redemptionId
         ) {
           setRedemptionLoadState('error')
-          toast.error(t('Failed to load redemption code'))
+          handleServerError(result, t('Failed to load redemption code'))
           return
         }
         form.reset(transformRedemptionToFormDefaults(result.data))
@@ -217,6 +217,8 @@ export function RedemptionsMutateDrawer({
           toast.success(t(SUCCESS_MESSAGES.REDEMPTION_UPDATED))
           onOpenChange(false)
           triggerRefresh()
+        } else {
+          handleServerError(result)
         }
       } else {
         // Create mode
@@ -253,8 +255,12 @@ export function RedemptionsMutateDrawer({
           }
           onOpenChange(false)
           triggerRefresh()
+        } else {
+          handleServerError(result)
         }
       }
+    } catch (error) {
+      handleServerError(error)
     } finally {
       setIsSubmitting(false)
     }

@@ -123,7 +123,7 @@ test('shows the CNY amount without floating point noise', async () => {
   )
 })
 
-test.each(['network', 'unsuccessful', 'wrong record'])(
+test.each(['network', 'unsuccessful', 'missing message', 'wrong record'])(
   'blocks updates after a %s load failure',
   async (failure) => {
     const error = vi.spyOn(toast, 'error')
@@ -132,9 +132,12 @@ test.each(['network', 'unsuccessful', 'wrong record'])(
     } else {
       vi.mocked(api.get).mockResolvedValue({
         data: {
-          success: failure !== 'unsuccessful',
+          success: failure === 'wrong record',
           data: redemption(2),
-          message: 'raw server message',
+          message:
+            failure === 'missing message'
+              ? undefined
+              : 'Redemption code is no longer available',
         },
       })
     }
@@ -149,7 +152,11 @@ test.each(['network', 'unsuccessful', 'wrong record'])(
       fireEvent.submit(form)
     })
     expect(api.put).not.toHaveBeenCalled()
-    expect(screen.queryByText('raw server message')).toBeNull()
+    let expected = 'Redemption code is no longer available'
+    if (failure === 'network') expected = 'network failure'
+    if (failure === 'missing message')
+      expected = 'Failed to load redemption code'
+    expect(error).toHaveBeenCalledWith(expected)
   }
 )
 

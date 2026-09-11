@@ -51,6 +51,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
+import { handleServerError } from '@/lib/handle-server-error'
 
 import { updateChannel } from '../../api'
 import { useChannelProbes } from '../../hooks/use-channel-probes'
@@ -275,7 +276,7 @@ function ChannelTestDialogContent(props: {
         models: models.filter((model) => !failed.has(model)).join(','),
       })
       if (!response.success) {
-        toast.error(response.message || t('Failed to delete failed models'))
+        handleServerError(response, t('Failed to delete failed models'))
         return
       }
       setRemoved((previous) => new Set([...previous, ...failed]))
@@ -292,11 +293,7 @@ function ChannelTestDialogContent(props: {
         queryKey: channelsQueryKeys.lists(),
       })
     } catch (error: unknown) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : t('Failed to delete failed models')
-      )
+      handleServerError(error, t('Failed to delete failed models'))
     } finally {
       setDeleting(false)
     }

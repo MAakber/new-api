@@ -120,8 +120,13 @@ import {
   parseChannelConnectionInfo,
   type ChannelConnectionInfo,
 } from '@/lib/channel-connection-info'
+import { handleServerError } from '@/lib/handle-server-error'
 import { parseNumberInputValue } from '@/lib/number-input'
 import { ROLE } from '@/lib/roles'
+import {
+  requireServerSuccess,
+  createServerError,
+} from '@/lib/server-error-message'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth-store'
 
@@ -744,7 +749,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   // Fetch channel details if editing
   const { data: channelData, isLoading: isChannelLoading } = useQuery({
     queryKey: channelsQueryKeys.detail(channelId || 0),
-    queryFn: () => getChannel(channelId || 0),
+    queryFn: async () => requireServerSuccess(await getChannel(channelId || 0)),
     enabled: isEditing && Boolean(channelId),
   })
   const effectiveCurrentRow = currentRow ?? channelData?.data ?? null
@@ -768,19 +773,19 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   // Fetch available groups
   const { data: groupsData, isLoading: isLoadingGroups } = useQuery({
     queryKey: ['groups'],
-    queryFn: getGroups,
+    queryFn: async () => requireServerSuccess(await getGroups()),
   })
 
   // Fetch all available models
   const { data: allModelsData } = useQuery({
     queryKey: ['channel_models'],
-    queryFn: getAllModels,
+    queryFn: async () => requireServerSuccess(await getAllModels()),
   })
 
   // Fetch prefill model groups
   const { data: prefillGroupsData } = useQuery({
     queryKey: ['prefill_groups', 'model'],
-    queryFn: () => getPrefillGroups('model'),
+    queryFn: async () => requireServerSuccess(await getPrefillGroups('model')),
   })
 
   const { copyToClipboard } = useCopyToClipboard()
@@ -1032,7 +1037,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   )
   const taskPluginOptionsQuery = useQuery({
     queryKey: ['task-plugin-options'],
-    queryFn: getTaskPluginOptions,
+    queryFn: async () => requireServerSuccess(await getTaskPluginOptions()),
     enabled: currentType === CHANNEL_TYPE_TASK_PLUGIN && canBindTaskPlugin,
   })
 
@@ -1522,14 +1527,14 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     try {
       const res = await refreshCodexCredential(channelId)
       if (!res.success) {
-        throw new Error(res.message || t('Failed to refresh credential'))
+        throw createServerError(res, t('Failed to refresh credential'))
       }
       toast.success(t('Credential refreshed'))
       queryClient.invalidateQueries({
         queryKey: channelsQueryKeys.detail(channelId),
       })
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : t('Refresh failed'))
+      handleServerError(error, t('Refresh failed'))
     } finally {
       setIsCodexCredentialRefreshing(false)
     }
@@ -1596,7 +1601,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
     if (response.success && response.data) {
       return response.data
     }
-    throw new Error(response.message || t('No models fetched from upstream'))
+    throw createServerError(response, t('No models fetched from upstream'))
   }, [canEditSensitive, channelId, form, isEditing, t])
 
   // Handle model operations
@@ -1815,7 +1820,10 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       if (hasModelMapping) {
         const validation = validateModelMappingJson(modelMappingValue)
         if (!validation.valid) {
-          toast.error(t(validation.error || 'Invalid model mapping'))
+          handleServerError(
+            validation,
+            t(validation.error || 'Invalid model mapping')
+          )
           return
         }
       }

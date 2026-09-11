@@ -20,6 +20,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import i18next from 'i18next'
 import { toast } from 'sonner'
 
+import { handleServerError } from '@/lib/handle-server-error'
+import { requireServerSuccess } from '@/lib/server-error-message'
+
 import { updateSystemOption } from '../api'
 import type { UpdateOptionRequest } from '../types'
 
@@ -45,7 +48,8 @@ export function useUpdateOption() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (request: UpdateOptionRequest) => updateSystemOption(request),
+    mutationFn: async (request: UpdateOptionRequest) =>
+      requireServerSuccess(await updateSystemOption(request)),
     onSuccess: (data, variables) => {
       if (data.success) {
         // Always refresh system-options
@@ -63,11 +67,11 @@ export function useUpdateOption() {
 
         toast.success(i18next.t('Setting updated successfully'))
       } else {
-        toast.error(data.message || i18next.t('Failed to update setting'))
+        handleServerError(data, i18next.t('Failed to update setting'))
       }
     },
     onError: (error: Error) => {
-      toast.error(error.message || i18next.t('Failed to update setting'))
+      handleServerError(error, i18next.t('Failed to update setting'))
     },
   })
 }

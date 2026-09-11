@@ -63,6 +63,7 @@ import {
 } from '@/components/ui/sheet'
 import { Switch } from '@/components/ui/switch'
 import { getCurrencyDisplay, getCurrencyLabel } from '@/lib/currency'
+import { handleServerError } from '@/lib/handle-server-error'
 import {
   parseIntegerInputValue,
   parseNumberInputValue,
@@ -125,7 +126,11 @@ export function SubscriptionsMutateDrawer({
       }
       getGroups()
         .then((res) => {
-          if (res.success) setGroupOptions(res.data || [])
+          if (res.success) {
+            setGroupOptions(res.data || [])
+          } else {
+            handleServerError(res)
+          }
         })
         .catch(() => {})
       // Best-effort — empty list still lets the operator use "+ Create".
@@ -168,6 +173,8 @@ export function SubscriptionsMutateDrawer({
           toast.success(t('Update succeeded'))
           onOpenChange(false)
           triggerRefresh()
+        } else {
+          handleServerError(res)
         }
       } else {
         const res = await createPlan(payload)
@@ -175,10 +182,12 @@ export function SubscriptionsMutateDrawer({
           toast.success(t('Create succeeded'))
           onOpenChange(false)
           triggerRefresh()
+        } else {
+          handleServerError(res)
         }
       }
-    } catch {
-      toast.error(t('Request failed'))
+    } catch (error) {
+      handleServerError(error, t('Request failed'))
     } finally {
       setIsSubmitting(false)
     }
@@ -235,14 +244,15 @@ export function SubscriptionsMutateDrawer({
         )
       } else {
         const reason = typeof res.data === 'string' ? res.data : undefined
-        toast.error(
-          reason
+        handleServerError(res.data, undefined, {
+          title: reason
             ? `${t('Waffo Pancake product creation failed')}: ${reason}`
-            : t('Waffo Pancake product creation failed')
-        )
+            : t('Waffo Pancake product creation failed'),
+        })
       }
     } catch (err) {
-      toast.error(
+      handleServerError(
+        err,
         `${t('Waffo Pancake product creation failed')}: ${err instanceof Error ? err.message : String(err)}`
       )
     } finally {

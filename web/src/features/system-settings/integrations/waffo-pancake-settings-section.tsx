@@ -26,6 +26,7 @@ import { Combobox } from '@/components/ui/combobox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { handleServerError } from '@/lib/handle-server-error'
 
 import { removeTrailingSlash } from './utils'
 import {
@@ -159,19 +160,20 @@ export function WaffoPancakeSettingsSection({
           stores = (body.data as { stores: CatalogStore[] }).stores ?? []
         } else {
           const reason = typeof body?.data === 'string' ? body.data : undefined
-          toast.error(
-            reason
+          handleServerError(body, undefined, {
+            title: reason
               ? `${t('Credentials verification failed')}: ${reason}`
               : t(
                   'Credentials verification failed — double-check Merchant ID and API private key.'
-                )
-          )
+                ),
+          })
           setPhase('idle')
           return
         }
       } catch (err) {
         if (serial !== fetchSerialRef.current) return
-        toast.error(
+        handleServerError(
+          err,
           `${t('Credentials verification failed')}: ${
             err instanceof Error ? err.message : String(err)
           }`
@@ -322,11 +324,14 @@ export function WaffoPancakeSettingsSection({
       const reason =
         errData?.error ??
         (typeof body?.data === 'string' ? body.data : undefined)
-      toast.error(
-        reason ? `${t('Creation failed')}: ${reason}` : t('Creation failed')
-      )
+      handleServerError(body, undefined, {
+        title: reason
+          ? `${t('Creation failed')}: ${reason}`
+          : t('Creation failed'),
+      })
     } catch (err) {
-      toast.error(
+      handleServerError(
+        err,
         `${t('Creation failed')}: ${err instanceof Error ? err.message : String(err)}`
       )
     } finally {

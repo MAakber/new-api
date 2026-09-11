@@ -52,6 +52,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
+import { requireServerSuccess } from '@/lib/server-error-message'
 
 import { getDeploymentLogs, listDeploymentContainers } from '../../api'
 
@@ -80,8 +81,10 @@ export function ViewLogsDialog({
     isFetching: isFetchingContainers,
   } = useQuery({
     queryKey: ['deployment-containers', deploymentId],
-    queryFn: () =>
-      deploymentId ? listDeploymentContainers(deploymentId) : null,
+    queryFn: async () =>
+      requireServerSuccess(
+        await (deploymentId ? listDeploymentContainers(deploymentId) : null)
+      ),
     enabled: open && deploymentId !== null,
   })
 
@@ -118,14 +121,16 @@ export function ViewLogsDialog({
     isFetching: isFetchingLogs,
   } = useQuery({
     queryKey: ['deployment-logs', deploymentId, containerId, stream],
-    queryFn: () =>
-      deploymentId && containerId
-        ? getDeploymentLogs(deploymentId, {
-            container_id: containerId,
-            stream,
-            limit: 500,
-          })
-        : null,
+    queryFn: async () =>
+      requireServerSuccess(
+        await (deploymentId && containerId
+          ? getDeploymentLogs(deploymentId, {
+              container_id: containerId,
+              stream,
+              limit: 500,
+            })
+          : null)
+      ),
     enabled: open && deploymentId !== null && Boolean(containerId),
     refetchInterval: open && autoRefresh ? 5000 : false,
   })

@@ -38,6 +38,7 @@ export function PluginSandbox(props: { pluginKey: string }) {
   const [args, setArgs] = useState('[{}]')
   const [output, setOutput] = useState('')
   const mutation = useMutation({
+    meta: { errorToast: false },
     mutationFn: async () => {
       const parsed = JSON.parse(args) as unknown
       if (!Array.isArray(parsed)) {

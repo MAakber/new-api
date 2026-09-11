@@ -39,6 +39,7 @@ import {
 } from '@/components/ui/empty'
 import { Spinner } from '@/components/ui/spinner'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { handleServerError } from '@/lib/handle-server-error'
 import { cn } from '@/lib/utils'
 
 import { updateChannel } from '../../api'
@@ -141,16 +142,14 @@ function FetchModelsSession(
       }
       if (!mounted.current) return
       if (!response.success) {
-        toast.error(response.message || t('Failed to update models'))
+        handleServerError(response, t('Failed to update models'))
         return
       }
       toast.success(t('Models updated successfully'))
       props.onOpenChange(false)
     } catch (error: unknown) {
       if (!mounted.current) return
-      toast.error(
-        error instanceof Error ? error.message : t('Failed to update models')
-      )
+      handleServerError(error, t('Failed to update models'))
     }
   }
 

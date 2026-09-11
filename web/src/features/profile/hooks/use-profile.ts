@@ -20,6 +20,7 @@ import { t } from 'i18next'
 import { useState, useEffect, useCallback } from 'react'
 import { toast } from 'sonner'
 
+import { handleServerError } from '@/lib/handle-server-error'
 import { useAuthStore } from '@/stores/auth-store'
 
 import {
@@ -98,10 +99,8 @@ export function useProfile() {
           syncAuthUser(nextProfile)
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to fetch profile:', error)
         if (!silent) {
-          toast.error(t('Failed to load profile'))
+          handleServerError(error, t('Failed to load profile'))
         }
       } finally {
         if (!silent) {
@@ -147,12 +146,10 @@ export function useProfile() {
           return true
         }
 
-        toast.error(response.message || t('Failed to update avatar'))
+        handleServerError(response, t('Failed to update avatar'))
         return false
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to update avatar:', error)
-        toast.error(t('Failed to update avatar'))
+        handleServerError(error, t('Failed to update avatar'))
         return false
       } finally {
         setAvatarUpdating(false)
@@ -182,12 +179,10 @@ export function useProfile() {
         return true
       }
 
-      toast.error(response.message || t('Failed to remove avatar'))
+      handleServerError(response, t('Failed to remove avatar'))
       return false
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to remove avatar:', error)
-      toast.error(t('Failed to remove avatar'))
+      handleServerError(error, t('Failed to remove avatar'))
       return false
     } finally {
       setAvatarUpdating(false)
@@ -207,12 +202,10 @@ export function useProfile() {
           return true
         }
 
-        toast.error(response.message || t('Failed to update profile'))
+        handleServerError(response, t('Failed to update profile'))
         return false
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to update profile:', error)
-        toast.error(t('Failed to update profile'))
+        handleServerError(error, t('Failed to update profile'))
         return false
       } finally {
         setUpdating(false)
@@ -234,12 +227,10 @@ export function useProfile() {
           return true
         }
 
-        toast.error(response.message || t('Failed to update settings'))
+        handleServerError(response, t('Failed to update settings'))
         return false
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to update settings:', error)
-        toast.error(t('Failed to update settings'))
+        handleServerError(error, t('Failed to update settings'))
         return false
       } finally {
         setUpdating(false)
