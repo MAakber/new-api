@@ -1,3 +1,21 @@
+/*
+Copyright (C) 2023-2026 QuantumNous
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+For commercial licensing, please contact support@quantumnous.com
+*/
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import {
   act,
@@ -40,11 +58,9 @@ function redemption(id = 1, overrides: Partial<Redemption> = {}): Redemption {
 let client: QueryClient
 const previousConfig = useSystemConfigStore.getState().config
 beforeEach(() => {
-  useSystemConfigStore
-    .getState()
-    .setConfig({
-      currency: { ...DEFAULT_CURRENCY_CONFIG, quotaDisplayType: 'USD' },
-    })
+  useSystemConfigStore.getState().setConfig({
+    currency: { ...DEFAULT_CURRENCY_CONFIG, quotaDisplayType: 'USD' },
+  })
   client = new QueryClient({
     defaultOptions: {
       queries: { retry: false, staleTime: Infinity, gcTime: 0 },
@@ -84,15 +100,13 @@ async function ready() {
 }
 
 test('shows the CNY amount without floating point noise', async () => {
-  useSystemConfigStore
-    .getState()
-    .setConfig({
-      currency: {
-        ...DEFAULT_CURRENCY_CONFIG,
-        quotaDisplayType: 'CNY',
-        usdExchangeRate: 7.2,
-      },
-    })
+  useSystemConfigStore.getState().setConfig({
+    currency: {
+      ...DEFAULT_CURRENCY_CONFIG,
+      quotaDisplayType: 'CNY',
+      usdExchangeRate: 7.2,
+    },
+  })
   vi.mocked(api.get).mockResolvedValue({
     data: { success: true, data: redemption(1, { quota: 13888889 }) },
   })

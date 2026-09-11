@@ -203,6 +203,14 @@ export function CompactDateTimeRangePicker({
     return `${startText} ~ ${endText}`
   }, [end, start, t])
 
+  const mobileLabel = useMemo(() => {
+    if (!start || !end) return label
+    if (dayjs(start).isSame(end, 'day')) {
+      return `${dayjs(start).format('MM/DD HH:mm')}–${dayjs(end).format('HH:mm')}`
+    }
+    return label
+  }, [start, end, label])
+
   const handleOpenChange = (nextOpen: boolean) => {
     if (nextOpen) {
       setDraftStart(cloneDate(start))
@@ -257,6 +265,7 @@ export function CompactDateTimeRangePicker({
           <Button
             type='button'
             variant='outline'
+            aria-label={label}
             className={cn(
               'min-w-0 w-full justify-start gap-2 overflow-hidden px-2.5 text-sm leading-5 font-normal tabular-nums',
               !start && !end && 'text-muted-foreground',
@@ -266,7 +275,10 @@ export function CompactDateTimeRangePicker({
         }
       >
         <CalendarDays className='text-muted-foreground size-4 shrink-0' />
-        <span className='truncate'>{label}</span>
+        <span className='hidden truncate sm:block'>{label}</span>
+        <span className='min-w-0 [overflow-wrap:anywhere] whitespace-normal sm:hidden'>
+          {mobileLabel}
+        </span>
       </PopoverTrigger>
       <PopoverContent
         align='start'
@@ -336,7 +348,7 @@ export function CompactDateTimeRangePicker({
               className='h-7 min-w-0 px-2 text-xs'
               onClick={() => applyPreset('month')}
             >
-              {t('This month')}
+              {t('Current month')}
             </Button>
           </div>
 
