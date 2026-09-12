@@ -36,6 +36,7 @@ import { LoadingState } from '@/components/loading-state'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { toIntlLocale } from '@/i18n/languages'
 
 import type { DrawingGallery as DrawingGalleryState } from '../hooks/use-drawing-gallery'
 import { loadGalleryAsset } from '../lib/gallery-storage'
@@ -186,7 +187,7 @@ export function DrawingGallery(props: {
                 {selected.settings.model} · {selected.width} × {selected.height}{' '}
                 ·{' '}
                 {new Date(selected.createdAt).toLocaleString(
-                  i18n.resolvedLanguage
+                  toIntlLocale(i18n.resolvedLanguage || i18n.language)
                 )}
               </p>
               {selected.sourceUrl && (

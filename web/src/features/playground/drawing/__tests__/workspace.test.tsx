@@ -21,8 +21,12 @@ import { act, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ReactFlowProvider } from '@xyflow/react'
 import type { Window as HappyDOMWindow } from 'happy-dom'
+import i18next, { createInstance } from 'i18next'
+import { I18nextProvider } from 'react-i18next'
 import { afterEach, describe, it, expect, vi } from 'vitest'
 
+import zhTW from '@/i18n/locales/zh-TW.json'
+import zhCN from '@/i18n/locales/zh.json'
 import { api } from '@/lib/api'
 import { useDrawingStore } from '@/stores/drawing-store'
 
@@ -54,7 +58,7 @@ const savedImage = {
 
 afterEach(() => browser.happyDOM.setWindowSize({ width: 1024, height: 768 }))
 
-function renderWorkspace(userId: number) {
+function renderWorkspace(userId: number, i18n = i18next) {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false, staleTime: Infinity } },
   })
@@ -67,16 +71,61 @@ function renderWorkspace(userId: number) {
     [{ value: 'gpt-image-1', label: 'gpt-image-1' }]
   )
   const view = render(
-    <QueryClientProvider client={client}>
-      <ReactFlowProvider initialWidth={1000} initialHeight={700}>
-        <DrawingWorkspace userId={userId} />
-      </ReactFlowProvider>
-    </QueryClientProvider>
+    <I18nextProvider i18n={i18n}>
+      <QueryClientProvider client={client}>
+        <ReactFlowProvider initialWidth={1000} initialHeight={700}>
+          <DrawingWorkspace userId={userId} />
+        </ReactFlowProvider>
+      </QueryClientProvider>
+    </I18nextProvider>
   )
   return { client, view }
 }
 
 describe('Drawing workspace', () => {
+  it.each([
+    { language: 'zhCN', resources: zhCN, userId: 836 },
+    { language: 'zhTW', resources: zhTW, userId: 837 },
+  ])(
+    'opens a saved image preview when the interface language is $language',
+    async ({ language, resources, userId }) => {
+      browser.happyDOM.setWindowSize({ width: 1440, height: 900 })
+      await saveGalleryImage(userId, savedImage)
+      const i18n = createInstance()
+      await i18n.init({
+        lng: language,
+        resources: { [language]: resources },
+        interpolation: { escapeValue: false },
+      })
+      const user = userEvent.setup()
+      const { client, view } = renderWorkspace(userId, i18n)
+      try {
+        await user.click(
+          await screen.findByRole('button', {
+            name: i18n.t('Preview {{name}}', { name: savedImage.prompt }),
+          })
+        )
+        const preview = await screen.findByRole('dialog', {
+          name: i18n.t('Image preview'),
+        })
+        expect(preview).toBeVisible()
+        await waitFor(() =>
+          expect(
+            within(preview).getByRole('button', {
+              name: i18n.t('Add to canvas'),
+            })
+          ).toBeEnabled()
+        )
+        expect(
+          within(preview).getByRole('img', { name: savedImage.prompt })
+        ).toBeVisible()
+      } finally {
+        view.unmount()
+        client.clear()
+      }
+    }
+  )
+
   it('keeps a long preview prompt in a keyboard-accessible scroll area', async () => {
     browser.happyDOM.setWindowSize({ width: 1440, height: 900 })
     await saveGalleryImage(835, {
