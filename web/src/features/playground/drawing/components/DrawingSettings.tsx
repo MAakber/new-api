@@ -20,14 +20,21 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { MagicWand01Icon, StopIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useEffect } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Combobox } from '@/components/ui/combobox'
 import { Label } from '@/components/ui/label'
-import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { useDrawingStore } from '@/stores/drawing-store'
@@ -78,15 +85,17 @@ export function DrawingSettings(props: DrawingSettingsProps) {
     models.isError ||
     !groups.data?.length
 
+  const syncSettings = () => {
+    form.clearErrors('root')
+    updateSettings(form.getValues())
+  }
+
   return (
     <FormProvider {...form}>
       <form
         className='flex h-full min-h-0 flex-col'
         aria-label={t('Image generation settings')}
-        onChange={() => {
-          form.clearErrors('root')
-          updateSettings(form.getValues())
-        }}
+        onChange={syncSettings}
         onSubmit={form.handleSubmit((values) => {
           const error = validateImageSettings(values, references.length)
           if (error) {
@@ -106,68 +115,100 @@ export function DrawingSettings(props: DrawingSettingsProps) {
           <div className='grid grid-cols-2 gap-3'>
             <div className='space-y-1.5'>
               <Label htmlFor='drawing-mode'>{t('Mode')}</Label>
-              <NativeSelect
-                id='drawing-mode'
-                className='w-full'
-                {...form.register('mode')}
-              >
-                <NativeSelectOption value='generate'>
-                  {t('Text to image')}
-                </NativeSelectOption>
-                <NativeSelectOption
-                  value='edit'
-                  disabled={family === 'dall-e-3'}
-                >
-                  {t('Image editing')}
-                </NativeSelectOption>
-              </NativeSelect>
+              <Controller
+                control={form.control}
+                name='mode'
+                render={({ field }) => (
+                  <Select
+                    name={field.name}
+                    value={field.value}
+                    items={[
+                      { value: 'generate', label: t('Text to image') },
+                      { value: 'edit', label: t('Image editing') },
+                    ]}
+                    onValueChange={(value) => {
+                      if (value === null) return
+                      field.onChange(value)
+                      syncSettings()
+                    }}
+                  >
+                    <SelectTrigger
+                      ref={field.ref}
+                      id='drawing-mode'
+                      className='w-full'
+                      onBlur={field.onBlur}
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent alignItemWithTrigger={false}>
+                      <SelectGroup>
+                        <SelectItem value='generate'>
+                          {t('Text to image')}
+                        </SelectItem>
+                        <SelectItem
+                          value='edit'
+                          disabled={family === 'dall-e-3'}
+                        >
+                          {t('Image editing')}
+                        </SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </div>
             <div className='space-y-1.5'>
               <Label htmlFor='drawing-group'>{t('Group')}</Label>
-              <NativeSelect
-                id='drawing-group'
-                className='w-full'
-                disabled={groups.isPending}
-                {...form.register('group', {
-                  onChange: () => form.setValue('model', ''),
-                })}
-              >
-                {!groups.data?.length && (
-                  <NativeSelectOption value=''>
-                    {t('Select a group.')}
-                  </NativeSelectOption>
+              <Controller
+                control={form.control}
+                name='group'
+                render={({ field }) => (
+                  <Combobox
+                    ref={field.ref}
+                    id='drawing-group'
+                    name={field.name}
+                    value={groups.data?.length ? field.value : null}
+                    options={groups.data ?? []}
+                    placeholder={t('Select a group.')}
+                    disabled={groups.isPending}
+                    onBlur={field.onBlur}
+                    onValueChange={(value) => {
+                      if (!value || value === field.value) return
+                      field.onChange(value)
+                      form.setValue('model', '')
+                      syncSettings()
+                    }}
+                  />
                 )}
-                {groups.data?.map((group) => (
-                  <NativeSelectOption key={group.value} value={group.value}>
-                    {group.label}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+              />
             </div>
           </div>
           <div className='space-y-1.5'>
             <Label htmlFor='drawing-model'>{t('Model')}</Label>
-            <Input
-              id='drawing-model'
-              list='drawing-models'
-              autoComplete='off'
-              placeholder={t('Select an image model.')}
-              {...form.register('model', {
-                onChange: (event) => {
-                  const model = String(event.target.value)
-                  const next = settingsForImageModel(form.getValues(), model)
-                  form.setValue('quality', next.quality)
-                  form.setValue('size', next.size)
-                  form.setValue('n', next.n)
-                  form.setValue('mode', next.mode)
-                },
-              })}
+            <Controller
+              control={form.control}
+              name='model'
+              render={({ field }) => (
+                <Combobox
+                  id='drawing-model'
+                  value={field.value}
+                  options={models.data ?? []}
+                  allowCustomValue
+                  placeholder={t('Select an image model.')}
+                  emptyText='No results found'
+                  onValueChange={(value) => {
+                    const model = value ?? ''
+                    field.onChange(model)
+                    const next = settingsForImageModel(form.getValues(), model)
+                    form.setValue('quality', next.quality)
+                    form.setValue('size', next.size)
+                    form.setValue('n', next.n)
+                    form.setValue('mode', next.mode)
+                    syncSettings()
+                  }}
+                />
+              )}
             />
-            <datalist id='drawing-models'>
-              {models.data?.map((model) => (
-                <option key={model.value} value={model.value} />
-              ))}
-            </datalist>
             <p className='text-muted-foreground text-xs leading-relaxed'>
               {t('Choose an image model available in the selected group.')}
             </p>

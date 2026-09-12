@@ -16,7 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { useFormContext, useWatch } from 'react-hook-form'
+import { useController, useFormContext, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -27,7 +27,14 @@ import {
 } from '@/components/ui/accordion'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useDrawingStore } from '@/stores/drawing-store'
 
 import { getImageModelFamily, getImageQualities } from '../lib/image-settings'
@@ -35,7 +42,14 @@ import type { ImageSettings } from '../types'
 import { ImageSizeFields } from './ImageSizeFields'
 
 type SelectFieldProps = {
-  name: keyof ImageSettings
+  name:
+    | 'quality'
+    | 'outputFormat'
+    | 'responseFormat'
+    | 'background'
+    | 'moderation'
+    | 'inputFidelity'
+    | 'style'
   label: string
   options: { value: string; label: string }[]
 }
@@ -43,20 +57,44 @@ type SelectFieldProps = {
 function ParameterSelect(props: SelectFieldProps) {
   const { t } = useTranslation()
   const form = useFormContext<ImageSettings>()
+  const { field } = useController({ name: props.name, control: form.control })
+  const options = props.options.map((option) => ({
+    value: option.value,
+    label: t(option.label),
+  }))
   return (
     <div className='space-y-1.5'>
       <Label htmlFor={`drawing-${props.name}`}>{t(props.label)}</Label>
-      <NativeSelect
-        id={`drawing-${props.name}`}
-        className='w-full'
-        {...form.register(props.name)}
+      <Select
+        name={field.name}
+        value={field.value}
+        items={options}
+        onValueChange={(value) => {
+          if (value === null) return
+          field.onChange(value)
+          form.clearErrors('root')
+          useDrawingStore.getState().updateSettings(form.getValues())
+        }}
       >
-        {props.options.map((option) => (
-          <NativeSelectOption key={option.value} value={option.value}>
-            {t(option.label)}
-          </NativeSelectOption>
-        ))}
-      </NativeSelect>
+        <SelectTrigger
+          ref={field.ref}
+          id={`drawing-${props.name}`}
+          className='w-full'
+          onBlur={field.onBlur}
+          aria-invalid={Boolean(form.formState.errors[props.name])}
+        >
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent alignItemWithTrigger={false}>
+          <SelectGroup>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
   )
 }
