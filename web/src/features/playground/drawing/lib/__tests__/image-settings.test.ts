@@ -23,6 +23,7 @@ import {
   buildImagePayload,
   validateImageSettings,
 } from '../image-settings'
+import { getImageSizePresets } from '../image-size-presets'
 
 const settings = {
   ...DEFAULT_IMAGE_SETTINGS,
@@ -123,5 +124,50 @@ describe('OpenAI image parameters', () => {
     expect(
       validateImageSettings({ ...settings, size: '99999x99999' }, 0)
     ).not.toBeNull()
+  })
+
+  it('maps ratio cards to aligned dimensions and keeps UHD within the image pixel limit', () => {
+    const presets = getImageSizePresets('gpt-image-2')
+    expect(
+      Object.fromEntries(
+        presets
+          .filter((preset) => preset.resolution === 1024)
+          .map((preset) => [preset.aspectRatio, preset.size])
+      )
+    ).toEqual({
+      '1:1': '1024x1024',
+      '2:3': '672x1008',
+      '3:2': '1008x672',
+      '3:4': '768x1024',
+      '4:3': '1024x768',
+      '9:16': '576x1024',
+      '16:9': '1024x576',
+    })
+    expect(presets).toContainEqual({
+      aspectRatio: '16:9',
+      resolution: 2048,
+      size: '2048x1152',
+    })
+    expect(presets.filter((preset) => preset.resolution === 3840)).toEqual([
+      { aspectRatio: '9:16', resolution: 3840, size: '2160x3840' },
+      { aspectRatio: '16:9', resolution: 3840, size: '3840x2160' },
+    ])
+    expect(
+      validateImageSettings(
+        { ...settings, model: 'gpt-image-2', size: '3840x3840' },
+        0
+      )
+    ).not.toBeNull()
+  })
+
+  it.each([
+    ['gpt-image-1', ['1024x1024', '1536x1024', '1024x1536']],
+    ['gpt-image-1.5', ['1024x1024', '1536x1024', '1024x1536']],
+    ['dall-e-2', ['256x256', '512x512', '1024x1024']],
+    ['dall-e-3', ['1024x1024', '1792x1024', '1024x1792']],
+  ])('preserves the fixed image sizes for %s', (model, sizes) => {
+    expect(
+      getImageSizePresets(model as string).map((preset) => preset.size)
+    ).toEqual(sizes)
   })
 })

@@ -24,7 +24,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { api } from '@/lib/api'
 import { useDrawingStore } from '@/stores/drawing-store'
 
+import { loadGalleryPage } from '../../lib/gallery-storage'
 import { DEFAULT_IMAGE_SETTINGS } from '../../lib/image-settings'
+import { useDrawingGallery } from '../use-drawing-gallery'
 import { useImageGeneration } from '../use-image-generation'
 
 const decoders: EventTarget[] = []
@@ -60,6 +62,130 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllGlobals())
 
 describe('Image generation jobs', () => {
+  it('archives final batch outputs even when a canvas node was removed and excludes streaming previews', async () => {
+    useDrawingStore.getState().initialize(913)
+    useDrawingStore.getState().hydrate(null)
+    let stream: ReadableStreamDefaultController<Uint8Array>
+    vi.mocked(api.post).mockResolvedValueOnce({
+      headers: { 'content-type': 'text/event-stream' },
+      data: new ReadableStream<Uint8Array>({
+        start(controller) {
+          stream = controller
+        },
+      }),
+    })
+    const client = new QueryClient()
+    const hook = renderHook(
+      () => {
+        const gallery = useDrawingGallery(913, true)
+        return { gallery, generation: useImageGeneration(gallery.archive) }
+      },
+      {
+        wrapper: (props: { children: ReactNode }) => (
+          <QueryClientProvider client={client}>
+            {props.children}
+          </QueryClientProvider>
+        ),
+      }
+    )
+    act(() =>
+      hook.result.current.generation.generate(
+        {
+          ...DEFAULT_IMAGE_SETTINGS,
+          model: 'gpt-image-1',
+          prompt: 'Two cups',
+          n: 2,
+          stream: true,
+        },
+        { x: 0, y: 0 }
+      )
+    )
+    await waitFor(() => expect(api.post).toHaveBeenCalledOnce())
+    await act(async () =>
+      stream.enqueue(
+        new TextEncoder().encode(
+          'data: {"type":"image_generation.partial_image","image_index":0,"b64_json":"YWJj"}\n\n'
+        )
+      )
+    )
+    await waitFor(() =>
+      expect(useDrawingStore.getState().nodes[0].data.asset).toBeDefined()
+    )
+    expect((await loadGalleryPage(913)).total).toBe(0)
+    act(() =>
+      useDrawingStore
+        .getState()
+        .removeNodes([useDrawingStore.getState().nodes[0].id])
+    )
+    await act(async () => {
+      stream.enqueue(
+        new TextEncoder().encode(
+          'data: {"type":"image_generation.completed","image_index":0,"b64_json":"ZGVm"}\n\ndata: {"type":"image_generation.completed","image_index":1,"b64_json":"Z2hp"}\n\n'
+        )
+      )
+      stream.close()
+    })
+    await waitFor(() => expect(decoders).toHaveLength(2))
+    await act(async () => {
+      for (const decoder of decoders) decoder.dispatchEvent(new Event('load'))
+    })
+    await waitFor(async () =>
+      expect((await loadGalleryPage(913)).total).toBe(2)
+    )
+    act(() => useDrawingStore.getState().clear())
+    expect(
+      (await loadGalleryPage(913)).images.map((image) => image.prompt)
+    ).toEqual(['Two cups', 'Two cups'])
+    hook.unmount()
+    client.clear()
+  })
+
+  it('keeps a completed generation usable when gallery storage fails and retries saving without generating again', async () => {
+    useDrawingStore.getState().initialize(914)
+    useDrawingStore.getState().hydrate(null)
+    vi.mocked(api.post).mockResolvedValueOnce({
+      headers: { 'content-type': 'application/json' },
+      data: new Response(JSON.stringify({ data: [{ b64_json: 'YWJj' }] })).body,
+    })
+    const unavailable = vi.spyOn(indexedDB, 'open').mockImplementation(() => {
+      throw new DOMException('Storage unavailable', 'QuotaExceededError')
+    })
+    const client = new QueryClient()
+    const hook = renderHook(
+      () => {
+        const gallery = useDrawingGallery(914, false)
+        return { gallery, generation: useImageGeneration(gallery.archive) }
+      },
+      {
+        wrapper: (props: { children: ReactNode }) => (
+          <QueryClientProvider client={client}>
+            {props.children}
+          </QueryClientProvider>
+        ),
+      }
+    )
+    act(() =>
+      hook.result.current.generation.generate(
+        { ...DEFAULT_IMAGE_SETTINGS, model: 'gpt-image-1', prompt: 'A cup' },
+        { x: 0, y: 0 }
+      )
+    )
+    await waitFor(() => expect(decoders).toHaveLength(1))
+    await act(async () => decoders[0].dispatchEvent(new Event('load')))
+    await waitFor(() =>
+      expect(hook.result.current.gallery.unsaved).toHaveLength(1)
+    )
+    expect(useDrawingStore.getState().nodes[0].data.status).toBe('complete')
+    unavailable.mockRestore()
+    act(() => hook.result.current.gallery.retryUnsaved())
+    await waitFor(() =>
+      expect(hook.result.current.gallery.unsaved).toHaveLength(0)
+    )
+    expect((await loadGalleryPage(914)).total).toBe(1)
+    expect(api.post).toHaveBeenCalledOnce()
+    hook.unmount()
+    client.clear()
+  })
   it('tracks streamed previews and decoding, then resets progress when retrying the failed attempt', async () => {
     const now = vi.spyOn(Date, 'now').mockReturnValue(100000)
     let stream: ReadableStreamDefaultController<Uint8Array>

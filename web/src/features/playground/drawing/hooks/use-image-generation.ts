@@ -26,7 +26,12 @@ import { useDrawingStore } from '@/stores/drawing-store'
 import { generateImages } from '../api'
 import { imageSourceToAsset } from '../lib/image-assets'
 import { validateImageSettings } from '../lib/image-settings'
-import type { DrawingNode, ImageAsset, ImageSettings } from '../types'
+import type {
+  DrawingNode,
+  ImageAsset,
+  ImageNodeData,
+  ImageSettings,
+} from '../types'
 
 type ImageJob = { id: string; controller: AbortController; nodeIds: string[] }
 type GenerationInput = {
@@ -37,7 +42,9 @@ type GenerationInput = {
   userId: number | null
 }
 
-export function useImageGeneration() {
+export function useImageGeneration(
+  onGenerated?: (userId: number, data: ImageNodeData) => void
+) {
   const { t } = useTranslation()
   const jobs = useRef(new Map<string, ImageJob>())
   const [pendingCount, setPendingCount] = useState(0)
@@ -149,6 +156,17 @@ export function useImageGeneration() {
           },
           input.job.id
         )
+        if (input.userId !== null) {
+          onGenerated?.(input.userId, {
+            asset: asset.value,
+            origin: 'generated',
+            prompt: input.settings.prompt,
+            settings: { ...input.settings },
+            status: 'complete',
+            createdAt: Date.now(),
+            revisedPrompt: result.images[index].revisedPrompt?.slice(0, 64000),
+          })
+        }
       }
     },
     onError: (error, input) => {
@@ -231,6 +249,7 @@ export function useImageGeneration() {
         width: 280,
         height: 330,
         data: {
+          origin: 'generated',
           prompt: settings.prompt,
           settings: { ...settings },
           status: 'pending',

@@ -28,13 +28,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select'
+import { useDrawingStore } from '@/stores/drawing-store'
 
-import {
-  getImageModelFamily,
-  getImageQualities,
-  getImageSizes,
-} from '../lib/image-settings'
+import { getImageModelFamily, getImageQualities } from '../lib/image-settings'
 import type { ImageSettings } from '../types'
+import { ImageSizeFields } from './ImageSizeFields'
 
 type SelectFieldProps = {
   name: keyof ImageSettings
@@ -78,22 +76,17 @@ export function ImageParameterFields() {
   }
   return (
     <>
+      <ImageSizeFields
+        key={settings.model}
+        model={settings.model}
+        size={settings.size}
+        onChange={(size) => {
+          form.clearErrors('root')
+          form.setValue('size', size, { shouldDirty: true })
+          useDrawingStore.getState().updateSettings({ size })
+        }}
+      />
       <div className='grid grid-cols-2 gap-3'>
-        <div className='space-y-1.5'>
-          <Label htmlFor='drawing-size'>{t('Image size')}</Label>
-          <Input
-            id='drawing-size'
-            list='drawing-sizes'
-            {...form.register('size')}
-            autoComplete='off'
-            placeholder='1024x1024'
-          />
-          <datalist id='drawing-sizes'>
-            {getImageSizes(settings.model).map((size) => (
-              <option key={size} value={size} />
-            ))}
-          </datalist>
-        </div>
         <ParameterSelect
           name='quality'
           label='Quality'
@@ -114,35 +107,30 @@ export function ImageParameterFields() {
             {...form.register('n', { valueAsNumber: true })}
           />
         </div>
-        {family === 'gpt-image' && (
-          <ParameterSelect
-            name='outputFormat'
-            label='Output format'
-            options={[
-              { value: 'png', label: 'PNG' },
-              { value: 'jpeg', label: 'JPEG' },
-              { value: 'webp', label: 'WebP' },
-            ]}
-          />
-        )}
-        {family !== 'gpt-image' && (
-          <ParameterSelect
-            name='responseFormat'
-            label='Response format'
-            options={[
-              { value: 'b64_json', label: 'Base64' },
-              { value: 'url', label: 'URL' },
-            ]}
-          />
-        )}
-      </div>
-      {family === 'gpt-image' && (
-        <p className='text-muted-foreground text-xs leading-relaxed'>
-          {t(
-            'Use auto or WIDTHxHEIGHT. Custom resolutions require model support.'
+        <div className='col-span-2'>
+          {family === 'gpt-image' && (
+            <ParameterSelect
+              name='outputFormat'
+              label='Output format'
+              options={[
+                { value: 'png', label: 'PNG' },
+                { value: 'jpeg', label: 'JPEG' },
+                { value: 'webp', label: 'WebP' },
+              ]}
+            />
           )}
-        </p>
-      )}
+          {family !== 'gpt-image' && (
+            <ParameterSelect
+              name='responseFormat'
+              label='Response format'
+              options={[
+                { value: 'b64_json', label: 'Base64' },
+                { value: 'url', label: 'URL' },
+              ]}
+            />
+          )}
+        </div>
+      </div>
       {family !== 'gpt-image' && settings.responseFormat === 'url' && (
         <p className='text-muted-foreground text-xs'>
           {t('Image URLs expire. Download results to keep a copy.')}

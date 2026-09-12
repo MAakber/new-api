@@ -19,7 +19,6 @@ For commercial licensing, please contact support@quantumnous.com
 import {
   ArrowReloadHorizontalIcon,
   Delete02Icon,
-  Download04Icon,
   ImageAdd01Icon,
   ViewIcon,
 } from '@hugeicons/core-free-icons'
@@ -27,7 +26,6 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Handle, NodeResizer, Position, type NodeProps } from '@xyflow/react'
 import { memo, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -36,9 +34,9 @@ import { cn } from '@/lib/utils'
 import { useDrawingStore } from '@/stores/drawing-store'
 
 import { ImageRetryContext } from '../context/image-retry-context'
-import { downloadBlob, imageAssetToFile } from '../lib/image-assets'
 import { getImageModelFamily } from '../lib/image-settings'
 import type { DrawingNode } from '../types'
+import { ImageDownloadButton } from './ImageDownloadButton'
 import { ImageGenerationProgress } from './ImageGenerationProgress'
 
 export const ImageCanvasNode = memo(function ImageCanvasNode(
@@ -50,7 +48,6 @@ export const ImageCanvasNode = memo(function ImageCanvasNode(
     state.referenceIds.includes(props.id)
   )
   const checkpoint = useDrawingStore((state) => state.checkpoint)
-  const [downloading, setDownloading] = useState(false)
   const [failedSource, setFailedSource] = useState<string | null>(null)
   const asset = props.data.asset
   const imageFailed = Boolean(asset && failedSource === asset.src)
@@ -249,39 +246,11 @@ export const ImageCanvasNode = memo(function ImageCanvasNode(
             >
               <HugeiconsIcon icon={ViewIcon} size={14} aria-hidden='true' />
             </Button>
-            <Button
-              type='button'
-              size='icon-xs'
-              variant='ghost'
-              disabled={!asset || !complete || downloading}
-              title={t('Download')}
-              aria-label={t('Download')}
-              onClick={async () => {
-                if (!asset) return
-                setDownloading(true)
-                try {
-                  const file = await imageAssetToFile(asset)
-                  downloadBlob(
-                    file,
-                    `new-api-${props.id}.${file.type.split('/')[1]}`
-                  )
-                } catch {
-                  toast.error(
-                    t(
-                      'The image could not be downloaded. Try opening the preview.'
-                    )
-                  )
-                } finally {
-                  setDownloading(false)
-                }
-              }}
-            >
-              <HugeiconsIcon
-                icon={Download04Icon}
-                size={14}
-                aria-hidden='true'
-              />
-            </Button>
+            <ImageDownloadButton
+              asset={asset}
+              disabled={!complete}
+              filenameId={props.id}
+            />
             <Button
               type='button'
               size='icon-xs'

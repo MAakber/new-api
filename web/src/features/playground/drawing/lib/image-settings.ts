@@ -71,6 +71,41 @@ export function getImageSizes(model: string): string[] {
   return ['auto', '1024x1024', '1536x1024', '1024x1536']
 }
 
+export function supportsCustomImageSize(model: string): boolean {
+  return (
+    getImageModelFamily(model) === 'gpt-image' &&
+    !/^(gpt-image-1(?:[.-]|$)|chatgpt-image-latest$)/.test(model)
+  )
+}
+
+export function validateImageSize(model: string, size: string): string | null {
+  const family = getImageModelFamily(model)
+  const standard = getImageSizes(model).includes(size)
+  if (family !== 'gpt-image' && !standard) {
+    return 'Choose a size supported by this model.'
+  }
+  if (size !== 'auto' && !/^[1-9]\d{1,4}x[1-9]\d{1,4}$/.test(size)) {
+    return 'Enter a size in WIDTHxHEIGHT format.'
+  }
+  if (family === 'gpt-image' && !standard) {
+    if (!supportsCustomImageSize(model)) {
+      return 'Choose a size supported by this model.'
+    }
+    const [width, height] = size.split('x').map(Number)
+    if (
+      width % 16 ||
+      height % 16 ||
+      width / height < 1 / 3 ||
+      width / height > 3 ||
+      width * height > 3840 * 2160 ||
+      Math.max(width, height) > 3840
+    ) {
+      return 'Custom dimensions must be multiples of 16, within 3840 × 2160 pixels and a 1:3 to 3:1 aspect ratio.'
+    }
+  }
+  return null
+}
+
 export function getImageQualities(model: string): string[] {
   const family = getImageModelFamily(model)
   if (family === 'dall-e-2') return ['standard']
@@ -90,8 +125,7 @@ export function settingsForImageModel(
   }
   if (
     !getImageSizes(model).includes(next.size) &&
-    (family !== 'gpt-image' ||
-      /^(gpt-image-1(?:[.-]|$)|chatgpt-image-latest$)/.test(model))
+    !supportsCustomImageSize(model)
   ) {
     next.size = '1024x1024'
   }
@@ -130,37 +164,8 @@ export function validateImageSettings(
   if (!getImageQualities(settings.model).includes(settings.quality)) {
     return 'Choose a quality supported by this model.'
   }
-  if (
-    family !== 'gpt-image' &&
-    !getImageSizes(settings.model).includes(settings.size)
-  ) {
-    return 'Choose a size supported by this model.'
-  }
-  if (
-    settings.size !== 'auto' &&
-    !/^[1-9]\d{1,4}x[1-9]\d{1,4}$/.test(settings.size)
-  ) {
-    return 'Enter a size in WIDTHxHEIGHT format.'
-  }
-  if (
-    family === 'gpt-image' &&
-    !getImageSizes(settings.model).includes(settings.size)
-  ) {
-    if (/^(gpt-image-1(?:[.-]|$)|chatgpt-image-latest$)/.test(settings.model)) {
-      return 'Choose a size supported by this model.'
-    }
-    const [width, height] = settings.size.split('x').map(Number)
-    if (
-      width % 16 ||
-      height % 16 ||
-      width / height < 1 / 3 ||
-      width / height > 3 ||
-      width * height > 3840 * 2160 ||
-      Math.max(width, height) > 3840
-    ) {
-      return 'Custom dimensions must be multiples of 16, within 3840 × 2160 pixels and a 1:3 to 3:1 aspect ratio.'
-    }
-  }
+  const sizeError = validateImageSize(settings.model, settings.size)
+  if (sizeError) return sizeError
   if (
     family === 'gpt-image' &&
     settings.background === 'transparent' &&

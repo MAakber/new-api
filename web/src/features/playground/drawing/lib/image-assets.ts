@@ -86,13 +86,17 @@ export async function imageFileToAsset(file: File): Promise<ImageAsset> {
   if (file.size > MAX_IMAGE_BYTES) {
     throw new Error('Each reference image must be smaller than 50 MB.')
   }
-  const source = await new Promise<string>((resolve, reject) => {
+  const source = await imageBlobToDataUrl(file)
+  return imageSourceToAsset(source, file.name, file.type)
+}
+
+export function imageBlobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => resolve(String(reader.result))
     reader.onerror = () => reject(new Error('The image could not be loaded.'))
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(blob)
   })
-  return imageSourceToAsset(source, file.name, file.type)
 }
 
 export async function imageAssetToFile(

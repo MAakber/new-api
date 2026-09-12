@@ -44,6 +44,7 @@ const nodeSchema = z.object({
   height: z.number().positive().max(10000).optional(),
   data: z.object({
     asset: assetSchema.optional(),
+    origin: z.enum(['generated', 'uploaded', 'gallery']).optional(),
     prompt: z.string().max(32000),
     settings: imageSettingsSchema,
     status: z.enum(['pending', 'complete', 'error', 'cancelled']),

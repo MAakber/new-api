@@ -103,7 +103,7 @@ beforeEach(() => {
     data: new Response(JSON.stringify({ data: [{ b64_json: 'ZGVm' }] })).body,
   })
   client = new QueryClient()
-  hook = renderHook(useImageGeneration, {
+  hook = renderHook(() => useImageGeneration(), {
     wrapper: (props: { children: ReactNode }) => (
       <QueryClientProvider client={client}>
         {props.children}

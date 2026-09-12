@@ -28,7 +28,12 @@ import {
   serializeDrawingDocument,
 } from '../lib/canvas-document'
 import { downloadBlob, imageFileToAsset } from '../lib/image-assets'
-import type { DrawingDocument, DrawingNode, ImageAsset } from '../types'
+import type {
+  DrawingDocument,
+  DrawingNode,
+  ImageAsset,
+  ImageNodeData,
+} from '../types'
 
 export function useCanvasFiles() {
   const { t } = useTranslation()
@@ -37,6 +42,84 @@ export function useCanvasFiles() {
   const [pendingImport, setPendingImport] = useState<DrawingDocument | null>(
     null
   )
+
+  const addAssets = (
+    assets: ImageAsset[],
+    position: { x: number; y: number },
+    asReferences = false,
+    details?: Pick<ImageNodeData, 'prompt' | 'settings' | 'revisedPrompt'>
+  ): boolean => {
+    const state = useDrawingStore.getState()
+    const existing = assets.flatMap((asset) => {
+      const node = state.nodes.find(
+        (item) =>
+          item.data.asset?.id === asset.id && item.data.status === 'complete'
+      )
+      return node ? [node] : []
+    })
+    const newAssets = assets.filter(
+      (asset) => !existing.some((node) => node.data.asset?.id === asset.id)
+    )
+    if (state.nodes.length + newAssets.length > 500) {
+      toast.error(
+        t(
+          'This canvas can hold up to 500 images. Export it before starting a new one.'
+        )
+      )
+      return false
+    }
+    if (
+      asReferences &&
+      state.referenceIds.length +
+        assets.length -
+        existing.filter((node) => state.referenceIds.includes(node.id)).length >
+        16
+    ) {
+      toast.error(
+        t('Use one reference for DALL·E 2 or up to 16 for GPT Image.')
+      )
+      return false
+    }
+    const nodes: DrawingNode[] = newAssets.map((asset, index) => ({
+      id: crypto.randomUUID(),
+      type: 'image',
+      dragHandle: '.drawing-node-handle',
+      position: {
+        x: position.x + (index % 3) * 312,
+        y: position.y + Math.floor(index / 3) * 370,
+      },
+      width: 280,
+      height: 330,
+      selected: true,
+      data: {
+        asset,
+        origin: details ? 'gallery' : 'uploaded',
+        prompt: details?.prompt || '',
+        settings: { ...(details?.settings || state.settings) },
+        revisedPrompt: details?.revisedPrompt,
+        status: 'complete',
+        createdAt: Date.now(),
+      },
+    }))
+    if (nodes.length) state.addNodes(nodes)
+    const targets = [...existing, ...nodes]
+    const ids = new Set(targets.map((node) => node.id))
+    state.changeNodes(
+      useDrawingStore.getState().nodes.map((node) => ({
+        type: 'select',
+        id: node.id,
+        selected: ids.has(node.id),
+      }))
+    )
+    if (asReferences) {
+      state.setReferences([...state.referenceIds, ...ids])
+      state.updateSettings({ mode: 'edit' })
+    }
+    requestAnimationFrame(() => {
+      void flow.fitView({ nodes: targets, padding: 0.3, maxZoom: 1 })
+    })
+    return true
+  }
 
   const addImages = async (
     files: File[],
@@ -58,37 +141,7 @@ export function useCanvasFiles() {
       const assets: ImageAsset[] = []
       for (const file of files) assets.push(await imageFileToAsset(file))
       if (useDrawingStore.getState().userId !== userId) return
-      const state = useDrawingStore.getState()
-      const nodes: DrawingNode[] = assets.map((asset, index) => ({
-        id: crypto.randomUUID(),
-        type: 'image',
-        dragHandle: '.drawing-node-handle',
-        position: {
-          x: position.x + (index % 3) * 312,
-          y: position.y + Math.floor(index / 3) * 370,
-        },
-        width: 280,
-        height: 330,
-        selected: true,
-        data: {
-          asset,
-          prompt: '',
-          settings: { ...state.settings },
-          status: 'complete',
-          createdAt: Date.now(),
-        },
-      }))
-      state.addNodes(nodes)
-      if (asReferences) {
-        state.setReferences([
-          ...state.referenceIds,
-          ...nodes.map((node) => node.id),
-        ])
-        state.updateSettings({ mode: 'edit' })
-      }
-      requestAnimationFrame(() => {
-        void flow.fitView({ nodes, padding: 0.3, maxZoom: 1 })
-      })
+      addAssets(assets, position, asReferences)
     } catch (error) {
       toast.error(
         t(
@@ -136,6 +189,7 @@ export function useCanvasFiles() {
   }
   return {
     addImages,
+    addAssets,
     importCanvas,
     exportCanvas,
     busy,

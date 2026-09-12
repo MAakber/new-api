@@ -63,6 +63,7 @@ import { useDrawingStore } from '@/stores/drawing-store'
 
 import { ImageRetryContext } from '../context/image-retry-context'
 import { useCanvasFiles } from '../hooks/use-canvas-files'
+import { useDrawingGallery } from '../hooks/use-drawing-gallery'
 import { useDrawingPersistence } from '../hooks/use-drawing-persistence'
 import { useImageGeneration } from '../hooks/use-image-generation'
 import { useReferenceConnections } from '../hooks/use-reference-connections'
@@ -71,6 +72,7 @@ import { canConnectReference } from '../lib/reference-connections'
 import type { DrawingNode, ImageSettings } from '../types'
 import { CanvasToolbar } from './CanvasToolbar'
 import { CanvasViewportControls } from './CanvasViewportControls'
+import { DrawingGallery } from './DrawingGallery'
 import { DrawingSettings } from './DrawingSettings'
 import { ImageCanvasNode } from './ImageCanvasNode'
 import { ImagePreview } from './ImagePreview'
@@ -125,12 +127,19 @@ export function DrawingWorkspace(props: { userId: number }) {
   const referenceConnections = useReferenceConnections()
   const checkpoint = useDrawingStore((state) => state.checkpoint)
   const setViewport = useDrawingStore((state) => state.setViewport)
-  const { generate, retry, cancel, pendingCount } = useImageGeneration()
+  const gallery = useDrawingGallery(props.userId, ready)
+  const { generate, retry, cancel, pendingCount } = useImageGeneration(
+    gallery.archive
+  )
   const files = useCanvasFiles()
   const compact = useMediaQuery('(max-width: 1023px)')
+  const galleryOverlay = useMediaQuery('(max-width: 1279px)')
   const canvas = useRef<HTMLDivElement>(null)
+  const galleryButton = useRef<HTMLButtonElement>(null)
   const [tool, setTool] = useState<'select' | 'hand'>('select')
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [galleryOpen, setGalleryOpen] = useState(true)
+  const [gallerySheetOpen, setGallerySheetOpen] = useState(false)
   const [clearOpen, setClearOpen] = useState(false)
   const [maskEditorOpen, setMaskEditorOpen] = useState(false)
   const maskState = useDrawingStore((state) => state.mask)
@@ -153,6 +162,26 @@ export function DrawingWorkspace(props: { userId: number }) {
     if (!generate(settings, insertionPoint(), mask)) return
     setSettingsOpen(false)
   }
+  const galleryPanel = (
+    <DrawingGallery
+      gallery={gallery}
+      onClose={() => {
+        if (galleryOverlay) setGallerySheetOpen(false)
+        else {
+          setGalleryOpen(false)
+          galleryButton.current?.focus()
+        }
+      }}
+      onUseImage={(image, asset, asReference) => {
+        if (image.userId !== useDrawingStore.getState().userId) return false
+        if (files.addAssets([asset], insertionPoint(), asReference, image)) {
+          setGallerySheetOpen(false)
+          return true
+        }
+        return false
+      }}
+    />
+  )
   const settingsPanel = (
     <DrawingSettings
       userId={props.userId}
@@ -229,6 +258,12 @@ export function DrawingWorkspace(props: { userId: number }) {
         onExport={files.exportCanvas}
         onClear={() => setClearOpen(true)}
         onSettings={() => setSettingsOpen(true)}
+        galleryOpen={galleryOverlay ? gallerySheetOpen : galleryOpen}
+        galleryButtonRef={galleryButton}
+        onGallery={() => {
+          if (galleryOverlay) setGallerySheetOpen((open) => !open)
+          else setGalleryOpen((open) => !open)
+        }}
         onArrange={() => {
           useDrawingStore.getState().arrange()
           requestAnimationFrame(() => {
@@ -489,7 +524,34 @@ export function DrawingWorkspace(props: { userId: number }) {
             </div>
           )}
         </div>
+        {!galleryOverlay && galleryOpen && (
+          <aside
+            id='drawing-gallery'
+            className='bg-background h-full w-72 shrink-0 overflow-hidden border-l'
+            aria-label={t('Gallery panel')}
+          >
+            {galleryPanel}
+          </aside>
+        )}
       </div>
+      {galleryOverlay && (
+        <Sheet open={gallerySheetOpen} onOpenChange={setGallerySheetOpen}>
+          <SheetContent
+            id='drawing-gallery'
+            side='right'
+            className='w-full gap-0 p-0 sm:max-w-sm'
+            showCloseButton={false}
+          >
+            <SheetHeader className='sr-only'>
+              <SheetTitle>{t('Image gallery')}</SheetTitle>
+              <SheetDescription>
+                {t('Browse and reuse your generated images.')}
+              </SheetDescription>
+            </SheetHeader>
+            {galleryPanel}
+          </SheetContent>
+        </Sheet>
+      )}
       {compact && (
         <Sheet open={settingsOpen} onOpenChange={setSettingsOpen}>
           <SheetContent side='left' className='w-full gap-0 p-0 sm:max-w-sm'>

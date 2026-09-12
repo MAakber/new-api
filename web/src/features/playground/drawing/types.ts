@@ -32,6 +32,7 @@ export type ImageAsset = {
 }
 export type ImageNodeData = {
   asset?: ImageAsset
+  origin?: 'generated' | 'uploaded' | 'gallery'
   prompt: string
   settings: ImageSettings
   status: 'pending' | 'complete' | 'error' | 'cancelled'
@@ -71,3 +72,15 @@ export type ImageResponse = {
   usage?: Record<string, unknown>
   error?: { message?: string }
 }
+
+export type GalleryImage = Omit<ImageAsset, 'src'> & {
+  userId: number
+  prompt: string
+  settings: ImageSettings
+  revisedPrompt?: string
+  createdAt: number
+  thumbnail?: string
+  sourceUrl?: string
+}
+
+export type GalleryCursor = Pick<GalleryImage, 'createdAt' | 'id'>
