@@ -25,6 +25,142 @@ const sse = (...events: unknown[]) =>
 
 describe('channel test response presentation', () => {
   it.each([
+    [
+      'openai',
+      {
+        choices: [
+          { message: { content: '', reasoning_content: 'Let me think.' } },
+        ],
+      },
+    ],
+    [
+      'openai-response',
+      {
+        output: [
+          {
+            type: 'reasoning',
+            summary: [{ type: 'summary_text', text: 'Let me think.' }],
+          },
+        ],
+      },
+    ],
+    [
+      'anthropic',
+      { content: [{ type: 'thinking', thinking: 'Let me think.' }] },
+    ],
+    [
+      'gemini',
+      {
+        candidates: [
+          { content: { parts: [{ text: 'Let me think.', thought: true }] } },
+        ],
+      },
+    ],
+  ])(
+    'keeps reasoning separate from the final answer in %s JSON',
+    (endpoint, payload) => {
+      expect(
+        parseChannelTestPreview(JSON.stringify(payload), String(endpoint))
+      ).toMatchObject({
+        text: '',
+        reasoning: 'Let me think.',
+      })
+    }
+  )
+
+  it('joins streamed reasoning and retains the separate final answer', () => {
+    const raw = sse(
+      { choices: [{ index: 0, delta: { reasoning_content: 'Let me ' } }] },
+      { choices: [{ index: 0, delta: { reasoning_content: 'think.' } }] },
+      {
+        choices: [
+          { index: 0, delta: { content: 'pong' }, finish_reason: 'stop' },
+        ],
+      }
+    )
+    expect(parseChannelTestPreview(raw, 'openai')).toMatchObject({
+      text: 'pong',
+      reasoning: 'Let me think.',
+    })
+  })
+
+  it.each([
+    [
+      'openai-response',
+      sse(
+        {
+          type: 'response.reasoning_summary_text.delta',
+          output_index: 0,
+          summary_index: 0,
+          delta: 'Let me ',
+        },
+        {
+          type: 'response.reasoning_summary_text.delta',
+          output_index: 0,
+          summary_index: 0,
+          delta: 'think.',
+        },
+        {
+          type: 'response.reasoning_summary_text.done',
+          output_index: 0,
+          summary_index: 0,
+          text: 'Let me think.',
+        },
+        {
+          type: 'response.incomplete',
+          response: {
+            status: 'incomplete',
+            output: [
+              {
+                type: 'reasoning',
+                summary: [{ type: 'summary_text', text: 'Let me think.' }],
+              },
+            ],
+          },
+        }
+      ),
+    ],
+    [
+      'anthropic',
+      sse(
+        {
+          type: 'content_block_start',
+          index: 0,
+          content_block: { type: 'thinking', thinking: 'Let me ' },
+        },
+        {
+          type: 'content_block_delta',
+          index: 0,
+          delta: { type: 'thinking_delta', thinking: 'think.' },
+        }
+      ),
+    ],
+    [
+      'gemini',
+      sse(
+        {
+          candidates: [
+            { content: { parts: [{ text: 'Let me ', thought: true }] } },
+          ],
+        },
+        {
+          candidates: [
+            { content: { parts: [{ text: 'think.', thought: true }] } },
+          ],
+        }
+      ),
+    ],
+  ])(
+    'merges %s reasoning events without repeating the completed summary',
+    (endpoint, raw) => {
+      expect(parseChannelTestPreview(raw, endpoint)).toMatchObject({
+        text: '',
+        reasoning: 'Let me think.',
+      })
+    }
+  )
+
+  it.each([
     ['openai', { choices: [{ message: { content: 'pong' } }] }],
     [
       'openai-response',
@@ -83,6 +219,7 @@ describe('channel test response presentation', () => {
     )
     expect(parseChannelTestPreview(raw, 'openai')).toEqual({
       text: 'pong',
+      reasoning: '',
       images: [],
       tools: [
         { id: '0:0', name: 'first', arguments: '{"message":"one"}' },
@@ -166,6 +303,7 @@ describe('channel test response presentation', () => {
     )
     expect(parseChannelTestPreview(claude, 'anthropic')).toEqual({
       text: 'pong',
+      reasoning: '',
       images: [],
       tools: [
         { id: '1', name: 'channel_test_echo', arguments: '{"message":"ping"}' },
@@ -216,6 +354,7 @@ describe('channel test response presentation', () => {
     ).toEqual(['data:image/webp;base64,aGVsbG8='])
     expect(parseChannelTestPreview('invalid JSON', 'openai')).toEqual({
       text: '',
+      reasoning: '',
       tools: [],
       images: [],
     })

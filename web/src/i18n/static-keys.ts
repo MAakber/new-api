@@ -71,6 +71,7 @@ export const STATIC_I18N_KEYS = [
   'Tools · streaming',
   'Response compaction',
   'Valid response received',
+  'The model responded, but output stopped at the token limit.',
   'Tool name and arguments verified',
   'The gateway converted a non-streaming upstream response into SSE.',
   'This test does not apply to this endpoint.',

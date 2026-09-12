@@ -36,7 +36,11 @@ import { TestDialogHarness } from './channel-test-harness'
 
 export type PendingChannelProbe = {
   body: DetailedChannelTestRequest
-  reply: (status?: ChannelTestDiagnostics['status'], preview?: string) => void
+  reply: (
+    status?: ChannelTestDiagnostics['status'],
+    preview?: string,
+    reason?: string
+  ) => void
   answered: boolean
 }
 
@@ -60,7 +64,7 @@ export function channelTestApiFixture() {
       const request: PendingChannelProbe = {
         body,
         answered: false,
-        reply: (status = 'passed', preview) => {
+        reply: (status = 'passed', preview, reason) => {
           request.answered = true
           resolve({
             config,
@@ -74,9 +78,10 @@ export function channelTestApiFixture() {
               diagnostics: {
                 status,
                 reason:
-                  status === 'failed'
+                  reason ??
+                  (status === 'failed'
                     ? 'tool_not_called'
-                    : 'response_validated',
+                    : 'response_validated'),
                 endpoint_type: body.endpoint_type || 'openai',
                 test_type: body.test_type,
                 requested_stream: body.stream,

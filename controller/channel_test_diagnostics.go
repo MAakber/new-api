@@ -21,6 +21,7 @@ type channelProbeResponse struct {
 	endpoint string
 	stream   bool
 	output   bool
+	limited  bool
 	finished bool
 	reason   string
 	detail   string
@@ -77,6 +78,13 @@ func validateChannelProbeResponse(body []byte, d *channelTestDiagnostics, stream
 		d.Reason = "incomplete_stream"
 		return
 	}
+	// Basic probes use a small token budget to check connectivity. A normal
+	// token-limit stop with text or reasoning is a response, but it cannot
+	// establish that a tool call completed correctly.
+	if response.limited && (d.TestType == "tool_call" || !response.output) {
+		d.Reason = "output_incomplete"
+		return
+	}
 	if d.TestType == "tool_call" {
 		switch {
 		case len(response.tools) == 0:
@@ -92,6 +100,9 @@ func validateChannelProbeResponse(body []byte, d *channelTestDiagnostics, stream
 		d.Reason = "empty_output"
 	} else {
 		d.Status, d.Reason = "passed", "response_validated"
+		if response.limited {
+			d.Reason = "response_truncated"
+		}
 	}
 	if d.Status == "passed" && d.RequestedStream && d.UpstreamStream != nil && !*d.UpstreamStream {
 		d.Status, d.Reason = "degraded", "compatibility_stream"
@@ -217,7 +228,7 @@ func (r *channelProbeResponse) consumeChat(payload gjson.Result) {
 		}
 		finish := choice.Get("finish_reason").String()
 		if finish == "length" {
-			r.reason = "output_incomplete"
+			r.limited, r.finished = true, true
 		} else if finish == "content_filter" {
 			r.reason = "output_blocked"
 		} else if finish != "" {
@@ -228,6 +239,7 @@ func (r *channelProbeResponse) consumeChat(payload gjson.Result) {
 			message = choice.Get("delta")
 		}
 		r.output = r.output || channelProbeHasText(message.Get("content")) || channelProbeHasText(choice.Get("text"))
+		r.output = r.output || channelProbeHasText(message.Get("reasoning_content")) || channelProbeHasText(message.Get("reasoning"))
 		message.Get("tool_calls").ForEach(func(index, call gjson.Result) bool {
 			if call.Get("index").Exists() {
 				index = call.Get("index")
@@ -248,7 +260,7 @@ func (r *channelProbeResponse) consumeResponses(payload gjson.Result) {
 	kind := payload.Get("type").String()
 	key := r.toolKey(payload.Get("output_index").Raw, payload.Get("item_id").String())
 	switch kind {
-	case "response.output_text.delta":
+	case "response.output_text.delta", "response.reasoning_summary_text.delta", "response.reasoning_text.delta":
 		r.output = r.output || channelProbeHasText(payload.Get("delta"))
 	case "response.output_item.added", "response.output_item.done":
 		item := payload.Get("item")
@@ -259,6 +271,9 @@ func (r *channelProbeResponse) consumeResponses(payload gjson.Result) {
 			r.recordTool(key, item.Get("name").String(), item.Get("arguments").String(), false)
 		}
 		r.output = r.output || channelProbeHasText(item.Get("content"))
+		if item.Get("type").String() == "reasoning" {
+			r.output = r.output || channelProbeHasText(item.Get("summary"))
+		}
 	case "response.function_call_arguments.delta":
 		r.recordTool(key, "", payload.Get("delta").String(), true)
 	case "response.function_call_arguments.done":
@@ -267,19 +282,28 @@ func (r *channelProbeResponse) consumeResponses(payload gjson.Result) {
 		r.finished = true
 		r.consumeResponsesOutput(payload.Get("response"))
 	case "response.incomplete":
-		r.reason = "output_incomplete"
+		if payload.Get("response.status").String() != "incomplete" {
+			r.reason = "output_incomplete"
+			return
+		}
+		r.consumeResponsesOutput(payload.Get("response"))
 	case "response.failed":
 		r.reason = "upstream_error"
 	}
 }
 
 func (r *channelProbeResponse) consumeResponsesOutput(payload gjson.Result) {
-	if !r.stream && payload.Get("status").String() != "completed" {
+	status := payload.Get("status").String()
+	if !r.stream && status != "completed" && status != "incomplete" {
 		r.reason = "output_incomplete"
 	}
-	switch payload.Get("status").String() {
+	switch status {
 	case "incomplete":
-		r.reason = "output_incomplete"
+		if payload.Get("incomplete_details.reason").String() == "max_output_tokens" {
+			r.limited, r.finished = true, true
+		} else {
+			r.reason = "output_incomplete"
+		}
 	case "failed", "cancelled":
 		r.reason = "upstream_error"
 	case "completed":
@@ -291,6 +315,9 @@ func (r *channelProbeResponse) consumeResponsesOutput(payload gjson.Result) {
 			r.recordTool(key, item.Get("name").String(), item.Get("arguments").String(), false)
 		}
 		r.output = r.output || channelProbeHasText(item.Get("content"))
+		if item.Get("type").String() == "reasoning" {
+			r.output = r.output || channelProbeHasText(item.Get("summary"))
+		}
 		return true
 	})
 }
@@ -298,10 +325,13 @@ func (r *channelProbeResponse) consumeResponsesOutput(payload gjson.Result) {
 func (r *channelProbeResponse) consumeClaude(payload gjson.Result) {
 	if !r.stream {
 		if payload.Get("stop_reason").String() == "max_tokens" {
-			r.reason = "output_incomplete"
+			r.limited = true
 		}
 		payload.Get("content").ForEach(func(index, item gjson.Result) bool {
 			r.output = r.output || channelProbeHasText(item.Get("text"))
+			if item.Get("type").String() == "thinking" {
+				r.output = r.output || channelProbeHasText(item.Get("thinking"))
+			}
 			if item.Get("type").String() == "tool_use" {
 				r.recordTool(index.String(), item.Get("name").String(), item.Get("input").Raw, false)
 			}
@@ -314,6 +344,9 @@ func (r *channelProbeResponse) consumeClaude(payload gjson.Result) {
 	case "content_block_start":
 		block := payload.Get("content_block")
 		r.output = r.output || channelProbeHasText(block.Get("text"))
+		if block.Get("type").String() == "thinking" {
+			r.output = r.output || channelProbeHasText(block.Get("thinking"))
+		}
 		if block.Get("type").String() == "tool_use" {
 			args := block.Get("input").Raw
 			if args == "{}" {
@@ -324,12 +357,15 @@ func (r *channelProbeResponse) consumeClaude(payload gjson.Result) {
 	case "content_block_delta":
 		delta := payload.Get("delta")
 		r.output = r.output || channelProbeHasText(delta.Get("text"))
+		if delta.Get("type").String() == "thinking_delta" {
+			r.output = r.output || channelProbeHasText(delta.Get("thinking"))
+		}
 		if delta.Get("type").String() == "input_json_delta" {
 			r.recordTool(key, "", delta.Get("partial_json").String(), true)
 		}
 	case "message_delta":
 		if payload.Get("delta.stop_reason").String() == "max_tokens" {
-			r.reason = "output_incomplete"
+			r.limited = true
 		}
 	case "message_stop":
 		r.finished = true
@@ -341,7 +377,7 @@ func (r *channelProbeResponse) consumeGemini(payload gjson.Result) {
 		finish := candidate.Get("finishReason").String()
 		switch finish {
 		case "MAX_TOKENS":
-			r.reason = "output_incomplete"
+			r.limited, r.finished = true, true
 		case "STOP":
 			r.finished = true
 		case "":

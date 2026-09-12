@@ -21,6 +21,7 @@ type PreviewTool = { id: string; name: string; arguments: string }
 
 export type ChannelTestPreview = {
   text: string
+  reasoning: string
   tools: PreviewTool[]
   images: string[]
 }
@@ -62,13 +63,19 @@ export function parseChannelTestPreview(
         )
     : [raw]
   const texts = new Map<string, string>()
+  const reasoning = new Map<string, string>()
   const tools = new Map<string, PreviewTool>()
   const toolAliases = new Map<string, string>()
   const images = new Set<string>()
 
-  const addText = (key: string, value: unknown, replace = false) => {
+  const addText = (
+    target: Map<string, string>,
+    key: string,
+    value: unknown,
+    replace = false
+  ) => {
     const text = responseText(value)
-    if (text) texts.set(key, replace ? text : (texts.get(key) ?? '') + text)
+    if (text) target.set(key, replace ? text : (target.get(key) ?? '') + text)
   }
   const addTool = (
     key: string,
@@ -107,7 +114,12 @@ export function parseChannelTestPreview(
       ).entries()) {
         const prefix = String(choice.index ?? index)
         const message = responseRecord(stream ? choice.delta : choice.message)
-        addText(prefix, message.content ?? choice.text)
+        addText(texts, prefix, message.content ?? choice.text)
+        addText(
+          reasoning,
+          prefix,
+          message.reasoning_content ?? message.reasoning
+        )
         for (const [toolIndex, call] of responseRecords(
           message.tool_calls
         ).entries()) {
@@ -124,8 +136,25 @@ export function parseChannelTestPreview(
     } else if (endpoint === 'openai-response') {
       const kind = payload.type
       const key = String(payload.output_index ?? 0)
-      if (kind === 'response.output_text.delta') addText(key, payload.delta)
-      if (kind === 'response.output_text.done') addText(key, payload.text, true)
+      if (kind === 'response.output_text.delta') {
+        addText(texts, key, payload.delta)
+      }
+      if (kind === 'response.output_text.done') {
+        addText(texts, key, payload.text, true)
+      }
+      const reasoningKey = `${key}:${String(payload.summary_index ?? payload.content_index ?? 0)}`
+      if (
+        kind === 'response.reasoning_summary_text.delta' ||
+        kind === 'response.reasoning_text.delta'
+      ) {
+        addText(reasoning, reasoningKey, payload.delta)
+      }
+      if (
+        kind === 'response.reasoning_summary_text.done' ||
+        kind === 'response.reasoning_text.done'
+      ) {
+        addText(reasoning, reasoningKey, payload.text, true)
+      }
       if (kind === 'response.function_call_arguments.delta') {
         addTool(key, undefined, payload.delta, true)
       }
@@ -137,11 +166,20 @@ export function parseChannelTestPreview(
       const response = stream ? responseRecord(payload.response) : payload
       if (Array.isArray(response.output) && response.output.length > 0) {
         texts.clear()
+        reasoning.clear()
         tools.clear()
         for (const [index, output] of responseRecords(
           response.output
         ).entries()) {
-          if (output.type === 'message') addText(String(index), output.content)
+          if (output.type === 'message') {
+            addText(texts, String(index), output.content)
+          }
+          if (output.type === 'reasoning') {
+            addText(reasoning, String(index), output.summary)
+            if (!responseText(output.summary)) {
+              addText(reasoning, String(index), output.content)
+            }
+          }
           if (output.type === 'function_call') {
             addTool(String(index), output.name, output.arguments)
           }
@@ -153,7 +191,10 @@ export function parseChannelTestPreview(
         for (const [index, block] of responseRecords(
           message.content
         ).entries()) {
-          if (block.type === 'text') addText(String(index), block.text)
+          if (block.type === 'text') addText(texts, String(index), block.text)
+          if (block.type === 'thinking') {
+            addText(reasoning, String(index), block.thinking)
+          }
           if (block.type === 'tool_use') {
             addTool(String(index), block.name, block.input)
           }
@@ -162,7 +203,8 @@ export function parseChannelTestPreview(
       const key = String(payload.index ?? 0)
       const block = responseRecord(payload.content_block)
       if (payload.type === 'content_block_start') {
-        if (block.type === 'text') addText(key, block.text)
+        if (block.type === 'text') addText(texts, key, block.text)
+        if (block.type === 'thinking') addText(reasoning, key, block.thinking)
         if (block.type === 'tool_use') {
           addTool(
             key,
@@ -172,7 +214,10 @@ export function parseChannelTestPreview(
         }
       }
       const delta = responseRecord(payload.delta)
-      if (delta.type === 'text_delta') addText(key, delta.text)
+      if (delta.type === 'text_delta') addText(texts, key, delta.text)
+      if (delta.type === 'thinking_delta') {
+        addText(reasoning, key, delta.thinking)
+      }
       if (delta.type === 'input_json_delta') {
         addTool(key, undefined, delta.partial_json, true)
       }
@@ -184,7 +229,7 @@ export function parseChannelTestPreview(
         for (const [partIndex, part] of responseRecords(
           responseRecord(candidate.content).parts
         ).entries()) {
-          if (!part.thought) addText(prefix, part.text)
+          addText(part.thought ? reasoning : texts, prefix, part.text)
           const call = responseRecord(part.functionCall)
           if (call.name) {
             addTool(
@@ -225,6 +270,7 @@ export function parseChannelTestPreview(
   }
   return {
     text: [...texts.values()].join('\n\n'),
+    reasoning: [...reasoning.values()].join('\n\n'),
     tools: [...tools.values()],
     images: [...images],
   }

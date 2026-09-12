@@ -187,6 +187,8 @@ func TestChannelProbeImageForwardingAndIncompleteUpstream(t *testing.T) {
 		{"image SSE", "gpt-image-2", "image-generation", channelProbeSSE(`{"type":"image_generation.completed","b64_json":"aW1hZ2U="}`), "passed", "response_validated", true, true},
 		{"image compatibility SSE", "gpt-image-2", "image-generation", `{"created":1,"data":[{"b64_json":"aW1hZ2U="}]}`, "degraded", "compatibility_stream", true, false},
 		{"truncated chat before finish", "gpt-4o", "openai", channelProbeSSE(`{"choices":[{"index":0,"delta":{"content":"partial"}}]}`), "failed", "incomplete_stream", true, true},
+		{"token limited reasoning JSON", "gpt-4o", "openai", `{"id":"chat-1","object":"chat.completion","model":"gpt-4o","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"Let me think."},"finish_reason":"length"}],"usage":{"prompt_tokens":37,"completion_tokens":16,"total_tokens":53,"completion_tokens_details":{"reasoning_tokens":16}}}`, "passed", "response_truncated", false, false},
+		{"token limited reasoning SSE", "gpt-4o", "openai", channelProbeSSE(`{"id":"chat-1","object":"chat.completion.chunk","model":"gpt-4o","choices":[{"index":0,"delta":{"reasoning_content":"Let me think."},"finish_reason":"length"}]}`, `{"choices":[],"usage":{"prompt_tokens":37,"completion_tokens":16,"total_tokens":53}}`, "[DONE]"), "passed", "response_truncated", true, true},
 		{"empty chat stream", "gpt-4o", "openai", channelProbeSSE("[DONE]"), "failed", "", true, true},
 		{"late malformed event", "gpt-4o", "openai", channelProbeSSE(`{"choices":[{"index":0,"delta":{"content":"pong"},"finish_reason":"stop"}]}`, "broken-json"), "failed", "", true, true},
 	}

@@ -168,4 +168,29 @@ describe('channel test configuration', () => {
       )
     ).toBe(false)
   })
+
+  it('keeps a model when a basic test is inconclusive because its output was cut off', () => {
+    expect(
+      canDeleteProbeModel(
+        {
+          basic: {
+            ...result('basic', 'failed'),
+            diagnostics: {
+              status: 'failed',
+              reason: 'output_incomplete',
+              endpoint_type: 'openai',
+              test_type: 'basic',
+              requested_stream: false,
+              duration_ms: 42,
+              event_count: 0,
+              tool_count: 0,
+            },
+          },
+          stream: result('stream', 'failed'),
+        },
+        'openai',
+        key
+      )
+    ).toBe(false)
+  })
 })

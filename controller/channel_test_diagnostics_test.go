@@ -34,7 +34,8 @@ func TestChannelProbeValidatesProtocolResults(t *testing.T) {
 		{"empty body", "openai", "basic", "", "failed", "empty_response", false, false},
 		{"malformed body", "openai", "basic", "<html>bad gateway</html>", "failed", "invalid_json", false, false},
 		{"error in 200", "openai", "basic", `{"error":{"message":"rate limit"}}`, "failed", "upstream_error", false, false},
-		{"output limit", "openai", "basic", `{"choices":[{"message":{"content":"partial"},"finish_reason":"length"}]}`, "failed", "output_incomplete", false, false},
+		{"output limit", "openai", "basic", `{"choices":[{"message":{"content":"partial"},"finish_reason":"length"}]}`, "passed", "response_truncated", false, false},
+		{"reasoning response", "openai", "basic", `{"choices":[{"message":{"content":"","reasoning_content":"Let me think."},"finish_reason":"stop"}]}`, "passed", "response_validated", false, false},
 		{"chat stream", "openai", "basic", channelProbeSSE(`{"choices":[{"delta":{"content":"pong"}}]}`, `{"choices":[{"delta":{},"finish_reason":"stop"}]}`, "[DONE]"), "passed", "response_validated", true, false},
 		{"stream missing completion", "openai", "basic", channelProbeSSE(`{"choices":[{"delta":{"content":"partial"}}]}`), "failed", "incomplete_stream", true, false},
 		{"done alone", "openai", "basic", channelProbeSSE("[DONE]"), "failed", "invalid_stream", true, false},
@@ -59,6 +60,7 @@ func TestChannelProbeValidatesProtocolResults(t *testing.T) {
 		{"rerank result", "jina-rerank", "basic", `{"results":[{"index":0,"relevance_score":0.9}]}`, "passed", "response_validated", false, false},
 		{"compaction result", "openai-response-compact", "basic", `{"output":[{"type":"compaction","encrypted_content":"compact"}]}`, "passed", "response_validated", false, false},
 		{"tool not triggered", "openai", "tool_call", `{"choices":[{"message":{"content":"hello"},"finish_reason":"stop"}]}`, "failed", "tool_not_called", false, false},
+		{"token limit with valid tool arguments", "openai", "tool_call", `{"choices":[{"message":{"tool_calls":[{"function":{"name":"channel_test_echo","arguments":"{\"message\":\"ping\"}"}}]},"finish_reason":"length"}]}`, "failed", "output_incomplete", false, false},
 		{"tool arguments invalid", "openai", "tool_call", `{"choices":[{"message":{"tool_calls":[{"function":{"name":"channel_test_echo","arguments":"{\"message\":123}"}}]}}]}`, "failed", "invalid_tool_arguments", false, false},
 		{"tool wrong name", "openai", "tool_call", `{"choices":[{"message":{"tool_calls":[{"function":{"name":"other_tool","arguments":"{\"message\":\"ping\"}"}}]}}]}`, "failed", "unexpected_tool", false, false},
 	}
@@ -67,6 +69,68 @@ func TestChannelProbeValidatesProtocolResults(t *testing.T) {
 			d := &channelTestDiagnostics{EndpointType: tt.endpoint, TestType: tt.kind, RequestedStream: tt.stream, UpstreamStream: common.GetPointer(!tt.compatibility)}
 			validateChannelProbeResponse([]byte(tt.body), d, nil)
 			assert.Equal(t, tt.status, d.Status)
+			assert.Equal(t, tt.reason, d.Reason)
+		})
+	}
+}
+
+func TestChannelProbeTokenLimitedResponses(t *testing.T) {
+	tests := []struct {
+		name, endpoint, body string
+		stream               bool
+	}{
+		{"DeepSeek reasoning JSON", "openai", `{"choices":[{"message":{"content":"","reasoning_content":"先确认用户的问题。"},"finish_reason":"length"}],"usage":{"completion_tokens":16,"completion_tokens_details":{"reasoning_tokens":16}}}`, false},
+		{"DeepSeek reasoning SSE", "openai", channelProbeSSE(
+			`{"choices":[{"delta":{"reasoning_content":"先确认"}}]}`,
+			`{"choices":[{"delta":{"reasoning_content":"用户的问题。"},"finish_reason":"length"}]}`, "[DONE]"), true},
+		{"Responses reasoning JSON", "openai-response", `{"status":"incomplete","incomplete_details":{"reason":"max_output_tokens"},"output":[{"type":"reasoning","summary":[{"type":"summary_text","text":"Let me think."}]}]}`, false},
+		{"Responses reasoning SSE", "openai-response", channelProbeSSE(
+			`{"type":"response.reasoning_summary_text.delta","delta":"Let me think."}`,
+			`{"type":"response.incomplete","response":{"status":"incomplete","incomplete_details":{"reason":"max_output_tokens"}}}`), true},
+		{"Claude thinking JSON", "anthropic", `{"content":[{"type":"thinking","thinking":"Let me think."}],"stop_reason":"max_tokens"}`, false},
+		{"Claude thinking SSE", "anthropic", channelProbeSSE(
+			`{"type":"content_block_delta","delta":{"type":"thinking_delta","thinking":"Let me think."}}`,
+			`{"type":"message_delta","delta":{"stop_reason":"max_tokens"}}`,
+			`{"type":"message_stop"}`), true},
+		{"Gemini thought JSON", "gemini", `{"candidates":[{"content":{"parts":[{"text":"Let me think.","thought":true}]},"finishReason":"MAX_TOKENS"}]}`, false},
+		{"Gemini thought SSE", "gemini", channelProbeSSE(`{"candidates":[{"content":{"parts":[{"text":"Let me think.","thought":true}]},"finishReason":"MAX_TOKENS"}]}`), true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			d := &channelTestDiagnostics{EndpointType: tt.endpoint, TestType: "basic", RequestedStream: tt.stream}
+			validateChannelProbeResponse([]byte(tt.body), d, nil)
+			assert.Equal(t, "passed", d.Status)
+			assert.Equal(t, "response_truncated", d.Reason)
+
+			d.TestType = "tool_call"
+			validateChannelProbeResponse([]byte(tt.body), d, nil)
+			assert.Equal(t, "failed", d.Status)
+			assert.Equal(t, "output_incomplete", d.Reason)
+		})
+	}
+}
+
+func TestChannelProbeTruncationDoesNotHideFailures(t *testing.T) {
+	limited := channelProbeSSE(`{"choices":[{"delta":{"content":"partial"},"finish_reason":"length"}]}`)
+	timeout := relaycommon.NewStreamStatus()
+	timeout.SetEndReason(relaycommon.StreamEndReasonTimeout, context.DeadlineExceeded)
+	tests := []struct {
+		name, body, reason string
+		stream             bool
+		streamStatus       *relaycommon.StreamStatus
+	}{
+		{"empty limited response", `{"choices":[{"message":{"content":"","reasoning_content":" "},"finish_reason":"length"}]}`, "output_incomplete", false, nil},
+		{"blocked response", `{"choices":[{"message":{"content":"partial"},"finish_reason":"content_filter"}]}`, "output_blocked", false, nil},
+		{"reasoning stream without completion", channelProbeSSE(`{"choices":[{"delta":{"reasoning_content":"Let me think."}}]}`), "incomplete_stream", true, nil},
+		{"error after token limit", limited + channelProbeSSE(`{"error":{"message":"late failure"}}`, "[DONE]"), "upstream_error", true, nil},
+		{"invalid JSON after token limit", limited + channelProbeSSE("invalid-json", "[DONE]"), "invalid_json", true, nil},
+		{"timeout after token limit", limited, "stream_timeout", true, timeout},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			d := &channelTestDiagnostics{EndpointType: "openai", TestType: "basic", RequestedStream: tt.stream}
+			validateChannelProbeResponse([]byte(tt.body), d, tt.streamStatus)
+			assert.Equal(t, "failed", d.Status)
 			assert.Equal(t, tt.reason, d.Reason)
 		})
 	}

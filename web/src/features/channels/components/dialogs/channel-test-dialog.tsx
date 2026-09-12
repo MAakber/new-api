@@ -468,7 +468,9 @@ function ChannelTestDialogContent(props: {
                         total: progress.total,
                       })}
                     </span>
-                    <span className='text-muted-foreground'>{summary}</span>
+                    <span className='text-muted-foreground'>
+                      {t('Latest run: {{summary}}', { summary })}
+                    </span>
                     {progress.cancelled > 0 && (
                       <span className='text-muted-foreground'>
                         {t('{{count}} stopped', { count: progress.cancelled })}

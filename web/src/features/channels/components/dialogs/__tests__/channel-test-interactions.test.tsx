@@ -94,6 +94,9 @@ describe('channel test matrix interactions', () => {
     })
     await act(async () => api.requests[4]?.reply())
     expect(
+      screen.getByText('Latest run: 1 passed · 0 failed · 0 compatibility')
+    ).toBeDefined()
+    expect(
       within(table).getByRole('button', {
         name: 'gpt-4o · Tools · non-streaming: Passed',
       })

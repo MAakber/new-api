@@ -79,3 +79,69 @@ it('opens the full response from a preview button, keeps raw data collapsed, and
       .getAttribute('aria-expanded')
   ).toBe('false')
 })
+
+it('shows token-limited reasoning as a readable response and keeps the model out of failed-model deletion', async () => {
+  const user = userEvent.setup()
+  const reasoning = '先确认用户的问题。'
+  const raw = JSON.stringify({
+    choices: [
+      {
+        message: { content: '', reasoning_content: reasoning },
+        finish_reason: 'length',
+      },
+    ],
+    usage: {
+      completion_tokens: 16,
+      completion_tokens_details: { reasoning_tokens: 16 },
+    },
+  })
+  renderChannelTest(['deepseek-flash'])
+  await user.click(screen.getByRole('button', { name: 'Start testing' }))
+  await waitFor(() => expect(api.requests).toHaveLength(4))
+  await act(async () => {
+    api.requests[0]?.reply('passed', raw, 'response_truncated')
+    api.requests[1]?.reply('passed', raw, 'response_truncated')
+    api.requests[2]?.reply('failed')
+    api.requests[3]?.reply('failed')
+  })
+  expect(
+    screen.queryByRole('button', { name: /Delete failed models/ })
+  ).toBeNull()
+  expect(
+    screen.getByRole('button', { name: 'Select successful models (1)' })
+  ).toBeDefined()
+  const table = screen.getByRole('region', { name: 'Channel models' })
+  await user.click(
+    within(table).getByRole('button', {
+      name: 'deepseek-flash · Non-streaming: Passed',
+    })
+  )
+  const details = screen.getByRole('dialog', { name: 'Test details' })
+  expect(
+    within(details).getByText(
+      'The model responded, but output stopped at the token limit.'
+    )
+  ).toBeDefined()
+  await user.click(
+    within(details).getByRole('button', { name: 'Response preview' })
+  )
+  const preview = screen.getByRole('dialog', { name: 'Response preview' })
+  expect(
+    within(preview).queryByText(
+      'No readable output. Expand the raw response for details.'
+    )
+  ).toBeNull()
+  expect(within(preview).getByText(reasoning)).toBeDefined()
+  const reasoningButton = within(preview).getByRole('button', {
+    name: 'Reasoning',
+  })
+  expect(reasoningButton.getAttribute('aria-expanded')).toBe('true')
+  reasoningButton.focus()
+  await user.keyboard('{Enter}')
+  expect(reasoningButton.getAttribute('aria-expanded')).toBe('false')
+  expect(
+    within(preview)
+      .getByRole('button', { name: 'Raw response' })
+      .getAttribute('aria-expanded')
+  ).toBe('false')
+})

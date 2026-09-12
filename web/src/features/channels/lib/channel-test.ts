@@ -101,6 +101,8 @@ export const CHANNEL_TEST_ENDPOINTS = [
 
 export const CHANNEL_PROBE_REASONS: Record<string, string> = {
   response_validated: 'Valid response received',
+  response_truncated:
+    'The model responded, but output stopped at the token limit.',
   tool_validated: 'Tool name and arguments verified',
   compatibility_stream:
     'The gateway converted a non-streaming upstream response into SSE.',
@@ -234,6 +236,7 @@ export function canDeleteProbeModel(
         result?.status === 'failed' &&
         result.configurationKey === currentKey(probe) &&
         result.errorCode !== 'model_price_error' &&
+        result.diagnostics?.reason !== 'output_incomplete' &&
         result.diagnostics?.reason !== 'invalid_endpoint'
       )
     })

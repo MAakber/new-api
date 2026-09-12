@@ -26,6 +26,11 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import {
+  Reasoning,
+  ReasoningContent,
+  ReasoningTrigger,
+} from '@/components/ai-elements/reasoning'
 import { Button } from '@/components/ui/button'
 import {
   Collapsible,
@@ -96,12 +101,31 @@ function ChannelProbeResponseContent(props: {
 }) {
   const { t } = useTranslation()
   const { copyToClipboard } = useCopyToClipboard()
+  const [reasoningOpen, setReasoningOpen] = useState(true)
   const preview = useMemo(
     () => parseChannelTestPreview(props.response, props.endpoint),
     [props.response, props.endpoint]
   )
   return (
     <div className='flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-4 pb-4'>
+      {preview.reasoning && (
+        <Reasoning
+          open={reasoningOpen}
+          onOpenChange={setReasoningOpen}
+          defaultOpen={false}
+          className='mb-0'
+        >
+          <ReasoningTrigger className='group flex'>
+            {t('Reasoning')}
+            <HugeiconsIcon
+              icon={ArrowDown01Icon}
+              className='size-3.5 transition-transform group-aria-expanded:rotate-180'
+              aria-hidden='true'
+            />
+          </ReasoningTrigger>
+          <ReasoningContent>{preview.reasoning}</ReasoningContent>
+        </Reasoning>
+      )}
       {preview.text && (
         <div className='text-sm leading-relaxed [overflow-wrap:anywhere] break-words whitespace-pre-wrap'>
           {preview.text}
@@ -133,6 +157,7 @@ function ChannelProbeResponseContent(props: {
         </div>
       )}
       {!preview.text &&
+        !preview.reasoning &&
         preview.images.length === 0 &&
         preview.tools.length === 0 && (
           <p className='text-muted-foreground text-sm'>
