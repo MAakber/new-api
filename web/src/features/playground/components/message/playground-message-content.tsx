@@ -51,6 +51,7 @@ import { getMessageContentStyles } from '../../lib/message/message-styles'
 import type { Message } from '../../types'
 import { MessageError } from './message-error'
 import { MessageMetadata } from './message-metadata'
+import { MessageToolTimeline } from './message-tool-timeline'
 
 type PlaygroundMessageContentProps = {
   actions: ReactNode
@@ -59,6 +60,7 @@ type PlaygroundMessageContentProps = {
   isSourceVisible?: boolean
   message: Message
   versionContent: string
+  versionSelector?: ReactNode
 }
 
 export function PlaygroundMessageContent({
@@ -68,6 +70,7 @@ export function PlaygroundMessageContent({
   isSourceVisible = false,
   message,
   versionContent,
+  versionSelector,
 }: PlaygroundMessageContentProps) {
   const { t } = useTranslation()
   const {
@@ -83,6 +86,7 @@ export function PlaygroundMessageContent({
   const isMessageFinal =
     message.status !== MESSAGE_STATUS.LOADING &&
     message.status !== MESSAGE_STATUS.STREAMING
+  const hasRunParts = Boolean(message.run?.parts.length) && !isSourceVisible
 
   return (
     <div
@@ -93,20 +97,41 @@ export function PlaygroundMessageContent({
     >
       {hasSources && (
         <Sources>
-          <SourcesTrigger count={sources.length} />
+          <SourcesTrigger count={sources.length}>
+            {t('Sources')} · {sources.length}
+          </SourcesTrigger>
           <SourcesContent>
             {sources.map((source) => (
-              <Source
-                href={source.href}
+              <div
                 key={`${source.href}-${source.title}`}
-                title={source.title}
-              />
+                className='flex flex-wrap items-baseline gap-2'
+              >
+                <Source
+                  href={source.href}
+                  key={`${source.href}-${source.title}`}
+                  title={source.title}
+                />
+                {source.cited !== undefined && (
+                  <span className='text-muted-foreground'>
+                    {source.cited ? t('Cited') : t('Found')}
+                  </span>
+                )}
+                {source.published_at && (
+                  <span className='text-muted-foreground'>
+                    {source.published_at}
+                  </span>
+                )}
+              </div>
             ))}
           </SourcesContent>
         </Sources>
       )}
 
-      {hasReasoning && (
+      {hasRunParts && message.run && (
+        <MessageToolTimeline run={message.run} final={isMessageFinal} />
+      )}
+
+      {hasReasoning && !hasRunParts && (
         <Reasoning
           defaultOpen
           duration={message.reasoning?.duration}
@@ -117,7 +142,7 @@ export function PlaygroundMessageContent({
         </Reasoning>
       )}
 
-      {showLoader && (
+      {showLoader && !hasRunParts && (
         <div className='flex items-center gap-2 py-2'>
           <Loader />
           <Shimmer className='text-sm' duration={1}>
@@ -130,35 +155,40 @@ export function PlaygroundMessageContent({
         <>
           <MessageError message={message} className='mb-2' />
           <MessageMetadata alignment={alignment} message={message} />
+          {versionSelector}
           {errorActions}
         </>
       )}
 
-      {!isError && showMessageContent && (
+      {!isError &&
+        showMessageContent &&
+        !hasRunParts &&
+        (isSourceVisible ? (
+          <CodeBlock
+            code={versionContent}
+            className='my-0 group-[.is-assistant]:w-full group-[.is-assistant]:max-w-[78ch]'
+            collapsedLines={24}
+            defaultCollapsed={false}
+            language='markdown'
+            maxExpandedLines={48}
+            showLineNumbers
+            showToolbar
+            title={t('Raw response')}
+          >
+            <CodeBlockCopyButton />
+          </CodeBlock>
+        ) : (
+          <MessageContent
+            variant='flat'
+            className={cn(getMessageContentStyles())}
+          >
+            <Response final={isMessageFinal}>{displayContent}</Response>
+          </MessageContent>
+        ))}
+      {!isError && (showMessageContent || hasRunParts) && (
         <>
-          {isSourceVisible ? (
-            <CodeBlock
-              code={versionContent}
-              className='my-0 group-[.is-assistant]:w-full group-[.is-assistant]:max-w-[78ch]'
-              collapsedLines={24}
-              defaultCollapsed={false}
-              language='markdown'
-              maxExpandedLines={48}
-              showLineNumbers
-              showToolbar
-              title={t('Raw response')}
-            >
-              <CodeBlockCopyButton />
-            </CodeBlock>
-          ) : (
-            <MessageContent
-              variant='flat'
-              className={cn(getMessageContentStyles())}
-            >
-              <Response final={isMessageFinal}>{displayContent}</Response>
-            </MessageContent>
-          )}
           <MessageMetadata alignment={alignment} message={message} />
+          {versionSelector}
           {actions}
         </>
       )}

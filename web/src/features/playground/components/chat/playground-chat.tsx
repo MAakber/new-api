@@ -26,6 +26,13 @@ import {
 } from '@/components/ai-elements/conversation'
 import { Loader } from '@/components/ai-elements/loader'
 import { Message } from '@/components/ai-elements/message'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import {
   getChatMessageRenderState,
@@ -34,6 +41,7 @@ import {
   getPreviousUserMessage,
   isErrorMessage,
 } from '../../lib'
+import { selectMessageVersion } from '../../lib/message/message-run-utils'
 import type {
   Message as MessageType,
   PlaygroundMessageLayoutMode,
@@ -80,6 +88,9 @@ export function PlaygroundChat({
   const { t } = useTranslation()
   const [editText, setEditText] = useState('')
   const [originalText, setOriginalText] = useState('')
+  const [selectedVersions, setSelectedVersions] = useState<
+    Record<string, string>
+  >({})
   const [sourceMessageKeys, setSourceMessageKeys] = useState<
     ReadonlySet<string>
   >(() => new Set())
@@ -114,13 +125,17 @@ export function PlaygroundChat({
 
   let chatContent = visibleMessages.map((message, visibleMessageIndex) => {
     const messageIndex = visibleMessageOffset + visibleMessageIndex
-    const { alwaysShowActions, content, isEditing } = getChatMessageRenderState(
+    const { alwaysShowActions, isEditing } = getChatMessageRenderState(
       messages,
       message,
       messageIndex,
       editingKey
     )
-    const isError = isErrorMessage(message)
+    const displayed = selectMessageVersion(
+      message,
+      selectedVersions[message.key]
+    )
+    const isError = isErrorMessage(displayed)
     const previousUserMessage = isError
       ? getPreviousUserMessage(messages, messageIndex)
       : null
@@ -149,11 +164,21 @@ export function PlaygroundChat({
               alignment={alignment}
               actions={
                 <MessageActions
-                  message={message}
+                  message={displayed}
                   onCopy={onCopyMessage}
-                  onRegenerate={onRegenerateMessage}
+                  onRegenerate={
+                    onRegenerateMessage
+                      ? () => {
+                          setSelectedVersions((current) => ({
+                            ...current,
+                            [message.key]: '',
+                          }))
+                          onRegenerateMessage(message)
+                        }
+                      : undefined
+                  }
                   onToggleSource={handleToggleMessageSource}
-                  onEdit={onEditMessage}
+                  onEdit={displayed === message ? onEditMessage : undefined}
                   onDelete={onDeleteMessage}
                   isSourceVisible={isSourceVisible}
                   isGenerating={isGenerating}
@@ -162,7 +187,51 @@ export function PlaygroundChat({
                 />
               }
               isSourceVisible={isSourceVisible}
-              message={message}
+              message={displayed}
+              versionSelector={
+                message.versions.length > 1 ? (
+                  <Select
+                    value={displayed.versions[0].id}
+                    disabled={isGenerating}
+                    onValueChange={(value) => {
+                      if (value) {
+                        setSelectedVersions((current) => ({
+                          ...current,
+                          [message.key]: value,
+                        }))
+                      }
+                    }}
+                  >
+                    <SelectTrigger
+                      className='mt-2'
+                      size='sm'
+                      aria-label={t('Response version')}
+                    >
+                      <SelectValue>
+                        {t('Version {{number}} of {{total}}', {
+                          number:
+                            message.versions.length -
+                            message.versions.findIndex(
+                              (version) =>
+                                version.id === displayed.versions[0].id
+                            ),
+                          total: message.versions.length,
+                        })}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {message.versions.map((version, index) => (
+                        <SelectItem key={version.id} value={version.id}>
+                          {t('Version {{number}} of {{total}}', {
+                            number: message.versions.length - index,
+                            total: message.versions.length,
+                          })}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                ) : undefined
+              }
               errorActions={
                 isError ? (
                   <MessageErrorActions
@@ -185,7 +254,7 @@ export function PlaygroundChat({
                   />
                 ) : undefined
               }
-              versionContent={content}
+              versionContent={displayed.versions[0].content}
             />
           )}
         </div>

@@ -16,7 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { GlobeIcon, PaperclipIcon, Trash2Icon } from 'lucide-react'
+import { PaperclipIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -37,11 +37,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { cn } from '@/lib/utils'
 
 import { ATTACHMENT_ACTIONS, getAttachmentActionNotice } from '../../lib'
 import type { ParameterEnabled, PlaygroundConfig } from '../../types'
 import { PlaygroundParameterPanel } from './playground-parameter-panel'
+import { PlaygroundSearchTools } from './playground-search-tools'
 
 type PlaygroundInputToolsProps = {
   config: PlaygroundConfig
@@ -76,10 +76,6 @@ export function PlaygroundInputTools({
     toast.info(t(notice.title), {
       description: notice.description,
     })
-  }
-
-  const handleSearchAction = () => {
-    onConfigChange('webSearchEnabled', !config.webSearchEnabled)
   }
 
   const handleClearMessages = () => {
@@ -126,29 +122,11 @@ export function PlaygroundInputTools({
           </DropdownMenu>
         </Tooltip>
 
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <PromptInputButton
-                aria-label={t('Web search')}
-                aria-pressed={config.webSearchEnabled}
-                className={cn(
-                  'text-muted-foreground hover:text-foreground hover:bg-muted/70 font-medium',
-                  config.webSearchEnabled &&
-                    'bg-accent text-accent-foreground hover:bg-accent/80'
-                )}
-                disabled={disabled}
-                onClick={handleSearchAction}
-                variant='ghost'
-              >
-                <GlobeIcon aria-hidden='true' size={16} />
-              </PromptInputButton>
-            }
-          />
-          <TooltipContent>
-            <p>{t('Web search')}</p>
-          </TooltipContent>
-        </Tooltip>
+        <PlaygroundSearchTools
+          config={config}
+          disabled={disabled}
+          onConfigChange={onConfigChange}
+        />
 
         <PlaygroundParameterPanel
           config={config}

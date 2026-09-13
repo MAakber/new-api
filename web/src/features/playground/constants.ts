@@ -56,6 +56,8 @@ export const DEFAULT_CONFIG: PlaygroundConfig = {
   reasoning_effort: 'medium',
   stream: true,
   webSearchEnabled: false,
+  searchMode: 'off',
+  mcpTools: [],
 }
 
 export const DEFAULT_PARAMETER_ENABLED: ParameterEnabled = {

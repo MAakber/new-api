@@ -67,7 +67,7 @@ export function updateCurrentVersionContent(
   const currentVersion = getCurrentVersion(message)
   return {
     ...message,
-    versions: [{ ...currentVersion, content }],
+    versions: [{ ...currentVersion, content }, ...message.versions.slice(1)],
   }
 }
 

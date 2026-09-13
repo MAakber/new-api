@@ -18,6 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { ERROR_MESSAGES, MESSAGE_ROLES, MESSAGE_STATUS } from '../../constants'
 import type { Message } from '../../types'
+import { finalizeMessage, settleToolCalls } from './message-streaming-utils'
 import { completeAssistantTiming } from './message-timing-utils'
 import { updateCurrentVersionContent } from './message-utils'
 
@@ -31,16 +32,22 @@ export function updateAssistantMessageWithError(
   title: string = ERROR_MESSAGES.API_REQUEST_ERROR
 ): Message[] {
   return updateLastAssistantMessage(messages, (message) => {
-    const updatedMessage = updateCurrentVersionContent(
-      message,
-      `${title}: ${errorMessage}`
-    )
+    const updatedMessage = message.run
+      ? settleToolCalls(finalizeMessage(message))
+      : updateCurrentVersionContent(message, `${title}: ${errorMessage}`)
 
     return completeAssistantTiming({
       ...updatedMessage,
+      run: updatedMessage.run
+        ? {
+            ...updatedMessage.run,
+            usage: { ...updatedMessage.run.usage, partial: true },
+          }
+        : undefined,
       status: MESSAGE_STATUS.ERROR,
       isReasoningStreaming: false,
       errorCode: errorCode || null,
+      errorMessage: `${title}: ${errorMessage}`,
     })
   })
 }

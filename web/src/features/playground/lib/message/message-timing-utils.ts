@@ -33,7 +33,8 @@ export function completeAssistantTiming(
     ...message,
     startedAt,
     completedAt,
-    durationMs: Math.max(0, completedAt - startedAt),
+    durationMs:
+      message.run?.duration_ms ?? Math.max(0, completedAt - startedAt),
   }
 }
 

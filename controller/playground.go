@@ -64,8 +64,19 @@ func Playground(c *gin.Context) {
 	}
 
 	var playgroundRequest dto.GeneralOpenAIRequest
-	if err := common.UnmarshalBodyReusable(c, &playgroundRequest); err == nil && isPlaygroundWebSearchEnabled(playgroundRequest.WebSearch) {
-		newAPIError = playgroundWithWebSearch(c, &playgroundRequest)
+	var options playgroundOptions
+	if err := common.UnmarshalBodyReusable(c, &playgroundRequest); err == nil {
+		if err := common.UnmarshalBodyReusable(c, &options); err != nil {
+			newAPIError = types.NewError(err, types.ErrorCodeInvalidRequest, types.ErrOptionWithSkipRetry())
+			return
+		}
+		if options.SearchMode == "" {
+			options.SearchMode = "off"
+			if isPlaygroundWebSearchEnabled(playgroundRequest.WebSearch) {
+				options.SearchMode = "mcp"
+			}
+		}
+		newAPIError = playgroundWithTools(c, &playgroundRequest, options)
 		return
 	}
 
@@ -74,6 +85,11 @@ func Playground(c *gin.Context) {
 
 func writePlaygroundError(c *gin.Context, apiError *types.NewAPIError) {
 	body := gin.H{"error": apiError.ToOpenAIError()}
+	if partial, exists := c.Get(playgroundPartialResponseKey); exists {
+		if response, ok := partial.(gin.H); ok {
+			body["playground"], body["sources"] = response["playground"], response["sources"]
+		}
+	}
 	if c.Writer.Written() && strings.HasPrefix(c.Writer.Header().Get("Content-Type"), "text/event-stream") {
 		if err := helper.ObjectData(c, body); err == nil {
 			helper.Done(c)

@@ -17,7 +17,15 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { ERROR_MESSAGES } from '../../constants'
-import type { ChatCompletionChunk, WebSearchSource } from '../../types'
+import type {
+  ChatCompletionChunk,
+  PlaygroundEvent,
+  WebSearchSource,
+} from '../../types'
+import {
+  playgroundEventSchema,
+  playgroundUsageSchema,
+} from './playground-event-schema'
 import {
   parseAPIErrorDetails,
   type RequestErrorDetails,
@@ -29,6 +37,7 @@ const STREAM_CLOSED_READY_STATE = 2
 export type StreamUpdateType = 'reasoning' | 'content' | 'sources'
 
 export type StreamMessageUpdate =
+  | { type: 'event'; event: PlaygroundEvent }
   | {
       type: 'reasoning' | 'content'
       chunk: string
@@ -60,12 +69,54 @@ export function parseStreamMessageUpdates(data: string): StreamMessageUpdate[] {
   const chunk = JSON.parse(data) as ChatCompletionChunk & { error?: unknown }
   if (chunk.error) throw new StreamResponseError(parseAPIErrorDetails(chunk))
   const delta = chunk.choices?.[0]?.delta
-
-  if (!delta) {
-    return []
-  }
-
   const updates: StreamMessageUpdate[] = []
+  if (chunk.playground) {
+    const event = playgroundEventSchema.parse(chunk.playground)
+    if (event.type === 'delta') {
+      return [
+        {
+          type: 'event',
+          event: playgroundEventSchema.parse({
+            ...event,
+            content: delta?.content,
+            reasoning_content: delta?.reasoning_content,
+          }),
+        },
+      ]
+    }
+    if (event.type === 'complete') {
+      return [
+        {
+          type: 'event',
+          event: {
+            ...event,
+            sources: normalizeWebSearchSources(event.sources),
+          },
+        },
+      ]
+    }
+    if (event.type !== 'ping') updates.push({ type: 'event', event })
+  }
+  if (chunk.usage) {
+    const usage = chunk.usage
+    updates.push({
+      type: 'event',
+      event: {
+        type: 'usage',
+        usage: playgroundUsageSchema.parse({
+          input_tokens: usage.input_tokens ?? usage.prompt_tokens,
+          output_tokens: usage.output_tokens ?? usage.completion_tokens,
+          total_tokens: usage.total_tokens,
+          cached_tokens: usage.prompt_tokens_details?.cached_tokens,
+          cache_write_tokens:
+            usage.prompt_tokens_details?.cache_write_tokens ??
+            usage.prompt_tokens_details?.cached_creation_tokens,
+          reasoning_tokens: usage.completion_tokens_details?.reasoning_tokens,
+        }),
+      },
+    })
+  }
+  if (!delta) return updates
 
   if (delta.reasoning_content) {
     updates.push({ type: 'reasoning', chunk: delta.reasoning_content })
@@ -94,7 +145,7 @@ export function normalizeWebSearchSources(sources: unknown): WebSearchSource[] {
       continue
     }
 
-    const candidate = source as { href?: unknown; title?: unknown }
+    const candidate = source as Record<string, unknown>
     if (typeof candidate.href !== 'string') {
       continue
     }
@@ -106,12 +157,18 @@ export function normalizeWebSearchSources(sources: unknown): WebSearchSource[] {
       continue
     }
 
-    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+    if (
+      (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') ||
+      parsed.username ||
+      parsed.password
+    ) {
       continue
     }
 
     const href = parsed.toString()
-    if (normalized.some((item) => item.href === href)) {
+    const existing = normalized.find((item) => item.href === href)
+    if (existing) {
+      if (candidate.cited === true) existing.cited = true
       continue
     }
 
@@ -119,20 +176,26 @@ export function normalizeWebSearchSources(sources: unknown): WebSearchSource[] {
       typeof candidate.title === 'string' && candidate.title.trim()
         ? candidate.title.trim()
         : parsed.hostname
-    normalized.push({ href, title })
-
-    if (normalized.length >= 20) {
-      break
+    const item: WebSearchSource = { href, title }
+    if (typeof candidate.id === 'string') item.id = candidate.id
+    if (typeof candidate.tool_call_id === 'string') {
+      item.tool_call_id = candidate.tool_call_id
     }
+    if (typeof candidate.published_at === 'string') {
+      item.published_at = candidate.published_at
+    }
+    if (typeof candidate.cited === 'boolean') item.cited = candidate.cited
+    normalized.push(item)
   }
-  return normalized
+  normalized.sort((a, b) => Number(Boolean(b.cited)) - Number(Boolean(a.cited)))
+  return normalized.filter((source, index) => source.cited || index < 32)
 }
 
 export function mergeWebSearchSources(
   current: WebSearchSource[] | undefined,
-  incoming: WebSearchSource[]
+  incoming: WebSearchSource[] | undefined
 ): WebSearchSource[] {
-  return normalizeWebSearchSources([...(current ?? []), ...incoming])
+  return normalizeWebSearchSources([...(current ?? []), ...(incoming ?? [])])
 }
 
 export function isStreamDoneMessage(data: string): boolean {

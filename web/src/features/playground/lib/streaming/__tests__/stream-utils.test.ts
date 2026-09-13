@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import assert from 'node:assert/strict'
 
-import { describe, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 import {
   mergeWebSearchSources,
@@ -27,6 +27,43 @@ import {
 } from '../stream-utils'
 
 describe('web search stream updates', () => {
+  test('preserves a usage-only final chunk including an explicit zero input count', () => {
+    const updates = parseStreamMessageUpdates(
+      JSON.stringify({
+        choices: [],
+        usage: { prompt_tokens: 0, completion_tokens: 4, total_tokens: 4 },
+      })
+    )
+    expect(updates).toMatchObject([
+      {
+        type: 'event',
+        event: {
+          type: 'usage',
+          usage: { input_tokens: 0, output_tokens: 4, total_tokens: 4 },
+        },
+      },
+    ])
+  })
+
+  test('retains a later cited result after the candidate list fills', () => {
+    const sources = normalizeWebSearchSources([
+      ...Array.from({ length: 40 }, (_, index) => ({
+        href: `https://example.com/candidate/${index}`,
+        title: 'Candidate',
+      })),
+      {
+        href: 'https://example.com/quote',
+        title: 'Current quote',
+        cited: true,
+      },
+    ])
+    expect(sources).toContainEqual(
+      expect.objectContaining({
+        href: 'https://example.com/quote',
+        cited: true,
+      })
+    )
+  })
   test('parses and sanitizes source metadata without treating it as text', () => {
     const updates = parseStreamMessageUpdates(
       JSON.stringify({

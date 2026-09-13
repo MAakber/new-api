@@ -19,7 +19,12 @@ For commercial licensing, please contact support@quantumnous.com
 import { t } from 'i18next'
 
 import { ERROR_MESSAGES, MESSAGE_ROLES, MESSAGE_STATUS } from '../../constants'
-import type { ChatCompletionResponse, Message } from '../../types'
+import type {
+  ChatCompletionResponse,
+  Message,
+  PlaygroundRun,
+  WebSearchSource,
+} from '../../types'
 import { mergeWebSearchSources } from '../streaming/stream-utils'
 import { parseThinkTags } from './message-reasoning-utils'
 import {
@@ -151,9 +156,24 @@ export function finalizeMessage(
 
 export function completeAssistantMessage(message: Message): Message {
   return completeAssistantTiming({
-    ...finalizeMessage(message),
+    ...settleToolCalls(finalizeMessage(message)),
     status: MESSAGE_STATUS.COMPLETE,
   })
+}
+
+export function settleToolCalls(message: Message): Message {
+  if (!message.run?.tool_calls.some((tool) => tool.state === 'running')) {
+    return message
+  }
+  return {
+    ...message,
+    run: {
+      ...message.run,
+      tool_calls: message.run.tool_calls.map((tool) =>
+        tool.state === 'running' ? { ...tool, state: 'cancelled' } : tool
+      ),
+    },
+  }
 }
 
 export function isAssistantMessageFinal(message: Message): boolean {
@@ -209,13 +229,36 @@ export function applyChatCompletionResponse(
   }
 
   const updatedMessage = applyChatCompletionChoice(message, choice)
-  if (!updatedMessage || !response.sources) {
-    return updatedMessage
-  }
-
   return {
     ...updatedMessage,
     sources: mergeWebSearchSources([], response.sources),
+    run: response.playground,
+    durationMs: response.playground?.duration_ms ?? updatedMessage.durationMs,
+  }
+}
+
+export function restorePlaygroundRun(
+  message: Message,
+  run: PlaygroundRun,
+  sources?: WebSearchSource[]
+): Message {
+  const content = run.parts
+    .filter((part) => part.type === 'text')
+    .map((part) => part.text ?? '')
+    .join('')
+  const reasoning = run.parts
+    .filter((part) => part.type === 'reasoning')
+    .map((part) => part.text ?? '')
+    .join('')
+  const restored = finalizeMessage(
+    updateCurrentVersionContent(message, content),
+    reasoning
+  )
+  return {
+    ...restored,
+    run,
+    sources: mergeWebSearchSources([], sources),
+    durationMs: run.duration_ms ?? restored.durationMs,
   }
 }
 
@@ -237,7 +280,7 @@ export function sanitizeMessagesOnLoad(messages: Message[]): Message[] {
 
   if (targetIndex === -1) return messages
 
-  const finalized = finalizeMessage(messages[targetIndex])
+  const finalized = settleToolCalls(finalizeMessage(messages[targetIndex]))
   const hasContent = hasMessageContent(finalized)
   const hasReasoning = finalized.reasoning?.content?.trim()
 

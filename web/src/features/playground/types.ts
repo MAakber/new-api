@@ -23,14 +23,97 @@ export type MessageStatus = 'loading' | 'streaming' | 'complete' | 'error'
 
 export type PlaygroundMessageLayoutMode = 'alternating' | 'left'
 
+export type SearchMode = 'off' | 'mcp' | 'native'
+
+export interface PlaygroundUsage {
+  input_tokens?: number
+  output_tokens?: number
+  total_tokens?: number
+  cached_tokens?: number
+  cache_write_tokens?: number
+  reasoning_tokens?: number
+  estimated?: boolean
+  partial?: boolean
+  rounds?: number
+  model_duration_ms?: number
+  generation_duration_ms?: number
+  first_token_ms?: number
+}
+
+export interface PlaygroundToolCall {
+  id: string
+  round_id: number
+  server_name: string
+  name: string
+  kind: 'search' | 'fetch' | 'tool'
+  state: 'running' | 'completed' | 'error' | 'cancelled'
+  input: Record<string, unknown>
+  output?: string
+  error?: string
+  duration_ms: number
+}
+
+export interface PlaygroundPart {
+  type: 'text' | 'reasoning' | 'tool'
+  text?: string
+  tool_call_id?: string
+  round_id: number
+}
+
+export interface PlaygroundRun {
+  run_id: string
+  search_mode: SearchMode
+  usage?: PlaygroundUsage
+  parts: PlaygroundPart[]
+  tool_calls: PlaygroundToolCall[]
+  duration_ms?: number
+}
+
+export type PlaygroundEvent =
+  | { type: 'run'; run_id: string; search_mode: SearchMode }
+  | {
+      type: 'delta'
+      round_id: number
+      content?: string
+      reasoning_content?: string
+    }
+  | { type: 'usage'; usage: PlaygroundUsage }
+  | { type: 'tool'; tool: PlaygroundToolCall }
+  | {
+      type: 'complete'
+      duration_ms: number
+      sources: WebSearchSource[]
+      usage: PlaygroundUsage
+    }
+  | { type: 'ping' }
+
+export type MessageSnapshot = Pick<
+  Message,
+  | 'run'
+  | 'sources'
+  | 'reasoning'
+  | 'createdAt'
+  | 'startedAt'
+  | 'completedAt'
+  | 'durationMs'
+  | 'status'
+  | 'errorMessage'
+  | 'errorCode'
+>
+
 export interface MessageVersion {
   id: string
   content: string
+  snapshot?: MessageSnapshot
 }
 
 export interface WebSearchSource {
   href: string
   title: string
+  id?: string
+  tool_call_id?: string
+  published_at?: string
+  cited?: boolean
 }
 
 export interface Message {
@@ -41,6 +124,7 @@ export interface Message {
   startedAt?: number
   completedAt?: number
   durationMs?: number
+  run?: PlaygroundRun
   sources?: WebSearchSource[]
   reasoning?: {
     content: string
@@ -54,6 +138,7 @@ export interface Message {
   isContentComplete?: boolean
   status?: MessageStatus
   errorCode?: string | null
+  errorMessage?: string
 }
 
 // API payload types
@@ -76,6 +161,8 @@ export interface ChatCompletionRequest {
   messages: ChatCompletionMessage[]
   stream: boolean
   web_search?: boolean
+  search_mode?: SearchMode
+  mcp_tools?: string[]
   temperature?: number
   top_p?: number
   max_tokens?: number
@@ -90,6 +177,20 @@ export interface ChatCompletionChunk {
   object: string
   created: number
   model: string
+  playground?: PlaygroundEvent
+  usage?: {
+    prompt_tokens?: number
+    completion_tokens?: number
+    input_tokens?: number
+    output_tokens?: number
+    total_tokens?: number
+    prompt_tokens_details?: {
+      cached_tokens?: number
+      cache_write_tokens?: number
+      cached_creation_tokens?: number
+    }
+    completion_tokens_details?: { reasoning_tokens?: number }
+  }
   choices: Array<{
     index: number
     delta: {
@@ -119,6 +220,7 @@ export interface ChatCompletionResponse {
     finish_reason: string
   }>
   sources?: WebSearchSource[]
+  playground?: PlaygroundRun
   usage?: {
     prompt_tokens: number
     completion_tokens: number
@@ -139,6 +241,8 @@ export interface PlaygroundConfig {
   reasoning_effort: string
   stream: boolean
   webSearchEnabled: boolean
+  searchMode?: SearchMode
+  mcpTools?: string[]
 }
 
 export interface ParameterEnabled {

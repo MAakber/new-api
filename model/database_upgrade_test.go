@@ -63,6 +63,91 @@ func TestDatabaseUpgradePreservesDownstreamData(t *testing.T) {
 	verifyDatabaseUpgradeFixture(t)
 }
 
+// TEST_MCP_DB_PHASE=upgrade consumes a database seeded with the released
+// gateway. With no phase it exercises a fresh startup. The same disposable
+// DSN conventions as the general upgrade fixture apply.
+func TestMCPDatabaseMigration(t *testing.T) {
+	previousDB, previousLogDB := DB, LOG_DB
+	mainType, logType := common.MainDatabaseType(), common.LogDatabaseType()
+	previousPath := common.SQLitePath
+	t.Cleanup(func() {
+		DB, LOG_DB = previousDB, previousLogDB
+		common.SetDatabaseTypes(mainType, logType)
+		common.SQLitePath = previousPath
+		initCol()
+	})
+	directory := os.Getenv("TEST_UPGRADE_SQLITE_DIR")
+	if directory == "" {
+		directory = t.TempDir()
+	}
+	mainDB, mainDialect := openUpgradeFixtureDB(t, "TEST_UPGRADE_DSN", filepath.Join(directory, "main.db"))
+	logDB, logDialect := openUpgradeFixtureDB(t, "TEST_UPGRADE_LOG_DSN", filepath.Join(directory, "log.db"))
+	recorder := &migrationSQLRecorder{}
+	DB, LOG_DB = mainDB.Session(&gorm.Session{Logger: recorder}), logDB.Session(&gorm.Session{Logger: recorder})
+	common.SetDatabaseTypes(mainDialect, logDialect)
+	initCol()
+	require.NoError(t, migrateDB())
+	require.NoError(t, migrateLOGDB())
+	if os.Getenv("TEST_MCP_DB_PHASE") != "upgrade" {
+		require.NoError(t, DB.Create(&User{Id: 9201, Username: "mcp-upgrade-fixture", Password: "not-a-login", Quota: 432100, UsedQuota: 321, AffCode: "mcp-upgrade"}).Error)
+		require.NoError(t, DB.Create(&Token{Id: 9201, UserId: 9201, Key: strings.Repeat("m", 48), Name: "mcp-upgrade-fixture", RemainQuota: 7654}).Error)
+		require.NoError(t, DB.Create(&Channel{Id: 9201, Type: 1, Key: "not-a-real-key", Name: "mcp-upgrade-fixture", Models: "fixture-model"}).Error)
+		require.NoError(t, DB.Create(&Option{Key: "MCPCompatibilityFixture", Value: "保留配置"}).Error)
+		require.NoError(t, LOG_DB.Create(&Log{Id: 9201, UserId: 9201, Type: 2, Quota: 120, RequestId: "mcp-upgrade-fixture"}).Error)
+	}
+	secret, err := common.EncryptWithCryptoSecret(`{"headers":{"Authorization":"Bearer fixture-secret"}}`)
+	require.NoError(t, err)
+	server := MCPServer{Name: "检索服务", URL: "https://mcp.example.com/mcp", GroupsJSON: `["default"]`, ToolsJSON: `[]`, EncryptedCredentials: secret, TimeoutSeconds: 30, MaxConcurrency: 2}
+	require.NoError(t, SaveMCPServer(&server))
+	require.Positive(t, server.ID)
+	stale := server
+	server.Enabled = true
+	require.NoError(t, SaveMCPServer(&server))
+	require.ErrorIs(t, SaveMCPServer(&stale), ErrMCPServerConflict)
+	for range 2 {
+		recorder.reset()
+		require.NoError(t, migrateDB())
+		require.NoError(t, migrateLOGDB())
+		assert.Empty(t, recorder.schemaMutations(), "unchanged startup must not alter schemas")
+	}
+	stored, err := GetMCPServer(server.ID)
+	require.NoError(t, err)
+	assert.True(t, stored.Enabled)
+	assert.EqualValues(t, 2, stored.Revision)
+	assert.Equal(t, "检索服务", stored.Name)
+	assert.Equal(t, secret, stored.EncryptedCredentials)
+	decoded, err := common.DecryptWithCryptoSecret(stored.EncryptedCredentials)
+	require.NoError(t, err)
+	assert.JSONEq(t, `{"headers":{"Authorization":"Bearer fixture-secret"}}`, decoded)
+	require.NoError(t, CheckMCPServerRevision(server.ID, server.Revision))
+	server.Enabled = false
+	require.NoError(t, SaveMCPServer(&server))
+	require.ErrorIs(t, CheckMCPServerRevision(server.ID, server.Revision), ErrMCPServerConflict)
+	var user User
+	require.NoError(t, DB.First(&user, 9201).Error)
+	assert.Equal(t, 432100, user.Quota)
+	assert.Equal(t, 321, user.UsedQuota)
+	var token Token
+	require.NoError(t, DB.First(&token, 9201).Error)
+	assert.Equal(t, strings.Repeat("m", 48), token.Key)
+	assert.Equal(t, 7654, token.RemainQuota)
+	var channel Channel
+	require.NoError(t, DB.First(&channel, 9201).Error)
+	assert.Equal(t, "fixture-model", channel.Models)
+	var option Option
+	require.NoError(t, DB.Where(&Option{Key: "MCPCompatibilityFixture"}).First(&option).Error)
+	assert.Equal(t, "保留配置", option.Value)
+	var log Log
+	require.NoError(t, LOG_DB.First(&log, 9201).Error)
+	assert.Equal(t, 120, log.Quota)
+	// Uniqueness must survive the released-schema upgrade.
+	assert.Error(t, DB.Create(&Token{UserId: 9201, Key: token.Key}).Error)
+	require.ErrorIs(t, DeleteMCPServer(server.ID, stale.Revision), ErrMCPServerConflict)
+	require.NoError(t, DeleteMCPServer(server.ID, server.Revision))
+	_, err = GetMCPServer(server.ID)
+	require.ErrorIs(t, err, gorm.ErrRecordNotFound)
+}
+
 func openUpgradeFixtureDB(t *testing.T, envName, sqlitePath string) (*gorm.DB, common.DatabaseType) {
 	t.Helper()
 	dsn := os.Getenv(envName)

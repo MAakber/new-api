@@ -24,6 +24,16 @@ func SetApiRouter(router *gin.Engine) {
 		apiRouter.GET("/setup", controller.GetSetup)
 		apiRouter.POST("/setup", anonymousRequestBodyLimit, controller.PostSetup)
 		apiRouter.GET("/status", controller.GetStatus)
+		apiRouter.GET("/mcp/tools", middleware.UserAuth(), controller.GetAvailableMCPTools)
+		mcpRoute := apiRouter.Group("/mcp")
+		mcpRoute.Use(middleware.RootAuth())
+		{
+			mcpRoute.GET("/servers", controller.GetMCPServers)
+			mcpRoute.POST("/servers", controller.SaveMCPServer)
+			mcpRoute.PUT("/servers/:id", controller.SaveMCPServer)
+			mcpRoute.DELETE("/servers/:id", controller.DeleteMCPServer)
+			mcpRoute.POST("/test", controller.TestMCPServer)
+		}
 		registerBannerRoutes(apiRouter)
 		apiRouter.GET("/uptime/status", controller.GetUptimeKumaStatus)
 		apiRouter.GET("/models", middleware.UserAuth(), controller.DashboardListModels)

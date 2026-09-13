@@ -36,6 +36,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import type { Message } from '../../types'
+import { snapshotMessage } from './message-run-utils'
 import {
   createLoadingAssistantMessage,
   createUserMessage,
@@ -86,7 +87,14 @@ export function createRegeneratedMessages(
     ]
   }
 
-  return [...messages.slice(0, messageIndex), createLoadingAssistantMessage()]
+  const previous = messages[messageIndex]
+  const next = createLoadingAssistantMessage()
+  next.key = previous.key
+  next.versions.push(
+    { ...previous.versions[0], snapshot: snapshotMessage(previous) },
+    ...previous.versions.slice(1, 9)
+  )
+  return [...messages.slice(0, messageIndex), next]
 }
 
 export function removeMessageByKey(

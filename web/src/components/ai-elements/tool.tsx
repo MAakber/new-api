@@ -46,6 +46,7 @@ type ExtendedToolState =
   | 'approval-requested'
   | 'approval-responded'
   | 'output-denied'
+  | 'output-cancelled'
 
 export type ToolProps = ComponentProps<typeof Collapsible>
 
@@ -63,15 +64,17 @@ export type ToolHeaderProps = {
   className?: string
 }
 
-const getStatusBadge = (status: ExtendedToolState) => {
+const ToolStatusBadge = ({ status }: { status: ExtendedToolState }) => {
+  const { t } = useTranslation()
   const labels: Record<ExtendedToolState, string> = {
-    'input-streaming': 'Pending',
-    'input-available': 'Running',
-    'approval-requested': 'Awaiting Approval',
-    'approval-responded': 'Responded',
-    'output-available': 'Completed',
-    'output-error': 'Error',
-    'output-denied': 'Denied',
+    'input-streaming': t('Pending'),
+    'input-available': t('Running'),
+    'approval-requested': t('Awaiting Approval'),
+    'approval-responded': t('Responded'),
+    'output-available': t('Completed'),
+    'output-error': t('Error'),
+    'output-denied': t('Denied'),
+    'output-cancelled': t('Cancelled'),
   }
 
   const icons: Record<ExtendedToolState, ReactNode> = {
@@ -82,6 +85,7 @@ const getStatusBadge = (status: ExtendedToolState) => {
     'output-available': <CheckCircleIcon className='text-success size-4' />,
     'output-error': <XCircleIcon className='text-destructive size-4' />,
     'output-denied': <XCircleIcon className='text-warning size-4' />,
+    'output-cancelled': <CircleIcon className='text-muted-foreground size-4' />,
   }
 
   return (
@@ -106,12 +110,15 @@ export const ToolHeader = ({
     )}
     {...props}
   >
-    <div className='flex items-center gap-2'>
-      <WrenchIcon className='text-muted-foreground size-4' />
-      <span className='text-sm font-medium'>
+    <div className='flex min-w-0 flex-wrap items-center gap-2 text-start'>
+      <WrenchIcon
+        aria-hidden='true'
+        className='text-muted-foreground size-4 shrink-0'
+      />
+      <span className='min-w-0 text-sm font-medium break-all'>
         {title ?? type.split('-').slice(1).join('-')}
       </span>
-      {getStatusBadge(state)}
+      <ToolStatusBadge status={state} />
     </div>
     <ChevronDownIcon className='text-muted-foreground size-4 transition-transform group-data-[panel-open]:rotate-180' />
   </CollapsibleTrigger>
@@ -158,6 +165,7 @@ export const ToolOutput = ({
   errorText,
   ...props
 }: ToolOutputProps) => {
+  const { t } = useTranslation()
   if (!(output || errorText)) {
     return null
   }
@@ -175,7 +183,7 @@ export const ToolOutput = ({
   return (
     <div className={cn('space-y-2 p-4', className)} {...props}>
       <h4 className='text-muted-foreground text-xs font-medium tracking-wide uppercase'>
-        {errorText ? 'Error' : 'Result'}
+        {errorText ? t('Error') : t('Result')}
       </h4>
       <div
         className={cn(

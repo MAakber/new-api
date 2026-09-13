@@ -42,9 +42,11 @@ export function buildChatCompletionPayload(
     group: config.group,
     messages: processedMessages,
     stream: config.stream,
+    search_mode: config.searchMode ?? (config.webSearchEnabled ? 'mcp' : 'off'),
+    mcp_tools: config.mcpTools ?? [],
   }
 
-  if (config.webSearchEnabled) {
+  if (payload.search_mode === 'mcp') {
     payload.web_search = true
   }
 

@@ -16,6 +16,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { MCPSettingsSection } from '@/features/mcp/components/mcp-settings-section'
+
 import { SystemBehaviorSection } from '../general/system-behavior-section'
 import { EmailSettingsSection } from '../integrations/email-settings-section'
 import { MonitoringSettingsSection } from '../integrations/monitoring-settings-section'
@@ -27,6 +29,11 @@ import type { OperationsSettings } from '../types'
 import { createSectionRegistry } from '../utils/section-registry'
 
 const OPERATIONS_SECTIONS = [
+  {
+    id: 'mcp',
+    titleKey: 'MCP Management',
+    build: (_settings: OperationsSettings) => <MCPSettingsSection />,
+  },
   {
     id: 'behavior',
     titleKey: 'System Behavior',

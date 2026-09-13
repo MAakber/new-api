@@ -17,6 +17,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { ERROR_MESSAGES } from '../../constants'
+import type { PlaygroundRun, WebSearchSource } from '../../types'
+import { playgroundFailureSchema } from './playground-event-schema'
 
 type RequestErrorLike = {
   message?: string
@@ -29,6 +31,8 @@ type RequestErrorLike = {
 export type RequestErrorDetails = {
   errorCode?: string
   errorMessage: string
+  run?: PlaygroundRun
+  sources?: WebSearchSource[]
 }
 
 export function parseAPIErrorDetails(
@@ -98,9 +102,18 @@ export function parseAPIErrorDetails(
 export function parseRequestErrorDetails(error: unknown): RequestErrorDetails {
   const requestError = error as RequestErrorLike
 
-  return parseAPIErrorDetails(
+  const details = parseAPIErrorDetails(
     requestError?.response?.data,
     requestError?.response?.status,
     requestError?.message
   )
+  const partial = playgroundFailureSchema.safeParse(
+    requestError?.response?.data
+  )
+  if (!partial.success) return details
+  return {
+    ...details,
+    run: partial.data.playground,
+    sources: partial.data.sources,
+  }
 }

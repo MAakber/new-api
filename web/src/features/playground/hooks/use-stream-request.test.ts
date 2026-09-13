@@ -175,7 +175,7 @@ describe('latest-wins stream request coordination', () => {
     })
     const callbacks = {
       onUpdate: (update: StreamMessageUpdate) => {
-        if (update.type !== 'sources') {
+        if (update.type === 'content' || update.type === 'reasoning') {
           updates.push(update.chunk)
         }
       },

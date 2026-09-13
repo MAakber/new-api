@@ -48,7 +48,8 @@ export function getMessageErrorState(
     return null
   }
 
-  const content = getMessageContent(message) || FALLBACK_ERROR_CONTENT
+  const content =
+    message.errorMessage || getMessageContent(message) || FALLBACK_ERROR_CONTENT
   const isModelPriceError = message.errorCode === MODEL_PRICE_ERROR_CODE
 
   return {

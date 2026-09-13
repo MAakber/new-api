@@ -17,14 +17,22 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { MESSAGE_STATUS, STORAGE_KEYS } from '../../constants'
-import type { PlaygroundConfig, ParameterEnabled, Message } from '../../types'
+import type {
+  PlaygroundConfig,
+  ParameterEnabled,
+  Message,
+  MessageSnapshot,
+  PlaygroundRun,
+} from '../../types'
 import {
   finalizeMessage,
   isAssistantMessagePending,
   sanitizeMessagesOnLoad,
+  settleToolCalls,
 } from '../message/message-streaming-utils'
 import { completeAssistantTiming } from '../message/message-timing-utils'
 import { hasMessageContent } from '../message/message-utils'
+import { normalizeWebSearchSources } from '../streaming/stream-utils'
 import {
   MAX_LOADED_MESSAGE_CHARS,
   MAX_LOADED_MESSAGES_CHARS,
@@ -95,13 +103,68 @@ function trimMessages(messages: Message[]): Message[] {
 }
 
 function getMessageSize(message: Message): number {
-  const versionsSize = message.versions.reduce(
-    (total, version) => total + version.content.length,
-    0
-  )
-  const reasoningSize = message.reasoning?.content.length ?? 0
+  return JSON.stringify(message).length
+}
 
-  return versionsSize + reasoningSize
+function compactStoredRun(
+  run: PlaygroundRun | undefined
+): PlaygroundRun | undefined {
+  if (!run) return undefined
+  let remaining = MAX_LOADED_MESSAGE_CHARS
+  return {
+    ...run,
+    parts: run.parts.slice(0, 128).map((part) => {
+      if (!part.text) return part
+      const text = truncateText(part.text, Math.max(0, remaining))
+      remaining -= text.length
+      return { ...part, text }
+    }),
+    tool_calls: run.tool_calls.slice(0, 16).map((tool) => {
+      const input = JSON.stringify(tool.input)
+      return {
+        ...tool,
+        input:
+          input.length > 4096
+            ? { preview: truncateText(input, 4096) }
+            : tool.input,
+        output: tool.output ? truncateText(tool.output, 4096) : tool.output,
+      }
+    }),
+  }
+}
+
+function compactStoredSnapshot(snapshot: MessageSnapshot): MessageSnapshot {
+  return {
+    ...snapshot,
+    errorMessage: snapshot.errorMessage
+      ? truncateText(snapshot.errorMessage, MAX_LOADED_MESSAGE_CHARS)
+      : snapshot.errorMessage,
+    run: compactStoredRun(snapshot.run),
+    sources: normalizeWebSearchSources(snapshot.sources),
+    reasoning: snapshot.reasoning
+      ? {
+          ...snapshot.reasoning,
+          content: truncateText(
+            snapshot.reasoning.content,
+            MAX_LOADED_MESSAGE_CHARS
+          ),
+        }
+      : undefined,
+  }
+}
+
+function compactStoredMessage(message: Message): Message {
+  return {
+    ...message,
+    ...compactStoredSnapshot(message),
+    versions: message.versions.slice(0, 10).map((version) => ({
+      ...version,
+      content: truncateText(version.content, MAX_LOADED_MESSAGE_CHARS),
+      snapshot: version.snapshot
+        ? compactStoredSnapshot(version.snapshot)
+        : undefined,
+    })),
+  }
 }
 
 function truncateText(text: string, maxLength: number): string {
@@ -223,7 +286,9 @@ function normalizeStoredMessageForLoad(message: Message): Message {
     changed = true
   }
 
-  const normalized = changed ? { ...message, versions, reasoning } : message
+  const normalized = settleToolCalls(
+    changed ? { ...message, versions, reasoning } : message
+  )
 
   if (!isAssistantMessagePending(normalized)) {
     return normalized
@@ -344,7 +409,9 @@ export function loadMessages(): Message[] | null {
     if (!saved) return null
 
     const parsed = messagesSchema.parse(unwrapStoredValue(saved)) as Message[]
-    const normalized = parsed.map(normalizeStoredMessageForLoad)
+    const normalized = parsed
+      .map(compactStoredMessage)
+      .map(normalizeStoredMessageForLoad)
     const normalizedChanged = normalized.some(
       (message, index) => message !== parsed[index]
     )
@@ -374,8 +441,41 @@ export function loadMessages(): Message[] | null {
  */
 export function saveMessages(messages: Message[]): void {
   try {
-    const trimmed = trimMessages(messages)
+    const trimmed = trimMessages(messages).map(compactStoredMessage)
     const parsed = messagesSchema.parse(trimmed) as Message[]
+    const encoder = new TextEncoder()
+    while (
+      encoder.encode(JSON.stringify({ version: STORAGE_VERSION, data: parsed }))
+        .length > MAX_STORED_MESSAGES_BYTES
+    ) {
+      if (parsed.length > 1) {
+        parsed.shift()
+      } else if (parsed[0]?.versions.length > 1) {
+        parsed[0].versions.pop()
+      } else if (
+        parsed[0]?.run?.parts.length ||
+        parsed[0]?.run?.tool_calls.length ||
+        parsed[0]?.sources?.length ||
+        parsed[0]?.versions.some((version) => version.snapshot)
+      ) {
+        // Keep the answer and counters even if one run has unusually large metadata.
+        parsed[0] = {
+          ...parsed[0],
+          run: parsed[0].run
+            ? { ...parsed[0].run, parts: [], tool_calls: [] }
+            : undefined,
+          sources: [],
+          versions: parsed[0].versions.map((version) => ({
+            id: version.id,
+            content: version.content,
+          })),
+        }
+      } else {
+        // No reducible metadata remains. Dropping a malformed oversized entry
+        // guarantees progress instead of blocking the browser indefinitely.
+        parsed.pop()
+      }
+    }
     writeStoredValue(STORAGE_KEYS.MESSAGES, parsed)
   } catch (error) {
     // eslint-disable-next-line no-console

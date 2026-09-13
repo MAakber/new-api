@@ -29,7 +29,12 @@ export type MessageStateUpdater =
   | ((previousMessages: Message[]) => Message[])
 
 export function getInitialPlaygroundConfig(): PlaygroundConfig {
-  return { ...DEFAULT_CONFIG, ...loadConfig() }
+  const saved = loadConfig()
+  return {
+    ...DEFAULT_CONFIG,
+    ...saved,
+    searchMode: saved.searchMode ?? (saved.webSearchEnabled ? 'mcp' : 'off'),
+  }
 }
 
 export function getInitialParameterEnabled(): ParameterEnabled {

@@ -18,7 +18,13 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { z } from 'zod'
 
-export const STORAGE_VERSION = 1
+import {
+  playgroundRunSchema,
+  searchModeSchema,
+  sourceSchema,
+} from '../streaming/playground-event-schema'
+
+export const STORAGE_VERSION = 2
 export const MAX_STORED_MESSAGES = 100
 export const MAX_STORED_MESSAGES_BYTES = 1024 * 1024
 export const MAX_LOADED_MESSAGES_CHARS = 120_000
@@ -36,6 +42,8 @@ export const playgroundConfigSchema = z.object({
   reasoning_effort: z.string().optional(),
   stream: z.boolean().optional(),
   webSearchEnabled: z.boolean().optional(),
+  searchMode: searchModeSchema.optional(),
+  mcpTools: z.array(z.string().max(256)).max(64).optional(),
 })
 
 export const parameterEnabledSchema = z.object({
@@ -56,22 +64,31 @@ const messageStatusSchema = z.enum([
   'error',
 ])
 
-const messageVersionSchema = z.object({
-  id: z.string(),
-  content: z.string(),
-})
-
-const sourceSchema = z.object({
-  href: z.string(),
-  title: z.string(),
-})
-
 const reasoningSchema = z.object({
   content: z.string(),
   duration: z.number(),
   startedAt: z.number().optional(),
   completedAt: z.number().optional(),
   durationMs: z.number().optional(),
+})
+
+const snapshotSchema = z.object({
+  run: playgroundRunSchema.optional(),
+  sources: z.array(sourceSchema).optional(),
+  reasoning: reasoningSchema.optional(),
+  createdAt: z.number().optional(),
+  startedAt: z.number().optional(),
+  completedAt: z.number().optional(),
+  durationMs: z.number().optional(),
+  status: messageStatusSchema.optional(),
+  errorMessage: z.string().optional(),
+  errorCode: z.string().nullable().optional(),
+})
+
+const messageVersionSchema = z.object({
+  id: z.string(),
+  content: z.string(),
+  snapshot: snapshotSchema.optional(),
 })
 
 const messageSchema = z.object({
@@ -82,6 +99,7 @@ const messageSchema = z.object({
   startedAt: z.number().optional(),
   completedAt: z.number().optional(),
   durationMs: z.number().optional(),
+  run: playgroundRunSchema.optional(),
   sources: z.array(sourceSchema).optional(),
   reasoning: reasoningSchema.optional(),
   isReasoningStreaming: z.boolean().optional(),
@@ -89,6 +107,7 @@ const messageSchema = z.object({
   isContentComplete: z.boolean().optional(),
   status: messageStatusSchema.optional(),
   errorCode: z.string().nullable().optional(),
+  errorMessage: z.string().optional(),
 })
 
 export const messagesSchema = z.array(messageSchema)

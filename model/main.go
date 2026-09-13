@@ -347,6 +347,7 @@ func migrateDB() error {
 	err := DB.AutoMigrate(
 		&Channel{},
 		&ChannelCustomBalance{},
+		&MCPServer{},
 		&Token{},
 		&User{},
 		&UserAvatar{},
