@@ -16,7 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { PaperclipIcon, Trash2Icon } from 'lucide-react'
+import { MoreHorizontalIcon, PaperclipIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -33,10 +33,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
+  Popover,
+  PopoverContent,
+  PopoverTitle,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 import { ATTACHMENT_ACTIONS, getAttachmentActionNotice } from '../../lib'
 import type { ParameterEnabled, PlaygroundConfig } from '../../types'
@@ -69,6 +76,7 @@ export function PlaygroundInputTools({
   parameterEnabled,
 }: PlaygroundInputToolsProps) {
   const { t } = useTranslation()
+  const isMobile = useIsMobile()
   const [clearConfirmOpen, setClearConfirmOpen] = useState(false)
 
   const handleFileAction = (action: string) => {
@@ -84,77 +92,107 @@ export function PlaygroundInputTools({
     toast.success(t('Conversation cleared'))
   }
 
-  return (
-    <>
-      <PromptInputTools className='bg-background/70 border-border/60 rounded-lg border p-1 shadow-xs'>
-        <Tooltip>
-          <DropdownMenu>
-            <TooltipTrigger
-              render={
-                <DropdownMenuTrigger
-                  render={
-                    <PromptInputButton
-                      aria-label={t('Attach')}
-                      className='text-muted-foreground hover:text-foreground hover:bg-muted/70 font-medium'
-                      disabled={disabled}
-                      variant='ghost'
-                    />
-                  }
-                >
-                  <PaperclipIcon size={16} />
-                </DropdownMenuTrigger>
-              }
-            />
-            <TooltipContent>
-              <p>{t('Attach')}</p>
-            </TooltipContent>
-            <DropdownMenuContent align='start'>
-              {ATTACHMENT_ACTIONS.map(({ action, icon: Icon, label }) => (
-                <DropdownMenuItem
-                  key={action}
-                  onClick={() => handleFileAction(action)}
-                >
-                  <Icon className='mr-2' size={16} />
-                  {t(label)}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </Tooltip>
-
-        <PlaygroundSearchTools
-          config={config}
-          disabled={disabled}
-          onConfigChange={onConfigChange}
-        />
-
-        <PlaygroundParameterPanel
-          config={config}
-          disabled={disabled}
-          onConfigChange={onConfigChange}
-          onParameterEnabledChange={onParameterEnabledChange}
-          parameterEnabled={parameterEnabled}
-        />
-
-        <Tooltip>
+  const tools = (
+    <PromptInputTools className='bg-background/70 border-border/60 max-w-full flex-wrap rounded-lg border p-1 shadow-xs md:flex-nowrap'>
+      <Tooltip>
+        <DropdownMenu>
           <TooltipTrigger
             render={
-              <PromptInputButton
-                aria-label={t('Clear chat history')}
-                className='text-muted-foreground hover:text-destructive hover:bg-destructive/10 font-medium'
-                disabled={disabled || !hasMessages || !onClearMessages}
-                onClick={() => setClearConfirmOpen(true)}
-                variant='ghost'
+              <DropdownMenuTrigger
+                render={
+                  <PromptInputButton
+                    aria-label={t('Attach')}
+                    className='text-muted-foreground hover:text-foreground hover:bg-muted/70 font-medium'
+                    disabled={disabled}
+                    variant='ghost'
+                  />
+                }
               >
-                <Trash2Icon size={16} />
-              </PromptInputButton>
+                <PaperclipIcon size={16} />
+              </DropdownMenuTrigger>
             }
           />
           <TooltipContent>
-            <p>{t('Clear chat history')}</p>
+            <p>{t('Attach')}</p>
           </TooltipContent>
-        </Tooltip>
-      </PromptInputTools>
+          <DropdownMenuContent align='start'>
+            {ATTACHMENT_ACTIONS.map(({ action, icon: Icon, label }) => (
+              <DropdownMenuItem
+                key={action}
+                onClick={() => handleFileAction(action)}
+              >
+                <Icon className='mr-2' size={16} />
+                {t(label)}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </Tooltip>
+
+      <PlaygroundSearchTools
+        config={config}
+        disabled={disabled}
+        onConfigChange={onConfigChange}
+      />
+
+      <PlaygroundParameterPanel
+        config={config}
+        disabled={disabled}
+        onConfigChange={onConfigChange}
+        onParameterEnabledChange={onParameterEnabledChange}
+        parameterEnabled={parameterEnabled}
+      />
+
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <PromptInputButton
+              aria-label={t('Clear chat history')}
+              className='text-muted-foreground hover:text-destructive hover:bg-destructive/10 font-medium'
+              disabled={disabled || !hasMessages || !onClearMessages}
+              onClick={() => setClearConfirmOpen(true)}
+              variant='ghost'
+            >
+              <Trash2Icon size={16} />
+            </PromptInputButton>
+          }
+        />
+        <TooltipContent>
+          <p>{t('Clear chat history')}</p>
+        </TooltipContent>
+      </Tooltip>
+    </PromptInputTools>
+  )
+
+  return (
+    <>
+      {isMobile ? (
+        <Popover>
+          <PopoverTrigger
+            render={
+              <PromptInputButton
+                className='bg-background/70 border-border/60 text-muted-foreground hover:text-foreground border shadow-xs'
+                disabled={disabled}
+              >
+                <MoreHorizontalIcon aria-hidden='true' size={16} />
+                <span>{t('More')}</span>
+              </PromptInputButton>
+            }
+          />
+          <PopoverContent
+            align='start'
+            className='w-auto max-w-[calc(100vw-2rem)] p-0 ring-0'
+            collisionPadding={16}
+            side='top'
+            sideOffset={8}
+          >
+            <PopoverTitle className='sr-only'>{t('Tools')}</PopoverTitle>
+            {tools}
+          </PopoverContent>
+        </Popover>
+      ) : (
+        tools
+      )}
 
       <ConfirmDialog
         destructive

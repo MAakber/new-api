@@ -67,58 +67,42 @@ export function PlaygroundInputControls({
       text,
     })
 
-  const renderSelector = () => (
-    <ModelGroupSelector
-      selectedModel={modelValue}
-      models={models}
-      onModelChange={onModelChange}
-      selectedGroup={groupValue}
-      groups={groups}
-      onGroupChange={onGroupChange}
-      disabled={isSelectorDisabled}
-    />
-  )
-
-  const renderSubmitButton = () =>
-    shouldShowStop ? (
-      <PromptInputButton
-        className='border-destructive/25 bg-destructive/10 text-destructive hover:bg-destructive/15 font-medium'
-        onClick={onStop}
-        variant='secondary'
-      >
-        <SquareIcon className='fill-current' size={16} />
-        <span className='hidden sm:inline'>{t('Stop')}</span>
-        <span className='sr-only sm:hidden'>{t('Stop')}</span>
-      </PromptInputButton>
-    ) : (
-      <PromptInputButton
-        className='bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground h-8 px-3 font-medium shadow-sm'
-        disabled={!canSubmit}
-        type='submit'
-        variant='default'
-      >
-        <SendIcon size={16} />
-        <span className='hidden sm:inline'>{t('Send')}</span>
-        <span className='sr-only sm:hidden'>{t('Send')}</span>
-      </PromptInputButton>
-    )
-
   return (
-    <div className='flex w-full flex-col gap-2.5 md:flex-row md:items-center md:justify-between'>
-      <div className='flex min-w-0 items-center justify-end md:hidden'>
-        {renderSelector()}
-      </div>
-
-      <div className='flex items-center justify-between gap-2 md:justify-start'>
-        {tools}
-        <div className='flex items-center gap-1.5 md:hidden'>
-          {renderSubmitButton()}
-        </div>
-      </div>
-
-      <div className='hidden min-w-0 items-center gap-2 md:flex'>
-        {renderSelector()}
-        {renderSubmitButton()}
+    <div className='flex w-full min-w-0 items-center justify-between gap-2'>
+      <div className='shrink-0'>{tools}</div>
+      <div className='flex min-w-0 flex-1 items-center justify-end gap-2'>
+        <ModelGroupSelector
+          className='min-w-0 shrink'
+          selectedModel={modelValue}
+          models={models}
+          onModelChange={onModelChange}
+          selectedGroup={groupValue}
+          groups={groups}
+          onGroupChange={onGroupChange}
+          disabled={isSelectorDisabled}
+        />
+        {shouldShowStop ? (
+          <PromptInputButton
+            className='border-destructive/25 bg-destructive/10 text-destructive hover:bg-destructive/15 font-medium'
+            onClick={onStop}
+            variant='secondary'
+          >
+            <SquareIcon className='fill-current' size={16} />
+            <span className='hidden sm:inline'>{t('Stop')}</span>
+            <span className='sr-only sm:hidden'>{t('Stop')}</span>
+          </PromptInputButton>
+        ) : (
+          <PromptInputButton
+            className='bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground h-8 px-3 font-medium shadow-sm'
+            disabled={!canSubmit}
+            type='submit'
+            variant='default'
+          >
+            <SendIcon size={16} />
+            <span className='hidden sm:inline'>{t('Send')}</span>
+            <span className='sr-only sm:hidden'>{t('Send')}</span>
+          </PromptInputButton>
+        )}
       </div>
     </div>
   )
