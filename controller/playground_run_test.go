@@ -262,6 +262,21 @@ func TestPlaygroundLaterCitationsSurviveCandidateLimits(t *testing.T) {
 	assert.Empty(t, mergePlaygroundSources(nil, []playgroundWebSearchSource{{Href: "javascript:alert(1)"}, {Href: "https://user:pass@example.com"}}))
 }
 
+func TestPlaygroundSourcesRequireRetrievedEvidence(t *testing.T) {
+	answer := "See https://weather.example.com/beijing and https://suggested.example.com/"
+	assert.Empty(t, citedPlaygroundSources(nil, answer), "links generated in an answer do not prove a search was performed")
+
+	sources := citedPlaygroundSources([]playgroundWebSearchSource{
+		{Href: "https://weather.example.com/beijing", Title: "Retrieved forecast"},
+		{Href: "https://annotations.example.com/", Title: "Provider citation", Cited: true},
+	}, answer)
+	require.Len(t, sources, 2)
+	assert.Equal(t, "https://weather.example.com/beijing", sources[0].Href)
+	assert.True(t, sources[0].Cited)
+	assert.Equal(t, "https://annotations.example.com/", sources[1].Href)
+	assert.True(t, sources[1].Cited, "provider annotations remain citations without a literal URL in the answer")
+}
+
 func TestPlaygroundUsagePreservesProviderSemantics(t *testing.T) {
 	for _, test := range []struct {
 		name, raw                                 string

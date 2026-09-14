@@ -103,10 +103,14 @@ func mergePlaygroundSources(current, incoming []playgroundWebSearchSource) []pla
 
 func citedPlaygroundSources(sources []playgroundWebSearchSource, answer string) []playgroundWebSearchSource {
 	answerSources := collectPlaygroundSources(answer, "")
-	for index := range answerSources {
-		answerSources[index].Cited = true
+	citedURLs := make(map[string]bool, len(answerSources))
+	for _, source := range answerSources {
+		citedURLs[source.Href] = true
 	}
-	sources = mergePlaygroundSources(sources, answerSources)
+	// Answer links establish citations only when they match retrieved sources.
+	for index := range sources {
+		sources[index].Cited = sources[index].Cited || citedURLs[sources[index].Href]
+	}
 	slices.SortStableFunc(sources, func(a, b playgroundWebSearchSource) int {
 		if a.Cited == b.Cited {
 			return 0

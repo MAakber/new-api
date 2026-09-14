@@ -74,10 +74,17 @@ func TextHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *types
 	adaptor.Init(info)
 
 	passThroughGlobal := model_setting.GetGlobalSettings().PassThroughRequestEnabled
+	nativeSearchViaResponses := shouldUseResponsesForPlaygroundSearch(info, request)
+	if nativeSearchViaResponses && (passThroughGlobal || info.ChannelSetting.PassThroughBodyEnabled) {
+		return types.NewErrorWithStatusCode(
+			fmt.Errorf("Playground native search requires Responses conversion; disable global and channel request body passthrough"),
+			types.ErrorCodeInvalidRequest, http.StatusBadRequest, types.ErrOptionWithSkipRetry(),
+		)
+	}
 	if info.RelayMode == relayconstant.RelayModeChatCompletions &&
 		!passThroughGlobal &&
 		!info.ChannelSetting.PassThroughBodyEnabled &&
-		service.ShouldChatCompletionsUseResponsesGlobal(info.ChannelId, info.ChannelType, info.OriginModelName) {
+		(nativeSearchViaResponses || service.ShouldChatCompletionsUseResponsesGlobal(info.ChannelId, info.ChannelType, info.OriginModelName)) {
 		applySystemPromptIfNeeded(c, info, request)
 		usage, newApiErr := textRequestViaResponses(c, info, adaptor, request)
 		if interceptionErr := service.FinishUpstreamInterception(c); interceptionErr != nil {

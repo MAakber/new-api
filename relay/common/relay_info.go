@@ -493,26 +493,7 @@ func GenRelayInfoResponses(c *gin.Context, request *dto.OpenAIResponsesRequest) 
 	info.RelayMode = relayconstant.RelayModeResponses
 	info.RelayFormat = types.RelayFormatOpenAIResponses
 
-	info.ResponsesUsageInfo = &ResponsesUsageInfo{
-		BuiltInTools: make(map[string]*BuildInToolInfo),
-	}
-	if len(request.Tools) > 0 {
-		for _, tool := range request.GetToolsMap() {
-			toolType := common.Interface2String(tool["type"])
-			info.ResponsesUsageInfo.BuiltInTools[toolType] = &BuildInToolInfo{
-				ToolName:  toolType,
-				CallCount: 0,
-			}
-			switch toolType {
-			case dto.BuildInToolWebSearchPreview:
-				searchContextSize := common.Interface2String(tool["search_context_size"])
-				if searchContextSize == "" {
-					searchContextSize = "medium"
-				}
-				info.ResponsesUsageInfo.BuiltInTools[toolType].SearchContextSize = searchContextSize
-			}
-		}
-	}
+	info.InitResponsesToolUsage(request)
 	return info
 }
 

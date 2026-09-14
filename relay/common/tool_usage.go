@@ -19,6 +19,31 @@ var reservedBillableToolNames = map[string]struct{}{
 	dto.BuildInToolImageGeneration:  {},
 }
 
+// InitResponsesToolUsage records declarations without charging a call and
+// preserves counts already collected by the current relay request.
+func (info *RelayInfo) InitResponsesToolUsage(request *dto.OpenAIResponsesRequest) {
+	if info.ResponsesUsageInfo == nil {
+		info.ResponsesUsageInfo = &ResponsesUsageInfo{BuiltInTools: make(map[string]*BuildInToolInfo)}
+	}
+	if info.ResponsesUsageInfo.BuiltInTools == nil {
+		info.ResponsesUsageInfo.BuiltInTools = make(map[string]*BuildInToolInfo)
+	}
+	for _, tool := range request.GetToolsMap() {
+		toolType := common.Interface2String(tool["type"])
+		usage := info.ResponsesUsageInfo.BuiltInTools[toolType]
+		if usage == nil {
+			usage = &BuildInToolInfo{ToolName: toolType}
+			info.ResponsesUsageInfo.BuiltInTools[toolType] = usage
+		}
+		if toolType == dto.BuildInToolWebSearchPreview || toolType == dto.BuildInToolWebSearch {
+			usage.SearchContextSize = common.Interface2String(tool["search_context_size"])
+			if usage.SearchContextSize == "" {
+				usage.SearchContextSize = "medium"
+			}
+		}
+	}
+}
+
 // CountBillableToolCall is the single entry point for per-call tool billing counts.
 // Built-in call types always count; custom function/tool_use names only count when priced.
 func (info *RelayInfo) CountBillableToolCall(itemType string, functionName string) {

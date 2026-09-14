@@ -151,6 +151,7 @@ func convertResponsesResponseForClient(c *gin.Context, info *relaycommon.RelayIn
 		usage = service.ResponseText2Usage(c, text, info.UpstreamModelName, info.GetEstimatePromptTokens())
 		response.Usage = relayconvert.UsageFromChatUsage(usage)
 	}
+	countResponsesSearchCalls(info, response.Output, make(map[string]struct{}))
 
 	result, err := service.ConvertResponse(c, info, info.RelayFormat, response)
 	if err != nil {
@@ -160,6 +161,19 @@ func convertResponsesResponseForClient(c *gin.Context, info *relaycommon.RelayIn
 		usage = result.Usage
 	}
 	return result.Value, usage, nil
+}
+
+func countResponsesSearchCalls(info *relaycommon.RelayInfo, output []dto.ResponsesOutput, seen map[string]struct{}) {
+	for _, item := range output {
+		if item.Type != dto.BuildInCallWebSearchCall || item.ID == "" {
+			continue
+		}
+		if _, exists := seen[item.ID]; exists {
+			continue
+		}
+		seen[item.ID] = struct{}{}
+		info.CountBillableToolCall(dto.BuildInCallWebSearchCall, "")
+	}
 }
 
 func OaiResponsesToChatStreamHandler(c *gin.Context, info *relaycommon.RelayInfo, resp *http.Response) (*dto.Usage, *types.NewAPIError) {
@@ -180,6 +194,7 @@ func OaiResponsesToChatStreamHandler(c *gin.Context, info *relaycommon.RelayInfo
 		return nil, types.NewOpenAIError(err, types.ErrorCodeBadResponse, http.StatusInternalServerError)
 	}
 	streamErr := (*types.NewAPIError)(nil)
+	seenSearchCalls := make(map[string]struct{})
 
 	if info.RelayFormat == types.RelayFormatClaude && info.ClaudeConvertInfo == nil {
 		info.ClaudeConvertInfo = &relaycommon.ClaudeConvertInfo{LastMessagesType: relaycommon.LastMessageTypeNone}
@@ -273,6 +288,12 @@ func OaiResponsesToChatStreamHandler(c *gin.Context, info *relaycommon.RelayInfo
 			return
 		}
 
+		if streamResp.Type == dto.ResponsesOutputTypeItemDone && streamResp.Item != nil {
+			countResponsesSearchCalls(info, []dto.ResponsesOutput{*streamResp.Item}, seenSearchCalls)
+		}
+		if streamResp.Response != nil && (streamResp.Type == "response.completed" || streamResp.Type == "response.done" || streamResp.Type == "response.incomplete") {
+			countResponsesSearchCalls(info, streamResp.Response.Output, seenSearchCalls)
+		}
 		results, err := service.ConvertStreamResponseChunk(c, info, state, &streamResp)
 		if err != nil {
 			streamErr = types.NewOpenAIError(err, types.ErrorCodeBadResponse, http.StatusInternalServerError)

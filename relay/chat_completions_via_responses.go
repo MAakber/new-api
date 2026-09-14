@@ -72,6 +72,20 @@ func applySystemPromptIfNeeded(c *gin.Context, info *relaycommon.RelayInfo, requ
 	}
 }
 
+func shouldUseResponsesForPlaygroundSearch(info *relaycommon.RelayInfo, request *dto.GeneralOpenAIRequest) bool {
+	if !info.IsPlayground || request.WebSearchOptions == nil || info.ChannelType != constant.ChannelTypeOpenAI {
+		return false
+	}
+	// OpenAI's general models expose hosted search through Responses. Dedicated
+	// Chat Completions search models retain their documented endpoint.
+	for _, model := range []string{"gpt-5-search-api", "gpt-4o-search-preview", "gpt-4o-mini-search-preview"} {
+		if info.UpstreamModelName == model || strings.HasPrefix(info.UpstreamModelName, model+"-") {
+			return false
+		}
+	}
+	return true
+}
+
 func textRequestViaResponses(c *gin.Context, info *relaycommon.RelayInfo, adaptor channel.Adaptor, request any) (*dto.Usage, *types.NewAPIError) {
 	paramOverrideApplied := false
 	if chatRequest, ok := request.(*dto.GeneralOpenAIRequest); ok {
@@ -112,6 +126,7 @@ func textRequestViaResponses(c *gin.Context, info *relaycommon.RelayInfo, adapto
 }
 
 func relayResponsesRequest(c *gin.Context, info *relaycommon.RelayInfo, adaptor channel.Adaptor, responsesReq *dto.OpenAIResponsesRequest, paramOverrideApplied bool) (*dto.Usage, *types.NewAPIError) {
+	info.InitResponsesToolUsage(responsesReq)
 	savedRelayMode := info.RelayMode
 	savedRequestURLPath := info.RequestURLPath
 	defer func() {
