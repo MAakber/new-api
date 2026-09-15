@@ -32,6 +32,7 @@ import {
   DISPLAYABLE_LOG_TYPES,
   TIMING_LOG_TYPES,
 } from '../constants'
+import type { RequestDebugEntry } from '../data/schema'
 import type {
   GetLogsParams,
   GetLogsResponse,
@@ -58,6 +59,12 @@ export function isDisplayableLogType(type: number): boolean {
  */
 export function isTimingLogType(type: number): boolean {
   return (TIMING_LOG_TYPES as readonly number[]).includes(type)
+}
+
+export function hasRequestDebugData(
+  entry: RequestDebugEntry | undefined
+): entry is RequestDebugEntry {
+  return !!entry && Object.values(entry).some((value) => value != null)
 }
 
 /**

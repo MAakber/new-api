@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"net/http"
 	"regexp"
 	"strings"
@@ -93,6 +94,52 @@ func (r *requestDebugCaptureReadCloser) storeBody(ctx context.Context, requestID
 	truncated := r.fullTruncated || contentLength > model.RequestDebugBodyMaxBytes || contentLength > totalBytes || readErr != nil
 	r.mu.Unlock()
 	return model.StoreRequestDebugBody(ctx, requestID, contentType, body, totalBytes, truncated)
+}
+
+// responseDebugCaptureReadCloser captures a bounded preview as the relay reads
+// the upstream response. JSON serialization snapshots it at log time, so SSE is
+// never read ahead and the context's diagnostic maps stay immutable.
+type responseDebugCaptureReadCloser struct {
+	io.ReadCloser
+	mu            sync.Mutex
+	metadata      map[string]any
+	contentType   string
+	contentLength int64
+	buffer        bytes.Buffer
+	totalBytes    int64
+	complete      bool
+	readFailed    bool
+}
+
+func (r *responseDebugCaptureReadCloser) Read(p []byte) (int, error) {
+	n, err := r.ReadCloser.Read(p)
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if n > 0 {
+		r.totalBytes += int64(n)
+		remaining := common2.RequestDebugBodyLimit - r.buffer.Len()
+		_, _ = r.buffer.Write(p[:min(n, remaining)])
+	}
+	if err == io.EOF {
+		r.complete = true
+	} else if err != nil {
+		r.readFailed = true
+	}
+	return n, err
+}
+
+func (r *responseDebugCaptureReadCloser) MarshalJSON() ([]byte, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	debug := maps.Clone(r.metadata)
+	truncated := r.totalBytes > common2.RequestDebugBodyLimit || r.readFailed ||
+		r.contentLength > r.totalBytes || (!r.complete && r.contentLength < 0)
+	maps.Copy(debug, common2.RequestDebugBody(r.buffer.Bytes(), r.contentType, truncated))
+	if r.contentLength < 0 || r.complete {
+		debug["body_bytes"] = r.totalBytes
+		debug["body_bytes_known"] = r.complete
+	}
+	return common2.Marshal(debug)
 }
 
 // ApplyUpstreamBodyMetadata restores metadata that net/http cannot infer from
@@ -702,9 +749,21 @@ func doRequest(c *gin.Context, req *http.Request, info *common.RelayInfo) (*http
 	if resp == nil {
 		return nil, errors.New("resp is nil")
 	}
-	common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]interface{}{
+	responseMetadata := common2.RequestDebugResponse(resp)
+	var responseDebug any = responseMetadata
+	if common2.IsRequestDebugRawEnabled() && resp.Body != nil {
+		capture := &responseDebugCaptureReadCloser{
+			ReadCloser:    resp.Body,
+			metadata:      responseMetadata,
+			contentType:   resp.Header.Get("Content-Type"),
+			contentLength: resp.ContentLength,
+		}
+		resp.Body = capture
+		responseDebug = capture
+	}
+	common2.SetContextKey(c, rootconstant.ContextKeyRequestDebug, map[string]any{
 		"upstream": requestDebug(),
-		"response": common2.RequestDebugResponse(resp),
+		"response": responseDebug,
 	})
 	if common2.DebugEnabled {
 		policy := service.NormalizeHTTPTransportPolicy(info.ChannelSetting)
