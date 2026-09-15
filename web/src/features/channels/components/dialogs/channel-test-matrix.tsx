@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import type { ColumnDef, RowSelectionState } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -109,7 +109,17 @@ export function ChannelTestMatrix(props: {
     rowSelection: props.selected,
     onRowSelectionChange: props.onSelectedChange,
     initialPagination: { pageIndex: 0, pageSize: 30 },
+    // Probe results rebuild the model array on every update, which would reset
+    // the reader to page one. Only a change of the listed models should do that.
+    autoResetPageIndex: false,
   })
+  const listedModels = props.models.join('\n')
+  const previousListedModels = useRef(listedModels)
+  useEffect(() => {
+    if (previousListedModels.current === listedModels) return
+    previousListedModels.current = listedModels
+    table.setPageIndex(0)
+  }, [listedModels, table])
   const rows = table.getRowModel().rows
 
   return (

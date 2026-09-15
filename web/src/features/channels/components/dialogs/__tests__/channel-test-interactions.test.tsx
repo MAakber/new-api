@@ -173,6 +173,35 @@ describe('channel test matrix interactions', () => {
     ])
   })
 
+  it('keeps the current page while a single model probe refreshes its result', async () => {
+    const models = Array.from(
+      { length: 31 },
+      (_, index) => `model-${index + 1}`
+    )
+    renderChannelTest(models)
+    const table = screen.getByRole('region', { name: 'Channel models' })
+    await act(async () =>
+      fireEvent.click(screen.getByRole('button', { name: 'Go to next page' }))
+    )
+    await act(async () =>
+      fireEvent.click(
+        within(table).getByRole('button', {
+          name: 'model-31 · Non-streaming: Not tested',
+        })
+      )
+    )
+    await waitFor(() => expect(api.requests).toHaveLength(1))
+    await act(async () => api.requests[0]?.reply('passed'))
+    expect(
+      within(table).getByRole('checkbox', { name: 'Select model model-31' })
+    ).toBeDefined()
+    expect(
+      within(table).getByRole('button', {
+        name: 'model-31 · Non-streaming: Passed',
+      })
+    ).toBeDefined()
+  })
+
   it('shares five active slots across closing and reopening, discards late results, and stops queued probes', async () => {
     renderChannelTest(['model-a', 'model-b'])
     await act(async () =>
