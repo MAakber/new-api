@@ -52,6 +52,7 @@ func SetApiRouter(router *gin.Engine) {
 			perfMetricsRoute.GET("", controller.GetPerfMetrics)
 		}
 		apiRouter.GET("/rankings", middleware.HeaderNavModuleAuth("rankings"), controller.GetRankings)
+		apiRouter.GET("/official-status", middleware.HeaderNavModuleAuth("official_status"), controller.GetOfficialStatus)
 		rankingRoute := apiRouter.Group("/rankings")
 		rankingRoute.Use(middleware.HeaderNavModuleAuth("rankings"))
 		{

@@ -1,0 +1,16 @@
+{
+  "captured_at": "2026-09-15T20:01:04.374Z",
+  "description": "Reduced public official publications. Event and component fields are retained; unrelated Flight UI frames and older events are omitted.",
+  "urls": [
+    "https://status.openai.com/api/v2/components.json",
+    "https://status.openai.com/api/v2/incidents.json",
+    "https://status.openai.com/",
+    "https://status.claude.com/api/v2/summary.json",
+    "https://status.claude.com/api/v2/incidents.json",
+    "https://status.x.ai/{product}.txt",
+    "https://status.x.ai/feed.xml",
+    "https://statuspage.flashduty.com/api/status-page/6410630422455/summary/active",
+    "https://statuspage.flashduty.com/api/status-page/6410630422455/summary/structure",
+    "https://statuspage.flashduty.com/api/status-page/6410630422455/change/list"
+  ]
+}

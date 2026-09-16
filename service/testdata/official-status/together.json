@@ -1,0 +1,1357 @@
+{
+  "data": {
+    "id": "197766",
+    "type": "status_page",
+    "attributes": {
+      "company_name": "Together AI",
+      "company_url": "https://www.together.ai/",
+      "contact_url": "https://www.together.ai/contact",
+      "logo_url": "https://d1lppblt9t2x15.cloudfront.net/logos/88f97476a7a036f53d24f512ae21e5e4.png",
+      "timezone": "Pacific Time (US & Canada)",
+      "subdomain": "together-public",
+      "custom_domain": "status.together.ai",
+      "announcement": null,
+      "logo_remote_url": "https://drive.google.com/uc?export=download&id=1sAoG9BSd_eVyX0mD0CiIx9UbL7VJK3Us",
+      "aggregate_state": "operational",
+      "created_at": "2024-10-04T20:48:22.509Z",
+      "updated_at": "2026-09-15T19:17:46.264Z"
+    },
+    "relationships": {
+      "sections": {
+        "data": [
+          {
+            "id": "231960",
+            "type": "status_page_section"
+          },
+          {
+            "id": "231964",
+            "type": "status_page_section"
+          },
+          {
+            "id": "231963",
+            "type": "status_page_section"
+          },
+          {
+            "id": "231961",
+            "type": "status_page_section"
+          },
+          {
+            "id": "250859",
+            "type": "status_page_section"
+          },
+          {
+            "id": "300754",
+            "type": "status_page_section"
+          }
+        ]
+      },
+      "resources": {
+        "data": [
+          {
+            "id": "8475065",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8475068",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8604811",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8604812",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8568824",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8802608",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8752981",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8911095",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8918569",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8966703",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8978884",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8980894",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8982920",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8987968",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8989814",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8991404",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8997896",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8998776",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "9007319",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8691673",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8692046",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8670586",
+            "type": "status_page_resource"
+          },
+          {
+            "id": "8670585",
+            "type": "status_page_resource"
+          }
+        ]
+      },
+      "status_reports": {
+        "data": [
+          {
+            "id": "941865",
+            "type": "status_report"
+          }
+        ]
+      }
+    }
+  },
+  "included": [
+    {
+      "id": "231960",
+      "type": "status_page_section",
+      "attributes": {
+        "name": "Website",
+        "position": 1
+      }
+    },
+    {
+      "id": "8475065",
+      "type": "status_page_resource",
+      "attributes": {
+        "status_page_section_id": 231960,
+        "resource_id": 2675828,
+        "resource_type": "Monitor",
+        "public_name": "Website",
+        "explanation": "",
+        "position": 1,
+        "availability": 1,
+        "status": "operational",
+        "status_history": [
+          {
+            "day": "2026-06-18",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-19",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-20",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-21",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-22",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-23",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-24",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-25",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-26",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-27",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-28",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-29",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-30",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-01",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-02",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-03",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-04",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-05",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-06",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-07",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-08",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-09",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-10",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-11",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-12",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-13",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-14",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-15",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-16",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-17",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-18",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-19",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-20",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-21",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-22",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-23",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-24",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-25",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-26",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-27",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-28",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-29",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-30",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-31",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-01",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-02",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-03",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-04",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-05",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-06",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-07",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-08",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-09",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-10",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-11",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-12",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-13",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-14",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-15",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-16",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-17",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-18",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-19",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-20",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-21",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-22",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-23",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-24",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-25",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-26",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-27",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-28",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-29",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-30",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-31",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-01",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-02",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-03",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-04",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-05",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-06",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-07",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-08",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-09",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-10",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-11",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-12",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-13",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-14",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-15",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "8475068",
+      "type": "status_page_resource",
+      "attributes": {
+        "status_page_section_id": 231960,
+        "resource_id": 2675829,
+        "resource_type": "Monitor",
+        "public_name": "Playground",
+        "explanation": "",
+        "position": 2,
+        "availability": 1,
+        "status": "operational",
+        "status_history": [
+          {
+            "day": "2026-06-18",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-19",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-20",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-21",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-22",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-23",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-24",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-25",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-26",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-27",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-28",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-29",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-06-30",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-01",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-02",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-03",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-04",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-05",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-06",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-07",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-08",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-09",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-10",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-11",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-12",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-13",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-14",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-15",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-16",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-17",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-18",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-19",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-20",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-21",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-22",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-23",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-24",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-25",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-26",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-27",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-28",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-29",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-30",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-07-31",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-01",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-02",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-03",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-04",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-05",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-06",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-07",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-08",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-09",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-10",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-11",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-12",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-13",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-14",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-15",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-16",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-17",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-18",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-19",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-20",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-21",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-22",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-23",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-24",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-25",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-26",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-27",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-28",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-29",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-30",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-08-31",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-01",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-02",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-03",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-04",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-05",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-06",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-07",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-08",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-09",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-10",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-11",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-12",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-13",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-14",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          },
+          {
+            "day": "2026-09-15",
+            "status": "operational",
+            "downtime_duration": 0,
+            "maintenance_duration": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "5326570",
+      "type": "status_update",
+      "attributes": {
+        "message": "Maintenance ended",
+        "published_at": "2026-07-03T06:59:00.000Z",
+        "published_at_timezone": null,
+        "notify_subscribers": true,
+        "affected_resources": []
+      }
+    },
+    {
+      "id": "5324213",
+      "type": "status_update",
+      "attributes": {
+        "message": "We will be performing scheduled network maintenance on July 2nd, 9 PM – midnight.\n\nDuring this window, some serverless models may experience degraded performance or be temporary unavailability. \nCheck status.together.ai for per-model updates.\n\nWe appreciate your patience as we work through this. The goal remains the same — meaningfully more stable and performant models on the other side of this work.",
+        "published_at": "2026-07-03T04:00:59.000Z",
+        "published_at_timezone": null,
+        "notify_subscribers": true,
+        "affected_resources": []
+      }
+    },
+    {
+      "id": "941865",
+      "type": "status_report",
+      "attributes": {
+        "title": "Scheduled network maintenance",
+        "report_type": "maintenance",
+        "starts_at": "2026-07-03T04:00:59.000Z",
+        "ends_at": "2026-07-03T06:59:00.000Z",
+        "affected_resources": [
+          {
+            "status_page_resource_id": "8802370",
+            "status": "maintenance"
+          },
+          {
+            "status_page_resource_id": "8806939",
+            "status": "maintenance"
+          },
+          {
+            "status_page_resource_id": "8824641",
+            "status": "maintenance"
+          },
+          {
+            "status_page_resource_id": "8827857",
+            "status": "maintenance"
+          },
+          {
+            "status_page_resource_id": "8898048",
+            "status": "maintenance"
+          },
+          {
+            "status_page_resource_id": "8911095",
+            "status": "maintenance"
+          },
+          {
+            "status_page_resource_id": "8912359",
+            "status": "maintenance"
+          },
+          {
+            "status_page_resource_id": "8918569",
+            "status": "maintenance"
+          }
+        ],
+        "aggregate_state": "resolved"
+      },
+      "relationships": {
+        "status_updates": {
+          "data": [
+            {
+              "id": "5326570",
+              "type": "status_update"
+            },
+            {
+              "id": "5324213",
+              "type": "status_update"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

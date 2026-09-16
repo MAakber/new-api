@@ -1,0 +1,152 @@
+[
+  {
+    "id": "fJ4691Pe2g9KsTbP8g5F",
+    "number": "11425782758836097339",
+    "begin": "2026-09-11T13:00:00+00:00",
+    "created": "2026-09-11T20:45:19+00:00",
+    "end": "2026-09-11T20:22:00+00:00",
+    "modified": "2026-09-11T20:45:42+00:00",
+    "external_desc": "**Summary:**\nMitigated intermittent elevated error rates with Gemini 3.1 Pro models on Gemini Web and Gemini App.\n**Description:**\nBetween 6:00 PDT and 13:22 PDT on 11 September 2026, a subset of Gemini users may have experienced elevated error rates with Gemini 3.1 Pro models on Gemini Web and Gemini App.\nFrom preliminary analysis, the issue was triggered by a recent rollout. Our engineers identified the cause and mitigated it with a code change.\nWe thank you for your patience while we worked on resolving the issue.\n**Symptoms:**\nCustomers may have encountered intermittent errors when using Gemini 3.1 Pro models on Gemini Web and Gemini App.",
+    "updates": [
+      {
+        "created": "2026-09-11T20:45:19+00:00",
+        "modified": "2026-09-11T20:45:42+00:00",
+        "when": "2026-09-11T20:45:19+00:00",
+        "text": "**Summary:**\nMitigated intermittent elevated error rates with Gemini 3.1 Pro models on Gemini Web and Gemini App.\n**Description:**\nBetween 6:00 PDT and 13:22 PDT on 11 September 2026, a subset of Gemini users may have experienced elevated error rates with Gemini 3.1 Pro models on Gemini Web and Gemini App.\nFrom preliminary analysis, the issue was triggered by a recent rollout. Our engineers identified the cause and mitigated it with a code change.\nWe thank you for your patience while we worked on resolving the issue.\n**Symptoms:**\nCustomers may have encountered intermittent errors when using Gemini 3.1 Pro models on Gemini Web and Gemini App.",
+        "status": "AVAILABLE"
+      }
+    ],
+    "most_recent_update": {
+      "created": "2026-09-11T20:45:19+00:00",
+      "modified": "2026-09-11T20:45:42+00:00",
+      "when": "2026-09-11T20:45:19+00:00",
+      "text": "**Summary:**\nMitigated intermittent elevated error rates with Gemini 3.1 Pro models on Gemini Web and Gemini App.\n**Description:**\nBetween 6:00 PDT and 13:22 PDT on 11 September 2026, a subset of Gemini users may have experienced elevated error rates with Gemini 3.1 Pro models on Gemini Web and Gemini App.\nFrom preliminary analysis, the issue was triggered by a recent rollout. Our engineers identified the cause and mitigated it with a code change.\nWe thank you for your patience while we worked on resolving the issue.\n**Symptoms:**\nCustomers may have encountered intermittent errors when using Gemini 3.1 Pro models on Gemini Web and Gemini App.",
+      "status": "AVAILABLE"
+    },
+    "status_impact": "SERVICE_INFORMATION",
+    "severity": "low",
+    "service_key": "npdyhgECDJ6tB66MxXyo",
+    "service_name": "Gemini",
+    "affected_products": [
+      {
+        "title": "Gemini",
+        "id": "npdyhgECDJ6tB66MxXyo"
+      }
+    ],
+    "uri": "incidents/fJ4691Pe2g9KsTbP8g5F"
+  },
+  {
+    "id": "6GdahVtGTryxTdh56iLP",
+    "number": "3413083329319526622",
+    "begin": "2025-09-29T17:53:00+00:00",
+    "created": "2025-09-29T18:58:21+00:00",
+    "end": "2025-09-29T18:42:00+00:00",
+    "modified": "2025-10-02T20:17:06+00:00",
+    "external_desc": "We're investigating reports of an issue with Gemini. We will provide more information shortly.",
+    "updates": [
+      {
+        "created": "2025-10-02T20:17:06+00:00",
+        "modified": "2025-10-02T20:17:06+00:00",
+        "when": "2025-10-02T20:17:06+00:00",
+        "text": "# Incident Report\n## Summary\nOn Monday, 29 September 2025, several AI products experienced elevated 500 (internal) errors globally for 49 minutes, between 10:53 and 11:42 US/Pacific.\nTo our customers whose operations were impacted during this disruption, we sincerely apologize. This is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.\n## Root Cause\nThe incident occurred on a core machine learning (ML) serving platform at Google, responsible for hosting and delivering the Large Language Models that power many of our AI products and services.\nA software update intended to improve the platform's performance and scalability introduced a bug in a central control system. This system directs traffic to the correct machine learning models, and the bug caused it to incorrectly determine that some models were unavailable, leading to errors for our customers.\nThe impact of this issue was unintentionally magnified because the faulty component was responding more quickly, which caused our traffic management system to direct more requests to that component.\n## Remediation and Prevention\nGoogle engineers were alerted to the outage via manual escalation from multiple products on Monday, 29 September 2025 at 11:09 US/Pacific and immediately started an investigation. Once the underlying cause was identified, the problematic change was rolled back. All the errors returned by ML serving were then reduced to pre-fault levels, mitigating customer impact at 11:42 US/Pacific.\nGoogle is committed preventing a repeat of this issue in the future and is completing the following actions:\n* Update error handling for the ML serving platform to not incorrectly return an unavailable status for deployed models.\n* Shard the deployed models such that the critical ones always get new updates in the last waves of rollouts.\n* Add missing checks to automatically rollback this class of changes.\n* Review and update internal processes to ensure timely communications with external customers.\nWe apologize for the length and severity of this incident. We are taking immediate steps to prevent a recurrence and improve reliability in the future.\n## Detailed Description of Impact\nOn Monday, 29 September 2025, from 10:53 to 11:42 US/Pacific, Google Workspace products with a dependency on the LM Serving infrastructure experienced routing issues globally. The incident resulted in 21 percent of the request failing due to [model] NOT_FOUND error, which cascaded to customers as an internal error.\n---",
+        "status": "AVAILABLE"
+      },
+      {
+        "created": "2025-09-30T05:12:51+00:00",
+        "modified": "2025-10-02T20:17:06+00:00",
+        "when": "2025-09-30T05:12:51+00:00",
+        "text": "# Mini Incident Report\nWe apologize for the inconvenience this service disruption/outage may have caused. We would like to provide some information about this incident below. Please note, this information is based on our best knowledge at the time of posting and is subject to change as our investigation continues. If you have experienced impact outside of what is listed below, please reach out to Google Cloud Support using https://cloud.google.com/support or to Google Workspace Support using help article https://support.google.com/a/answer/1047213.\n(All Times US/Pacific)\n**Incident Start:** 29 September, 2025 10:53\n**Incident End:** 29 September, 2025 11:42\n**Duration:** 49 minutes\n**GWS Affected Services and Features:**\nWorkspace Gemini and NotebookLM\n**Regions/Zones:** Global\n**Description:**\nVarious AI products experienced elevated 500 (internal) errors due to the rollout of a faulty change to production. Google will complete a full IR in the following days that will provide a full root cause.\n**Customer Impact:**\nCustomers affected by this issue may have observed up to a 100% of requests failing with '500' errors during the impacted time, between 10:53 and 11:42 US/Pacific on 29 September 2025.\n**Additional details:**\nA faulty change was rolled out to the control plane of the canonical Machine Learning (ML) serving stack in one cluster. Traffic routers that received their configuration from the faulty cluster assumed that some models were deleted and returned errors to the clients. Due to the error, the faulty control plane cluster had a significantly lower load, which resulted in more routers getting their configuration from the faulty cluster. This exacerbated the impact of the change.\nThe bad change was rolled back and all the errors returned by ML serving were reduced to pre-fault levels, mitigating customer impact.",
+        "status": "AVAILABLE"
+      },
+      {
+        "created": "2025-09-29T19:48:03+00:00",
+        "modified": "2025-09-30T05:12:51+00:00",
+        "when": "2025-09-29T19:48:03+00:00",
+        "text": "**Summary:**\nWorkSpace Gemini customers may experience elevated errors for online users\n**Description:**\nThe issue with Workspace Gemini has been mitigated as of Monday, 2025-09-29 11:42 PDT.\nBased on preliminary investigation, the root cause of the issue was due to a recent change, which has been rolled back.\n**Customer Symptoms:**\nCustomers are experiencing elevated \"INTERNAL\\_ERROR\" with error code 500s",
+        "status": "SERVICE_INFORMATION"
+      },
+      {
+        "created": "2025-09-29T19:37:23+00:00",
+        "modified": "2025-09-29T19:48:03+00:00",
+        "when": "2025-09-29T19:37:23+00:00",
+        "text": "**Summary:**\nWorkSpace Gemini customers may experience elevated errors for online users\n**Description:**\nOur engineering team has identified the cause of the issue and a mitigation has been put in place. We are currently monitoring and believe we are seeing full recovery.\n**Customer Symptoms:**\nCustomers are experiencing elevated \"INTERNAL\\_ERROR\" with error code 500s",
+        "status": "SERVICE_INFORMATION"
+      },
+      {
+        "created": "2025-09-29T18:58:21+00:00",
+        "modified": "2025-09-29T19:37:23+00:00",
+        "when": "2025-09-29T18:58:21+00:00",
+        "text": "We're investigating reports of an issue with Gemini. We will provide more information shortly. Some users would observe elevated errors from Gemini for Workspace.",
+        "status": "SERVICE_INFORMATION"
+      }
+    ],
+    "most_recent_update": {
+      "created": "2025-10-02T20:17:06+00:00",
+      "modified": "2025-10-02T20:17:06+00:00",
+      "when": "2025-10-02T20:17:06+00:00",
+      "text": "# Incident Report\n## Summary\nOn Monday, 29 September 2025, several AI products experienced elevated 500 (internal) errors globally for 49 minutes, between 10:53 and 11:42 US/Pacific.\nTo our customers whose operations were impacted during this disruption, we sincerely apologize. This is not the level of quality and reliability we strive to offer you, and we are taking immediate steps to improve the platform’s performance and availability.\n## Root Cause\nThe incident occurred on a core machine learning (ML) serving platform at Google, responsible for hosting and delivering the Large Language Models that power many of our AI products and services.\nA software update intended to improve the platform's performance and scalability introduced a bug in a central control system. This system directs traffic to the correct machine learning models, and the bug caused it to incorrectly determine that some models were unavailable, leading to errors for our customers.\nThe impact of this issue was unintentionally magnified because the faulty component was responding more quickly, which caused our traffic management system to direct more requests to that component.\n## Remediation and Prevention\nGoogle engineers were alerted to the outage via manual escalation from multiple products on Monday, 29 September 2025 at 11:09 US/Pacific and immediately started an investigation. Once the underlying cause was identified, the problematic change was rolled back. All the errors returned by ML serving were then reduced to pre-fault levels, mitigating customer impact at 11:42 US/Pacific.\nGoogle is committed preventing a repeat of this issue in the future and is completing the following actions:\n* Update error handling for the ML serving platform to not incorrectly return an unavailable status for deployed models.\n* Shard the deployed models such that the critical ones always get new updates in the last waves of rollouts.\n* Add missing checks to automatically rollback this class of changes.\n* Review and update internal processes to ensure timely communications with external customers.\nWe apologize for the length and severity of this incident. We are taking immediate steps to prevent a recurrence and improve reliability in the future.\n## Detailed Description of Impact\nOn Monday, 29 September 2025, from 10:53 to 11:42 US/Pacific, Google Workspace products with a dependency on the LM Serving infrastructure experienced routing issues globally. The incident resulted in 21 percent of the request failing due to [model] NOT_FOUND error, which cascaded to customers as an internal error.\n---",
+      "status": "AVAILABLE"
+    },
+    "status_impact": "SERVICE_INFORMATION",
+    "severity": "low",
+    "service_key": "npdyhgECDJ6tB66MxXyo",
+    "service_name": "Gemini",
+    "affected_products": [
+      {
+        "title": "Gemini",
+        "id": "npdyhgECDJ6tB66MxXyo"
+      }
+    ],
+    "uri": "incidents/6GdahVtGTryxTdh56iLP"
+  },
+  {
+    "id": "y2ufhCB886p7rveYNnko",
+    "number": "1967299596760361422",
+    "begin": "2026-08-28T17:50:00+00:00",
+    "created": "2026-08-28T19:25:37+00:00",
+    "end": "2026-08-28T20:34:00+00:00",
+    "modified": "2026-09-04T03:43:27+00:00",
+    "external_desc": "**Summary:**\nGoogle Chat users are experiencing an issue where they receive notifications for new messages, but the actual messages fail to appear in their chat application unless the user refreshes their view.\n**Description:**\nWe are experiencing an intermittent issue with Google Chat Friday, 2026-08-28 10:25 PDT.\nOur engineering team has investigated the issue and are currently working on mitigating the issue.\nWe will provide more information by Friday, 2026-08-28 14:15 PDT with current details.\nWe apologize to all who are affected by the disruption.\n**Customer Symptoms:**\nUsers are experiencing an issue where they receive notifications for new messages, but the actual messages fail to appear in their chat application unless the user refreshes their view\n**Workaround:**\nUsers can refresh to see new messages",
+    "updates": [
+      {
+        "created": "2026-09-04T03:43:07+00:00",
+        "modified": "2026-09-04T03:43:27+00:00",
+        "when": "2026-09-04T03:43:07+00:00",
+        "text": "## Incident Report\n## Summary\nOn Friday, August 28, 2026, between 10:50 US/Pacific and 13:34 US/Pacific for a duration of 2 hours and 44 minutes, Google Chat users experienced delays in receiving real-time incoming messages within active conversation streams across web, desktop, and mobile applications. While users continued to receive notifications for new messages, the message contents did not automatically render in active conversation streams until the user manually refreshed the application or sent a reply message.\nTo our valued Google Workspace customers, we are deeply sorry for the service interruption you experienced. We are taking immediate and decisive action to address the issue and strengthen our systems against future incidents.\n## Root Cause\nThe incident was triggered during a global database schema rollout. An incompatible database schema change caused database writes required for message delivery to start failing.\nSpecifically, a mechanism for schema synchronization—designed to ensure high consistency between primary storage and live message delivery—encountered a rare race condition bug. This caused backend message dispatchers to attempt writes against an unready schema state, leading to write failures.\nBecause live message delivery had an active dependency on these writes completing successfully before pushing events to user screens, the failure caused incoming messages to experience synchronization delays. Separate push notification services and core message storage operated independently and were unaffected, which is why users still received alerts for new messages while active conversation streams experienced delays.\n## Remediation and Prevention\nThe issue was detected through automated backend alerting on dispatch error rates, alongside corresponding customer reports. Google Engineering initiated parallel workstreams to restore service.\n* At 12:44 US/Pacific, Google Engineering directly mitigated the source of the issue by removing the dependency that live message delivery had on the failing database write. This allowed new incoming messages to bypass the failed write and immediately resume normal real-time delivery to user screens.\n* At 13:00 US/Pacific, Engineering halted and reverted the database schema change to its previous verified stable version, restoring full database compatibility.\n* By 13:34 US/Pacific, as queued messages were processed, real-time message synchronization delays returned to 0% across all customer domains. Engineering verified that full service health was restored with zero message loss.\nTo prevent this from happening again, we are executing the following preventative actions:\n* **Hardened internal detection:** Strengthen automated validation and verification to cover this specific failure scenario across pre-production and internal rollout stages. This aims to catch and mitigate schema incompatibilities and synchronization edge cases internally before any customer traffic can be impacted in the future.\n* **Resilience Against Race Conditions:** Implement Architectural improvements to make the schema synchronization and message delivery architecture resilient to race conditions. This aims to ensure that background schema and config synchronization inconsistencies cannot disrupt real-time message delivery.\n \n## Detailed Description of Impact\nThe incident impact window occurred between 10:50 US/Pacific and 13:34 US/Pacific on Friday, 28 August 2026\\. This issue applied globally to all Google Chat environments.\n**Google Chat:**\n* **Delayed message rendering:** New messages did not appear in active conversation streams automatically. Users were required to manually refresh their client or send a new message/react to force the stream to synchronize.\n* **Stalled read states and inbox sorting:** Background actions, such as updating unread badges and moving active spaces to the top of the inbox, experienced heavy internal error rates and were significantly delayed for users.\n* **Search indexing delays:** New messages sent during the outage window stalled in the indexing pipeline, experiencing delays in becoming searchable.\n**Scope Exclusions:**\n* **No Data Loss:** At no point was customer data lost or compromised. All messages transmitted during the incident window were securely captured in primary storage and successfully delivered to conversation streams once the backlog cleared.",
+        "status": "AVAILABLE"
+      },
+      {
+        "created": "2026-08-28T20:55:51+00:00",
+        "modified": "2026-09-04T03:43:07+00:00",
+        "when": "2026-08-28T20:55:51+00:00",
+        "text": "**Summary**\nGoogle Chat users experienced an issue where they received notifications for new messages, but the actual messages failed to appear in their chat application unless the user refreshed their view.\n**Description**\nThe issue with Google Chat has been resolved for all affected users as of Friday, 2026-08-28 13:45 PDT.\nFrom preliminary analysis the issue was triggered due to a recent change which was rolled back to mitigate the impact.\nWe thank you for your patience while we worked on resolving the issue.\n**Customer Symptoms**\nUsers were experiencing an issue where they received notifications for new messages, but the actual messages failed to appear in their chat application unless the user refreshed their view.\n**Workaround**\nNone as the issue is resolved.",
+        "status": "AVAILABLE"
+      },
+      {
+        "created": "2026-08-28T19:25:37+00:00",
+        "modified": "2026-08-28T20:55:51+00:00",
+        "when": "2026-08-28T19:25:37+00:00",
+        "text": "**Summary:**\nGoogle Chat users are experiencing an issue where they receive notifications for new messages, but the actual messages fail to appear in their chat application unless the user refreshes their view.\n**Description:**\nWe are experiencing an intermittent issue with Google Chat Friday, 2026-08-28 10:25 PDT.\nOur engineering team has investigated the issue and are currently working on mitigating the issue.\nWe will provide more information by Friday, 2026-08-28 14:15 PDT with current details.\nWe apologize to all who are affected by the disruption.\n**Customer Symptoms:**\nUsers are experiencing an issue where they receive notifications for new messages, but the actual messages fail to appear in their chat application unless the user refreshes their view\n**Workaround:**\nUsers can refresh to see new messages",
+        "status": "SERVICE_INFORMATION"
+      }
+    ],
+    "most_recent_update": {
+      "created": "2026-09-04T03:43:07+00:00",
+      "modified": "2026-09-04T03:43:27+00:00",
+      "when": "2026-09-04T03:43:07+00:00",
+      "text": "## Incident Report\n## Summary\nOn Friday, August 28, 2026, between 10:50 US/Pacific and 13:34 US/Pacific for a duration of 2 hours and 44 minutes, Google Chat users experienced delays in receiving real-time incoming messages within active conversation streams across web, desktop, and mobile applications. While users continued to receive notifications for new messages, the message contents did not automatically render in active conversation streams until the user manually refreshed the application or sent a reply message.\nTo our valued Google Workspace customers, we are deeply sorry for the service interruption you experienced. We are taking immediate and decisive action to address the issue and strengthen our systems against future incidents.\n## Root Cause\nThe incident was triggered during a global database schema rollout. An incompatible database schema change caused database writes required for message delivery to start failing.\nSpecifically, a mechanism for schema synchronization—designed to ensure high consistency between primary storage and live message delivery—encountered a rare race condition bug. This caused backend message dispatchers to attempt writes against an unready schema state, leading to write failures.\nBecause live message delivery had an active dependency on these writes completing successfully before pushing events to user screens, the failure caused incoming messages to experience synchronization delays. Separate push notification services and core message storage operated independently and were unaffected, which is why users still received alerts for new messages while active conversation streams experienced delays.\n## Remediation and Prevention\nThe issue was detected through automated backend alerting on dispatch error rates, alongside corresponding customer reports. Google Engineering initiated parallel workstreams to restore service.\n* At 12:44 US/Pacific, Google Engineering directly mitigated the source of the issue by removing the dependency that live message delivery had on the failing database write. This allowed new incoming messages to bypass the failed write and immediately resume normal real-time delivery to user screens.\n* At 13:00 US/Pacific, Engineering halted and reverted the database schema change to its previous verified stable version, restoring full database compatibility.\n* By 13:34 US/Pacific, as queued messages were processed, real-time message synchronization delays returned to 0% across all customer domains. Engineering verified that full service health was restored with zero message loss.\nTo prevent this from happening again, we are executing the following preventative actions:\n* **Hardened internal detection:** Strengthen automated validation and verification to cover this specific failure scenario across pre-production and internal rollout stages. This aims to catch and mitigate schema incompatibilities and synchronization edge cases internally before any customer traffic can be impacted in the future.\n* **Resilience Against Race Conditions:** Implement Architectural improvements to make the schema synchronization and message delivery architecture resilient to race conditions. This aims to ensure that background schema and config synchronization inconsistencies cannot disrupt real-time message delivery.\n \n## Detailed Description of Impact\nThe incident impact window occurred between 10:50 US/Pacific and 13:34 US/Pacific on Friday, 28 August 2026\\. This issue applied globally to all Google Chat environments.\n**Google Chat:**\n* **Delayed message rendering:** New messages did not appear in active conversation streams automatically. Users were required to manually refresh their client or send a new message/react to force the stream to synchronize.\n* **Stalled read states and inbox sorting:** Background actions, such as updating unread badges and moving active spaces to the top of the inbox, experienced heavy internal error rates and were significantly delayed for users.\n* **Search indexing delays:** New messages sent during the outage window stalled in the indexing pipeline, experiencing delays in becoming searchable.\n**Scope Exclusions:**\n* **No Data Loss:** At no point was customer data lost or compromised. All messages transmitted during the incident window were securely captured in primary storage and successfully delivered to conversation streams once the backlog cleared.",
+      "status": "AVAILABLE"
+    },
+    "status_impact": "SERVICE_INFORMATION",
+    "severity": "low",
+    "service_key": "Ht9Vx5PFzDPHYvrnrvSk",
+    "service_name": "Google Chat",
+    "affected_products": [
+      {
+        "title": "Google Chat",
+        "id": "Ht9Vx5PFzDPHYvrnrvSk"
+      }
+    ],
+    "uri": "incidents/y2ufhCB886p7rveYNnko"
+  }
+]

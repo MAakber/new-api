@@ -87,6 +87,26 @@ func TestHeaderNavModuleAuthAllowsDefaultPublicAccess(t *testing.T) {
 	require.Equal(t, http.StatusOK, recorder.Code)
 }
 
+func TestHeaderNavOfficialStatusAccess(t *testing.T) {
+	for _, tc := range []struct {
+		name, config  string
+		authenticated bool
+		want          int
+	}{
+		{"public by default", "", false, http.StatusOK},
+		{"disabled", `{"official_status":{"enabled":false,"requireAuth":false}}`, false, http.StatusForbidden},
+		{"legacy disabled", `{"official_status":false}`, false, http.StatusForbidden},
+		{"login required", `{"official_status":{"enabled":true,"requireAuth":true}}`, false, http.StatusUnauthorized},
+		{"authenticated", `{"official_status":{"enabled":true,"requireAuth":true}}`, true, http.StatusOK},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			withHeaderNavModules(t, tc.config)
+			response := performHeaderNavRequest(t, HeaderNavModuleAuth("official_status"), tc.authenticated)
+			require.Equal(t, tc.want, response.Code)
+		})
+	}
+}
+
 func TestHeaderNavModuleAuthRejectsDisabledPricing(t *testing.T) {
 	raw := `{"pricing":{"enabled":false,"requireAuth":false}}`
 	withHeaderNavModules(t, raw)

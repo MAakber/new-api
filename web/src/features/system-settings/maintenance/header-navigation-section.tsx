@@ -55,6 +55,8 @@ const headerNavSchema = z.object({
   pricingRequireAuth: z.boolean(),
   rankingsEnabled: z.boolean(),
   rankingsRequireAuth: z.boolean(),
+  officialStatusEnabled: z.boolean(),
+  officialStatusRequireAuth: z.boolean(),
   docs: z.boolean(),
   about: z.boolean(),
 })
@@ -89,6 +91,12 @@ const toFormValues = (config: HeaderNavModulesConfig): HeaderNavFormValues => ({
     config.rankings?.requireAuth === undefined
       ? HEADER_NAV_DEFAULT.rankings.requireAuth
       : Boolean(config.rankings.requireAuth),
+  officialStatusEnabled:
+    config.official_status?.enabled ??
+    HEADER_NAV_DEFAULT.official_status.enabled,
+  officialStatusRequireAuth:
+    config.official_status?.requireAuth ??
+    HEADER_NAV_DEFAULT.official_status.requireAuth,
   docs:
     config.docs === undefined ? HEADER_NAV_DEFAULT.docs : Boolean(config.docs),
   about:
@@ -130,6 +138,10 @@ export function HeaderNavigationSection({
         ...(config.rankings ?? HEADER_NAV_DEFAULT.rankings),
         enabled: values.rankingsEnabled,
         requireAuth: values.rankingsRequireAuth,
+      },
+      official_status: {
+        enabled: values.officialStatusEnabled,
+        requireAuth: values.officialStatusRequireAuth,
       },
     }
 
@@ -178,7 +190,10 @@ export function HeaderNavigationSection({
   const accessModules: Array<{
     enabledKey: keyof HeaderNavFormValues
     requireAuthKey: keyof HeaderNavFormValues
-    requireAuthDependsOn: 'pricingEnabled' | 'rankingsEnabled'
+    requireAuthDependsOn:
+      | 'pricingEnabled'
+      | 'rankingsEnabled'
+      | 'officialStatusEnabled'
     title: string
     description: string
     requireAuthTitle: string
@@ -204,6 +219,17 @@ export function HeaderNavigationSection({
       requireAuthTitle: t('Require login to view rankings'),
       requireAuthDescription: t(
         'Visitors must authenticate before accessing the rankings page.'
+      ),
+    },
+    {
+      enabledKey: 'officialStatusEnabled',
+      requireAuthKey: 'officialStatusRequireAuth',
+      requireAuthDependsOn: 'officialStatusEnabled',
+      title: t('Official availability'),
+      description: t('Service status published by AI providers.'),
+      requireAuthTitle: t('Require login to view official availability'),
+      requireAuthDescription: t(
+        'Visitors must sign in to view official service status.'
       ),
     },
   ]

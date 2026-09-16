@@ -86,6 +86,15 @@ export function useTopNavLinks(): TopNavLink[] {
     links.push({ title: t('Rankings'), href: '/rankings', requiresAuth })
   }
 
+  const officialStatus = modules.official_status
+  if (officialStatus.enabled) {
+    links.push({
+      title: t('Official availability'),
+      href: '/official-status',
+      requiresAuth: officialStatus.requireAuth && !isAuthed,
+    })
+  }
+
   // Docs (supports external links)
   if (modules?.docs !== false) {
     if (docsLink) {

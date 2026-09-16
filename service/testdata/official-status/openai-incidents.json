@@ -1,0 +1,118 @@
+{
+  "page": {
+    "id": "01JMDK9XYNY6RXSED6SDWW50WY",
+    "name": "OpenAI",
+    "url": "https://status.openai.com/",
+    "updated_at": "2026-09-15T16:54:01Z"
+  },
+  "incidents": [
+    {
+      "id": "01M2JZR57HRQTKQGTCWG31M3AS",
+      "name": "Ads Manager login issues",
+      "status": "resolved",
+      "created_at": "2026-09-15T16:52:36Z",
+      "updated_at": "2026-09-15T16:54:01Z",
+      "resolved_at": "2026-09-15T16:54:01Z",
+      "impact": "minor",
+      "page_id": "01JMDK9XYNY6RXSED6SDWW50WY",
+      "incident_updates": [
+        {
+          "id": "01M2JZTR80NSFYSFZ6ZKYCKCGN",
+          "body": "All impacted services have now fully recovered.",
+          "created_at": "2026-09-15T16:54:01Z",
+          "display_at": "2026-09-15T16:54:01Z",
+          "incident_id": "01M2JZR57HRQTKQGTCWG31M3AS",
+          "status": "resolved",
+          "updated_at": "2026-09-15T16:54:01Z"
+        },
+        {
+          "id": "01M2JZR57HZD26RPKPAR3RM6G1",
+          "body": "We have applied the mitigation and are monitoring the recovery.",
+          "created_at": "2026-09-15T16:52:36Z",
+          "display_at": "2026-09-15T16:52:36Z",
+          "incident_id": "01M2JZR57HRQTKQGTCWG31M3AS",
+          "status": "monitoring",
+          "updated_at": "2026-09-15T16:52:36Z"
+        }
+      ]
+    },
+    {
+      "id": "01M2HYH64J2CZMZ63HEV2FCQFA",
+      "name": "Elevated errors from GPT-5.6 and GPT-5.6 Instant on paid plans",
+      "status": "resolved",
+      "created_at": "2026-09-15T07:12:04Z",
+      "updated_at": "2026-09-15T07:53:36Z",
+      "resolved_at": "2026-09-15T07:53:36Z",
+      "impact": "minor",
+      "page_id": "01JMDK9XYNY6RXSED6SDWW50WY",
+      "incident_updates": [
+        {
+          "id": "01M2J0X79BNVMG3PYGWFMXQEMF",
+          "body": "All impacted services have now fully recovered.",
+          "created_at": "2026-09-15T07:53:36Z",
+          "display_at": "2026-09-15T07:53:36Z",
+          "incident_id": "01M2HYH64J2CZMZ63HEV2FCQFA",
+          "status": "resolved",
+          "updated_at": "2026-09-15T07:53:36Z"
+        },
+        {
+          "id": "01M2HZ7TC87HASCTWXAM60M6CS",
+          "body": "We have applied the mitigation and are monitoring the recovery.",
+          "created_at": "2026-09-15T07:24:26Z",
+          "display_at": "2026-09-15T07:24:26Z",
+          "incident_id": "01M2HYH64J2CZMZ63HEV2FCQFA",
+          "status": "monitoring",
+          "updated_at": "2026-09-15T07:24:26Z"
+        },
+        {
+          "id": "01M2HYH64JJFGSFW86SFKWQ1PS",
+          "body": "We are investigating the issue for the listed services.",
+          "created_at": "2026-09-15T07:12:04Z",
+          "display_at": "2026-09-15T07:12:04Z",
+          "incident_id": "01M2HYH64J2CZMZ63HEV2FCQFA",
+          "status": "investigating",
+          "updated_at": "2026-09-15T07:12:04Z"
+        }
+      ]
+    },
+    {
+      "id": "01M2GA8XTS6VB3QCDEGZ0HNAQ5",
+      "name": "Elevated errors affecting Work Mode in ChatGPT",
+      "status": "resolved",
+      "created_at": "2026-09-14T15:58:48Z",
+      "updated_at": "2026-09-15T03:11:36Z",
+      "resolved_at": "2026-09-15T03:11:36Z",
+      "impact": "minor",
+      "page_id": "01JMDK9XYNY6RXSED6SDWW50WY",
+      "incident_updates": [
+        {
+          "id": "01M2HGRW6AW7NY1E7CZEKJBQ8Z",
+          "body": "All impacted services have now fully recovered.",
+          "created_at": "2026-09-15T03:11:36Z",
+          "display_at": "2026-09-15T03:11:36Z",
+          "incident_id": "01M2GA8XTS6VB3QCDEGZ0HNAQ5",
+          "status": "resolved",
+          "updated_at": "2026-09-15T03:11:36Z"
+        },
+        {
+          "id": "01M2GQ1VVBT6XM0JQSMDQ2Y5R8",
+          "body": "We have applied additional mitigations for Work Mode. We are monitoring to confirm that workspace tools and files are functioning normally for ChatGPT Plus users.",
+          "created_at": "2026-09-14T19:42:08Z",
+          "display_at": "2026-09-14T19:42:08Z",
+          "incident_id": "01M2GA8XTS6VB3QCDEGZ0HNAQ5",
+          "status": "monitoring",
+          "updated_at": "2026-09-14T19:42:08Z"
+        },
+        {
+          "id": "01M2GA8XTS1TDQV1E196EBJ33C",
+          "body": "Earlier today, some ChatGPT Plus users using Work Mode experienced errors starting or resuming tasks, or had limited access to workspace tools and files. We have applied a mitigation and service has recovered. We are monitoring the results.",
+          "created_at": "2026-09-14T15:58:48Z",
+          "display_at": "2026-09-14T15:58:48Z",
+          "incident_id": "01M2GA8XTS6VB3QCDEGZ0HNAQ5",
+          "status": "monitoring",
+          "updated_at": "2026-09-14T15:58:48Z"
+        }
+      ]
+    }
+  ]
+}
