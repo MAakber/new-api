@@ -112,22 +112,41 @@ export function renderList(
   key: string,
   options: BlockRendererOptions
 ): ReactNode {
+  // Ordered markers are drawn manually instead of relying on `::marker`:
+  // outside markers hang in the ol's padding, and once the number outgrows
+  // that padding any overflow-hidden ancestor clips it to the last digit
+  // ("10." rendering as "0."). A fixed-width right-aligned number keeps
+  // 1-2 digit markers inside the item box so nothing can clip them.
   const className = cn(
-    'my-3 list-outside space-y-1.5 pl-5',
-    node.ordered ? 'list-decimal' : 'list-disc'
+    'my-3 space-y-1.5 pl-7',
+    node.ordered ? 'list-none' : 'list-outside list-disc'
   )
-  const items = node.items.map((item, index) => (
-    <li
-      className='marker:text-muted-foreground pl-1 leading-7'
-      key={getNodeKey(item, index)}
-    >
-      {options.renderChildren(item.children)}
-    </li>
-  ))
+  const items = node.items.map((item, index) => {
+    const itemKey = getNodeKey(item, index)
+    const content = options.renderChildren(item.children)
+    if (!node.ordered) {
+      return (
+        <li
+          className='marker:text-muted-foreground pl-1 leading-7'
+          key={itemKey}
+        >
+          {content}
+        </li>
+      )
+    }
+    return (
+      <li className='flex gap-2 leading-7' key={itemKey} role='listitem'>
+        <span className='text-muted-foreground w-7 shrink-0 text-right whitespace-nowrap tabular-nums'>
+          {(node.start ?? 1) + index}.
+        </span>
+        <span className='min-w-0 flex-1'>{content}</span>
+      </li>
+    )
+  })
 
   if (node.ordered) {
     return (
-      <ol className={className} key={key} start={node.start}>
+      <ol className={className} key={key} role='list' start={node.start}>
         {items}
       </ol>
     )
