@@ -99,6 +99,9 @@ export function renderList(
   // that padding any overflow-hidden ancestor clips it to the last digit
   // ("10." rendering as "0."). A fixed-width right-aligned number keeps
   // 1-2 digit markers inside the item box so nothing can clip them.
+  // `items-baseline` keeps the number on the first line's baseline: item
+  // children are block paragraphs with a top margin, and with the default
+  // stretch alignment the number would sit ~12px above the text.
   const className = cn(
     'my-3 space-y-1.5 pl-7',
     node.ordered ? 'list-none' : 'list-outside list-disc'
@@ -117,7 +120,11 @@ export function renderList(
       )
     }
     return (
-      <li className='flex gap-2 leading-7' key={itemKey} role='listitem'>
+      <li
+        className='flex items-baseline gap-2 leading-7'
+        key={itemKey}
+        role='listitem'
+      >
         <span className='text-muted-foreground w-7 shrink-0 text-right whitespace-nowrap tabular-nums'>
           {(node.start ?? 1) + index}.
         </span>
