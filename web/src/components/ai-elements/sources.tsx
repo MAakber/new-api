@@ -1,21 +1,3 @@
-/*
-Copyright (C) 2023-2026 QuantumNous
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-For commercial licensing, please contact support@quantumnous.com
-*/
 'use client'
 
 import { BookIcon, ChevronDownIcon } from 'lucide-react'
@@ -74,7 +56,9 @@ export const SourcesContent = ({
 }: SourcesContentProps) => (
   <CollapsibleContent
     className={cn(
-      'border-border/70 mt-3 ml-2 flex w-fit flex-col gap-2 border-l pl-4',
+      // Keep the source list on the same left edge as the trigger label, so the
+      // label and its entries read as one block instead of drifting apart.
+      'mt-2 flex w-fit max-w-full min-w-0 flex-col gap-2',
       'data-closed:fade-out-0 data-closed:slide-out-to-top-2 data-open:slide-in-from-top-2 data-closed:animate-out data-open:animate-in outline-none',
       className
     )}
