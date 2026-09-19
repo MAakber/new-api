@@ -60,8 +60,8 @@ type ChannelTestDialogProps = {
 
 export function ChannelTestDialog(props: ChannelTestDialogProps) {
   const { currentRow } = useChannels()
-  // Each opening is a new session. The shared queue still accounts for in-flight
-  // requests from the previous opening, but no previous UI result is reused.
+  // Probe sessions live in the global probe store: closing the dialog keeps
+  // tests running in the background and reopening restores the live results.
   if (!props.open || !currentRow) return null
   return (
     <ChannelTestDialogContent
@@ -302,13 +302,7 @@ function ChannelTestDialogContent(props: {
   )
 
   return (
-    <Dialog
-      open
-      onOpenChange={(open) => {
-        if (!open) probes.close()
-        props.onOpenChange(open)
-      }}
-    >
+    <Dialog open onOpenChange={props.onOpenChange}>
       <DialogContent
         showCloseButton={false}
         className='flex h-dvh max-h-dvh w-screen max-w-none flex-col gap-0 overflow-hidden rounded-none p-0 sm:max-w-none md:h-[min(860px,90dvh)] md:max-h-[90dvh] md:w-[calc(100vw-3rem)] md:max-w-[1280px] md:rounded-xl'
@@ -577,7 +571,6 @@ function ChannelTestDialogContent(props: {
         probe={detail?.probe ?? 'basic'}
         result={detailResult}
         stale={detailStale}
-        busy={busy}
         onRetry={() => {
           if (detail) runSingle(detail.model, detail.probe)
         }}

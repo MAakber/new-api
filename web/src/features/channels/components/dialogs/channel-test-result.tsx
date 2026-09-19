@@ -66,7 +66,6 @@ export function ChannelProbeCell(props: {
   result?: ChannelProbeResult
   stale: boolean
   notApplicable: boolean
-  busy: boolean
   onRun: () => void
   onDetails: (trigger: HTMLElement) => void
 }) {
@@ -74,8 +73,9 @@ export function ChannelProbeCell(props: {
   const spec = CHANNEL_PROBE_BY_ID[props.probe]
   const status =
     props.result?.status ?? (props.notApplicable ? 'skipped' : 'idle')
-  const interactive =
-    Boolean(props.result) || (!props.notApplicable && !props.busy)
+  // Idle cells stay clickable while another test is running: the store queues
+  // the new job into the active run instead of blocking the click.
+  const interactive = Boolean(props.result) || !props.notApplicable
   return (
     <button
       type='button'
@@ -143,7 +143,6 @@ export function ChannelProbeDetails(props: {
   probe: ChannelProbeId
   result?: ChannelProbeResult
   stale: boolean
-  busy: boolean
   onRetry: () => void
   returnFocus: RefObject<HTMLElement | null>
 }) {
@@ -306,10 +305,7 @@ export function ChannelProbeDetails(props: {
           )}
         </div>
         <SheetFooter className='border-t'>
-          <Button
-            onClick={props.onRetry}
-            disabled={props.busy || status === 'skipped'}
-          >
+          <Button onClick={props.onRetry} disabled={status === 'skipped'}>
             <HugeiconsIcon
               icon={result ? ArrowReloadHorizontalIcon : PlayIcon}
               aria-hidden='true'

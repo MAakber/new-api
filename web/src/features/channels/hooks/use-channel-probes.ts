@@ -1,203 +1,33 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
+import { useCallback } from 'react'
 
-import { testChannelDetailed } from '../api'
-import { channelsQueryKeys } from '../lib/channel-actions'
-import {
-  CHANNEL_PROBE_BY_ID,
-  channelProbeQueue,
-  type ChannelProbeJob,
-  type ChannelProbeResult,
-  type ChannelProbeResults,
-} from '../lib/channel-test'
-import type {
-  Channel,
-  GetChannelsResponse,
-  SearchChannelsResponse,
-} from '../types'
+import { useChannelProbeStore } from '@/stores/channel-probe-store'
 
-type ProbeRun = {
-  stopped: boolean
-  jobs: ChannelProbeJob[]
-}
+import type { ChannelProbeJob, ChannelProbeResults } from '../lib/channel-test'
+import type { Channel } from '../types'
 
+const EMPTY_RESULTS: ChannelProbeResults = {}
+const EMPTY_RUN_JOBS: ChannelProbeJob[] = []
+
+// Probe sessions live in the global probe store, so tests keep running after
+// the dialog closes and reopening restores the live results.
 export function useChannelProbes(channel: Channel) {
-  const { t } = useTranslation()
   const queryClient = useQueryClient()
-  const [results, setResults] = useState<ChannelProbeResults>({})
-  const [isRunning, setIsRunning] = useState(false)
-  const [isStopping, setIsStopping] = useState(false)
-  const [runJobs, setRunJobs] = useState<ChannelProbeJob[]>([])
-  const activeRun = useRef<ProbeRun | null>(null)
-
-  const close = useCallback(() => {
-    if (activeRun.current) activeRun.current.stopped = true
-    activeRun.current = null
-    channelProbeQueue.flushCancelled()
-  }, [])
-
-  useEffect(() => close, [close])
-
-  const stop = useCallback(() => {
-    const run = activeRun.current
-    if (!run) return
-    run.stopped = true
-    setIsStopping(true)
-    channelProbeQueue.flushCancelled()
-    setResults((previous) => {
-      const next = { ...previous }
-      for (const job of run.jobs) {
-        const result = next[job.model]?.[job.probe]
-        if (result?.status === 'queued') {
-          next[job.model] = {
-            ...next[job.model],
-            [job.probe]: { ...result, status: 'cancelled' },
-          }
-        }
-      }
-      return next
-    })
-  }, [])
+  const channelId = channel.id
+  const session = useChannelProbeStore((state) => state.sessions[channelId])
+  const startProbes = useChannelProbeStore((state) => state.startProbes)
+  const stopProbes = useChannelProbeStore((state) => state.stopProbes)
 
   const start = useCallback(
-    async (requestedJobs: ChannelProbeJob[]) => {
-      if (activeRun.current || requestedJobs.length === 0) return
-      const jobs = [
-        ...new Map(
-          requestedJobs.map((job) => [job.configurationKey, job])
-        ).values(),
-      ]
-      const run: ProbeRun = { stopped: false, jobs }
-      activeRun.current = run
-      setRunJobs(jobs)
-      setIsRunning(true)
-      setIsStopping(false)
-      setResults((previous) => {
-        const next = { ...previous }
-        for (const job of jobs) {
-          next[job.model] = {
-            ...next[job.model],
-            [job.probe]: { ...job, status: 'queued' },
-          }
-        }
-        return next
-      })
-
-      const completed: ChannelProbeResult[] = []
-      await Promise.allSettled(
-        jobs.map((job) =>
-          channelProbeQueue.schedule(
-            async () => {
-              if (run.stopped || activeRun.current !== run) return
-              setResults((previous) => ({
-                ...previous,
-                [job.model]: {
-                  ...previous[job.model],
-                  [job.probe]: { ...job, status: 'running' },
-                },
-              }))
-              const spec = CHANNEL_PROBE_BY_ID[job.probe]
-              let result: ChannelProbeResult
-              try {
-                const response = await testChannelDetailed(channel.id, {
-                  model: job.model,
-                  endpoint_type: job.endpoint === 'auto' ? '' : job.endpoint,
-                  stream: spec.stream,
-                  test_type: spec.testType,
-                  message: spec.testType === 'tool_call' ? '' : job.message,
-                })
-                result = {
-                  ...job,
-                  status: response.diagnostics?.status ?? 'failed',
-                  diagnostics: response.diagnostics,
-                  completedAt: Date.now(),
-                  error: response.message || response.diagnostics?.detail,
-                  errorCode: response.diagnostics
-                    ? response.error_code
-                    : 'diagnostics_unavailable',
-                  preview: response.response_preview,
-                }
-              } catch (error: unknown) {
-                const failure = error as {
-                  response?: {
-                    data?: { message?: string; error_code?: string }
-                  }
-                }
-                result = {
-                  ...job,
-                  status: 'failed',
-                  completedAt: Date.now(),
-                  error:
-                    failure.response?.data?.message ||
-                    t('The test request failed.'),
-                  errorCode: failure.response?.data?.error_code,
-                }
-              }
-              completed.push(result)
-              if (activeRun.current !== run) return
-              setResults((previous) => ({
-                ...previous,
-                [job.model]: { ...previous[job.model], [job.probe]: result },
-              }))
-            },
-            () => run.stopped || activeRun.current !== run
-          )
-        )
-      )
-
-      // Refresh once per run, including requests that finished after the dialog closed.
-      const latest = completed
-        .filter((result) => result.diagnostics && result.status !== 'skipped')
-        .sort((a, b) => (b.completedAt ?? 0) - (a.completedAt ?? 0))[0]
-      if (latest?.diagnostics) {
-        const patch = {
-          response_time: latest.diagnostics.duration_ms,
-          test_time: Math.floor((latest.completedAt ?? Date.now()) / 1000),
-        }
-        queryClient.setQueriesData<
-          GetChannelsResponse | SearchChannelsResponse
-        >({ queryKey: channelsQueryKeys.lists() }, (previous) => {
-          if (!previous?.data?.items) return previous
-          return {
-            ...previous,
-            data: {
-              ...previous.data,
-              items: previous.data.items.map((item) =>
-                item.id === channel.id ? { ...item, ...patch } : item
-              ),
-            },
-          }
-        })
-        void queryClient.invalidateQueries({
-          queryKey: channelsQueryKeys.lists(),
-        })
-      }
-      if (activeRun.current !== run) return
-      activeRun.current = null
-      setIsRunning(false)
-      setIsStopping(false)
-      const passed = completed.filter(
-        (result) => result.status === 'passed'
-      ).length
-      const failed = completed.filter(
-        (result) => result.status === 'failed'
-      ).length
-      const degraded = completed.filter(
-        (result) => result.status === 'degraded'
-      ).length
-      const title = run.stopped ? t('Testing stopped') : t('Testing completed')
-      const description = t(
-        '{{passed}} passed · {{failed}} failed · {{degraded}} compatibility',
-        { passed, failed, degraded }
-      )
-      if (failed > 0) toast.error(title, { description })
-      else toast.info(title, { description })
+    (jobs: ChannelProbeJob[]) => {
+      void startProbes(channelId, jobs, queryClient)
     },
-    [channel.id, queryClient, t]
+    [channelId, queryClient, startProbes]
   )
+  const stop = useCallback(() => stopProbes(channelId), [channelId, stopProbes])
 
+  const results = session?.results ?? EMPTY_RESULTS
+  const runJobs = session?.runJobs ?? EMPTY_RUN_JOBS
   const runResults = runJobs.map((job) => results[job.model]?.[job.probe])
   const progress = {
     total: runJobs.length,
@@ -214,5 +44,12 @@ export function useChannelProbes(channel: Channel) {
       .length,
   }
 
-  return { results, isRunning, isStopping, progress, start, stop, close }
+  return {
+    results,
+    isRunning: session?.isRunning ?? false,
+    isStopping: session?.isStopping ?? false,
+    progress,
+    start,
+    stop,
+  }
 }

@@ -174,7 +174,6 @@ export function ChannelTestMatrix(props: {
                         props.endpointForModel(model),
                         probe.id
                       )}
-                      busy={props.busy}
                       onRun={() => props.onRun(model, probe.id)}
                       onDetails={(trigger) =>
                         props.onDetails(model, probe.id, trigger)
@@ -257,7 +256,6 @@ export function ChannelTestMatrix(props: {
                             props.endpointForModel(model),
                             probe.id
                           )}
-                          busy={props.busy}
                           onRun={() => props.onRun(model, probe.id)}
                           onDetails={(trigger) =>
                             props.onDetails(model, probe.id, trigger)

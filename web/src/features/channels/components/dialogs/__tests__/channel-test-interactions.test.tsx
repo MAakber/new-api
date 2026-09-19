@@ -184,8 +184,8 @@ describe('channel test matrix interactions', () => {
     ).toBeDefined()
   })
 
-  it('shares five active slots across closing and reopening, discards late results, and stops queued probes', async () => {
-    renderChannelTest(['model-a', 'model-b'])
+  it('keeps probes running across closing and reopening, records late results, and stops queued probes', async () => {
+    renderChannelTest(['model-a', 'model-b', 'model-c'])
     await act(async () =>
       fireEvent.click(screen.getByRole('button', { name: 'Start testing' }))
     )
@@ -198,28 +198,24 @@ describe('channel test matrix interactions', () => {
     )
     const table = screen.getByRole('region', { name: 'Channel models' })
     expect(
-      within(table).getAllByRole('button', { name: /Not tested$/ })
-    ).toHaveLength(8)
-    await act(async () =>
-      fireEvent.click(screen.getByRole('button', { name: 'Start testing' }))
-    )
-    expect(api.requests).toHaveLength(5)
+      within(table).getAllByRole('button', { name: /Testing$/ })
+    ).toHaveLength(5)
     expect(
       within(table).getAllByRole('button', { name: /Queued$/ })
-    ).toHaveLength(8)
+    ).toHaveLength(7)
     await act(async () =>
       api.requests.slice(0, 5).forEach((request) => request.reply('failed'))
     )
     await waitFor(() => expect(api.requests).toHaveLength(10))
     expect(
-      within(table).queryAllByRole('button', { name: /Failed$/ })
-    ).toHaveLength(0)
+      within(table).getAllByRole('button', { name: /Failed$/ })
+    ).toHaveLength(5)
     await act(async () =>
       fireEvent.click(screen.getByRole('button', { name: 'Stop testing' }))
     )
     expect(
       within(table).getAllByRole('button', { name: /Stopped$/ })
-    ).toHaveLength(3)
+    ).toHaveLength(2)
     await api.finish()
     await waitFor(() =>
       expect(

@@ -7,6 +7,7 @@ import type {
 } from 'axios'
 
 import { api } from '@/lib/api'
+import { useChannelProbeStore } from '@/stores/channel-probe-store'
 
 import { ChannelsProvider } from '../components/channels-provider'
 import type {
@@ -99,6 +100,8 @@ export function channelTestApiFixture() {
 }
 
 export function renderChannelTest(models = ['gpt-4o']) {
+  // Probe sessions are global, so every render starts from a clean store.
+  useChannelProbeStore.setState({ sessions: {} })
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
   })
