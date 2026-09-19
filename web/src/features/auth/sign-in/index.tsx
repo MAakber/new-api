@@ -1,11 +1,14 @@
 import { Link, useSearch } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { LanguageSwitcher } from '@/components/language-switcher'
 import { useStatus } from '@/hooks/use-status'
 
 import { AuthLayout } from '../auth-layout'
 import { TermsFooter } from '../components/terms-footer'
 import { UserAuthForm } from './components/user-auth-form'
+
+const DOCS_URL = 'https://docs.newapi.ai'
 
 export function SignIn() {
   const { t } = useTranslation()
@@ -13,19 +16,39 @@ export function SignIn() {
   const { status } = useStatus()
 
   return (
-    <AuthLayout variant='sign-in'>
-      <div className='auth-login-page w-full space-y-6 sm:space-y-8'>
+    <AuthLayout
+      variant='sign-in'
+      footer={
+        <>
+          <a
+            href={DOCS_URL}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='hover:text-primary font-medium transition-colors'
+          >
+            {t('Docs')}
+          </a>
+          <LanguageSwitcher />
+          <TermsFooter
+            variant='sign-in'
+            status={status}
+            className='w-full text-start sm:ms-auto sm:w-auto sm:text-end'
+          />
+        </>
+      }
+    >
+      <div className='w-full space-y-6 sm:space-y-8'>
         <div className='space-y-2'>
-          <h2 className='text-center text-2xl font-semibold tracking-tight sm:text-left'>
+          <h2 className='text-center text-2xl font-semibold tracking-tight lg:text-left'>
             {t('Sign in')}
           </h2>
           {!status?.self_use_mode_enabled &&
             status?.register_enabled !== false && (
-              <p className='text-muted-foreground text-left text-sm sm:text-base'>
+              <p className='text-muted-foreground text-center text-sm sm:text-base lg:text-left'>
                 {t("Don't have an account?")}{' '}
                 <Link
                   to='/sign-up'
-                  className='auth-login-action-link hover:text-primary font-medium underline underline-offset-4'
+                  className='auth-ink-action-link hover:text-primary font-medium underline underline-offset-4'
                 >
                   {t('Sign up')}
                 </Link>
@@ -35,12 +58,6 @@ export function SignIn() {
         </div>
 
         <UserAuthForm redirectTo={redirect} />
-
-        <TermsFooter
-          variant='sign-in'
-          status={status}
-          className='auth-login-terms text-center leading-5'
-        />
       </div>
     </AuthLayout>
   )
