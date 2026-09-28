@@ -23,6 +23,7 @@ import (
 	"github.com/QuantumNous/new-api/model"
 	pluginruntime "github.com/QuantumNous/new-api/pkg/jsplugin"
 	relayconstant "github.com/QuantumNous/new-api/relay/constant"
+	channeldto "github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/relaykit/types"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
@@ -350,7 +351,8 @@ func PinTaskPluginEndpoint() gin.HandlerFunc {
 		generation := pluginruntime.DefaultRegistry.Generation()
 		selectedGeneration, channelSelected := c.Get(contextKeyTaskPluginEndpointGeneration)
 		if channelSelected {
-			if c.GetInt("channel_type") != constant.ChannelTypeTaskPlugin {
+			channelType := c.GetInt("channel_type")
+			if channelType != constant.ChannelTypeTaskPlugin && channelType != constant.ChannelTypeNewAPI {
 				c.Next()
 				return
 			}
@@ -405,32 +407,40 @@ func PinTaskPluginEndpoint() gin.HandlerFunc {
 			c.Next()
 			return
 		}
-		if rewriteTo != "" {
-			if rewriteErr := rewriteTaskPluginJSONModel(c, rewriteTo); rewriteErr != nil {
-				abortWithOpenAiMessage(c, http.StatusBadRequest, "Invalid task protocol request")
-				return
-			}
-		}
-		modelRequest.Model = pinModel
-		c.Set(contextKeyTaskPluginEndpointModel, *modelRequest)
 		candidates := generation.LookupEndpointCandidates(c.Request.Method, c.Request.URL.Path, lookupModel)
 		if len(candidates) == 0 {
 			candidates = []pluginruntime.ProtocolBinding{binding}
 		}
 		if channelSelected {
-			selectedKey := c.GetString("task_plugin_key")
-			matched := false
-			for _, candidate := range candidates {
-				if candidate.Plugin != nil && candidate.Plugin.Meta.Key == selectedKey {
-					binding = candidate
-					candidates = []pluginruntime.ProtocolBinding{candidate}
-					matched = true
-					break
+			if c.GetInt("channel_type") == constant.ChannelTypeNewAPI {
+				setting, _ := common.GetContextKeyType[channeldto.ChannelSettings](c, constant.ContextKeyChannelSetting)
+				bound := make([]pluginruntime.ProtocolBinding, 0, len(candidates))
+				for _, candidate := range candidates {
+					if candidate.Plugin != nil && setting.BindsTaskPlugin(candidate.Plugin.Meta.Key) {
+						bound = append(bound, candidate)
+					}
 				}
-			}
-			if !matched {
-				abortWithOpenAiMessage(c, http.StatusBadRequest, "Selected task plugin does not support this endpoint")
-				return
+				if len(bound) == 0 {
+					// The same gateway also serves ordinary protocol requests.
+					c.Next()
+					return
+				}
+				candidates, binding = bound, bound[0]
+			} else {
+				selectedKey := c.GetString("task_plugin_key")
+				matched := false
+				for _, candidate := range candidates {
+					if candidate.Plugin != nil && candidate.Plugin.Meta.Key == selectedKey {
+						binding = candidate
+						candidates = []pluginruntime.ProtocolBinding{candidate}
+						matched = true
+						break
+					}
+				}
+				if !matched {
+					abortWithOpenAiMessage(c, http.StatusBadRequest, "Selected task plugin does not support this endpoint")
+					return
+				}
 			}
 		}
 		if definition, known := pluginruntime.HostProtocol(binding.Protocol); known && len(definition.DefinedModes()) > 0 {
@@ -470,6 +480,18 @@ func PinTaskPluginEndpoint() gin.HandlerFunc {
 			binding = candidates[0]
 		}
 
+		if channelSelected {
+			candidates = []pluginruntime.ProtocolBinding{binding}
+			c.Set("task_plugin_key", binding.Plugin.Meta.Key)
+		}
+		if rewriteTo != "" {
+			if rewriteErr := rewriteTaskPluginJSONModel(c, rewriteTo); rewriteErr != nil {
+				abortWithOpenAiMessage(c, http.StatusBadRequest, "Invalid task protocol request")
+				return
+			}
+		}
+		modelRequest.Model = pinModel
+		c.Set(contextKeyTaskPluginEndpointModel, *modelRequest)
 		pin := pluginruntime.PinnedPlugin{Generation: generation, Plugin: binding.Plugin}
 		pinnedEndpoint := pluginruntime.PinnedEndpoint{
 			Generation:  generation,
@@ -998,7 +1020,7 @@ func buildTaskPluginRouteRequest(c *gin.Context) (pluginruntime.RouteRequestCont
 			if !utf8.ValidString(field) || len(field) > maxTaskPluginFieldNameBytes {
 				return requestContext, fmt.Errorf("invalid multipart file field name")
 			}
-			for _, header := range headers {
+			for index, header := range headers {
 				if !utf8.ValidString(header.Filename) || len(header.Filename) > maxTaskPluginFilenameBytes {
 					return requestContext, fmt.Errorf("invalid multipart filename")
 				}
@@ -1012,7 +1034,7 @@ func buildTaskPluginRouteRequest(c *gin.Context) (pluginruntime.RouteRequestCont
 				if header.Size < 0 || header.Size > int64(fileLimitMB)<<20 {
 					return requestContext, fmt.Errorf("multipart file exceeds %d MB", fileLimitMB)
 				}
-				ref := "request_file:" + field
+				ref := pluginruntime.FileReference(field, index)
 				files = append(files, map[string]any{"ref": ref, "field": field, "filename": header.Filename, "mimeType": header.Header.Get("Content-Type"), "size": header.Size})
 			}
 		}
@@ -1231,7 +1253,7 @@ func renderTaskPluginQuery(
 	views := make([]map[string]any, 0, len(taskIDs))
 	for _, taskID := range taskIDs {
 		task := tasksByID[taskID]
-		if task == nil {
+		if task == nil || !task.ResultRetrievable() {
 			logger.LogDebug(
 				c,
 				"task_plugin subsystem=query event=lookup_failed generation=%d plugin=%q reason=task_not_found requested=%d found=%d",
@@ -1438,8 +1460,11 @@ func logTaskPluginChannelDecision(c *gin.Context, channel *model.Channel, modelN
 		return
 	}
 	identityMode := "legacy_channel_type"
-	if channel.Type == constant.ChannelTypeTaskPlugin {
+	switch channel.Type {
+	case constant.ChannelTypeTaskPlugin:
 		identityMode = "type59_setting"
+	case constant.ChannelTypeNewAPI:
+		identityMode = "type60_setting"
 	}
 	logger.LogDebug(
 		c,

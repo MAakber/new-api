@@ -1,8 +1,11 @@
 package relay
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/QuantumNous/new-api/common"
@@ -153,6 +156,7 @@ func TestRelayTaskSubmitAliasBillingIdentityAndExprFallback(t *testing.T) {
 	const mapping = `{"alias-model":"declared-model"}`
 	const aliasExpr = `tier("alias", 2)`
 	const tailExpr = `tier("tail", 3)`
+	const legacyExpr = `tier("legacy", u("old_units") * 2)`
 
 	tests := []struct {
 		name       string
@@ -160,6 +164,7 @@ func TestRelayTaskSubmitAliasBillingIdentityAndExprFallback(t *testing.T) {
 		exprs      map[string]string
 		wantTiered bool
 		wantExpr   string
+		source     string
 	}{
 		{
 			name:       "alias own tiered wins",
@@ -174,6 +179,16 @@ func TestRelayTaskSubmitAliasBillingIdentityAndExprFallback(t *testing.T) {
 			exprs:      map[string]string{"declared-model": tailExpr},
 			wantTiered: true,
 			wantExpr:   tailExpr,
+		},
+		{
+			name:       "stored expression keeps running after schema narrows",
+			modes:      map[string]string{"declared-model": "tiered_expr"},
+			exprs:      map[string]string{"declared-model": legacyExpr},
+			wantTiered: true,
+			wantExpr:   legacyExpr,
+			source: strings.Replace(billingFallbackPlugin, `fetchMode:"per_task"`, `fetchMode:"per_task", usageSchema:{old_units:{type:"number",unit:"count"}}, usageProfiles:[{models:["declared-model"],schema:{seconds:{type:"number",unit:"second"}}}]`, 1) + `
+export function extractUsage(){return {old_units:2};}
+`,
 		},
 		{
 			name:       "neither tiered uses ordinary pricing",
@@ -204,7 +219,11 @@ func TestRelayTaskSubmitAliasBillingIdentityAndExprFallback(t *testing.T) {
 			c.Set("group", "default")
 			info.UserGroup = "default"
 			info.UsingGroup = "default"
-			pinMappingOrderPlugin(t, c, billingFallbackPlugin)
+			source := testCase.source
+			if source == "" {
+				source = billingFallbackPlugin
+			}
+			pinMappingOrderPlugin(t, c, source)
 			info.OriginModelName = "alias-model"
 
 			_, taskErr := RelayTaskSubmit(c, info)
@@ -218,11 +237,14 @@ func TestRelayTaskSubmitAliasBillingIdentityAndExprFallback(t *testing.T) {
 			assert.Equal(t, "declared-model", task.Properties.UpstreamModelName)
 
 			if testCase.wantTiered {
-				require.NotNil(t, info.TieredBillingSnapshot)
+				require.NotNil(t, info.TieredBillingSnapshot, "submission error: %+v", taskErr)
 				assert.Equal(t, "alias-model", info.TieredBillingSnapshot.ModelName)
 				assert.Equal(t, testCase.wantExpr, info.TieredBillingSnapshot.ExprString)
 				assert.Equal(t, billingexpr.ExprHashString(testCase.wantExpr), info.TieredBillingSnapshot.ExprHash)
 				assert.NotEqual(t, "model_price_error", taskErr.Code)
+				if testCase.wantExpr == legacyExpr {
+					assert.Equal(t, 4*common.QuotaPerUnit, info.TieredBillingSnapshot.EstimatedQuotaBeforeGroup)
+				}
 			} else {
 				assert.Nil(t, info.TieredBillingSnapshot)
 				assert.Equal(t, "model_price_error", taskErr.Code)
@@ -230,3 +252,162 @@ func TestRelayTaskSubmitAliasBillingIdentityAndExprFallback(t *testing.T) {
 		})
 	}
 }
+
+func TestSharedTaskBillingExpressionSelectionAndFrozenSettlement(t *testing.T) {
+	const baseExpr = `tier("base", u("seconds") * 2)`
+	const alphaExpr = `tier("alpha", u("seconds") * 3)`
+	const betaExpr = `tier("beta", u("credits") * 5)`
+	const aliasExpr = `tier("alias", u("credits") * 7)`
+	for _, tc := range []struct {
+		name, plugin, model, mapping, modelExpr, mode, wantExpr string
+		variants                                                map[string]string
+		wantPriceError, profiled                                bool
+	}{
+		{name: "executing plugin override", plugin: "billing-beta", model: "declared-model", modelExpr: baseExpr, mode: "tiered_expr", variants: map[string]string{"billing-alpha::declared-model": alphaExpr, "billing-beta::declared-model": betaExpr}, wantExpr: betaExpr},
+		{name: "override ignores model mode", plugin: "billing-beta", model: "declared-model", modelExpr: baseExpr, mode: "ratio", variants: map[string]string{"billing-beta::declared-model": betaExpr}, wantExpr: betaExpr},
+		{name: "model expression fallback", plugin: "billing-alpha", model: "declared-model", modelExpr: baseExpr, mode: "tiered_expr", wantExpr: baseExpr},
+		{name: "alias override precedes mapped override", plugin: "billing-beta", model: "alias-model", mapping: `{"alias-model":"declared-model"}`, modelExpr: baseExpr, mode: "tiered_expr", variants: map[string]string{"billing-beta::declared-model": betaExpr, "billing-beta::alias-model": aliasExpr}, wantExpr: aliasExpr},
+		{name: "mapped override precedes model fallback", plugin: "billing-beta", model: "alias-model", mapping: `{"alias-model":"declared-model"}`, modelExpr: baseExpr, mode: "tiered_expr", variants: map[string]string{"billing-beta::declared-model": betaExpr}, wantExpr: betaExpr},
+		{name: "unconfigured plugin cannot use another schema", plugin: "billing-beta", model: "declared-model", modelExpr: baseExpr, mode: "tiered_expr", wantPriceError: true},
+		{name: "missing usage in skipped branch remains incompatible", plugin: "billing-beta", model: "declared-model", modelExpr: `true ? tier("free", 0) : tier("missing", u("seconds"))`, mode: "tiered_expr", wantPriceError: true},
+		{name: "fixed pricing is still rejected", plugin: "billing-beta", model: "declared-model", variants: map[string]string{"billing-beta::declared-model": `tier("fixed", fixed(1))`}, wantPriceError: true},
+		{name: "endpoint mapping keeps the declared profile", plugin: "billing-beta", model: "declared-model", mapping: `{"declared-model":"ep-endpoint"}`, modelExpr: baseExpr, mode: "tiered_expr", variants: map[string]string{"billing-beta::declared-model": betaExpr}, wantExpr: betaExpr, profiled: true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			saveBillingConfig(t)
+			registry := pluginruntime.NewRegistry()
+			for _, spec := range []struct{ key, field, unit string }{{"billing-alpha", "seconds", "second"}, {"billing-beta", "credits", "credit"}} {
+				source := strings.ReplaceAll(billingFallbackPlugin, "bill-fallback", spec.key)
+				schema := `usageSchema:{` + spec.field + `:{type:"number",unit:"` + spec.unit + `"}}`
+				if tc.profiled && spec.key == "billing-beta" {
+					// The endpoint ID is undeclared, so only the declared model's profile carries this schema.
+					schema = `usageSchema:{seconds:{type:"number",unit:"second"}},usageProfiles:[{models:["declared-model"],schema:{` + spec.field + `:{type:"number",unit:"` + spec.unit + `"}}}]`
+				}
+				source = strings.Replace(source, `fetchMode:"per_task"`, `fetchMode:"per_task",`+schema, 1)
+				source += `export function extractUsage(){return {` + spec.field + `:2};}`
+				_, err := registry.Register(source, pluginruntime.Options{})
+				require.NoError(t, err)
+			}
+			variants := tc.variants
+			if variants == nil {
+				variants = map[string]string{}
+			}
+			rawVariants, err := common.Marshal(variants)
+			require.NoError(t, err)
+			modes, err := common.Marshal(map[string]string{"declared-model": tc.mode})
+			require.NoError(t, err)
+			expressions, err := common.Marshal(map[string]string{"declared-model": tc.modelExpr})
+			require.NoError(t, err)
+			require.NoError(t, config.GlobalConfig.LoadFromDB(map[string]string{
+				billing_setting.PluginBillingExprOption: string(rawVariants), "billing_setting.billing_mode": string(modes), "billing_setting.billing_expr": string(expressions),
+			}))
+			c, info := newTaskSubmitContext(t, tc.model, tc.mapping)
+			c.Set("group", "default")
+			c.Set("task_plugin_key", tc.plugin)
+			info.UserGroup = "default"
+			info.UsingGroup = "default"
+			info.OriginModelName = tc.model
+			plugin, ok := registry.Generation().Get(tc.plugin)
+			require.True(t, ok)
+			c.Set(pluginruntime.ContextKeyPinnedPlugin, pluginruntime.PinnedPlugin{Generation: registry.Generation(), Plugin: plugin})
+			_, taskErr := RelayTaskSubmit(c, info)
+			require.NotNil(t, taskErr) // This fixture stops at reservation, before upstream submission.
+			if tc.wantPriceError {
+				assert.Equal(t, "model_price_error", taskErr.Code)
+				assert.Nil(t, info.TieredBillingSnapshot)
+				return
+			}
+			require.NotNil(t, info.TieredBillingSnapshot, "submission error: %+v", taskErr)
+			assert.Equal(t, tc.wantExpr, info.TieredBillingSnapshot.ExprString)
+			assert.NotEqual(t, "model_price_error", taskErr.Code)
+			require.NoError(t, config.GlobalConfig.LoadFromDB(map[string]string{billing_setting.PluginBillingExprOption: `{}`, "billing_setting.billing_expr": `{}`}))
+			field := "seconds"
+			if tc.plugin == "billing-beta" {
+				field = "credits"
+			}
+			result, usage, err := service.EvaluateTaskCompletionUsage(info.TieredBillingSnapshot, map[string]any{field: float64(4)})
+			require.NoError(t, err)
+			assert.Equal(t, float64(4), usage[field])
+			assert.Equal(t, float64(2), info.TieredBillingSnapshot.UsageFacts[field])
+			assert.Equal(t, 2*info.TieredBillingSnapshot.EstimatedQuotaAfterGroup, result.ActualQuotaAfterGroup)
+			assert.Equal(t, tc.wantExpr, info.TieredBillingSnapshot.ExprString)
+		})
+	}
+}
+
+// Issue #7478: task APIs answer 201 Created or 202 Accepted on submission.
+// Every 2xx must reach parseSubmitResponse; only other statuses are upstream
+// failures that keep the upstream status and body.
+func TestRelayTaskSubmitAcceptsAnySuccessfulUpstreamStatus(t *testing.T) {
+	service.InitHttpClient()
+	const source = `
+export const meta = {apiVersion:1,key:"status-echo",name:"Status Echo",version:"1.0.0",author:{name:"Test"},models:["declared-model"],fetchMode:"per_task"};
+export function buildSubmitRequest(ctx) { return {url: ctx.baseUrl+"/submit", method:"POST", body:{model: ctx.model}, action:"text_to_video"}; }
+export function parseSubmitResponse(ctx, response) { return {taskId: response.body.id, taskData: {status: response.statusCode}}; }
+export function buildQueryRequest(ctx) { return {url: ctx.baseUrl+"/query"}; }
+export function parseTaskResult() { return {status:"SUCCESS"}; }
+`
+	for _, tc := range []struct {
+		status   int
+		wantCode string
+	}{
+		{status: http.StatusOK},
+		{status: http.StatusCreated},
+		{status: http.StatusAccepted},
+		{status: http.StatusBadRequest, wantCode: "fail_to_fetch_task"},
+		{status: http.StatusBadGateway, wantCode: "fail_to_fetch_task"},
+	} {
+		t.Run(strconv.Itoa(tc.status), func(t *testing.T) {
+			saveBillingConfig(t)
+			require.NoError(t, config.GlobalConfig.LoadFromDB(map[string]string{
+				"billing_setting.billing_mode": `{"declared-model":"tiered_expr"}`,
+				"billing_setting.billing_expr": `{"declared-model":"tier(\"flat\", 3)"}`,
+			}))
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(tc.status)
+				_, _ = w.Write([]byte(`{"id":"job-42","message":"upstream body"}`))
+			}))
+			defer server.Close()
+
+			c, info := newTaskSubmitContext(t, "declared-model", "")
+			common.SetContextKey(c, constant.ContextKeyChannelBaseUrl, server.URL)
+			c.Set("group", "default")
+			info.UserGroup, info.UsingGroup = "default", "default"
+			info.OriginModelName = "declared-model"
+			// An existing reservation skips pre-consume so the fixture reaches the upstream call.
+			info.Billing = &taskStatusReservation{limit: 1 << 30}
+			pinMappingOrderPlugin(t, c, source)
+
+			result, taskErr := RelayTaskSubmit(c, info)
+			if tc.wantCode != "" {
+				require.NotNil(t, taskErr)
+				assert.Equal(t, tc.wantCode, taskErr.Code)
+				assert.Equal(t, tc.status, taskErr.StatusCode)
+				assert.Contains(t, taskErr.Message, "upstream body")
+				assert.Nil(t, result)
+				return
+			}
+			require.Nil(t, taskErr, "submission error: %+v", taskErr)
+			require.NotNil(t, result)
+			assert.Equal(t, "job-42", result.UpstreamTaskID)
+			assert.JSONEq(t, `{"status":`+strconv.Itoa(tc.status)+`}`, string(result.TaskData))
+		})
+	}
+}
+
+type taskStatusReservation struct {
+	held, limit int
+}
+
+func (s *taskStatusReservation) Reserve(quota int) error {
+	if quota > s.limit {
+		return errors.New("insufficient test reservation")
+	}
+	s.held = max(s.held, quota)
+	return nil
+}
+func (s *taskStatusReservation) GetPreConsumedQuota() int { return s.held }
+func (*taskStatusReservation) Settle(int) error           { return nil }
+func (*taskStatusReservation) Refund(*gin.Context)        {}
+func (*taskStatusReservation) NeedsRefund() bool          { return false }

@@ -103,7 +103,7 @@ describe('UploadDialog file selection', () => {
     ).toBeInTheDocument()
   })
 
-  test('rejects a file over the 1 MiB limit without touching the source', async () => {
+  test('rejects a file over the 8 MiB limit without touching the source', async () => {
     const user = userEvent.setup()
     renderDialog()
 
@@ -114,7 +114,7 @@ describe('UploadDialog file selection', () => {
     await user.upload(fileInput(), oversized)
 
     expect(
-      await screen.findByText('Plugin source exceeds the 1 MiB limit.')
+      await screen.findByText('Plugin source exceeds the 8 MiB limit.')
     ).toBeInTheDocument()
     expect(screen.queryByText('huge.js')).toBeNull()
     expect(footerButton('Upload')).toBeDisabled()

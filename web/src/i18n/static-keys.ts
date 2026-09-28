@@ -131,6 +131,7 @@ export const STATIC_I18N_KEYS = [
   'Image generation failed.',
   'Canvas files must be smaller than 200 MB.',
   'This file is not a valid drawing canvas.',
+  'Connect to New API model services with support for multiple task plugins',
   // Billing expression simulation diagnostics and conditional labels.
   '{{start}}–{{end}}',
 

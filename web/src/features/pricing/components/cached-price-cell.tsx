@@ -1,4 +1,25 @@
+/*
+Copyright (C) 2023-2026 QuantumNous
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+For commercial licensing, please contact support@quantumnous.com
+*/
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { useSystemConfigStore } from '@/stores/system-config-store'
 
 import { DEFAULT_TOKEN_UNIT } from '../constants'
 import { useBillingTime } from '../hooks/use-billing-time'
@@ -28,15 +49,31 @@ export function CachedPriceCell(props: {
   const tokenUnitLabel = tokenUnit === 'K' ? '1K' : '1M'
 
   const model = props.model
+  const currency = useSystemConfigStore((state) => state.config.currency)
   const billingTime = useBillingTime(model.billing_expr)
-  const dynamicSummary = getDynamicPricingSummary(model, {
-    now: billingTime === undefined ? undefined : new Date(billingTime),
-    tokenUnit,
-    showRechargePrice,
-    priceRate,
-    usdExchangeRate,
-    groupRatioMultiplier: getDynamicDisplayGroupRatio(model, selectedGroup),
-  })
+  const dynamicSummary = useMemo(
+    () =>
+      getDynamicPricingSummary(model, {
+        now: billingTime === undefined ? undefined : new Date(billingTime),
+        tokenUnit,
+        showRechargePrice,
+        priceRate,
+        usdExchangeRate,
+        groupRatioMultiplier: getDynamicDisplayGroupRatio(model, selectedGroup),
+      }),
+    // Currency is read indirectly by the price formatter.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      model,
+      tokenUnit,
+      showRechargePrice,
+      priceRate,
+      usdExchangeRate,
+      selectedGroup,
+      billingTime,
+      currency,
+    ]
+  )
 
   if (dynamicSummary) {
     if (dynamicSummary.isSpecialExpression) {

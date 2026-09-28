@@ -37,6 +37,7 @@ import {
 import { getTaskPricingDisplayTiers } from '../lib/task-matrix-display'
 import {
   taskPriceLabel,
+  taskUsageUnitLabel,
   taskPricingConditions,
 } from '../lib/task-price-display'
 import type { BillingUsageSchema, BillingUsageUnit } from '../types'
@@ -85,6 +86,7 @@ type BreakdownPriceField = {
   label: string
   labelKind: DynamicPriceLabelKind
   unit: BillingUsageUnit | 'request' | 'token'
+  unitLabel?: string | Record<string, string>
   showTokenUnit?: boolean
   value: (tier: BreakdownTier) => number
 }
@@ -178,14 +180,17 @@ function formatBreakdownPrice(
   symbol: string,
   rate: number,
   t: (key: string) => string,
-  taskPriceOptions: DynamicPricingBreakdownProps['taskPriceOptions']
+  taskPriceOptions: DynamicPricingBreakdownProps['taskPriceOptions'],
+  language: string
 ): string {
   const amount =
     field.labelKind === 'schema' || field.unit === 'request'
       ? formatTaskUsageUnitPrice(value, { tokenUnit: 'M', ...taskPriceOptions })
       : `${symbol}${(value * rate).toFixed(4)}`
   if (field.unit === 'second') return `${amount}/${t('s')}`
-  if (field.unit === 'count') return `${amount}/${t('unit')}`
+  if (field.unit === 'count') {
+    return `${amount}/${taskUsageUnitLabel(field, language, t('unit'))}`
+  }
   if (field.unit === 'credit') return `${amount}/${t('credit')}`
   if (field.unit === 'token' && field.labelKind === 'schema') {
     return `${amount}/${t('1M token')}`
@@ -348,6 +353,7 @@ export function DynamicPricingBreakdown({
           label: taskPriceLabel(definition.description, field, i18n.language),
           labelKind: 'schema' as const,
           unit: definition.unit as BillingUsageUnit,
+          unitLabel: definition.unitLabel,
           value: (tier: BreakdownTier) =>
             isTaskBreakdownTier(tier) ? Number(tier.unitPrices[field] || 0) : 0,
         }))
@@ -516,7 +522,8 @@ export function DynamicPricingBreakdown({
                                   symbol,
                                   rate,
                                   t,
-                                  taskPriceOptions
+                                  taskPriceOptions,
+                                  i18n.language
                                 )
                               : '-'}
                           </div>
@@ -631,7 +638,8 @@ export function DynamicPricingBreakdown({
                         symbol,
                         rate,
                         t,
-                        taskPriceOptions
+                        taskPriceOptions,
+                        i18n.language
                       )}
                     </span>
                   ) : (

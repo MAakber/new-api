@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	stdmaps "maps"
 	"sort"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/setting/billing_setting"
 	"gorm.io/gorm"
 )
 
@@ -36,7 +38,7 @@ type PricingPatchOperation struct {
 	Expected *PricingExpectedValue `json:"expected,omitempty"`
 }
 
-// PatchPricingOptions atomically applies model-level changes to the ten
+// PatchPricingOptions atomically applies model-level changes to the
 // canonical JSON maps. Returned values are the complete committed maps.
 func PatchPricingOptions(operations []PricingPatchOperation) (map[string]string, error) {
 	committed, _, err := PatchPricingOptionsWithApplied(operations)
@@ -54,6 +56,10 @@ func PatchPricingOptionsWithApplied(operations []PricingPatchOperation) (map[str
 	}
 	applied := 0
 	latest, err := model.MutatePricingOptions(func(_ *gorm.DB, maps map[string]map[string]json.RawMessage) error {
+		previous := make(map[string]map[string]json.RawMessage, len(maps))
+		for key, values := range maps {
+			previous[key] = stdmaps.Clone(values)
+		}
 		for _, operation := range operations {
 			if operation.Expected == nil {
 				continue
@@ -86,20 +92,46 @@ func PatchPricingOptionsWithApplied(operations []PricingPatchOperation) (map[str
 		}
 		changedModels := make(map[string]bool)
 		for _, operation := range operations {
-			changedModels[operation.Model] = true
+			name := operation.Model
+			if operation.Key == billing_setting.PluginBillingExprOption {
+				_, name, _ = billing_setting.SplitPluginBillingExprKey(name)
+			}
+			changedModels[name] = true
 		}
 		for name := range changedModels {
-			pricing := make(model.PricingValues)
-			for _, key := range model.PricingOptionKeys {
-				if raw, exists := maps[key][name]; exists {
-					var value any
-					if err := common.Unmarshal(raw, &value); err != nil {
-						return fmt.Errorf("%w: %s", ErrPricingPatchValidation, err)
+			var snapshots [2]model.PricingValues
+			for index, options := range []map[string]map[string]json.RawMessage{maps, previous} {
+				pricing := make(model.PricingValues)
+				for _, key := range model.PricingOptionKeys {
+					if key == billing_setting.PluginBillingExprOption {
+						variants := make(map[string]any)
+						for composite, raw := range options[key] {
+							pluginKey, modelName, valid := billing_setting.SplitPluginBillingExprKey(composite)
+							if !valid || modelName != name {
+								continue
+							}
+							var expression string
+							if err := common.Unmarshal(raw, &expression); err != nil {
+								return fmt.Errorf("%w: %s", ErrPricingPatchValidation, err)
+							}
+							variants[pluginKey] = expression
+						}
+						if len(variants) > 0 {
+							pricing[key] = variants
+						}
+						continue
 					}
-					pricing[key] = value
+					if raw, exists := options[key][name]; exists {
+						var value any
+						if err := common.Unmarshal(raw, &value); err != nil {
+							return fmt.Errorf("%w: %s", ErrPricingPatchValidation, err)
+						}
+						pricing[key] = value
+					}
 				}
+				snapshots[index] = pricing
 			}
-			if err := model.ValidateModelPricing(name, pricing); err != nil {
+			if err := model.ValidateModelPricingAgainstSnapshot(name, snapshots[0], snapshots[1]); err != nil {
 				return fmt.Errorf("%w: %s", ErrPricingPatchValidation, err)
 			}
 		}
@@ -183,6 +215,11 @@ func validatePricingOperations(operations []PricingPatchOperation) error {
 		if !model.IsPricingOptionKey(operation.Key) || operation.Model == "" {
 			return fmt.Errorf("%w: invalid target", ErrPricingPatchValidation)
 		}
+		if operation.Key == billing_setting.PluginBillingExprOption {
+			if _, _, valid := billing_setting.SplitPluginBillingExprKey(operation.Model); !valid {
+				return fmt.Errorf("%w: invalid plugin pricing target", ErrPricingPatchValidation)
+			}
+		}
 		switch operation.Action {
 		case PricingPatchSet, PricingPatchDelete:
 			if operation.Expected == nil {
@@ -212,7 +249,7 @@ func isPricingScalar(key string, raw json.RawMessage) bool {
 	if len(raw) == 0 || common.Unmarshal(raw, &value) != nil || value == nil {
 		return false
 	}
-	if key == "billing_setting.billing_mode" || key == "billing_setting.billing_expr" {
+	if key == "billing_setting.billing_mode" || key == "billing_setting.billing_expr" || key == billing_setting.PluginBillingExprOption {
 		_, ok := value.(string)
 		return ok
 	}

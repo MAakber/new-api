@@ -132,6 +132,7 @@ import {
   CHANNEL_TYPE_CODE_BUDDY,
   CHANNEL_TYPE_CODEX,
   CHANNEL_STATUS_LABELS,
+  CHANNEL_TYPE_NEW_API,
   CHANNEL_TYPE_OPTIONS,
   CHANNEL_TYPE_TASK_PLUGIN,
   channelTypeOptionsForTaskPluginBind,
@@ -167,6 +168,7 @@ import {
   hasAdvancedSettingsErrors,
   normalizeCustomBalanceSettings,
 } from '../../lib'
+import { supportsNewAPIUpstream } from '../../lib/channel-plugin-extensions'
 import {
   collectInvalidStatusCodeEntries,
   collectNewDisallowedStatusCodeRedirects,
@@ -1020,7 +1022,10 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   const taskPluginOptionsQuery = useQuery({
     queryKey: ['task-plugin-options'],
     queryFn: async () => requireServerSuccess(await getTaskPluginOptions()),
-    enabled: currentType === CHANNEL_TYPE_TASK_PLUGIN && canBindTaskPlugin,
+    enabled:
+      (currentType === CHANNEL_TYPE_TASK_PLUGIN ||
+        currentType === CHANNEL_TYPE_NEW_API) &&
+      canBindTaskPlugin,
   })
 
   const boundTaskPlugin =
@@ -1655,6 +1660,46 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
       form.setValue('models', selected.join(','))
     },
     [form]
+  )
+
+  const taskPluginExtensionOptions = useMemo(
+    () =>
+      (taskPluginOptionsQuery.data ?? [])
+        .filter(supportsNewAPIUpstream)
+        .map((plugin) => ({
+          value: plugin.key,
+          label: plugin.name,
+          hint: plugin.key,
+          icon: <PluginIcon plugin={plugin} size={16} />,
+        })),
+    [taskPluginOptionsQuery.data]
+  )
+
+  // Binding an upstream plugin publishes its models like the dedicated task-plugin prefill;
+  // unbinding removes the models that no remaining bound plugin declares.
+  const handleTaskExtendPluginKeysChange = useCallback(
+    (keys: string[]) => {
+      const plugins = taskPluginOptionsQuery.data ?? []
+      const declaredBy = (bound: readonly string[]) =>
+        new Set(
+          plugins
+            .filter((plugin) => bound.includes(plugin.key))
+            .flatMap((plugin) => plugin.models)
+        )
+      const previous = form.getValues('task_extend_plugin_keys') ?? []
+      const added = declaredBy(keys.filter((key) => !previous.includes(key)))
+      const kept = declaredBy(keys)
+      const dropped = declaredBy(previous.filter((key) => !keys.includes(key)))
+      const models = parseModelsString(form.getValues('models') || '').filter(
+        (model) => kept.has(model) || !dropped.has(model)
+      )
+      for (const model of added) {
+        if (!models.includes(model)) models.push(model)
+      }
+      form.setValue('task_extend_plugin_keys', keys, { shouldDirty: true })
+      form.setValue('models', models.join(','), { shouldDirty: true })
+    },
+    [form, taskPluginOptionsQuery.data]
   )
 
   // Handle successful submission
@@ -3532,6 +3577,42 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                   <ChannelModelsSection>
                     <div className='space-y-5'>
                       <div className='border-border/60 bg-muted/10 rounded-lg border p-4'>
+                        {currentType === CHANNEL_TYPE_NEW_API &&
+                          canBindTaskPlugin &&
+                          taskPluginOptionsQuery.isSuccess && (
+                            <FormField
+                              control={form.control}
+                              name='task_extend_plugin_keys'
+                              render={({ field }) => (
+                                <FormItem className='mb-4'>
+                                  <FormLabel>
+                                    {t('Upstream task plugins')}
+                                  </FormLabel>
+                                  <FormControl>
+                                    <MultiSelect
+                                      options={taskPluginExtensionOptions}
+                                      aria-label={t('Upstream task plugins')}
+                                      selected={field.value ?? []}
+                                      onChange={
+                                        handleTaskExtendPluginKeysChange
+                                      }
+                                      placeholder={t(
+                                        'Select the task plugins installed on the upstream gateway'
+                                      )}
+                                      maxVisibleChips={8}
+                                      disabled={!canEditSensitive}
+                                    />
+                                  </FormControl>
+                                  <FormDescription>
+                                    {t(
+                                      'This channel serves the models of every selected plugin. The upstream New API gateway must have the same plugins installed.'
+                                    )}
+                                  </FormDescription>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          )}
                         <FormField
                           control={form.control}
                           name='models'

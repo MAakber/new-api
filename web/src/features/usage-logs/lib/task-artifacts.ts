@@ -1,5 +1,6 @@
 import { TASK_STATUS } from '../constants'
 import type {
+  AudioClip,
   TaskArtifact,
   TaskArtifactProjection,
   TaskArtifactsResponse,
@@ -13,7 +14,12 @@ const taskArtifactContentPathPattern =
   /\/v1\/tasks\/[^/]+\/artifacts\/[^/]+\/content$/
 const taskArtifactAccessTokenPattern = /^[A-Za-z0-9_-]{43}$/
 const maxTaskArtifacts = 64
-export type TaskPreviewMode = 'plugin' | 'legacy-suno' | 'legacy-video' | 'none'
+export type TaskPreviewMode =
+  | 'plugin'
+  | 'legacy-suno'
+  | 'legacy-video'
+  | 'discarded'
+  | 'none'
 
 export class TaskArtifactApiError extends Error {
   constructor(
@@ -114,6 +120,28 @@ function parseTaskArtifact(value: unknown): TaskArtifact {
   return artifact
 }
 
+// Legacy Suno tasks persisted their clip list as an array or as a JSON string
+// holding one. Only clips with an audio URL can be previewed.
+export function parseLegacyAudioClips(data: unknown): AudioClip[] {
+  let values: unknown[] = []
+  if (Array.isArray(data)) {
+    values = data
+  } else if (typeof data === 'string') {
+    try {
+      const parsed = JSON.parse(data)
+      values = Array.isArray(parsed) ? parsed : []
+    } catch {
+      return []
+    }
+  }
+  return values
+    .filter(
+      (value): value is AudioClip =>
+        isRecord(value) && typeof value.audio_url === 'string'
+    )
+    .slice(0, maxTaskArtifacts)
+}
+
 export function parseTaskArtifactsResponse(
   response: TaskArtifactsResponse
 ): TaskArtifactProjection {
@@ -147,6 +175,11 @@ export function parseTaskArtifactsResponse(
       response.data.legacy_content_url
     )
   }
+  if (response.data?.legacy_audio_clips != null) {
+    projection.legacyAudioClips = parseLegacyAudioClips(
+      response.data.legacy_audio_clips
+    )
+  }
   return projection
 }
 
@@ -154,7 +187,11 @@ export function shouldLoadTaskArtifacts(
   log: TaskLog,
   dialogOpen: boolean
 ): boolean {
-  return dialogOpen && log.status === TASK_STATUS.SUCCESS
+  return (
+    dialogOpen &&
+    log.status === TASK_STATUS.SUCCESS &&
+    log.result_discarded !== true
+  )
 }
 
 export function resolveTaskPreviewMode(
@@ -162,6 +199,9 @@ export function resolveTaskPreviewMode(
   hasProjectedArtifacts = false
 ): TaskPreviewMode {
   if (log.status !== TASK_STATUS.SUCCESS) return 'none'
+  // A synchronous result was returned inline and never persisted; there is
+  // nothing to project, so the viewer explains that instead of opening.
+  if (log.result_discarded === true) return 'discarded'
   if (hasProjectedArtifacts) return 'plugin'
   if (log.admin_info?.task_plugin) return 'plugin'
   if (log.platform === 'suno') return 'legacy-suno'

@@ -44,6 +44,7 @@ import {
 } from '@/features/pricing/lib/task-expr'
 import {
   taskPriceLabel,
+  taskUsageUnitLabel,
   taskEnumLabel,
   taskPricingConditions,
 } from '@/features/pricing/lib/task-price-display'
@@ -199,7 +200,11 @@ function TaskMatrixTable(props: TaskMatrixTableProps) {
                   </span>
                   <span className='text-muted-foreground text-[11px] font-normal'>
                     {(props.currency ?? USD_PRICING_CURRENCY).symbol}/
-                    {t(getTaskUsagePriceUnitLabelKey(definition.unit))}
+                    {taskUsageUnitLabel(
+                      definition,
+                      i18n.language,
+                      t(getTaskUsagePriceUnitLabelKey(definition.unit))
+                    )}
                   </span>
                 </div>
                 <FillColumnPopover

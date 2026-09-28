@@ -2,9 +2,12 @@ package controller
 
 import (
 	"context"
+	"crypto/sha256"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -12,24 +15,30 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/constant"
 	"github.com/QuantumNous/new-api/dto"
+	"github.com/QuantumNous/new-api/middleware"
 	"github.com/QuantumNous/new-api/model"
 	pluginruntime "github.com/QuantumNous/new-api/pkg/jsplugin"
 	"github.com/QuantumNous/new-api/relay"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
+	channeldto "github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/QuantumNous/new-api/types"
 	"github.com/gin-gonic/gin"
 	"github.com/glebarez/sqlite"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 type taskSubmissionTestBilling struct {
-	events    *[]string
-	settleErr error
-	onSettle  func()
-	refunds   int
+	events     *[]string
+	settleErr  error
+	reserveErr error
+	onSettle   func()
+	refunds    int
 }
 
 func (b *taskSubmissionTestBilling) Settle(int) error {
@@ -49,7 +58,7 @@ func (b *taskSubmissionTestBilling) NeedsRefund() bool        { return b.refunds
 func (b *taskSubmissionTestBilling) GetPreConsumedQuota() int { return 0 }
 func (b *taskSubmissionTestBilling) Reserve(int) error {
 	*b.events = append(*b.events, "reserve")
-	return nil
+	return b.reserveErr
 }
 
 func TestPresentTaskSubmissionUsesNativePresenterAfterPersistence(t *testing.T) {
@@ -227,6 +236,75 @@ func TestExecuteTaskSubmissionPersistsPinnedPluginProvenance(t *testing.T) {
 	assert.Equal(t, "upstream-private", stored.PrivateData.UpstreamTaskID)
 }
 
+// A submit route declaring retainResult: false persists the task row for
+// billing but never writes the upstream snapshot for an immediate terminal
+// result, while the in-memory task still carries it for the presenter. An
+// asynchronous result on the same route is retained because polling and
+// retrieval depend on it.
+func TestExecuteTaskSubmissionHonorsRouteRetainResult(t *testing.T) {
+	retainFalse := false
+	for _, tc := range []struct {
+		name          string
+		immediate     *relaycommon.TaskInfo
+		wantDiscarded bool
+	}{
+		{"immediate success is discarded", &relaycommon.TaskInfo{Status: model.TaskStatusSuccess, Progress: "100%"}, true},
+		{"immediate failure is discarded", &relaycommon.TaskInfo{Status: model.TaskStatusFailure, Reason: "rejected"}, true},
+		{"asynchronous result is retained", nil, false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			events := make([]string, 0, 3)
+			database, _ := openTaskDialectDatabase(t, &model.Task{}, &model.User{}, &model.Channel{})
+			previousDB := model.DB
+			model.DB = database
+			t.Cleanup(func() { model.DB = previousDB })
+			previousLogConsumeEnabled := common.LogConsumeEnabled
+			common.LogConsumeEnabled = false
+			t.Cleanup(func() { common.LogConsumeEnabled = previousLogConsumeEnabled })
+
+			c := taskSubmissionTestContext()
+			c.Set(pluginruntime.ContextKeyPinnedRoute, pluginruntime.PinnedRoute{
+				Plugin: &pluginruntime.LoadedPlugin{Meta: pluginruntime.Meta{Key: "sync-images"}},
+				Route:  pluginruntime.Route{Method: http.MethodPost, Path: "/sync/images", Type: pluginruntime.RouteTypeSubmit, RetainResult: &retainFalse},
+			})
+			info := taskSubmissionRelayInfo(&taskSubmissionTestBilling{events: &events})
+			upstream := []byte(`{"data":[{"url":"https://cdn.example/a.png"}]}`)
+
+			outcome, taskErr := executeTaskSubmissionWith(c, info, func(*gin.Context, *relaycommon.RelayInfo) (*relay.TaskSubmitResult, *dto.TaskError) {
+				return &relay.TaskSubmitResult{
+					UpstreamTaskID: "task_public",
+					Platform:       constant.TaskPlatform("sync-images"),
+					TaskData:       upstream,
+					Immediate:      tc.immediate,
+				}, nil
+			})
+			require.Nil(t, taskErr)
+			require.NotNil(t, outcome)
+			assert.JSONEq(t, string(upstream), string(outcome.Task.Data), "presenter keeps the in-memory snapshot")
+			assert.Equal(t, tc.wantDiscarded, outcome.Task.PrivateData.ResultDiscarded)
+			assert.Equal(t, !tc.wantDiscarded, outcome.Task.ResultRetrievable())
+
+			var stored model.Task
+			require.NoError(t, database.Where("task_id = ?", "task_public").First(&stored).Error)
+			assert.Equal(t, tc.wantDiscarded, stored.PrivateData.ResultDiscarded)
+			var nullCount int64
+			require.NoError(t, database.Model(&model.Task{}).Where("task_id = ? AND data IS NULL", "task_public").Count(&nullCount).Error)
+			if tc.wantDiscarded {
+				assert.Equal(t, int64(1), nullCount, "snapshot column must stay NULL")
+				artifacts, err := projectTaskArtifacts(&stored)
+				require.NoError(t, err)
+				assert.Empty(t, artifacts)
+			} else {
+				assert.Equal(t, int64(0), nullCount)
+				assert.JSONEq(t, string(upstream), string(stored.Data))
+			}
+			listed := model.TaskGetAllUserTask(1, 0, 10, model.SyncTaskQueryParams{})
+			require.Len(t, listed, 1)
+			assert.Empty(t, listed[0].Data, "task lists never select the snapshot column")
+		})
+	}
+}
+
 func TestExecuteTaskSubmissionRefundsCancellationBeforeDurableBarrier(t *testing.T) {
 	events := make([]string, 0, 2)
 	setupTaskSubmissionDatabase(t, true, &events)
@@ -351,17 +429,21 @@ func TestExecuteTaskSubmissionDisconnectAfterDurableInsertDoesNotRefund(t *testi
 	assert.False(t, c.Writer.Written())
 }
 
+// setupTaskSubmissionDatabase opens the dialect selected by
+// TEST_TASK_DB_DIALECT (SQLite in memory by default) and records every task
+// INSERT in events so tests can assert the reserve → insert → settle order.
+// Without migrate the task table does not exist and inserts fail.
 func setupTaskSubmissionDatabase(t *testing.T, migrate bool, events *[]string) *gorm.DB {
 	t.Helper()
 	previousDB := model.DB
-	database, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
-	require.NoError(t, err)
+	var models []any
+	if migrate {
+		models = append(models, &model.Task{})
+	}
+	database, _ := openTaskDialectDatabase(t, models...)
 	require.NoError(t, database.Callback().Create().Before("gorm:create").Register("test:task-submit-order", func(*gorm.DB) {
 		*events = append(*events, "insert")
 	}))
-	if migrate {
-		require.NoError(t, database.AutoMigrate(&model.Task{}))
-	}
 	model.DB = database
 	t.Cleanup(func() { model.DB = previousDB })
 	return database
@@ -385,5 +467,293 @@ func taskSubmissionRelayInfo(billing relaycommon.BillingSettler) *relaycommon.Re
 			LockedChannel: &model.Channel{Id: 1, Type: constant.ChannelTypeTaskPlugin, Name: "plugin"},
 		},
 		ChannelMeta: &relaycommon.ChannelMeta{ChannelId: 1, ChannelType: constant.ChannelTypeTaskPlugin},
+	}
+}
+
+// Uses the real submit adaptor, expression evaluator, BillingSession, task row
+// and consume log. Set TEST_TASK_DB_DIALECT plus TEST_MYSQL_DSN or
+// TEST_POSTGRES_DSN to exercise the same contract on an external test database.
+// Unique table prefixes keep the fixture isolated from all existing tables.
+// openTaskDialectDatabase opens the engine selected by TEST_TASK_DB_DIALECT
+// (default SQLite in memory; MySQL and PostgreSQL through TEST_MYSQL_DSN and
+// TEST_POSTGRES_DSN) with a unique table prefix, migrates the given models and
+// drops them on cleanup. It logs the engine version so database verification
+// runs leave a record.
+func openTaskDialectDatabase(t *testing.T, models ...any) (*gorm.DB, common.DatabaseType) {
+	t.Helper()
+	dialect := common.DatabaseType(os.Getenv("TEST_TASK_DB_DIALECT"))
+	var driver gorm.Dialector
+	switch dialect {
+	case "", common.DatabaseTypeSQLite:
+		dialect = common.DatabaseTypeSQLite
+		driver = sqlite.Open(":memory:")
+	case common.DatabaseTypeMySQL:
+		require.NotEmpty(t, os.Getenv("TEST_MYSQL_DSN"))
+		driver = mysql.Open(os.Getenv("TEST_MYSQL_DSN"))
+	case common.DatabaseTypePostgreSQL:
+		require.NotEmpty(t, os.Getenv("TEST_POSTGRES_DSN"))
+		driver = postgres.New(postgres.Config{DSN: os.Getenv("TEST_POSTGRES_DSN"), PreferSimpleProtocol: true})
+	default:
+		t.Fatalf("unsupported test dialect %q", dialect)
+	}
+	db, err := gorm.Open(driver, &gorm.Config{NamingStrategy: schema.NamingStrategy{TablePrefix: fmt.Sprintf("tsubmit_%d_", time.Now().UnixNano())}})
+	require.NoError(t, err)
+	sqlDB, err := db.DB()
+	require.NoError(t, err)
+	sqlDB.SetMaxOpenConns(1)
+	t.Cleanup(func() { _ = sqlDB.Close() })
+	require.NoError(t, db.AutoMigrate(models...))
+	t.Cleanup(func() { require.NoError(t, db.Migrator().DropTable(models...)) })
+	var version string
+	if dialect == common.DatabaseTypeSQLite {
+		require.NoError(t, db.Raw("SELECT sqlite_version()").Scan(&version).Error)
+	} else {
+		require.NoError(t, db.Raw("SELECT version()").Scan(&version).Error)
+	}
+	t.Logf("database: %s %s", dialect, version)
+	return db, dialect
+}
+
+func TestImmediateTaskSettlementDatabase(t *testing.T) {
+	db, dialect := openTaskDialectDatabase(t, &model.User{}, &model.Channel{}, &model.Task{}, &model.Log{})
+	oldDB, oldLogDB := model.DB, model.LOG_DB
+	oldMain, oldLog := common.MainDatabaseType(), common.LogDatabaseType()
+	oldRedis, oldMemory, oldBatch, oldConsume, oldExport := common.RedisEnabled, common.MemoryCacheEnabled, common.BatchUpdateEnabled, common.LogConsumeEnabled, common.DataExportEnabled
+	model.DB, model.LOG_DB = db, db
+	common.SetDatabaseTypes(dialect, dialect)
+	common.RedisEnabled, common.MemoryCacheEnabled, common.BatchUpdateEnabled, common.LogConsumeEnabled, common.DataExportEnabled = false, false, false, true, false
+	t.Cleanup(func() {
+		model.DB, model.LOG_DB = oldDB, oldLogDB
+		common.SetDatabaseTypes(oldMain, oldLog)
+		common.RedisEnabled, common.MemoryCacheEnabled, common.BatchUpdateEnabled, common.LogConsumeEnabled, common.DataExportEnabled = oldRedis, oldMemory, oldBatch, oldConsume, oldExport
+	})
+
+	const expression = `u("units") == 7 ? tier("missing", u("missing") * 1.0) : u("units") == 8 ? tier("invalid", -1.0) : u("units") > 3 ? tier("bulk", u("units") * 0.01) : tier("small", u("units") * 0.01)`
+	withTieredBillingConfig(t, map[string]string{"document-model": "tiered_expr"}, map[string]string{"document-model": expression})
+	const source = `
+export const meta={apiVersion:1,key:"generic-settlement",name:"Generic settlement",version:"1.0.0",author:{name:"Test"},models:["document-model"],fetchMode:"per_task",usageSchema:{units:{type:"number",unit:"count"}}};
+export function buildSubmitRequest(ctx){return {url:ctx.baseUrl+"/compile",body:ctx.requestBody};}
+export function parseSubmitResponse(ctx,resp){return {taskId:"vendor-job",taskData:resp.body,immediate:{status:resp.body.status,reason:"provider rejected job"}};}
+export function extractUsage(){return {units:4};}
+export function extractUsageOnComplete(ctx,result,body){return body.usage;}
+export function parseTaskResult(){throw new Error("completed submissions must not poll");}
+export function buildQueryRequest(){throw new Error("completed submissions must not poll");}
+`
+	plugin, err := pluginruntime.CompilePlugin(source, pluginruntime.Options{})
+	require.NoError(t, err)
+	for index, tc := range []struct {
+		name, status string
+		actual       any
+		count        float64
+	}{
+		{"partial", "SUCCESS", 2, 2}, {"zero", "SUCCESS", 0, 0}, {"larger", "SUCCESS", 6, 6},
+		{"invalid usage", "SUCCESS", -1, 4}, {"expression failure", "SUCCESS", 7, 4}, {"negative result", "SUCCESS", 8, 4}, {"missing usage", "SUCCESS", nil, 4}, {"failed", "FAILURE", 9, 0},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				w.Header().Set("Content-Type", "application/json")
+				body := map[string]any{"status": tc.status}
+				if tc.actual != nil {
+					body["usage"] = map[string]any{"units": tc.actual}
+				}
+				encoded, err := common.Marshal(body)
+				if err != nil {
+					panic(err)
+				}
+				_, _ = w.Write(encoded)
+			}))
+			defer server.Close()
+			initial := int(20 * common.QuotaPerUnit)
+			user := model.User{Username: fmt.Sprintf("task_user_%d", index), AffCode: fmt.Sprintf("task_aff_%d", index), Quota: initial}
+			require.NoError(t, db.Create(&user).Error)
+			ch := model.Channel{Name: "test provider", Type: constant.ChannelTypeTaskPlugin}
+			require.NoError(t, db.Create(&ch).Error)
+			c := taskSubmissionTestContext()
+			c.Set("group", "default")
+			c.Set("username", user.Username)
+			c.Set("task_request", map[string]any{"model": "document-model"})
+			c.Set(pluginruntime.ContextKeyPinnedPlugin, pluginruntime.PinnedPlugin{Plugin: plugin})
+			common.SetContextKey(c, constant.ContextKeyOriginalModel, "document-model")
+			common.SetContextKey(c, constant.ContextKeyChannelBaseUrl, server.URL)
+			common.SetContextKey(c, constant.ContextKeyChannelId, ch.Id)
+			common.SetContextKey(c, constant.ContextKeyChannelType, ch.Type)
+			info := taskSubmissionRelayInfo(nil)
+			info.UserId = user.Id
+			info.OriginModelName = "document-model"
+			info.UserGroup = "default"
+			info.UsingGroup = "default"
+			info.IsPlayground = true
+			info.UserSetting.BillingPreference = "wallet_only"
+			info.PublicTaskID = model.GenerateTaskID()
+			info.LockedChannel = &ch
+			outcome, taskErr := executeTaskSubmission(c, info)
+			require.Nil(t, taskErr)
+			require.NotNil(t, outcome)
+			want := common.QuotaRound(tc.count * 0.01 * common.QuotaPerUnit)
+			assert.Equal(t, want, outcome.Result.Quota)
+			assert.Equal(t, want, info.PriceData.Quota)
+			var stored model.Task
+			require.NoError(t, db.Where("task_id = ?", info.PublicTaskID).First(&stored).Error)
+			assert.Equal(t, want, stored.Quota)
+			assert.Equal(t, model.TaskStatus(tc.status), stored.Status)
+			assert.Positive(t, stored.FinishTime)
+			assert.Equal(t, float64(4), info.TieredBillingSnapshot.EstimatedQuotaBeforeGroup/(0.01*common.QuotaPerUnit))
+			if tc.status == "SUCCESS" {
+				assert.Equal(t, tc.count, stored.PrivateData.BillingContext.TieredSnapshot.UsageFacts["units"])
+			}
+			var updated model.User
+			require.NoError(t, db.First(&updated, user.Id).Error)
+			assert.Equal(t, initial-want, updated.Quota)
+			assert.Equal(t, want, updated.UsedQuota)
+			var logs []model.Log
+			require.NoError(t, db.Where("user_id = ?", user.Id).Find(&logs).Error)
+			require.Len(t, logs, 1)
+			assert.Equal(t, want, logs[0].Quota)
+			var other map[string]any
+			require.NoError(t, common.UnmarshalJsonStr(logs[0].Other, &other))
+			if tc.status == "SUCCESS" {
+				assert.Equal(t, tc.count, other["usage_facts"].(map[string]any)["units"])
+			}
+			assert.False(t, c.Writer.Written(), "presentation must follow persistence and settlement")
+			require.NoError(t, info.Billing.Settle(want))
+			info.Billing.Refund(c)
+			require.NoError(t, db.First(&updated, user.Id).Error)
+			assert.Equal(t, initial-want, updated.Quota, "terminal settlement is idempotent")
+		})
+	}
+}
+
+func TestAcceptedSubmitStreamNeverRetries(t *testing.T) {
+	c := taskSubmissionTestContext()
+	assert.False(t, shouldRetryTaskRelay(c, 1, &dto.TaskError{StatusCode: 502, LocalError: true, NoRetry: true}, 3))
+}
+
+func TestExecuteTaskSubmissionRefundsWhenFinalReserveFails(t *testing.T) {
+	events := []string{}
+	setupTaskSubmissionDatabase(t, true, &events)
+	billing := &taskSubmissionTestBilling{events: &events, reserveErr: errors.New("insufficient funds")}
+	c := taskSubmissionTestContext()
+	info := taskSubmissionRelayInfo(billing)
+	outcome, taskErr := executeTaskSubmissionWith(c, info, func(*gin.Context, *relaycommon.RelayInfo) (*relay.TaskSubmitResult, *dto.TaskError) {
+		return &relay.TaskSubmitResult{Platform: "plugin", Quota: 600, Immediate: &relaycommon.TaskInfo{Status: "SUCCESS"}}, nil
+	})
+	require.Nil(t, outcome)
+	require.NotNil(t, taskErr)
+	assert.Equal(t, http.StatusForbidden, taskErr.StatusCode)
+	assert.Equal(t, []string{"reserve", "refund"}, events)
+	assert.Equal(t, 1, billing.refunds)
+	assert.False(t, c.Writer.Written())
+}
+
+func TestOfficialTypeSafeInstallSubmitAndSettlement(t *testing.T) {
+	source, err := os.ReadFile("testdata/marketplace/typesafe-1.0.0.js")
+	require.NoError(t, err)
+	require.Equal(t, "80585e402c8e6709f976e6be1f0308a95d3b991370383ab984d21fe968d8e912", fmt.Sprintf("%x", sha256.Sum256(source)))
+	service.InitHttpClient()
+	for _, tc := range []struct {
+		name        string
+		channelType int
+		path        string
+		status      int
+	}{
+		{name: "vendor", channelType: constant.ChannelTypeTaskPlugin, path: "/v1/systemone", status: http.StatusCreated},
+		{name: "gateway", channelType: constant.ChannelTypeNewAPI, path: "/typesafe/v1/systemone", status: http.StatusAccepted},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			db, dialect := openTaskDialectDatabase(t, &model.User{}, &model.Channel{}, &model.Task{}, &model.Log{}, &model.TaskPlugin{}, &model.Option{})
+			oldDB, oldLogDB := model.DB, model.LOG_DB
+			oldMain, oldLog := common.MainDatabaseType(), common.LogDatabaseType()
+			oldRedis, oldMemory, oldBatch, oldConsume, oldExport := common.RedisEnabled, common.MemoryCacheEnabled, common.BatchUpdateEnabled, common.LogConsumeEnabled, common.DataExportEnabled
+			model.DB, model.LOG_DB = db, db
+			common.SetDatabaseTypes(dialect, dialect)
+			common.RedisEnabled, common.MemoryCacheEnabled, common.BatchUpdateEnabled, common.LogConsumeEnabled, common.DataExportEnabled = false, false, false, true, false
+			t.Cleanup(func() {
+				model.DB, model.LOG_DB = oldDB, oldLogDB
+				common.SetDatabaseTypes(oldMain, oldLog)
+				common.RedisEnabled, common.MemoryCacheEnabled, common.BatchUpdateEnabled, common.LogConsumeEnabled, common.DataExportEnabled = oldRedis, oldMemory, oldBatch, oldConsume, oldExport
+			})
+			withTieredBillingConfig(t, map[string]string{"jev-latest": "tiered_expr"}, map[string]string{"jev-latest": `tier("input", u("input_tokens") * 0.5 / 1000000)`})
+			cleanupTaskPluginControllerRuntime(t, "typesafe")
+			body, err := common.Marshal(map[string]any{"source": string(source)})
+			require.NoError(t, err)
+			upload := httptest.NewRecorder()
+			uploadContext, _ := gin.CreateTestContext(upload)
+			uploadContext.Request = httptest.NewRequest(http.MethodPost, "/api/plugin/task", strings.NewReader(string(body)))
+			uploadContext.Request.Header.Set("Content-Type", "application/json")
+			UploadTaskPlugin(uploadContext)
+			require.Contains(t, upload.Body.String(), `"success":true`)
+			storedPlugin, err := model.GetTaskPluginVersion("typesafe", "1.0.0")
+			require.NoError(t, err)
+			require.Equal(t, string(source), string(storedPlugin.Source))
+			plugin, ok := pluginruntime.DefaultRegistry.Get("typesafe")
+			require.True(t, ok)
+			const responseBody = `{"model":"jev-latest","answers":{"ok":{"type":"noul","value":true}},"usage":{"input_tokens":1000}}`
+			upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				assert.Equal(t, tc.path, r.URL.Path)
+				assert.Equal(t, "Bearer test-typesafe-token", r.Header.Get("Authorization"))
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(tc.status)
+				_, _ = w.Write([]byte(responseBody))
+			}))
+			t.Cleanup(upstream.Close)
+			initial := int(10 * common.QuotaPerUnit)
+			user := model.User{Username: "typesafe-user", AffCode: "typesafe-aff", Quota: initial}
+			require.NoError(t, db.Create(&user).Error)
+			channel := model.Channel{Name: "typesafe test", Type: tc.channelType, Key: "test-typesafe-token", BaseURL: &upstream.URL, Models: "jev-latest", Group: "default", Status: common.ChannelStatusEnabled}
+			if tc.channelType == constant.ChannelTypeNewAPI {
+				channel.SetSetting(channeldto.ChannelSettings{TaskExtendPluginKeys: []string{"typesafe"}})
+			} else {
+				channel.SetSetting(channeldto.ChannelSettings{TaskPluginKey: "typesafe"})
+			}
+			require.NoError(t, db.Create(&channel).Error)
+			var info *relaycommon.RelayInfo
+			router := gin.New()
+			router.POST("/typesafe/v1/systemone", func(c *gin.Context) {
+				c.Set("group", "default")
+				c.Set("username", user.Username)
+				generation := pluginruntime.DefaultRegistry.Generation()
+				c.Set(pluginruntime.ContextKeyPinnedPlugin, pluginruntime.PinnedPlugin{Generation: generation, Plugin: plugin})
+				c.Set(pluginruntime.ContextKeyPinnedRoute, pluginruntime.PinnedRoute{Generation: generation, Plugin: plugin, Route: plugin.Meta.Routes[0]})
+				c.Next()
+			}, middleware.PrepareTaskPluginRoute(), func(c *gin.Context) {
+				require.Nil(t, middleware.SetupContextForSelectedChannel(c, &channel, "jev-latest"))
+				info = taskSubmissionRelayInfo(nil)
+				info.UserId = user.Id
+				info.OriginModelName = "jev-latest"
+				info.UserGroup, info.UsingGroup = "default", "default"
+				info.IsPlayground = true
+				info.UserSetting.BillingPreference = "wallet_only"
+				info.PublicTaskID = model.GenerateTaskID()
+				info.LockedChannel = &channel
+				info.Action = c.GetString("task_action")
+				outcome, taskErr := executeTaskSubmission(c, info)
+				require.Nil(t, taskErr)
+				require.NotNil(t, outcome)
+				presentTaskSubmission(c, outcome)
+			})
+			request := httptest.NewRequest(http.MethodPost, "/typesafe/v1/systemone", strings.NewReader(`{"model":"jev-latest","state":"test document","questions":{"ok":{"type":"noul","instructions":"Is this a test?"}}}`))
+			request.Header.Set("Content-Type", "application/json")
+			response := httptest.NewRecorder()
+			router.ServeHTTP(response, request)
+			require.Equal(t, http.StatusOK, response.Code, response.Body.String())
+			assert.JSONEq(t, responseBody, response.Body.String())
+			require.NotNil(t, info)
+			want := common.QuotaRound(1000 * 0.5 / 1000000 * common.QuotaPerUnit)
+			var stored model.Task
+			require.NoError(t, db.Where("task_id = ?", info.PublicTaskID).First(&stored).Error)
+			assert.Equal(t, model.TaskStatus(model.TaskStatusSuccess), stored.Status)
+			assert.Equal(t, want, stored.Quota)
+			assert.True(t, stored.PrivateData.ResultDiscarded)
+			assert.False(t, stored.ResultRetrievable())
+			assert.Empty(t, stored.Data, "retainResult:false must not persist the private response")
+			assert.Equal(t, float64(1000), stored.PrivateData.BillingContext.TieredSnapshot.UsageFacts["input_tokens"])
+			var updated model.User
+			require.NoError(t, db.First(&updated, user.Id).Error)
+			assert.Equal(t, initial-want, updated.Quota)
+			var logs []model.Log
+			require.NoError(t, db.Where("user_id = ?", user.Id).Find(&logs).Error)
+			require.Len(t, logs, 1)
+			assert.Equal(t, want, logs[0].Quota)
+		})
 	}
 }

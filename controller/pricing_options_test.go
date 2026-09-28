@@ -2,12 +2,16 @@ package controller
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/pkg/jsplugin"
+	"github.com/QuantumNous/new-api/setting/billing_setting"
+	"github.com/QuantumNous/new-api/setting/config"
 	"github.com/QuantumNous/new-api/setting/ratio_setting"
 	"github.com/gin-gonic/gin"
 	"github.com/glebarez/sqlite"
@@ -111,4 +115,47 @@ func TestGenericOptionHandlerRejectsPricingBeforeRuntimeValidation(t *testing.T)
 	require.Equal(t, before.Value, common.OptionMap["ModelPrice"])
 	common.OptionMapRWMutex.RUnlock()
 	require.Equal(t, runtimeBefore, ratio_setting.ModelPrice2JSONString())
+}
+
+func TestPricingPatchPluginVariantsUseLockedSnapshot(t *testing.T) {
+	previousConfig := config.GlobalConfig.ExportAllConfigs()
+	t.Cleanup(func() { require.NoError(t, config.GlobalConfig.LoadFromDB(previousConfig)) })
+	usePricingControllerDB(t)
+	for _, spec := range []struct{ key, field string }{{"patch-alpha", "seconds"}, {"patch-beta", "credits"}} {
+		source := fmt.Sprintf(`
+export const meta={apiVersion:1,key:%q,name:%q,version:"1.0.0",author:{name:"Test"},models:["patch-shared"],fetchMode:"per_task",usageSchema:{%s:{type:"number",unit:"count"}}};
+export function buildSubmitRequest(){return {}} export function parseSubmitResponse(){return {}}
+export function buildQueryRequest(){return {}} export function parseTaskResult(){return {}}
+`, spec.key, spec.key, spec.field)
+		_, err := jsplugin.DefaultRegistry.Register(source, jsplugin.Options{})
+		require.NoError(t, err)
+		t.Cleanup(func() { require.NoError(t, jsplugin.DefaultRegistry.Unregister(spec.key)) })
+	}
+	created := performPricingPatch(t, `{"operations":[
+{"key":"billing_setting.billing_expr","model":"patch-shared","action":"set","value":"u(\"seconds\")","expected":{"present":false}},
+{"key":"billing_setting.plugin_billing_expr","model":"patch-beta::patch-shared","action":"set","value":"u(\"credits\")","expected":{"present":false}}
+]}`)
+	require.Equal(t, http.StatusOK, created.Code, created.Body.String())
+	expression, exists := billing_setting.GetPluginBillingExpr("patch-beta", "patch-shared")
+	require.True(t, exists)
+	require.Equal(t, `u("credits")`, expression)
+	deleted := performPricingPatch(t, `{"operations":[{"key":"billing_setting.plugin_billing_expr","model":"patch-beta::patch-shared","action":"delete","expected":{"present":true,"value":"u(\"credits\")"}}]}`)
+	require.Equal(t, http.StatusBadRequest, deleted.Code, deleted.Body.String())
+	stillStored, exists := billing_setting.GetPluginBillingExpr("patch-beta", "patch-shared")
+	require.True(t, exists)
+	assert.Equal(t, expression, stillStored)
+	require.NoError(t, jsplugin.DefaultRegistry.Unregister("patch-beta"))
+	// An out-of-date process cache must neither reject the stored orphan nor
+	// authorize a different orphaned expression absent from the locked database.
+	require.NoError(t, config.GlobalConfig.LoadFromDB(map[string]string{
+		billing_setting.PluginBillingExprOption: `{"patch-beta::patch-shared":"u(\"credits\") * 2"}`,
+	}))
+	ordinary := performPricingPatch(t, `{"operations":[{"key":"ModelRatio","model":"patch-shared","action":"set","value":2,"expected":{"present":false}}]}`)
+	require.Equal(t, http.StatusOK, ordinary.Code, ordinary.Body.String())
+	invalidOrphan := performPricingPatch(t, `{"operations":[{"key":"billing_setting.plugin_billing_expr","model":"patch-beta::patch-shared","action":"set","value":"u(\"credits\") * 2","expected":{"present":true,"value":"u(\"credits\")"}}]}`)
+	require.Equal(t, http.StatusBadRequest, invalidOrphan.Code, invalidOrphan.Body.String())
+	removed := performPricingPatch(t, `{"operations":[{"key":"billing_setting.plugin_billing_expr","model":"patch-beta::patch-shared","action":"delete","expected":{"present":true,"value":"u(\"credits\")"}}]}`)
+	require.Equal(t, http.StatusOK, removed.Code, removed.Body.String())
+	_, exists = billing_setting.GetPluginBillingExpr("patch-beta", "patch-shared")
+	assert.False(t, exists)
 }
