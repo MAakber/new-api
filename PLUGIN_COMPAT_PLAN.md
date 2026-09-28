@@ -20,7 +20,7 @@ Integrate the complete plugin contract and its execution dependencies from the p
 3. **Completed:** Integrate gateway plugin bindings, selection, credentials, polling, and lifecycle management. Focused lifecycle and permission tests pass.
 4. **Completed:** Integrate current plugin protocol extensions, frontend configuration, and API documentation. TypeSafe uses the resulting generic contract; no TypeSafe-only host branch was added.
 5. **Completed with noted environment gates:** Focused and integration tests, real database compatibility checks, independent relaykit build, frontend checks, and downstream regression checks are complete.
-6. **In progress:** Review final diff and evidence, commit verified changes, and integrate into main only after the required gates pass.
+6. **Completed:** Reviewed the final diff, committed the verified branch as `e39f68be3`, and merged it into `main` as `5e8b5e806` while preserving the pre-existing auth UI worktree changes.
 
 ## Preservation rules
 
@@ -65,4 +65,4 @@ Read this file, inspect `git status --short --branch`, `git diff --name-only --d
 - Full affected frontend run passed: 84 test files and 651 tests. Full affected Go package run passed for plugin/runtime, perf metrics, adaptor, built-ins, router, relay, service, middleware, and model; the controller package had only existing Windows SQLite TempDir cleanup failures in unrelated security/quota tests. Targeted controller tests passed.
 - `go build ./...` cannot run in this checkout because `main.go` embeds missing `web/dist`; independent `GOWORK=off go build ./...` and tests in `relaykit` passed. The Linux Docker retry was blocked only by uncached Go modules and network timeout; Windows MySQL/PostgreSQL TypeSafe and source-upgrade runs passed.
 - The broad frontend run emitted only Happy DOM `scrollTo()` not-implemented notices; all 84 files and 651 tests passed. Changed-file lint and typecheck passed.
-- No merge to `main` or remote publication has occurred. Main's unrelated auth UI files are disjoint from this branch's changed paths. Next: commit this branch, merge it into main while preserving the dirty auth files, then run status and ancestry checks.
+- Merged into `main` as `5e8b5e806` (`merge: integrate upstream plugin contract and gateway support`); `e39f68be3` is an ancestor of `main`. Main's unrelated auth UI files remain uncommitted and untouched. No remote push or deployment was performed.
