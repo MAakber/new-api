@@ -19,6 +19,7 @@ import (
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/pkg/jsplugin"
 	builtinplugins "github.com/QuantumNous/new-api/plugins"
+	channeldto "github.com/QuantumNous/new-api/relaykit/dto"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
 	"github.com/glebarez/sqlite"
@@ -1742,6 +1743,55 @@ func TestPrepareTaskPluginEndpointUsesSelectedChannelCandidate(t *testing.T) {
 			} else {
 				assert.Equal(t, http.StatusNoContent, recorder.Code, recorder.Body.String())
 			}
+		})
+	}
+}
+
+func TestGatewayEndpointUsesBindingsAndPreservesOrdinaryModel(t *testing.T) {
+	for _, key := range []string{"gateway-alpha", "gateway-beta"} {
+		source := taskResponsesPluginSource(key, 0, `["gateway-shared"]`, `["sync"]`, `renderFinal:function(){return {};}`, `return {model:ctx.model,action:"gateway"}`)
+		source = strings.Replace(source, `fetchMode: "per_task",`, `fetchMode: "per_task", upstreams:["new_api"],`, 1)
+		_, err := jsplugin.DefaultRegistry.Register(source, jsplugin.Options{})
+		require.NoError(t, err)
+		t.Cleanup(func() { require.NoError(t, jsplugin.DefaultRegistry.Unregister(key)) })
+	}
+	for _, tc := range []struct {
+		name       string
+		bindings   []string
+		wantPlugin string
+	}{
+		{name: "bound beta", bindings: []string{"gateway-beta"}, wantPlugin: "gateway-beta"},
+		{name: "multiple bindings use stable generation order", bindings: []string{"gateway-beta", "gateway-alpha"}, wantPlugin: "gateway-alpha"},
+		{name: "unbound gateway keeps ordinary request"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			channel := &model.Channel{Id: 900, Type: constant.ChannelTypeNewAPI, Key: "test-gateway-token"}
+			channel.SetSetting(channeldto.ChannelSettings{TaskExtendPluginKeys: tc.bindings})
+			router := gin.New()
+			router.POST("/v1/responses", TaskPluginEndpointCandidates(), func(c *gin.Context) {
+				require.Nil(t, SetupContextForSelectedChannel(c, channel, "GATEWAY-SHARED"))
+				c.Next()
+			}, PinTaskPluginEndpoint(), PrepareTaskPluginEndpoint(), func(c *gin.Context) {
+				value, claimed := c.Get(jsplugin.ContextKeyPinnedEndpoint)
+				if tc.wantPlugin == "" {
+					assert.False(t, claimed)
+					request, err := getModelFromRequest(c)
+					require.NoError(t, err)
+					assert.Equal(t, "GATEWAY-SHARED", request.Model)
+				} else {
+					require.True(t, claimed)
+					pinned := value.(jsplugin.PinnedEndpoint)
+					assert.Equal(t, tc.wantPlugin, pinned.Plugin.Meta.Key)
+					require.Len(t, pinned.Candidates, 1)
+					assert.Equal(t, tc.wantPlugin, c.GetString("task_plugin_key"))
+				}
+				c.Status(http.StatusNoContent)
+			})
+			request := httptest.NewRequest(http.MethodPost, "/v1/responses", strings.NewReader(`{"model":"GATEWAY-SHARED"}`))
+			request.Header.Set("Content-Type", "application/json")
+			response := httptest.NewRecorder()
+			router.ServeHTTP(response, request)
+			require.Equal(t, http.StatusNoContent, response.Code, response.Body.String())
 		})
 	}
 }

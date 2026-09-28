@@ -29,7 +29,7 @@ func AppendTaskPluginIdentityFilter(c *gin.Context, pluginKey string) {
 		return
 	}
 	channelTypes, pluginKeys := pinnedTaskPluginIdentities(c, pluginKey)
-	if c.GetInt("channel_type") == constant.ChannelTypeTaskPlugin {
+	if channelType := c.GetInt("channel_type"); channelType == constant.ChannelTypeTaskPlugin || channelType == constant.ChannelTypeNewAPI {
 		// An explicitly bound plugin must not retry onto an ordinary channel.
 		channelTypes = nil
 	}

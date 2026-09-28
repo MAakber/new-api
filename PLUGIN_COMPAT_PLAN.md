@@ -17,8 +17,8 @@ Integrate the complete plugin contract and its execution dependencies from the p
 
 1. **Completed:** Inventory upstream plugin changes, dependencies, and baseline checks; locate marketplace plugin fixtures.
 2. **Implemented, focused tests pass:** Complete contract, submission streaming, model-specific usage metadata, and settlement integration. Full integration gates remain in stage 5.
-3. **In progress:** Integrate gateway plugin bindings, selection, credentials, polling, and lifecycle management.
-4. **Pending:** Integrate current plugin protocol extensions, frontend configuration, and API documentation.
+3. **Implemented, focused tests pass:** Integrate gateway plugin bindings, selection, credentials, polling, and lifecycle management. Full database/lifecycle gates remain in stage 5.
+4. **In progress:** Integrate current plugin protocol extensions, frontend configuration, and API documentation.
 5. **Pending:** Run focused and integration tests, real database compatibility checks, independent relaykit build, frontend checks, and downstream regression checks.
 6. **Pending:** Review final diff and evidence, commit verified changes, and integrate into main only after the required gates pass.
 
@@ -57,3 +57,8 @@ Read this file, inspect `git status --short --branch`, `git diff --name-only --d
 - Test databases are isolated Docker containers in WSL `Ubuntu-SF3D`, names `newapi-plugin-compat-mysql-20260928` and `newapi-plugin-compat-postgres-20260928`, loopback ports 13306/15432. WSL must remain alive; an active docker-log-follow process currently keeps it running. Do not affect unrelated containers. Stop these two test containers when final verification is complete.
 - Security guidance consulted before binding/credential changes: OWASP ASVS 5.0.0 (https://owasp.org/projects/asvs), Authorization, Authentication, and Session Management cheat sheets. Applicable controls: server-side permission checks on every binding mutation, fail-closed validation, existing session protection, and no usable credentials in audit output. This is scoped guidance, not a whole-application compliance claim.
 - Next: port 4c34f25a4 backend and tests using semantic three-way comparison, then adapt type-60 binding to this fork's channel-first endpoint selection. Follow-up upstream plugin commits include 129f21b69, a8ed7f7c5, 03563a4a7, 65d3a2171, 47713bcb1, 474ed66fb, c0cff23a3, 2c175190c, d61d6be75; examine relevant task metrics change 3abbb8198 as well.
+- Stage 3: 4c34f25a4 backend integrated with fork-specific channel selection. No channel IDs changed. Preserved candidate-only filters and unbound gateway traffic; model rewriting now happens only after a plugin actually claims a request. Regression reproduced the ordinary-model rewrite bug before fixing it.
+- Binding permission test exposed pointer aliasing in the existing sparse channel update: decoding into a shallow copy also changed the original settings used for permission comparison. Replaced that with an independent JSON copy, preserving non-JSON revision/guard/key metadata. Both original sparse-patch authorization tests and new gateway permission tests pass.
+- Gateway drivers now reject execution when a plugin does not declare gateway support. Unbinding reads and updates settings inside a row-locked transaction. Cache refresh also runs when a later cascade step fails after a successful unbind.
+- `stage3-final-focused`: 328 tests passed, 0 failed, 0 skipped. Independent `GOWORK=off go build ./...` and `go test -count=1 ./dto` in relaykit passed. Earlier `stage3-gateway-fixed` passed 34 middleware tests.
+- Next concrete step: integrate the follow-up JSON/usage fixes and 03563a4a7 image host protocol plus retainResult support; preserve the fork's legacy Ali image adaptor/billing path while adding plugin image support. Then frontend changes from 74629e29f/4c34f25a4 and remaining pinned-upstream plugin fixes. No merge to main or remote publication has occurred.
