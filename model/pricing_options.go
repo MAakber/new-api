@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/setting/billing_setting"
 	"github.com/QuantumNous/new-api/setting/config"
 	"github.com/QuantumNous/new-api/setting/ratio_setting"
 	"gorm.io/gorm"
@@ -19,6 +20,7 @@ var PricingOptionKeys = []string{
 	"ModelPrice", "ModelRatio", "CompletionRatio", "CacheRatio", "CreateCacheRatio",
 	"ImageRatio", "AudioRatio", "AudioCompletionRatio",
 	"billing_setting.billing_mode", "billing_setting.billing_expr",
+	billing_setting.PluginBillingExprOption,
 }
 
 var (
@@ -105,18 +107,19 @@ func IsPricingOptionKey(key string) bool {
 func CanonicalPricingOptionDefaults() map[string]string {
 	configs := config.GlobalConfig.ExportAllConfigs()
 	defaults := map[string]string{
-		"ModelPrice":                   ratio_setting.ModelPrice2JSONString(),
-		"ModelRatio":                   ratio_setting.ModelRatio2JSONString(),
-		"CompletionRatio":              ratio_setting.CompletionRatio2JSONString(),
-		"CacheRatio":                   ratio_setting.CacheRatio2JSONString(),
-		"CreateCacheRatio":             ratio_setting.CreateCacheRatio2JSONString(),
-		"ImageRatio":                   ratio_setting.ImageRatio2JSONString(),
-		"AudioRatio":                   ratio_setting.AudioRatio2JSONString(),
-		"AudioCompletionRatio":         ratio_setting.AudioCompletionRatio2JSONString(),
-		"billing_setting.billing_mode": "{}",
-		"billing_setting.billing_expr": "{}",
+		"ModelPrice":                            ratio_setting.ModelPrice2JSONString(),
+		"ModelRatio":                            ratio_setting.ModelRatio2JSONString(),
+		"CompletionRatio":                       ratio_setting.CompletionRatio2JSONString(),
+		"CacheRatio":                            ratio_setting.CacheRatio2JSONString(),
+		"CreateCacheRatio":                      ratio_setting.CreateCacheRatio2JSONString(),
+		"ImageRatio":                            ratio_setting.ImageRatio2JSONString(),
+		"AudioRatio":                            ratio_setting.AudioRatio2JSONString(),
+		"AudioCompletionRatio":                  ratio_setting.AudioCompletionRatio2JSONString(),
+		"billing_setting.billing_mode":          "{}",
+		"billing_setting.billing_expr":          "{}",
+		billing_setting.PluginBillingExprOption: "{}",
 	}
-	for _, key := range []string{"billing_setting.billing_mode", "billing_setting.billing_expr"} {
+	for _, key := range []string{"billing_setting.billing_mode", "billing_setting.billing_expr", billing_setting.PluginBillingExprOption} {
 		if value, ok := configs[key]; ok {
 			defaults[key] = value
 		}

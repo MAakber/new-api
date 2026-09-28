@@ -15,9 +15,9 @@ Integrate the complete plugin contract and its execution dependencies from the p
 
 ## Stages
 
-1. **In progress:** Inventory upstream plugin changes, dependencies, and baseline checks; locate marketplace plugin fixtures.
-2. **Pending:** Complete contract, submission streaming, model-specific usage metadata, and settlement integration.
-3. **Pending:** Integrate gateway plugin bindings, selection, credentials, polling, and lifecycle management.
+1. **Completed:** Inventory upstream plugin changes, dependencies, and baseline checks; locate marketplace plugin fixtures.
+2. **Implemented, focused tests pass:** Complete contract, submission streaming, model-specific usage metadata, and settlement integration. Full integration gates remain in stage 5.
+3. **In progress:** Integrate gateway plugin bindings, selection, credentials, polling, and lifecycle management.
 4. **Pending:** Integrate current plugin protocol extensions, frontend configuration, and API documentation.
 5. **Pending:** Run focused and integration tests, real database compatibility checks, independent relaykit build, frontend checks, and downstream regression checks.
 6. **Pending:** Review final diff and evidence, commit verified changes, and integrate into main only after the required gates pass.
@@ -49,3 +49,11 @@ Read this file, inspect `git status --short --branch`, `git diff --name-only --d
 ## Checkpoints
 
 - Initial: created isolated worktree from the existing contract slice; fetched and pinned upstream. No implementation changes yet.
+- Marketplace cloned at `D:/10178/Projects/new-api-plugin-compat-evidence/marketplace`, revision `b42cc99a6bd1998d0cc1581270bd46798ce00ad6`. TypeSafe 1.0.0 is present and uses vendor/new_api upstream modes, synchronous results, and actual input-token settlement.
+- Baseline `go test -count=1 ./pkg/jsplugin ./relay/channel/task/jsplugin ./plugins` passed. Frontend baseline `bun run typecheck` passed; dependencies installed with frozen lockfile.
+- Ported the backend execution/usage/pricing portions of 74629e29f. Retained canonical CAS pricing writer, profile-independent quantity bounds, saturation propagation, and deterministic selected-channel decoding. New plugin-specific prices use the same canonical rows and locked validation as existing prices. Conflict rationale is recorded in external `stage2-decisions.json` and `stage2b-decisions.json`.
+- `stage2-final-focused`: 418 tests passed, 0 failed, 4 external-DB cases skipped; covers controller, relay, service, model, middleware, adaptor, plugins, and billing settings. Evidence is in `D:/10178/Projects/new-api-plugin-compat-evidence/*.jsonl` and `*.summary.txt`.
+- Real DB matrix: MySQL 5.7.44 and PostgreSQL 9.6.24 passed. SQLite 3.50.4 assertions passed but its Windows TempDir cleanup failed (directory not empty). Changing TEMP did not fix cleanup; this is an outstanding gate, not a full matrix pass. Broader controller run also encountered Windows SQLite cleanup failures in existing security tests; baseline targeted security tests passed.
+- Test databases are isolated Docker containers in WSL `Ubuntu-SF3D`, names `newapi-plugin-compat-mysql-20260928` and `newapi-plugin-compat-postgres-20260928`, loopback ports 13306/15432. WSL must remain alive; an active docker-log-follow process currently keeps it running. Do not affect unrelated containers. Stop these two test containers when final verification is complete.
+- Security guidance consulted before binding/credential changes: OWASP ASVS 5.0.0 (https://owasp.org/projects/asvs), Authorization, Authentication, and Session Management cheat sheets. Applicable controls: server-side permission checks on every binding mutation, fail-closed validation, existing session protection, and no usable credentials in audit output. This is scoped guidance, not a whole-application compliance claim.
+- Next: port 4c34f25a4 backend and tests using semantic three-way comparison, then adapt type-60 binding to this fork's channel-first endpoint selection. Follow-up upstream plugin commits include 129f21b69, a8ed7f7c5, 03563a4a7, 65d3a2171, 47713bcb1, 474ed66fb, c0cff23a3, 2c175190c, d61d6be75; examine relevant task metrics change 3abbb8198 as well.

@@ -19,6 +19,7 @@ import (
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/pkg/jsplugin"
 	builtinplugins "github.com/QuantumNous/new-api/plugins"
+	"github.com/QuantumNous/new-api/service"
 	"github.com/gin-gonic/gin"
 	"github.com/glebarez/sqlite"
 	"github.com/stretchr/testify/assert"
@@ -1697,4 +1698,50 @@ func setupTaskPluginRouteDB(t *testing.T) {
 func insertTaskPluginRouteTask(t *testing.T, task *model.Task) {
 	t.Helper()
 	require.NoError(t, model.DB.Create(task).Error)
+}
+
+func TestPrepareTaskPluginEndpointUsesSelectedChannelCandidate(t *testing.T) {
+	for _, tc := range []struct {
+		name, selected, alpha, beta, wantError string
+	}{
+		{name: "selected beta accepts despite alpha rejection", selected: "decode-beta", alpha: `throw new Error("unselected alpha executed")`, beta: `return {model:ctx.model,action:"beta"}`},
+		{name: "selected alpha accepts without decoding beta", selected: "decode-alpha", alpha: `return {model:ctx.model,action:"alpha"}`, beta: `throw new Error("unselected beta executed")`},
+		{name: "selected invalid result cannot switch billed provider", selected: "decode-alpha", alpha: `return {kind:"query",model:ctx.model}`, beta: `return {model:ctx.model,action:"beta"}`, wantError: "plugin returned an invalid route result"},
+		{name: "selected decoder cannot rewrite model ownership", selected: "decode-beta", alpha: `return {model:ctx.model,action:"alpha"}`, beta: `return {model:"another-model"}`, wantError: `model "another-model" is not served by this plugin`},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			for _, spec := range []struct{ key, decode string }{{"decode-alpha", tc.alpha}, {"decode-beta", tc.beta}} {
+				_, err := jsplugin.DefaultRegistry.Register(taskResponsesPluginSource(spec.key, 0, `["decode-shared-model"]`, `["sync"]`, `renderFinal:function(){return {};}`, spec.decode), jsplugin.Options{})
+				require.NoError(t, err)
+				t.Cleanup(func() { require.NoError(t, jsplugin.DefaultRegistry.Unregister(spec.key)) })
+			}
+			router := gin.New()
+			router.POST("/v1/responses", func(c *gin.Context) {
+				c.Set(contextKeyTaskPluginEndpointGeneration, jsplugin.DefaultRegistry.Generation())
+				c.Set("channel_type", constant.ChannelTypeTaskPlugin)
+				c.Set("task_plugin_key", tc.selected)
+				c.Next()
+			}, PinTaskPluginEndpoint(), PrepareTaskPluginEndpoint(), func(c *gin.Context) {
+				pinned := c.MustGet(jsplugin.ContextKeyPinnedEndpoint).(jsplugin.PinnedEndpoint)
+				require.Len(t, pinned.Candidates, 1)
+				assert.Equal(t, tc.selected, pinned.Plugin.Meta.Key)
+				assert.Equal(t, tc.selected, c.GetString("task_plugin_key"))
+				assert.Same(t, pinned.Plugin, c.MustGet(jsplugin.ContextKeyPinnedPlugin).(jsplugin.PinnedPlugin).Plugin)
+				assert.Equal(t, []string{tc.selected}, service.GetChannelConstraints(c).Filters[0].TaskPluginKeys)
+				c.Status(http.StatusNoContent)
+			})
+			request := httptest.NewRequest(http.MethodPost, "/v1/responses", strings.NewReader(`{"model":"decode-shared-model"}`))
+			request.Header.Set("Content-Type", "application/json")
+			recorder := httptest.NewRecorder()
+			router.ServeHTTP(recorder, request)
+			if tc.wantError != "" {
+				assert.Equal(t, http.StatusBadRequest, recorder.Code)
+				var response struct{ Error struct{ Message string } }
+				require.NoError(t, common.Unmarshal(recorder.Body.Bytes(), &response))
+				assert.Contains(t, response.Error.Message, tc.wantError)
+			} else {
+				assert.Equal(t, http.StatusNoContent, recorder.Code, recorder.Body.String())
+			}
+		})
+	}
 }
