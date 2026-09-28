@@ -33,7 +33,7 @@ func setupTaskPluginModelTest(t *testing.T) {
 func TestTaskPluginIconSurvivesRestartsAndSourceUpdates(t *testing.T) {
 	setupTaskPluginModelTest(t)
 	icon := "data:image/svg+xml;base64," + strings.Repeat("A", 70000)
-	plugin := TaskPlugin{Key: "icon", APIVersion: 1, Version: "1.0.0", Source: "fixture", SourceHash: "fixture-hash", Enabled: true, Icon: icon}
+	plugin := TaskPlugin{Key: "icon", APIVersion: 1, Version: "1.0.0", Source: "fixture", SourceHash: "fixture-hash", Enabled: true, Icon: LongText(icon)}
 	require.NoError(t, SaveTaskPlugin(&plugin))
 	for restart := 0; restart < 2; restart++ {
 		recorder := &migrationSQLRecorder{}
@@ -42,14 +42,14 @@ func TestTaskPluginIconSurvivesRestartsAndSourceUpdates(t *testing.T) {
 	}
 	stored, err := GetTaskPluginVersion("icon", "1.0.0")
 	require.NoError(t, err)
-	assert.Equal(t, icon, stored.Icon)
+	assert.Equal(t, icon, string(stored.Icon))
 	assert.True(t, stored.Active)
 	public, err := common.Marshal(stored)
 	require.NoError(t, err)
 	assert.NotContains(t, string(public), "data:image")
 	update := TaskPlugin{Key: "icon", APIVersion: 1, Version: "1.0.0", Source: "fixture", SourceHash: "fixture-hash", Remark: "updated note", Enabled: false}
 	require.NoError(t, SaveTaskPlugin(&update))
-	assert.Equal(t, icon, update.Icon)
+	assert.Equal(t, icon, string(update.Icon))
 	assert.False(t, update.Enabled)
 	duplicate := plugin
 	duplicate.Id = 0

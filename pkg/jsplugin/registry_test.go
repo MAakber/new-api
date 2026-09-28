@@ -1,8 +1,12 @@
 package jsplugin
 
 import (
+	"bytes"
+	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -11,6 +15,54 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func TestOfficialMarketplacePluginContracts(t *testing.T) {
+	directory := os.Getenv("TEST_TASK_PLUGIN_MARKETPLACE_DIR")
+	if directory == "" {
+		t.Skip("set TEST_TASK_PLUGIN_MARKETPLACE_DIR to a pinned official marketplace checkout")
+	}
+	data, err := os.ReadFile(filepath.Join(directory, "index.json"))
+	require.NoError(t, err)
+	var index struct {
+		IndexVersion int `json:"indexVersion"`
+		Plugins      []struct {
+			Key      string `json:"key"`
+			Latest   string `json:"latest"`
+			Versions []struct {
+				Version       string `json:"version"`
+				Path          string `json:"path"`
+				SHA256        string `json:"sha256"`
+				MinAPIVersion int    `json:"minApiVersion"`
+			} `json:"versions"`
+		} `json:"plugins"`
+	}
+	require.NoError(t, common.Unmarshal(data, &index))
+	require.Equal(t, 1, index.IndexVersion)
+	require.NotEmpty(t, index.Plugins)
+	for _, entry := range index.Plugins {
+		t.Run(entry.Key, func(t *testing.T) {
+			found := false
+			for _, version := range entry.Versions {
+				if version.Version != entry.Latest {
+					continue
+				}
+				found = true
+				require.LessOrEqual(t, version.MinAPIVersion, APIVersion1)
+				require.True(t, filepath.IsLocal(filepath.FromSlash(version.Path)))
+				source, err := os.ReadFile(filepath.Join(directory, filepath.FromSlash(version.Path)))
+				require.NoError(t, err)
+				// Git checkouts on Windows may convert source line endings.
+				source = bytes.ReplaceAll(source, []byte("\r\n"), []byte("\n"))
+				require.Equal(t, version.SHA256, fmt.Sprintf("%x", sha256.Sum256(source)))
+				plugin, err := NewRegistry().Register(string(source), Options{})
+				require.NoError(t, err)
+				assert.Equal(t, entry.Key, plugin.Meta.Key)
+				assert.Equal(t, version.Version, plugin.Meta.Version)
+			}
+			require.True(t, found, "latest marketplace version must have a source entry")
+		})
+	}
+}
 
 func TestRegistryOverrideTakesPrecedenceOverFactory(t *testing.T) {
 	registry := NewRegistry()
@@ -1127,6 +1179,17 @@ usageProfiles: [
 	schema, examples := plugin.Meta.UsageForModel("empty")
 	assert.Empty(t, schema)
 	assert.Nil(t, examples)
+
+	// A channel mapping may send a declared model to an undeclared endpoint ID:
+	// the first profiled candidate wins, otherwise the defaults apply.
+	schema, examples = plugin.Meta.UsageForModels("ep-endpoint", "image")
+	assert.Equal(t, plugin.Meta.UsageProfiles[0].Schema, schema)
+	assert.Nil(t, examples)
+	schema, _ = plugin.Meta.UsageForModels("video", "image")
+	assert.Equal(t, plugin.Meta.UsageProfiles[1].Schema, schema)
+	schema, examples = plugin.Meta.UsageForModels("ep-endpoint", "default")
+	assert.Equal(t, plugin.Meta.UsageSchema, schema)
+	assert.Equal(t, plugin.Meta.UsageExamples, examples)
 
 	snapshot := registry.Snapshot()
 	require.Len(t, snapshot.Override, 1)

@@ -17,10 +17,10 @@ Integrate the complete plugin contract and its execution dependencies from the p
 
 1. **Completed:** Inventory upstream plugin changes, dependencies, and baseline checks; locate marketplace plugin fixtures.
 2. **Implemented, focused tests pass:** Complete contract, submission streaming, model-specific usage metadata, and settlement integration. Full integration gates remain in stage 5.
-3. **Implemented, focused tests pass:** Integrate gateway plugin bindings, selection, credentials, polling, and lifecycle management. Full database/lifecycle gates remain in stage 5.
-4. **In progress:** Integrate current plugin protocol extensions, frontend configuration, and API documentation.
-5. **Pending:** Run focused and integration tests, real database compatibility checks, independent relaykit build, frontend checks, and downstream regression checks.
-6. **Pending:** Review final diff and evidence, commit verified changes, and integrate into main only after the required gates pass.
+3. **Completed:** Integrate gateway plugin bindings, selection, credentials, polling, and lifecycle management. Focused lifecycle and permission tests pass.
+4. **Completed:** Integrate current plugin protocol extensions, frontend configuration, and API documentation. TypeSafe uses the resulting generic contract; no TypeSafe-only host branch was added.
+5. **Completed with noted environment gates:** Focused and integration tests, real database compatibility checks, independent relaykit build, frontend checks, and downstream regression checks are complete.
+6. **In progress:** Review final diff and evidence, commit verified changes, and integrate into main only after the required gates pass.
 
 ## Preservation rules
 
@@ -35,12 +35,11 @@ Integrate the complete plugin contract and its execution dependencies from the p
 
 ## Confirmed gaps at baseline
 
-- The second reported slice is not present in the clean sandbox.
-- `ChannelFilter.TaskPluginKeys` is a request candidate set; persisted channel settings still have one `TaskPluginKey`.
-- `submit-sse-delta@1` is advertised, but the adaptor has no submission SSE execution path.
-- `UsageForModel` is implemented in the registry but not consumed by execution/validation.
-- The upstream `FilterResponsesWebSocket` symbol is absent locally; do not import unrelated upstream context as if already implemented.
-- TypeSafe source/version has not yet been identified.
+- The second reported slice was not present in the clean sandbox; its required backend behavior is now integrated semantically on this branch.
+- `ChannelFilter.TaskPluginKeys` remains a request candidate set; persisted settings now add `task_extend_plugin_keys` while retaining the fork's task-plugin channel type 65.
+- `usageProfiles`, submission streaming, model-specific usage validation, settlement, gateway routing, retainResult, and plugin source sync are integrated and covered by focused tests.
+- The upstream `FilterResponsesWebSocket` symbol remains absent locally; no unrelated WebSocket implementation was imported.
+- TypeSafe 1.0.0 is pinned as an official marketplace fixture under `controller/testdata/marketplace/` with SHA-256 verification; tests use local HTTP fixtures only.
 
 ## Resume
 
@@ -56,9 +55,14 @@ Read this file, inspect `git status --short --branch`, `git diff --name-only --d
 - Real DB matrix: MySQL 5.7.44 and PostgreSQL 9.6.24 passed. SQLite 3.50.4 assertions passed but its Windows TempDir cleanup failed (directory not empty). Changing TEMP did not fix cleanup; this is an outstanding gate, not a full matrix pass. Broader controller run also encountered Windows SQLite cleanup failures in existing security tests; baseline targeted security tests passed.
 - Test databases are isolated Docker containers in WSL `Ubuntu-SF3D`, names `newapi-plugin-compat-mysql-20260928` and `newapi-plugin-compat-postgres-20260928`, loopback ports 13306/15432. WSL must remain alive; an active docker-log-follow process currently keeps it running. Do not affect unrelated containers. Stop these two test containers when final verification is complete.
 - Security guidance consulted before binding/credential changes: OWASP ASVS 5.0.0 (https://owasp.org/projects/asvs), Authorization, Authentication, and Session Management cheat sheets. Applicable controls: server-side permission checks on every binding mutation, fail-closed validation, existing session protection, and no usable credentials in audit output. This is scoped guidance, not a whole-application compliance claim.
-- Next: port 4c34f25a4 backend and tests using semantic three-way comparison, then adapt type-60 binding to this fork's channel-first endpoint selection. Follow-up upstream plugin commits include 129f21b69, a8ed7f7c5, 03563a4a7, 65d3a2171, 47713bcb1, 474ed66fb, c0cff23a3, 2c175190c, d61d6be75; examine relevant task metrics change 3abbb8198 as well.
+- Follow-up upstream plugin commits `129f21b69`, `a8ed7f7c5`, `03563a4a7`, `65d3a2171`, `47713bcb1`, `474ed66fb`, `c0cff23a3`, `2c175190c`, `d61d6be75`, and terminal metrics `3abbb8198` are integrated selectively. Image protocol, large source storage, source-hash sync, 2xx submission statuses, and terminal metrics are covered by focused tests.
 - Stage 3: 4c34f25a4 backend integrated with fork-specific channel selection. No channel IDs changed. Preserved candidate-only filters and unbound gateway traffic; model rewriting now happens only after a plugin actually claims a request. Regression reproduced the ordinary-model rewrite bug before fixing it.
 - Binding permission test exposed pointer aliasing in the existing sparse channel update: decoding into a shallow copy also changed the original settings used for permission comparison. Replaced that with an independent JSON copy, preserving non-JSON revision/guard/key metadata. Both original sparse-patch authorization tests and new gateway permission tests pass.
 - Gateway drivers now reject execution when a plugin does not declare gateway support. Unbinding reads and updates settings inside a row-locked transaction. Cache refresh also runs when a later cascade step fails after a successful unbind.
 - `stage3-final-focused`: 328 tests passed, 0 failed, 0 skipped. Independent `GOWORK=off go build ./...` and `go test -count=1 ./dto` in relaykit passed. Earlier `stage3-gateway-fixed` passed 34 middleware tests.
-- Next concrete step: integrate the follow-up JSON/usage fixes and 03563a4a7 image host protocol plus retainResult support; preserve the fork's legacy Ali image adaptor/billing path while adding plugin image support. Then frontend changes from 74629e29f/4c34f25a4 and remaining pinned-upstream plugin fixes. No merge to main or remote publication has occurred.
+- `stage4-backend-verified`: 1,051 focused tests passed across plugin runtime, perf metrics, task adaptor, built-ins, controller, router, relay, service, middleware, and model packages. Official TypeSafe install/submit/settlement passed on SQLite, MySQL 5.7.44, and PostgreSQL 9.6.24. Large source/icon upgrade round-trip passed on all three. Official marketplace manifest/source digest verification passed.
+- `stage4-frontend`: `bun run typecheck` passed; changed-file `oxlint` passed; gateway drawer save interaction passed; gateway helper, icon, pricing, plugin detail, and usage schema tests passed. Broad frontend test run was started but remains slow; its final result must be recorded before completion.
+- Full affected frontend run passed: 84 test files and 651 tests. Full affected Go package run passed for plugin/runtime, perf metrics, adaptor, built-ins, router, relay, service, middleware, and model; the controller package had only existing Windows SQLite TempDir cleanup failures in unrelated security/quota tests. Targeted controller tests passed.
+- `go build ./...` cannot run in this checkout because `main.go` embeds missing `web/dist`; independent `GOWORK=off go build ./...` and tests in `relaykit` passed. The Linux Docker retry was blocked only by uncached Go modules and network timeout; Windows MySQL/PostgreSQL TypeSafe and source-upgrade runs passed.
+- The broad frontend run emitted only Happy DOM `scrollTo()` not-implemented notices; all 84 files and 651 tests passed. Changed-file lint and typecheck passed.
+- No merge to `main` or remote publication has occurred. Main's unrelated auth UI files are disjoint from this branch's changed paths. Next: commit this branch, merge it into main while preserving the dirty auth files, then run status and ancestry checks.

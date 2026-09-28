@@ -23,9 +23,19 @@ import { cn } from '@/lib/utils'
 export type Option = {
   label: string
   value: string
+  /**
+   * Secondary text shown beside the option in the dropdown.
+   */
+  hint?: string
+  /**
+   * Leading icon rendered before the label in the dropdown and on the chip.
+   * Decorative only: it never changes the accessible name.
+   */
+  icon?: React.ReactNode
 }
 
 interface MultiSelectProps {
+  'aria-label'?: string
   options: Option[]
   selected: string[]
   onChange: (values: string[]) => void
@@ -117,6 +127,22 @@ export function MultiSelect(props: MultiSelectProps) {
     const map = new Map<string, string>()
     for (const option of props.options) {
       map.set(option.value, option.label)
+    }
+    return map
+  }, [props.options])
+
+  const hintMap = React.useMemo(() => {
+    const map = new Map<string, string>()
+    for (const option of props.options) {
+      if (option.hint) map.set(option.value, option.hint)
+    }
+    return map
+  }, [props.options])
+
+  const iconMap = React.useMemo(() => {
+    const map = new Map<string, React.ReactNode>()
+    for (const option of props.options) {
+      if (option.icon) map.set(option.value, option.icon)
     }
     return map
   }, [props.options])
@@ -264,8 +290,17 @@ export function MultiSelect(props: MultiSelectProps) {
               <>
                 {visibleValues.map((value) => {
                   const label = labelMap.get(value) ?? value
+                  const icon = iconMap.get(value)
                   return (
                     <ComboboxChip key={value}>
+                      {icon && (
+                        <span
+                          aria-hidden='true'
+                          className='inline-flex shrink-0'
+                        >
+                          {icon}
+                        </span>
+                      )}
                       {props.copyChipOnClick ? (
                         <button
                           type='button'
@@ -328,7 +363,7 @@ export function MultiSelect(props: MultiSelectProps) {
               : undefined
           }
           onKeyDown={handleKeyDown}
-          aria-label={placeholder}
+          aria-label={props['aria-label'] ?? placeholder}
         />
       </ComboboxChips>
 
@@ -338,6 +373,8 @@ export function MultiSelect(props: MultiSelectProps) {
             {(item: string) => {
               const isCreate = canCreate && item === trimmedInput
               const label = labelMap.get(item) ?? item
+              const hint = hintMap.get(item)
+              const icon = iconMap.get(item)
               return (
                 <ComboboxItem
                   key={item}
@@ -359,7 +396,25 @@ export function MultiSelect(props: MultiSelectProps) {
                       </span>
                     </>
                   ) : (
-                    <span className='truncate'>{label}</span>
+                    <>
+                      {icon && (
+                        <span
+                          aria-hidden='true'
+                          className='inline-flex shrink-0'
+                        >
+                          {icon}
+                        </span>
+                      )}
+                      <span className='truncate'>{label}</span>
+                      {hint && (
+                        <span
+                          aria-hidden='true'
+                          className='text-muted-foreground ml-auto max-w-40 shrink-0 truncate text-xs'
+                        >
+                          {hint}
+                        </span>
+                      )}
+                    </>
                   )}
                 </ComboboxItem>
               )

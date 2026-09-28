@@ -143,6 +143,8 @@ interface StreamTpsCellProps {
   compact?: boolean
   /** Task logs are asynchronous jobs; stream vs non-stream does not apply. */
   isTask?: boolean
+  /** The task request returned its result inline, so it is a synchronous call. */
+  isSyncTask?: boolean
   tokensPerSecond?: number | null
   streamStatus?: LogOtherData['stream_status']
   className?: string
@@ -157,7 +159,9 @@ export function StreamTpsCell(props: StreamTpsCellProps) {
       ? `${Math.round(props.tokensPerSecond)} t/s`
       : '—'
   let streamLabel = props.isStream ? t('Stream') : t('Non-stream')
-  if (props.isTask) streamLabel = t('Async')
+  if (props.isTask) {
+    streamLabel = props.isSyncTask ? t('Sync') : t('Async')
+  }
 
   return (
     <div
