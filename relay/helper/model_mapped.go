@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	rootcommon "github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/constant"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
 	relayconstant "github.com/QuantumNous/new-api/relay/constant"
 	"github.com/QuantumNous/new-api/relaykit/dto"
@@ -28,6 +29,12 @@ func ModelMappedHelper(c *gin.Context, info *relaycommon.RelayInfo, request dto.
 
 	// map model name
 	modelMapping := c.GetString("model_mapping")
+	if modelMapping == "" {
+		// Channel selection publishes the persisted mapping under the typed
+		// context key. Keep the plain Gin key as a compatibility fallback for
+		// handlers/tests that provide a request-local override.
+		modelMapping = rootcommon.GetContextKeyString(c, constant.ContextKeyChannelModelMapping)
+	}
 	if modelMapping != "" && modelMapping != "{}" {
 		modelMap := make(map[string]string)
 		err := rootcommon.Unmarshal([]byte(modelMapping), &modelMap)

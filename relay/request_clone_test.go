@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/constant"
 	relaycommon "github.com/QuantumNous/new-api/relay/common"
 	"github.com/QuantumNous/new-api/relay/helper"
 	"github.com/QuantumNous/new-api/relaykit/dto"
@@ -80,6 +81,18 @@ func TestRequestDeepCopyResponses(t *testing.T) {
 			request.Input[1] = 'H'
 			assert.Equal(t, json.RawMessage(`"hello"`), src.Input)
 		}
+	})
+
+	t.Run("channel context mapping is used by ordinary chat handlers", func(t *testing.T) {
+		request := &dto.GeneralOpenAIRequest{Model: "gpt-6-astra"}
+		c, _ := gin.CreateTestContext(httptest.NewRecorder())
+		common.SetContextKey(c, constant.ContextKeyChannelModelMapping, `{"gpt-6-astra":"gpt-6-astra-cc-format"}`)
+		info := &relaycommon.RelayInfo{OriginModelName: request.Model}
+		require.NoError(t, helper.ModelMappedHelper(c, info, request))
+		assert.Equal(t, "gpt-6-astra", info.OriginModelName)
+		assert.Equal(t, "gpt-6-astra-cc-format", info.UpstreamModelName)
+		assert.Equal(t, "gpt-6-astra-cc-format", request.Model)
+		assert.True(t, info.IsModelMapped)
 	})
 }
 
