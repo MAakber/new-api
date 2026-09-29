@@ -20,11 +20,11 @@ For commercial licensing, please contact support@quantumnous.com
  * Ink Route sign-in shell.
  *
  * The page splits into a warm-paper form pane (start side) and a graphite
- * stage pane (end side) hosting the one-shot provider route map. Both panes
- * are driven by dedicated --ink-* tokens; dark mode keeps the same hierarchy
- * (form pane raised, stage pane deep) through the same token names. The form
- * pane remaps the app's semantic tokens so every existing form control
- * adopts the ink palette without touching component code.
+ * stage pane (end side) hosting the provider reel. Both panes are driven by
+ * dedicated --ink-* tokens; dark mode keeps the same hierarchy (form pane
+ * raised, stage pane deep) through the same token names. The form pane remaps
+ * the app's semantic tokens so every existing form control adopts the ink
+ * palette without touching component code.
  */
 .auth-ink-shell {
   --ink-paper: oklch(0.97 0.013 85);
@@ -36,6 +36,7 @@ For commercial licensing, please contact support@quantumnous.com
   --ink-graphite: oklch(0.21 0.018 260);
   --ink-graphite-raised: oklch(0.27 0.02 260);
   --ink-route: oklch(0.92 0.016 88);
+  --ink-sheen: oklch(0.99 0.02 92);
 
   display: flex;
   flex-direction: column;
@@ -152,9 +153,12 @@ For commercial licensing, please contact support@quantumnous.com
   }
 }
 
-/* Stage pane: flat graphite, no gradients or glows. */
+/* Stage pane: flat graphite, no gradients or glows. It only exists next to
+   the form pane, so the single-column layouts drop it entirely — stacked
+   under the form it read as a second screen. Phones therefore get the plain
+   form page back, with no reel animating below the fold. */
 .auth-ink-stage-pane {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   min-width: 0;
@@ -163,213 +167,425 @@ For commercial licensing, please contact support@quantumnous.com
   background: var(--ink-graphite);
 }
 
-.auth-ink-map {
-  width: 100%;
-  max-width: 660px;
-  pointer-events: none;
-}
-
-.auth-ink-map.is-compact {
-  max-width: 440px;
-}
-
-.auth-ink-map-canvas {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 2;
-}
-
-/* The canvas is aspect-locked to the 3:2 viewBox, so `none` only removes
-   sub-pixel letterboxing without ever distorting the routes. */
-.auth-ink-map-lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.ink-route-line {
-  stroke: var(--ink-route);
-  stroke-width: 1.5;
-  stroke-linecap: butt;
-  opacity: 0.55;
-  vector-effect: non-scaling-stroke;
-}
-
-.ink-node {
-  position: absolute;
-  width: 3.5rem;
-  height: 3.5rem;
-  transform: translate(-50%, -50%);
-}
-
-.ink-gateway.ink-node {
-  width: 4rem;
-  height: 4rem;
-}
-
-.auth-ink-map.is-compact .ink-node {
-  width: 2.75rem;
-  height: 2.75rem;
-}
-
-.auth-ink-map.is-compact .ink-gateway.ink-node {
-  width: 3.25rem;
-  height: 3.25rem;
-}
-
-.ink-node-ring {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  border: 1.5px solid color-mix(in oklch, var(--ink-route) 40%, transparent);
-  border-radius: 9999px;
-  background: var(--ink-graphite-raised);
-  color: var(--ink-route);
-}
-
-.ink-gateway-ring {
-  border-color: color-mix(in oklch, var(--ink-coral) 80%, transparent);
-  background: color-mix(
-    in oklch,
-    var(--ink-graphite-raised) 92%,
-    var(--ink-coral)
-  );
-}
-
-.ink-node-icon {
-  display: flex;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.auth-ink-map.is-compact .ink-node-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.ink-node-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-.ink-gateway-icon {
-  width: 1.625rem;
-  height: 1.625rem;
-}
-
-.auth-ink-map.is-compact .ink-gateway-icon {
-  width: 1.375rem;
-  height: 1.375rem;
-}
-
-.ink-node-label {
-  position: absolute;
-  top: calc(100% + 0.625rem);
-  left: 50%;
-  margin: 0;
-  font-size: 0.75rem;
-  line-height: 1.25;
-  color: color-mix(in oklch, var(--ink-route) 72%, transparent);
-  text-align: center;
-  white-space: nowrap;
-  transform: translateX(-50%);
-}
-
-.ink-gateway .ink-node-label {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: color-mix(in oklch, var(--ink-route) 88%, transparent);
+/* Same query that switches the shell to two columns, so the pane is visible
+   exactly when there is a start-side form and an end-side stage. */
+@media (min-width: 1024px) {
+  .auth-ink-stage-pane {
+    display: flex;
+  }
 }
 
 /*
- * One-shot drawing sequence. Every initial state lives inside the `from`
- * keyframes and `animation-fill-mode: both` holds it during the delay, so
- * removing the animation (static fallback) reveals the finished composition.
+ * Provider reel: one brand on stage at a time, in the showcase order from the
+ * design brief (OpenAI -> Anthropic -> Google -> DeepSeek -> Qwen).
+ *
+ * Every brand plays the same three beats, in order, and then hands over to the
+ * next; the swap itself is a plain cross-fade. Timeline for one brand, with
+ * `0ms` the moment its card becomes active (REEL_STEP_MS in ink-icon-reel.tsx,
+ * 2800ms):
+ *
+ *     0ms   the ring and the outline layer fade in
+ *    80ms   BEAT 1 — the contour is drawn along its own path from that path's
+ *          own start point, coral: a line being laid down, not a wipe
+ *   880ms   BEAT 2 — a highlight runs along the outline that was just drawn,
+ *          one light travelling the same route
+ *  1360ms   BEAT 3 — the solid logo fades up inside the outline it described
+ *  1400ms   the outline dissolves into the logo, its job done
+ *  1800ms   the brand name rises into place
+ *  2220ms   the finished logo holds
+ *  2800ms   the next brand takes over
+ *
+ * Both stroke beats are real walks, not mask sweeps: ink-icon-reel.tsx measures
+ * each contour (`getTotalLength`) and dashes it in its own user units, so
+ * `stroke-dashoffset` running along that length walks the dash over the path
+ * itself (one full-length dash for the outline, one short dash for the
+ * highlight). Sub-paths further along a single icon therefore draw after the
+ * ones before them, which is what makes it read as hand-traced. `pathLength` is
+ * deliberately not used: the engine scales a dash pattern by
+ * `pathLength / length` but leaves the dash offset in user units, so the two
+ * disagree and the line never clips proportionally.
  */
-.auth-ink-map.is-animated .ink-route-line {
-  animation: ink-route-draw 380ms cubic-bezier(0.45, 0.05, 0.35, 1) both;
-  animation-delay: var(--ink-delay);
+.auth-ink-reel {
+  --reel-trace-delay: 80ms;
+  --reel-trace-duration: 800ms;
+  --reel-sheen-delay: 880ms;
+  --reel-sheen-duration: 480ms;
+  --reel-fill-delay: 960ms;
+  --reel-fill-duration: 360ms;
+  --reel-dissolve-delay: 1120ms;
+  --reel-dissolve-duration: 260ms;
+  --reel-name-delay: 1380ms;
+  --reel-name-duration: 420ms;
+  --reel-swap-duration: 260ms;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 420px;
+  pointer-events: none;
 }
 
-.auth-ink-map.is-animated .ink-node {
-  animation: ink-node-in 300ms cubic-bezier(0.33, 1, 0.68, 1) both;
-  animation-delay: var(--ink-delay);
+/* Every brand shares one grid cell, so the stage never reflows on a swap. */
+.auth-ink-reel-stage {
+  display: grid;
+  width: 100%;
+  place-items: center;
 }
 
-.auth-ink-map.is-animated .ink-node-icon {
-  animation: ink-node-reveal 260ms ease-out both;
-  animation-delay: calc(var(--ink-delay) + 70ms);
+.ink-reel-item {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.125rem;
+  opacity: 0;
+  transition: opacity var(--reel-swap-duration) ease-out;
 }
 
-.auth-ink-map.is-animated .ink-node-label {
-  animation: ink-label-in 240ms ease-out both;
-  animation-delay: calc(var(--ink-delay) + 130ms);
+.ink-reel-item.is-active {
+  opacity: 1;
 }
 
-@keyframes ink-route-draw {
+.ink-reel-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6.5rem;
+  height: 6.5rem;
+  border: 1.5px solid color-mix(in oklch, var(--ink-route) 32%, transparent);
+  border-radius: 9999px;
+  background: var(--ink-graphite-raised);
+  overflow: hidden;
+}
+
+.ink-reel-glyph {
+  position: relative;
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  color: var(--ink-route);
+}
+
+/* All three layers carry the same geometry: the contour that gets drawn, the
+   highlight that runs over it, and the solid logo that settles inside it. */
+.ink-reel-glyph-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.ink-reel-glyph-layer svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Resting states are the *finished* states: whenever an animation is taken
+   away (inactive brand, reduced motion, short viewport) the mark falls back
+   to a complete solid icon instead of snapping back to an empty box. */
+.ink-reel-trace {
+  opacity: 0;
+}
+
+/* The same paths, redrawn as a pure contour: no fill, hairline coral stroke. */
+.ink-reel-trace svg,
+.ink-reel-trace svg * {
+  fill: none;
+  stroke: var(--ink-coral);
+  stroke-width: 0.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Each contour is dashed with its own measured length and walked from that
+   length back to zero (ink-icon-reel.tsx sets `stroke-dasharray`,
+   --ink-contour-length, --ink-contour-index, --ink-contour-duration and
+   --ink-contour-step), so the resting state is the complete outline and only
+   the active brand draws it. */
+.ink-reel-trace svg * {
+  stroke-dashoffset: 0;
+}
+
+/* The highlight: the same contour again, drawn as one short bright dash that
+   travels the route. Its resting offset parks the dash past the end of the
+   path, and it fades in only during the sheen window. */
+.ink-reel-sheen {
+  opacity: 0;
+}
+
+.ink-reel-sheen svg,
+.ink-reel-sheen svg * {
+  fill: none;
+  stroke: var(--ink-sheen);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ink-reel-sheen svg * {
+  stroke-dashoffset: var(--ink-contour-length, 0);
+}
+
+.ink-reel-sheen-beam {
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 25%,
+    color-mix(in oklch, var(--ink-sheen) 25%, transparent) 42%,
+    color-mix(in oklch, var(--ink-sheen) 95%, white) 50%,
+    color-mix(in oklch, var(--ink-sheen) 25%, transparent) 58%,
+    transparent 75%
+  );
+  opacity: 0;
+  mix-blend-mode: screen;
+  transform: translateX(-120%) rotate(5deg);
+}
+
+.ink-reel-name {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  color: var(--ink-route);
+  white-space: nowrap;
+}
+
+.ink-reel-dots {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ink-reel-dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--ink-route) 26%, transparent);
+  transition:
+    width var(--reel-swap-duration) ease-out,
+    background-color var(--reel-swap-duration) ease-out;
+}
+
+.ink-reel-dot.is-active {
+  width: 1.125rem;
+  background: var(--ink-coral);
+}
+
+.auth-ink-reel-caption {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.25;
+  color: color-mix(in oklch, var(--ink-route) 62%, transparent);
+}
+
+/*
+ * The beats. Each one is started by the active class, so a brand that leaves
+ * mid-animation simply drops back to its finished resting state and fades out.
+ */
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-ring {
+  animation: ink-reel-ring var(--reel-trace-duration) ease-out
+    var(--reel-trace-delay) both;
+}
+
+/* BEAT 1 — the outline. The layer owns the fade, the contours own the stroke
+   walk. One piece after another: every piece draws over --ink-contour-duration
+   and starts --ink-contour-step later than the one before, so the whole icon
+   closes on the same beat whatever its subpath count (both values are set per
+   piece by ink-icon-reel.tsx, the step is shared through the svg). */
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-trace {
+  animation:
+    ink-reel-trace-show var(--reel-trace-duration) linear
+      var(--reel-trace-delay) both,
+    ink-reel-dissolve var(--reel-dissolve-duration) ease-out
+      var(--reel-dissolve-delay) both;
+}
+
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-trace svg * {
+  animation: ink-reel-draw
+    var(--ink-contour-duration, var(--reel-trace-duration))
+    cubic-bezier(0.33, 0, 0.25, 1)
+    calc(
+      var(--reel-trace-delay) + var(--ink-contour-index, 0) *
+        var(--ink-contour-step, 0ms)
+    )
+    both;
+}
+
+/* BEAT 2 — the highlight. One short bright dash per contour piece, travelling
+   the same route the line was just drawn along. */
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-sheen {
+  animation: ink-reel-sheen-fade var(--reel-sheen-duration) ease-in-out
+    var(--reel-sheen-delay) both;
+}
+
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-sheen svg * {
+  animation: ink-reel-sheen
+    var(--ink-contour-duration, var(--reel-sheen-duration))
+    cubic-bezier(0.4, 0, 0.45, 1)
+    calc(
+      var(--reel-sheen-delay) + var(--ink-contour-index, 0) *
+        var(--ink-contour-step, 0ms)
+    )
+    both;
+}
+
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-sheen-beam {
+  animation: ink-reel-beam-sweep var(--reel-sheen-duration)
+    cubic-bezier(0.22, 0.61, 0.36, 1) var(--reel-sheen-delay) both;
+}
+
+/* BEAT 3 — the logo itself, settling inside the outline it described. */
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-fill {
+  animation: ink-reel-fill var(--reel-fill-duration)
+    cubic-bezier(0.16, 1, 0.3, 1) var(--reel-fill-delay) both;
+}
+
+.auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-name {
+  animation: ink-reel-name var(--reel-name-duration) ease-out
+    var(--reel-name-delay) both;
+}
+
+@keyframes ink-reel-ring {
   from {
-    stroke: var(--ink-coral);
-    stroke-dasharray: 1 1;
-    stroke-dashoffset: 1;
-    opacity: 0.95;
-  }
-
-  70% {
-    stroke: var(--ink-coral);
-    opacity: 0.95;
+    border-color: color-mix(in oklch, var(--ink-coral) 72%, transparent);
+    box-shadow: 0 0 0 0.35rem
+      color-mix(in oklch, var(--ink-coral) 9%, transparent);
   }
 
   to {
-    stroke: var(--ink-route);
-    stroke-dasharray: 1 1;
+    border-color: color-mix(in oklch, var(--ink-route) 32%, transparent);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/* `both` holds the undrawn start state through the delay, so the outline only
+   exists from the moment it starts being drawn. */
+@keyframes ink-reel-trace-show {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ink-reel-draw {
+  from {
+    stroke-dashoffset: var(--ink-contour-length, 0);
+  }
+
+  to {
     stroke-dashoffset: 0;
-    opacity: 0.55;
   }
 }
 
-@keyframes ink-node-in {
+/* The highlight starts just before the path, sweeps its whole length and parks
+   just past the end — invisible at both ends of the walk, so it reads as light
+   running over the mark rather than a piece of the mark appearing. */
+@keyframes ink-reel-sheen {
+  from {
+    stroke-dashoffset: calc(-1 * var(--ink-sheen-span, 0));
+  }
+
+  to {
+    stroke-dashoffset: var(--ink-contour-length, 0);
+  }
+}
+
+@keyframes ink-reel-sheen-fade {
+  0% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ink-reel-beam-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%) rotate(5deg);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(120%) rotate(5deg);
+  }
+}
+
+@keyframes ink-reel-fill {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: brightness(1.6);
+  }
+
+  50% {
+    opacity: 0.95;
+    filter: brightness(1.3);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes ink-reel-dissolve {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ink-reel-name {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.72);
+    transform: translateY(0.35rem);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes ink-node-reveal {
-  from {
-    clip-path: inset(-20% 100% -20% -20%);
-  }
-
-  to {
-    clip-path: inset(-20% -20% -20% -20%);
-  }
-}
-
-@keyframes ink-label-in {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(0.375rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .auth-ink-map.is-animated .ink-route-line,
-  .auth-ink-map.is-animated .ink-node,
-  .auth-ink-map.is-animated .ink-node-icon,
-  .auth-ink-map.is-animated .ink-node-label {
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-ring,
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-trace,
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-trace svg *,
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-sheen,
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-sheen svg *,
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-sheen-beam,
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-fill,
+  .auth-ink-reel.is-animated .ink-reel-item.is-active .ink-reel-name {
     animation: none;
   }
 }

@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useSystemConfig } from '@/hooks/use-system-config'
 import { cn } from '@/lib/utils'
 
-import { InkRouteMap } from './components/ink-route-map'
+import { InkIconReel } from './components/ink-icon-reel'
 
 type AuthLayoutProps = {
   children: React.ReactNode
@@ -80,7 +80,7 @@ export function AuthLayout({
         {footer ? <div className='auth-ink-pane-footer'>{footer}</div> : null}
       </div>
       <div className='auth-ink-stage-pane' aria-hidden='true'>
-        <InkRouteMap />
+        <InkIconReel />
       </div>
     </div>
   )
