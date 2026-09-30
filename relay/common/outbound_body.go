@@ -1,9 +1,13 @@
 package common
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/gin-gonic/gin"
+	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 // NewOutboundJSONBody wraps the already-marshaled upstream request body into a
@@ -28,4 +32,31 @@ func NewOutboundJSONBody(data []byte) (body common.ReplayableBody, closer io.Clo
 		return nil, nil, err
 	}
 	return common.NewReplayableBodyReader(storage), storage, nil
+}
+
+// NewMappedPassthroughBody preserves the original JSON except for an explicit
+// channel model redirect. Keep the shared inbound storage immutable: another
+// channel attempt must apply its own mapping to the client's original body.
+// Callers own closer, including when the original replay source is reused.
+func NewMappedPassthroughBody(c *gin.Context, info *RelayInfo) (common.ReplayableBody, io.Closer, error) {
+	storage, err := common.GetBodyStorage(c)
+	if err != nil {
+		return nil, nil, err
+	}
+	if info == nil || info.ChannelMeta == nil || !info.IsModelMapped || info.UpstreamModelName == "" {
+		body := common.NewReplayableBodyReader(storage)
+		return body, io.NopCloser(body), nil
+	}
+	data, err := storage.Bytes()
+	if err != nil {
+		return nil, nil, err
+	}
+	if !gjson.ValidBytes(data) || !gjson.ParseBytes(data).IsObject() {
+		return nil, nil, fmt.Errorf("model mapping requires a JSON object request body")
+	}
+	data, err = sjson.SetBytes(data, "model", info.UpstreamModelName)
+	if err != nil {
+		return nil, nil, err
+	}
+	return NewOutboundJSONBody(data)
 }

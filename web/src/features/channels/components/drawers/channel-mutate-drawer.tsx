@@ -186,9 +186,9 @@ import {
   MissingModelsConfirmationDialog,
   type MissingModelsAction,
 } from '../dialogs/missing-models-confirmation-dialog'
+import { ModelMappingDialog } from '../dialogs/model-mapping-dialog'
 import { ParamOverrideEditorDialog } from '../dialogs/param-override-editor-dialog'
 import { StatusCodeRiskDialog } from '../dialogs/status-code-risk-dialog'
-import { ModelMappingEditor } from '../model-mapping-editor'
 import {
   ChannelAdvancedSection,
   ChannelApiAccessSection,
@@ -721,6 +721,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
   const [customBalanceConfigured, setCustomBalanceConfigured] = useState(false)
   const [customBalanceDirty, setCustomBalanceDirty] = useState(false)
   const [paramOverrideEditorOpen, setParamOverrideEditorOpen] = useState(false)
+  const [modelMappingDialogOpen, setModelMappingDialogOpen] = useState(false)
   const [advancedCustomEditorOpen, setAdvancedCustomEditorOpen] =
     useState(false)
   const [clipboardConnectionInfo, setClipboardConnectionInfo] =
@@ -1894,7 +1895,8 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
         if (!customBalanceSaved) return
       }
 
-      await channelMutation.mutateAsync(data)
+      // onError owns the failure toast; keep this form open with its draft.
+      channelMutation.mutate(data)
     },
     [
       isEditing,
@@ -3797,7 +3799,7 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                         <FormField
                           control={form.control}
                           name='model_mapping'
-                          render={({ field }) => (
+                          render={() => (
                             <FormItem className='space-y-3'>
                               <div className='flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between'>
                                 <div className='space-y-1'>
@@ -3870,16 +3872,23 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
                                 </div>
                               </div>
                               <FormControl>
-                                <ModelMappingEditor
-                                  value={field.value || ''}
-                                  onChange={field.onChange}
+                                <Button
+                                  type='button'
+                                  variant='outline'
                                   disabled={isSubmitting}
-                                  sourceModelOptions={currentModelsArray}
-                                  targetModelOptions={modelOptions.map(
-                                    (option) => option.value
-                                  )}
-                                />
+                                  onClick={() =>
+                                    setModelMappingDialogOpen(true)
+                                  }
+                                  aria-label={t('Edit model redirects')}
+                                >
+                                  {t('Edit model redirects')}
+                                </Button>
                               </FormControl>
+                              <p className='text-muted-foreground text-xs'>
+                                {t('{{count}} mapping(s) configured', {
+                                  count: modelMappingGuardrail.entries.length,
+                                })}
+                              </p>
                               {modelMappingGuardrail.invalidJson && (
                                 <Alert variant='destructive'>
                                   <AlertDescription>
@@ -5174,6 +5183,33 @@ export function ChannelMutateDrawer(props: ChannelMutateDrawerProps) {
         <Sheet open={open} onOpenChange={handleOpenChange}>
           {editorContent}
         </Sheet>
+      )}
+
+      {modelMappingDialogOpen && (
+        <ModelMappingDialog
+          open={modelMappingDialogOpen}
+          onOpenChange={setModelMappingDialogOpen}
+          value={currentModelMapping || ''}
+          channelModels={currentModelsArray}
+          upstreamModels={[
+            ...new Set([
+              ...allModelsList,
+              ...currentModelsArray,
+              ...redirectModelList,
+            ]),
+          ]}
+          disabled={isSubmitting}
+          onApply={(value, models) => {
+            form.setValue('model_mapping', value, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+            form.setValue('models', formatModelsArray(models), {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }}
+        />
       )}
 
       {paramOverrideEditorOpen && !sensitiveLocked && (

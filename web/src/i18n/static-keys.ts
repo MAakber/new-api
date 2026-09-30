@@ -1,6 +1,9 @@
 // Static translation keys that don't get picked up by the t('...') regex.
 // These cover dynamic labels (e.g. constants, configs) that are passed into t at runtime.
 export const STATIC_I18N_KEYS = [
+  'Both request and upstream model names are required',
+  'Model names must not start or end with whitespace',
+  'Model mapping contains a cycle',
   // Channel capability probe labels, statuses and diagnostic reasons.
   'Use default endpoint',
   'Test capabilities',

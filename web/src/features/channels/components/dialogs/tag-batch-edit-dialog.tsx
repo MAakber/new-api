@@ -22,6 +22,7 @@ import {
   getGroups,
 } from '../../api'
 import { channelsQueryKeys } from '../../lib'
+import { validateModelMappingJson } from '../../lib/model-mapping-validation'
 import type { TagOperationParams } from '../../types'
 import { useChannels } from '../channels-provider'
 import { ModelMappingEditor } from '../model-mapping-editor'
@@ -45,6 +46,7 @@ export function TagBatchEditDialog({
   const [newTag, setNewTag] = useState('')
   const [models, setModels] = useState('')
   const [modelMapping, setModelMapping] = useState('')
+  const [modelMappingValid, setModelMappingValid] = useState(true)
   const [groups, setGroups] = useState<string[]>([])
 
   // Fetch available groups
@@ -99,6 +101,9 @@ export function TagBatchEditDialog({
 
   const handleSave = async () => {
     if (!currentTag) return
+    if (!modelMappingValid || !validateModelMappingJson(modelMapping).valid) {
+      return
+    }
 
     // Validate model mapping JSON if provided
     if (modelMapping.trim()) {
@@ -185,7 +190,10 @@ export function TagBatchEditDialog({
             <Button variant='outline' onClick={handleClose} disabled={isSaving}>
               {t('Cancel')}
             </Button>
-            <Button onClick={handleSave} disabled={isSaving}>
+            <Button
+              onClick={handleSave}
+              disabled={isSaving || !modelMappingValid}
+            >
               {isSaving ? (
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
               ) : null}
@@ -251,6 +259,7 @@ export function TagBatchEditDialog({
             <ModelMappingEditor
               value={modelMapping}
               onChange={setModelMapping}
+              onValidityChange={setModelMappingValid}
               disabled={isSaving}
             />
           </div>

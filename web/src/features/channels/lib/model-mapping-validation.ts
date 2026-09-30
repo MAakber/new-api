@@ -167,6 +167,54 @@ export function validateModelMappingJson(modelMapping: string): {
         error: 'Model mapping values must be strings',
       }
     }
+    const entries = Object.entries(parsed) as Array<[string, string]>
+    if (entries.some(([from, to]) => !from.trim() || !to.trim())) {
+      return {
+        valid: false,
+        error: 'Both request and upstream model names are required',
+      }
+    }
+    // The relay matches names exactly. Reject invisible whitespace instead of
+    // reporting a saved mapping that can never match the published model name.
+    if (
+      entries.some(([from, to]) => from !== from.trim() || to !== to.trim())
+    ) {
+      return {
+        valid: false,
+        error: 'Model names must not start or end with whitespace',
+      }
+    }
+    // After shape validation every member is string:string. Consume complete
+    // members so escaped quotes/colons inside a value cannot be read as keys.
+    const keys = new Set<string>()
+    for (const member of modelMapping.matchAll(
+      /("(?:\\.|[^"\\])*")\s*:\s*"(?:\\.|[^"\\])*"/g
+    )) {
+      const key: string = JSON.parse(member[1])
+      if (keys.has(key)) {
+        return {
+          valid: false,
+          error: 'Duplicate source model mappings are not allowed',
+        }
+      }
+      keys.add(key)
+    }
+    const mapping = new Map(entries)
+    const resolved = new Set<string>()
+    for (const start of mapping.keys()) {
+      const visited = new Set<string>()
+      let current = start
+      while (mapping.has(current) && !resolved.has(current)) {
+        if (visited.has(current)) {
+          return { valid: false, error: 'Model mapping contains a cycle' }
+        }
+        visited.add(current)
+        const next = mapping.get(current)
+        if (next === undefined || next === current) break
+        current = next
+      }
+      for (const model of visited) resolved.add(model)
+    }
     return { valid: true }
   } catch {
     return {

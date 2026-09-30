@@ -110,16 +110,21 @@ func TextHelper(c *gin.Context, info *relaycommon.RelayInfo) (newAPIError *types
 	passThroughBody := (passThroughGlobal || info.ChannelSetting.PassThroughBodyEnabled) &&
 		info.ChannelType != constant.ChannelTypeCodeBuddy
 	if passThroughBody {
-		storage, err := common.GetBodyStorage(c)
+		body, closer, err := relaycommon.NewMappedPassthroughBody(c, info)
 		if err != nil {
 			return types.NewErrorWithStatusCode(err, types.ErrorCodeReadRequestBodyFailed, http.StatusBadRequest, types.ErrOptionWithSkipRetry())
 		}
+		defer closer.Close()
 		if common.DebugEnabled {
-			if debugBytes, bErr := storage.Bytes(); bErr == nil {
-				logger.LogDebug(c, "requestBody: %s", debugBytes)
+			if debugReader, readErr := body.NewReader(); readErr == nil {
+				debugBytes, debugErr := io.ReadAll(debugReader)
+				debugReader.Close()
+				if debugErr == nil {
+					logger.LogDebug(c, "requestBody: %s", debugBytes)
+				}
 			}
 		}
-		requestBody = common.NewReplayableBodyReader(storage)
+		requestBody = body
 	} else {
 		convertedRequest, err := adaptor.ConvertOpenAIRequest(c, info, request)
 		if err != nil {
